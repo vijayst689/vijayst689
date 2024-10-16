@@ -12,7 +12,7 @@
                                 <img src="{{ asset('assets/images/pkrm.png') }}" width="100%" alt="">
                             </div>
                             <div class="logo-name flex-grow-1"> <a href="{{ url('dashboard') }}">
-                                    
+
                             </div>
                             <div class="sidebar-close">
                                 <span class="material-icons-outlined">close</span>
@@ -100,12 +100,12 @@
                                             <div class="menu-title">Services</div>
                                         </a>
                                         <ul>
-                                            <li><a href="#"><i
-                                                        class="material-icons-outlined">arrow_right</i>Services</a>
-                                            </li>
-                                            <li><a href="#"><i class="material-icons-outlined">arrow_right</i>Add
+                                            <li><a href="{{ url('/service') }}"><i class="material-icons-outlined">arrow_right</i>Add
                                                     Services</a>
                                             </li>
+                                            <li><a href="{{ url('/viewservice') }}"><i
+                                                class="material-icons-outlined">arrow_right</i>Services</a>
+                                    </li>
                                         </ul>
                                     </li>
                                     <li>
