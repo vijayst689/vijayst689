@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lokeshonlineservices</title>
+    <title>pkrmsolutions</title>
     <!--favicon-->
     <link rel="icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/png">
     <!-- loader-->
@@ -44,7 +44,286 @@
     @endif
       <!--authentication-->
 
-  <div class="section-authentication-cover">
+      <div class="modal-content mt-3 ps-2 pe-2">
+        <div class="row row-cols-1 row-cols-lg-4">
+            <div class="col-lg-4">
+                <div class="card rounded-4">
+                    <div class="card-body">
+                        <img src="assets/images/auth/login1.png" class="img-fluid rounded-4" alt="">
+                        <div class="d-grid mt-2">
+                            <button type="button" class="btn btn-grd-danger rounded-4" data-bs-toggle="modal"
+                                data-bs-target="#FormModal">Distributor</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card rounded-4">
+                    <div class="card-body">
+                        <img src="assets/images/auth/register1.png" class="img-fluid rounded-4" style="width: 500px; height: 400px;" alt="">
+                        <div class="d-grid mt-2">
+                            <button type="button" class="btn btn-grd-success rounded-4" data-bs-toggle="modal"
+                                data-bs-target="#retailler">Retailler</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card rounded-4">
+                    <div class="card-body">
+                        <img src="assets/images/auth/reset-password1.png" class="img-fluid rounded-4" alt="">
+                        <div class="d-grid mt-2">
+                            <button type="button" class="btn btn-grd-warning rounded-4" data-bs-toggle="modal"
+                                data-bs-target="#customer">Customer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--end row-->
+    </div>
+
+    <div class="col-12 col-xl-6">
+        <div class="card rounded-4">
+            <div class="">
+                <div class="modal fade" id="FormModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0 py-2 bg-grd-info">
+                                <h5 class="modal-title">Distributor Registration</h5>
+                                <a href="javascript:;" class="primaery-menu-close" data-bs-dismiss="modal">
+                                    <i class="material-icons-outlined">close</i>
+                                </a>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-body">
+                                    <form action="{{ url('/savedistributorregister') }}" method="post"
+                                        enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="input1" class="form-label">Name</label>
+                                                <input type="text" class="form-control" maxlength="20"
+                                                    name="name" placeholder="Name">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="input2" class="form-label">Phone</label>
+                                                <input onkeyup="duplicatephone(0)" id="phone" type="text"
+                                                    maxlength="10" class="form-control number" name="phone"
+                                                    placeholder="Phone">
+                                                <span id="dupphone" style="color:red"></span>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label for="input1" class="form-label">Aadhaar No</label>
+                                                <input onkeyup="duplicateaadhar(0)" id="aadhaar_no" type="text"
+                                                    class="form-control number" maxlength="12" name="aadhaar_no"
+                                                    placeholder="Aadhaar No">
+                                                <span id="dupaadhar" style="color:red"></span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="input2" class="form-label">Aadhaar Image</label>
+                                                <input type="file" class="form-control" name="aadhaar_file">
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label for="input1" class="form-label">Pan No</label>
+                                                <input onkeyup="duplicatepan(0)" id="pan_no" type="text"
+                                                    class="form-control" maxlength="10" name="pan_no"
+                                                    placeholder="Pan No">
+                                                <span id="duppan" style="color:red"></span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="input2" class="form-label">Pan Image</label>
+                                                <input type="file" class="form-control" name="pan_file">
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label for="input1" class="form-label">Email</label>
+                                                <input onkeyup="duplicateemail(0)" id="email" type="email"
+                                                    class="form-control" maxlength="30" name="email"
+                                                    placeholder="Email">
+                                                <span id="dupemail" style="color:red"></span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="input2" class="form-label">Password</label>
+                                                <input type="password" maxlength="10" class="form-control"
+                                                    name="password" placeholder="Password">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mt-2">
+                                            <div class="d-md-flex d-grid align-items-center gap-3">
+                                                <button type="submit" id="save"
+                                                    class="btn btn-grd-danger px-4">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-xl-6">
+        <div class="card rounded-4">
+            <div class="">
+                <div class="modal fade" id="retailler">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0 py-2 bg-grd-info">
+                                <h5 class="modal-title">Retailer Registration</h5>
+                                <a href="javascript:;" class="primaery-menu-close" data-bs-dismiss="modal">
+                                    <i class="material-icons-outlined">close</i>
+                                </a>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-body">
+                                    <form action="{{ url('/saveretailerregister') }}" method="post"
+                                        enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="input1" class="form-label">Name</label>
+                                                <input type="text" class="form-control" maxlength="20"
+                                                    name="name" placeholder="Name">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="input2" class="form-label">Phone</label>
+                                                <input onkeyup="duplicatephone(0)" id="phone" type="text"
+                                                    maxlength="10" class="form-control number" name="phone"
+                                                    placeholder="Phone">
+                                                <span id="dupphone" style="color:red"></span>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label for="input1" class="form-label">Aadhaar No</label>
+                                                <input onkeyup="duplicateaadhar(0)" id="aadhaar_no" type="text"
+                                                    class="form-control number" maxlength="12" name="aadhaar_no"
+                                                    placeholder="Aadhaar No">
+                                                <span id="dupaadhar" style="color:red"></span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="input2" class="form-label">Aadhaar Image</label>
+                                                <input type="file" class="form-control" name="aadhaar_file">
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label for="input1" class="form-label">Pan No</label>
+                                                <input onkeyup="duplicatepan(0)" id="pan_no" type="text"
+                                                    class="form-control" maxlength="10" name="pan_no"
+                                                    placeholder="Pan No">
+                                                <span id="duppan" style="color:red"></span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="input2" class="form-label">Pan Image</label>
+                                                <input type="file" class="form-control" name="pan_file">
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label for="input1" class="form-label">Email</label>
+                                                <input onkeyup="duplicateemail(0)" id="email" type="email"
+                                                    class="form-control" maxlength="30" name="email"
+                                                    placeholder="Email">
+                                                <span id="dupemail" style="color:red"></span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="input2" class="form-label">Password</label>
+                                                <input type="password" maxlength="10" class="form-control"
+                                                    name="password" placeholder="Password">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mt-2">
+                                            <div class="d-md-flex d-grid align-items-center gap-3">
+                                                <button type="submit" id="save"
+                                                    class="btn btn-grd-danger px-4">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-xl-6">
+        <div class="card rounded-4">
+            <div class="">
+                <div class="modal fade" id="customer">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0 py-2 bg-grd-info">
+                                <h5 class="modal-title">Customer Registration</h5>
+                                <a href="javascript:;" class="primaery-menu-close" data-bs-dismiss="modal">
+                                    <i class="material-icons-outlined">close</i>
+                                </a>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-body">
+                                    <form action="{{ url('/saveregister') }}" method="post"
+                                        enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="input1" class="form-label">Name</label>
+                                                <input type="text" class="form-control" maxlength="20"
+                                                    name="name" placeholder="Name">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="input2" class="form-label">Phone</label>
+                                                <input onkeyup="duplicatephone(0)" id="phone" type="text"
+                                                    maxlength="10" class="form-control number" name="phone"
+                                                    placeholder="Phone">
+                                                <span id="dupphone" style="color:red"></span>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label for="aadhaar_no" class="form-label">Aadhaar No</label>
+                                                <input onkeyup="duplicateaadhar(0)" id="aadhaar_no" type="text"
+                                                    class="form-control number" maxlength="12" name="aadhaar_no"
+                                                    placeholder="Aadhaar No">
+                                                <span id="dupaadhar" style="color:red"></span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="input2" class="form-label">Aadhaar Image</label>
+                                                <input type="file" class="form-control" name="aadhaar_file">
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label for="input1" class="form-label">Email</label>
+                                                <input onkeyup="duplicateemail(0)" id="email" type="email"
+                                                    class="form-control" maxlength="30" name="email"
+                                                    placeholder="Email">
+                                                <span id="dupemail" style="color:red"></span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="input2" class="form-label">Password</label>
+                                                <input type="password" maxlength="10" class="form-control"
+                                                    name="password" placeholder="Password">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mt-2">
+                                            <div class="d-md-flex d-grid align-items-center gap-3">
+                                                <button type="submit" id="save"
+                                                    class="btn btn-grd-danger px-4">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+  {{-- <div class="section-authentication-cover">
     <div class="">
       <div class="row g-0">
 
@@ -123,11 +402,17 @@
       </div>
       <!--end row-->
     </div>
-  </div>
+  </div> --}}
 
   <!--authentication-->
 
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+
+    <script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
+    <script src="{{ asset('assets/plugins/metismenu/metisMenu.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
 
     <script>
         $(document).ready(function() {
@@ -160,7 +445,7 @@
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupemail").html("email alredy exit!");
+                        $("#dupemail").html("email alredy exists!");
                     } else {
                         $("#save").prop('disabled', false);
                         $("#dupemail").html("");
@@ -188,7 +473,7 @@
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupaadhar").html("aadhar no alredy exit!");
+                        $("#dupaadhar").html("aadhar no alredy exists!");
                     } else {
                         $("#save").prop('disabled', false);
                         $("#dupaadhar").html("");
@@ -215,13 +500,45 @@
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupphone").html("mobile no alredy exit!");
+                        $("#dupphone").html("mobile no alredy exists!");
                     } else {
                         $("#save").prop('disabled', false);
                         $("#dupphone").html("");
                     }
                 },
 
+                error: function(jqXHR, exception) {
+                    console.log(exception);
+                }
+            });
+        }
+
+        function duplicatepan(id) {
+            var pan_no = $("#pan_no").val().trim();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                type: "post",
+                url: '{{ url('checkpan') }}',
+                data: {
+                    id: id,
+                    pan_no: pan_no,
+                    _token: _token
+                },
+
+                success: function(res) {
+                    if (res.exists) {
+                        $("#save").prop('disabled', true);
+                        $("#duppan").html("pan no alredy exists!");
+                    } else {
+                        $("#duppan").html("");
+                    }
+                    if ($("#dupphone").html() == "" && $("#duppan").html() == "" && $("#duppan").html() ==
+                        "") {
+                        $("#save").prop('disabled', false);
+                    } else {
+                        $("#save").prop('disabled', true);
+                    }
+                },
                 error: function(jqXHR, exception) {
                     console.log(exception);
                 }

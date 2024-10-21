@@ -239,4 +239,21 @@ class userController extends Controller
             return response()->json( array( 'exists' => false ) );
         }
     }
+
+    public function checkpan( Request $request )
+    {
+        $pan_no = trim( $request->pan_no );
+        $id = trim( $request->id );
+        if ( $id == 0 ) {
+            $sql = "SELECT * FROM users where pan_no='$pan_no'";
+        } else {
+            $sql = "SELECT * FROM users where pan_no='$pan_no' and id <> $id";
+        }
+        $users = DB::select( DB::raw( $sql ) );
+        if ( count( $users ) > 0 ) {
+            return response()->json( array( 'exists' => true ) );
+        } else {
+            return response()->json( array( 'exists' => false ) );
+        }
+    }
 }

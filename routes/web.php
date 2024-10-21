@@ -27,6 +27,8 @@ Route::get('admin', [CustomAuthController::class, 'index'])->name('login');
 Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
 Route::get('register', [CustomAuthController::class, 'register'])->name('register');
 Route::post('saveregister', [CustomAuthController::class, 'saveregister'])->name('saveregister');
+Route::post('savedistributorregister', [CustomAuthController::class, 'savedistributorregister'])->name('savedistributorregister');
+Route::post('saveretailerregister', [CustomAuthController::class, 'saveretailerregister'])->name('saveretailerregister');
 Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
 
@@ -59,6 +61,8 @@ Route::post('/checkemail', [App\Http\Controllers\userController::class, 'checkem
 Route::post('/checkaadhar', [App\Http\Controllers\userController::class, 'checkaadhar']);
 
 Route::post('/checkphone', [App\Http\Controllers\userController::class, 'checkphone']);
+
+Route::post('/checkpan', [App\Http\Controllers\userController::class, 'checkpan']);
 
 
 
