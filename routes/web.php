@@ -110,6 +110,8 @@ Route::post('/approvepayment', [App\Http\Controllers\PaymentsController::class, 
 
 Route::get('service', [App\Http\Controllers\ServiceController::class, 'service']);
 
+Route::get('allservices/{customerid}', [App\Http\Controllers\ServiceController::class, 'allservices']);
+
 Route::get('subservice/{id}', [App\Http\Controllers\ServiceController::class, 'subservice']);
 
 Route::post('addsubservice', [App\Http\Controllers\ServiceController::class, 'addsubservice']);
@@ -126,7 +128,13 @@ Route::get('dropservice/{id}', [App\Http\Controllers\ServiceController::class, '
 
 Route::get('dropsubservice/{id}', [App\Http\Controllers\ServiceController::class, 'dropsubservice']);
 
-Route::get('applyservice/{customerid}', [App\Http\Controllers\ServiceController::class, 'applyservice']);
+Route::get('services/{serviceid}/{customerid}', [App\Http\Controllers\ServiceController::class, 'services']);
+
+Route::get('applyservice/{serviceid}/{customerid}', [App\Http\Controllers\ServiceController::class, 'applyservice']);
+Route::get('service/get_taluk/{distid}', [App\Http\Controllers\ServiceController::class, 'get_taluk'])->name('gettaluk');
+Route::get('service/get_panchayath/{taluk_id}', [App\Http\Controllers\ServiceController::class, 'get_panchayath'])->name('getpanchayath');
+
+Route::get('services/{serviceid}/{customerid}', [App\Http\Controllers\ServiceController::class, 'services']);
 Route::post('submit_applyservice', [App\Http\Controllers\ServiceController::class, 'submit_applyservice']);
 Route::get('get_subservice/{parentid}', [App\Http\Controllers\ServiceController::class, 'get_subservice']);
 Route::get('application', [App\Http\Controllers\ServiceController::class, 'application']);

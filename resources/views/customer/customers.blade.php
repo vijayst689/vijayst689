@@ -39,7 +39,7 @@
                     @endif
                     <div class="customer-table">
                         <div class="table-responsive white-space-nowrap">
-                            <table class="table align-middle">
+                            <table id="example2" class="table align-middle">
                                 <thead class="table-dark">
                                     <tr>
                                         <th>Sl No</th>
@@ -51,8 +51,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($viewcustomers as $key => $cus)
                                         <tr>
+                                    @foreach ($viewcustomers as $key => $cus)
                                             <td>{{ $key + 1 }}</td>
                                             <td>
                                                 <a class="d-flex align-items-center gap-3" href="{{ url('profile') }}">
@@ -77,15 +77,15 @@
                                                     href="{{ url('/dropcustomer', $cus->id) }}" type="button"
                                                     style="font-size: small" class="btn btn-inverse-danger px-1">Drop</a>
 
-                                                <a href="{{ url('/applyservice', $cus->id) }}" style="font-size: small"
+                                                <a href="{{ url('/allservices', $cus->id) }}" style="font-size: small"
                                                     class="btn btn-grd btn-grd-branding px-1">Service</a>
 
                                                 <a href="{{ url('/documents', $cus->id) }}" style="font-size: small"
                                                     class="btn btn-grd btn-grd-info px-1">Document</a>
                                             </td>
                                         </tr>
-                                </tbody>
                                 @endforeach
+                                </tbody>
                             </table>
                         </div>
                     </div>

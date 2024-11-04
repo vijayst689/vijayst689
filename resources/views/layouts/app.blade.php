@@ -21,6 +21,7 @@
   <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+  <link href="{{ asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
   <!--main css-->
   <link href="{{ asset('assets/css/bootstrap-extended.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/sass/main.css') }}" rel="stylesheet">
@@ -47,9 +48,6 @@
   @yield('content')
   <!--end main wrapper-->
 
-   <!--start footer-->
-   @include('layouts.footer')
-  <!--end footer-->
 
   <!--bootstrap js-->
   <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
@@ -67,6 +65,26 @@
   </script>
   <script src="{{ asset('assets/js/main.js') }}"></script>
   <script src="{{ asset('assets/js/dashboard1.js') }}"></script>
+  <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
+  <script>
+      $(document).ready(function() {
+          $('#example').DataTable();
+      } );
+  </script>
+  <script>
+      $(document).ready(function() {
+          var table = $('#example2').DataTable( {
+              lengthChange: false,
+              buttons: [ 'copy', 'excel', 'pdf', 'print']
+          } );
+
+          table.buttons().container()
+              .appendTo( '#example2_wrapper .col-md-6:eq(0)' );
+      } );
+  </script>
+<script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
   <script>
 	   new PerfectScrollbar(".user-list")
   </script>

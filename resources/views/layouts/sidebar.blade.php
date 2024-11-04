@@ -291,7 +291,7 @@
                                     </li>
                                     <li>
                                         <a href="javascript:;" class="has-arrow">
-                                            <div class="parent-icon"><i class="material-icons-outlined">person</i>
+                                            <div class="parent-icon"><i></i>
                                             </div>
                                             <div class="menu-title">Customers</div>
                                         </a>
