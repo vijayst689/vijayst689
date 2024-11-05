@@ -570,3 +570,26 @@ CREATE TABLE `smartcard` (
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+
+CREATE TABLE `license` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `service_id` int(11) DEFAULT 0,
+ `user_id` int(11) DEFAULT 0,
+ `retailer_id` int(11) DEFAULT 0,
+ `distributor_id` int(11) DEFAULT 0,
+ `admin_id` int(11) DEFAULT 0,
+ `amount` decimal(10,2) DEFAULT 0.00,
+ `reg_cell_number` varchar(10) DEFAULT NULL,
+ `aadhaar_card` varchar(20) DEFAULT NULL,
+ `dob` varchar(10) DEFAULT NULL,
+ `driving_license` varchar(20) DEFAULT NULL,
+ `acknowledgement` varchar(20) DEFAULT NULL,
+ `status` varchar(20) DEFAULT NULL,
+ `remarks` varchar(100) DEFAULT NULL,
+ `application_no` varchar(50) DEFAULT NULL,
+ `certificate` varchar(20) DEFAULT NULL,
+ `applied_date` varchar(10) DEFAULT NULL,
+ `completed_date` varchar(10) DEFAULT NULL,
+ `created_at` varchar(10) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB;
