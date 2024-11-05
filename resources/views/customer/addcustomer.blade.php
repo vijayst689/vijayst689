@@ -13,12 +13,11 @@
                     </nav>
                 </div>
                 <div class="ms-auto">
-                    <div class="col-auto">
-                        <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                            <a href="{{ url('customers') }}" class="btn btn-grd btn-grd-info px-3"><i
-                                    class="bi bi-chat me-2"></i>View Customers</a>
-                        </div>
+                <div class="col-auto">
+                    <div class="d-flex align-items-center gap-2 justify-content-lg-end">
+                    <a href="{{ url('customers') }}" class="btn btn-grd btn-grd-info px-3"><i class="bi bi-chat me-2"></i>View Customers</a>
                     </div>
+                </div>
                 </div>
             </div>
             @if (session()->has('success'))
@@ -43,64 +42,197 @@
                                 </div>
                             </div>
                             <form class="row g-4" action="{{ url('/savecustomer') }}" enctype="multipart/form-data"
-                                method="post">
-                                {{ csrf_field() }}
-                                <div class="col-md-6">
-                                    <label for="input1" class="form-label">Name</label>
-                                    <input type="text" name="name" maxlength="20" class="form-control" id="input1"
-                                        placeholder="Name">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="input3" class="form-label">Phone</label>
-                                    <input onkeyup="duplicatephone(0)" id="phone" type="text" name="phone"
-                                        maxlength="10" class="form-control" id="input3" placeholder="Phone">
-                                    <span id="dupphone" style="color:red"></span>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="aadhaar_no" class="form-label">Aadhaar No</label>
-                                    <input onkeyup="duplicateaadhar(0)" type="text" id="aadhaar_no" name="aadhaar_no"
-                                        maxlength="12" class="form-control number" id="input3" placeholder="Aadhaar No">
-                                    <span id="dupaadhar" style="color:red"></span>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="input7" class="form-label">Gender</label>
-                                    <select name="gender" id="input7" class="form-select">
-                                        <option selected="">Select</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="input4" class="form-label">Email</label>
-                                    <input onkeyup="duplicateemail(0)" id="email" type="email" name="email"
-                                        maxlength="40" class="form-control" id="input4" placeholder="Email">
-                                    <span id="dupemail" style="color:red"></span>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="input5" class="form-label">Password</label>
-                                    <input type="password" name="password" maxlength="10" class="form-control"
-                                        id="input5" placeholder="Password">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="input6" class="form-label">DOB</label>
-                                    <input name="date_of_birth" type="date" class="form-control" id="input6">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="input6" class="form-label">Profile</label>
-                                    <input name="profile" type="file" class="form-control" id="input6">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="input11" class="form-label">Address</label>
-                                    <textarea name="address" maxlength="200" class="form-control" id="input11" placeholder="Address ..."
-                                        rows="4" cols="4"></textarea>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="d-md-flex d-grid align-items-center gap-3">
-                                        <button id="save" type="submit"
-                                            class="btn btn-grd-primary px-4">Submit</button>
+                            method="post">
+                            {{ csrf_field() }}
+                            <div class="col-lg-6">
+                                <div class="mb-3 row">
+                                    <label for="example-text-input" class="col-sm-3 form-label">Applicant Name</label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" name="name" maxlength="100" type="text"
+                                            id="example-text-input" placeholder="Applicant Name">
                                     </div>
                                 </div>
-                            </form>
+
+                                 <div class="mb-3 row">
+                                    <label for="example-email-input" class="col-sm-3 form-label">Email</label>
+                                    <div class="col-sm-9">
+                                        <input onkeyup="duplicateemail(0)" class="form-control" type="email"
+                                            maxlength="50" name="email" id="email" placeholder="Email">
+                                        <span id="dupemail" style="color:red"></span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label class="col-sm-3 form-label">Gender</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-select" name="gender" required>
+                                            <option>Select</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                 <div class="mb-3 row">
+                                    <label for="example-text-input-lg" class="col-sm-3 form-label">Taluk</label>
+                                    <div class="col-sm-9">
+                                        <select required name="taluk_id" id="taluk" class="form-control">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="aadhaar_no" class="col-sm-3 form-label">Aadhaar No</label>
+                                    <div class="col-sm-9">
+                                        <input required onkeyup="duplicateaadhar(0)" class="form-control number" maxlength="12"
+                                            type="text" name="aadhaar_no" id="aadhaar_no" placeholder="Aadhaar No">
+                                        <span id="dupaadhar" style="color:red"></span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="example-text-input-lg" class="col-sm-3 form-label">Signature</label>
+                                    <div class="col-sm-9">
+                                        <input required accept="image/jpeg, image/png" type="file"
+                                            class="form-control" name="signature" />
+                                    </div>
+                                </div>
+
+                                 <div class="mb-3 row">
+                                    <label for="example-text-input-lg" class="col-sm-3 form-label">Smart Card</label>
+                                    <div class="col-sm-9">
+                                        <input required accept="image/jpeg, image/png" type="file"
+                                            class="form-control" name="smartcard" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-lg-6">
+
+                                 <div class="mb-3 row">
+                                    <label for="example-url-input" class="col-sm-3 form-label">DOB</label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" type="date" onkeyup="return false;" name="date_of_birth"
+                                            id="example-url-input">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="example-month-input" class="col-sm-3 form-label">Phone</label>
+                                    <div class="col-sm-9">
+                                        <input required onkeyup="duplicatephone(0)" class="form-control number" type="text"
+                                            name="phone" maxlength="10" id="phone" placeholder="Phone">
+                                        <span id="dupphone" style="color:red"></span>
+                                    </div>
+                                </div>
+
+                                 <div class="mb-3 row">
+                                    <label for="dist_id" class="col-sm-3 form-label">District</label>
+                                    <div class="col-sm-9">
+                                        <select required name="dist_id" id="dist_id" class="form-control">
+                                            <option value="">Select District</option>
+                                            @foreach ($districts as $d)
+                                                <option value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="panchayath" class="col-sm-3 form-label">VAO</label>
+                                    <div class="col-sm-9">
+                                        <select required name="panchayath_id" id="panchayath" class="form-control">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="example-text-input-lg" class="col-sm-3 form-label">Aadhar Card</label>
+                                    <div class="col-sm-9">
+                                        <input required accept="image/jpeg, image/png" type="file"
+                                            class="form-control" name="aadhaar_file" />
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="example-text-input-lg" class="col-sm-3 form-label">Profile</label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" type="file" name="profile"
+                                            id="example-text-input-lg">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="example-url-input" class="col-sm-3 form-label">Address</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control" maxlength="100" type="text" rows="3" name="address" id="example-url-input"
+                                            placeholder="Address"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                             <div class="col-lg-12">
+                                <div class="mb-3 row">
+                                    <label for="example-text-input-lg" class="col-sm-3 form-label">Do You Have Can Number</label>
+                                    <div class="col-sm-6">
+                                        <select required name="can_details" id="can_details" class="form-control">
+                                            <option value="">Select Can Details</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                             </div>
+                             <h3 class="text-center">Family Details</h3>
+                                <table id="pricetable" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Relationship</th>
+                                            <th>Name</th>
+                                            <th>Age</th>
+                                            <th>Living Status</th>
+                                            <th>Aadhaar/Death Cert</th>
+                                            <th><a class="btn btn-sm btn-success" onclick="addnewrow()"><i
+                                                        class='material-symbols-outlined'>add</i></a></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td> <select required name="relationship[]" class="form-control">
+                                                    <option value="">Select</option>
+                                                    <option value="Husband">கணவர்</option>
+                                                    <option value="Wife">மனைவி</option>
+                                                    <option value="Son">மகன்</option>
+                                                    <option value="Daughter">மகள்</option>
+                                                </select></td>
+                                            <td><input required class="form-control" type="text"
+                                                    name="relation_name[]" maxlength="50"></td>
+                                            <td width="10%"><input required class="form-control number"
+                                                    type="text" name="relation_age[]" maxlength="2"></td>
+                                            <td><select required name="relationship_status[]"
+                                                    class="form-control alive_or_dead">
+                                                    <option value="">Select</option>
+                                                    <option value="Dead">Dead</option>
+                                                    <option value="Alive">Alive</option>
+                                                </select></td>
+                                            <td>
+                                                <P class="changename"></P><input required class="form-control"
+                                                    type="file" name="doc[]" accept="image/jpeg, image/png">
+                                            </td>
+                                            <td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i
+                                                        class='material-symbols-outlined'>Remove</i></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            <div class="text-center">
+                                <div class="col-12">
+                                    <div class="mb-0">
+                                        <button id="save" type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                         </div>
                     </div>
                 </div>
@@ -108,3 +240,60 @@
         </div>
     </main>
 @endsection
+@push('page_scripts')
+    <script>
+        $("#pricetable").on('change', '.alive_or_dead', function() {
+            if ($(this).val() == "Alive") {
+                $(this).closest('tr').find('.changename').text("Aadhaar Card");
+            } else {
+                $(this).closest('tr').find('.changename').text("Death Certificate");
+            }
+        });
+
+        $('#dist_id').on('change', function() {
+            var dist_id = this.value;
+            $("#taluk").html('');
+            var url = "{{ url('service/get_taluk') }}/" + dist_id;
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function(result) {
+                    $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
+                    $.each(result, function(key, value) {
+                        $("#taluk").append('<option value="' + value
+                            .id + '">' + value.taluk_name + '</option>');
+                    });
+                    $('#panchayath').html('<option value="">-- Select Panchayath --</option>');
+                }
+            });
+        });
+
+        $('#taluk').on('change', function() {
+            var taluk_id = this.value;
+            $("#panchayath").html('');
+            var url = "{{ url('service/get_panchayath') }}/" + taluk_id;
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function(result) {
+                    $('#panchayath').html('<option value="">-- Select Panchayath Name --</option>');
+                    $.each(result, function(key, value) {
+                        $("#panchayath").append('<option value="' + value
+                            .id + '">' + value.panchayath_name + '</option>');
+                    });
+                }
+            });
+        });
+
+        $("#pricetable").on('click', '.btnDelete', function() {
+            $(this).closest('tr').remove();
+        });
+
+        function addnewrow() {
+            $("#pricetable tbody").append(
+                "<tr><td> <select required name='relationship[]' class='form-control'><option value=''>Select</option><option value='Husband'>கணவர்</option><option value='Wife'>மனைவி</option><option value='Son'>மகன்</option><option value='Daughter'>மகள்</option></select></td><td><input class='form-control' required type='text' name='relation_name[]'maxlength='80'></td><td width='10%'><input class='form-control number' required type='text' name='relation_age[]'maxlength='2'></td><td><select required name='relationship_status[]' class='form-control alive_or_dead'><option value=''>Select</option><option value='Dead'>Dead</option><option value='Alive'>Alive</option></select></td><td><P class='changename'></P><input class='form-control' required type='file' name='doc[]' accept='image/jpeg, image/png'></td><td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i class='material-symbols-outlined'>Remove</i></a></td></tr>"
+                );
+        }
+    </script>
+    </script>
+@endpush

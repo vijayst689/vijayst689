@@ -68,10 +68,8 @@
                                             <td>{{ $cus->email }}</td>
                                             <td>{{ $cus->cpassword }}</td>
                                             <td style="white-space: nowrap">
-                                                <button
-                                                    onclick="edit_customer('{{ $cus->id }}','{{ $cus->name }}','{{ $cus->phone }}','{{ $cus->aadhaar_no }}','{{ $cus->gender }}','{{ $cus->email }}','{{ $cus->date_of_birth }}','{{ $cus->address }}','{{ $cus->status }}')"
-                                                    ype="button" style="font-size: small"
-                                                    class="btn btn-grd btn-grd-primary px-1">Edit</button>
+                                                <a href="{{ url('/editcustomer', $cus->id) }}" style="font-size: small"
+                                                    class="btn-sm btn btn-primary">Edit</a>
 
                                                 <a onclick="return confirm('Do you want to confirm delete customer?')"
                                                     href="{{ url('/dropcustomer', $cus->id) }}" type="button"
