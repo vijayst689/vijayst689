@@ -108,13 +108,13 @@
                                     </li>
                                         </ul>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="{{ url('/application')}}" aria-expanded="false">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
                                             <div class="menu-title">Applications</div>
                                         </a>
-                                    </li>
+                                    </li> --}}
 
                                 </ul>
                             @endif
@@ -145,9 +145,9 @@
                                             <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
                                             </li>
-                                            <li><a href="{{ url('/appliedservice') }}/Approved"><i
+                                            {{-- <li><a href="{{ url('/appliedservice') }}/Approved"><i
                                                         class="material-icons-outlined">arrow_right</i>Approved</a>
-                                            </li>
+                                            </li> --}}
                                         </ul>
                                     </li>
                                     <li>
@@ -228,13 +228,13 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="{{ url('/application') }}" aria-expanded="false">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
                                             <div class="menu-title">Applications</div>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             @endif
                             @if (Auth::user()->user_type_id == 3)
@@ -292,13 +292,13 @@
                                             </li>
                                         </ul>
                                     </li>
-                                              <li>
+                                              {{-- <li>
                                         <a href="{{ url('/application')}}" aria-expanded="false">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
                                             <div class="menu-title">Applications</div>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             @endif
                             @if (Auth::user()->user_type_id == 4)
@@ -362,13 +362,13 @@
                                             </li>
                                         </ul>
                                     </li>
-                                              <li>
+                                              {{-- <li>
                                         <a href="{{ url('/application')}}" aria-expanded="false">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
                                             <div class="menu-title">Applications</div>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             @endif
                             <!--end navigation-->
@@ -411,14 +411,13 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="{{ url('/application') }}" aria-expanded="false">
                                             <div class="parent-icon"><i class="material-icons-outlined">folder</i>
                                             </div>
                                             <div class="menu-title">Applications</div>
                                         </a>
-                                    </li>
-
+                                    </li> --}}
                                 </ul>
                             @endif
                             <!--end navigation-->
