@@ -64,7 +64,7 @@
                                         <th>To ID</th>
                                         <th>Title</th>
                                          <th>Debit</th>
-                                        <th>Credit</th> 
+                                        <th>Credit</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -96,9 +96,9 @@
                                         <td>Total</td>
                                         <td>{{ Auth::user()->wallet }}</td>
                                         <td></td>
-                                        
+
                                     </tr>
-                                
+
                             </table>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                             <div class="col">
                                 <div class="card-body">
                                     <div class="text-center">
-                                        <img src="/upload/qr/qrimg.jpeg" class="w-50 mb-4 rounded" alt="...">
+                                        <img src="upload/qr/qrimg.jpeg" class="w-50 mb-4 rounded" alt="...">
                                     </div>
                                 </div>
                             </div>
