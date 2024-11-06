@@ -45,7 +45,7 @@
         </div>
         <!-- End Preloader -->
 
-        <!-- Start Navbar Area --> 
+        <!-- Start Navbar Area -->
         <div class="navbar-area fixed-top is-sticky">
 			<div class="mobile-responsive-nav">
 				<div class="container">
@@ -61,30 +61,30 @@
 
 			<div class="desktop-nav">
 				<div class="container">
-					<nav class="navbar navbar-expand-md navbar-light">  
+					<nav class="navbar navbar-expand-md navbar-light">
                             <img src="{{ asset('assetss/images/mudiuma.png') }}" width="15%" alt="logo">
 						</a>
 						<div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent" style="display: block;">
 							<ul class="navbar-nav mx-auto">
                                 <li class="nav-item">
-                                    <a href="#" class=" nav-link active">
+                                    <a href="{{url('/')}}" class=" nav-link active">
                                         Home
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="contact.html" class="nav-link">
+                                    <a href="" class="nav-link">
                                         About Us
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="contact.html" class="nav-link">
+                                    <a href="" class="nav-link">
                                         Contacts
                                     </a>
                                 </li>
                             </ul>
                             <div class="others-option position-relative d-flex align-items-center">
                                 <div class="option-item">
-                                    <a href="courses-details.html" class="default-btn2">
+                                    <a href="{{ url('/admin')}}" class="default-btn2">
                                         Admin Login
                                         <img src="{{ asset('assetss/images/icon/left-small.svg') }}" alt="icon">
                                     </a>
@@ -104,7 +104,7 @@
 							<div class="circle circle-three"></div>
 						</div>
 					</div>
-					
+
 					<div class="container">
 						<div class="option-inner">
 							<div class="others-options justify-content-center d-flex align-items-center">
@@ -178,7 +178,7 @@
                             <p>48 Courses</p>
                         </div>
                     </div>
-                   
+
                     <div class="col-lg-3 col-sm-6">
                         <div class="single-categories-card second-color text-center">
                         <div>
