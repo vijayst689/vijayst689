@@ -14,10 +14,12 @@
                 </div>
                 <div class="ms-auto">
                     <div class="col-auto">
+                        @if( Auth::user()->user_type_id == 1 )
                         <div class="d-flex align-items-center gap-2 justify-content-lg-end">
                             <a href="{{ url('/service') }}" class="btn btn-grd btn-grd-info px-3"><i
                                     class="bi bi-chat me-2"></i>Add Service</a>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -69,6 +71,7 @@
                                     <tr>
                                         <th>Sl No</th>
                                         <th>SubSevice Name</th>
+                                        <th>Status</th>
                                         <th>Amount</th>
                                         <th>Action</th>
                                     </tr>
@@ -78,6 +81,7 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $ser->service_name }}</td>
+                                            <td>{{ $ser->status }}</td>
                                             <td>{{ $ser->amount }}</td>
                                             <td style="white-space: nowrap">
                                                 {{-- <button

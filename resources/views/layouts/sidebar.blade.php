@@ -212,22 +212,19 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="javascript:;" class="has-arrow">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
                                             <div class="menu-title">Services</div>
                                         </a>
                                         <ul>
-                                            <li><a href="{{ url('/service') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Services</a>
-                                            </li>
                                             <li><a href="{{ url('/viewservice') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>View
                                                     Services</a>
                                             </li>
                                         </ul>
-                                    </li>
+                                    </li> --}}
                                     {{-- <li>
                                         <a href="{{ url('/application') }}" aria-expanded="false">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>

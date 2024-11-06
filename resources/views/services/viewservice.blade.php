@@ -14,10 +14,12 @@
                 </div>
                 <div class="ms-auto">
                     <div class="col-auto">
+                        @if( Auth::user()->user_type_id == 1 )
                         <div class="d-flex align-items-center gap-2 justify-content-lg-end">
                             <a href="{{ url('/service') }}" class="btn btn-grd btn-grd-info px-3"><i
                                     class="bi bi-chat me-2"></i>Add Services</a>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -44,6 +46,7 @@
                                     <tr>
                                         <th>Sl No</th>
                                         <th>Service Name</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -52,6 +55,7 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $ser->service_name }}</td>
+                                            <td>{{ $ser->status }}</td>
                                             <td style="white-space: nowrap">
                                                 <button
                                                     onclick="edit_service('{{ $ser->id }}','{{ $ser->service_name }}','{{ $ser->status }}')"
@@ -88,13 +92,13 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="form-body">
-                                                        <form class="row g-3" action="{{ url('/updatecustomer') }}"
+                                                        <form class="row g-3" action="{{ url('/updateservice') }}"
                                                             method="post" enctype="multipart/form-data">
                                                             {{ csrf_field() }}
                                                             <div class="col-md-6">
                                                                 <input type="hidden" name="service_id" id="serviceid" />
                                                                 <label for="editname" class="form-label">Service Name</label>
-                                                                <input name="name" maxlength="30" type="text"
+                                                                <input name="service_name" maxlength="30" type="text"
                                                                     class="form-control" id="editname" placeholder="Service Name">
                                                             </div>
                                                             <div class="col-md-6">
