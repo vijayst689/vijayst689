@@ -80,11 +80,11 @@
                                                     @if ($ser->status == 'Resubmit')
 
                                                     <a href="{{ url('/servicestatus') }}/{{ $ser->status }}/{{ $ser->id }}/{{ $ser->service_id }}" style="font-size: small"
-                                                        class="btn btn-grd btn-grd-info px-1"></a>
+                                                        class="btn btn-grd btn-grd-info px-1">Resubmit</a>
 
                                                     @else
                                                         <button type="button"  style="font-size: small"
-                                                        class="btn btn-grd btn-grd-primary" disabled></button>
+                                                        class="btn btn-grd btn-grd-primary" disabled>Pending</button>
                                                     @endif
                                                 @else
                                                     @if (Auth::user()->id == $ser->user_id)

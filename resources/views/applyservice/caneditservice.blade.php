@@ -74,17 +74,16 @@
                                             <label style="color:#23e156" for="door_no" class="form-label">Door No</label>
                                             <input required type="text" maxlength="20" class="form-control"
                                                 name="door_no" placeholder="Door No" />
-                                            <label style="color:#23e156" for="panchayath_id" class="form-label">Postal
-                                                Area</label>
-                                            <select required name="panchayath_id" id="panchayath" class="form-control">
-                                            </select>
-                                            <label style="color:#23e156" for="dist_id"
+                                                <label style="color:#23e156" for="dist_id"
                                                 class="form-label">District</label>
                                             <select required name="dist_id" id="district_id" class="form-control">
                                                 <option value="">Select District</option>
                                                 @foreach ($districts as $d)
                                                     <option value="{{ $d->id }}">{{ $d->district_name }}</option>
                                                 @endforeach
+                                            </select>
+                                            <label style="color:#e411dd" for="taluk_id" class="form-label">Taluk</label>
+                                            <select required name="taluk_id" id="taluk" class="form-control">
                                             </select>
 
                                         </div>
@@ -130,9 +129,11 @@
                                                 பெயர்</label>
                                             <input required type="text" maxlength="50" class="form-control"
                                                 name="postal_name" placeholder="அஞ்சல் பெயர்" />
-                                            <label style="color:#e411dd" for="taluk_id" class="form-label">Taluk</label>
-                                            <select required name="taluk_id" id="taluk" class="form-control">
-                                            </select>
+                                                <label style="color:#23e156" for="panchayath_id"
+                                                class="form-label">கிராம நிர்வாக பகுதி</label>
+                                                <select required name="panchayath_id" id="panchayath" class="form-control">
+                                                </select>
+
                                         </div>
                                         <div class="mb-3 col-md-4">
 
@@ -171,10 +172,12 @@
                                                 Code</label>
                                             <input required type="text" maxlength="10" class="form-control"
                                                 name="pin_code" placeholder="Pin Code" />
-                                            <label style="color:#23e156" for="village_administrative_area"
-                                                class="form-label">கிராம நிர்வாக பகுதி</label>
-                                            <input required type="text" maxlength="20" class="form-control"
-                                                name="village_administrative_area" placeholder="கிராம நிர்வாக பகுதி" />
+                                                <label style="color:#23e156" for="village_administrative_area" class="form-label">Postal
+                                                    Area</label>
+                                          <input required type="text" maxlength="20" class="form-control"
+                                              name="village_administrative_area" placeholder="Postal Area"/>
+
+
                                         </div>
                                     @elseif($serviceid == 62)
                                         <div class="mb-3 col-md-6">
@@ -329,7 +332,7 @@
                         'font-weight': 'bold'
                     });
     }
-    
+
         });
 
     $('#district_id').on('change', function () {

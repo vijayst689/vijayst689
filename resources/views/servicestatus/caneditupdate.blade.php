@@ -96,19 +96,21 @@
                                         <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
                                             value="{{ $services->door_no }}" class="form-control" name="door_no"
                                             maxlength="20" placeholder="Door No" />
-                                        <label for="village_administrative_area" class="form-label">கிராம நிர்வாக பகுதி</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
-                                            value="{{ $services->village_administrative_area }}" class="form-control" name="village_administrative_area"
-                                            maxlength="20" placeholder="கிராம நிர்வாக பகுதி" />
-                                        <label for="dist_id" class="form-label">District</label>
-                                        <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif name="dist_id"
-                                            id="dist_id" class="form-control">
-                                            <option value="">Select District</option>
-                                            @foreach ($districts as $d)
-                                                <option @if ($d->id == $services->dist_id) selected @endif
-                                                    value="{{ $d->id }}">{{ $d->district_name }}</option>
-                                            @endforeach
-                                        </select>
+                                            <label for="dist_id" class="form-label">District</label>
+                                            <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif name="dist_id"
+                                                id="dist_id" class="form-control">
+                                                <option value="">Select District</option>
+                                                @foreach ($districts as $d)
+                                                    <option @if ($d->id == $services->dist_id) selected @endif
+                                                        value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                                @endforeach
+                                            </select>
+                                            <label for="taluk_id" class="form-label">Taluk</label>
+                                            <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif name="taluk_id"
+                                                id="taluk" class="form-control">
+                                            </select>
+
+
                                     </div>
                                     <div class="mb-3 col-md-4">
 
@@ -159,10 +161,10 @@
                                             <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
                                                 value="{{ $services->street_name_tamil }}" class="form-control" name="street_name_tamil"
                                                 maxlength="50" placeholder="அஞ்சல் பெயர்" />
-                                        <label for="taluk_id" class="form-label">Taluk</label>
-                                            <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif name="taluk_id"
-                                                id="taluk" class="form-control">
-                                            </select>
+                                                <label for="panchayath_id" class="form-label">கிராம நிர்வாக பகுதி</label>
+                                                <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif name="panchayath_id"
+                                                    id="panchayath" class="form-control">
+                                                </select>
                                         </div>
                                         <div class="mb-3 col-md-4">
                                             <label for="personalized_name_english" class="form-label">Name In English</label>
@@ -229,10 +231,9 @@
                                             <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
                                                 value="{{ $services->pin_code }}" class="form-control" name="pin_code"
                                                 maxlength="10" placeholder="Pin Code" />
-                                        <label for="panchayath_id" class="form-label">Postal Area</label>
-                                            <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif name="panchayath_id"
-                                                id="panchayath" class="form-control">
-                                            </select>
+                                        <label for="village_administrative_area" class="form-label">Postal Area</label>
+                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required class="form-control" name="village_administrative_area"
+                                        maxlength="20" placeholder="Postal Area" />
                                     </div>
 
                                     @elseif ($serviceid == 62)
@@ -515,6 +516,10 @@
         $(function() {
             var status = "{{ $services->status }}";
             var acknowledgement = "{{ $services->acknowledgement }}";
+            var dist_id = "{{ $services->dist_id }}";
+            var taluk_id = "{{ $services->taluk_id }}";
+            gettaluk(dist_id);
+            getpanchayath(taluk_id);
 
             if (status == "Resubmit") {
                 $('#remarkshide').show("slow");
@@ -574,6 +579,40 @@
                 $('#application_no').prop("required", false);
             }
         });
+
+        function gettaluk(dist_id) {
+        var url = "{{ url('service/get_taluk') }}/" + dist_id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
+                $.each(result, function (key, value) {
+                    $("#taluk").append('<option value="' + value
+                        .id + '">' + value.taluk_name + '</option>');
+                });
+                $("#taluk").val("{{ $services->taluk_id }}");
+
+            }
+        });
+    }
+
+    function getpanchayath(taluk_id) {
+        var url = "{{ url('service/get_panchayath') }}/" + taluk_id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function(result) {
+                $('#panchayath').html('<option value="">-- Select Panchayath Name --</option>');
+                $.each(result, function(key, value) {
+                    $("#panchayath").append('<option value="' + value
+                        .id + '">' + value.panchayath_name + '</option>');
+                });
+                $("#panchayath").val("{{ $services->panchayath_id }}");
+
+            }
+        });
+    }
     </script>
 @endpush
 

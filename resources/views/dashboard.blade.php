@@ -333,7 +333,7 @@
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <div>
                                         <p class="mb-1">services</p>
-                                        <h3 class="mb-0">0</h3>
+                                        <h3 class="mb-0">{{ $servicecount }}</h3>
                                     </div>
                                     <div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
