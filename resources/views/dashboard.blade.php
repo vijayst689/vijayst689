@@ -385,16 +385,6 @@
                             </ol>
                         </nav>
                     </div>
-                    <div class="ms-auto">
-                        <div class="btn-group">
-                            <div class="col-auto">
-                                <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                                    <a href="{{ url('wallet') }}" class="btn btn-grd btn-grd-info px-3"><i
-                                            class="bi bi-chat me-2"></i>wallet Request</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!--end breadcrumb-->
                 <div class="row">
@@ -538,14 +528,6 @@
                         </nav>
                     </div>
                     <div class="ms-auto">
-                        <div class="btn-group">
-                            <div class="col-auto">
-                                <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                                    <a href="{{ url('wallet') }}" class="btn btn-grd btn-grd-info px-3"><i
-                                            class="bi bi-chat me-2"></i>wallet Request</a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <!--end breadcrumb-->
@@ -649,14 +631,6 @@
                     </nav>
                 </div>
                 <div class="ms-auto">
-                    <div class="btn-group">
-                        <div class="col-auto">
-                            <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                                <a href="{{ url('wallet') }}" class="btn btn-grd btn-grd-info px-3"><i
-                                        class="bi bi-chat me-2"></i>wallet Request</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!--end breadcrumb-->

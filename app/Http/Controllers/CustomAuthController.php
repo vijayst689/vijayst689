@@ -56,14 +56,14 @@ class CustomAuthController extends Controller
 
         $insertid = DB::getPdo()->lastInsertId();
 
-        $aadhaar_file = "";
-        if ($request->aadhaar_file != null) {
-          $aadhaar_file = $insertid.'.'.$request->file('aadhaar_file')->extension();
-          $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'aadhaarimage' . DIRECTORY_SEPARATOR);
-          move_uploaded_file($_FILES['aadhaar_file']['tmp_name'], $filepath . $aadhaar_file);
+        $profile = "";
+        if ($request->profile != null) {
+          $profile = $insertid.'.'.$request->file('profile')->extension();
+          $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'profile_photo' . DIRECTORY_SEPARATOR);
+          move_uploaded_file($_FILES['profile']['tmp_name'], $filepath . $profile);
         }
         $image = DB::table( 'users' )->where( 'id', $insertid )->update( [
-          'aadhaar_file'    => $aadhaar_file,
+          'profile'    => $profile,
         ] );
 
         return redirect("/")->with( 'success', 'You Have Registerd !' );
@@ -87,7 +87,7 @@ class CustomAuthController extends Controller
 
         $aadhaar_file = "";
         if ($request->aadhaar_file != null) {
-          $aadhaar_file = $insertid.'.'.$request->file('aadhaar_file')->extension();
+          $aadhaar_file = $insertid.'.'.$request->file('profile')->extension();
           $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'aadhaarimage' . DIRECTORY_SEPARATOR);
           move_uploaded_file($_FILES['aadhaar_file']['tmp_name'], $filepath . $aadhaar_file);
         }
