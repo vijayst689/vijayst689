@@ -29,6 +29,7 @@
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                         <div class="card-body p-4">
                             <h5 class="card-title">{{ $servicename }}</h5>
+                            <h6 class="card-title">Service Payment : <span class="text-danger">{{ $payment }}</span></h6>
                             <form class="row g-4" action="{{ url('submitapply_canedit') }}" enctype="multipart/form-data"
                                 method="post">
                                 @csrf

@@ -29,6 +29,7 @@
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                         <div class="card-body p-4">
                             <h5 class="card-title">{{ $servicename }}</h5>
+                            <h6 class="card-title">Service Payment : <span class="text-danger">{{ $payment }}</span></h6>
                             <form class="row g-4" action="{{ url('submitvoterid') }}" enctype="multipart/form-data"
                                 method="post">
                                 @csrf
@@ -55,7 +56,7 @@
                                 <option value="Brother">Brother</option>
                                 <option value="Sister">Sister</option>
                             </select>
-                            
+
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="photo" class="form-label text-danger">Photo</label>
@@ -82,7 +83,7 @@
                             <input required accept="image/jpeg, image/png"  type="file" class="form-control text-danger"
                             name="aadhaar_card" />
                         </div>
-                        @endif    
+                        @endif
                                     <div class="text-center">
                                         <p id="nopayment"></p>
                                     </div>
@@ -115,7 +116,7 @@
                         'font-weight': 'bold'
                     });
     }
-    
+
         });
 
     $('#district_id').on('change', function () {

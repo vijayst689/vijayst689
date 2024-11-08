@@ -14,7 +14,7 @@ class ServicestatusController extends Controller
 
     public function appliedservice($status)
     {
-       if(Auth::user()->user_type_id == 2 || Auth::user()->user_type_id == 1){
+       if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2){
 
             $service = DB::table('msme')->select('services.service_name', 'users.name','msme.*')
             ->Join('services', 'services.id', '=', 'msme.service_id')
@@ -99,6 +99,12 @@ class ServicestatusController extends Controller
             ->where('license.status',$status)
             ->orderBy('license.id', 'Desc')->get();
 
+            $nalavariyam = DB::table('nalavariyam')->select('services.service_name', 'users.name','nalavariyam.*')
+            ->Join('services', 'services.id', '=', 'nalavariyam.service_id')
+            ->Join('users', 'users.id', '=', 'nalavariyam.user_id')
+            ->where('nalavariyam.status',$status)
+            ->orderBy('nalavariyam.id', 'Desc')->get();
+
            $service = $service->merge($tnegaservices);
            $service = $service->merge($smartcard);
            $service = $service->merge($itr);
@@ -112,6 +118,7 @@ class ServicestatusController extends Controller
            $service = $service->merge($fssai);
            $service = $service->merge($covid);
            $service = $service->merge($license);
+           $service = $service->merge($nalavariyam);
 
 
         }elseif(Auth::user()->user_type_id == 3){
@@ -177,7 +184,7 @@ class ServicestatusController extends Controller
             ->where('voterid.status',$status)
             ->where('voterid.retailer_id',Auth::user()->id)
             ->orderBy('voterid.id', 'Desc')->get();
-            
+
              $pancard = DB::table('pancard')->select('services.service_name', 'users.name','pancard.*')
             ->Join('services', 'services.id', '=', 'pancard.service_id')
             ->Join('users', 'users.id', '=', 'pancard.user_id')
@@ -213,6 +220,13 @@ class ServicestatusController extends Controller
             ->where('license.retailer_id',Auth::user()->id)
             ->orderBy('license.id', 'Desc')->get();
 
+            $nalavariyam = DB::table('nalavariyam')->select('services.service_name', 'users.name','nalavariyam.*')
+            ->Join('services', 'services.id', '=', 'nalavariyam.service_id')
+            ->Join('users', 'users.id', '=', 'nalavariyam.user_id')
+            ->where('nalavariyam.status',$status)
+            ->where('nalavariyam.retailer_id',Auth::user()->id)
+            ->orderBy('nalavariyam.id', 'Desc')->get();
+
             $service = $service->merge($tnegaservices);
             $service = $service->merge($smartcard);
             $service = $service->merge($itr);
@@ -226,6 +240,7 @@ class ServicestatusController extends Controller
             $service = $service->merge($fssai);
             $service = $service->merge($covid);
             $service = $service->merge($license);
+            $service = $service->merge($nalavariyam);
 
         }elseif(Auth::user()->user_type_id == 4){
 
@@ -290,7 +305,7 @@ class ServicestatusController extends Controller
             ->where('voterid.status',$status)
             ->where('voterid.retailer_id',Auth::user()->id)
             ->orderBy('voterid.id', 'Desc')->get();
-            
+
              $pancard = DB::table('pancard')->select('services.service_name', 'users.name','pancard.*')
             ->Join('services', 'services.id', '=', 'pancard.service_id')
             ->Join('users', 'users.id', '=', 'pancard.user_id')
@@ -326,6 +341,13 @@ class ServicestatusController extends Controller
             ->where('license.retailer_id',Auth::user()->id)
             ->orderBy('license.id', 'Desc')->get();
 
+            $nalavariyam = DB::table('nalavariyam')->select('services.service_name', 'users.name','nalavariyam.*')
+            ->Join('services', 'services.id', '=', 'nalavariyam.service_id')
+            ->Join('users', 'users.id', '=', 'nalavariyam.user_id')
+            ->where('nalavariyam.status',$status)
+            ->where('nalavariyam.retailer_id',Auth::user()->id)
+            ->orderBy('nalavariyam.id', 'Desc')->get();
+
             $service = $service->merge($tnegaservices);
             $service = $service->merge($smartcard);
             $service = $service->merge($itr);
@@ -339,6 +361,7 @@ class ServicestatusController extends Controller
             $service = $service->merge($fssai);
             $service = $service->merge($covid);
             $service = $service->merge($license);
+            $service = $service->merge($nalavariyam);
 
         }elseif(Auth::user()->user_type_id == 5){
 
@@ -403,7 +426,7 @@ class ServicestatusController extends Controller
             ->where('voterid.status',$status)
             ->where('voterid.user_id',Auth::user()->id)
             ->orderBy('voterid.id', 'Desc')->get();
-            
+
             $pancard = DB::table('pancard')->select('services.service_name', 'users.name','pancard.*')
            ->Join('services', 'services.id', '=', 'pancard.service_id')
            ->Join('users', 'users.id', '=', 'pancard.user_id')
@@ -439,6 +462,13 @@ class ServicestatusController extends Controller
            ->where('license.user_id',Auth::user()->id)
            ->orderBy('license.id', 'Desc')->get();
 
+           $nalavariyam = DB::table('nalavariyam')->select('services.service_name', 'users.name','nalavariyam.*')
+           ->Join('services', 'services.id', '=', 'nalavariyam.service_id')
+           ->Join('users', 'users.id', '=', 'nalavariyam.user_id')
+           ->where('nalavariyam.status',$status)
+           ->where('nalavariyam.user_id',Auth::user()->id)
+           ->orderBy('nalavariyam.id', 'Desc')->get();
+
            $service = $service->merge($tnegaservices);
            $service = $service->merge($smartcard);
            $service = $service->merge($itr);
@@ -451,6 +481,7 @@ class ServicestatusController extends Controller
            $service = $service->merge($fssai);
            $service = $service->merge($covid);
            $service = $service->merge($license);
+           $service = $service->merge($nalavariyam);
        }
 
         return view( 'services.appliedservice',compact('service','status') );
@@ -495,6 +526,8 @@ class ServicestatusController extends Controller
             $services = DB::table('covid')->where('id',$id)->where('status',$status)->first();
         }elseif($service_id == 132 || $service_id == 134 ){
             $services = DB::table('license')->where('id',$id)->where('status',$status)->first();
+        }elseif($service_id == 95 || $service_id == 96 || $service_id == 97 || $service_id == 98){
+            $services = DB::table('nalavariyam')->where('id',$id)->where('status',$status)->first();
         }else{
             $services = DB::table('tnega_services')->where('id',$id)->where('status',$status)->first();
         }
@@ -570,6 +603,8 @@ class ServicestatusController extends Controller
             return view('servicestatus.covidstatusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
         }  elseif( $service_id == 132 || $service_id == 134 ){
             return view('servicestatus.licensestatusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
+        }  elseif( $service_id == 95 || $service_id == 96 || $service_id == 97 || $service_id == 98 ){
+            return view('servicestatus.nalavariyamupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
         }
 
  }
@@ -3507,6 +3542,82 @@ public function driving_license_update(Request $request){
             ]);
         }
         DB::table( 'license' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+        ] );
+    }
+
+    return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
+}
+
+public function nalavariyam_update(Request $request){
+    $apply_user_id = 0;
+    if($request->retailer_id == 0){
+        $apply_user_id = $request->distributor_id;
+    }elseif($request->distributor_id == 0){
+        $apply_user_id = $request->retailer_id;
+    }
+    if($request->user_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+        $status = $request->status;
+        if($status == "Resubmit"){
+            DB::table( 'nalavariyam' )->where('id', $request->applied_serviceid)->update( [
+                'remarks' => $request->remarks,
+                'status'  => $status,
+            ] );
+        }elseif($status == "Processing"){
+            if ( $request->acknowledgement != null ) {
+                $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
+                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
+                move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
+                DB::table( 'nalavariyam' )->where( 'id', $request->applied_serviceid )->update( [
+                    'acknowledgement' => $acknowledgement,
+                    'status' => $status,
+                    'application_no' => $request->application_no,
+                ] );
+            }
+        }elseif($status == "Approved"){
+            if ( $request->certificate != null ) {
+                $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
+                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'certificate'. DIRECTORY_SEPARATOR);
+                move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
+                DB::table( 'nalavariyam' )->where( 'id', $request->applied_serviceid )->update( [
+                    'certificate' => $certificate,
+                    'status' => $status,
+                    'completed_date' => date("Y-m-d"),
+                ] );
+            }
+        }
+    }else{
+        $status = "Pending";
+        $serviceid = $request->serviceid;
+        DB::table('nalavariyam')->where('id', $request->applied_serviceid)->update([
+            'service_id'      => $request ->serviceid,
+            'register_no'     => $request->register_no,
+            'mobile'          => $request->mobile,
+            'aadhaar_no'      => $request->aadhaar_no,
+            'dob'             => $request->dob,
+            'status'          => 'Pending',
+            'applied_date'    => date("Y-m-d"),
+            'created_at'      => date("Y-m-d"),
+        ] );
+
+        if ($request->photo != null) {
+            $photo = uniqid().'.'.$request->file('photo')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
+            move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
+            DB::table('nalavariyam')->where( 'id', $request->applied_serviceid )->update( [
+                'photo' => $photo,
+            ]);
+        }
+        if ($request->signature != null) {
+            $signature = uniqid().'.'.$request->file('signature')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'signature' . DIRECTORY_SEPARATOR);
+            move_uploaded_file($_FILES['signature']['tmp_name'], $filepath . $signature);
+
+            DB::table('nalavariyam')->where( 'id', $request->applied_serviceid )->update( [
+                'signature' => $signature,
+            ]);
+        }
+        DB::table( 'nalavariyam' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
         ] );
     }

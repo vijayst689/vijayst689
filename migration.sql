@@ -607,3 +607,28 @@ CREATE TABLE `service_payment` (
 
 alter table users modify wallet decimal(10,2) DEFAULT 0;
 alter table users add smartcard_no varchar(15) DEFAULT NULL after smartcard;
+
+CREATE TABLE `nalavariyam` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `mobile` varchar(10) DEFAULT NULL,
+  `register_no` varchar(20) DEFAULT NULL,
+  `aadhaar_no` varchar(12) DEFAULT NULL,
+  `dob` varchar(10) DEFAULT NULL,
+  `signature` varchar(20) DEFAULT NULL,
+  `photo` varchar(20) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `application_no` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB;

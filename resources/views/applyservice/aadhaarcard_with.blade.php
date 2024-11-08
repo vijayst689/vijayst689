@@ -18,6 +18,7 @@
                     @endif
                     <div class="card-body">
                         <h1 class="card-title">{{ $servicename }}</h1>
+                        <h6 class="card-title">Service Payment : <span class="text-danger">{{ $payment }}</span></h6>
                         <div class="row">
                             <form class="row g-4" action="{{ url('submitaadhaar_without') }}" enctype="multipart/form-data"
                                 method="post">

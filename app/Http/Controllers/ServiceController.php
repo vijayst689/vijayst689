@@ -3273,6 +3273,84 @@ public function submitapply_covid(Request $request){
 
 }
 
+public function submitapply_nalavariyam(Request $request){
+
+    $user_id = 0;
+    $retailer_id = 0;
+    $distributor_id = 0;
+    if(Auth::user()->user_type_id == 3){
+        $user_id = $request ->user_id;
+        $distributor_id = Auth::user()->id;
+    }elseif(Auth::user()->user_type_id == 4){
+        $user_id = $request ->user_id;
+        $retailer_id = Auth::user()->id;
+    } elseif(Auth::user()->user_type_id == 5){
+        $user_id = Auth::user()->id;
+    }
+    $serviceid = $request ->serviceid;
+    DB::table( 'nalavariyam' )->insert( [
+       'user_id'         => $user_id,
+       'retailer_id'     => $retailer_id,
+       'distributor_id'  => $distributor_id,
+       'service_id'      => $request ->serviceid,
+       'amount'          => $request->amount,
+       'register_no'     => $request->register_no,
+       'mobile'          => $request->mobile,
+       'aadhaar_no'      => $request->aadhaar_no,
+       'dob'             => $request->dob,
+       'status'          => 'Pending',
+       'applied_date'    => date("Y-m-d"),
+       'created_at'      => date("Y-m-d"),
+   ] );
+    $insertid = DB::getPdo()->lastInsertId();
+    $photo = "";
+    $signature = "";
+    if ($request->photo != null) {
+        $photo = uniqid().'.'.$request->file('photo')->extension();
+        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
+        move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
+
+    }
+    DB::table('nalavariyam')->where('id', $insertid)->update([
+      'photo' => $photo,
+  ]);
+    if ($request->signature != null) {
+        $signature = uniqid().'.'.$request->file('signature')->extension();
+        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'signature' . DIRECTORY_SEPARATOR);
+        move_uploaded_file($_FILES['signature']['tmp_name'], $filepath . $signature);
+
+    }
+    DB::table('nalavariyam')->where('id', $insertid)->update([
+      'signature' => $signature,
+  ]);
+
+    $servicepayment = $request->service_amount;
+    if(Auth::user()->user_type_id == 3){
+        $user_id = $distributor_id;
+    }elseif(Auth::user()->user_type_id == 4){
+        $user_id = $retailer_id;
+    }elseif(Auth::user()->user_type_id == 5){
+        $user_id = $user_id;
+    }
+    $date = date( 'Y-m-d' );
+    $time = date( 'H:i:s' );
+    $service_status = 'Out Payment';
+    $ad_info = 'Service Payment';
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id')";
+    DB::insert( DB::raw( $sql ) );
+    $sql = "update users set wallet = wallet + $servicepayment where id = 2";
+    DB::update( DB::raw( $sql ) );
+    $service_status = 'IN Payment';
+    $ad_info = 'Service Payment';
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id')";
+    DB::insert( DB::raw( $sql ) );
+    $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+    DB::update( DB::raw( $sql ) );
+
+    return redirect("appliedservice/Pending")->With("success","Application submitted Succesfully");
+
+}
+
 
 public function get_taluk($distid)
 {
