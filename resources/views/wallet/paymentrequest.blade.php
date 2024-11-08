@@ -40,7 +40,7 @@
                                         <th>Amount</th>
                                         <th>Date</th>
                                         <th>Status</th>
-                                        @if( Auth::user()->user_type_id == 2 || Auth::user()->user_type_id == 3)
+                                        @if( Auth::user()->user_type_id == 2 )
                                         <th>Action</th>
                                         @endif
                                     </tr>
@@ -55,7 +55,7 @@
                                             <td>{{ $a->req_date }}&nbsp;{{ $a->req_time }}</td>
                                             <td>{{ $a->status }}</td>
                                             <td style="white-space: nowrap">
-                                                @if( Auth::user()->user_type_id == 2 || Auth::user()->user_type_id == 3 )
+                                                @if( Auth::user()->user_type_id == 2 )
                                                 <a onclick="showrequest('{{ $a->id }}','{{ $a->from_id }}','{{ $a->amount }}','{{ $a->req_image }}','{{ $a->status }}')"
                                                     class="btn btn-info"><i
                                                         class="material-icons-outlined">remove_red_eye</i>
