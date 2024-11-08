@@ -606,3 +606,4 @@ CREATE TABLE `service_payment` (
 ) ENGINE=InnoDB;
 
 alter table users modify wallet decimal(10,2) DEFAULT 0;
+alter table users add smartcard_no varchar(15) DEFAULT NULL after smartcard;

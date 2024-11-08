@@ -84,7 +84,7 @@ class DistributorController extends Controller
       $profile = "";
       if ($request->profile != null) {
         $profile = $request->distributor_id.'.'.$request->file('profile')->extension();
-        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'distributor' . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR);
+        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'distributor' . DIRECTORY_SEPARATOR);
         move_uploaded_file($_FILES['profile']['tmp_name'], $filepath . $profile);
         $sql = "update users set profile='$profile' where id = $request->distributor_id";
         DB::update(DB::raw($sql));

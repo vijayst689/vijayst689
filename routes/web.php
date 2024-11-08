@@ -78,6 +78,8 @@ Route::get('addretailer', [App\Http\Controllers\retailerController::class, 'Addr
 
 Route::get('retailer', [App\Http\Controllers\retailerController::class, 'Retailer']);
 
+Route::post('updateretailer', [App\Http\Controllers\retailerController::class, 'updateretailer']);
+
 Route::get('dropretailer/{id}', [App\Http\Controllers\retailerController::class, 'dropretailer']);
 
 

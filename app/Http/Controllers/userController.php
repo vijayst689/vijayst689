@@ -99,6 +99,7 @@ class userController extends Controller
         'dist_id'       => $request->dist_id,
         'can_details'   => $request->can_details,
         'can_number'    => $request->can_number,
+        'smartcard_no'  => $request->smartcard_no,
         'user_type_id'  => '5',
         'status'        => 'Active'
       ]);
@@ -195,6 +196,7 @@ class userController extends Controller
             'dist_id'       => $request->dist_id,
             'can_details'   => $request->can_details,
             'can_number'    => $request->can_number,
+            'smartcard_no'  => $request->smartcard_no,
           ]);
 
           $customer_id = $request->customer_id;

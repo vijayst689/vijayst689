@@ -145,9 +145,9 @@
                                             <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
                                             </li>
-                                            {{-- <li><a href="{{ url('/appliedservice') }}/Approved"><i
+                                            <li><a href="{{ url('/appliedservice') }}/Approved"><i
                                                         class="material-icons-outlined">arrow_right</i>Approved</a>
-                                            </li> --}}
+                                            </li>
                                         </ul>
                                     </li>
                                     <li>
@@ -254,6 +254,27 @@
                                             </div>
                                             <div class="menu-title">Dashboard</div>
                                         </a>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Service Status</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/appliedservice') }}/Pending"><i
+                                                        class="material-icons-outlined">arrow_right</i>Pending</a>
+                                            </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Processing"><i
+                                                        class="material-icons-outlined">arrow_right</i>Processing</a>
+                                            </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
+                                                        class="material-icons-outlined">arrow_right</i>Resubmit</a>
+                                            </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Approved"><i
+                                                        class="material-icons-outlined">arrow_right</i>Approved</a>
+                                            </li>
+                                        </ul>
                                     </li>
                                     <li>
                                         <a class="has-arrow" href="javascript:;">

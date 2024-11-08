@@ -67,11 +67,16 @@
                                             <td>{{ $cus->name }}</td>
                                             <td>{{ $cus->phone }}</td>
                                             <td>{{ $cus->email }}</td>
-                                            <td><img src="/upload/profile_photo/{{ $cus->profile }}"
+                                            <td><img src="/upload/retailer/{{ $cus->profile }}"
                                                 class="rounded-circle" width="40" height="40"
                                                 alt=""></td>
                                             <td>{{ $cus->cpassword }}</td>
                                             <td>
+                                                <button
+                                                onclick="edit_retailer('{{ $cus->id }}','{{ $cus->name }}','{{ $cus->phone }}','{{ $cus->aadhaar_no }}','{{ $cus->gender }}','{{ $cus->email }}','{{ $cus->date_of_birth }}','{{ $cus->address }}','{{ $cus->status }}')"
+                                                ype="button" style="font-size: small"
+                                                class="btn btn-grd btn-grd-primary px-1">Edit</button>
+
                                                 <a onclick="return confirm('Do you want to confirm delete retailer?')"
                                                 href="{{ url('/dropretailer', $cus->id) }}" type="button"
                                                 style="font-size: small"
@@ -86,5 +91,110 @@
                 </div>
             </div>
         </div>
+        <div class="col-12">
+            <div class="card rounded-4">
+                <div class="card-body">
+                    <div class="">
+                        <div class="modal fade" id="editretailer">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header border-bottom-0 py-2 bg-grd-info">
+                                        <h5 class="modal-title">Update Retailers</h5>
+                                        <a href="javascript:;" class="primaery-menu-close"
+                                            data-bs-dismiss="modal">
+                                            <i class="material-icons-outlined">close</i>
+                                        </a>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-body">
+                                            <form class="row g-3" action="{{ url('/updateretailer') }}"
+                                                method="post" enctype="multipart/form-data">
+                                                {{ csrf_field() }}
+                                                <div class="col-md-6">
+                                                    <input type="hidden" name="retailer_id"
+                                                        id="retailerid" />
+                                                    <label for="editname" class="form-label">Name</label>
+                                                    <input name="name" maxlength="30" type="text"
+                                                        class="form-control" id="editname"
+                                                        placeholder="Name">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="editphone" class="form-label">Phone</label>
+                                                    <input type="text" class="form-control number"
+                                                        id="editphone" name="phone" maxlength="10"
+                                                        placeholder="Phone">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="editadhar" class="form-label">Aadhaar
+                                                        No</label>
+                                                    <input type="text" name="aadhaar_no"
+                                                        class="form-control" maxlength="12" id="editadhar"
+                                                        placeholder="Aadhaar No">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="editgender" class="form-label">Gender</label>
+                                                    <select id="editgender" name="gender"
+                                                        class="form-select">
+                                                        <option>Select</option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="editemail" class="form-label">Email</label>
+                                                    <input type="email" name="email" class="form-control"
+                                                        id="editemail" maxlength="60" placeholder="Email">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="editstatus" class="form-label">Status</label>
+                                                    <select type="text" name="status" class="form-select"
+                                                        id="editstatus">
+                                                        <option>Select</option>
+                                                        <option value="Active">Active</option>
+                                                        <option value="Inactive">Inactive</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="input8" class="form-label">Profile</label>
+                                                    <input type="file" name="profile" class="form-control"
+                                                        id="input8">
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="editaddress"
+                                                        class="form-label">Address</label>
+                                                    <textarea class="form-control" name="address" id="editaddress" placeholder="Address ..." rows="3"></textarea>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="d-md-flex d-grid align-items-center gap-3">
+                                                        <button type="submit"
+                                                            class="btn btn-grd-danger px-4">Submit</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 @endsection
+@push('page_scripts')
+    <script>
+        function edit_retailer(id, name, phone, aadhaar_no, gender, email, date_of_birth, address, status) {
+            $("#editname").val(name);
+            $("#editphone").val(phone);
+            $("#editadhar").val(aadhaar_no);
+            $("#editgender").val(gender);
+            $("#editemail").val(email);
+            $("#editdob").val(date_of_birth);
+            $("#editaddress").val(address);
+            $("#editstatus").val(status);
+            $("#retailerid").val(id);
+            $("#editretailer").modal("show");
+        }
+    </script>
+@endpush

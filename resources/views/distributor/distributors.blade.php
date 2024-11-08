@@ -2,7 +2,7 @@
 @section('content')
     <main class="main-wrapper">
         <div class="main-content">
-        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
                 <div class="breadcrumb-title pe-3">Distributors</div>
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
@@ -13,14 +13,15 @@
                     </nav>
                 </div>
                 <div class="ms-auto">
-                <div class="col-auto">
-                    <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                    <a href="{{ url('distributors') }}" class="btn btn-grd btn-grd-info px-3"><i class="bi bi-chat me-2"></i>Add Distributors</a>
+                    <div class="col-auto">
+                        <div class="d-flex align-items-center gap-2 justify-content-lg-end">
+                            <a href="{{ url('distributors') }}" class="btn btn-grd btn-grd-info px-3"><i
+                                    class="bi bi-chat me-2"></i>Add Distributors</a>
+                        </div>
                     </div>
                 </div>
-                </div>
             </div>
-           <!--end row-->
+            <!--end row-->
 
             <div class="card mt-4">
                 <div class="card-body">
@@ -44,6 +45,7 @@
                                         <th>Sl No</th>
                                         <th>Name</th>
                                         <th>Phone</th>
+                                        <th>Image</th>
                                         <th>Email</th>
                                         <th>Password</th>
                                         <th>Action</th>
@@ -54,16 +56,17 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>
-                                                <a class="d-flex align-items-center gap-3" href="{{ url('profile') }}">
+                                                <p class="mb-0 customer-name fw-bold">{{ $dis->name }}</p>
+                                                </a>
+                                            </td>
+                                            <td>{{ $dis->phone }}</td>
+                                            <td><a class="d-flex align-items-center gap-3" href="{{ url('profile') }}">
                                                     <div class="customer-pic">
                                                         <img src="/upload/distributor/{{ $dis->profile }}"
                                                             class="rounded-circle" width="30" height="30"
                                                             alt="">
                                                     </div>
-                                                    <p class="mb-0 customer-name fw-bold">{{ $dis->name }}</p>
-                                                </a>
                                             </td>
-                                            <td>{{ $dis->phone }}</td>
                                             <td>{{ $dis->email }}</td>
                                             <td>{{ $dis->cpassword }}</td>
                                             <td style="white-space: nowrap">
@@ -74,14 +77,7 @@
 
                                                 <a onclick="return confirm('Do you want to confirm delete distributor?')"
                                                     href="{{ url('/dropdistributor', $dis->id) }}" type="button"
-                                                    style="font-size: small"
-                                                    class="btn btn-inverse-danger px-1">Drop</a>
-
-                                                <a href="{{ url('/service', $dis->id) }}" style="font-size: small"
-                                                    class="btn btn-grd btn-grd-branding px-1">Service</a>
-
-                                                <a href="{{ url('/documents', $dis->id) }}" style="font-size: small"
-                                                    class="btn btn-grd btn-grd-info px-1">Document</a>
+                                                    style="font-size: small" class="btn btn-inverse-danger px-1">Drop</a>
                                             </td>
                                         </tr>
                                 </tbody>
@@ -97,7 +93,7 @@
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header border-bottom-0 py-2 bg-grd-info">
-                                                    <h5 class="modal-title">Edit Customer</h5>
+                                                    <h5 class="modal-title">Update Distributor</h5>
                                                     <a href="javascript:;" class="primaery-menu-close"
                                                         data-bs-dismiss="modal">
                                                         <i class="material-icons-outlined">close</i>
@@ -113,8 +109,7 @@
                                                                     id="distributorid" />
                                                                 <label for="editname" class="form-label">Name</label>
                                                                 <input name="name" maxlength="30" type="text"
-                                                                    class="form-control" id="editname"
-                                                                    placeholder="Name">
+                                                                    class="form-control" id="editname" placeholder="Name">
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label for="editphone" class="form-label">Phone</label>
@@ -125,8 +120,8 @@
                                                             <div class="col-md-6">
                                                                 <label for="editadhar" class="form-label">Aadhaar
                                                                     No</label>
-                                                                <input type="text" name="aadhaar_no"
-                                                                    class="form-control" maxlength="12" id="editadhar"
+                                                                <input type="text" name="aadhaar_no" class="form-control"
+                                                                    maxlength="12" id="editadhar"
                                                                     placeholder="Aadhaar No">
                                                             </div>
                                                             <div class="col-md-6">
@@ -144,11 +139,6 @@
                                                                     id="editemail" placeholder="Email">
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label for="editdob" class="form-label">DOB</label>
-                                                                <input type="date" name="date_of_birth"
-                                                                    class="form-control" id="editdob">
-                                                            </div>
-                                                            <div class="col-md-6">
                                                                 <label for="editstatus" class="form-label">Status</label>
                                                                 <select type="text" name="status" class="form-select"
                                                                     id="editstatus">
@@ -157,7 +147,7 @@
                                                                     <option value="Inactive">Inactive</option>
                                                                 </select>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-12">
                                                                 <label for="input8" class="form-label">Profile</label>
                                                                 <input type="file" name="profile" class="form-control"
                                                                     id="input8">
@@ -165,7 +155,7 @@
                                                             <div class="col-md-12">
                                                                 <label for="editaddress"
                                                                     class="form-label">Address</label>
-                                                                <textarea class="form-control" id="editaddress" placeholder="Address ..." rows="3"></textarea>
+                                                                <textarea name="address" class="form-control" id="editaddress" placeholder="Address ..." rows="3"></textarea>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <div class="d-md-flex d-grid align-items-center gap-3">

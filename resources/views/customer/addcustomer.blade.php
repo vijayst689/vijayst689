@@ -105,6 +105,13 @@
                                             class="form-control" name="smartcard" />
                                     </div>
                                 </div>
+                                 <div class="mb-3 row">
+                                    <label for="example-text-input-lg" class="col-sm-3 form-label">Smart Card No</label>
+                                    <div class="col-sm-9">
+                                        <input required  type="text"
+                                            class="form-control" name="smartcard_no" maxlength="15" placeholder="SmartCard No"/>
+                                    </div>
+                                </div>
 
                             </div>
 
@@ -172,18 +179,6 @@
                                 </div>
 
                             </div>
-                             <div class="col-lg-12">
-                                <div class="mb-3 row">
-                                    <label for="example-text-input-lg" class="col-sm-3 form-label">Do You Have Can Number</label>
-                                    <div class="col-sm-6">
-                                        <select required name="can_details" id="can_details" class="form-control">
-                                            <option value="">Select Can Details</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-                             </div>
                              <h3 class="text-center">Family Details</h3>
                                 <table id="pricetable" class="table table-bordered">
                                     <thead>

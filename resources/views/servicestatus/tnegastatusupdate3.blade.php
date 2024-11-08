@@ -117,7 +117,7 @@
                                                     Uploaded</a><br>
                                             @else
                                                 <br><a target="_blank"
-                                                    href="/upload/services/aadhaar_card/{{ $customers->aadhaar_file }}"
+                                                    href="/upload/users/aadhaar_file/{{ $customers->aadhaar_file }}"
                                                     class="btn btn-primary me-2">View</a><br>
                                             @endif
 
@@ -127,7 +127,7 @@
                                                     Uploaded</a><br>
                                             @else
                                                 <br><a target="_blank"
-                                                    href="/upload/services/smart_card/{{ $customers->smartcard }}"
+                                                    href="/upload/users/smart_card/{{ $customers->smartcard }}"
                                                     class="btn btn-primary me-2">View</a><br>
                                             @endif
                                             <label for="signature" class="form-label">Signature</label>
@@ -136,7 +136,7 @@
                                                     Uploaded</a><br>
                                             @else
                                                 <br><a target="_blank"
-                                                    href="/upload/services/signature/{{ $customers->signature }}"
+                                                    href="/upload/users/signature/{{ $customers->signature }}"
                                                     class="btn btn-primary me-2">View</a><br>
                                             @endif
                                             <label for="photo" class="form-label">Photo</label>
@@ -145,7 +145,7 @@
                                                     Uploaded</a><br>
                                             @else
                                                 <br><a target="_blank"
-                                                    href="/upload/services/photo/{{ $customers->profile }}"
+                                                    href="/upload/users/profile_photo/{{ $customers->profile }}"
                                                     class="btn btn-primary me-2">View</a><br>
                                             @endif
 

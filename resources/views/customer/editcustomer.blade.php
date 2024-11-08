@@ -96,8 +96,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label for="example-text-input-lg"
-                                                class="col-sm-2 form-label">Signature</label>
+                                            <label for="example-text-input-lg" class="col-sm-2 form-label">Signature</label>
                                             <div class="col-sm-10">
                                                 <input required accept="image/jpeg, image/png" type="file"
                                                     class="form-control" name="signature" />
@@ -171,6 +170,14 @@
                                             <div class="col-sm-10">
                                                 <input required accept="image/jpeg, image/png" type="file"
                                                     class="form-control" name="smartcard" />
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="example-text-input-lg" class="col-sm-2 form-label">Smart
+                                                Card No</label>
+                                            <div class="col-sm-10">
+                                                <input required  type="text" maxlength="15"
+                                                    class="form-control" name="smartcard_no" placeholder="SmartCard No" />
                                             </div>
                                         </div>
 

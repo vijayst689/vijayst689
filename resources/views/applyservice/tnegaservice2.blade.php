@@ -97,26 +97,26 @@
                         @if($customers->aadhaar_file == "")
                         <br><a  href="#" class="btn btn-primary me-2">No File Uploaded</a><br>
                         @else
-                        <br><a target="_blank" href="/upload/services/aadhaar_card/{{ $customers->aadhaar_file }}" class="btn btn-primary me-2">View</a><br>
+                        <br><a target="_blank" href="/upload/users/aadhaar_file/{{ $customers->aadhaar_file }}" class="btn btn-primary me-2">View</a><br>
                         @endif
 
                         <label for="smart_card" class="form-label">Smart Card</label>
                          @if($customers->smartcard == "")
                          <br><a  href="#" class="btn btn-primary me-2">No File Uploaded</a><br>
                          @else
-                        <br><a target="_blank" href="/upload/services/smart_card/{{ $customers->smartcard }}" class="btn btn-primary me-2">View</a><br>
+                        <br><a target="_blank" href="/upload/users/smart_card/{{ $customers->smartcard }}" class="btn btn-primary me-2">View</a><br>
                         @endif
                         <label for="signature" class="form-label">Signature</label>
                          @if($customers->signature == "")
                          <br><a  href="#" class="btn btn-primary me-2">No File Uploaded</a><br>
                          @else
-                        <br><a target="_blank" href="/upload/services/signature/{{ $customers->signature }}" class="btn btn-primary me-2">View</a><br>
+                        <br><a target="_blank" href="/upload/users/signature/{{ $customers->signature }}" class="btn btn-primary me-2">View</a><br>
                         @endif
                         <label for="photo" class="form-label">Photo</label>
                          @if($customers->profile == "")
                          <br><a  href="#" class="btn btn-primary me-2">No File Uploaded</a><br>
                          @else
-                        <br><a target="_blank" href="/upload/services/photo/{{ $customers->profile }}" class="btn btn-primary me-2">View</a><br>
+                        <br><a target="_blank" href="/upload/users/profile_photo/{{ $customers->profile }}" class="btn btn-primary me-2">View</a><br>
                         @endif
 
                       </div>
