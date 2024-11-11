@@ -700,5 +700,50 @@
             </div>
         </div>
     @endif
+
+    @if (Auth::user()->user_type_id == 3 || Auth::user()->user_type_id == 4)
+        <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Your Profile</h5>
+                    </div>
+                    @foreach ($activation as $act)
+                        <input type="hidden" id="statuscheck" value="{{ $act->status }}">
+                        <div class="modal-body">
+                            <center>
+                                <p><b> Please Wait For The admin's approval... </b></p>
+                                <div class="form-group row">
+                                    <label for="phone" class="col-form-label">Please Contact Your Admin<span
+                                            style="color: red;"> Username : {{ $act->email }} </span> and <br><span
+                                            style="color: red;">
+                                            Password : {{ $act->cpassword }} </span></label>
+                                </div>
+                    @endforeach
+                    </center>
+                    <div class="modal-footer justify-content-between">
+                        <a></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    @endif
     </main>
 @endsection
+@push('page_scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var status = $("#statuscheck").val();
+            if (status == "Inactive") {
+                $('#myModal').modal("show")({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            } else if (status == "Active") {
+                $('#paidstatuscheck').modal("hide")({});
+            }
+        });
+    </script>
+@endpush

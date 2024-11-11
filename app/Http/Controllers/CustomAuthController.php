@@ -50,6 +50,7 @@ class CustomAuthController extends Controller
             'email'         => $request->email,
             'password'      => Hash::make($request->password),
             'cpassword'     => $request->password,
+            'status'        => 'Active',
             'user_type_id'  => '5',
             'refferal_id'   => '2',
         ] );
@@ -79,6 +80,7 @@ class CustomAuthController extends Controller
             'pan_no'        => $request->pan_no,
             'password'      => Hash::make($request->password),
             'cpassword'     => $request->password,
+            'status'        => 'Inactive',
             'user_type_id'  => '3',
             'refferal_id'   => '2',
         ] );
@@ -117,6 +119,7 @@ class CustomAuthController extends Controller
             'pan_no'        => $request->pan_no,
             'password'      => Hash::make($request->password),
             'cpassword'     => $request->password,
+            'status'        => 'Inactive',
             'user_type_id'  => '4',
             'refferal_id'   => '2',
         ] );
@@ -160,6 +163,8 @@ class CustomAuthController extends Controller
         $logid = Auth::user()->id;
         if(Auth::check()){
 
+            $activation = DB::table( 'users' )->where('id',$logid)->get();
+
             $sql = "select count(*) as servicecount from users";
             $users = DB::select(DB::raw($sql));
             if (count($users) > 0) {
@@ -200,7 +205,7 @@ class CustomAuthController extends Controller
             if (count($users) > 0) {
                 $retailer_count = $users[0]->retailer_count;
             }
-            return view('dashboard',compact('servicecount','customercount','retailer','distributor','retailer_count','distributor_count','customer'));
+            return view('dashboard',compact('servicecount','customercount','retailer','distributor','retailer_count','distributor_count','customer','activation'));
         }
 
         return redirect("login")->withSuccess('You are not allowed to access');
