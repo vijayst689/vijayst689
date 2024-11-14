@@ -36,51 +36,77 @@ Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout')
 
 Route::get('home', [App\Http\Controllers\Frontend\HomeController::class, 'Index']);
 
-Route::get('addcustomer', [App\Http\Controllers\userController::class, 'addcustomer']);
+Route::get('addcustomer', [App\Http\Controllers\UserController::class, 'addcustomer']);
 
-Route::get('customers', [App\Http\Controllers\userController::class, 'customers']);
+Route::get('customers', [App\Http\Controllers\UserController::class, 'customers']);
 
-Route::post('updatecustomer', [App\Http\Controllers\userController::class, 'updatecustomer']);
+Route::post('updatecustomer', [App\Http\Controllers\UserController::class, 'updatecustomer']);
 
-Route::post('savecustomer', [App\Http\Controllers\userController::class, 'savecustomer']);
+Route::post('savecustomer', [App\Http\Controllers\UserController::class, 'savecustomer']);
 
-Route::post('updatecustomer', [App\Http\Controllers\userController::class, 'updatecustomer']);
+Route::post('updatecustomer', [App\Http\Controllers\UserController::class, 'updatecustomer']);
 
-Route::get('dropcustomer/{id}', [App\Http\Controllers\userController::class, 'dropcustomer']);
+Route::get('dropcustomer/{id}', [App\Http\Controllers\UserController::class, 'dropcustomer']);
 
-Route::get('documents/{id}', [App\Http\Controllers\userController::class, 'documents']);
+Route::get('documents/{id}', [App\Http\Controllers\UserController::class, 'documents']);
 
-Route::post('adddocument', [App\Http\Controllers\userController::class, 'adddocument']);
+Route::post('adddocument', [App\Http\Controllers\UserController::class, 'adddocument']);
 
-Route::get('profile', [App\Http\Controllers\userController::class, 'Profile']);
+Route::get('profile', [App\Http\Controllers\UserController::class, 'Profile']);
 
-Route::post('updateprofile', [App\Http\Controllers\userController::class, 'updateprofile']);
+Route::post('updateprofile', [App\Http\Controllers\UserController::class, 'updateprofile']);
 
-Route::post('/checkemail', [App\Http\Controllers\userController::class, 'checkemail']);
+Route::post('/checkemail', [App\Http\Controllers\UserController::class, 'checkemail']);
 
-Route::post('/checkaadhar', [App\Http\Controllers\userController::class, 'checkaadhar']);
+Route::post('/checkaadhar', [App\Http\Controllers\UserController::class, 'checkaadhar']);
 
-Route::post('/checkphone', [App\Http\Controllers\userController::class, 'checkphone']);
+Route::post('/checkphone', [App\Http\Controllers\UserController::class, 'checkphone']);
 
-Route::post('/checkpan', [App\Http\Controllers\userController::class, 'checkpan']);
+Route::post('/checkpan', [App\Http\Controllers\UserController::class, 'checkpan']);
+
+Route::post('/checkemailregister', [App\Http\Controllers\UserController::class, 'checkemailregister']);
+
+Route::post('/checkaadharregister', [App\Http\Controllers\UserController::class, 'checkaadharregister']);
+
+Route::post('/checkphoneregister', [App\Http\Controllers\UserController::class, 'checkphoneregister']);
+
+Route::post('/checkpanregister', [App\Http\Controllers\UserController::class, 'checkpanregister']);
+
+Route::post('/checkemailregisterretailer', [App\Http\Controllers\UserController::class, 'checkemailregisterretailer']);
+
+Route::post('/checkaadharregisterretailer', [App\Http\Controllers\UserController::class, 'checkaadharregisterretailer']);
+
+Route::post('/checkphoneregisterretailer', [App\Http\Controllers\UserController::class, 'checkphoneregisterretailer']);
+
+Route::post('/checkpanregisterretailer', [App\Http\Controllers\UserController::class, 'checkpanregisterretailer']);
+
+Route::post('/checkemailregistercustomer', [App\Http\Controllers\UserController::class, 'checkemailregistercustomer']);
+
+Route::post('/checkaadharregistercustomer', [App\Http\Controllers\UserController::class, 'checkaadharregistercustomer']);
+
+Route::post('/checkphoneregistercustomer', [App\Http\Controllers\UserController::class, 'checkphoneregistercustomer']);
 
 Route::get('/editcustomer/{id}', [App\Http\Controllers\UserController::class, 'editcustomer'])->name('editcustomer');
 
 
 
-Route::get('addretailer', [App\Http\Controllers\retailerController::class, 'Addretailer']);
+Route::get('addretailer', [App\Http\Controllers\RetailerController::class, 'Addretailer']);
 
-Route::post('saveretailer', [App\Http\Controllers\retailerController::class, 'saveretailer']);
+Route::post('saveretailer', [App\Http\Controllers\RetailerController::class, 'saveretailer']);
 
-Route::get('retailers', [App\Http\Controllers\retailerController::class, 'Retailer']);
+Route::get('retailers', [App\Http\Controllers\RetailerController::class, 'Retailer']);
 
-Route::get('addretailer', [App\Http\Controllers\retailerController::class, 'Addretailer']);
+Route::get('addretailer', [App\Http\Controllers\RetailerController::class, 'Addretailer']);
 
-Route::get('retailer', [App\Http\Controllers\retailerController::class, 'Retailer']);
+Route::get('retailer', [App\Http\Controllers\RetailerController::class, 'Retailer']);
 
-Route::post('updateretailer', [App\Http\Controllers\retailerController::class, 'updateretailer']);
+Route::post('updateretailer', [App\Http\Controllers\RetailerController::class, 'updateretailer']);
 
-Route::get('dropretailer/{id}', [App\Http\Controllers\retailerController::class, 'dropretailer']);
+Route::post('retailerstatusupdate', [App\Http\Controllers\RetailerController::class, 'retailerstatusupdate']);
+
+Route::post('updatestatus', [App\Http\Controllers\RetailerController::class, 'updatestatus']);
+
+Route::get('dropretailer/{id}', [App\Http\Controllers\RetailerController::class, 'dropretailer']);
 
 
 
@@ -93,6 +119,8 @@ Route::post('savedistributor', [App\Http\Controllers\DistributorController::clas
 Route::post('updatedistributor', [App\Http\Controllers\DistributorController::class, 'updatedistributor']);
 
 Route::get('dropdistributor/{id}', [App\Http\Controllers\DistributorController::class, 'dropdistributor']);
+
+Route::post('statusupdate', [App\Http\Controllers\DistributorController::class, 'statusupdate']);
 
 
 Route::get('retailer', [App\Http\Controllers\walletController::class, 'Retailer']);

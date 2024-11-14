@@ -56,7 +56,7 @@
                                  <div class="mb-3 row">
                                     <label for="example-email-input" class="col-sm-3 form-label">Email</label>
                                     <div class="col-sm-9">
-                                        <input onkeyup="duplicateemail(0)" class="form-control" type="email"
+                                        <input required onkeyup="duplicateemail(0)" class="form-control" type="email"
                                             maxlength="50" name="email" id="email" placeholder="Email">
                                         <span id="dupemail" style="color:red"></span>
                                     </div>
@@ -116,7 +116,6 @@
                             </div>
 
                             <div class="col-lg-6">
-
                                  <div class="mb-3 row">
                                     <label for="example-url-input" class="col-sm-3 form-label">DOB</label>
                                     <div class="col-sm-9">

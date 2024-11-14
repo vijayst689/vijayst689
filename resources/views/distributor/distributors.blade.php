@@ -45,6 +45,7 @@
                                         <th>Sl No</th>
                                         <th>Name</th>
                                         <th>Phone</th>
+                                        <th>Status</th>
                                         <th>Image</th>
                                         <th>Email</th>
                                         <th>Password</th>
@@ -60,6 +61,7 @@
                                                 </a>
                                             </td>
                                             <td>{{ $dis->phone }}</td>
+                                            <td>{{ $dis->status }}</td>
                                             <td><a class="d-flex align-items-center gap-3" href="{{ url('profile') }}">
                                                     <div class="customer-pic">
                                                         <img src="/upload/distributor/{{ $dis->profile }}"
@@ -71,9 +73,15 @@
                                             <td>{{ $dis->cpassword }}</td>
                                             <td style="white-space: nowrap">
                                                 <button
-                                                    onclick="edit_customer('{{ $dis->id }}','{{ $dis->name }}','{{ $dis->phone }}','{{ $dis->aadhaar_no }}','{{ $dis->gender }}','{{ $dis->email }}','{{ $dis->date_of_birth }}','{{ $dis->address }}','{{ $dis->status }}')"
+                                                    onclick="edit_customer('{{ $dis->id }}','{{ $dis->name }}','{{ $dis->phone }}','{{ $dis->aadhaar_no }}','{{ $dis->gender }}','{{ $dis->email }}','{{ $dis->date_of_birth }}','{{ $dis->address }}')"
                                                     ype="button" style="font-size: small"
                                                     class="btn btn-grd btn-grd-primary px-1">Edit</button>
+
+                                                @if (Auth::user()->user_type_id == 2)
+                                                    <button
+                                                        onclick="edit_status('{{ $dis->id }}','{{ $dis->status }}')"
+                                                        type="button" class="btn-sm btn btn-success">Update Status</button>
+                                                @endif
 
                                                 <a onclick="return confirm('Do you want to confirm delete distributor?')"
                                                     href="{{ url('/dropdistributor', $dis->id) }}" type="button"
@@ -120,8 +128,8 @@
                                                             <div class="col-md-6">
                                                                 <label for="editadhar" class="form-label">Aadhaar
                                                                     No</label>
-                                                                <input type="text" name="aadhaar_no" class="form-control"
-                                                                    maxlength="12" id="editadhar"
+                                                                <input type="text" name="aadhaar_no"
+                                                                    class="form-control" maxlength="12" id="editadhar"
                                                                     placeholder="Aadhaar No">
                                                             </div>
                                                             <div class="col-md-6">
@@ -176,6 +184,55 @@
                 </div>
             </div>
         </div>
+        <div class="col-12">
+            <div class="card rounded-4">
+                <div class="card-body">
+                    <div class="">
+                        <div class="modal fade" id="statusup">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header border-bottom-0 py-2 bg-grd-info">
+                                        <h5 class="modal-title">Update Status</h5>
+                                        <a href="javascript:;" class="primaery-menu-close" data-bs-dismiss="modal">
+                                            <i class="material-icons-outlined">close</i>
+                                        </a>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-body">
+                                            <form class="row g-3" action="{{ url('/statusupdate') }}" method="post"
+                                                enctype="multipart/form-data">
+                                                {{ csrf_field() }}
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="hidden" name="statusid" id="status_id" />
+                                                        <div class="mb-3">
+                                                            <label for="editstatusnew" class="form-label">Status</label>
+                                                            <select name="status" type="text" maxlength="8"
+                                                                class="form-control" id="editstatusnew">
+                                                                <option value="">Select</option>
+                                                                <option value="Active">Active</option>
+                                                                <option value="Inactive">Inactive</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
     </main>
 @endsection
 @push('page_scripts')
@@ -191,6 +248,12 @@
             $("#editstatus").val(status);
             $("#distributorid").val(id);
             $("#editcustomer").modal("show");
+        }
+
+        function edit_status(id, status) {
+            $("#editstatusnew").val(status);
+            $("#status_id").val(id);
+            $("#statusup").modal("show");
         }
     </script>
 @endpush

@@ -42,6 +42,32 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="addmoney" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0 py-2 bg-grd-info">
+                <h5 class="modal-title">Add Payment</h5>
+                <a href="javascript:;" class="primaery-menu-close" data-bs-dismiss="modal">
+                    <i class="material-icons-outlined">close</i>
+                </a>
+            </div>
+            <div class="modal-body">
+                <form method="post" class="row g-3" action="{{ url('/adminaddwallet') }}" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <div class="col-md-12">
+                        <label class="form-label">Add Money</label>
+                        <input type="text" maxlength="5" placeholder="Amount" name="wallet" class="form-control">
+                    </div>
+                    <div class="col-md-12">
+                        <div class="d-md-flex d-grid align-items-center gap-3">
+                            <button type="submit" class="btn btn-grd-danger px-4">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <header class="top-header">
     <nav class="navbar navbar-expand align-items-center gap-4">
         <div class="btn-toggle">
@@ -76,11 +102,17 @@
                 </div>
             </div>
         </div>
-        <span class="form-label text-success">Wallet Amount : {{ Auth::user()->wallet }}</span>
         @if (Auth::user()->user_type_id == 3 || Auth::user()->user_type_id == 4 || Auth::user()->user_type_id == 5)
+        <span class="form-label text-success">Wallet Amount : {{ Auth::user()->wallet }}</span>
             <div class="d-flex align-items-center gap-2 justify-content-lg-end">
                 <button type="button" class="btn btn-grd-primary px-4" data-bs-toggle="modal"
                     data-bs-target="#FormModal">Add Money</button>
+            </div>
+            @elseif (Auth::user()->user_type_id == 2 )
+            <div class="d-flex align-items-center gap-2 justify-content-lg-end">
+                <span class="text-white"><b>Wallet Amount : {{ Auth::user()->wallet }}</b></span>&nbsp;
+                <button type="button" class="btn-sm btn btn-success" data-bs-toggle="modal"
+                    data-bs-target="#addmoney">Add Payment</button>
             </div>
         @endif
         <ul class="navbar-nav gap-1 nav-right-links align-items-center">

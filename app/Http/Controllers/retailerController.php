@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
 
-class retailerController extends Controller
+class RetailerController extends Controller
 {
 
     public function addretailer()
@@ -111,5 +111,40 @@ class retailerController extends Controller
      return redirect()->back()->with('success', 'Retailer Deleted Successfully ... !');
     }
 
+    public function retailerstatusupdate(Request $request)
+    {
+      $retailerstatusupdate = DB::table('users')->where( 'id', $request->statusid )->update([
+        'status'          => $request->status,
+      ]);
+
+      return redirect('/retailers')->with('success', 'retailer Status Updated Successfully ... !');
+    }
+
+    public function updatestatus(Request $request) {
+
+        $amount = $request->amount;
+        $status = $request->status;
+        $from_id = Auth::user()->id;
+        $request_id = $request->request_id;
+        $login_id = Auth::user()->id;
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $sql = "update users set status = '$status' where id = $request_id";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'Out Payment';
+        $ad_info = 'Fund Transfer';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$login_id','$login_id','$from_id','$amount','$ad_info', '$service_status','$time','$date','$from_id')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $amount where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $ad_info = 'Fund Transfer';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$login_id','$from_id','$login_id','$amount','$ad_info', '$service_status','$time','$date','$from_id')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $amount where id = $login_id";
+        DB::update( DB::raw( $sql ) );
+
+     return redirect( "/retailers" )->with( 'success', 'Status Update Successfully' );
+    }
 
 }

@@ -99,5 +99,14 @@ class DistributorController extends Controller
      return redirect()->back()->with('success', 'distributor Deleted Successfully ... !');
     }
 
+    public function statusupdate(Request $request)
+    {
+
+      $statusupdate = DB::table('users')->where( 'id', $request->statusid )->update([
+        'status'        => $request->status,
+      ]);
+
+      return redirect('/distributors')->with('success', 'Status Updated Successfully ... !');
+    }
 
 }

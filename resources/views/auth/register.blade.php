@@ -107,7 +107,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="input2" class="form-label">Phone</label>
-                                                <input onkeyup="duplicatephone(0)" id="phone" type="text"
+                                                <input required onkeyup="duplicatephone(0)" id="phone" type="text"
                                                     maxlength="10" class="form-control number" name="phone"
                                                     placeholder="Phone">
                                                 <span id="dupphone" style="color:red"></span>
@@ -115,19 +115,19 @@
 
                                             <div class="col-md-6">
                                                 <label for="input1" class="form-label">Aadhaar No</label>
-                                                <input onkeyup="duplicateaadhar(0)" id="aadhaar_no" type="text"
+                                                <input required onkeyup="duplicateaadhar(0)" id="aadhaar_no" type="text"
                                                     class="form-control number" maxlength="12" name="aadhaar_no"
                                                     placeholder="Aadhaar No">
                                                 <span id="dupaadhar" style="color:red"></span>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="input2" class="form-label">Aadhaar Image</label>
-                                                <input type="file" class="form-control" name="aadhaar_file">
+                                                <input required type="file" class="form-control" name="aadhaar_file">
                                             </div>
 
                                             <div class="col-md-6">
                                                 <label for="input1" class="form-label">Pan No</label>
-                                                <input onkeyup="duplicatepan(0)" id="pan_no" type="text"
+                                                <input required onkeyup="duplicatepan(0)" id="pan_no" type="text"
                                                     class="form-control" maxlength="10" name="pan_no"
                                                     placeholder="Pan No">
                                                 <span id="duppan" style="color:red"></span>
@@ -139,14 +139,14 @@
 
                                             <div class="col-md-6">
                                                 <label for="input1" class="form-label">Email</label>
-                                                <input onkeyup="duplicateemail(0)" id="email" type="email"
+                                                <input required onkeyup="duplicateemail(0)" id="email" type="email"
                                                     class="form-control" maxlength="30" name="email"
                                                     placeholder="Email">
                                                 <span id="dupemail" style="color:red"></span>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="input2" class="form-label">Password</label>
-                                                <input type="password" maxlength="10" class="form-control"
+                                                <input required type="password" maxlength="10" class="form-control"
                                                     name="password" placeholder="Password">
                                             </div>
                                         </div>
@@ -191,46 +191,46 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="input2" class="form-label">Phone</label>
-                                                <input onkeyup="duplicatephone(0)" id="phone" type="text"
+                                                <input required onkeyup="duplicatephone1(0)" id="phone" type="text"
                                                     maxlength="10" class="form-control number" name="phone"
                                                     placeholder="Phone">
-                                                <span id="dupphone" style="color:red"></span>
+                                                <span id="dupphone1" style="color:red"></span>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <label for="input1" class="form-label">Aadhaar No</label>
-                                                <input onkeyup="duplicateaadhar(0)" id="aadhaar_no" type="text"
+                                                <input required onkeyup="duplicateaadhar1(0)" id="aadhaar_no" type="text"
                                                     class="form-control number" maxlength="12" name="aadhaar_no"
                                                     placeholder="Aadhaar No">
-                                                <span id="dupaadhar" style="color:red"></span>
+                                                <span id="dupaadhar1" style="color:red"></span>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="input2" class="form-label">Aadhaar Image</label>
-                                                <input type="file" class="form-control" name="aadhaar_file">
+                                                <input required type="file" class="form-control" name="aadhaar_file">
                                             </div>
 
                                             <div class="col-md-6">
                                                 <label for="input1" class="form-label">Pan No</label>
-                                                <input onkeyup="duplicatepan(0)" id="pan_no" type="text"
+                                                <input required onkeyup="duplicatepan1(0)" id="pan_no" type="text"
                                                     class="form-control" maxlength="10" name="pan_no"
                                                     placeholder="Pan No">
-                                                <span id="duppan" style="color:red"></span>
+                                                <span id="duppan1" style="color:red"></span>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="input2" class="form-label">Pan Image</label>
-                                                <input type="file" class="form-control" name="pan_file">
+                                                <input required type="file" class="form-control" name="pan_file">
                                             </div>
 
                                             <div class="col-md-6">
                                                 <label for="input1" class="form-label">Email</label>
-                                                <input onkeyup="duplicateemail(0)" id="email" type="email"
+                                                <input required onkeyup="duplicateemail1(0)" id="email" type="email"
                                                     class="form-control" maxlength="30" name="email"
                                                     placeholder="Email">
-                                                <span id="dupemail" style="color:red"></span>
+                                                <span id="dupemail1" style="color:red"></span>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="input2" class="form-label">Password</label>
-                                                <input type="password" maxlength="10" class="form-control"
+                                                <input required type="password" maxlength="10" class="form-control"
                                                     name="password" placeholder="Password">
                                             </div>
                                         </div>
@@ -270,39 +270,39 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="input1" class="form-label">Name</label>
-                                                <input type="text" class="form-control" maxlength="20"
+                                                <input required type="text" class="form-control" maxlength="20"
                                                     name="name" placeholder="Name">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="input2" class="form-label">Phone</label>
-                                                <input onkeyup="duplicatephone(0)" id="phone" type="text"
+                                                <input required onkeyup="duplicatephone2(0)" id="phone" type="text"
                                                     maxlength="10" class="form-control number" name="phone"
                                                     placeholder="Phone">
-                                                <span id="dupphone" style="color:red"></span>
+                                                <span id="dupphone2" style="color:red"></span>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <label for="aadhaar_no" class="form-label">Aadhaar No</label>
-                                                <input onkeyup="duplicateaadhar(0)" id="aadhaar_no" type="text"
+                                                <input required onkeyup="duplicateaadhar2(0)" id="aadhaar_no" type="text"
                                                     class="form-control number" maxlength="12" name="aadhaar_no"
                                                     placeholder="Aadhaar No">
-                                                <span id="dupaadhar" style="color:red"></span>
+                                                <span id="dupaadhar2" style="color:red"></span>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="input2" class="form-label">Aadhaar Image</label>
-                                                <input type="file" class="form-control" name="aadhaar_file">
+                                                <input required type="file" class="form-control" name="aadhaar_file">
                                             </div>
 
                                             <div class="col-md-6">
                                                 <label for="input1" class="form-label">Email</label>
-                                                <input onkeyup="duplicateemail(0)" id="email" type="email"
+                                                <input required onkeyup="duplicateemail2(0)" id="email" type="email"
                                                     class="form-control" maxlength="30" name="email"
                                                     placeholder="Email">
-                                                <span id="dupemail" style="color:red"></span>
+                                                <span id="dupemail2" style="color:red"></span>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="input2" class="form-label">Password</label>
-                                                <input type="password" maxlength="10" class="form-control"
+                                                <input required type="password" maxlength="10" class="form-control"
                                                     name="password" placeholder="Password">
                                             </div>
                                         </div>
@@ -321,88 +321,6 @@
             </div>
         </div>
     </div>
-
-
-  {{-- <div class="section-authentication-cover">
-    <div class="">
-      <div class="row g-0">
-
-        <div class="col-12 col-xl-7 col-xxl-8 auth-cover-left align-items-center justify-content-center d-none d-xl-flex border-end bg-transparent">
-
-          <div class="card rounded-0 mb-0 border-0 shadow-none bg-transparent bg-none">
-            <div class="card-body">
-              <img src="assets/images/auth/register1.png" class="img-fluid auth-img-cover-login" width="500"
-                alt="">
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col-12 col-xl-5 col-xxl-4 auth-cover-right align-items-center justify-content-center">
-          <div class="card rounded-0 m-3 border-0 shadow-none bg-none">
-            <div class="card-body p-sm-5">
-              <img src="{{ asset('assets/images/sidelogo.png') }}" class="mb-4" width="345" alt="">
-              <h4 class="fw-bold">Get Started Now</h4>
-              <p class="mb-0">Enter your credentials to create your account</p>
-
-              <div class="separator section-padding">
-                <div class="line"></div>
-                <p class="mb-0 fw-bold">OR</p>
-                <div class="line"></div>
-              </div>
-
-              <div class="form-body mt-4">
-              <form action="{{ url('/saveregister') }}" method="post" class="row g-3">
-                                @csrf
-                                <div class="col-12">
-                                    <label for="name" class="form-label">Name</label>
-                                    <input type="text" maxlength="30" name="name" class="form-control"
-                                        id="inputUsername" placeholder="Name" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="phone" class="form-label">Phone</label>
-                                    <input onkeyup="duplicatephone(0)" id="phone" type="text" name="phone"
-                                        class="form-control number" id="inputUsername" maxlength="10"
-                                        placeholder="Phone" required>
-                                    <span id="dupphone" style="color:red"></span>
-                                </div>
-                                <div class="col-12">
-                                    <label for="inputEmailAddress" class="form-label">Email</label>
-                                    <input onkeyup="duplicateemail(0)" id="email" type="email" maxlength="40"
-                                        name="email" class="form-control" id="inputEmailAddress" placeholder="Email" required>
-                                    <span id="dupemail" style="color:red"></span>
-                                </div>
-                                <div class="col-12">
-                                    <label for="inputChoosePassword" class="form-label">Password</label>
-                                    <div class="input-group" id="show_hide_password">
-                                        <input maxlength="10" type="password" class="form-control border-end-0"
-                                            id="inputChoosePassword" name="password" placeholder="Enter Password" required>
-                                        <a href="javascript:;" class="input-group-text bg-transparent"><i
-                                                class="bi bi-eye-slash-fill"></i></a>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="d-grid">
-                                        <button id="save" type="submit"
-                                            class="btn btn-grd-danger">Register</button>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="text-start">
-                                        <p class="mb-0">Already have an account? <a href="{{ url('/') }}">Signin here</a></p>
-                                    </div>
-                                </div>
-                            </form>
-              </div>
-
-          </div>
-          </div>
-        </div>
-
-      </div>
-      <!--end row-->
-    </div>
-  </div> --}}
 
   <!--authentication-->
 
@@ -430,40 +348,132 @@
             });
         });
 
+        //Distributor Script
+
         function duplicateemail(id) {
-            var email = $("#email").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('checkemail') }}',
-                data: {
-                    id: id,
-                    email: email,
-                    _token: _token
-                },
+                var email = $("#email").val().trim();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    type: "post",
+                    url: '{{ url('checkemailregister') }}',
+                    data: {
+                        id: id,
+                        email: email,
+                        _token: _token
+                    },
 
-                success: function(res) {
-                    if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#dupemail").html("email alredy exists!");
-                    } else {
-                        $("#save").prop('disabled', false);
-                        $("#dupemail").html("");
+                    success: function(res) {
+                        if (res.exists) {
+                            $("#save").prop('disabled', true);
+                            $("#dupemail").html("email alredy exists!");
+                        } else {
+                            $("#save").prop('disabled', false);
+                            $("#dupemail").html("");
+                        }
+                    },
+
+                    error: function(jqXHR, exception) {
+                        console.log(exception);
                     }
-                },
+                });
+            }
 
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
-            });
-        }
+            function duplicateaadhar(id) {
+                var aadhaar_no = $("#aadhaar_no").val().trim();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    type: "post",
+                    url: '{{ url('checkaadharregister') }}',
+                    data: {
+                        id: id,
+                        aadhaar_no: aadhaar_no,
+                        _token: _token
+                    },
 
-        function duplicateaadhar(id) {
+                    success: function(res) {
+                        if (res.exists) {
+                            $("#save").prop('disabled', true);
+                            $("#dupaadhar").html("aadhar no alredy exists!");
+                        } else {
+                            $("#save").prop('disabled', false);
+                            $("#dupaadhar").html("");
+                        }
+                    },
+                    error: function(jqXHR, exception) {
+                        console.log(exception);
+                    }
+                });
+            }
+
+            function duplicatephone(id) {
+                var phone = $("#phone").val().trim();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    type: "post",
+                    url: '{{ url('checkphoneregister') }}',
+                    data: {
+                        id: id,
+                        phone: phone,
+                        _token: _token
+                    },
+
+                    success: function(res) {
+                        if (res.exists) {
+                            $("#save").prop('disabled', true);
+                            $("#dupphone").html("mobile no alredy exists!");
+                        } else {
+                            $("#save").prop('disabled', false);
+                            $("#dupphone").html("");
+                        }
+                    },
+
+                    error: function(jqXHR, exception) {
+                        console.log(exception);
+                    }
+                });
+            }
+
+            function duplicatepan(id) {
+                var pan_no = $("#pan_no").val().trim();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    type: "post",
+                    url: '{{ url('checkpanregister') }}',
+                    data: {
+                        id: id,
+                        pan_no: pan_no,
+                        _token: _token
+                    },
+
+                    success: function(res) {
+                        if (res.exists) {
+                            $("#save").prop('disabled', true);
+                            $("#duppan").html("pan no alredy exists!");
+                        } else {
+                            $("#duppan").html("");
+                        }
+                        if ($("#dupphone").html() == "" && $("#duppan").html() == "" && $("#duppan").html() ==
+                            "") {
+                            $("#save").prop('disabled', false);
+                        } else {
+                            $("#save").prop('disabled', true);
+                        }
+                    },
+                    error: function(jqXHR, exception) {
+                        console.log(exception);
+                    }
+
+                });
+            }
+
+//Retailer Script
+
+function duplicateaadhar1(id) {
             var aadhaar_no = $("#aadhaar_no").val().trim();
             var _token = $('input[name="_token"]').val();
             $.ajax({
                 type: "post",
-                url: '{{ url('checkaadhar') }}',
+                url: '{{ url('checkaadharregisterretailer') }}',
                 data: {
                     id: id,
                     aadhaar_no: aadhaar_no,
@@ -473,10 +483,15 @@
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupaadhar").html("aadhar no alredy exists!");
+                        $("#dupaadhar1").html("aadhar no alredy exists!");
                     } else {
+                        $("#dupaadhar1").html("");
+                    }
+                    if ($("#dupaadhar1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1").html() ==
+                        "") {
                         $("#save").prop('disabled', false);
-                        $("#dupaadhar").html("");
+                    } else {
+                        $("#save").prop('disabled', true);
                     }
                 },
                 error: function(jqXHR, exception) {
@@ -485,12 +500,12 @@
             });
         }
 
-        function duplicatephone(id) {
+        function duplicatephone1(id) {
             var phone = $("#phone").val().trim();
             var _token = $('input[name="_token"]').val();
             $.ajax({
                 type: "post",
-                url: '{{ url('checkphone') }}',
+                url: '{{ url('checkphoneregisterretailer') }}',
                 data: {
                     id: id,
                     phone: phone,
@@ -500,10 +515,15 @@
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupphone").html("mobile no alredy exists!");
+                        $("#dupphone1").html("mobile no alredy exists!");
                     } else {
+                        $("#dupphone1").html("");
+                    }
+                    if ($("#dupphone1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1").html() ==
+                        "") {
                         $("#save").prop('disabled', false);
-                        $("#dupphone").html("");
+                    } else {
+                        $("#save").prop('disabled', true);
                     }
                 },
 
@@ -513,12 +533,45 @@
             });
         }
 
-        function duplicatepan(id) {
+        function duplicateemail1(id) {
+            var email = $("#email").val().trim();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                type: "post",
+                url: '{{ url('checkemailregisterretailer') }}',
+                data: {
+                    id: id,
+                    email: email,
+                    _token: _token
+                },
+
+                success: function(res) {
+                    if (res.exists) {
+                        $("#save").prop('disabled', true);
+                        $("#dupemail1").html("email no alredy exists!");
+                    } else {
+                        $("#dupemail1").html("");
+                    }
+                    if ($("#dupemail1").html() == "" && $("#dupemail1").html() == "" && $("#dupemail1").html() ==
+                        "") {
+                        $("#save").prop('disabled', false);
+                    } else {
+                        $("#save").prop('disabled', true);
+                    }
+                },
+
+                error: function(jqXHR, exception) {
+                    console.log(exception);
+                }
+            });
+        }
+
+        function duplicatepan1(id) {
             var pan_no = $("#pan_no").val().trim();
             var _token = $('input[name="_token"]').val();
             $.ajax({
                 type: "post",
-                url: '{{ url('checkpan') }}',
+                url: '{{ url('checkpanregisterretailer') }}',
                 data: {
                     id: id,
                     pan_no: pan_no,
@@ -528,17 +581,117 @@
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#duppan").html("pan no alredy exists!");
+                        $("#duppan1").html("pan no alredy exists!");
                     } else {
-                        $("#duppan").html("");
+                        $("#duppan1").html("");
                     }
-                    if ($("#dupphone").html() == "" && $("#duppan").html() == "" && $("#duppan").html() ==
+                    if ($("#dupphone1").html() == "" && $("#duppan1").html() == "" && $("#duppan1").html() ==
                         "") {
                         $("#save").prop('disabled', false);
                     } else {
                         $("#save").prop('disabled', true);
                     }
                 },
+                error: function(jqXHR, exception) {
+                    console.log(exception);
+                }
+            });
+        }
+
+//Customer Script
+
+function duplicateaadhar2(id) {
+            var aadhaar_no = $("#aadhaar_no").val().trim();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                type: "post",
+                url: '{{ url('checkaadharregistercustomer') }}',
+                data: {
+                    id: id,
+                    aadhaar_no: aadhaar_no,
+                    _token: _token
+                },
+
+                success: function(res) {
+                    if (res.exists) {
+                        $("#save").prop('disabled', true);
+                        $("#dupaadhar2").html("aadhar no alredy exists!");
+                    } else {
+                        $("#dupaadhar2").html("");
+                    }
+                    if ($("#dupaadhar2").html() == "" && $("#dupaadhar2").html() == "" && $("#dupemail2").html() ==
+                        "") {
+                        $("#save").prop('disabled', false);
+                    } else {
+                        $("#save").prop('disabled', true);
+                    }
+                },
+                error: function(jqXHR, exception) {
+                    console.log(exception);
+                }
+            });
+        }
+
+        function duplicatephone2(id) {
+            var phone = $("#phone").val().trim();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                type: "post",
+                url: '{{ url('checkphoneregistercustomer') }}',
+                data: {
+                    id: id,
+                    phone: phone,
+                    _token: _token
+                },
+
+                success: function(res) {
+                    if (res.exists) {
+                        $("#save").prop('disabled', true);
+                        $("#dupphone2").html("mobile no alredy exists!");
+                    } else {
+                        $("#dupphone2").html("");
+                    }
+                    if ($("#dupphone2").html() == "" && $("#dupphone2").html() == "" && $("#dupemail2").html() ==
+                        "") {
+                        $("#save").prop('disabled', false);
+                    } else {
+                        $("#save").prop('disabled', true);
+                    }
+                },
+
+                error: function(jqXHR, exception) {
+                    console.log(exception);
+                }
+            });
+        }
+
+        function duplicateemail2(id) {
+            var email = $("#email").val().trim();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                type: "post",
+                url: '{{ url('checkemailregistercustomer') }}',
+                data: {
+                    id: id,
+                    email: email,
+                    _token: _token
+                },
+
+                success: function(res) {
+                    if (res.exists) {
+                        $("#save").prop('disabled', true);
+                        $("#dupemail2").html("email no alredy exists!");
+                    } else {
+                        $("#dupemail2").html("");
+                    }
+                    if ($("#dupemail2").html() == "" && $("#dupemail2").html() == "" && $("#dupemail2").html() ==
+                        "") {
+                        $("#save").prop('disabled', false);
+                    } else {
+                        $("#save").prop('disabled', true);
+                    }
+                },
+
                 error: function(jqXHR, exception) {
                     console.log(exception);
                 }
