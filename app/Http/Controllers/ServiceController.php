@@ -244,6 +244,8 @@ public function services($serviceid,$customerid) {
        return view( 'applyservice.fssaiservice_apply',compact('serviceid','districts','servicename','amount','customers','payment'));
    } elseif ( $serviceid == 125 ){
     return view( 'applyservice.covidservice',compact('serviceid','districts','servicename','amount','customers','payment'));
+   } elseif ( $serviceid == 144 ){
+    return view( 'applyservice.passportservice',compact('serviceid','districts','servicename','amount','customers','payment'));
 }
    }
 
@@ -3350,6 +3352,245 @@ public function submitapply_nalavariyam(Request $request){
     return redirect("appliedservice/Pending")->With("success","Application submitted Succesfully");
 
 }
+public function submitapply_passport(Request $request){
+
+    $user_id = 0;
+    $retailer_id = 0;
+    $distributor_id = 0;
+    if(Auth::user()->user_type_id == 3){
+        $user_id = $request ->user_id;
+        $distributor_id = Auth::user()->id;
+    }elseif(Auth::user()->user_type_id == 4){
+        $user_id = $request ->user_id;
+        $retailer_id = Auth::user()->id;
+    } elseif(Auth::user()->user_type_id == 5){
+        $user_id = Auth::user()->id;
+    }
+    $serviceid = $request ->serviceid;
+    DB::table( 'passport' )->insert( [
+       'user_id'                  => $user_id,
+       'retailer_id'              => $retailer_id,
+       'distributor_id'           => $distributor_id,
+       'service_id'               => $request ->serviceid,
+       'amount'                   => $request->amount,
+       'application_type'         => $request->application_type,
+       'type'                     => $request->type,
+       'no_of_pages'              => $request->no_of_pages,
+       'name'                     => $request->name,
+       'surname'                  => $request->surname,
+       'father_name'              => $request->father_name,
+       'mother_name'              => $request->mother_name,
+       'mobile'                   => $request->mobile,
+       'dob'                      => $request->dob,
+       'validity'                 => $request->validity,
+       'gender'                   => $request->gender,
+       'place_of_birth'           => $request->place_of_birth,
+       'district_of_birth'        => $request->district_of_birth,
+       'state_of_birth'           => $request->state_of_birth,
+       'qualification'            => $request->qualification,
+       'address'                  => $request->address,
+       'email_id'                 => $request->email_id,
+       'aadhaar_no'               => $request->aadhaar_no,
+       'age_id_proof'             => $request->age_id_proof,
+       'employee_type'            => $request->employee_type,
+       'area_police_station_name' => $request->area_police_station_name,
+       'address_proof'            => $request->address_proof,
+       'status'                   => 'Pending',
+       'applied_date'             => date("Y-m-d"),
+       'created_at'               => date("Y-m-d"),
+   ] );
+    $insertid = DB::getPdo()->lastInsertId();
+    $aadhaar_card = "";
+    $marksheet = "";
+    $birth_certificate = "";
+    $pan_card = "";
+    $voter_id = "";
+    $driving_licence = "";
+    $lic_policy_bond = "";
+    $service_record_extract = "";
+    $bank_statement = "";
+    $old_passport_copy = "";
+    $electric = "";
+    $gas_connection_proof = "";
+    $rent_agreement = "";
+    $certificate_from_employer = "";
+    $parent_passport = "";
+    $income_tax_assesssment = "";
+   
+    if ($request->aadhaar_card != null) {
+        $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
+        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
+        move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
+
+    }
+    DB::table('passport')->where('id', $insertid)->update([
+      'aadhaar_card' => $aadhaar_card,
+  ]);
+    if ($request->marksheet != null) {
+        $marksheet = uniqid().'.'.$request->file('marksheet')->extension();
+        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'marksheet' . DIRECTORY_SEPARATOR);
+        move_uploaded_file($_FILES['marksheet']['tmp_name'], $filepath . $marksheet);
+
+    }
+    DB::table('passport')->where('id', $insertid)->update([
+      'marksheet' => $marksheet,
+  ]);
+  if ($request->birth_certificate != null) {
+    $birth_certificate = uniqid().'.'.$request->file('birth_certificate')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'birth_certificate' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['birth_certificate']['tmp_name'], $filepath . $birth_certificate);
+
+}
+DB::table('passport')->where('id', $insertid)->update([
+  'birth_certificate' => $birth_certificate,
+]);
+if ($request->pan_card != null) {
+    $pan_card = uniqid().'.'.$request->file('pan_card')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'pan_card' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['pan_card']['tmp_name'], $filepath . $pan_card);
+
+}
+DB::table('passport')->where('id', $insertid)->update([
+  'pan_card' => $pan_card,
+]);
+if ($request->voter_id != null) {
+    $voter_id = uniqid().'.'.$request->file('voter_id')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'voter_id' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['voter_id']['tmp_name'], $filepath . $voter_id);
+
+}
+DB::table('passport')->where('id', $insertid)->update([
+  'voter_id' => $voter_id,
+]);
+if ($request->driving_licence != null) {
+    $driving_licence = uniqid().'.'.$request->file('driving_licence')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'driving_licence' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['driving_licence']['tmp_name'], $filepath . $driving_licence);
+
+}
+DB::table('passport')->where('id', $insertid)->update([
+  'driving_licence' => $driving_licence,
+]);
+
+if ($request->lic_policy_bond != null) {
+    $lic_policy_bond = uniqid().'.'.$request->file('lic_policy_bond')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'lic_policy_bond' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['lic_policy_bond']['tmp_name'], $filepath . $lic_policy_bond);
+
+}
+DB::table('passport')->where('id', $insertid)->update([
+  'lic_policy_bond' => $lic_policy_bond,
+]);
+
+if ($request->service_record_extract != null) {
+    $service_record_extract = uniqid().'.'.$request->file('service_record_extract')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'service_record_extract' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['service_record_extract']['tmp_name'], $filepath . $service_record_extract);
+
+}
+DB::table('passport')->where('id', $insertid)->update([
+  'service_record_extract' => $service_record_extract,
+]);
+if ($request->bank_statement != null) {
+    $bank_statement = uniqid().'.'.$request->file('bank_statement')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'bank_statement' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['bank_statement']['tmp_name'], $filepath . $bank_statement);
+
+}
+DB::table('passport')->where('id', $insertid)->update([
+  'bank_statement' => $bank_statement,
+]);
+if ($request->old_passport_copy != null) {
+    $old_passport_copy = uniqid().'.'.$request->file('old_passport_copy')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'old_passport_copy' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['old_passport_copy']['tmp_name'], $filepath . $old_passport_copy);
+
+}
+DB::table('passport')->where('id', $insertid)->update([
+  'old_passport_copy' => $old_passport_copy,
+]);
+if ($request->electric != null) {
+    $electric = uniqid().'.'.$request->file('electric')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'electric' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['electric']['tmp_name'], $filepath . $electric);
+
+}
+DB::table('passport')->where('id', $insertid)->update([
+  'electric' => $electric,
+]);
+if ($request->gas_connection_proof != null) {
+    $gas_connection_proof = uniqid().'.'.$request->file('gas_connection_proof')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'gas_connection_proof' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['gas_connection_proof']['tmp_name'], $filepath . $gas_connection_proof);
+
+}
+DB::table('passport')->where('id', $insertid)->update([
+  'gas_connection_proof' => $gas_connection_proof,
+]);
+if ($request->rent_agreement != null) {
+    $rent_agreement = uniqid().'.'.$request->file('rent_agreement')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'rent_agreement' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['rent_agreement']['tmp_name'], $filepath . $rent_agreement);
+
+}
+DB::table('passport')->where('id', $insertid)->update([
+  'rent_agreement' => $rent_agreement,
+]);
+if ($request->certificate_from_employer != null) {
+    $certificate_from_employer = uniqid().'.'.$request->file('certificate_from_employer')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'certificate_from_employer' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['certificate_from_employer']['tmp_name'], $filepath . $certificate_from_employer);
+
+}
+DB::table('passport')->where('id', $insertid)->update([
+  'certificate_from_employer' => $certificate_from_employer,
+]);
+if ($request->parent_passport != null) {
+    $parent_passport = uniqid().'.'.$request->file('parent_passport')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'parent_passport' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['parent_passport']['tmp_name'], $filepath . $parent_passport);
+
+}
+DB::table('passport')->where('id', $insertid)->update([
+  'parent_passport' => $parent_passport,
+]);
+if ($request->income_tax_assesssment != null) {
+    $income_tax_assesssment = uniqid().'.'.$request->file('income_tax_assesssment')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'income_tax_assesssment' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['income_tax_assesssment']['tmp_name'], $filepath . $income_tax_assesssment);
+
+}
+DB::table('passport')->where('id', $insertid)->update([
+  'income_tax_assesssment' => $income_tax_assesssment,
+]);
+
+    $servicepayment = $request->service_amount;
+    if(Auth::user()->user_type_id == 3){
+        $user_id = $distributor_id;
+    }elseif(Auth::user()->user_type_id == 4){
+        $user_id = $retailer_id;
+    }elseif(Auth::user()->user_type_id == 5){
+        $user_id = $user_id;
+    }
+    $date = date( 'Y-m-d' );
+    $time = date( 'H:i:s' );
+    $service_status = 'Out Payment';
+    $ad_info = 'Service Payment';
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id')";
+    DB::insert( DB::raw( $sql ) );
+    $sql = "update users set wallet = wallet + $servicepayment where id = 2";
+    DB::update( DB::raw( $sql ) );
+    $service_status = 'IN Payment';
+    $ad_info = 'Service Payment';
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id')";
+    DB::insert( DB::raw( $sql ) );
+    $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+    DB::update( DB::raw( $sql ) );
+
+    return redirect("appliedservice/Pending")->With("success","Application submitted Succesfully");
+
+}
+
 
 
 public function get_taluk($distid)

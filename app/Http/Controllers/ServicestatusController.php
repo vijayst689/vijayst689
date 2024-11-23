@@ -105,6 +105,12 @@ class ServicestatusController extends Controller
             ->where('nalavariyam.status',$status)
             ->orderBy('nalavariyam.id', 'Desc')->get();
 
+            $passport = DB::table('passport')->select('services.service_name', 'users.name','passport.*')
+            ->Join('services', 'services.id', '=', 'passport.service_id')
+            ->Join('users', 'users.id', '=', 'passport.user_id')
+            ->where('passport.status',$status)
+            ->orderBy('passport.id', 'Desc')->get();
+
            $service = $service->merge($tnegaservices);
            $service = $service->merge($smartcard);
            $service = $service->merge($itr);
@@ -119,6 +125,7 @@ class ServicestatusController extends Controller
            $service = $service->merge($covid);
            $service = $service->merge($license);
            $service = $service->merge($nalavariyam);
+           $service = $service->merge($passport);
 
 
         }elseif(Auth::user()->user_type_id == 3){
@@ -227,6 +234,13 @@ class ServicestatusController extends Controller
             ->where('nalavariyam.retailer_id',Auth::user()->id)
             ->orderBy('nalavariyam.id', 'Desc')->get();
 
+            $passport = DB::table('passport')->select('services.service_name', 'users.name','passport.*')
+            ->Join('services', 'services.id', '=', 'passport.service_id')
+            ->Join('users', 'users.id', '=', 'passport.user_id')
+            ->where('passport.status',$status)
+            ->where('passport.retailer_id',Auth::user()->id)
+            ->orderBy('passport.id', 'Desc')->get();
+
             $service = $service->merge($tnegaservices);
             $service = $service->merge($smartcard);
             $service = $service->merge($itr);
@@ -241,6 +255,7 @@ class ServicestatusController extends Controller
             $service = $service->merge($covid);
             $service = $service->merge($license);
             $service = $service->merge($nalavariyam);
+            $service = $service->merge($passport);
 
         }elseif(Auth::user()->user_type_id == 4){
 
@@ -348,6 +363,13 @@ class ServicestatusController extends Controller
             ->where('nalavariyam.retailer_id',Auth::user()->id)
             ->orderBy('nalavariyam.id', 'Desc')->get();
 
+            $passport = DB::table('passport')->select('services.service_name', 'users.name','passport.*')
+            ->Join('services', 'services.id', '=', 'passport.service_id')
+            ->Join('users', 'users.id', '=', 'passport.user_id')
+            ->where('passport.status',$status)
+            ->where('passport.retailer_id',Auth::user()->id)
+            ->orderBy('passport.id', 'Desc')->get();
+
             $service = $service->merge($tnegaservices);
             $service = $service->merge($smartcard);
             $service = $service->merge($itr);
@@ -362,6 +384,7 @@ class ServicestatusController extends Controller
             $service = $service->merge($covid);
             $service = $service->merge($license);
             $service = $service->merge($nalavariyam);
+            $service = $service->merge($passport);
 
         }elseif(Auth::user()->user_type_id == 5){
 
@@ -469,6 +492,13 @@ class ServicestatusController extends Controller
            ->where('nalavariyam.user_id',Auth::user()->id)
            ->orderBy('nalavariyam.id', 'Desc')->get();
 
+           $passport = DB::table('passport')->select('services.service_name', 'users.name','passport.*')
+           ->Join('services', 'services.id', '=', 'passport.service_id')
+           ->Join('users', 'users.id', '=', 'passport.user_id')
+           ->where('passport.status',$status)
+           ->where('passport.user_id',Auth::user()->id)
+           ->orderBy('passport.id', 'Desc')->get();
+
            $service = $service->merge($tnegaservices);
            $service = $service->merge($smartcard);
            $service = $service->merge($itr);
@@ -482,6 +512,7 @@ class ServicestatusController extends Controller
            $service = $service->merge($covid);
            $service = $service->merge($license);
            $service = $service->merge($nalavariyam);
+           $service = $service->merge($pkrm);
        }
 
         return view( 'services.appliedservice',compact('service','status') );
@@ -528,6 +559,8 @@ class ServicestatusController extends Controller
             $services = DB::table('license')->where('id',$id)->where('status',$status)->first();
         }elseif($service_id == 95 || $service_id == 96 || $service_id == 97 || $service_id == 98){
             $services = DB::table('nalavariyam')->where('id',$id)->where('status',$status)->first();
+        }elseif($service_id == 144 ){
+            $services = DB::table('passport')->where('id',$id)->where('status',$status)->first();
         }else{
             $services = DB::table('tnega_services')->where('id',$id)->where('status',$status)->first();
         }
@@ -605,6 +638,8 @@ class ServicestatusController extends Controller
             return view('servicestatus.licensestatusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
         }  elseif( $service_id == 95 || $service_id == 96 || $service_id == 97 || $service_id == 98 ){
             return view('servicestatus.nalavariyamupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
+        }  elseif( $service_id == 144 ){
+            return view('servicestatus.passportupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
         }
 
  }
