@@ -48,12 +48,12 @@
                                 <div class="mb-3 row">
                                     <label for="example-text-input" class="col-sm-3 form-label">Applicant Name</label>
                                     <div class="col-sm-9">
-                                        <input required class="form-control" name="name" maxlength="100" type="text"
-                                            id="example-text-input" placeholder="Applicant Name">
+                                        <input required class="form-control" name="name" maxlength="100"
+                                            type="text" id="example-text-input" placeholder="Applicant Name">
                                     </div>
                                 </div>
 
-                                 <div class="mb-3 row">
+                                <div class="mb-3 row">
                                     <label for="example-email-input" class="col-sm-3 form-label">Email</label>
                                     <div class="col-sm-9">
                                         <input required onkeyup="duplicateemail(0)" class="form-control" type="email"
@@ -65,7 +65,7 @@
                                 <div class="mb-3 row">
                                     <label class="col-sm-3 form-label">Gender</label>
                                     <div class="col-sm-9">
-                                        <select class="form-select" name="gender" required>
+                                        <select required class="form-select" name="gender" required>
                                             <option>Select</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
@@ -73,7 +73,7 @@
                                     </div>
                                 </div>
 
-                                 <div class="mb-3 row">
+                                <div class="mb-3 row">
                                     <label for="example-text-input-lg" class="col-sm-3 form-label">Taluk</label>
                                     <div class="col-sm-9">
                                         <select required name="taluk_id" id="taluk" class="form-control">
@@ -84,8 +84,9 @@
                                 <div class="mb-3 row">
                                     <label for="aadhaar_no" class="col-sm-3 form-label">Aadhaar No</label>
                                     <div class="col-sm-9">
-                                        <input required onkeyup="duplicateaadhar(0)" class="form-control number" maxlength="12"
-                                            type="text" name="aadhaar_no" id="aadhaar_no" placeholder="Aadhaar No">
+                                        <input required onkeyup="duplicateaadhar(0)" class="form-control number"
+                                            maxlength="12" type="text" name="aadhaar_no" id="aadhaar_no"
+                                            placeholder="Aadhaar No">
                                         <span id="dupaadhar" style="color:red"></span>
                                     </div>
                                 </div>
@@ -98,42 +99,50 @@
                                     </div>
                                 </div>
 
-                                 <div class="mb-3 row">
+                                <div class="mb-3 row">
                                     <label for="example-text-input-lg" class="col-sm-3 form-label">Smart Card</label>
                                     <div class="col-sm-9">
                                         <input required accept="image/jpeg, image/png" type="file"
                                             class="form-control" name="smartcard" />
                                     </div>
                                 </div>
-                                 <div class="mb-3 row">
+                                <div class="mb-3 row">
                                     <label for="example-text-input-lg" class="col-sm-3 form-label">Smart Card No</label>
                                     <div class="col-sm-9">
-                                        <input required  type="text"
-                                            class="form-control" name="smartcard_no" maxlength="15" placeholder="SmartCard No"/>
+                                        <input required type="text" class="form-control" name="smartcard_no"
+                                            maxlength="10" placeholder="SmartCard No" />
                                     </div>
                                 </div>
 
                             </div>
 
                             <div class="col-lg-6">
-                                 <div class="mb-3 row">
+
+                                <div class="mb-3 row">
                                     <label for="example-url-input" class="col-sm-3 form-label">DOB</label>
                                     <div class="col-sm-9">
-                                        <input required class="form-control" type="date" onkeyup="return false;" name="date_of_birth"
-                                            id="example-url-input">
+                                        <input required class="form-control" type="date" onkeyup="return false;"
+                                            name="date_of_birth" id="example-url-input">
                                     </div>
                                 </div>
-
+                                <div class="mb-3 row">
+                                    <label for="example-month-input" class="col-sm-3 form-label">Password</label>
+                                    <div class="col-sm-9">
+                                        <input required class="form-control" type="password" name="password"
+                                            maxlength="10" placeholder="Password">
+                                    </div>
+                                </div>
                                 <div class="mb-3 row">
                                     <label for="example-month-input" class="col-sm-3 form-label">Phone</label>
                                     <div class="col-sm-9">
-                                        <input required onkeyup="duplicatephone(0)" class="form-control number" type="text"
-                                            name="phone" maxlength="10" id="phone" placeholder="Phone">
+                                        <input required onkeyup="duplicatephone(0)" class="form-control number"
+                                            type="text" name="phone" maxlength="10" id="phone"
+                                            placeholder="Phone">
                                         <span id="dupphone" style="color:red"></span>
                                     </div>
                                 </div>
 
-                                 <div class="mb-3 row">
+                                <div class="mb-3 row">
                                     <label for="dist_id" class="col-sm-3 form-label">District</label>
                                     <div class="col-sm-9">
                                         <select required name="dist_id" id="dist_id" class="form-control">
@@ -172,53 +181,71 @@
                                 <div class="mb-3 row">
                                     <label for="example-url-input" class="col-sm-3 form-label">Address</label>
                                     <div class="col-sm-9">
-                                        <textarea class="form-control" maxlength="100" type="text" rows="3" name="address" id="example-url-input"
-                                            placeholder="Address"></textarea>
+                                        <textarea required class="form-control" maxlength="100" type="text" rows="3" name="address"
+                                            id="example-url-input" placeholder="Address"></textarea>
                                     </div>
                                 </div>
 
                             </div>
-                             <h3 class="text-center">Family Details</h3>
-                                <table id="pricetable" class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Relationship</th>
-                                            <th>Name</th>
-                                            <th>Age</th>
-                                            <th>Living Status</th>
-                                            <th>Aadhaar/Death Cert</th>
-                                            <th><a class="btn btn-sm btn-success" onclick="addnewrow()"><i
-                                                        class='material-symbols-outlined'>add</i></a></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td> <select required name="relationship[]" class="form-control">
+                            <h3 class="text-center">Family Details</h3>
+                            <table id="pricetable" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Relationship</th>
+                                        <th>Name</th>
+                                        <th>Age</th>
+                                        <th>Profession</th>
+                                        <th>Income</th>
+                                        <th>Living Status</th>
+                                        <th>Aadhaar/Death Cert</th>
+                                        <th><a class="btn btn-sm btn-success" onclick="addnewrow()"><i
+                                                    class='material-symbols-outlined'>add</i></a></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> <select required name="relationship[]" class="form-control">
+                                                <option value="">Select</option>
+                                                <option value="Father">தகப்பன்</option>
+                                                <option value="Mother">தாய்</option>
+                                                <option value="Husband">கணவர்</option>
+                                                <option value="Wife">மனைவி</option>
+                                                <option value="Son">மகன்</option>
+                                                <option value="Daughter">மகள்</option>
+                                            </select></td>
+                                        <td><input required class="form-control" type="text"
+                                                name="relation_name[]" maxlength="50"></td>
+                                        <td width="10%"><input required class="form-control number" type="text"
+                                                name="relation_age[]" maxlength="2"></td>
+
+                                                <td> <select required name="profession[]" class="form-control">
                                                     <option value="">Select</option>
-                                                    <option value="Husband">கணவர்</option>
-                                                    <option value="Wife">மனைவி</option>
-                                                    <option value="Son">மகன்</option>
-                                                    <option value="Daughter">மகள்</option>
+                                                    <option value="Students">Students</option>
+                                                    <option value="Farmer">Farmer</option>
+                                                    <option value="Daily Wages">Daily Wages</option>
+                                                    <option value="Self Employee">Self Employee</option>
+                                                    <option value="Business">Business</option>
+                                                    <option value="Govt Job">Govt Job</option>
+                                                    <option value="Private Job">Private Job</option>
                                                 </select></td>
-                                            <td><input required class="form-control" type="text"
-                                                    name="relation_name[]" maxlength="50"></td>
-                                            <td width="10%"><input required class="form-control number"
-                                                    type="text" name="relation_age[]" maxlength="2"></td>
-                                            <td><select required name="relationship_status[]"
-                                                    class="form-control alive_or_dead">
-                                                    <option value="">Select</option>
-                                                    <option value="Dead">Dead</option>
-                                                    <option value="Alive">Alive</option>
-                                                </select></td>
-                                            <td>
-                                                <P class="changename"></P><input required class="form-control"
-                                                    type="file" name="doc[]" accept="image/jpeg, image/png">
-                                            </td>
-                                            <td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i
-                                                        class='material-symbols-outlined'>Remove</i></a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                                <td> <input required name="income[]" type="text"  class="form-control number" maxlength="7" placeholder="Income">
+                                                   </td>
+
+                                        <td><select required name="relationship_status[]"
+                                                class="form-control alive_or_dead">
+                                                <option value="">Select</option>
+                                                <option value="Dead">Dead</option>
+                                                <option value="Alive">Alive</option>
+                                            </select></td>
+                                        <td>
+                                            <P class="changename"></P><input required class="form-control"
+                                                type="file" name="doc[]" accept="image/jpeg, image/png">
+                                        </td>
+                                        <td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i
+                                                    class='material-symbols-outlined'>Remove</i></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                             <div class="text-center">
                                 <div class="col-12">
                                     <div class="mb-0">
@@ -227,7 +254,7 @@
                                 </div>
                             </div>
                         </form>
-                        </div>
+                    </div>
                     </div>
                 </div>
             </div><!--end row-->
@@ -236,7 +263,7 @@
 @endsection
 @push('page_scripts')
     <script>
-        $("#pricetable").on('change', '.alive_or_dead', function() {
+         $("#pricetable").on('change', '.alive_or_dead', function() {
             if ($(this).val() == "Alive") {
                 $(this).closest('tr').find('.changename').text("Aadhaar Card");
             } else {
@@ -283,10 +310,11 @@
             $(this).closest('tr').remove();
         });
 
+
         function addnewrow() {
             $("#pricetable tbody").append(
-                "<tr><td> <select required name='relationship[]' class='form-control'><option value=''>Select</option><option value='Husband'>கணவர்</option><option value='Wife'>மனைவி</option><option value='Son'>மகன்</option><option value='Daughter'>மகள்</option></select></td><td><input class='form-control' required type='text' name='relation_name[]'maxlength='80'></td><td width='10%'><input class='form-control number' required type='text' name='relation_age[]'maxlength='2'></td><td><select required name='relationship_status[]' class='form-control alive_or_dead'><option value=''>Select</option><option value='Dead'>Dead</option><option value='Alive'>Alive</option></select></td><td><P class='changename'></P><input class='form-control' required type='file' name='doc[]' accept='image/jpeg, image/png'></td><td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i class='material-symbols-outlined'>Remove</i></a></td></tr>"
-                );
+                "<tr><td> <select required name='relationship[]' class='form-control'><option value=''>Select</option><option value='Father'>தகப்பன்</option><option value='Mother'>தாய்</option><option value='Husband'>கணவர்</option><option value='Wife'>மனைவி</option><option value='Son'>மகன்</option><option value='Daughter'>மகள்</option></select></td><td><input class='form-control' required type='text' name='relation_name[]'maxlength='80'></td><td width='10%'><input class='form-control number' required type='text' name='relation_age[]'maxlength='2'></td><td><select required name='profession[]' class='form-control'><option value=''>Select</option><option value='Students'>Students</option><option value='Farmer'>Farmer</option><option value='Daily Wages'>Daily Wages</option><option value='Self Employee'>Self Employee</option><option value='Business'>Business</option><option value='Govt Job'>Govt Job</option><option value='Private Job'>Private Job</option></select></td><td><input class='form-control number' required type='text' name='income[]' maxlength='7' placeholder='Income'></td><td><select required name='relationship_status[]' class='form-control alive_or_dead'><option value=''>Select</option><option value='Dead'>Dead</option><option value='Alive'>Alive</option></select></td><td><P class='changename'></P><input class='form-control' required type='file' name='doc[]' accept='image/jpeg, image/png'></td><td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i class='mdi mdi-delete mdi-18px'></i></a></td></tr>"
+            );
         }
     </script>
     </script>

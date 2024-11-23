@@ -691,3 +691,6 @@ CREATE TABLE `passport` (
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
+//23-11-24
+alter table family_member add income int(11) DEFAULT 0 after relation_status;
+alter table family_member add profession varchar(20) DEFAULT NULL after income;
