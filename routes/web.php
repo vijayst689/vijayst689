@@ -201,6 +201,7 @@ Route::post('/submitvoterid', [App\Http\Controllers\ServiceController::class, 's
 Route::post('/submit_fssaiservice', [App\Http\Controllers\ServiceController::class, 'submit_fssaiservice'])->name('submit_fssaiservice');
 Route::post('/submitapply_covid', [App\Http\Controllers\ServiceController::class, 'submitapply_covid'])->name('submitapply_covid');
 Route::post('/submitapply_nalavariyam', [App\Http\Controllers\ServiceController::class, 'submitapply_nalavariyam'])->name('submitapply_nalavariyam');
+Route::post('/submitapply_passport', [App\Http\Controllers\ServiceController::class, 'submitapply_passport'])->name('submitapply_passport');
 
 
 
