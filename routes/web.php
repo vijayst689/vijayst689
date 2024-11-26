@@ -144,6 +144,10 @@ Route::get('service', [App\Http\Controllers\ServiceController::class, 'service']
 
 Route::get('allservices/{customerid}', [App\Http\Controllers\ServiceController::class, 'allservices']);
 
+Route::get('allservices', [App\Http\Controllers\ServiceController::class, 'allservices']);
+
+Route::get('servicesone/{serviceid}', [App\Http\Controllers\ServiceController::class, 'servicesone']);
+
 Route::get('subservice/{id}', [App\Http\Controllers\ServiceController::class, 'subservice']);
 
 Route::post('addsubservice', [App\Http\Controllers\ServiceController::class, 'addsubservice']);
@@ -163,7 +167,11 @@ Route::get('dropsubservice/{id}', [App\Http\Controllers\ServiceController::class
 Route::get('services/{serviceid}/{customerid}', [App\Http\Controllers\ServiceController::class, 'services']);
 
 Route::get('applyservice/{serviceid}/{customerid}', [App\Http\Controllers\ServiceController::class, 'applyservice']);
+
+Route::get('applyservices/{serviceid}', [App\Http\Controllers\ServiceController::class, 'applyservices']);
+
 Route::get('service/get_taluk/{distid}', [App\Http\Controllers\ServiceController::class, 'get_taluk'])->name('gettaluk');
+
 Route::get('service/get_panchayath/{taluk_id}', [App\Http\Controllers\ServiceController::class, 'get_panchayath'])->name('getpanchayath');
 
 Route::get('services/{serviceid}/{customerid}', [App\Http\Controllers\ServiceController::class, 'services']);

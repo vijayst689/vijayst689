@@ -365,7 +365,7 @@
                                         <a href="javascript:;" class="has-arrow">
                                             <div class="parent-icon"><i></i>
                                             </div>
-                                            <div class="menu-title">Customers</div>
+                                            <div class="menu-title">TNEGA</div>
                                         </a>
                                         <ul class="mm-collapse">
                                             <li><a href="{{ url('addcustomer') }}"><i
@@ -373,6 +373,18 @@
                                             </li>
                                             <li><a href="{{ url('customers') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>Customers</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;" class="has-arrow">
+                                            <div class="parent-icon"><i></i>
+                                            </div>
+                                            <div class="menu-title">Other Services</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('allservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Services</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -392,13 +404,6 @@
                                             </li>
                                         </ul>
                                     </li>
-                                              {{-- <li>
-                                        <a href="{{ url('/application')}}" aria-expanded="false">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">Applications</div>
-                                        </a>
-                                    </li> --}}
                                 </ul>
                             @endif
                             <!--end navigation-->
