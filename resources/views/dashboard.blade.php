@@ -51,13 +51,13 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <div>
-                                        <p class="mb-1">Wallet</p>
-                                        <h3 class="mb-0">0</h3>
+                                        <p class="mb-1">Ramji Wallet</p>
+                                        <h3 class="mb-0">{{ Auth::user()->rawallet }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/wallet') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"><i class="material-icons-outlined">wallet</i></span>
-                                    </div>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -71,13 +71,13 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <div>
-                                        <p class="mb-1">Wallet Request</p>
-                                        <h3 class="mb-0">0</h3>
+                                        <p class="mb-1">Ramji Wallet Request</p>
+                                        <h3 class="mb-0">{{ $ramjirequestAmount }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/paymentrequest') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"><i class="material-icons-outlined">alarm</i></span>
-                                    </div>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -94,10 +94,10 @@
                                         <p class="mb-1">Distributor</p>
                                         <h3 class="mb-0">{{ $distributor }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/distributors') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"><i class="material-icons-outlined">anchor</i></span>
-                                    </div>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -114,10 +114,10 @@
                                         <p class="mb-1">Retailer</p>
                                         <h3 class="mb-0">{{ $retailer }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/retailers') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"><i class="material-icons-outlined">handshake</i></span>
-                                    </div>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -134,10 +134,10 @@
                                         <p class="mb-1">Customer</p>
                                         <h3 class="mb-0">{{ $customercount }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/customers') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"><i class="material-icons">supervisor_account</i></span>
-                                    </div>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -171,7 +171,6 @@
         @endif
         @if (Auth::user()->user_type_id == 2)
             <div class="main-content">
-                <!--breadcrumb-->
                 <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
                     <div class="breadcrumb-title pe-3">Dashboard</div>
                     <div class="ps-3">
@@ -190,7 +189,6 @@
                         </div>
                     </div>
                 </div>
-                <!--end breadcrumb-->
                 <div class="row">
                     <div class="col-xxl-8 d-flex align-items-stretch">
                         <div class="card w-100 overflow-hidden rounded-4">
@@ -219,14 +217,119 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <div>
-                                        <p class="mb-1">Wallet</p>
-                                        <h3 class="mb-0">0</h3>
+                                        <p class="mb-1">Pending</p>
+                                        <h3 class="mb-0">{{ $pending }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/appliedservice') }}/Pending"><div
+                                        class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                        <span class="material-icons-outlined fs-5 text-white"><i
+                                            class="material-icons-outlined">pending</i></span>
+                                    </div></a>
+                                </div>
+                                <div class="progress mb-0" style="height:6px;">
+                                    <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card rounded-4 w-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <p class="mb-1">Inprocess</p>
+                                        <h3 class="mb-0">{{ $inpro }}</h3>
+                                    </div>
+                                    <a href="{{ url('/appliedservice') }}/Processing"><div
+                                        class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                        <span class="material-icons-outlined fs-5 text-white"><i
+                                            class="material-icons-outlined">processing</i></span>
+                                    </div></a>
+                                </div>
+                                <div class="progress mb-0" style="height:6px;">
+                                    <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card rounded-4 w-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <p class="mb-1">Resubmit</p>
+                                        <h3 class="mb-0">{{ $resub }}</h3>
+                                    </div>
+                                    <a href="{{ url('/appliedservice') }}/Resubmit"><div
+                                        class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                        <span class="material-icons-outlined fs-5 text-white"><i
+                                            class="material-icons-outlined">resubmit</i></span>
+                                    </div></a>
+                                </div>
+                                <div class="progress mb-0" style="height:6px;">
+                                    <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card rounded-4 w-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <p class="mb-1">Approved</p>
+                                        <h3 class="mb-0">{{ $approve }}</h3>
+                                    </div>
+                                    <a href="{{ url('/appliedservice') }}/Approved"><div
+                                        class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                        <span class="material-icons-outlined fs-5 text-white"><i
+                                            class="material-icons-outlined">approved</i></span>
+                                    </div></a>
+                                </div>
+                                <div class="progress mb-0" style="height:6px;">
+                                    <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card rounded-4 w-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <p class="mb-1">Wallet</p>
+                                        <h3 class="mb-0">{{ Auth::user()->wallet }}</h3>
+                                    </div>
+                                    <a href="{{ url('/wallet') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"><i
                                             class="material-icons-outlined">wallet</i></span>
+                                    </div></a>
+                                </div>
+                                <div class="progress mb-0" style="height:6px;">
+                                    <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card rounded-4 w-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <p class="mb-1">RaWallet</p>
+                                        <h3 class="mb-0">{{ Auth::user()->rawallet }}</h3>
                                     </div>
+                                    <a href="{{ url('/rawallet') }}"><div
+                                        class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                        <span class="material-icons-outlined fs-5 text-white"><i
+                                            class="material-icons-outlined">rawallet</i></span>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -241,13 +344,13 @@
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <div>
                                         <p class="mb-1">Wallet Request</p>
-                                        <h3 class="mb-0">0</h3>
+                                        <h3 class="mb-0">{{ $RequestAmount }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/paymentrequest') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"><i
                                             class="material-icons-outlined">alarm</i></span>
-                                    </div>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -264,11 +367,11 @@
                                         <p class="mb-1">Distributor</p>
                                         <h3 class="mb-0">{{ $distributor_count }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/distributors') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"><i
                                             class="material-icons-outlined">anchor</i></span>
-                                    </div>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -285,11 +388,11 @@
                                         <p class="mb-1">Retailer</p>
                                         <h3 class="mb-0">{{ $retailer_count }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/retailers') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"><i
                                         class="material-icons-outlined">handshake</i></span>
-                                    </div>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -306,11 +409,11 @@
                                         <p class="mb-1">Customer</p>
                                         <h3 class="mb-0">{{ $customer }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/customers') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"><i
                                             class="material-icons-outlined">supervisor_account</i></span>
-                                    </div>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -327,10 +430,10 @@
                                         <p class="mb-1">services</p>
                                         <h3 class="mb-0">{{ $servicecount }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/services') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"><i class="material-icons-outlined">manage_accounts</i></span>
-                                    </div>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -365,7 +468,6 @@
         @endif
         @if (Auth::user()->user_type_id == 3)
             <div class="main-content">
-                <!--breadcrumb-->
                 <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
                     <div class="breadcrumb-title pe-3">Dashboard</div>
                     <div class="ps-3">
@@ -378,7 +480,7 @@
                         </nav>
                     </div>
                 </div>
-                <!--end breadcrumb-->
+
                 <div class="row">
                     <div class="col-xxl-8 d-flex align-items-stretch">
                         <div class="card w-100 overflow-hidden rounded-4">
@@ -407,13 +509,97 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <div>
-                                        <p class="mb-1">Wallet</p>
-                                        <h3 class="mb-0">0</h3>
+                                        <p class="mb-1">Pending</p>
+                                        <h3 class="mb-0">{{ $pending }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/appliedservice') }}/Pending"><div
+                                        class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                        <span class="material-icons-outlined fs-5 text-white"><i
+                                            class="material-icons-outlined">pending</i></span>
+                                    </div></a>
+                                </div>
+                                <div class="progress mb-0" style="height:6px;">
+                                    <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card rounded-4 w-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <p class="mb-1">Inprocess</p>
+                                        <h3 class="mb-0">{{ $inpro }}</h3>
+                                    </div>
+                                    <a href="{{ url('/appliedservice') }}/Processing"><div
+                                        class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                        <span class="material-icons-outlined fs-5 text-white"><i
+                                            class="material-icons-outlined">processing</i></span>
+                                    </div></a>
+                                </div>
+                                <div class="progress mb-0" style="height:6px;">
+                                    <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card rounded-4 w-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <p class="mb-1">Resubmit</p>
+                                        <h3 class="mb-0">{{ $resub }}</h3>
+                                    </div>
+                                    <a href="{{ url('/appliedservice') }}/Resubmit"><div
+                                        class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                        <span class="material-icons-outlined fs-5 text-white"><i
+                                            class="material-icons-outlined">resubmit</i></span>
+                                    </div></a>
+                                </div>
+                                <div class="progress mb-0" style="height:6px;">
+                                    <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card rounded-4 w-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <p class="mb-1">Approved</p>
+                                        <h3 class="mb-0">{{ $approve }}</h3>
+                                    </div>
+                                    <a href="{{ url('/appliedservice') }}/Approved"><div
+                                        class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                        <span class="material-icons-outlined fs-5 text-white"><i
+                                            class="material-icons-outlined">approved</i></span>
+                                    </div></a>
+                                </div>
+                                <div class="progress mb-0" style="height:6px;">
+                                    <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card rounded-4 w-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <p class="mb-1">Wallet</p>
+                                        <h3 class="mb-0">{{ Auth::user()->wallet }}</h3>
+                                    </div>
+                                    <a href="{{ url('/wallet') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"></span>
-                                    </div>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -428,12 +614,12 @@
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <div>
                                         <p class="mb-1">Wallet Request</p>
-                                        <h3 class="mb-0">0</h3>
+                                        <h3 class="mb-0">{{ $RequestAmount }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/paymentrequest') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white">alarm</span>
-                                    </div>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -448,12 +634,12 @@
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <div>
                                         <p class="mb-1">Retailer</p>
-                                        <h3 class="mb-0">0</h3>
+                                        <h3 class="mb-0">{{ $retailer_count }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/retailers') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"><i class="material-icons-outlined">handshake</i></span>
-                                    </div>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -470,10 +656,10 @@
                                         <p class="mb-1">Customers</p>
                                         <h3 class="mb-0">{{ $customer }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/customers') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"><i class="material-icons-outlined">supervisor_account</i></span>
-                                    </div>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -551,13 +737,116 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <div>
-                                        <p class="mb-1">Wallet</p>
-                                        <h3 class="mb-0">0</h3>
+                                        <p class="mb-1">Pending</p>
+                                        <h3 class="mb-0">{{ $pending }}</h3>
                                     </div>
-                                    <div
+                                    <a href="{{ url('/appliedservice') }}/Pending"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
-                                        <span class="material-icons-outlined fs-5 text-white"><i class="material-icons-outlined">wallet</i></span>
+                                        <span class="material-icons-outlined fs-5 text-white"><i
+                                            class="material-icons-outlined">pending</i></span>
+                                    </div></a>
+                                </div>
+                                <div class="progress mb-0" style="height:6px;">
+                                    <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card rounded-4 w-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <p class="mb-1">Inprocess</p>
+                                        <h3 class="mb-0">{{ $inpro }}</h3>
                                     </div>
+                                    <a href="{{ url('/appliedservice') }}/Processing"><div
+                                        class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                        <span class="material-icons-outlined fs-5 text-white"><i
+                                            class="material-icons-outlined">processing</i></span>
+                                    </div></a>
+                                </div>
+                                <div class="progress mb-0" style="height:6px;">
+                                    <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card rounded-4 w-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <p class="mb-1">Resubmit</p>
+                                        <h3 class="mb-0">{{ $resub }}</h3>
+                                    </div>
+                                    <a href="{{ url('/appliedservice') }}/Resubmit"><div
+                                        class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                        <span class="material-icons-outlined fs-5 text-white"><i
+                                            class="material-icons-outlined">resubmit</i></span>
+                                    </div></a>
+                                </div>
+                                <div class="progress mb-0" style="height:6px;">
+                                    <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card rounded-4 w-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <p class="mb-1">Approved</p>
+                                        <h3 class="mb-0">{{ $approve }}</h3>
+                                    </div>
+                                    <a href="{{ url('/appliedservice') }}/Approved"><div
+                                        class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                        <span class="material-icons-outlined fs-5 text-white"><i
+                                            class="material-icons-outlined">approved</i></span>
+                                    </div></a>
+                                </div>
+                                <div class="progress mb-0" style="height:6px;">
+                                    <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card rounded-4 w-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <p class="mb-1">Wallet</p>
+                                        <h3 class="mb-0">{{ Auth::user()->wallet }}</h3>
+                                    </div>
+                                    <a href="{{ url('/wallet') }}"><div class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                        <span class="material-icons-outlined fs-5 text-white"><i class="material-icons-outlined">wallet</i></span>
+                                    </div></a>
+                                </div>
+                                <div class="progress mb-0" style="height:6px;">
+                                    <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card rounded-4 w-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <p class="mb-1">Wallet Request</p>
+                                        <h3 class="mb-0">{{ $RequestAmount }}</h3>
+                                    </div>
+                                    <a href="{{ url('/paymentrequest') }}">
+                                        <div class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                        <span class="material-icons-outlined fs-5 text-white"><i class="material-icons-outlined">supervisor_account</i></span>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -572,12 +861,12 @@
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <div>
                                         <p class="mb-1">Customers</p>
-                                        <h3 class="mb-0">0</h3>
+                                        <h3 class="mb-0">{{ $customer }}</h3>
                                     </div>
-                                    <div
-                                        class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                    <a href="{{ url('/customers') }}">
+                                        <div class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"><i class="material-icons-outlined">supervisor_account</i></span>
-                                    </div>
+                                    </div></a>
                                 </div>
                                 <div class="progress mb-0" style="height:6px;">
                                     <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -654,13 +943,117 @@
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between mb-3">
                                 <div>
-                                    <p class="mb-1">Wallet</p>
-                                    <h3 class="mb-0">0</h3>
+                                    <p class="mb-1">Pending</p>
+                                    <h3 class="mb-0">{{ $pending }}</h3>
                                 </div>
-                                <div
+                                <a href="{{ url('/appliedservice') }}/Pending"><div
+                                    class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                    <span class="material-icons-outlined fs-5 text-white"><i
+                                        class="material-icons-outlined">pending</i></span>
+                                </div></a>
+                            </div>
+                            <div class="progress mb-0" style="height:6px;">
+                                <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card rounded-4 w-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div>
+                                    <p class="mb-1">Inprocess</p>
+                                    <h3 class="mb-0">{{ $inpro }}</h3>
+                                </div>
+                                <a href="{{ url('/appliedservice') }}/Processing"><div
+                                    class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                    <span class="material-icons-outlined fs-5 text-white"><i
+                                        class="material-icons-outlined">processing</i></span>
+                                </div></a>
+                            </div>
+                            <div class="progress mb-0" style="height:6px;">
+                                <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card rounded-4 w-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div>
+                                    <p class="mb-1">Resubmit</p>
+                                    <h3 class="mb-0">{{ $resub }}</h3>
+                                </div>
+                                <a href="{{ url('/appliedservice') }}/Resubmit"><div
+                                    class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                    <span class="material-icons-outlined fs-5 text-white"><i
+                                        class="material-icons-outlined">resubmit</i></span>
+                                </div></a>
+                            </div>
+                            <div class="progress mb-0" style="height:6px;">
+                                <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card rounded-4 w-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div>
+                                    <p class="mb-1">Approved</p>
+                                    <h3 class="mb-0">{{ $approve }}</h3>
+                                </div>
+                                <a href="{{ url('/appliedservice') }}/Approved"><div
+                                    class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                    <span class="material-icons-outlined fs-5 text-white"><i
+                                        class="material-icons-outlined">approved</i></span>
+                                </div></a>
+                            </div>
+                            <div class="progress mb-0" style="height:6px;">
+                                <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card rounded-4 w-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div>
+                                    <p class="mb-1">Wallet</p>
+                                    <h3 class="mb-0">{{ Auth::user()->wallet }}</h3>
+                                </div>
+                                <a href="{{ url('/wallet') }}"><div
                                     class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                     <span class="material-icons-outlined fs-5 text-white"><i class="material-icons-outlined">wallet</i></span>
+                                </div></a>
+                            </div>
+                            <div class="progress mb-0" style="height:6px;">
+                                <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card rounded-4 w-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div>
+                                    <p class="mb-1">Wallet Request</p>
+                                    <h3 class="mb-0">{{ Auth::user()->wallet }}</h3>
                                 </div>
+                                <a href="{{ url('/wallet') }}"><div
+                                    class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                    <span class="material-icons-outlined fs-5 text-white"><i class="material-icons-outlined">wallet</i></span>
+                                </div></a>
                             </div>
                             <div class="progress mb-0" style="height:6px;">
                                 <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
@@ -677,10 +1070,10 @@
                                     <p class="mb-1">Services</p>
                                     <h3 class="mb-0">0</h3>
                                 </div>
-                                <div
+                                <a href="{{ url('/allservices') }}"><div
                                     class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                     <span class="material-icons-outlined fs-5 text-white"><i class="material-icons-outlined">manage_accounts</i></span>
-                                </div>
+                                </div></a>
                             </div>
                             <div class="progress mb-0" style="height:6px;">
                                 <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"

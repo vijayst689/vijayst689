@@ -52,7 +52,8 @@
                 </a>
             </div>
             <div class="modal-body">
-                <form method="post" class="row g-3" action="{{ url('/adminaddwallet') }}" enctype="multipart/form-data">
+                <form method="post" class="row g-3" action="{{ url('/adminaddwallet') }}"
+                    enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="col-md-12">
                         <label class="form-label">Add Money</label>
@@ -68,6 +69,73 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="ramjirequest" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0 py-2 bg-grd-info">
+                <h5 class="modal-title align-self-center" id="exampleModalLongTitle-1">Ramji Wallet Request</h5>
+                <a href="javascript:;" class="primaery-menu-close" data-bs-dismiss="modal">
+                    <i class="material-icons-outlined">close</i>
+                </a>
+            </div>
+            <div class="modal-body">
+                <form method="post" class="row g-3" action="{{ url('/ramjisaverequest') }}"
+                    enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <img src="/upload/qr/qrimgramji.jpeg" class="img-fluid" alt="...">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Amount</label>
+                                <input name="amount" type="text" maxlength="5" class="form-control number"
+                                    placeholder="Amount">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Paid Image (Screen)</label>
+                                <input type="file" name="req_image" class="form-control" maxlength="10">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mb-3">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="Submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addramji" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0 py-2 bg-grd-info">
+                <h5 class="modal-title align-self-center" id="exampleModalLongTitle-1">Add Super Admin Payment</h5>
+                <a href="javascript:;" class="primaery-menu-close" data-bs-dismiss="modal">
+                    <i class="material-icons-outlined">close</i>
+                </a>
+            </div>
+            <div class="modal-body">
+                <form method="post" class="row g-3" action="{{ url('/superadminaddwallet') }}"
+                    enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <input name="wallet" maxlength="5" type="text" class="form-control" placeholder="Amount">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
 <header class="top-header">
     <nav class="navbar navbar-expand align-items-center gap-4">
         <div class="btn-toggle">
@@ -75,24 +143,8 @@
         </div>
         <div class="search-bar flex-grow-1">
             <div class="position-relative">
-                <input class="form-control rounded-5 px-5 search-control d-lg-block d-none" type="text"
-                    placeholder="Search">
-                <span
-                    class="material-icons-outlined position-absolute d-lg-block d-none ms-3 translate-middle-y start-0 top-50">search</span>
-                <span
-                    class="material-icons-outlined position-absolute me-3 translate-middle-y end-0 top-50 search-close">close</span>
                 <div class="search-popup p-3">
                     <div class="card rounded-4 overflow-hidden">
-                        <div class="card-header d-lg-none">
-                            <div class="position-relative">
-                                <input class="form-control rounded-5 px-5 mobile-search-control" type="text"
-                                    placeholder="Search">
-                                <span
-                                    class="material-icons-outlined position-absolute ms-3 translate-middle-y start-0 top-50">search</span>
-                                <span
-                                    class="material-icons-outlined position-absolute me-3 translate-middle-y end-0 top-50 mobile-search-close">close</span>
-                            </div>
-                        </div>
                         <div class="card-body search-content">
                         </div>
                         <div class="card-footer text-center bg-transparent">
@@ -103,18 +155,31 @@
             </div>
         </div>
         @if (Auth::user()->user_type_id == 3 || Auth::user()->user_type_id == 4 || Auth::user()->user_type_id == 5)
-        <span class="form-label text-success">Wallet Amount : {{ Auth::user()->wallet }}</span>
+            <span class="form-label text-success">Wallet Amount : {{ Auth::user()->wallet }}</span>
             <div class="d-flex align-items-center gap-2 justify-content-lg-end">
                 <button type="button" class="btn btn-grd-primary px-4" data-bs-toggle="modal"
                     data-bs-target="#FormModal">Add Money</button>
             </div>
-            @elseif (Auth::user()->user_type_id == 2 )
+        @elseif (Auth::user()->user_type_id == 2)
+            <div class="d-flex align-items-center gap-2 justify-content-lg-end">
+                <span class="text-white"><b>Ramji Wallet : {{ Auth::user()->rawallet }}</b></span>&nbsp;
+                <button type="button" class="btn-sm btn btn-success" data-bs-toggle="modal"
+                    data-bs-target="#ramjirequest">Add Money</button>
+            </div>
             <div class="d-flex align-items-center gap-2 justify-content-lg-end">
                 <span class="text-white"><b>Wallet Amount : {{ Auth::user()->wallet }}</b></span>&nbsp;
-                <button type="button" class="btn-sm btn btn-success" data-bs-toggle="modal"
+                <button type="button" class="btn-sm btn btn-success px-4" data-bs-toggle="modal"
                     data-bs-target="#addmoney">Add Payment</button>
             </div>
         @endif
+        @if (Auth::user()->user_type_id == 1 )
+        <div class="d-flex align-items-center gap-2 justify-content-lg-end">
+            <span class="text-white"><b>Ramji Wallet Amount : {{ Auth::user()->rawallet }}</b></span>&nbsp;
+            <button type="button" class="btn-sm btn btn-success px-4" data-bs-toggle="modal"
+                data-bs-target="#addramji">Add Payment</button>
+        </div>
+        @endif
+
         <ul class="navbar-nav gap-1 nav-right-links align-items-center">
             <li class="nav-item d-lg-none mobile-search-btn">
                 <a class="nav-link" href="javascript:;"><i class="material-icons-outlined">search</i></a>

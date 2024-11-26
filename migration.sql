@@ -694,3 +694,13 @@ CREATE TABLE `passport` (
 //23-11-24
 alter table family_member add income int(11) DEFAULT 0 after relation_status;
 alter table family_member add profession varchar(20) DEFAULT NULL after income;
+
+26-11-2024
+
+alter table users add rawallet decimal(10,2) DEFAULT 0 after wallet;
+alter table payment add newbalance decimal(10,2) DEFAULT 0 after amount;
+
+alter table services add ser_id int(11) DEFAULT 0 after parent_id;
+
+alter table family_member add income int(11) DEFAULT 0 after relation_status;
+alter table family_member add profession varchar(20) DEFAULT NULL after income;

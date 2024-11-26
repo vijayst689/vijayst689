@@ -30,7 +30,27 @@
                                             <div class="menu-title">Dashboard</div>
                                         </a>
                                     </li>
-
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Service Status</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/appliedservice') }}/Pending"><i
+                                                        class="material-icons-outlined">arrow_right</i>Pending</a>
+                                            </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Processing"><i
+                                                        class="material-icons-outlined">arrow_right</i>Processing</a>
+                                            </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
+                                                        class="material-icons-outlined">arrow_right</i>Resubmit</a>
+                                            </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Approved"><i
+                                                        class="material-icons-outlined">arrow_right</i>Approved</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                     <li>
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
@@ -66,7 +86,7 @@
                                         <a href="javascript:;" class="has-arrow">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
-                                            <div class="menu-title">Customers</div>
+                                            <div class="menu-title">TNEGA</div>
                                         </a>
                                         <ul class="mm-collapse">
                                             <li><a href="{{ url('addcustomer') }}"><i
@@ -74,6 +94,22 @@
                                             </li>
                                             <li><a href="{{ url('customers') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>Customers</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="">
+                                        <a href="javascript:;" class="has-arrow" aria-expanded="false">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Ramji Wallet</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('rawallet') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Ramji Wallet</a>
+                                            </li>
+                                            <li><a href="{{ url('rapaymentrequest') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Ramji Payment
+                                                    Request</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -108,14 +144,6 @@
                                     </li>
                                         </ul>
                                     </li>
-                                    {{-- <li>
-                                        <a href="{{ url('/application')}}" aria-expanded="false">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">Applications</div>
-                                        </a>
-                                    </li> --}}
-
                                 </ul>
                             @endif
                             <!--end navigation-->
@@ -197,7 +225,7 @@
                                         <a href="javascript:;" class="has-arrow">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
-                                            <div class="menu-title">Customers</div>
+                                            <div class="menu-title">TNEGA</div>
                                         </a>
                                         <ul class="mm-collapse">
                                             <li><a href="{{ url('addcustomer') }}"><i
@@ -206,6 +234,28 @@
                                             <li><a href="{{ url('customers') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>Customers</a>
                                             </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;" class="has-arrow">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Other Services</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('allservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Services</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                            <i class="mdi mdi-email-variant"></i>
+                                            <span>Ramji Wallet</span>
+                                        </a>
+                                        <ul class="sub-menu" aria-expanded="false">
+                                            <li><a href="{{ url('/rawallet') }}">Ramji Wallet</a></li>
+                                            <li><a href="{{ url('/rapaymentrequest') }}">Ramji Paymentrequest</a></li>
                                         </ul>
                                     </li>
                                     <li class="">
@@ -224,26 +274,6 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    {{-- <li>
-                                        <a href="javascript:;" class="has-arrow">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">Services</div>
-                                        </a>
-                                        <ul>
-                                            <li><a href="{{ url('/viewservice') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>View
-                                                    Services</a>
-                                            </li>
-                                        </ul>
-                                    </li> --}}
-                                    {{-- <li>
-                                        <a href="{{ url('/application') }}" aria-expanded="false">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">Applications</div>
-                                        </a>
-                                    </li> --}}
                                 </ul>
                             @endif
                             @if (Auth::user()->user_type_id == 3)
@@ -295,7 +325,7 @@
                                         <a href="javascript:;" class="has-arrow">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
-                                            <div class="menu-title">Customers</div>
+                                            <div class="menu-title">TNEGA</div>
                                         </a>
                                         <ul class="mm-collapse">
                                             <li><a href="{{ url('addcustomer') }}"><i
@@ -303,6 +333,18 @@
                                             </li>
                                             <li><a href="{{ url('customers') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>Customers</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;" class="has-arrow">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Other Services</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('allservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Services</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -322,13 +364,6 @@
                                             </li>
                                         </ul>
                                     </li>
-                                              {{-- <li>
-                                        <a href="{{ url('/application')}}" aria-expanded="false">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">Applications</div>
-                                        </a>
-                                    </li> --}}
                                 </ul>
                             @endif
                             @if (Auth::user()->user_type_id == 4)

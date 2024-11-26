@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 // Auth //
 
-Route::get('dashboard', [CustomAuthController::class, 'dashboard']);
+Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'dashboard']);
 Route::get('login', [CustomAuthController::class, 'index'])->name('login');
 Route::get('admin', [CustomAuthController::class, 'index'])->name('login');
 Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
@@ -135,6 +135,12 @@ Route::post('saverequest', [App\Http\Controllers\WalletController::class, 'saver
 
 Route::post('/adminaddwallet', [App\Http\Controllers\WalletController::class, 'adminaddwallet'])->name('adminaddwallet');
 
+Route::get('rawallet', [App\Http\Controllers\WalletController::class, 'rawallet']);
+
+Route::get('rapaymentrequest', [App\Http\Controllers\WalletController::class, 'rapaymentrequest']);
+
+Route::post('/superadminaddwallet', [App\Http\Controllers\WalletController::class, 'superadminaddwallet'])->name('superadminaddwallet');
+
 
 Route::get('/declinerequest_payment/{id}', [App\Http\Controllers\PaymentsController::class, 'declinerequest_payment'])->name('declinerequest_payment');
 Route::post('/approvepayment', [App\Http\Controllers\PaymentsController::class, 'approvepayment'])->name('approvepayment');
@@ -142,7 +148,7 @@ Route::post('/approvepayment', [App\Http\Controllers\PaymentsController::class, 
 
 Route::get('service', [App\Http\Controllers\ServiceController::class, 'service']);
 
-Route::get('allservices/{customerid}', [App\Http\Controllers\ServiceController::class, 'allservices']);
+Route::get('allservice/{customerid}', [App\Http\Controllers\ServiceController::class, 'allservice']);
 
 Route::get('allservices', [App\Http\Controllers\ServiceController::class, 'allservices']);
 
