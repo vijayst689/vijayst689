@@ -329,9 +329,7 @@ public function applyservice($serviceid,$customerid) {
  }  elseif ($serviceid == 181 || $serviceid == 182 || $serviceid == 185 || $serviceid == 184){
      return view( 'applyservice.sabarimalaiservice',compact('serviceid','districts','servicename','amount','customers','payment'));
  }
-    elseif ($serviceid == 183 || $serviceid == 186){
-     return view( 'applyservice.rechargeservice',compact('serviceid','districts','servicename','amount','customers','payment'));
- }
+   
  }
 
  public function submit_applyservice( Request $request ) {
