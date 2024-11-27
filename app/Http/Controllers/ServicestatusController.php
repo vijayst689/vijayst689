@@ -69,6 +69,7 @@ class ServicestatusController extends Controller
             ->Join('users', 'users.id', '=', 'voterid.user_id')
             ->where('voterid.status',$status)
             ->orderBy('voterid.id', 'Desc')->get();
+            
             $pancard = DB::table('pancard')->select('services.service_name', 'users.name','pancard.*')
             ->Join('services', 'services.id', '=', 'pancard.service_id')
             ->Join('users', 'users.id', '=', 'pancard.user_id')
