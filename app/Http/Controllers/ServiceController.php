@@ -228,8 +228,7 @@ public function applyservice($serviceid,$customerid) {
      $payment = 0;
  }
     $customers = DB::table( 'users' )->orderBy('id', 'Asc')->first();
- // $customers = DB::table( 'users' )->where('id',$customerid)->first();
-         //dd($customers);
+
   if ($serviceid == 17){
      return view( 'backend.services.applyservice1',compact('serviceid','districts','servicename','amount','customers','payment'));
 
