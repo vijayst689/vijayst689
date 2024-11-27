@@ -487,7 +487,7 @@
                                               </li>
                                             <li><a href="{{ url('allservices') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>
-                                                    Services</a>
+                                                    Other Services</a>
                                             </li>
                                         </ul>
                                     </li>
