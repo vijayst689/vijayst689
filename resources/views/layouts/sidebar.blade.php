@@ -452,16 +452,37 @@
                                             <div class="menu-title">Dashboard</div>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Service Status</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/appliedservice') }}/Pending"><i
+                                                        class="material-icons-outlined">arrow_right</i>Pending</a>
+                                            </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Processing"><i
+                                                        class="material-icons-outlined">arrow_right</i>Processing</a>
+                                            </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
+                                                        class="material-icons-outlined">arrow_right</i>Resubmit</a>
+                                            </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Approved"><i
+                                                        class="material-icons-outlined">arrow_right</i>Approved</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                     <li class="">
                                         <a href="javascript:;" class="has-arrow" aria-expanded="false">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
-                                            <div class="menu-title">Service</div>
+                                            <div class="menu-title">Services</div>
                                         </a>
                                         <ul class="mm-collapse">
-                                            <li><a href="{{ url('/applyservice') }}/{{ Auth::user()->id }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Apply
-                                                    Service</a>
+                                            <li><a href="{{ url('allservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>
+                                                    Services</a>
                                             </li>
                                         </ul>
                                     </li>

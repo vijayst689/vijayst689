@@ -577,11 +577,11 @@ class ServicestatusController extends Controller
            $service = $service->merge($aadhaarcard);
            $service = $service->merge($voterid);
            $service = $service->merge($pancard);
+           $service = $service->merge($bond);
            $service = $service->merge($fssai);
            $service = $service->merge($covid);
            $service = $service->merge($license);
            $service = $service->merge($nalavariyam);
-           $service = $service->merge($pkrm);
            $service = $service->merge($passport);
        }
 
