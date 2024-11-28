@@ -118,6 +118,15 @@
 
                                 </div>
 
+                                <div class="mb-3 row">
+                                    <label class="col-sm-3 form-label">Gender</label>
+                                    <div class="col-sm-9">
+                                        <select required class="form-select" name="gender" required>
+                                            <option>Select</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+
                                 <div class="col-lg-6">
 
                                     <div class="mb-3 row">
@@ -163,6 +172,13 @@
                                             </select>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="example-text-input-lg" class="col-sm-3 form-label">Smart Card No</label>
+                                    <div class="col-sm-9">
+                                        <input required type="text" class="form-control" name="smartcard_no"
+                                            maxlength="13" placeholder="SmartCard No" />
+
 
                                     <div class="mb-3 row">
                                         <label for="example-text-input-lg" class="col-sm-3 form-label">Aadhar Card</label>
@@ -170,6 +186,7 @@
                                             <input required accept="image/jpeg, image/png" type="file"
                                                 class="form-control" name="aadhaar_file" />
                                         </div>
+
                                     </div>
 
                                     <div class="mb-3 row">
@@ -179,6 +196,19 @@
                                                 id="example-text-input-lg">
                                         </div>
                                     </div>
+
+                                </div>
+                                
+                                <div class="mb-3 row">
+                                    <label for="example-month-input" class="col-sm-3 form-label">Phone</label>
+                                    <div class="col-sm-9">
+                                        <input required onkeyup="duplicatephone(0)" class="form-control number"
+                                            type="text" name="phone" maxlength="10" id="phone"
+                                            placeholder="Phone">
+                                        <span id="dupphone" style="color:red"></span>
+                                    </div>
+                                </div>
+
 
                                     <div class="mb-3 row">
                                         <label for="example-url-input" class="col-sm-3 form-label">Address</label>
