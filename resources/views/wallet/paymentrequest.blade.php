@@ -106,7 +106,7 @@
                                             <button type="button" class="btn btn-default"
                                                 data-bs-dismiss="modal">Close</button>
                                             <input id="declinebtn" type="button" value="Decline" class="btn btn-danger">
-                                            <button id="save" type="submit"
+                                            <button id="aprovedbtn" type="submit"
                                                 class="btn btn-primary">Approve</button>
                                         </div>
                                     </form>
@@ -134,6 +134,9 @@
             } else {
                 $("#save").attr("disabled", true);
                 $("#declinebtn").attr("disabled", true);
+            }
+            if (status == "Approved") {
+                $("#aprovedbtn").attr("disabled", true);
             }
             document.getElementById("paidimg").src = "../upload/paidimage/" + req_image;
             $("#showrequest").modal("show");
