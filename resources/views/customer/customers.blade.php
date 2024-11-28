@@ -75,8 +75,8 @@
                                                     href="{{ url('/dropcustomer', $cus->id) }}" type="button"
                                                     style="font-size: small" class="btn btn-inverse-danger px-1">Drop</a>
 
-                                                <a href="{{ url('/allservices', $cus->id) }}" style="font-size: small"
-                                                    class="btn btn-grd btn-grd-branding px-1">Service</a>
+                                                <a href="{{ url('/allservice', $cus->id) }}" style="font-size: small"
+                                                    class="btn btn-grd btn-grd-branding px-1">TNEGA</a>
 
                                                 <a href="{{ url('/documents', $cus->id) }}" style="font-size: small"
                                                     class="btn btn-grd btn-grd-info px-1">Document</a>

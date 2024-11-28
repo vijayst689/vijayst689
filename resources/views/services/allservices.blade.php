@@ -12,16 +12,15 @@
                         <div class="card-body position-relative p-4">
                             <div class="row">
                                 @foreach ($ourservice as $ser)
-                                    <div class="col-12 col-sm-4 col-md-2">
-                                        <div class="d-flex align-items-center gap-3 mb-5">
-                                            <div class="text-center">
-                                                <a href="{{ url('/services', $ser->id) }}/{{ $customerid }}"><img
-                                                        src="/upload/service/{{ $ser->service_image }}" alt=""
-                                                        class="rounded-circle raised bg-white p-1" width="120"
-                                                        height="120"></a>
-                                                        <h5>{{ $ser->service_name }}</h5>
-                                            </div>
-
+                                    <div class="col-md-3 col-lg-2 col-sm-4 mb-2">
+                                        <div class="text-center">
+                                            @if ($ser->id == 119)
+                                                <a href="{{ url('/licservices', $ser->id) }}">
+                                                @else
+                                                    <a href="{{ url('/servicesone', $ser->id) }}">
+                                            @endif
+                                            <img src="/upload/service/{{ $ser->service_image }}" alt=""
+                                                class="rounded-circle img-thumbnail avatar-xl"></a>
                                         </div>
                                     </div>
                                 @endforeach

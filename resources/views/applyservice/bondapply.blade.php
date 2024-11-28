@@ -70,7 +70,9 @@
                                         <select required name="taluk_id" id="taluk"  class="form-control">
                                         </select>
                                     </div>
-
+                                    <div class="text-center">
+                                        <p id="nopayment"></p>
+                                    </div>
                                 <div class="mt-2 text-center">
                                     <button id="save" type="submit" class="btn btn-primary me-2">Apply</button>
                                 </div>
@@ -84,6 +86,20 @@
 @endsection
 @push('page_scripts')
     <script>
+         $(function() {
+            var wallet = "{{ Auth::user()->wallet }}";
+            var amount = "{{ $payment }}";
+            if (parseFloat(amount) > parseInt(wallet)) {
+                $('#save').prop("disabled", true);
+                $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
+                    'color': 'red',
+                    'font-size': '150%',
+                    'font-weight': 'bold'
+                });
+            }
+            $("#acc_number, #confirmacc_number").keyup(checkAccountNumberMatch);
+        });
+
         $('#dist_id').on('change', function() {
             var dist_id = this.value;
             $("#taluk").html('');

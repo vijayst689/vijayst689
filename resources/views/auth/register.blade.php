@@ -236,7 +236,7 @@
                                         </div>
                                         <div class="col-md-12 mt-2">
                                             <div class="d-md-flex d-grid align-items-center gap-3">
-                                                <button type="submit" id="save"
+                                                <button type="submit" id="save1"
                                                     class="btn btn-grd-danger px-4">Submit</button>
                                             </div>
                                         </div>
@@ -308,7 +308,7 @@
                                         </div>
                                         <div class="col-md-12 mt-2">
                                             <div class="d-md-flex d-grid align-items-center gap-3">
-                                                <button type="submit" id="save"
+                                                <button type="submit" id="save2"
                                                     class="btn btn-grd-danger px-4">Submit</button>
                                             </div>
                                         </div>
@@ -489,9 +489,9 @@ function duplicateaadhar1(id) {
                     }
                     if ($("#dupaadhar1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1").html() ==
                         "") {
-                        $("#save").prop('disabled', false);
+                        $("#save1").prop('disabled', false);
                     } else {
-                        $("#save").prop('disabled', true);
+                        $("#save1").prop('disabled', true);
                     }
                 },
                 error: function(jqXHR, exception) {
@@ -521,9 +521,9 @@ function duplicateaadhar1(id) {
                     }
                     if ($("#dupphone1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1").html() ==
                         "") {
-                        $("#save").prop('disabled', false);
+                        $("#save1").prop('disabled', false);
                     } else {
-                        $("#save").prop('disabled', true);
+                        $("#save1").prop('disabled', true);
                     }
                 },
 
@@ -554,9 +554,9 @@ function duplicateaadhar1(id) {
                     }
                     if ($("#dupemail1").html() == "" && $("#dupemail1").html() == "" && $("#dupemail1").html() ==
                         "") {
-                        $("#save").prop('disabled', false);
+                        $("#save1").prop('disabled', false);
                     } else {
-                        $("#save").prop('disabled', true);
+                        $("#save1").prop('disabled', true);
                     }
                 },
 
@@ -587,9 +587,9 @@ function duplicateaadhar1(id) {
                     }
                     if ($("#dupphone1").html() == "" && $("#duppan1").html() == "" && $("#duppan1").html() ==
                         "") {
-                        $("#save").prop('disabled', false);
+                        $("#save1").prop('disabled', false);
                     } else {
-                        $("#save").prop('disabled', true);
+                        $("#save1").prop('disabled', true);
                     }
                 },
                 error: function(jqXHR, exception) {
@@ -621,9 +621,9 @@ function duplicateaadhar2(id) {
                     }
                     if ($("#dupaadhar2").html() == "" && $("#dupaadhar2").html() == "" && $("#dupemail2").html() ==
                         "") {
-                        $("#save").prop('disabled', false);
+                        $("#save2").prop('disabled', false);
                     } else {
-                        $("#save").prop('disabled', true);
+                        $("#save2").prop('disabled', true);
                     }
                 },
                 error: function(jqXHR, exception) {
@@ -653,9 +653,9 @@ function duplicateaadhar2(id) {
                     }
                     if ($("#dupphone2").html() == "" && $("#dupphone2").html() == "" && $("#dupemail2").html() ==
                         "") {
-                        $("#save").prop('disabled', false);
+                        $("#save2").prop('disabled', false);
                     } else {
-                        $("#save").prop('disabled', true);
+                        $("#save2").prop('disabled', true);
                     }
                 },
 
@@ -686,9 +686,9 @@ function duplicateaadhar2(id) {
                     }
                     if ($("#dupemail2").html() == "" && $("#dupemail2").html() == "" && $("#dupemail2").html() ==
                         "") {
-                        $("#save").prop('disabled', false);
+                        $("#save2").prop('disabled', false);
                     } else {
-                        $("#save").prop('disabled', true);
+                        $("#save2").prop('disabled', true);
                     }
                 },
 

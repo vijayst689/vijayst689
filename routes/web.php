@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 // Auth //
 
-Route::get('dashboard', [CustomAuthController::class, 'dashboard']);
+Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'dashboard']);
 Route::get('login', [CustomAuthController::class, 'index'])->name('login');
 Route::get('admin', [CustomAuthController::class, 'index'])->name('login');
 Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
@@ -135,6 +135,12 @@ Route::post('saverequest', [App\Http\Controllers\WalletController::class, 'saver
 
 Route::post('/adminaddwallet', [App\Http\Controllers\WalletController::class, 'adminaddwallet'])->name('adminaddwallet');
 
+Route::get('rawallet', [App\Http\Controllers\WalletController::class, 'rawallet']);
+
+Route::get('rapaymentrequest', [App\Http\Controllers\WalletController::class, 'rapaymentrequest']);
+
+Route::post('/superadminaddwallet', [App\Http\Controllers\WalletController::class, 'superadminaddwallet'])->name('superadminaddwallet');
+
 
 Route::get('/declinerequest_payment/{id}', [App\Http\Controllers\PaymentsController::class, 'declinerequest_payment'])->name('declinerequest_payment');
 Route::post('/approvepayment', [App\Http\Controllers\PaymentsController::class, 'approvepayment'])->name('approvepayment');
@@ -142,7 +148,11 @@ Route::post('/approvepayment', [App\Http\Controllers\PaymentsController::class, 
 
 Route::get('service', [App\Http\Controllers\ServiceController::class, 'service']);
 
-Route::get('allservices/{customerid}', [App\Http\Controllers\ServiceController::class, 'allservices']);
+Route::get('allservice/{customerid}', [App\Http\Controllers\ServiceController::class, 'allservice']);
+
+Route::get('allservices', [App\Http\Controllers\ServiceController::class, 'allservices']);
+
+Route::get('servicesone/{serviceid}', [App\Http\Controllers\ServiceController::class, 'servicesone']);
 
 Route::get('subservice/{id}', [App\Http\Controllers\ServiceController::class, 'subservice']);
 
@@ -163,7 +173,11 @@ Route::get('dropsubservice/{id}', [App\Http\Controllers\ServiceController::class
 Route::get('services/{serviceid}/{customerid}', [App\Http\Controllers\ServiceController::class, 'services']);
 
 Route::get('applyservice/{serviceid}/{customerid}', [App\Http\Controllers\ServiceController::class, 'applyservice']);
+
+Route::get('applyservices/{serviceid}', [App\Http\Controllers\ServiceController::class, 'applyservices']);
+
 Route::get('service/get_taluk/{distid}', [App\Http\Controllers\ServiceController::class, 'get_taluk'])->name('gettaluk');
+
 Route::get('service/get_panchayath/{taluk_id}', [App\Http\Controllers\ServiceController::class, 'get_panchayath'])->name('getpanchayath');
 
 Route::get('services/{serviceid}/{customerid}', [App\Http\Controllers\ServiceController::class, 'services']);
@@ -194,7 +208,6 @@ Route::post('/submit_fssaiservice', [App\Http\Controllers\ServiceController::cla
 Route::post('/submitapply_covid', [App\Http\Controllers\ServiceController::class, 'submitapply_covid'])->name('submitapply_covid');
 Route::post('/submitapply_nalavariyam', [App\Http\Controllers\ServiceController::class, 'submitapply_nalavariyam'])->name('submitapply_nalavariyam');
 Route::post('/submitapply_passport', [App\Http\Controllers\ServiceController::class, 'submitapply_passport'])->name('submitapply_passport');
-
 
 
 Route::get('/appliedservice/{status}', [App\Http\Controllers\ServicestatusController::class, 'appliedservice'])->name('appliedservice');
