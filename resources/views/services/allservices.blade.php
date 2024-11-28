@@ -20,7 +20,7 @@
                                                     <a href="{{ url('/servicesone', $ser->id) }}">
                                             @endif
                                             <img src="/upload/service/{{ $ser->service_image }}" alt=""
-                                                class="rounded-circle img-thumbnail avatar-xl"></a>
+                                            class="rounded-circle bg-grd-info p-1"  width="100" height="100"></a>
                                         </div>
                                     </div>
                                 @endforeach
