@@ -162,19 +162,19 @@
             </div>
         @elseif (Auth::user()->user_type_id == 2)
             <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                <span class="text-white"><b>Ramji Wallet : {{ Auth::user()->rawallet }}</b></span>&nbsp;
+                <span class="text-danger"><b>Ramji Wallet : {{ Auth::user()->rawallet }}</b></span>&nbsp;
                 <button type="button" class="btn-sm btn btn-success" data-bs-toggle="modal"
                     data-bs-target="#ramjirequest">Add Money</button>
             </div>
             <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                <span class="text-white"><b>Wallet Amount : {{ Auth::user()->wallet }}</b></span>&nbsp;
+                <span class="text-danger"><b>Wallet Amount : {{ Auth::user()->wallet }}</b></span>&nbsp;
                 <button type="button" class="btn-sm btn btn-success px-4" data-bs-toggle="modal"
                     data-bs-target="#addmoney">Add Payment</button>
             </div>
         @endif
         @if (Auth::user()->user_type_id == 1 )
         <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-            <span class="text-white"><b>Ramji Wallet Amount : {{ Auth::user()->rawallet }}</b></span>&nbsp;
+            <span class="text-danger"><b>Ramji Wallet Amount : {{ Auth::user()->rawallet }}</b></span>&nbsp;
             <button type="button" class="btn-sm btn btn-success px-4" data-bs-toggle="modal"
                 data-bs-target="#addramji">Add Payment</button>
         </div>
