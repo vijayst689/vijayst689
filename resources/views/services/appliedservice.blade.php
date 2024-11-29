@@ -70,8 +70,8 @@
                                                 @if (Auth::user()->id == $ser->user_id && $ser->retailer_id == 0)
                                                     @if ($ser->status == 'Resubmit')
 
-                                                    <a href="{{ url('/servicestatus') }}/{{ $ser->status }}/{{ $ser->id }}" style="font-size: small"
-                                                        class="btn btn-grd btn-grd-info px-1"></a>
+                                                    <a href="{{ url('/servicestatus') }}/{{ $ser->status }}/{{ $ser->id }}/{{ $ser->service_id }}" style="font-size: small"
+                                                        class="btn btn-grd btn-grd-info px-1">Resubmit</a>
 
                                                     @else
                                                         <button type="button" style="font-size: small" class="btn btn-grd btn-grd-branding px-1" disabled></button>

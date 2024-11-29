@@ -12,7 +12,7 @@
                         <div class="card-body position-relative p-4">
                             <div class="row">
                                 @foreach ($ourservice as $ser)
-                                <div class="col-md-3 col-lg-2 col-sm-4 mb-2">
+                                <div class="d-flex align-items-center gap-3 col-md-5 mb-5">
                                     <div class="text-center">
                                         <a href="{{ url('/services', $ser->id) }}/{{ $customerid }}"><img
                                                 src="/upload/service/{{ $ser->service_image }}" alt=""
