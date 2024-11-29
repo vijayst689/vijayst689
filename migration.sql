@@ -719,3 +719,278 @@ CREATE TABLE `smartcard_payment` (
   `time` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+
+//29-11-24
+
+CREATE TABLE `tailor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `name` varchar(30) DEFAULT NULL,
+  `dist_id` int(11) DEFAULT 0,
+  `taluk_id` int(11) DEFAULT 0,
+  `panchayath_id` int(11) DEFAULT 0,
+  `significant` varchar(20) DEFAULT NULL,
+  `father_or_hus_name` varchar(30) DEFAULT NULL,
+  `door_no` varchar(20) DEFAULT NULL,
+  `street_name` varchar(30) DEFAULT NULL,
+  `pincode` varchar(10) DEFAULT NULL,
+  `aadhaar_no` varchar(12) DEFAULT NULL,
+  `course_name` varchar(50) DEFAULT NULL,
+  `photo` varchar(20) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+
+CREATE TABLE `pmkissan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `name` varchar(30) DEFAULT NULL,
+  `dist_id` int(11) DEFAULT 0,
+  `taluk_id` int(11) DEFAULT 0,
+  `panchayath_id` int(11) DEFAULT 0,
+  `aadhaar_card` varchar(20) DEFAULT NULL,
+  `land_document` varchar(20) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+alter table aadhaarcard add enrollment_slip varchar(20) after address_proof;
+alter table aadhaarcard add correction_proof varchar(20) after enrollment_slip;
+alter table aadhaarcard add enrollment_no varchar(20) after correction_proof;
+alter table aadhaarcard add enrollment_type varchar(30) after enrollment_no;
+
+
+alter table can_edit add relationship1 varchar(50) after relationship_name_english;
+alter table can_edit add mother_name_tamil varchar(50) after relationship1;
+alter table can_edit add mother_name_english varchar(50) after mother_name_tamil;
+
+CREATE TABLE `birth_certificate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `name` varchar(30) DEFAULT NULL,
+  `mobile` varchar(10) DEFAULT NULL,
+  `dist_id` int(11) DEFAULT 0,
+  `taluk_id` int(11) DEFAULT 0,
+  `panchayath_id` int(11) DEFAULT 0,
+  `childname` varchar(30) DEFAULT NULL,
+  `date_of_birth` varchar(10) DEFAULT NULL,
+  `place_of_birth` varchar(20) DEFAULT NULL,
+  `hospital_name` varchar(50) DEFAULT NULL,
+  `aadhaar_no` varchar(12) DEFAULT NULL,
+  `photo` varchar(20) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+alter table can_edit modify address_tamil varchar(200);
+
+alter table tec_exam add dist_id int(11) DEFAULT NULL after amount;
+alter table tec_exam add taluk_id int(11) DEFAULT NULL after dist_id;
+alter table tec_exam add panchayath_id int(11) DEFAULT NULL after taluk_id;
+alter table tec_exam add name varchar(30) DEFAULT NULL after panchayath_id;
+alter table tec_exam add shop_name varchar(50) DEFAULT NULL after mobile;
+alter table tec_exam add shop_address varchar(200) DEFAULT NULL after shop_name;
+alter table tec_exam add postal_name varchar(30) DEFAULT NULL after shop_address;
+alter table tec_exam add village_name varchar(30) DEFAULT NULL after postal_name;
+alter table tec_exam add door_no varchar(15) DEFAULT NULL after village_name;
+alter table tec_exam add street_name varchar(30) DEFAULT NULL after village_name;
+alter table tec_exam add pincode varchar(10) DEFAULT NULL after street_name;
+alter table tec_exam add pan_card varchar(20) DEFAULT NULL after pincode;
+alter table tec_exam add tec_certificate varchar(20) DEFAULT NULL after pan_card;
+alter table tec_exam add bank_passbook varchar(20) DEFAULT NULL after tec_certificate;
+alter table tec_exam add voterid varchar(20) DEFAULT NULL after bank_passbook;
+alter table tec_exam add bc_agent_certificate varchar(20) DEFAULT NULL after voterid;
+
+
+alter table tnega_services add family_plannnig_certificate varchar(20) after tailoring_certificate;
+alter table tnega_services add birth_certificate_children varchar(20) after family_plannnig_certificate;
+alter table tnega_services add id_proof varchar(20) after birth_certificate_children;
+alter table tnega_services add family_photo varchar(20) after id_proof;
+alter table tnega_services add handicapped_proof varchar(20) after family_photo;
+alter table tnega_services add udid_card varchar(20) after handicapped_proof;
+alter table tnega_services add registered_deed varchar(20) after udid_card;
+alter table tnega_services add chitta_and_villangam varchar(20) after registered_deed;
+alter table tnega_services add property_details varchar(20) after chitta_and_villangam;
+alter table tnega_services add residential_certificate varchar(20) after property_details;
+alter table tnega_services add damage_certificate varchar(20) after residential_certificate;
+
+
+alter table tec_exam add csc_id_number varchar(20) DEFAULT NULL after bc_agent_certificate;
+alter table tec_exam add csc_password varchar(15) DEFAULT NULL after csc_id_number;
+alter table tec_exam add e_aadhaar_pdf varchar(15) DEFAULT NULL after csc_password;
+alter table tec_exam add e_aadhaar_password varchar(15) DEFAULT NULL after e_aadhaar_pdf;
+alter table tec_exam add signature varchar(20) DEFAULT NULL after photo;
+
+alter table tec_exam modify e_aadhaar_pdf varchar(20);
+
+CREATE TABLE `medicalscheme` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `name` varchar(30) DEFAULT NULL,
+  `mobile` varchar(10) DEFAULT NULL,
+  `dist_id` int(11) DEFAULT 0,
+  `taluk_id` int(11) DEFAULT 0,
+  `panchayath_id` int(11) DEFAULT 0,
+  `family_head_name` varchar(30) DEFAULT NULL,
+  `smartcard_onlineprint` varchar(20) DEFAULT NULL,
+  `aadhaar_card` varchar(20) DEFAULT NULL,
+  `allfamily_mem_aadhaarcard` varchar(20) DEFAULT NULL,
+  `family_head_photo` varchar(20) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+ALTER TABLE `license` CHANGE `reg_cell_number` `driving_license_no` VARCHAR(15)  DEFAULT NULL;
+alter table license add rc_number varchar(15) DEFAULT NULL after driving_license_no;
+
+CREATE TABLE `voterid_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `wrong_data` varchar(100) DEFAULT NULL,
+  `new_data` varchar(100) DEFAULT NULL,
+  `correction_documents` varchar(50) DEFAULT NULL,
+  `voterid_correction` varchar(20) DEFAULT NULL,
+  `doc` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+alter table tec_exam add any_proof varchar(100) DEFAULT NULL after signature;
+
+alter table birth_certificate modify place_of_birth varchar(100);
+alter table birth_certificate add date_of_death varchar(10) DEFAULT NULL after date_of_birth;
+alter table birth_certificate add place_of_death varchar(100) DEFAULT NULL after date_of_death;
+
+CREATE TABLE `dharsan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `name` varchar(30) DEFAULT NULL,
+  `mobile` varchar(10) DEFAULT NULL,
+  `dist_id` int(11) DEFAULT 0,
+  `taluk_id` int(11) DEFAULT 0,
+  `panchayath_id` int(11) DEFAULT 0,
+  `darshan_date` varchar(10) DEFAULT NULL,
+  `photo` varchar(20) DEFAULT NULL,
+  `aadhaar_card` varchar(20) DEFAULT NULL,
+  `time` varchar(20) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+alter table users add rawallet decimal(10,2) DEFAULT 0 after wallet;
+alter table payment add newbalance decimal(10,2) DEFAULT 0 after amount;
+
+alter table services add ser_id int(11) DEFAULT 0 after parent_id;
+
+
+
+alter table family_member add income int(11) DEFAULT 0 after relation_status;
+alter table family_member add profession varchar(20) DEFAULT NULL after income;
+
+
+CREATE TABLE `recharge` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `mobile` varchar(20) DEFAULT NULL,
+  `circle` varchar(10) DEFAULT NULL,
+  `operator` varchar(10) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT 0,
+  `commission_amount` decimal(10,2) DEFAULT 0,
+  `recharge_date` date not NULL,
+  `recharge_time` varchar(10) DEFAULT NULL,
+  user_id int DEFAULT 0,
+  plan_id int DEFAULT 0,
+  usertx varchar(20) DEFAULT NULL,
+  status varchar(20) DEFAULT NULL,
+  message varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+
+alter table aadhaarcard add certificate varchar(20) DEFAULT NULL after acknowledgement;
+alter table voterid modify application_no varchar(40);
+
+
+CREATE TABLE `callback` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `operator` varchar(200) DEFAULT NULL,
+  `callback_date` varchar(10) DEFAULT NULL,
+  `callback_time` varchar(10) DEFAULT NULL,
+  `usertx` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  message varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+alter table payment add newbalance decimal(10,2) DEFAULT 0 after amount;
+
+alter table dharsan add route varchar(50) DEFAULT NULL after time;
+
+CREATE TABLE `operator` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(20) DEFAULT NULL,
+  `service_type` varchar(50) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `commission` decimal(10,2) DEFAULT 0.00,
+  `retailer_commission` decimal(10,2) DEFAULT 0.00,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;

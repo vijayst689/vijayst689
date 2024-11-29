@@ -326,8 +326,8 @@ public function applyservice($serviceid,$customerid) {
  }  elseif ($serviceid == 179 || $serviceid == 180){
      return view( 'applyservice.medicalscheme',compact('serviceid','districts','servicename','amount','customers','payment'));
 
- }  elseif ($serviceid == 181 || $serviceid == 182 || $serviceid == 185 || $serviceid == 184){
-     return view( 'applyservice.sabarimalaiservice',compact('serviceid','districts','servicename','amount','customers','payment'));
+ }  elseif ($serviceid == 183 || $serviceid == 184 || $serviceid == 185 || $serviceid == 186){
+     return view( 'applyservice.dharsanservice',compact('serviceid','districts','servicename','amount','customers','payment'));
  }
    
  }

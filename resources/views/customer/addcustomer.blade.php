@@ -55,15 +55,6 @@
                                     </div>
 
                                     <div class="mb-3 row">
-                                        <label for="example-email-input" class="col-sm-3 form-label">Email</label>
-                                        <div class="col-sm-9">
-                                            <input required onkeyup="duplicateemail(0)" class="form-control" type="email"
-                                                maxlength="50" name="email" id="email" placeholder="Email">
-                                            <span id="dupemail" style="color:red"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3 row">
                                         <label class="col-sm-3 form-label">Gender</label>
                                         <div class="col-sm-9">
                                             <select required class="form-select" name="gender" required>
@@ -112,7 +103,7 @@
                                             No</label>
                                         <div class="col-sm-9">
                                             <input required type="text" class="form-control" name="smartcard_no"
-                                                maxlength="10" placeholder="SmartCard No" />
+                                                maxlength="20" placeholder="SmartCard No" />
                                         </div>
                                     </div>
 
@@ -136,13 +127,7 @@
                                                 name="date_of_birth" id="example-url-input">
                                         </div>
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label for="example-month-input" class="col-sm-3 form-label">Password</label>
-                                        <div class="col-sm-9">
-                                            <input required class="form-control" type="password" name="password"
-                                                maxlength="10" placeholder="Password">
-                                        </div>
-                                    </div>
+                                    
                                     <div class="mb-3 row">
                                         <label for="example-month-input" class="col-sm-3 form-label">Phone</label>
                                         <div class="col-sm-9">
