@@ -194,6 +194,18 @@
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
+                                            <div class="menu-title">Smartcard Payment</div>
+                                        </a>
+                                        <ul class="sub-menu" aria-expanded="false">
+                                            @foreach($smartservice as $service)
+                                            <li><a href="{{ url('/smartcardpayment',$service->id) }}">{{ $service->service_name }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
                                             <div class="menu-title">Distributor</div>
                                         </a>
                                         <ul class="mm-collapse">

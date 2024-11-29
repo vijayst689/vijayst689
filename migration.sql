@@ -704,3 +704,18 @@ alter table services add ser_id int(11) DEFAULT 0 after parent_id;
 
 alter table family_member add income int(11) DEFAULT 0 after relation_status;
 alter table family_member add profession varchar(20) DEFAULT NULL after income;
+
+29-11-2024
+
+CREATE TABLE `smartcard_payment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) DEFAULT 0,
+  `service_id` int(11) DEFAULT 0,
+  `taluk_id` int(11) DEFAULT 0,
+  `distributor_amount` decimal(10,2) DEFAULT 0,
+  `retailer_amount` decimal(10,2) DEFAULT 0,
+  `customer_amount` decimal(10,2) DEFAULT 0,
+  `admin_amount` decimal(10,2) DEFAULT 0,
+  `time` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;

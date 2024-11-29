@@ -36,7 +36,7 @@ class ServicePaymentController extends Controller
         $distributor_amount = $request->distributor_amount[ $key ];
         $retailer_amount = $request->retailer_amount[ $key ];
         $customer_amount = $request->customer_amount[ $key ];
-       
+
           DB::table( 'service_payment' )->insert( [
             'parent_id'  => $payment,
             'service_id'  => $service_id,
@@ -47,6 +47,37 @@ class ServicePaymentController extends Controller
       }
     }
     return redirect('servicepayment/'.$payment);
+  }
+
+  public function smartcardpayment($serviceid){
+    $services = DB::table('services')->where('parent_id', $serviceid )->orderBy( 'id' , 'Asc' )->get();
+    $taluk = DB::table('taluk')->orderBy( 'id' , 'Asc' )->get();
+    return view('servicepayment.smartcardpayment',compact('services','serviceid','taluk'));
+  }
+
+  public function savesmart_payment(Request $request){
+    // dd($request->all());
+    $parent_id = $request->parent_id;
+    $serviceid = $request->serviceid;
+    $taluk_id = $request->taluk_id;
+     DB::table('smartcard_payment')->where('parent_id',$parent_id )->where('service_id',$serviceid )->where('taluk_id',$taluk_id )->delete();
+
+          DB::table( 'smartcard_payment' )->insert( [
+            'parent_id'            => $parent_id,
+            'service_id'           => $serviceid,
+            'taluk_id'             => $taluk_id,
+            'distributor_amount'   => $request->distributor_amount,
+            'retailer_amount'      => $request->retailer_amount,
+            'customer_amount'      => $request->customer_amount,
+            'admin_amount'         => $request->admin_amount,
+          ] );
+    return redirect('smartcardpayment/'.$parent_id);
+  }
+
+   public function get_smartcard_payment($talukid,$serviceid){
+    $response = DB::table('smartcard_payment')->where('service_id', $serviceid )->where('taluk_id', $talukid )->first();
+
+    return response()->json( $response );
   }
 
 
