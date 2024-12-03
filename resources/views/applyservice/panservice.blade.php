@@ -93,7 +93,6 @@
                                     </div>
                                 @elseif($serviceid == 190)
                                 <div class="mb-3 col-md-6">
-
                                         <label for="panno" class="form-label">PAN NO</label>
                                         <input required class="form-control" name="panno" type="text"  maxlength="10" style="width: 100%;" placeholder="PAN Number">
 
@@ -133,8 +132,8 @@
             }
         });
 
-        var serviceid = "{{ $serviceid }}";
- var ramjibalance = "{{ $mainbalance->rawallet }}";
+    var serviceid = "{{ $serviceid }}";
+    var ramjibalance = "{{ $mainbalance->rawallet }}";
     ramjibalance=parseFloat(ramjibalance);
     function checkpayment(e){
         if(serviceid == 69 || serviceid == 70){

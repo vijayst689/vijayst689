@@ -994,3 +994,19 @@ CREATE TABLE `operator` (
   `retailer_commission` decimal(10,2) DEFAULT 0.00,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+
+
+alter table pancard add last_name varchar(40) DEFAULT NULL after name;
+alter table pancard add email varchar(60) DEFAULT NULL after mobile;
+alter table pancard add title varchar(30) DEFAULT NULL after email;
+alter table pancard add mode varchar(30) DEFAULT NULL after title;
+alter table pancard add gender varchar(20) DEFAULT NULL after mode;
+alter table pancard add api_status varchar(30) DEFAULT NULL after status;
+alter table pancard add api_url varchar(700) DEFAULT NULL after api_status;
+alter table pancard add api_txid varchar(30) DEFAULT NULL after api_url;
+
+alter table pancard add pancard_type varchar(20) DEFAULT NULL after pan_card;
+alter table pancard add relative_name varchar(20) DEFAULT NULL after pancard_type;
+alter table pancard add email_id varchar(40) DEFAULT NULL after relative_name;
+alter table pancard add signature varchar(40) DEFAULT NULL after relative_name;
+alter table pancard add relationship varchar(20) DEFAULT NULL after signature;

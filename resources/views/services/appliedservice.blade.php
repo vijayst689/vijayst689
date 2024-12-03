@@ -65,7 +65,6 @@
                                                 <td><a download
                                                         href="{{ URL::to('/') }}/upload/services/certificate/{{ $ser->certificate }}" style="font-size: small" class="btn btn-grd btn-grd-branding px-1">Download</a></td>
                                             @endif
-                                            @endif
                                             @php
                                             $apply_user_id = 0;
                                             if($ser->retailer_id == 0){

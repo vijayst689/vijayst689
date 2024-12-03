@@ -235,6 +235,7 @@ Route::post('/fssaiservice_update', [App\Http\Controllers\ServicestatusControlle
 Route::post('/submit_panupdate', [App\Http\Controllers\ServicestatusController::class, 'submit_panupdate'])->name('submit_panupdate');
 Route::post('/covid_update', [App\Http\Controllers\ServicestatusController::class, 'covid_update'])->name('covid_update');
 Route::post('/nalavariyam_update', [App\Http\Controllers\ServicestatusController::class, 'nalavariyam_update'])->name('nalavariyam_update');
+Route::post('/pancard_update', [App\Http\Controllers\ServicestatusController::class, 'pancard_update'])->name('pancard_update');
 
 Route::get('/servicepayment/{serviceid}', [App\Http\Controllers\ServicePaymentController::class, 'servicepayment'])->name('servicepayment');
 
