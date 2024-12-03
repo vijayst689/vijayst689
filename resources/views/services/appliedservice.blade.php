@@ -65,35 +65,37 @@
                                                 <td><a download
                                                         href="{{ URL::to('/') }}/upload/services/certificate/{{ $ser->certificate }}" style="font-size: small" class="btn btn-grd btn-grd-branding px-1">Download</a></td>
                                             @endif
-                                            <td style="white-space:nowrap;">
+                                            @endif
+                                            @php
+                                            $apply_user_id = 0;
+                                            if($ser->retailer_id == 0){
+                                                $apply_user_id = $ser->distributor_id;
+                                            }elseif($ser->distributor_id == 0){
+                                                $apply_user_id = $ser->retailer_id;
+                                            }
+                                            @endphp
+                                             <td style="white-space:nowrap;">
+                                                @if(Auth::user()->id == $apply_user_id)
+                                                    @if($ser->status == "Resubmit")
 
-                                                @if (Auth::user()->id == $ser->user_id && $ser->retailer_id == 0)
-                                                    @if ($ser->status == 'Resubmit')
-
-                                                    <a href="{{ url('/servicestatus') }}/{{ $ser->status }}/{{ $ser->id }}/{{ $ser->service_id }}" style="font-size: small"
-                                                        class="btn btn-grd btn-grd-info px-1">Resubmit</a>
-
+                                                   <a href="{{ url('/servicestatus') }}/{{ $ser->status }}/{{ $ser->id }}/{{ $ser->service_id }}"
+                                                    class="btn btn-sm btn-warning">{{ $ser->status }}</a>
                                                     @else
-                                                        <button type="button" style="font-size: small" class="btn btn-grd btn-grd-branding px-1" disabled></button>
-                                                    @endif
-                                                @elseif(Auth::user()->id == $ser->retailer_id)
-                                                    @if ($ser->status == 'Resubmit')
+                                                    <button type="button" class="btn btn-sm btn-warning" disabled>{{ $ser->status }}</button>
+                                                    @if($ser->service_id == "69" || $ser->service_id == "70")
+                                                     <a href="{{ url('/pancard_reapply') }}/{{ $ser->api_txid }}"
+                                                    class="btn btn-sm btn-warning">Apply</a>
 
-                                                    <a href="{{ url('/servicestatus') }}/{{ $ser->status }}/{{ $ser->id }}/{{ $ser->service_id }}" style="font-size: small"
-                                                        class="btn btn-grd btn-grd-info px-1">Resubmit</a>
-
-                                                    @else
-                                                        <button type="button"  style="font-size: small"
-                                                        class="btn btn-grd btn-grd-primary" disabled>Pending</button>
                                                     @endif
-                                                @else
-                                                    @if (Auth::user()->id == $ser->user_id)
-                                                        <button type="button" style="font-size: small" class="btn btn-grd btn-grd-branding px-1" disabled></button>
-                                                    @else
-                                                    <a href="{{ url('/servicestatus') }}/{{ $ser->status }}/{{ $ser->id }}/{{ $ser->service_id }}" style="font-size: small"
-                                                        class="btn btn-grd btn-grd-info px-1">{{ $ser->status }}</a>
                                                     @endif
-                                                @endif
+                                                 @else
+                                                 @if(Auth::user()->user_type_id == 2 && $ser->status == "Resubmit")
+                                                  <button type="button" class="btn btn-sm btn-warning" disabled>{{ $ser->status }}</button>
+                                                 @else
+                                                 <a href="{{ url('/servicestatus') }}/{{ $ser->status }}/{{ $ser->id }}/{{ $ser->service_id }}"
+                                                    class="btn btn-sm btn-warning">{{ $ser->status }}</a>
+                                                    @endif
+                                                 @endif
                                             </td>
                                         </tr>
                                     @endforeach

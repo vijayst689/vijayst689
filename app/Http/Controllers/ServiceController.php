@@ -272,8 +272,9 @@ public function applyservice($serviceid,$customerid) {
  }  elseif ($serviceid == 56 || $serviceid == 58 || $serviceid == 158){
      return view( 'applyservice.aadhaarcard_apply',compact('serviceid','districts','servicename','amount','payment','customers'));
 
- }  elseif ($serviceid == 71 || $serviceid == 69){
-     return view( 'applyservice.panservice',compact('serviceid','districts','servicename','amount','payment','customers'));
+ }  elseif ($serviceid == 71 || $serviceid == 69 || $serviceid == 70){
+    $mainbalance = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+    return view( 'applyservice.panservice',compact('serviceid','districts','servicename','amount','payment','customers','mainbalance'));
 
  }  elseif ($serviceid == 113 || $serviceid == 120){
      return view( 'applyservice.voteridservice',compact('serviceid','districts','servicename','amount','payment','customers'));
@@ -329,7 +330,7 @@ public function applyservice($serviceid,$customerid) {
  }  elseif ($serviceid == 183 || $serviceid == 184 || $serviceid == 185 || $serviceid == 186){
      return view( 'applyservice.dharsanservice',compact('serviceid','districts','servicename','amount','customers','payment'));
  }
-   
+
  }
 
  public function submit_applyservice( Request $request ) {
@@ -4532,39 +4533,96 @@ public function submitapply_driving_license(Request $request){
     return redirect("appliedservice/Pending")->With("success","Application submitted Succesfully");
 
 }
-    public function submitapply_pancard(Request $request){
 
-        $user_id = 0;
-        $retailer_id = 0;
-        $distributor_id = 0;
-        if(Auth::user()->user_type_id == 3){
-            $user_id = $request ->user_id;
-            $distributor_id = Auth::user()->id;
-        }elseif(Auth::user()->user_type_id == 4){
-            $user_id = $request ->user_id;
-            $retailer_id = Auth::user()->id;
-        } elseif(Auth::user()->user_type_id == 5){
-            $user_id = Auth::user()->id;
+public function submitapply_pancard(Request $request){
+
+    $user_id = 0;
+    $retailer_id = 0;
+    $distributor_id = 0;
+    if(Auth::user()->user_type_id == 3){
+        $user_id = $request ->user_id;
+        $distributor_id = Auth::user()->id;
+    }elseif(Auth::user()->user_type_id == 4){
+        $user_id = $request ->user_id;
+        $retailer_id = Auth::user()->id;
+    } elseif(Auth::user()->user_type_id == 5){
+        $user_id = Auth::user()->id;
+    }
+
+    $serviceid = $request ->serviceid;
+    $status = "";
+    if($serviceid == 69){
+        $mobile = $request->mobile;
+        $mode = $request->mode;
+        $orderid = rand(000000,999999);
+        $panurl =  "https://connect.inspay.in/v4/nsdl/new_pan?username=IP7598984380&token=836a596851ed939b19a4b71157c47e1d&number=$mobile&mode=$mode&orderid=$orderid";
+        $crl = curl_init();
+        curl_setopt( $crl, CURLOPT_URL, $panurl );
+        curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
+        curl_setopt( $crl, CURLOPT_RETURNTRANSFER, true );
+        $result = curl_exec($crl);
+        $result = json_decode($result);
+        //echo "<pre>"; print_r($result);echo "</pre>";die;
+        $status = $result->status;
+        $url = "";
+        $message = "";
+        if($status == "Success"){
+            $url = $result->url;
+            $orderid = $result->orderid;
+            $message = $result->message;
+        }else{
+            $orderid = $result->orderid;
+            $message = $result->message;
         }
-        $serviceid = $request ->serviceid;
-        if($serviceid == 71 || $serviceid == 69){
+        curl_close($crl);
+    }else if($serviceid == 70){
+        $mobile = $request->mobile;
+        $mode = $request->mode;
+        $orderid = rand(000000,999999);
+        $panurl =  "https://connect.inspay.in/v4/nsdl/correction?username=IP7598984380&token=836a596851ed939b19a4b71157c47e1d&number=$mobile&mode=$mode&orderid=$orderid";
+        $crl = curl_init();
+        curl_setopt( $crl, CURLOPT_URL, $panurl );
+        curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
+        curl_setopt( $crl, CURLOPT_RETURNTRANSFER, true );
+        $result = curl_exec($crl);
+        $result = json_decode($result);
+        //echo "<pre>"; print_r($result);echo "</pre>";die;
+        $status = $result->status;
+        $url = "";
+        $message = "";
+        if($status == "Success"){
+            $url = $result->url;
+            $orderid = $result->orderid;
+            $message = $result->message;
+        }else{
+            $orderid = $result->orderid;
+            $message = $result->message;
+        }
+        curl_close($crl);
+
+    }
+    //dd($result);
+
+    if($serviceid == 69 || $serviceid == 70){
         DB::table( 'pancard' )->insert( [
-         'user_id'      => $user_id,
-         'retailer_id'  => $retailer_id,
-         'distributor_id'=> $distributor_id,
-         'service_id'   => $request ->serviceid,
-         'amount'       => $request->amount,
-         'pancard_type' => $request->pancard_type,
-         'name'         => $request->name,
-         'aadhaar_no'   => $request->aadhaar_no,
-         'relative_name'=> $request->relative_name,
-         'email_id'     => $request->email_id,
-         'relationship' => $request->relationship,
-         'mobile'       => $request->mobile,
-         'status'       => 'Pending',
-         'applied_date' => date("Y-m-d"),
-         'created_at'   => date("Y-m-d"),
-     ] );
+
+           'user_id'      => $user_id,
+           'retailer_id'  => $retailer_id,
+           'distributor_id'=> $distributor_id,
+           'service_id'   => $request ->serviceid,
+           'amount'       => $request->amount,
+           'name'         => $request->name,
+           'last_name'    => $request->last_name,
+           'email'        => $request->email,
+           'title'        => $request->title,
+           'mode'         => $request->mode,
+           'gender'       => $request->gender,
+           'aadhaar_no'   => $request->aadhaar_no,
+           'mobile'       => $request->mobile,
+           'status'       => 'Pending',
+           'applied_date' => date("Y-m-d"),
+           'created_at'   => date("Y-m-d"),
+       ] );
 
         $insertid = DB::getPdo()->lastInsertId();
         $pan_card = "";
@@ -4572,70 +4630,175 @@ public function submitapply_driving_license(Request $request){
         $aadhaar_card = "";
         $signature = "";
 
-        if ($request->pan_card != null) {
-            $pan_card = uniqid().'.'.$request->file('pancard_type')->extension();
-            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'pan_card' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['pan_card']['tmp_name'], $filepath . $pan_card);
-
-        }
         DB::table('pancard')->where('id', $insertid)->update([
-          'pan_card' => $pan_card,
-      ]);
-        if ($request->photo != null) {
-            $photo = uniqid().'.'.$request->file('photo')->extension();
-            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
-
-        }
-        DB::table('pancard')->where('id', $insertid)->update([
-            'photo' => $photo,
-        ]);
-        if ($request->aadhaar_card != null) {
-            $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
-            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
-
-        }
-        DB::table('pancard')->where('id', $insertid)->update([
-            'aadhaar_card' => $aadhaar_card,
-        ]);
-        if ($request->signature != null) {
-            $signature = uniqid().'.'.$request->file('signature')->extension();
-            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'signature' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['signature']['tmp_name'], $filepath . $signature);
-
-        }
-        DB::table('pancard')->where('id', $insertid)->update([
-            'signature' => $signature,
+            'api_url' => $url,
+            'api_status' => $status,
+            'api_txid' => $orderid,
         ]);
 
     }
-      $servicepayment = $request->service_amount;
-      if(Auth::user()->user_type_id == 3){
-        $user_id = $distributor_id;
-    }elseif(Auth::user()->user_type_id == 4){
-        $user_id = $retailer_id;
-    }elseif(Auth::user()->user_type_id == 5){
-        $user_id = $user_id;
-    }
-    $date = date( 'Y-m-d' );
-    $time = date( 'H:i:s' );
-    $service_status = 'Out Payment';
-    $ad_info = 'Service Payment';
-    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id')";
-    DB::insert( DB::raw( $sql ) );
-    $sql = "update users set wallet = wallet + $servicepayment where id = 2";
-    DB::update( DB::raw( $sql ) );
-    $service_status = 'IN Payment';
-    $ad_info = 'Service Payment';
-    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id')";
-    DB::insert( DB::raw( $sql ) );
-    $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
-    DB::update( DB::raw( $sql ) );
 
-    return redirect("appliedservice/Pending")->With("success","Application submitted Succesfully");
+    if($status == "Success"){
+        $servicepayment = $request->service_amount;
+        if(Auth::user()->user_type_id == 3){
+            $user_id = $distributor_id;
+        }elseif(Auth::user()->user_type_id == 4){
+            $user_id = $retailer_id;
+        }elseif(Auth::user()->user_type_id == 5){
+            $user_id = $user_id;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = 'Service Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $servicepayment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $ad_info = 'Service Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+        DB::update( DB::raw( $sql ) );
+
+
+        $ramjidebit_amount = $request->ramjidebit_amount;
+        $service_status = 'Out Payment';
+        $ad_info = 'Ramji Wallet Debit(PanCard)';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','2','1','$ramjidebit_amount','$ad_info', '$service_status','$time','$date','2')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set rawallet = rawallet + $ramjidebit_amount where id = 1";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $ad_info = 'Ramji Wallet Credit(PanCard)';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','1','2','$ramjidebit_amount','$ad_info', '$service_status','$time','$date','2')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set rawallet = rawallet - $ramjidebit_amount where id = 2";
+        DB::update( DB::raw( $sql ) );
+    }
+
+    if($serviceid == 71){
+        $aadhaar_no = $request->aadhaar_no;
+        $orderid = rand(000000,999999);
+        $panurl =  "https://goodapi.in/serviceApi/V1/panFind?apiKey=3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9&order_id=$orderid&uidNumber=$aadhaar_no";
+        $crl = curl_init();
+        curl_setopt( $crl, CURLOPT_URL, $panurl );
+        curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
+        curl_setopt( $crl, CURLOPT_RETURNTRANSFER, true );
+        $result = curl_exec($crl);
+        $result = json_decode($result,true);
+        $statuscode = $result['StatusCode'];
+        $pan_no = "";
+        $name = "";
+        $dob = "";
+        $message = "";
+        if($statuscode == "100"){
+            $pan_no = $result['pan_no'];
+            $name = $result['name'];
+            $dob = $result['dob'];
+
+            DB::table( 'pancard' )->insert( [
+
+               'user_id'      => $user_id,
+               'retailer_id'  => $retailer_id,
+               'distributor_id'=> $distributor_id,
+               'service_id'   => $request->serviceid,
+               'amount'       => $request->amount,
+               'name'         => $name,
+               'aadhaar_no'   => $request->aadhaar_no,
+               'pan_no'       => $pan_no,
+               'dob'          => $dob,
+               'status'       => 'Approved',
+               'applied_date' => date("Y-m-d"),
+               'created_at'   => date("Y-m-d"),
+               'completed_date'   => date("Y-m-d"),
+           ] );
+
+            $insertid = DB::getPdo()->lastInsertId();
+
+            $servicepayment = $request->service_amount;
+            if(Auth::user()->user_type_id == 3){
+                $user_id = $distributor_id;
+            }elseif(Auth::user()->user_type_id == 4){
+                $user_id = $retailer_id;
+            }elseif(Auth::user()->user_type_id == 5){
+                $user_id = $user_id;
+            }
+            $date = date( 'Y-m-d' );
+            $time = date( 'H:i:s' );
+            $service_status = 'Out Payment';
+            $ad_info = 'Service Payment';
+            $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id')";
+            DB::insert( DB::raw( $sql ) );
+            $sql = "update users set wallet = wallet + $servicepayment where id = 2";
+            DB::update( DB::raw( $sql ) );
+            $service_status = 'IN Payment';
+            $ad_info = 'Service Payment';
+            $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id')";
+            DB::insert( DB::raw( $sql ) );
+            $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+            DB::update( DB::raw( $sql ) );
+
+             $ramjidebit_amount = $request->ramjidebit_amount;
+        $service_status = 'Out Payment';
+        $ad_info = 'Ramji Wallet Debit(PanCard)';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','2','1','$ramjidebit_amount','$ad_info', '$service_status','$time','$date','2')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set rawallet = rawallet + $ramjidebit_amount where id = 1";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $ad_info = 'Ramji Wallet Credit(PanCard)';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','1','2','$ramjidebit_amount','$ad_info', '$service_status','$time','$date','2')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set rawallet = rawallet - $ramjidebit_amount where id = 2";
+        DB::update( DB::raw( $sql ) );
+
+
+            return redirect('servicestatus/Approved/'.$insertid.'/'.$serviceid)->With("success","Pan Number Find Successful...");
+        }else{
+            $message = $result['message'];
+            return redirect('applyservices/'.$serviceid)->With("error",$message);
+        }
 
     }
+    if($status == "Success"){
+        return redirect($url);
+    }else{
+     return redirect('applyservices/'.$serviceid)->With("error",$message);
+ }
+
+}
+
+public function pancard_reapply($txid){
+
+    $panurl =  "https://connect.inspay.in/v4/nsdl/incomplete?username=IP7598984380&token=836a596851ed939b19a4b71157c47e1d&orderid=$txid";
+    $crl = curl_init();
+    curl_setopt( $crl, CURLOPT_URL, $panurl );
+    curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
+    curl_setopt( $crl, CURLOPT_RETURNTRANSFER, true );
+    $result = curl_exec($crl);
+    $result = json_decode($result);
+        //echo "<pre>"; print_r($result);echo "</pre>";die;
+    $status = $result->status;
+    $url = "";
+    $message = "";
+    if($status == "Success"){
+        $url = $result->url;
+        $orderid = $result->txid;
+        $message = $result->message;
+    }else{
+        $orderid = $result->orderid;
+        $message = $result->message;
+    }
+    curl_close($crl);
+    if($status == "Success"){
+        return redirect($url);
+    }else{
+     return redirect('appliedservice/Pending')->With("error",$message);
+ }
+}
+
 
     public function submitapply_tailorshop(Request $request){
 

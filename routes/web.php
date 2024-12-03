@@ -208,6 +208,8 @@ Route::post('/submit_fssaiservice', [App\Http\Controllers\ServiceController::cla
 Route::post('/submitapply_covid', [App\Http\Controllers\ServiceController::class, 'submitapply_covid'])->name('submitapply_covid');
 Route::post('/submitapply_nalavariyam', [App\Http\Controllers\ServiceController::class, 'submitapply_nalavariyam'])->name('submitapply_nalavariyam');
 Route::post('/submitapply_passport', [App\Http\Controllers\ServiceController::class, 'submitapply_passport'])->name('submitapply_passport');
+Route::post('/submitapply_pancard', [App\Http\Controllers\ServiceController::class, 'submitapply_pancard'])->name('submitapply_pancard');
+Route::get('pancard_reapply/{txid}', [App\Http\Controllers\ServiceController::class, 'pancard_reapply']);
 
 
 Route::get('/appliedservice/{status}', [App\Http\Controllers\ServicestatusController::class, 'appliedservice'])->name('appliedservice');

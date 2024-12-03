@@ -4419,108 +4419,108 @@ public function driving_license_update(Request $request){
 }
 
 public function pancard_update(Request $request){
-$apply_user_id = 0;
-if($request->retailer_id == 0){
-   $apply_user_id = $request->distributor_id;
-}elseif($request->distributor_id == 0){
-   $apply_user_id = $request->retailer_id;
-}
-if($request->user_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
-   $status = $request->status;
-   if($status == "Resubmit"){
-       DB::table( 'pancard' )->where('id', $request->applied_serviceid)->update( [
-           'remarks'  => $request->remarks,
-           'status'  => $status,
-       ] );
-   }elseif($status == "Processing"){
-       if ( $request->acknowledgement != null ) {
-           $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
-           $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
-           move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
-           DB::table( 'pancard' )->where( 'id', $request->applied_serviceid )->update( [
-               'acknowledgement' => $acknowledgement,
-               'status' => $status,
-               'application_no' => $request->application_no,
-           ] );
-       }
-   }elseif($status == "Approved"){
-       if ( $request->certificate != null ) {
-           $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
-           $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'certificate'. DIRECTORY_SEPARATOR);
-           move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
-           DB::table( 'pancard' )->where( 'id', $request->applied_serviceid )->update( [
-               'certificate' => $certificate,
-               'status' => $status,
-               'completed_date' => date("Y-m-d"),
-           ] );
-       }
+    $apply_user_id = 0;
+   if($request->retailer_id == 0){
+       $apply_user_id = $request->distributor_id;
+   }elseif($request->distributor_id == 0){
+       $apply_user_id = $request->retailer_id;
    }
-}else{
-   $status = "Pending";
-   $serviceid = $request->serviceid;
-        if ($request->pan_card != null) {
-           $pan_card = uniqid().'.'.$request->file('pan_card')->extension();
-           $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'pan_card' . DIRECTORY_SEPARATOR);
-           move_uploaded_file($_FILES['pan_card']['tmp_name'], $filepath . $pan_card);
-           DB::table( 'pancard' )->where( 'id', $request->applied_serviceid )->update( [
-              'pan_card'             => $pan_card,
-            ] );
+   if($request->user_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+       $status = $request->status;
+       if($status == "Resubmit"){
+           DB::table( 'pancard' )->where('id', $request->applied_serviceid)->update( [
+               'remarks'  => $request->remarks,
+               'status'  => $status,
+           ] );
+       }elseif($status == "Processing"){
+           if ( $request->acknowledgement != null ) {
+               $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
+               $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
+               move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
+               DB::table( 'pancard' )->where( 'id', $request->applied_serviceid )->update( [
+                   'acknowledgement' => $acknowledgement,
+                   'status' => $status,
+                   'application_no' => $request->application_no,
+               ] );
+           }
+       }elseif($status == "Approved"){
+           if ( $request->certificate != null ) {
+               $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
+               $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'certificate'. DIRECTORY_SEPARATOR);
+               move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
+               DB::table( 'pancard' )->where( 'id', $request->applied_serviceid )->update( [
+                   'certificate' => $certificate,
+                   'status' => $status,
+                   'completed_date' => date("Y-m-d"),
+               ] );
+           }
        }
-      if($serviceid == 71 || $serviceid == 69){
-       DB::table('pancard')->where('id', $request->applied_serviceid)->update([
-           'pancard_type' => $request->pancard_type,
-           'name'         => $request->name,
-           'aadhaar_no'   => $request->aadhaar_no,
-           'relative_name'=> $request->relative_name,
-           'email_id'     => $request->email_id,
-           'relationship' => $request->relationship,
-           'mobile'       => $request->mobile,
-           'status'       => 'Pending',
-           'applied_date' => date("Y-m-d"),
-           'created_at'   => date("Y-m-d"),
-       ]);
+   }else{
+       $status = "Pending";
+       $serviceid = $request->serviceid;
+            if ($request->pan_card != null) {
+               $pan_card = uniqid().'.'.$request->file('pan_card')->extension();
+               $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'pan_card' . DIRECTORY_SEPARATOR);
+               move_uploaded_file($_FILES['pan_card']['tmp_name'], $filepath . $pan_card);
+               DB::table( 'pancard' )->where( 'id', $request->applied_serviceid )->update( [
+                  'pan_card'             => $pan_card,
+                ] );
+           }
+          if($serviceid == 71 || $serviceid == 69){
+           DB::table('pancard')->where('id', $request->applied_serviceid)->update([
+               'pancard_type' => $request->pancard_type,
+               'name'         => $request->name,
+               'aadhaar_no'   => $request->aadhaar_no,
+               'relative_name'=> $request->relative_name,
+               'email_id'     => $request->email_id,
+               'relationship' => $request->relationship,
+               'mobile'       => $request->mobile,
+               'status'       => 'Pending',
+               'applied_date' => date("Y-m-d"),
+               'created_at'   => date("Y-m-d"),
+           ]);
 
-DB::table( 'pancard' )->where( 'id', $request->applied_serviceid )->update( [
-   'status' => $status,
-] );
-if ($request->pan_card != null) {
-$pan_card = uniqid().'.'.$request->file('pan_card')->extension();
-$filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'pan_card' . DIRECTORY_SEPARATOR);
-move_uploaded_file($_FILES['pan_card']['tmp_name'], $filepath . $pan_card);
+   DB::table( 'pancard' )->where( 'id', $request->applied_serviceid )->update( [
+       'status' => $status,
+   ] );
+   if ($request->pan_card != null) {
+    $pan_card = uniqid().'.'.$request->file('pan_card')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'pan_card' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['pan_card']['tmp_name'], $filepath . $pan_card);
 
-DB::table('pancard')->where( 'id', $request->applied_serviceid )->update( [
-    'pan_card' => $pan_card,
-]);
-}
-if ($request->photo != null) {
-$photo = uniqid().'.'.$request->file('photo')->extension();
-$filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
-move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
-DB::table('pancard')->where( 'id', $request->applied_serviceid )->update( [
-    'photo' => $photo,
-]);
-}
-if ($request->aadhaar_card != null) {
-$aadhaarimg = uniqid().'.'.$request->file('aadhaar_card')->extension();
-$filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
-move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaarimg);
+    DB::table('pancard')->where( 'id', $request->applied_serviceid )->update( [
+        'pan_card' => $pan_card,
+    ]);
+ }
+   if ($request->photo != null) {
+    $photo = uniqid().'.'.$request->file('photo')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
+    DB::table('pancard')->where( 'id', $request->applied_serviceid )->update( [
+        'photo' => $photo,
+    ]);
+   }
+   if ($request->aadhaar_card != null) {
+    $aadhaarimg = uniqid().'.'.$request->file('aadhaar_card')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaarimg);
 
-DB::table('pancard')->where( 'id', $request->applied_serviceid )->update( [
-    'aadhaar_card' => $aadhaarimg,
-]);
-}
-if ($request->signature != null) {
-$signature = uniqid().'.'.$request->file('signature')->extension();
-$filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'signature' . DIRECTORY_SEPARATOR);
-move_uploaded_file($_FILES['signature']['tmp_name'], $filepath . $signature);
-}
-DB::table('pancard')->where( 'id', $request->applied_serviceid )->update( [
-    'signature' => $signature,
-]);
-}
+    DB::table('pancard')->where( 'id', $request->applied_serviceid )->update( [
+        'aadhaar_card' => $aadhaarimg,
+    ]);
+ }
+ if ($request->signature != null) {
+    $signature = uniqid().'.'.$request->file('signature')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'signature' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['signature']['tmp_name'], $filepath . $signature);
+ }
+    DB::table('pancard')->where( 'id', $request->applied_serviceid )->update( [
+        'signature' => $signature,
+    ]);
+ }
 
-}
-return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
+   }
+   return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
 public function tailorshop_update(Request $request){
 $apply_user_id = 0;
