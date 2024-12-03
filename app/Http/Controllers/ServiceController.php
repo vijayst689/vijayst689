@@ -192,9 +192,6 @@ public function applyservice($serviceid,$customerid) {
  }elseif ($serviceid == 27 || $serviceid == 28 || $serviceid == 129){
      return view( 'applyservice.tnegaservice3',compact('serviceid','districts','servicename','amount','customers','payment'));
 
- } elseif ($serviceid == 60 || $serviceid == 62 || $serviceid == 63 || $serviceid == 64 || $serviceid == 65 || $serviceid == 66 || $serviceid == 67 || $serviceid == 121){
-     return view( 'applyservice.caneditservice',compact('serviceid','districts','servicename','amount','customers','payment'));
-
  }  elseif ($serviceid == 151){
      return view( 'applyservice.tnegaservice4',compact('serviceid','districts','servicename','amount','customers','payment'));
 
@@ -271,6 +268,9 @@ public function applyservice($serviceid,$customerid) {
 
  }  elseif ($serviceid == 56 || $serviceid == 58 || $serviceid == 158){
      return view( 'applyservice.aadhaarcard_apply',compact('serviceid','districts','servicename','amount','payment','customers'));
+
+}  elseif ($serviceid == 60 || $serviceid == 62 || $serviceid == 63 || $serviceid == 64 || $serviceid == 65 || $serviceid == 66 || $serviceid == 67 || $serviceid == 121){
+     return view( 'applyservice.caneditservice',compact('serviceid','districts','servicename','amount','customers','payment'));
 
  }  elseif ($serviceid == 71 || $serviceid == 69 || $serviceid == 70){
     $mainbalance = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
