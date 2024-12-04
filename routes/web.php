@@ -146,6 +146,7 @@ Route::post('/superadminaddwallet', [App\Http\Controllers\WalletController::clas
 
 Route::get('/declinerequest_payment/{id}', [App\Http\Controllers\PaymentsController::class, 'declinerequest_payment'])->name('declinerequest_payment');
 Route::post('/approvepayment', [App\Http\Controllers\PaymentsController::class, 'approvepayment'])->name('approvepayment');
+Route::post('/approveramjipayment', [App\Http\Controllers\PaymentsController::class, 'approveramjipayment'])->name('approveramjipayment');
 
 
 Route::get('service', [App\Http\Controllers\ServiceController::class, 'service']);

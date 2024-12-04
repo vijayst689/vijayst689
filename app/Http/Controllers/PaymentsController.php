@@ -48,7 +48,32 @@ class PaymentsController extends Controller {
     }
 
 
+    public function approveramjipayment(Request $request) {
 
+        $amount = $request->amount;
+        $from_id = $request->from_id;
+        $request_id = $request->request_id;
+        $login_id = Auth::user()->id;
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $status = 'Approved';
+        $sql = "update request_payment set status = '$status' where id = $request_id";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'Out Payment';
+        $ad_info = 'Fund Transfer';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$login_id','$login_id','$from_id','$amount','$ad_info', '$service_status','$time','$date','$from_id')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set rawallet = rawallet + $amount where id = $from_id";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $ad_info = 'Fund Transfer';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$login_id','$from_id','$login_id','$amount','$ad_info', '$service_status','$time','$date','$from_id')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set rawallet = rawallet - $amount where id = $login_id";
+        DB::update( DB::raw( $sql ) );
+
+     return redirect( "/rapaymentrequest" )->with( 'success', 'Request Amount Approved Successfully' );
+    }
 
 
 

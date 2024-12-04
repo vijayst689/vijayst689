@@ -57,7 +57,7 @@
                                             @if (Auth::user()->user_type_id == 1)
                                             <td style="white-space: nowrap">
                                                     <a onclick="showrequest('{{ $a->id }}','{{ $a->from_id }}','{{ $a->amount }}','{{ $a->req_image }}','{{ $a->status }}')"
-                                                        class="btn btn-dribbble  ms-1"><i class="fab fa-dribbble"></i>
+                                                        class="btn btn-grd-danger  ms-1">Approve<i class="fab fa-dribbble"></i>
                                                     </a>
 
                                             </td>
@@ -78,7 +78,7 @@
                                     </a>
                                 </div>
                                 <div class="modal-body">
-                                    <form method="post" class="row g-3" action="{{ url('/approveramjipayment') }}"
+                                <form method="post" class="row g-3" action="{{ url('/approveramjipayment') }}"
                                     enctype="multipart/form-data">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="request_id" id="request_id" />
@@ -99,7 +99,7 @@
                                     <div class="text-center mb-3">
                                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                         <input id="declinebtn" type="button" value="Decline" class="btn btn-danger">
-                                        <button type="Submit" id="aprovedbtn" class="btn btn-primary">Approve</button>
+                                        <button type="Submit" id="aprovedbtn" class="btn btn-grd-danger">Approve</button>
                                     </div>
                                 </form>
                                 </div>
