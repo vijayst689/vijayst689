@@ -127,7 +127,7 @@
                                                 name="date_of_birth" id="example-url-input">
                                         </div>
                                     </div>
-                                    
+
                                     <div class="mb-3 row">
                                         <label for="example-month-input" class="col-sm-3 form-label">Phone</label>
                                         <div class="col-sm-9">
@@ -162,7 +162,7 @@
                                     <label for="example-text-input-lg" class="col-sm-3 form-label">Smart Card No</label>
                                     <div class="col-sm-9">
                                         <input required type="text" class="form-control" name="smartcard_no"
-                                            maxlength="13" placeholder="SmartCard No" />
+                                            maxlength="20" placeholder="SmartCard No" />
 
 
                                     <div class="mb-3 row">
@@ -183,7 +183,7 @@
                                     </div>
 
                                 </div>
-                                
+
                                 <div class="mb-3 row">
                                     <label for="example-month-input" class="col-sm-3 form-label">Phone</label>
                                     <div class="col-sm-9">

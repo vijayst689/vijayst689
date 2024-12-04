@@ -133,6 +133,8 @@ Route::get('requestpayment', [App\Http\Controllers\WalletController::class, 'req
 
 Route::post('saverequest', [App\Http\Controllers\WalletController::class, 'saverequest']);
 
+Route::post('ramjisaverequest', [App\Http\Controllers\WalletController::class, 'ramjisaverequest']);
+
 Route::post('/adminaddwallet', [App\Http\Controllers\WalletController::class, 'adminaddwallet'])->name('adminaddwallet');
 
 Route::get('rawallet', [App\Http\Controllers\WalletController::class, 'rawallet']);
