@@ -1010,3 +1010,13 @@ alter table pancard add relative_name varchar(20) DEFAULT NULL after pancard_typ
 alter table pancard add email_id varchar(40) DEFAULT NULL after relative_name;
 alter table pancard add signature varchar(40) DEFAULT NULL after relative_name;
 alter table pancard add relationship varchar(20) DEFAULT NULL after signature;
+
+
+CREATE TABLE `service_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT NULL,
+  `district_id` int(11) DEFAULT 0,
+  `service_type` int(11) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;

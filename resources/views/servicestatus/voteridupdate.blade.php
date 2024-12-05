@@ -47,7 +47,7 @@
                                         }
                                     @endphp
 
-                                   @if ($serviceid == 113)
+                                  @if ($serviceid == 113)
                                     <div class="mb-3 col-md-4">
                                         <label for="name" class="form-label">Name</label>
                                         <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
@@ -151,6 +151,69 @@
                                             @endif
                                         @endif
                                        
+                                    </div>
+                                    @elseif ($serviceid == 164)
+                                    <div class="mb-3 col-md-6">
+                                        <label for="epic_no" class="form-label">Epic No</label>
+                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                            value="{{ $services->epic_no }}" class="form-control" name="epic_no"
+                                            maxlength="15" placeholder="Epic No" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="mobile" class="form-label">Mobile Number</label>
+                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                            value="{{ $services->mobile }}" class="form-control number" name="mobile"
+                                            maxlength="10" placeholder="Mobile Number" />
+                                    </div>
+                                    
+                                    @elseif ($serviceid == 182)
+                                    <div class="mb-3 col-md-6">
+                                        <label for="epic_no" class="form-label">Epic No</label>
+                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                            value="{{ $services->epic_no }}" class="form-control" name="epic_no"
+                                            maxlength="15" placeholder="Epic No" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="mobile" class="form-label">Mobile Number</label>
+                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                            value="{{ $services->mobile }}" class="form-control number" name="mobile"
+                                            maxlength="10" placeholder="Mobile Number" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        @if (Auth::user()->id != $apply_user_id )
+                                            @if ($services->voter_id != '')
+                                                <label>Voter ID</label>
+                                                <br><a target="_blank"
+                                                    href="{{ URL::to('/') }}/upload/services/voter_id/{{ $services->voter_id }}"
+                                                    class="btn btn-primary me-2">View</a><br>
+                                            @endif
+                                        @else
+                                            <label>Voter ID</label>
+                                            <input @if ($services->voter_id == '') required @endif class="form-control"
+                                                type="file" accept="image/jpeg, image/png" name="voter_id">
+                                            @if ($services->voter_id != '')
+                                                <a target="_blank"
+                                                    href="{{ URL::to('/') }}/upload/services/voter_id/{{ $services->voter_id }}">Download</a><br>
+                                            @endif
+                                        @endif                                       
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        @if (Auth::user()->id != $apply_user_id )
+                                            @if ($services->aadhaar_card != '')
+                                                <label>Aadhar Card</label>
+                                                <br><a target="_blank"
+                                                    href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
+                                                    class="btn btn-primary me-2">View</a><br>
+                                            @endif
+                                        @else
+                                            <label>Aadhar Card</label>
+                                            <input @if ($services->aadhaar_card == '') required @endif class="form-control"
+                                                type="file" accept="image/jpeg, image/png" name="aadhaar_card">
+                                            @if ($services->aadhaar_card != '')
+                                                <a target="_blank"
+                                                    href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
+                                            @endif
+                                        @endif                                       
                                     </div>
                
                                     @endif
