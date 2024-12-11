@@ -657,8 +657,8 @@ class ServicestatusController extends Controller
                 $user_id = $services->user_id;
             }
         }
-        
-        
+
+
         //dd($votercorrection_services);
         //if(count($votercorrection_services) > 0){
             //$serviceid = $votercorrection_services[0]->service_id;
@@ -733,6 +733,7 @@ class ServicestatusController extends Controller
         }elseif($service_id == 69 || $service_id == 71 || $service_id == 70){
             $mainbalance = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
             $services = DB::table('pancard')->where('id',$id)->where('status',$status)->first();
+            return view('servicestatus.pancardstatusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
 
         } elseif($service_id == 72 ){
             return view('servicestatus.findaadhaar_numberupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
