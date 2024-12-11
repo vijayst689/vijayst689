@@ -81,6 +81,11 @@
                                         Contacts
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/admin')}}" class="nav-link">
+                                        Login
+                                    </a>
+                                </li>
                             </ul>
                             <div class="others-option position-relative d-flex align-items-center">
                                 <div class="option-item">
