@@ -34,8 +34,9 @@
                                         <th width="6%">Sl No</th>
                                         <th>Service Name</th>
                                         @if (Auth::user()->user_type_id == 1)
-                                            <th>Customer Name</th>
                                         @endif
+                                        <th>User Type Name</th>
+                                        
                                         <th>Status</th>
                                         <th>Applied Date</th>
                                         @if ($status == 'Processing')
@@ -53,8 +54,8 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $ser->service_name }}</td>
                                             @if (Auth::user()->user_type_id == 1)
-                                                <td>{{ $ser->name }}</td>
                                             @endif
+                                            <td>{{ $ser->id }}</td>
                                             <td>{{ $ser->status }}</td>
                                             <td>{{ date('d-m-Y', strtotime($ser->applied_date)) }}</td>
                                             @if ($status == 'Processing')

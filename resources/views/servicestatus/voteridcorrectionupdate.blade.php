@@ -32,19 +32,22 @@
                             <form action="{{ url('/voterid_update') }}" id="formAccountSettings"
                                 method="POST" enctype="multipart/form-data">
                                 {{ csrf_field() }}
+                                @foreach($services as $key=> $ser)
                                 <div class="row">
-                                    <input type="hidden" name="applied_serviceid" value="{{ $services->id }}">
-                                    <input type="hidden" name="user_id" value="{{ $services->user_id }}">
-                                    <input type="hidden" name="retailer_id" value="{{ $services->retailer_id }}">
-                                    <input type="hidden" name="distributor_id" value="{{ $services->distributor_id }}">
-                                    <input type="hidden" name="serviceid" value="{{ $services->service_id }}">
+                                    <input type="hidden" name="applied_serviceid" value="{{ $ser->id }}">
+                                    <input type="hidden" name="user_id" value="{{ $ser->user_id }}">
+                                    <input type="hidden" name="retailer_id" value="{{ $ser->retailer_id }}">
+                                    <input type="hidden" name="distributor_id" value="{{ $ser->distributor_id }}">
+                                    <input type="hidden" name="serviceid" value="{{ $ser->service_id }}">
                                     @php
-                                        $apply_user_id = 0;
-                                        if ($services->retailer_id == 0) {
-                                            $apply_user_id = $services->distributor_id;
-                                        } elseif ($services->distributor_id == 0) {
-                                            $apply_user_id = $services->retailer_id;
-                                        }
+                                    $apply_user_id = 0;
+                                    if ($ser->distributor_id == 0 && $ser->retailer_id == 0) {
+                                        $apply_user_id = $ser->user_id;
+                                    }elseif ($ser->retailer_id == 0) {
+                                        $apply_user_id = $ser->distributor_id;
+                                    } elseif ($ser->distributor_id == 0) {
+                                        $apply_user_id = $ser->retailer_id;
+                                    }
                                     @endphp
                                  <div class="mb-3 col-md-6">
                                     <label for="name" class="form-label">Name</label>
