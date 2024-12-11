@@ -138,6 +138,7 @@ class ServicestatusController extends Controller
             $service = $service->merge($medicalscheme);
             $service = $service->merge($dharsan);
 
+            //dd($service);
 
         }elseif(Auth::user()->user_type_id == 3){
 
