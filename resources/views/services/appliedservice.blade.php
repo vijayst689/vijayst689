@@ -35,8 +35,7 @@
                                         <th>Service Name</th>
                                         @if (Auth::user()->user_type_id == 1)
                                         @endif
-                                        <th>User Type Name</th>
-                                        
+                                        <th>User Type Name</th>                                        
                                         <th>Status</th>
                                         <th>Applied Date</th>
                                         @if ($status == 'Processing')
