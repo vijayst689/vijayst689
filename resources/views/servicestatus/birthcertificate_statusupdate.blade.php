@@ -29,7 +29,7 @@
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                         <div class="card-body p-4">
                             <h5 class="card-title">{{ $servicename }}</h5>
-                            <form action="{{ url('/covid_update') }}" id="formAccountSettings" method="POST"
+                            <form action="{{ url('/birthcertificate_update') }}" id="formAccountSettings" method="POST"
                                 enctype="multipart/form-data">
                                 {{ csrf_field() }}
 
@@ -48,7 +48,7 @@
                                         }
                                     @endphp
 
-                                     @if($serviceid == 155)
+                        @if($serviceid == 155)
 
                             <div class="mb-3 col-md-6">
                             <label for="childname" class="form-label">Child Name</label>
@@ -76,11 +76,13 @@
                                     <option @if ($services->place_of_birth == 'Home/others') selected @endif value="Home/others">Home/others</option>
                                 </select>
                             </div>
+                            <div class="mb-3 col-md-6">
                             <div class="" id="hospitalhide" class="form-control" style="display: none;">
                             <label>Hospital</label>
                             <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text" maxlength="50" class="form-control" value="{{ $services->hospital_name }}"
                             name="hospital_name" id="hospital_name" placeholder="Hospital Name"/>
                             </div>
+                        </div>
                         </div>
                         @elseif($serviceid == 156)
                             <div class="mb-3 col-md-6">
@@ -104,8 +106,7 @@
                             </select>
                         </div>
                             
-                                <div class="mb-3 col-md-6">
-    
+                                <div class="mb-3 col-md-6">   
                                     <label for="mobile" class="form-label number">Mobile Number</label>
                                     <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text" maxlength="10" class="form-control" value="{{ $services->mobile }}"
                                     name="mobile" placeholder="Mobile Number"/>
@@ -119,13 +120,13 @@
                                         <option @if ($services->place_of_death == 'Home/others') selected @endif value="Home/others">Home/others</option>
                                     </select>
                                 </div>
+                                <div class="mb-3 col-md-6">
                                 <div class="" id="hospital" class="form-control" style="display: none;">
                                 <label>Hospital</label>
                                 <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text" maxlength="100" class="form-control" value="{{ $services->hospital_name }}"
                                 name="hospital_name" id="hospital_name" placeholder="Hospital Name"/>
                                 </div>
-
-
+                            </div>
                         </div>  
                         @endif 
             
@@ -207,6 +208,14 @@
             var status = "{{ $services->status }}";
             var acknowledgement = "{{ $services->acknowledgement }}";
             var certificate = "{{ $services->certificate }}";
+            var placeofbirth = "{{ $services->place_of_birth }}";
+                var placeofdeath = "{{ $services->place_of_death }}";
+                if(placeofbirth == "Hospital"){
+                    $('#hospitalhide').show("slow"); 
+                }
+                if(placeofdeath == "Hospital"){
+                    $('#hospital').show("slow"); 
+                }
 
             if (status == "Resubmit") {
                 $('#remarkshide').show("slow");
@@ -266,5 +275,24 @@
                 $('#application_no').prop("required", false);
             }
         });
+
+        $('#place_of_birth').change(function(){
+                if($('#place_of_birth').val() == 'Hospital') {
+                    $('#hospitalhide').show("slow"); 
+                    $('#hospital_name').prop("required", true);  
+                }else{
+                    $('#hospitalhide').hide("slow");
+                    $('#hospital_name').prop("required", false); 
+                } 
+            });
+            $('#place_of_death').change(function(){
+                if($('#place_of_death').val() == 'Hospital') {
+                    $('#hospital').show("slow"); 
+                    $('#hospital_name').prop("required", true);  
+                }else{
+                    $('#hospital').hide("slow");
+                    $('#hospital_name').prop("required", false); 
+                } 
+            });
     </script>
 @endpush

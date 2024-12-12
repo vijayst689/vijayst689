@@ -235,6 +235,7 @@ Route::post('/caneditupdate', [App\Http\Controllers\ServicestatusController::cla
 Route::post('/smartcard_update1', [App\Http\Controllers\ServicestatusController::class, 'smartcard_update1'])->name('smartcard_update1');
 Route::post('/bond_update', [App\Http\Controllers\ServicestatusController::class, 'bond_update'])->name('bond_update');
 Route::post('/voterid_update', [App\Http\Controllers\ServicestatusController::class, 'voterid_update'])->name('voterid_update');
+Route::post('/birthcertificate_update', [App\Http\Controllers\ServicestatusController::class, 'birthcertificate_update'])->name('birthcertificate_update');
 Route::post('/fssaiservice_update', [App\Http\Controllers\ServicestatusController::class, 'fssaiservice_update'])->name('fssaiservice_update');
 Route::post('/submit_panupdate', [App\Http\Controllers\ServicestatusController::class, 'submit_panupdate'])->name('submit_panupdate');
 Route::post('/covid_update', [App\Http\Controllers\ServicestatusController::class, 'covid_update'])->name('covid_update');
