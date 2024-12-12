@@ -144,14 +144,14 @@
                                                     <option @if($details->correction_documents == 'Photo Correction') selected @endif value="Photo Correction">Photo Correction</option>
                                                 </select></td>
                                                 <td><P class='changename'></P>
-                                                    @if (Auth::user()->id != $apply_user_id) 
-                                                   <a target="_blank" class="btn btn-primary btn-sm" 
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                   <a target="_blank" class="btn btn-primary btn-sm"
                                     href="{{ URL::to('/') }}/upload/services/doc/{{ $details->doc }}">View</a>
                                                     @else
                                                      <input @if($details->doc == "")required @endif class="form-control" type="file"
                                                     name="doc[]" accept="image/jpeg, image/png">
 
-                                                    
+
                                                     @endif
                                                 </td>
                                                 <td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i class='mdi mdi-trash-can-outline'></i></a></td>
@@ -191,7 +191,7 @@
                                         <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
                                             <label for="application_no" class="form-label">Application No</label>
                                             <input value="{{ $services->application_no }}" class="form-control"
-                                                type="text" maxlength="20" name="application_no"
+                                                type="text" maxlength="40" name="application_no"
                                                 id="application_no" />
                                         </div>
                                         <div class="mb-3 col-md-6" id="certhide" style="display :none;">
