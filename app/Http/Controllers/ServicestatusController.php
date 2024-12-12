@@ -1863,11 +1863,15 @@ return redirect("appliedservice/$status")->With("success","Application submitted
 
 public function submit_statusupdate_msme(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -1968,11 +1972,15 @@ public function submit_statusupdate_msme(Request $request){
 
 public function submit_statusupdate_itr(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -2051,11 +2059,15 @@ public function submit_statusupdate_itr(Request $request){
 
 public function submit_statusupdate_gst(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -2169,11 +2181,15 @@ public function submit_statusupdate_gst(Request $request){
 
 public function submit_statusupdate_tecexam(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -2243,11 +2259,15 @@ public function submit_statusupdate_tecexam(Request $request){
 
 public function submit_statusupdate_tecexamregister(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -2323,11 +2343,15 @@ public function submit_statusupdate_tecexamregister(Request $request){
 
 public function submit_statusupdate_teccorrection(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -2398,11 +2422,15 @@ public function submit_statusupdate_teccorrection(Request $request){
 }
 public function insexam_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -2466,11 +2494,15 @@ public function insexam_update(Request $request){
 public function iibfexam_update(Request $request){
         //dd($request->all());
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -2555,11 +2587,15 @@ public function iibfexam_update(Request $request){
 
 public function rapexam_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -2631,11 +2667,15 @@ public function rapexam_update(Request $request){
 
 public function vleinsurance_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -2698,11 +2738,15 @@ public function vleinsurance_update(Request $request){
 
 public function submitsmartcard_register_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -3219,11 +3263,15 @@ public function submitsmartcard_register_update(Request $request){
 }
 public function aadhaarcardupdate(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -3452,11 +3500,15 @@ public function aadhaarcardupdate(Request $request){
 public function findaadhaar_numberupdate(Request $request){
 //dd($request->all());
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -3520,11 +3572,15 @@ public function findaadhaar_numberupdate(Request $request){
 }
 public function caneditupdate(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -3755,11 +3811,15 @@ public function caneditupdate(Request $request){
 
 public function smartcard_update1(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -3956,11 +4016,15 @@ public function smartcard_update1(Request $request){
 }
 public function voterid_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -4077,6 +4141,7 @@ public function bond_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -4143,6 +4208,7 @@ public function fssaiservice_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -4243,6 +4309,7 @@ public function covid_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -4308,6 +4375,7 @@ public function nalavariyam_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -4387,6 +4455,7 @@ public function driving_license_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -4466,6 +4535,7 @@ public function pancard_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
  if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
      $status = $request->status;
      if($status == "Resubmit"){
@@ -4573,6 +4643,7 @@ public function tailorshop_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
  if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
      $status = $request->status;
      if($status == "Resubmit"){
@@ -4660,6 +4731,7 @@ public function update_pmkissan(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -4729,6 +4801,7 @@ public function tec_csc_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -4843,6 +4916,7 @@ public function medicalscheme_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
+
     if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
@@ -5012,7 +5086,10 @@ public function birthcertificate_update(Request $request){
 }
 public function dharsan_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
