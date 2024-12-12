@@ -146,7 +146,7 @@
                                                 <td><P class='changename'></P>
                                                     @if (Auth::user()->id != $apply_user_id) 
                                                    <a target="_blank" class="btn btn-primary btn-sm" 
-                                    href="{{ URL::to('/') }}/upload/services/voter_id/{{ $details->doc }}">View</a>
+                                    href="{{ URL::to('/') }}/upload/services/doc/{{ $details->doc }}">View</a>
                                                     @else
                                                      <input @if($details->doc == "")required @endif class="form-control" type="file"
                                                     name="doc[]" accept="image/jpeg, image/png">
