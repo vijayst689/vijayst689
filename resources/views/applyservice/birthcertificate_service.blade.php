@@ -30,14 +30,17 @@
                         <div class="card-body p-4">
                             <h5 class="card-title">{{ $servicename }}</h5>
                             <h6 class="card-title">Service Payment : <span class="text-danger">{{ $payment }}</span></h6>
+                        </div>
                             <form class="row g-4" action="{{ url('submitapply_birthcertificate') }}" enctype="multipart/form-data"
                             method="post">
                             @csrf
+                        
                             <div class="row">
                                 <input type="hidden" name="serviceid" value="{{ $serviceid }}">
                                 <input type="hidden" name="amount" value="{{ $amount }}">
                                 <input type="hidden" name="service_amount" value="{{ $payment }}">
                                 <input type="hidden" name="user_id" value="{{ $customers->id }}">
+                                
                                 @if($serviceid == 155)
                                 <div class="mb-3 col-md-6">
                                     <label for="childname" class="form-label">Child Name</label>
