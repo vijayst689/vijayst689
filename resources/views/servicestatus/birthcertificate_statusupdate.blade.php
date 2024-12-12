@@ -41,7 +41,10 @@
                                     <input type="hidden" name="serviceid" value="{{ $services->service_id }}">
                                     @php
                                         $apply_user_id = 0;
-                                        if ($services->retailer_id == 0) {
+                                        if ($services->distributor_id == 0 && $services->retailer_id == 0) {
+                                            $apply_user_id = $services->user_id;
+                                        }
+                                        elseif ($services->retailer_id == 0) {
                                             $apply_user_id = $services->distributor_id;
                                         } elseif ($services->distributor_id == 0) {
                                             $apply_user_id = $services->retailer_id;
@@ -83,7 +86,7 @@
                             name="hospital_name" id="hospital_name" placeholder="Hospital Name"/>
                             </div>
                         </div>
-                        </div>
+                       
                         @elseif($serviceid == 156)
                             <div class="mb-3 col-md-6">
                                 <label for="name" class="form-label">Name</label>
@@ -127,11 +130,11 @@
                                 name="hospital_name" id="hospital_name" placeholder="Hospital Name"/>
                                 </div>
                             </div>
-                        </div>  
+                         
                         @endif 
             
 
-                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                    @if (Auth::user()->id != $apply_user_id)
                                         <div class="mb-3 col-md-6">
                                             <label for="service_name" class="form-label">Service Status</label>
                                             <select class="form-control" name="status" id="service_status">
@@ -186,7 +189,7 @@
                                 </div>
 
                                 <div class="mt-2 text-center">
-                                    @if ($services->status == 'Resubmit' && ($services->user_id != Auth::user()->id && $apply_user_id != Auth::user()->id))
+                                    @if ($services->status == 'Resubmit' && ($apply_user_id != Auth::user()->id))
                                         <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
                                     @elseif($services->status == 'Approved')
                                         <button type="button" disabled class="btn btn-primary me-2">Completed</button>
