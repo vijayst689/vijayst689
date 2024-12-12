@@ -52,7 +52,7 @@
                                         <label for="name" class="form-label">Name</label>
                                         <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
                                             value="{{ $services->name }}" class="form-control" name="name"
-                                            maxlength="30" placeholder="Name" /> 
+                                            maxlength="30" placeholder="Name" />
                                         <label for="mobile" class="form-label">Mobile Number</label>
                                         <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
                                             value="{{ $services->mobile }}" class="form-control number" name="mobile"
@@ -67,7 +67,7 @@
                                             </option>
                                             <option @if ($services->relationship == 'Sister') selected @endif value="Sister">Sister.
                                             </option>
-                                        </select>     
+                                        </select>
                                     </div>
                                     <div class="mb-3 col-md-4">
                                         @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
@@ -117,10 +117,10 @@
                                                 <a target="_blank"
                                                     href="{{ URL::to('/') }}/upload/services/voter_id/{{ $services->voter_id }}">Download</a><br>
                                             @endif
-                                        @endif 
-                                        
+                                        @endif
+
                                     </div>
-                                    
+
                                     @elseif ($serviceid == 120)
                                     <div class="mb-3 col-md-6">
                                         <label for="epic_no" class="form-label">Epic No</label>
@@ -150,7 +150,7 @@
                                                     href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
                                             @endif
                                         @endif
-                                       
+
                                     </div>
                                     @elseif ($serviceid == 164)
                                     <div class="mb-3 col-md-6">
@@ -165,7 +165,7 @@
                                             value="{{ $services->mobile }}" class="form-control number" name="mobile"
                                             maxlength="10" placeholder="Mobile Number" />
                                     </div>
-                                    
+
                                     @elseif ($serviceid == 182)
                                     <div class="mb-3 col-md-6">
                                         <label for="epic_no" class="form-label">Epic No</label>
@@ -195,7 +195,7 @@
                                                 <a target="_blank"
                                                     href="{{ URL::to('/') }}/upload/services/voter_id/{{ $services->voter_id }}">Download</a><br>
                                             @endif
-                                        @endif                                       
+                                        @endif
                                     </div>
                                     <div class="mb-3 col-md-6">
                                         @if (Auth::user()->id != $apply_user_id )
@@ -213,9 +213,9 @@
                                                 <a target="_blank"
                                                     href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
                                             @endif
-                                        @endif                                       
+                                        @endif
                                     </div>
-               
+
                                     @endif
                                     @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
                                         <div class="mb-3 col-md-6">
@@ -247,7 +247,7 @@
                                         <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
                                             <label for="application_no" class="form-label">Application No</label>
                                             <input value="{{ $services->application_no }}" class="form-control"
-                                                type="text" maxlength="20" name="application_no"
+                                                type="text" maxlength="40" name="application_no"
                                                 id="application_no" />
                                         </div>
                                         <div class="mb-3 col-md-6" id="certhide" style="display :none;">
