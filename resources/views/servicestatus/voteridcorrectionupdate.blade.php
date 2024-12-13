@@ -160,143 +160,149 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
-                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                        <div class="mb-3 col-md-6">
-                                            <label for="service_name" class="form-label">Service Status</label>
-                                            <select class="form-control" name="status" id="service_status">
-                                                <option value="">Select</option>
-                                                <option @if ($services->status == 'Pending') selected @endif
-                                                    value="Pending">Pending</option>
-                                                <option @if ($services->status == 'Resubmit') selected @endif
-                                                    value="Resubmit">Resubmit</option>
-                                                <option @if ($services->status == 'Processing') selected @endif
-                                                    value="Processing">Processing</option>
-                                                @if ($services->status == 'Processing' || $services->status == 'Approved')
-                                                    <option @if ($services->status == 'Approved') selected @endif
-                                                        value="Approved">Approved</option>
-                                                @endif
-                                            </select>
-                                        </div>
-                                        <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
-                                            <label for="remarks" class="form-label">Remarks</label>
-                                            <input value="{{ $services->remarks }}" class="form-control" type="text"
-                                                name="remarks" maxlength="100" id="remarks" placeholder="Remarks" />
-                                        </div>
-                                        <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
-                                            <label for="acknowledgement" class="form-label">Acknowledgement</label>
-                                            <input class="form-control" type="file" name="acknowledgement"
-                                                id="acknowledgement" />
-                                        </div>
-                                        <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
-                                            <label for="application_no" class="form-label">Application No</label>
-                                            <input value="{{ $services->application_no }}" class="form-control"
-                                                type="text" maxlength="40" name="application_no"
-                                                id="application_no" />
-                                        </div>
-                                        <div class="mb-3 col-md-6" id="certhide" style="display :none;">
-                                            <label for="certificate" class="form-label">Certificate</label>
-                                            <input class="form-control" type="file" name="certificate"
-                                                id="certificate" />
-                                        </div>
-                                    @else
-                                        <div class="row">
-                                            <div class="mb-3 col-md-6">
-                                                <label for="service_name" class="form-label">Service Status</label>
-                                                <input disabled value="{{ $services->status }}" class="form-control"
-                                                    type="text" />
+                            
+                            @if (Auth::user()->id != $apply_user_id)
+                            <div class="mb-3 col-md-6">
+                                <label for="service_name" class="form-label">Service Status</label>
+                                <select class="form-control" name="status" id="service_status">
+                                    <option value="">Select</option>
+                                    <option @if ($ser->status == 'Pending') selected @endif
+                                        value="Pending">Pending</option>
+                                        <option @if ($ser->status == 'Resubmit') selected @endif
+                                            value="Resubmit">Resubmit</option>
+                                            <option @if ($ser->status == 'Processing') selected @endif
+                                                value="Processing">Processing</option>
+                                                @if ($ser->status == 'Processing' || $ser->status == 'Approved')
+                                                <option @if ($ser->status == 'Approved') selected @endif
+                                                    value="Approved">Approved</option>
+                                                    @endif
+                                                </select>
                                             </div>
-                                            <div class="mb-3 col-md-6">
+                                            <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
                                                 <label for="remarks" class="form-label">Remarks</label>
-                                                <textarea rows="2" class="form-control" type="text" disabled placeholder="Remarks">{{ $services->remarks }}</textarea>
+                                                <input value="{{ $ser->remarks }}" class="form-control" type="text"
+                                                name="remarks" maxlength="100" id="remarks" placeholder="Remarks" />
                                             </div>
+                                            <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
+                                                <label for="acknowledgement" class="form-label">Acknowledgement</label>
+                                                <input class="form-control" type="file" name="acknowledgement"
+                                                id="acknowledgement" />
+                                            </div>
+                                            <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
+                                                <label for="application_no" class="form-label">Application No</label>
+                                                <input value="{{ $ser->application_no }}" class="form-control"
+                                                type="text" maxlength="20" name="application_no"
+                                                id="application_no" />
+                                            </div>
+                                            <div class="mb-3 col-md-6" id="certhide" style="display :none;">
+                                                <label for="certificate" class="form-label">Certificate</label>
+                                                <input class="form-control" type="file" name="certificate"
+                                                id="certificate" />
+                                            </div>
+                                            @else
+                                            <div class="row">
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="service_name" class="form-label">Service Status</label>
+                                                    <input disabled value="{{ $ser->status }}" class="form-control"
+                                                    type="text" />
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="remarks" class="form-label">Remarks</label>
+                                                    <textarea rows="2" class="form-control" type="text" disabled placeholder="Remarks">{{ $ser->remarks }}</textarea>
+                                                </div>
 
+                                            </div>
+                                            @endif
                                         </div>
-                                    @endif
-                                </div>
 
-                                <div class="mt-2 text-center">
-                                    @if ($services->status == 'Resubmit' && ($services->user_id != Auth::user()->id && $apply_user_id != Auth::user()->id))
-                                        <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
-                                    @elseif($services->status == 'Approved')
-                                        <button type="button" disabled class="btn btn-primary me-2">Completed</button>
-                                    @else
-                                        <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                    @endif
+                                        <div class="mt-2 text-center">
+                                            @if ($ser->status == 'Resubmit' && ( $apply_user_id != Auth::user()->id))
+                                            <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
+                                            @elseif($ser->status == 'Approved')
+                                            <button type="button" disabled class="btn btn-primary me-2">Completed</button>
+                                            @else
+                                            <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                            @endif
+                                        </div>
+                                        <input type="hidden" id="serstatus" value="{{ $ser->status }}"> 
+                                        <input type="hidden" id="seracknowledgement" value="{{ $ser->acknowledgement }}">
+                                        @endforeach
+                                    </form>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
+                    <div class="content-backdrop fade"></div>
                 </div>
+                <div class="layout-overlay layout-menu-toggle"></div>
             </div>
-        </div>
-    </main>
-@endsection
-@push('page_scripts')
-    <script>
-        $(function() {
-            var status = "{{ $services->status }}";
-            var acknowledgement = "{{ $services->acknowledgement }}";
+            @endsection
 
-            if (status == "Resubmit") {
-                $('#remarkshide').show("slow");
-                $('#remarks').prop("required", true);
-            } else if (status == "Processing") {
-                $('#applicationnohide').show("slow");
-                $('#application_no').prop("required", true);
-                $('#acknowledgementhide').show("slow");
-                if (acknowledgement == "") {
-                    $('#acknowledgement').prop("required", true);
-                }
-            } else if (status == "Approved") {
-                $('#certhide').show("slow");
-                if (acknowledgement == "") {
-                    $('#certificate').prop("required", true);
-                }
-            }
-        });
+            @push('page_scripts')
+            <script>
+                $(function() {
+                    var status = $("#serstatus").val();
+                    var acknowledgement = $("#seracknowledgement").val();
+
+                    if (status == "Resubmit") {
+                        $('#remarkshide').show("slow");
+                        $('#remarks').prop("required", true);
+                    } else if (status == "Processing") {
+                        $('#applicationnohide').show("slow");
+                        $('#application_no').prop("required", true);
+                        $('#acknowledgementhide').show("slow");
+                        if (acknowledgement == "") {
+                            $('#acknowledgement').prop("required", true);
+                        }
+                    } else if (status == "Approved") {
+                        $('#certhide').show("slow");
+                        if (acknowledgement == "") {
+                            $('#certificate').prop("required", true);
+                        }
+                    }
+                });
 
 
-        $('#service_status').change(function() {
-            if ($('#service_status').val() == 'Resubmit') {
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#remarkshide').show("slow");
-                $('#remarks').prop("required", true);
-            } else if ($('#service_status').val() == 'Processing') {
-                $('#acknowledgementhide').show("slow");
-                $('#acknowledgement').prop("required", true);
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationnohide').show("slow");
-                $('#application_no').prop("required", true);
-            } else if ($('#service_status').val() == 'Approved') {
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#certhide').show("slow");
-                $('#certificate').prop("required", true);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-            } else {
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-            }
-        });
-    </script>
-@endpush
+                $('#service_status').change(function() {
+                    if ($('#service_status').val() == 'Resubmit') {
+                        $('#acknowledgementhide').hide("slow");
+                        $('#acknowledgement').prop("required", false);
+                        $('#applicationnohide').hide("slow");
+                        $('#application_no').prop("required", false);
+                        $('#certhide').hide("slow");
+                        $('#certificate').prop("required", false);
+                        $('#remarkshide').show("slow");
+                        $('#remarks').prop("required", true);
+                    } else if ($('#service_status').val() == 'Processing') {
+                        $('#acknowledgementhide').show("slow");
+                        $('#acknowledgement').prop("required", true);
+                        $('#remarkshide').hide("slow");
+                        $('#remarks').prop("required", false);
+                        $('#certhide').hide("slow");
+                        $('#certificate').prop("required", false);
+                        $('#applicationnohide').show("slow");
+                        $('#application_no').prop("required", true);
+                    } else if ($('#service_status').val() == 'Approved') {
+                        $('#remarkshide').hide("slow");
+                        $('#remarks').prop("required", false);
+                        $('#acknowledgementhide').hide("slow");
+                        $('#acknowledgement').prop("required", false);
+                        $('#certhide').show("slow");
+                        $('#certificate').prop("required", true);
+                        $('#applicationnohide').hide("slow");
+                        $('#application_no').prop("required", false);
+                    } else {
+                        $('#remarkshide').hide("slow");
+                        $('#remarks').prop("required", false);
+                        $('#acknowledgementhide').hide("slow");
+                        $('#acknowledgement').prop("required", false);
+                        $('#certhide').hide("slow");
+                        $('#certificate').prop("required", false);
+                        $('#applicationnohide').hide("slow");
+                        $('#application_no').prop("required", false);
+                    }
+                });
+            </script>
+            @endpush
 
 
