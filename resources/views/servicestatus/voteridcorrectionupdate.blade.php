@@ -172,10 +172,8 @@
                                             value="Resubmit">Resubmit</option>
                                             <option @if ($ser->status == 'Processing') selected @endif
                                                 value="Processing">Processing</option>
-                                                @if ($ser->status == 'Processing' || $ser->status == 'Approved')
                                                 <option @if ($ser->status == 'Approved') selected @endif
                                                     value="Approved">Approved</option>
-                                                    @endif
                                                 </select>
                                             </div>
                                             <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
