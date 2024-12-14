@@ -28,14 +28,14 @@
                     @endif
                     <div class="customer-table">
                         <div class="table-responsive white-space-nowrap">
-                            <table class="table align-middle">
+                            <table id="example2" class="table align-middle">
                                 <thead>
                                     <tr>
                                         <th width="6%">Sl No</th>
                                         <th>Service Name</th>
                                         @if (Auth::user()->user_type_id == 1)
                                         @endif
-                                        <th>User Type Name</th>                                        
+                                        <th>User Type Name</th>
                                         <th>Status</th>
                                         <th>Applied Date</th>
                                         @if ($status == 'Processing')
