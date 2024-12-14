@@ -409,10 +409,8 @@
                                     value="Resubmit">Resubmit</option>
                                     <option @if ($services->status == 'Processing') selected @endif
                                         value="Processing">Processing</option>
-                                        @if ($services->status == 'Processing' || $services->status == 'Approved')
                                         <option @if ($services->status == 'Approved') selected @endif
                                             value="Approved">Approved</option>
-                                            @endif
                                         </select>
                                     </div>
                                     <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
