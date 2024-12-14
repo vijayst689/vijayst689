@@ -72,6 +72,7 @@ class CustomAuthController extends Controller
 
     public function savedistributorregister(Request $request)
     {
+        // dd($request->all());
         DB::table( 'users' )->insert( [
             'name'          => $request->name,
             'phone'         => $request->phone,
@@ -89,7 +90,7 @@ class CustomAuthController extends Controller
 
         $aadhaar_file = "";
         if ($request->aadhaar_file != null) {
-          $aadhaar_file = $insertid.'.'.$request->file('profile')->extension();
+          $aadhaar_file = $insertid.'.'.$request->file('aadhaar_file')->extension();
           $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'aadhaarimage' . DIRECTORY_SEPARATOR);
           move_uploaded_file($_FILES['aadhaar_file']['tmp_name'], $filepath . $aadhaar_file);
         }

@@ -365,7 +365,7 @@
                     success: function(res) {
                         if (res.exists) {
                             $("#save").prop('disabled', true);
-                            $("#dupemail").html("email alredy exists!");
+                            $("#dupemail").html("email id already exists!");
                         } else {
                             $("#save").prop('disabled', false);
                             $("#dupemail").html("");
@@ -393,7 +393,7 @@
                     success: function(res) {
                         if (res.exists) {
                             $("#save").prop('disabled', true);
-                            $("#dupaadhar").html("aadhar no alredy exists!");
+                            $("#dupaadhar").html("aadhar no already exists!");
                         } else {
                             $("#save").prop('disabled', false);
                             $("#dupaadhar").html("");
@@ -420,7 +420,7 @@
                     success: function(res) {
                         if (res.exists) {
                             $("#save").prop('disabled', true);
-                            $("#dupphone").html("mobile no alredy exists!");
+                            $("#dupphone").html("mobile no already exists!");
                         } else {
                             $("#save").prop('disabled', false);
                             $("#dupphone").html("");
@@ -448,7 +448,7 @@
                     success: function(res) {
                         if (res.exists) {
                             $("#save").prop('disabled', true);
-                            $("#duppan").html("pan no alredy exists!");
+                            $("#duppan").html("pan no already exists!");
                         } else {
                             $("#duppan").html("");
                         }
@@ -483,7 +483,7 @@ function duplicateaadhar1(id) {
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupaadhar1").html("aadhar no alredy exists!");
+                        $("#dupaadhar1").html("aadhar no already exists!");
                     } else {
                         $("#dupaadhar1").html("");
                     }
@@ -515,7 +515,7 @@ function duplicateaadhar1(id) {
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupphone1").html("mobile no alredy exists!");
+                        $("#dupphone1").html("mobile no already exists!");
                     } else {
                         $("#dupphone1").html("");
                     }
@@ -548,7 +548,7 @@ function duplicateaadhar1(id) {
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupemail1").html("email no alredy exists!");
+                        $("#dupemail1").html("email id already exists!");
                     } else {
                         $("#dupemail1").html("");
                     }
@@ -581,7 +581,7 @@ function duplicateaadhar1(id) {
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#duppan1").html("pan no alredy exists!");
+                        $("#duppan1").html("pan no already exists!");
                     } else {
                         $("#duppan1").html("");
                     }
@@ -615,7 +615,7 @@ function duplicateaadhar2(id) {
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupaadhar2").html("aadhar no alredy exists!");
+                        $("#dupaadhar2").html("aadhar no already exists!");
                     } else {
                         $("#dupaadhar2").html("");
                     }
@@ -647,7 +647,7 @@ function duplicateaadhar2(id) {
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupphone2").html("mobile no alredy exists!");
+                        $("#dupphone2").html("mobile no already exists!");
                     } else {
                         $("#dupphone2").html("");
                     }
@@ -680,7 +680,7 @@ function duplicateaadhar2(id) {
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupemail2").html("email no alredy exists!");
+                        $("#dupemail2").html("email id already exists!");
                     } else {
                         $("#dupemail2").html("");
                     }
