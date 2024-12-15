@@ -189,7 +189,7 @@ p:last-child {
   border-radius: 4px;
   display: inline-block;
   color: var(--whiteColor);
-  background-color: var(--blackColor);
+  background-color: #30aeb0ad;
   font-size: 18px;
   font-weight: 600;
   font-family: var(--fontFamily);

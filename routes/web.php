@@ -35,6 +35,8 @@ Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout')
 
 
 Route::get('home', [App\Http\Controllers\Frontend\HomeController::class, 'Index']);
+Route::get('about_us', [App\Http\Controllers\Frontend\HomeController::class, 'About_us']);
+Route::get('contact_us', [App\Http\Controllers\Frontend\HomeController::class, 'Contact_us']);
 
 Route::get('addcustomer', [App\Http\Controllers\UserController::class, 'addcustomer']);
 

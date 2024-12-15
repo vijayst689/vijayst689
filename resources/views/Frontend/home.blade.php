@@ -46,13 +46,13 @@
         <!-- End Preloader -->
 
         <!-- Start Navbar Area -->
-        <div class="navbar-area fixed-top is-sticky">
+        <div class="navbar-area fixed-top is-sticky" style="background-color: floralwhite;">
 			<div class="mobile-responsive-nav">
 				<div class="container">
 					<div class="mobile-responsive-menu">
 						<div class="logo">
 							<a href="{{ url('login') }}">
-              <img src="{{ asset('assetss/images/mudiuma.png') }}" width="400%" alt="logo">
+              <img src="{{ asset('assetss/images/mudiu.png') }}" width="400%" alt="logo">
 							</a>
 						</div>
 					</div>
@@ -62,30 +62,30 @@
 			<div class="desktop-nav">
 				<div class="container">
 					<nav class="navbar navbar-expand-md navbar-light">
-                            <img src="{{ asset('assetss/images/mudiuma.png') }}" width="15%" alt="logo">
+                            <img src="{{ asset('assetss/images/mudiu.png') }}" width="15%" alt="logo">
 						</a>
 						<div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent" style="display: block;">
 							<ul class="navbar-nav mx-auto">
                                 <li class="nav-item">
-                                    <a href="{{url('/')}}" class=" nav-link active">
+                                    <a href="{{url('/home')}}" class=" nav-link active">
                                         Home
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">
+                                    <a href="{{url('/about_us')}}" class="nav-link">
                                         About Us
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">
+                                    <a href="{{url('/contact_us')}}" class="nav-link">
                                         Contacts
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                     <a href="{{ url('/admin')}}" class="nav-link">
                                         Login
                                     </a>
-                                </li>
+                                </li> -->
                             </ul>
                             <div class="others-option position-relative d-flex align-items-center">
                                 <div class="option-item">
@@ -113,12 +113,12 @@
 					<div class="container">
 						<div class="option-inner">
 							<div class="others-options justify-content-center d-flex align-items-center">
-								<div class="option-item">
-                                    <a href="#" class="default-btn2">
-                                        Start Free Trial
-                                        <img src="assets/images/icon/left-small.svg" alt="icon">
-                                    </a>
-                                </div>
+                            <div class="option-item">
+                                <a href="{{ url('/admin')}}" class="default-btn2">
+                                    Admin Login
+                                    <img src="{{ asset('assetss/images/icon/left-small.svg') }}" alt="icon">
+                                </a>
+                            </div>
 							</div>
 						</div>
 					</div>
@@ -131,20 +131,15 @@
         <!-- Start Categories Area -->
         <div class="categories-area pt-136 pb-110">
             <div class="container">
-                <div class="categories-section-title" data-cue="slideInUp">
-                    <div class="row align-items-end">
-                        <div class="col-lg-6 col-md-7">
-                            <div class="section-title">
-                                <span class="d-inline-block sub-title"></span>
-                                <h2>
-                                    Explore Our
-                                    <span class="position-relative">
-                                     services
-                                    </span>
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
+            <div class="section-title text-center" data-cue="slideInUp" data-show="true" style="animation-name: slideInUp; animation-duration: 600ms; animation-timing-function: ease; animation-delay: 0ms; animation-direction: normal; animation-fill-mode: both;">
+                    <span class="d-inline-block sub-title">Most Featured services</span>
+                    <h2>
+                        Explore Our 
+                        <span class="position-relative">
+                            services
+                            <img src="{{ asset('assetss//images/shapes/title-shape.svg') }}" alt="shape">
+                        </span>
+                    </h2>
                 </div>
                 <div class="row" data-cues="fadeIn">
                     <div class="col-lg-3 col-sm-6">
@@ -152,8 +147,8 @@
                             <div>
                             <img  src="{{ asset('assetss/images/service/nalavariyam.png') }}" alt="bg-shape">
                             </div>
-                            <h3>Web Design</h3>
-                            <p>78 Courses</p>
+                            <h3>Nalavariyam</h3>
+                            
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
@@ -161,8 +156,7 @@
                         <div>
                             <img  src="{{ asset('assetss/images/service/images.png') }}" width="61%" alt="bg-shape">
                             </div>
-                            <h3>Digital Marketing</h3>
-                            <p>58 Courses</p>
+                            <h3>E-aadhar</h3>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
@@ -170,8 +164,7 @@
                         <div>
                             <img  src="{{ asset('assetss/images/service/utility.png') }}"  width="61%" alt="bg-shape">
                             </div>
-                            <h3>Data Science</h3>
-                            <p>24 Courses</p>
+                            <h3>Utility Services</h3>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
@@ -179,8 +172,7 @@
                         <div>
                         <img  src="{{ asset('assetss/images/service/service2.png') }}"  width="61%" alt="bg-shape">
                             </div>
-                            <h3>Software</h3>
-                            <p>48 Courses</p>
+                            <h3>Pancard Services</h3>
                         </div>
                     </div>
 
@@ -189,8 +181,7 @@
                         <div>
                         <img  src="{{ asset('assetss/images/service/service3.png') }}"  width="61%" alt="bg-shape">
                             </div>
-                            <h3>Digital Marketing</h3>
-                            <p>58 Courses</p>
+                            <h3>TNeGA</h3>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
@@ -198,8 +189,7 @@
                         <div>
                         <img  src="{{ asset('assetss/images/service/service4.png') }}"  width="85%" alt="bg-shape">
                             </div>
-                            <h3>Data Science</h3>
-                            <p>24 Courses</p>
+                            <h3>MSME</h3>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
@@ -207,8 +197,7 @@
                         <div>
                         <img  src="{{ asset('assetss/images/service/service8.png') }}"  width="61%" alt="bg-shape">
                             </div>
-                            <h3>Software</h3>
-                            <p>48 Courses</p>
+                            <h3>EPFO</h3>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
@@ -216,8 +205,7 @@
                             <div>
                             <img  src="{{ asset('assetss/images/service/service10.png') }}"  width="61%" alt="bg-shape">
                             </div>
-                            <h3>Web Design</h3>
-                            <p>78 Courses</p>
+                            <h3>LIC</h3>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
@@ -225,8 +213,7 @@
                             <div>
                             <img  src="{{ asset('assetss/images/service/service6.png') }}"  width="81%" alt="bg-shape">
                             </div>
-                            <h3>Web Design</h3>
-                            <p>78 Courses</p>
+                            <h3>FSSAI</h3>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
@@ -234,8 +221,7 @@
                         <div>
                         <img  src="{{ asset('assetss/images/service/service7.png') }}"  width="92%" alt="bg-shape">
                             </div>
-                            <h3>Digital Marketing</h3>
-                            <p>58 Courses</p>
+                            <h3>Documentations</h3>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
@@ -243,8 +229,7 @@
                         <div>
                         <img  src="{{ asset('assetss/images/service/service5.png') }}"  width="94%" alt="bg-shape">
                             </div>
-                            <h3>Data Science</h3>
-                            <p>24 Courses</p>
+                            <h3>Passport Services</h3>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
@@ -252,8 +237,7 @@
                         <div>
                         <img  src="{{ asset('assetss/images/service/Smart1.png') }}"  width="64%" alt="bg-shape">
                             </div>
-                            <h3>Software</h3>
-                            <p>48 Courses</p>
+                            <h3>Family card</h3>
                         </div>
                     </div>
                 </div>
@@ -268,7 +252,7 @@
                         <div class="single-footer-widget logo-info" data-cue="slideInUp">
                             <div class="logo">
                                 <a href="index.html">
-                                    <img src="{{ asset('assetss/images/white-logo.svg') }}" alt="white-logo">
+                                    <img src="{{ asset('assetss/images/mudiu.png') }}" alt="white-logo">
                                 </a>
                             </div>
                             <p>Lorem ipsum amet, consectetur adipiscing elit. Suspendis varius enim eros elementum tristique. Duis cursus.</p>
@@ -410,23 +394,23 @@
                         <div class="copyright-list" data-cue="slideInUp">
                             <ul class="list-unstyled ps-0 mb-0">
                                 <li class="d-inline-block">
-                                    <a href="blog-details.html" class="active">
-                                        Company
+                                    <a href="{{ url('/home') }}" class="active">
+                                        Home
                                     </a>
                                 </li>
                                 <li class="d-inline-block">
-                                    <a href="mailto:themeies3@gmail.com">
-                                        Support
+                                    <a href="{{ url('about_us') }}">
+                                        About us
                                     </a>
                                 </li>
                                 <li class="d-inline-block">
-                                    <a href="privacy-policy.html">
-                                        Privacy
+                                    <a href="{{ url('contact_us') }}">
+                                        Contact us
                                     </a>
                                 </li>
                                 <li class="d-inline-block">
-                                    <a href="contact.html">
-                                        Contact
+                                    <a href="{{ url('login') }}">
+                                        Login
                                     </a>
                                 </li>
                             </ul>
