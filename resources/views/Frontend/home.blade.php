@@ -64,21 +64,21 @@
 					<nav class="navbar navbar-expand-md navbar-light">
                             <img src="{{ asset('assetss/images/mudiu.png') }}" width="15%" alt="logo">
 						</a>
-						<div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent" style="display: block;">
+						<div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent" style="display: block;" id="top">
 							<ul class="navbar-nav mx-auto">
                                 <li class="nav-item">
-                                    <a href="{{url('/home')}}" class=" nav-link active">
+                                    <a href="{{url('/home')}}" class="nav-link active">
                                         Home
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{url('/about_us')}}" class="nav-link">
+                                    <a href="{{ url('/about_us') }}" class="nav-link">
                                         About Us
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{url('/contact_us')}}" class="nav-link">
-                                        Contacts
+                                        Contact us
                                     </a>
                                 </li>
                                 <!-- <li class="nav-item">
@@ -131,11 +131,11 @@
         <!-- Start Categories Area -->
         <div class="categories-area pt-136 pb-110">
             <div class="container">
-            <div class="section-title text-center" data-cue="slideInUp" data-show="true" style="animation-name: slideInUp; animation-duration: 600ms; animation-timing-function: ease; animation-delay: 0ms; animation-direction: normal; animation-fill-mode: both;">
+            <div class="section-title text-center"  data-show="true" style="animation-name: slideInUp; animation-duration: 600ms; animation-timing-function: ease; animation-delay: 0ms; animation-direction: normal; animation-fill-mode: both;">
                     <span class="d-inline-block sub-title">Most Featured services</span>
                     <h2>
                         Explore Our 
-                        <span class="position-relative">
+                        <span class="position-relative" >
                             services
                             <img src="{{ asset('assetss//images/shapes/title-shape.svg') }}" alt="shape">
                         </span>
@@ -249,120 +249,65 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3">
-                        <div class="single-footer-widget logo-info" data-cue="slideInUp">
+                        <div class="single-footer-widget logo-info" >
                             <div class="logo">
                                 <a href="index.html">
                                     <img src="{{ asset('assetss/images/mudiu.png') }}" alt="white-logo">
                                 </a>
                             </div>
-                            <p>Lorem ipsum amet, consectetur adipiscing elit. Suspendis varius enim eros elementum tristique. Duis cursus.</p>
-                            <a href="mailto:themeies3@gmail.com" class="email">
-                                support.edugen@email.com
+                            <!-- <p>The Common Services Centres (CSCs) are key to India's National e-Governance Plan (NeGP). They offer government and private services digitally, focusing on rural and remote areas.</p> -->
+                            <a href="mailto:pkrmsolution@gmail.com" class="email">
+                            pkrmsolution@gmail.com
                             </a>
                             <ul class="list-unstyled ps-0 mb-0 social-link">
                                 <li class="d-inline-block">
-                                    <a href="https://www.facebook.com/" target="_blank">
+                                    <a href="https://www.facebook.com/pkrmsolutioncsc" target="_blank">
                                         <i class="ri-facebook-fill"></i>
                                     </a>
                                 </li>
                                 <li class="d-inline-block">
-                                    <a href="https://x.com/home" target="_blank">
-                                        <i class="ri-twitter-x-fill"></i>
-                                    </a>
-                                </li>
-                                <li class="d-inline-block">
-                                    <a href="https://www.linkedin.com/" target="_blank">
-                                        <i class="ri-linkedin-fill"></i>
-                                    </a>
-                                </li>
-                                <li class="d-inline-block">
-                                    <a href="https://www.google.com/" target="_blank">
-                                        <i class="ri-google-fill"></i>
+                                    <a href="https://www.instagram.com/pkrm.solution/profilecard/?igsh=ODlmZXoyZHN2djA=" target="_blank">
+                                    <i class="ri-instagram-fill"></i>
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-2 col-sm-6 col-md-3">
-                        <div class="single-footer-widget links-info" data-cue="slideInUp">
+                        <div class="single-footer-widget links-info" >
                             <h3>Links</h3>
                             <ul class="list-unstyled ps-0 mb-0">
                                 <li>
-                                    <a href="index.html">
+                                    <a href="{{ url('/home') }}">
                                         Home
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="about.html">
+                                    <a href="{{ url('/about_us') }}">
                                         About Us
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="courses-list.html">
-                                        Courses
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="courses-details.html">
-                                        Courses Details
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="contact.html">
-                                        Contact Us
+                                    <a href="{{ url('/contact_us') }}">
+                                        Contact us
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6 col-md-3">
-                        <div class="single-footer-widget links-info" data-cue="slideInUp">
-                            <h3>Legal</h3>
-                            <ul class="list-unstyled ps-0 mb-0">
-                                <li>
-                                    <a href="blog-with-sidebar.html">
-                                        Trems of Use
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="terms-conditions.html">
-                                        Tearm & Condition
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="courses-details.html">
-                                        Payment Method
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="privacy-policy.html">
-                                        Privacy Policy
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="blog-standard.html">
-                                        Licensencing
-                                    </a>
-                                </li>
-                            </ul>
+                        <div class="single-footer-widget links-info" >
+                            <p>The Common Services Centres (CSCs) are key to India's National e-Governance Plan (NeGP). They offer government and private services digitally, focusing on rural and remote areas.</p>
+                            
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <div class="single-footer-widget app-info" data-cue="slideInUp">
-                            <h3>Install Our App</h3>
-                            <span>From App Store Or Google Play</span>
-                            <ul class="list-unstyled ps-0 mb-0">
-                                <li class="d-inline-block">
-                                    <a href="https://play.google.com/store/games?device=windows&amp;pli=1" target="_blank">
-                                        <img src="{{ asset('assetss/images/icon/google.svg') }}" alt="google">
-                                    </a>
-                                </li>
-                                <li class="d-inline-block">
-                                    <a href="https://www.apple.com/app-store/" target="_blank">
-                                        <img src="{{ asset('assetss/images/icon/app-store.svg') }}" alt="app-store">
-                                    </a>
-                                </li>
-                            </ul>
+                        <div class="single-footer-widget app-info" >
+                            <div class="logo">
+                                <a href="index.html">
+                                    <img src="{{ asset('assetss/images/mudiu.png') }}" alt="white-logo">
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -386,12 +331,12 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-5">
-                        <div class="copyright-content" data-cue="slideInUp">
-                            <p>© Copyright 2024 | Edugen Template | All Rights Reserved</p>
+                        <div class="copyright-content" >
+                            <p>© Copyright 2024 | Maran Software Solutions | All Rights Reserved</p>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-7">
-                        <div class="copyright-list" data-cue="slideInUp">
+                        <div class="copyright-list" >
                             <ul class="list-unstyled ps-0 mb-0">
                                 <li class="d-inline-block">
                                     <a href="{{ url('/home') }}" class="active">
@@ -419,7 +364,7 @@
                 </div>
             </div>
             <div class="icon-info">
-                <a href="#banner">
+                <a href="#top">
                     <img src="{{ asset('assetss/images/icon/up-icon.svg') }}" alt="icon">
                 </a>
             </div>
