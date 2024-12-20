@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-bs-theme="light-theme">
+<html lang="en" data-bs-theme="blue-theme">
 
 <head>
     <meta charset="utf-8">
