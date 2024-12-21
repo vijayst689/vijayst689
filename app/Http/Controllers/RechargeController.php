@@ -37,8 +37,9 @@ public function utilityservice($serviceid) {
             $sql="select * from operator where service_type = 'DTH' order by name";
         }
         $operator=DB::select($sql);
+        $mainbalance = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
       $recha = DB::table( 'recharge' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
-      return view( 'utility.utilityservice',compact('serviceid','servicename','operator','recha'));
+      return view( 'utility.utilityservice',compact('serviceid','servicename','operator','recha','mainbalance'));
     }
   }
 
@@ -87,15 +88,15 @@ public function proceedrecharge(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Recharge Out Payment';
-    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','$user_id','1','$newamount','$ad_info', '$service_status','$time','$date','$user_id')";
+    $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','$user_id','1','$newamount','$ad_info', '$service_status','$time','$date','$user_id')";
     DB::insert( DB::raw( $sql ) );
-    $sql = "update users set wallet = wallet + $newamount where id = 1";
+    $sql = "update users set rawallet = rawallet + $newamount where id = 1";
     DB::update( DB::raw( $sql ) );
     $service_status = 'IN Payment';
     $ad_info = 'Recharge In Payment';
-    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','1','$user_id','$newamount','$ad_info', '$service_status','$time','$date','$user_id')";
+    $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','1','$user_id','$newamount','$ad_info', '$service_status','$time','$date','$user_id')";
     DB::insert( DB::raw( $sql ) );
-    $sql = "update users set wallet = wallet - $newamount where id = $user_id";
+    $sql = "update users set rawallet = rawallet - $newamount where id = $user_id";
     DB::update( DB::raw( $sql ) );
 
 

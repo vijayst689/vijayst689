@@ -142,17 +142,6 @@
 @endsection
 @push('page_scripts')
     <script>
-        function edit_service(id, name, status, ) {
-            $("#editservice").val(name);
-            $("#editstatus").val(status);
-            $("#utilityid").val(id);
-            $("#editser").modal("show");
-        }
-
-        function editstatus(id, status) {
-            $("#editsta").val(status);
-            $("#utiid").val(id);
-            $("#edituti").modal("show");
-        }
+   
     </script>
 @endpush
