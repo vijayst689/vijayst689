@@ -1157,3 +1157,43 @@ CREATE TABLE `utility_services` (
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
+
+CREATE TABLE `operator` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(20) DEFAULT NULL,
+  `service_type` varchar(50) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `commission` decimal(10,2) DEFAULT 0.00,
+  `retailer_commission` decimal(10,2) DEFAULT 0.00,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+INSERT INTO `operator` VALUES (1,'A','Mobile Prepaid','Airtel',2.00,2.00),(2,'BT','Mobile Prepaid','BSNL TOP UP',5.20,4.00),(3,'RC','Mobile Prepaid','JIO',1.30,1.00),(4,'V','Mobile Prepaid','Vodafone',3.50,3.50),(5,'ATV','DTH','Airtel Digital TV',4.20,3.50),(6,'DTV','DTH','Dish TV',4.40,3.40),(7,'STV','DTH','Sun Direct',3.25,3.00),(8,'TTV','DTH','Tata Sky',3.20,2.80),(9,'VTV','DTH','Videocon DTH',4.20,3.50),(10,'BR','Mobile Prepaid','BSNL STV',5.20,4.00),(11,'I','Mobile Prepaid','IDEA',3.50,3.50),(12,'FDF','Fastag','Federal Bank - Fastag',0.10,0.00),(13,'HDF','Fastag','Hdfc Bank - Fastag',0.10,0.00),(14,'ICF','Fastag','Icici Bank Fastag',0.10,0.00),(15,'IBF','Fastag','Idbi Bank Fastag',0.10,0.00),(16,'IFF','Fastag','Idfc First Bank- Fastag',0.10,0.00),(17,'PTF',NULL,'Paytm Payments Bank Fastag',0.10,0.10),(18,'AXF',NULL,'Axis Bank Fastag',0.10,0.10);
+
+CREATE TABLE `recharge` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `mobile` varchar(20) DEFAULT NULL,
+  `circle` varchar(10) DEFAULT NULL,
+  `operator` varchar(10) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT 0,
+  `commission_amount` decimal(10,2) DEFAULT 0,
+  `recharge_date` date not NULL,
+  `recharge_time` varchar(10) DEFAULT NULL,
+  user_id int DEFAULT 0,
+  plan_id int DEFAULT 0,
+  usertx varchar(20) DEFAULT NULL,
+  status varchar(20) DEFAULT NULL,
+  message varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `callback` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `operator` varchar(200) DEFAULT NULL,
+  `callback_date` varchar(10) DEFAULT NULL,
+  `callback_time` varchar(10) DEFAULT NULL,
+  `usertx` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  message varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;

@@ -268,6 +268,18 @@
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
+                                            <div class="menu-title">UTILITY Services</div>
+                                        </a>
+                                         <ul class="mm-collapse">
+                                            <li><a href="{{ url('/utility') }}"><i
+                                                class="material-icons-outlined">arrow_right</i>Utility</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
                                             <div class="menu-title">Distributor</div>
                                         </a>
                                         <ul class="mm-collapse">

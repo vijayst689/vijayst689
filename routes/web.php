@@ -277,3 +277,10 @@ Route::post('/submitdlfind', [App\Http\Controllers\PDFServiceController::class, 
 Route::post('/submitrcfind', [App\Http\Controllers\PDFServiceController::class, 'submitrcfind'])->name('submitrcfind');
 Route::post('/submitrationfind', [App\Http\Controllers\PDFServiceController::class, 'submitrationfind'])->name('submitrationfind');
 Route::post('/submitpanadvance', [App\Http\Controllers\PDFServiceController::class, 'submitpanadvance'])->name('submitpanadvance');
+
+Route::get('/utility', [App\Http\Controllers\RechargeController::class, 'utility'])->name('utility');
+Route::get('/utilityservice/{serviceid}', [App\Http\Controllers\RechargeController::class, 'utilityservice'])->name('utilityservice');
+Route::post('proceedrecharge', [App\Http\Controllers\RechargeController::class, 'proceedrecharge']);
+Route::get('rechargehook', [App\Http\Controllers\RechargeController::class, 'rechargehook']);
+Route::get('panstatus', [App\Http\Controllers\ServiceController::class, 'panstatus']);
+Route::get('pancard_reapply/{txid}', [App\Http\Controllers\ServiceController::class, 'pancard_reapply']);
