@@ -183,23 +183,30 @@ class PDFServiceController extends Controller
       }elseif(Auth::user()->user_type_id == 5){
         $payment = $getservice_payment->customer_amount;
       }
+    }else{
+      if(Auth::user()->user_type_id == 2){
+        $payment = $amount;
+      }
     }
     if($payment == ""){
       $payment = 0;
     }
     $mainbalance = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
-    if( $serviceid == 1 || $serviceid == 2 ){
-      $pandetails = DB::table( 'pancard_find' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
+    if($serviceid == 1){
+      $pandetails = DB::table( 'pancard_find' )->where('user_id',Auth::user()->id)->where('service_id',$serviceid)->orderBy( 'id', 'Desc' )->get();
       return view( 'panservice.panfind',compact('serviceid','servicename','payment','mainbalance','pandetails','amount'));
+    }elseif($serviceid == 2){
+      $pandetails = DB::table( 'pancard_find' )->where('user_id',Auth::user()->id)->where('service_id',$serviceid)->orderBy( 'id', 'Desc' )->get();
+      return view( 'panservice.panadvance',compact('serviceid','servicename','payment','mainbalance','pandetails','amount'));
     }elseif( $serviceid == 3 ){
-        $dldetails = DB::table( 'dl' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
-        return view( 'pdfservice.dlservice',compact('serviceid','servicename','payment','mainbalance','dldetails','amount'));
+      $dldetails = DB::table( 'dl' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
+      return view( 'pdfservice.dlservice',compact('serviceid','servicename','payment','mainbalance','dldetails','amount'));
     }elseif( $serviceid == 4 ){
-        $rcdetails = DB::table( 'rc' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
-        return view( 'pdfservice.rcservice',compact('serviceid','servicename','payment','mainbalance','rcdetails','amount'));
+      $rcdetails = DB::table( 'rc' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
+      return view( 'pdfservice.rcservice',compact('serviceid','servicename','payment','mainbalance','rcdetails','amount'));
     }elseif( $serviceid == 5 ){
-        $rationdetails = DB::table( 'ration' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
-        return view( 'pdfservice.rationcardverify',compact('serviceid','servicename','payment','mainbalance','rationdetails','amount'));
+      $rationdetails = DB::table( 'ration' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
+      return view( 'pdfservice.rationcardverify',compact('serviceid','servicename','payment','mainbalance','rationdetails','amount'));
     }
   }
 
