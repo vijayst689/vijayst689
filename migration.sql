@@ -1054,3 +1054,12 @@ CREATE TABLE `ramji_payment` (
   `service_entity` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+
+CREATE TABLE `utility_services` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) DEFAULT NULL,
+  `ser_image` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
