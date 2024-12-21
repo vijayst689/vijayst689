@@ -51,6 +51,7 @@
                                             </li>
                                         </ul>
                                     </li>
+                                    
                                     <li>
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
@@ -174,6 +175,36 @@
                                     </li>
                                         </ul>
                                     </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Find Services</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/addfindservice') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Add Find Services</a>
+                                            </li>
+                                            <li><a href="{{ url('/viewfind') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>View Find</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Utility Services</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/addutilityservice') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Add Utility Services</a>
+                                            </li>
+                                            <li><a href="{{ url('/viewutility') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>View Utility</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             @endif
                             <!--end navigation-->
@@ -292,8 +323,9 @@
                                     </li>
                                     <li>
                                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                            <i class="mdi mdi-email-variant"></i>
-                                            <span>Ramji Wallet</span>
+                                        <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Ramji Wallet</div>
                                         </a>
                                         <ul class="sub-menu" aria-expanded="false">
                                             <li><a href="{{ url('/rawallet') }}">Ramji Wallet</a></li>

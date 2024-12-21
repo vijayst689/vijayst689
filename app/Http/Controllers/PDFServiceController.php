@@ -82,7 +82,7 @@ class PDFServiceController extends Controller
   public function saveutility( Request $request ) {
     DB::table( 'utility_services' )->insert( [
       'name'        => $request->name,
-      'amount'      => $request->amount,
+      // 'amount'      => $request->amount,
       'date'        => date("Y-m-d H:i:s"),
       'status'      => 'Active',
     ] );
