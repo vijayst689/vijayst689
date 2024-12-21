@@ -138,7 +138,36 @@ class ServicestatusController extends Controller
             $service = $service->merge($medicalscheme);
             $service = $service->merge($dharsan);
 
-            //dd($service);
+            $service = json_decode( json_encode( $service ), true );
+        foreach ( $service as $key => $s ) {
+            $user_id = 0;
+            $context = "";
+            if($s['retailer_id'] == 0 && $s['distributor_id'] == 0){
+            $user_id = $s['user_id'];
+            $context = "Customer";
+        }
+        elseif($s['retailer_id'] == 0){
+            $user_id = $s['distributor_id'];
+            $context = "Distributor";
+        }elseif($s['distributor_id'] == 0){
+            $user_id = $s['retailer_id'];
+            $context = "Retailer";
+        }
+        $user_id = $user_id;
+        $sql = "select name,phone from users where id=$user_id";
+        $result = DB::select( $sql );
+        $name = "";
+        $mobile = "";
+        if(count($result) > 0){
+            $name = $result[0]->name;
+            $mobile = $result[0]->phone;
+        }
+        $service[ $key ][ 'applyname' ] = $name;
+        $service[ $key ][ 'applymobile' ] = $mobile;
+        $service[ $key ][ 'context' ] = $context;
+        $service[ $key ][ 'applyuserid' ] = $user_id;
+    }
+        $service = json_decode( json_encode( $service ));
 
         }elseif(Auth::user()->user_type_id == 3){
 

@@ -51,7 +51,7 @@
                             <table class="table align-middle">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>Sl No</th>
+                                        <th>User Id</th>
                                         <th>Name</th>
                                         <th>Phone</th>
                                         <th>Status</th>
@@ -64,7 +64,7 @@
                                 <tbody>
                                     @foreach ($viewretailers as $key => $cus)
                                         <tr>
-                                            <td>{{ $key + 1 }}</td>
+                                            <td>R{{ $cus->id }}</td>
                                             <td>{{ $cus->name }}</td>
                                             <td>{{ $cus->phone }}</td>
                                             <td>{{ $cus->status }}</td>

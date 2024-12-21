@@ -42,7 +42,7 @@
                             <table id="example2" class="table align-middle">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>Sl No</th>
+                                        <th>User Id</th>
                                         <th>Name</th>
                                         <th>Phone</th>
                                         <th>Email</th>
@@ -53,7 +53,7 @@
                                 <tbody>
                                         <tr>
                                     @foreach ($viewcustomers as $key => $cus)
-                                            <td>{{ $key + 1 }}</td>
+                                            <td>C{{ $cus->id }}</td>
                                             <td>
                                                 <a class="d-flex align-items-center gap-3" href="{{ url('profile') }}">
                                                     <div class="customer-pic">

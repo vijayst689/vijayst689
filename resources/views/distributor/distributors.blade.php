@@ -42,7 +42,7 @@
                             <table class="table align-middle">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>Sl No</th>
+                                        <th>User Id</th>
                                         <th>Name</th>
                                         <th>Phone</th>
                                         <th>Status</th>
@@ -55,7 +55,7 @@
                                 <tbody>
                                     @foreach ($distributors as $key => $dis)
                                         <tr>
-                                            <td>{{ $key + 1 }}</td>
+                                            <td>D{{ $dis->id }}</td>
                                             <td>
                                                 <p class="mb-0 customer-name fw-bold">{{ $dis->name }}</p>
                                                 </a>

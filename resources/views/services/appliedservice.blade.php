@@ -33,7 +33,10 @@
                                     <tr>
                                         <th width="6%">Sl No</th>
                                         <th>Service Name</th>
-                                        @if (Auth::user()->user_type_id == 1)
+                                        @if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2)
+                                        <th>User ID</th>
+                                        <th>Name</th>
+                                        <th>Phone</th>
                                         @endif
                                         <th>User Type Name</th>
                                         <th>Status</th>
@@ -52,8 +55,11 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $ser->service_name }}</td>
-                                            @if (Auth::user()->user_type_id == 1)
-                                            @endif
+                                            @if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2)
+                                            <td>{{ $ser->context }}({{ $ser->applyuserid }})</td>
+                                            <td>{{ $ser->applyname }}</td>
+                                            <td>{{ $ser->applymobile }}</td>
+                                           @endif
                                             <td>{{ $ser->id }}</td>
                                             <td>{{ $ser->status }}</td>
                                             <td>{{ date('d-m-Y', strtotime($ser->applied_date)) }}</td>
