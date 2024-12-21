@@ -75,10 +75,10 @@ public function rawallet()
 
   if(Auth::user()->user_type_id == 1){
 
-      $raviewamount = DB::table( 'payment' )->where( 'to_id', $userid )->orderBy( 'id', 'desc' )->get();
+      $raviewamount = DB::table( 'ramji_payment' )->where( 'to_id', $userid )->orderBy( 'id', 'desc' )->get();
   }elseif (Auth::user()->user_type_id == 2) {
 
-      $raviewamount = DB::table( 'payment' )->where( 'to_id', 1 )->orderBy( 'id', 'desc' )->get();
+      $raviewamount = DB::table( 'ramji_payment' )->where( 'to_id', 1 )->orderBy( 'id', 'desc' )->get();
   }
   return view('wallet.rawallet',compact('raviewamount'));
 }
@@ -98,10 +98,30 @@ public function rawallet()
 
 public function superadminaddwallet( Request $request )
 {
-    $amount = $request->wallet;
+
+    $amount = $request->rawallet;
+    $from_id = Auth::user()->id;
+    $request_id = Auth::user()->id;
     $login_id = Auth::user()->id;
-    $sql = "update users set rawallet = rawallet + $amount where id = $login_id";
+    $date = date( 'Y-m-d' );
+    $time = date( 'H:i:s' );
+    $status = 'Approved';
+    $newbalance = Auth::user()->rawallet - $amount;
+    $sql = "update request_payment set status = '$status' where id = $request_id";
     DB::update( DB::raw( $sql ) );
+    $getwallet = DB::table( 'users' )->select('rawallet')->where('id',$from_id)->first();
+    $balance = 0;
+    if($getwallet){
+        $balance = $getwallet->rawallet;
+    }
+    $newbalance1 = $balance + $amount;
+
+    $sql = "update users set rawallet = rawallet + $amount where id = $from_id";
+    DB::update( DB::raw( $sql ) );
+    $service_status = 'IN Payment';
+    $ad_info = 'ADD MONEY';
+    $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$login_id','$from_id','$login_id','$amount','$ad_info', '$service_status','$time','$date','$from_id')";
+    DB::insert( DB::raw( $sql ) );
 
     return redirect()->back()->with( 'success', 'Ramji wallet Updated Successfully' );
 }
@@ -135,10 +155,30 @@ return redirect( "/rapaymentrequest" );
 
 public function adminaddwallet( Request $request )
 {
+
     $amount = $request->wallet;
+    $from_id = Auth::user()->id;
+    $request_id = Auth::user()->id;
     $login_id = Auth::user()->id;
-    $sql = "update users set wallet = wallet + $amount where id = $login_id";
+    $date = date( 'Y-m-d' );
+    $time = date( 'H:i:s' );
+    $status = 'Approved';
+    $newbalance = Auth::user()->wallet - $amount;
+    $sql = "update request_payment set status = '$status' where id = $request_id";
     DB::update( DB::raw( $sql ) );
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',$from_id)->first();
+    $balance = 0;
+    if($getwallet){
+        $balance = $getwallet->wallet;
+    }
+    $newbalance1 = $balance + $amount;
+
+    $sql = "update users set wallet = wallet + $amount where id = $from_id";
+    DB::update( DB::raw( $sql ) );
+    $service_status = 'IN Payment';
+    $ad_info = 'ADD MONEY';
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$login_id','$login_id','$from_id','$amount','$ad_info', '$service_status','$time','$date','$from_id')";
+    DB::insert( DB::raw( $sql ) );
 
     return redirect()->back()->with( 'success', 'wallet Updated Successfully' );
 }

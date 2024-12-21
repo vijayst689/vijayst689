@@ -83,6 +83,21 @@
                                         </ul>
                                     </li>
                                     <li>
+                                        <a href="javascript:;" class="has-arrow">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Services</div>
+                                        </a>
+                                        <ul>
+                                            <li><a href="{{ url('/service') }}"><i class="material-icons-outlined">arrow_right</i>Add
+                                                    Services</a>
+                                            </li>
+                                            <li><a href="{{ url('/viewservice') }}"><i
+                                                class="material-icons-outlined">arrow_right</i>Services</a>
+                                    </li>
+                                        </ul>
+                                    </li>
+                                    <li>
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
@@ -158,21 +173,6 @@
                                                         class="material-icons-outlined">arrow_right</i>Payment
                                                     Request</a>
                                             </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;" class="has-arrow">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">Services</div>
-                                        </a>
-                                        <ul>
-                                            <li><a href="{{ url('/service') }}"><i class="material-icons-outlined">arrow_right</i>Add
-                                                    Services</a>
-                                            </li>
-                                            <li><a href="{{ url('/viewservice') }}"><i
-                                                class="material-icons-outlined">arrow_right</i>Services</a>
-                                    </li>
                                         </ul>
                                     </li>
                                 </ul>
