@@ -55,6 +55,36 @@
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
+                                            <div class="menu-title">Find Services</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/addfindservice') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Add Find Services</a>
+                                            </li>
+                                            <li><a href="{{ url('/viewfind') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>View Find</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Utility Services</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/addutilityservice') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Add Utility Services</a>
+                                            </li>
+                                            <li><a href="{{ url('/viewutility') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>View Utility</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
                                             <div class="menu-title">Distributor</div>
                                         </a>
                                         <ul class="mm-collapse">
