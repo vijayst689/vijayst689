@@ -1,0 +1,362 @@
+<?php
+
+namespace App\Http\Controllers;
+use Auth;
+use Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class PDFServiceController extends Controller
+{
+  public function __construct()
+  {
+    $this->middleware('auth');
+  }
+
+  public function addfindservice(){
+    return view( 'panservice.addfindservice');
+  }
+
+  public function viewfind(){
+    $find = DB::table( 'find_services' )->orderBy( 'id', 'Asc' )->get();
+    return view( 'panservice.viewfind' ,compact('find'));
+  }
+
+  public function savefind( Request $request ) {
+    DB::table( 'find_services' )->insert( [
+      'name'        => $request->name,
+      'amount'      => $request->amount,
+      'date'        => date("Y-m-d H:i:s"),
+      'status'      => 'Active',
+    ] );
+
+    $insertid = DB::getPdo()->lastInsertId();
+
+    $ser_image = '';
+    if ( $request->ser_image != null ) {
+      $ser_image = $insertid.'.'.$request->file( 'ser_image' )->extension();
+      $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'find_service' . DIRECTORY_SEPARATOR );
+      move_uploaded_file( $_FILES[ 'ser_image' ][ 'tmp_name' ], $filepath . $ser_image );
+    }
+    $image = DB::table( 'find_services' )->where( 'id', $insertid )->update( [
+      'ser_image' => $ser_image,
+    ] );
+    return redirect('/viewfind')->with('success', 'Find Service Added Successfully ... !');
+  }
+
+  public function updatefind( Request $request ) {
+    DB::table( 'find_services' )->where('id', $request->findid)->update( [
+      'name'     => $request->name,
+      'amount'   => $request->amount,
+    ] );
+
+    if ( $request->ser_image != null ) {
+      $ser_image = $request->findid.'.'.$request->file( 'ser_image' )->extension();
+      $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'find_service' . DIRECTORY_SEPARATOR );
+      move_uploaded_file( $_FILES[ 'ser_image' ][ 'tmp_name' ], $filepath . $ser_image );
+      $image = DB::table( 'find_services' )->where( 'id', $request->findid )->update( [
+        'ser_image' => $ser_image,
+      ] );
+    }
+
+    return redirect()->back()->with( 'success', 'Find Service Updated Successfully' );
+  }
+
+  public function updatestatusfind( Request $request ) {
+    DB::table( 'find_services' )->where('id', $request->statusid)->update( [
+      'status'     => $request->status,
+    ] );
+
+    return redirect()->back()->with( 'success', 'Utility Status Updated Successfully' );
+  }
+
+  public function addutilityservice(){
+    return view( 'utility.addutilityservice');
+  }
+
+  public function viewutility(){
+    $utility = DB::table( 'utility_services' )->orderBy( 'id', 'Asc' )->get();
+    return view( 'utility.viewutility' ,compact('utility'));
+  }
+
+  public function saveutility( Request $request ) {
+    DB::table( 'utility_services' )->insert( [
+      'name'        => $request->name,
+      // 'amount'      => $request->amount,
+      'date'        => date("Y-m-d H:i:s"),
+      'status'      => 'Active',
+    ] );
+
+    $insertid = DB::getPdo()->lastInsertId();
+
+    $ser_image = '';
+    if ( $request->ser_image != null ) {
+      $ser_image = $insertid.'.'.$request->file( 'ser_image' )->extension();
+      $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'uti_image' . DIRECTORY_SEPARATOR );
+      move_uploaded_file( $_FILES[ 'ser_image' ][ 'tmp_name' ], $filepath . $ser_image );
+    }
+    $image = DB::table( 'utility_services' )->where( 'id', $insertid )->update( [
+      'ser_image' => $ser_image,
+    ] );
+    return redirect('/viewutility')->with('success', 'Utility Service Added Successfully ... !');
+  }
+
+  public function updateutility( Request $request ) {
+    DB::table( 'utility_services' )->where('id', $request->utilityid)->update( [
+      'name'     => $request->name,
+      'amount'   => $request->amount,
+    ] );
+
+    if ( $request->ser_image != null ) {
+      $ser_image = $request->utilityid.'.'.$request->file( 'ser_image' )->extension();
+      $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'uti_image' . DIRECTORY_SEPARATOR );
+      move_uploaded_file( $_FILES[ 'ser_image' ][ 'tmp_name' ], $filepath . $ser_image );
+      $image = DB::table( 'utility_services' )->where( 'id', $request->utilityid )->update( [
+        'ser_image' => $ser_image,
+      ] );
+    }
+
+    return redirect()->back()->with( 'success', 'Utility Service Updated Successfully' );
+  }
+
+  public function updatestatusuti( Request $request ) {
+    DB::table( 'utility_services' )->where('id', $request->utiid)->update( [
+      'status'     => $request->status,
+    ] );
+
+    return redirect()->back()->with( 'success', 'Utility Status Updated Successfully' );
+  }
+
+  public function pdfservices(){
+    $usertype = Auth::user()->user_type_id;
+    $service = DB::table( 'find_services' )->where('status' , 'Active')->orderBy( 'id', 'ASC' )->get();
+    $service = json_decode( json_encode( $service ), true );
+    foreach ( $service as $key => $s ) {
+
+      $serviceid = $s['id'];
+      $getservice_payment = DB::table( 'find_payment' )->where('service_id',$serviceid)->first();
+      $payment = 0;
+
+      if($getservice_payment){
+        if($usertype == 2){
+          $payment = $s['amount'];
+        }elseif($usertype == 3){
+          $payment = $getservice_payment->distributor_amount;
+        }elseif($usertype == 4){
+          $payment = $getservice_payment->retailer_amount;
+        }elseif($usertype == 5){
+          $payment = $getservice_payment->customer_amount;
+        }
+      }else{
+        if($usertype == 2){
+          $payment = $s['amount'];
+        }
+      }
+
+      if($payment == ""){
+        $payment = 0;
+      }
+      $service[ $key ][ 'payment' ] = $payment;
+    }
+    $service = json_decode( json_encode( $service ));
+    return view( 'panservice.pdfservices',compact('service'));
+  }
+
+  public function applypdfservice($serviceid) {
+    $getservicename = DB::table( 'find_services' )->where('id',$serviceid)->first();
+    $servicename = "";
+    $amount = 0;
+    if($getservicename){
+      $servicename = $getservicename->name;
+      $amount = $getservicename->amount;
+    }
+    $getservice_payment = DB::table( 'find_payment' )->where('service_id',$serviceid)->first();
+    $payment = 0;
+
+    if($getservice_payment){
+      if(Auth::user()->user_type_id == 2){
+        $payment = $amount;
+      }elseif(Auth::user()->user_type_id == 3){
+        $payment = $getservice_payment->distributor_amount;
+      }elseif(Auth::user()->user_type_id == 4){
+        $payment = $getservice_payment->retailer_amount;
+      }elseif(Auth::user()->user_type_id == 5){
+        $payment = $getservice_payment->customer_amount;
+      }
+    }
+    if($payment == ""){
+      $payment = 0;
+    }
+    $mainbalance = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+    if( $serviceid == 1 || $serviceid == 2 ){
+      $pandetails = DB::table( 'pancard_find' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
+      return view( 'panservice.panfind',compact('serviceid','servicename','payment','mainbalance','pandetails','amount'));
+    }elseif( $serviceid == 3 ){
+        $dldetails = DB::table( 'dl' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
+        return view( 'pdfservice.dlservice',compact('serviceid','servicename','payment','mainbalance','dldetails','amount'));
+    }elseif( $serviceid == 4 ){
+        $rcdetails = DB::table( 'rc' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
+        return view( 'pdfservice.rcservice',compact('serviceid','servicename','payment','mainbalance','rcdetails','amount'));
+    }elseif( $serviceid == 5 ){
+        $rationdetails = DB::table( 'ration' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
+        return view( 'pdfservice.rationcardverify',compact('serviceid','servicename','payment','mainbalance','rationdetails','amount'));
+    }
+  }
+
+  public function submitpanfind(Request $request){
+    $user_id = Auth::user()->id;
+    $aadhaar = $request->aadhaar_no;
+    $amount = $request->amount;
+    $servicepayment = $request->servicepayment;
+    $serviceid = $request->serviceid;
+    $api_key = base64_encode('e6890313368bd0f5c8c8e9383fa83763'); // Base 64 api Key Here
+    $application_no = "API-". rand(00000000,99999999); // Application Number
+
+    $url = 'https://apipanel.online/api/panno/instant/submit.php?application_no=' . $application_no . '&api_key=' . $api_key . '&aadhaar_no=' . $aadhaar;
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => $url,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "GET",
+    ));
+    $response = curl_exec($curl);
+    curl_close($curl);
+    $resdata = json_decode($response,true);
+    if($resdata){
+      if($resdata['status'] == "100"){
+        $pan=$resdata['pan_no'];
+        $message=$resdata['message'];
+        DB::table('pancard_find')->insert([
+          'user_id' => Auth::user()->id,
+          'aadhaar_no' => $request->aadhaar_no,
+          'pan_no' => $pan,
+          'service_id' => $serviceid,
+          'amount' => $servicepayment,
+          'message' => $message,
+          'status'    => 'Approved',
+          'date'    => date("Y-m-d "),
+        ]);
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = 'Ramji Wallet Debit(PanCard)';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set rawallet = rawallet + $amount where id = 1";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $ad_info = 'Ramji Wallet Credit(PanCard)';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set rawallet = rawallet - $amount where id = 2";
+        DB::update( DB::raw( $sql ) );
+
+        if(Auth::user()->user_type_id != 2){
+          $getservicename = DB::table( 'services' )->select('name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->name;
+          }
+          $date = date( 'Y-m-d' );
+          $time = date( 'H:i:s' );
+          $service_status = 'Out Payment';
+          $ad_info = 'Service Payment'. ' '. $servicename;
+
+          $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+          $balance = 0;
+          if($getwallet){
+            $balance = $getwallet->wallet;
+          }
+          $newbalance = $balance + $servicepayment;
+          $newbalance1 = Auth::user()->wallet - $servicepayment;
+
+          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','1','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
+          DB::insert( DB::raw( $sql ) );
+          $sql = "update users set wallet = wallet + $servicepayment where id = 1";
+          DB::update( DB::raw( $sql ) );
+          $service_status = 'IN Payment';
+          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','1','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
+          DB::insert( DB::raw( $sql ) );
+          $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+          DB::update( DB::raw( $sql ) );
+        }
+
+        return redirect('/applypdfservice/'.$serviceid)->with('success','Pan No Find Successfully');
+      }elseif($resdata['status'] == "2000"){
+        $pan=$resdata['pan_no'];
+        $message=$resdata['message'];
+         DB::table('pancard_find')->insert([
+          'user_id' => Auth::user()->id,
+          'aadhaar_no' => $request->aadhaar_no,
+          'pan_no' => $pan,
+          'service_id' => $serviceid,
+          'amount' => $servicepayment,
+          'message' => $message,
+          'status'    => 'Approved',
+          'date'    => date("Y-m-d "),
+        ]);
+
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = 'Ramji Wallet Debit(PanCard)';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set rawallet = rawallet + $amount where id = 1";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $ad_info = 'Ramji Wallet Credit(PanCard)';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set rawallet = rawallet - $amount where id = 2";
+        DB::update( DB::raw( $sql ) );
+
+
+        if(Auth::user()->user_type_id != 2){
+          $getservicename = DB::table( 'services' )->select('name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->name;
+          }
+          $date = date( 'Y-m-d' );
+          $time = date( 'H:i:s' );
+          $service_status = 'Out Payment';
+          $ad_info = 'Service Payment'. ' '. $servicename;
+
+          $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+          $balance = 0;
+          if($getwallet){
+            $balance = $getwallet->wallet;
+          }
+          $newbalance = $balance + $servicepayment;
+          $newbalance1 = Auth::user()->wallet - $servicepayment;
+
+          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','1','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
+          DB::insert( DB::raw( $sql ) );
+          $sql = "update users set wallet = wallet + $servicepayment where id = 1";
+          DB::update( DB::raw( $sql ) );
+          $service_status = 'IN Payment';
+          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','1','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
+          DB::insert( DB::raw( $sql ) );
+          $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+          DB::update( DB::raw( $sql ) );
+        }
+
+        return redirect('/applypdfservice/'.$serviceid)->with('success','Pan No Find Successfully');
+      }else{
+        $error=$resdata['message'];
+        return redirect('/applypdfservice/'.$serviceid)->with('error',$error);
+      }
+
+    }else{
+      return redirect('/applypdfservice/'.$serviceid)->with('error','Something Went Wrong..Please Check Aadhaar Number...');
+    }
+
+  }
+
+}

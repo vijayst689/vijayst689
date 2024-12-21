@@ -57,7 +57,7 @@
                     {{ csrf_field() }}
                     <div class="col-md-12">
                         <label class="form-label">Add Money</label>
-                        <input type="text" maxlength="5" placeholder="Amount" name="wallet" class="form-control">
+                        <input required type="text" maxlength="5" placeholder="Amount" name="wallet" class="form-control number">
                     </div>
                     <div class="col-md-12">
                         <div class="d-md-flex d-grid align-items-center gap-3">
@@ -91,14 +91,14 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="" class="form-label">Amount</label>
-                                <input name="amount" type="text" maxlength="5" class="form-control number"
+                                <input required name="amount" type="text" maxlength="5" class="form-control number"
                                     placeholder="Amount">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="" class="form-label">Paid Image (Screen)</label>
-                                <input type="file" name="req_image" class="form-control" maxlength="10">
+                                <input required type="file" name="req_image" class="form-control" maxlength="10">
                             </div>
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                 <form method="post" class="row g-3" action="{{ url('/superadminaddwallet') }}"
                     enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input name="wallet" maxlength="5" type="text" class="form-control" placeholder="Amount">
+                    <input required name="rawallet" maxlength="5" type="text" class="form-control" placeholder="Amount">
             </div>
 
             <div class="modal-footer">

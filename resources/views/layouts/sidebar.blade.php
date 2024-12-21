@@ -55,6 +55,48 @@
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
+                                            <div class="menu-title">Find Services</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/addfindservice') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Add Find Services</a>
+                                            </li>
+                                            <li><a href="{{ url('/viewfind') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>View Find</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Utility Services</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/addutilityservice') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Add Utility Services</a>
+                                            </li>
+                                            <li><a href="{{ url('/viewutility') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>View Utility</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    {{-- <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Admin</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('admin') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>View Admin</a>
+                                            </li>
+                                        </ul>
+                                    </li> --}}
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
                                             <div class="menu-title">Distributor</div>
                                         </a>
                                         <ul class="mm-collapse">
@@ -136,12 +178,13 @@
                                             <div class="menu-title">Services</div>
                                         </a>
                                         <ul>
-                                            <li><a href="{{ url('/service') }}"><i class="material-icons-outlined">arrow_right</i>Add
+                                            <li><a href="{{ url('/service') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Add
                                                     Services</a>
                                             </li>
                                             <li><a href="{{ url('/viewservice') }}"><i
-                                                class="material-icons-outlined">arrow_right</i>Services</a>
-                                    </li>
+                                                        class="material-icons-outlined">arrow_right</i>Services</a>
+                                            </li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -185,8 +228,10 @@
                                             <div class="menu-title">Service Payment</div>
                                         </a>
                                         <ul class="sub-menu" aria-expanded="false">
-                                            @foreach($services as $service)
-                                            <li><a href="{{ url('/servicepayment',$service->id) }}">{{ $service->service_name }}</a></li>
+                                            @foreach ($services as $service)
+                                                <li><a
+                                                        href="{{ url('/servicepayment', $service->id) }}">{{ $service->service_name }}</a>
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </li>
@@ -197,9 +242,26 @@
                                             <div class="menu-title">Smartcard Payment</div>
                                         </a>
                                         <ul class="sub-menu" aria-expanded="false">
-                                            @foreach($smartservice as $service)
-                                            <li><a href="{{ url('/smartcardpayment',$service->id) }}">{{ $service->service_name }}</a></li>
+                                            @foreach ($smartservice as $service)
+                                                <li><a
+                                                        href="{{ url('/smartcardpayment', $service->id) }}">{{ $service->service_name }}</a>
+                                                </li>
                                             @endforeach
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">PDF Services</div>
+                                        </a>
+                                         <ul class="mm-collapse">
+                                            <li><a href="{{ url('/findpayment') }}"><i
+                                                class="material-icons-outlined">arrow_right</i>Payment</a>
+                                            </li>
+                                            <li><a href="{{ url('/pdfservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>PDF SERVICE</a>
+                                            </li>
                                         </ul>
                                     </li>
                                     <li>
@@ -261,9 +323,10 @@
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                            <i class="mdi mdi-email-variant"></i>
-                                            <span>Ramji Wallet</span>
+                                        <a href="javascript:;" class="has-arrow" aria-expanded="false">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Ramji Wallet</div>
                                         </a>
                                         <ul class="sub-menu" aria-expanded="false">
                                             <li><a href="{{ url('/rawallet') }}">Ramji Wallet</a></li>
@@ -360,6 +423,19 @@
                                             </li>
                                         </ul>
                                     </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">PDF Services</div>
+                                        </a>
+                                         <ul class="mm-collapse">
+
+                                            <li><a href="{{ url('/pdfservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>PDF SERVICE</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                     <li class="">
                                         <a href="javascript:;" class="has-arrow" aria-expanded="false">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
@@ -435,6 +511,19 @@
                                             </li>
                                         </ul>
                                     </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">PDF Services</div>
+                                        </a>
+                                         <ul class="mm-collapse">
+
+                                            <li><a href="{{ url('/pdfservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>PDF SERVICE</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                     <li class="">
                                         <a href="javascript:;" class="has-arrow" aria-expanded="false">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
@@ -494,12 +583,25 @@
                                         </a>
                                         <ul class="mm-collapse">
                                             <li><a href="{{ url('/allservice') }}/{{ Auth::user()->id }}"><i
-                                                class="material-icons-outlined">arrow_right</i>
-                                            TNEGA</a>
-                                              </li>
+                                                        class="material-icons-outlined">arrow_right</i>
+                                                    TNEGA</a>
+                                            </li>
                                             <li><a href="{{ url('allservices') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>
                                                     Other Services</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">PDF Services</div>
+                                        </a>
+                                         <ul class="mm-collapse">
+
+                                            <li><a href="{{ url('/pdfservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>PDF SERVICE</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -539,3 +641,5 @@
     </div>
 </aside>
 <!--  -->
+
+

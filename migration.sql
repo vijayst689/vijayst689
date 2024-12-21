@@ -1020,3 +1020,37 @@ CREATE TABLE `service_details` (
   `status` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
+
+CREATE TABLE `find_services` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT 0,
+  `ser_image` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+INSERT INTO `find_services` VALUES (1,'Adhaar to Pan Number',12.00,'1.jpg','Active','2024-12-19 09:38:31'),(2,'Pan To Pan Details',11.00,'2.jpg','Active','2024-12-19 09:45:15'),(3,'Driving License PDF',7.00,'3.jpg','Active','2024-12-19 09:48:00'),(4,'RC Pdf',10.00,'4.jpg','Active','2024-12-19 09:49:12'),(5,'Smart Card Pdf',7.00,'5.jpg','Active','2024-12-19 09:51:21');
+
+CREATE TABLE `ramji_payment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `from_id` int(11) DEFAULT 0,
+  `to_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `iscommission` tinyint(4) DEFAULT 0,
+  `customer_id` int(11) DEFAULT NULL,
+  `service_id` int(11) DEFAULT NULL,
+  `pay_id` int(11) DEFAULT NULL,
+  `service_status` varchar(20) DEFAULT NULL,
+  `message` varchar(100) DEFAULT NULL,
+  `ad_info` varchar(100) DEFAULT NULL,
+  `ad_info2` varchar(100) DEFAULT NULL,
+  `paid_image` varchar(100) DEFAULT NULL,
+  `time` varchar(100) DEFAULT NULL,
+  `paydate` varchar(50) DEFAULT NULL,
+  `log_id` int(11) DEFAULT NULL,
+  `k_status` int(11) DEFAULT 1,
+  `service_entity` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;

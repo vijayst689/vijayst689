@@ -24,113 +24,114 @@
 
 <body>
 
-    <!-- Preloader -->
-    <div class="preloader-area position-fixed start-0 top-0 end-0 bottom-0 text-center">
-        <div class="preloader">
-            <img src="{{ asset('assetss/images/pkrm.png') }}" alt="preloader">
-            <div class="waviy fw-bold">
-                <span class="position-relative d-inline-block">P</span>
-                <span class="position-relative d-inline-block">k</span>
-                <span class="position-relative d-inline-block">r</span>
-                <span class="position-relative d-inline-block">m</span>
-                <span class="position-relative d-inline-block">S</span>
-                <span class="position-relative d-inline-block">o</span>
-                <span class="position-relative d-inline-block">l</span>
-                <span class="position-relative d-inline-block">u</span>
-                <span class="position-relative d-inline-block">t</span>
-                <span class="position-relative d-inline-block">i</span>
-                <span class="position-relative d-inline-block">o</span>
-                <span class="position-relative d-inline-block">n</span>
-                <span class="position-relative d-inline-block">s</span>
-            </div>
-        </div>
-    </div>
-    <!-- End Preloader -->
-
-    <!-- Start Navbar Area -->
-    <div class="navbar-area fixed-top is-sticky" style="background-color: floralwhite;">
-        <div class="mobile-responsive-nav">
-            <div class="container">
-                <div class="mobile-responsive-menu">
-                    <div class="logo">
-                        <a href="{{ url('/home') }}">
-                            <img src="{{ asset('assetss/images/mudiu.png') }}" width="400%" alt="logo">
-                        </a>
-                    </div>
+       <!-- Preloader -->
+       <div class="preloader-area position-fixed start-0 top-0 end-0 bottom-0 text-center">
+            <div class="preloader">
+                <img src="{{ asset('assetss/images/pkrm.png') }}" alt="preloader">
+                <div class="waviy fw-bold">
+                    <span class="position-relative d-inline-block">P</span>
+                    <span class="position-relative d-inline-block">k</span>
+                    <span class="position-relative d-inline-block">r</span>
+                    <span class="position-relative d-inline-block">m</span>
+                    <span class="position-relative d-inline-block">S</span>
+                    <span class="position-relative d-inline-block">o</span>
+                    <span class="position-relative d-inline-block">l</span>
+                    <span class="position-relative d-inline-block">u</span>
+                    <span class="position-relative d-inline-block">t</span>
+                    <span class="position-relative d-inline-block">i</span>
+                    <span class="position-relative d-inline-block">o</span>
+                    <span class="position-relative d-inline-block">n</span>
+                    <span class="position-relative d-inline-block">s</span>
                 </div>
             </div>
         </div>
+        <!-- End Preloader -->
 
-        <div class="desktop-nav">
-            <div class="container">
-                <nav class="navbar navbar-expand-md navbar-light">
-                    <img src="{{ asset('assetss/images/mudiu.png') }}" width="15%" alt="logo">
-                    <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent" style="display: block;">
-                        <ul class="navbar-nav mx-auto">
-                            <li class="nav-item">
-                                <a href="{{url('/home')}}" class=" nav-link active">
-                                    Home
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('/about_us')}}" class="nav-link">
-                                    About Us
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('/contact_us')}}" class="nav-link">
-                                    Contacts
-                                </a>
-                            </li>
-                            <!-- <li class="nav-item">
-                                <a href="{{ url('/admin') }}" class="nav-link">
-                                    Login
-                                </a>
-                            </li> -->
-                        </ul>
-                        <div class="others-option position-relative d-flex align-items-center">
+        <!-- Start Navbar Area -->
+        <div class="navbar-area fixed-top is-sticky" style="background-color: floralwhite;">
+			<div class="mobile-responsive-nav">
+				<div class="container">
+					<div class="mobile-responsive-menu">
+						<div class="logo">
+							<a href="{{ url('login') }}">
+              <img src="{{ asset('assetss/images/mudiu.png') }}" width="400%" alt="logo">
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="desktop-nav">
+				<div class="container">
+					<nav class="navbar navbar-expand-md navbar-light">
+                            <img src="{{ asset('assetss/images/mudiu.png') }}" width="15%" alt="logo">
+						</a>
+						<div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent" style="display: block;" id="top">
+							<ul class="navbar-nav mx-auto">
+                                <li class="nav-item">
+                                    <a href="{{url('/home')}}" class="nav-link">
+                                        Home
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/about_us') }}" class="nav-link">
+                                        About Us
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{url('/contact_us')}}" class=" nav-link active">
+                                        Contact us
+                                    </a>
+                                </li>
+                                <!-- <li class="nav-item">
+                                    <a href="{{ url('/admin')}}" class="nav-link">
+                                        Login
+                                    </a>
+                                </li> -->
+                            </ul>
+                            <div class="others-option position-relative d-flex align-items-center">
+                                <div class="option-item">
+                                    <a href="{{ url('/admin')}}" class="default-btn2">
+                                        Admin Login
+                                        <img src="{{ asset('assetss/images/icon/left-small.svg') }}" alt="icon">
+                                    </a>
+                                </div>
+                            </div>
+						</div>
+					</nav>
+				</div>
+			</div>
+
+			<div class="others-option-for-responsive">
+				<div class="container">
+					<div class="dot-menu">
+						<div class="inner">
+							<div class="circle circle-one"></div>
+							<div class="circle circle-two"></div>
+							<div class="circle circle-three"></div>
+						</div>
+					</div>
+
+					<div class="container">
+						<div class="option-inner">
+							<div class="others-options justify-content-center d-flex align-items-center">
                             <div class="option-item">
                                 <a href="{{ url('/admin')}}" class="default-btn2">
                                     Admin Login
                                     <img src="{{ asset('assetss/images/icon/left-small.svg') }}" alt="icon">
                                 </a>
                             </div>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        </div>
-
-        <div class="others-option-for-responsive">
-            <div class="container">
-                <div class="dot-menu">
-                    <div class="inner">
-                        <div class="circle circle-one"></div>
-                        <div class="circle circle-two"></div>
-                        <div class="circle circle-three"></div>
-                    </div>
-                </div>
-
-                <div class="container">
-                    <div class="option-inner">
-                        <div class="others-options justify-content-center d-flex align-items-center">
-                            <div class="option-item">
-                                <a href="{{ url('/admin') }}" class="default-btn2">
-                                    Admin login
-                                    <img src="{{ asset('assetss/images/icon/left-small.svg') }}" alt="icon">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Navbar Area -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Navbar Area -->
 
 
     <!-- Start Page Title Area -->
-    <div id="banner" class="page-title-area position-relative z-1" data-cue="slideInUp">
+    <div id="banner" class="page-title-area position-relative z-1" >
         <div class="container">
             <div class="page-title-content text-center">
                 <h2>Contact Us</h2>
@@ -186,8 +187,8 @@
                             </div>
                             <div class="content">
                                 <h3>Email-Us :</h3>
-                                <a href="mailto:edugenmail@email.com">
-                                    edugenmail@email.com
+                                <a href="mailto:pkrmsolution@gmail.com">
+                                pkrmsolution@gmail.com
                                 </a>
                             </div>
                         </div>
@@ -197,8 +198,8 @@
                             </div>
                             <div class="content">
                                 <h3>Call Us :</h3>
-                                <a href="tel:+1234568900">
-                                    +123 456 8900
+                                <a href="tel:+91 98431 61942">
+                                +91 98431 61942
                                 </a>
                             </div>
                         </div>
@@ -208,7 +209,7 @@
                             </div>
                             <div class="content">
                                 <h3>Office :</h3>
-                                <span>Mountain Green Road 2389, NY, USA</span>
+                                <span>Attur (Tk) , Salem (Dt), Tamilnadu -636108</span>
                             </div>
                         </div>
                     </div>
@@ -245,191 +246,135 @@
 
     <!-- Start Contact Map -->
     <div class="contact-map">
-        <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d24196.22093656893!2d-111.91936604612816!3d40.70640020197386!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87528ace2b0246f5%3A0x492b0c437e9cceb8!2sSouth%20Salt%20Lake%2C%20UT%2C%20USA!5e0!3m2!1sen!2sbd!4v1724093902757!5m2!1sen!2sbd"></iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d62532.92932298285!2d78.54452806791127!3d11.601370731974905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1s40%2F4%20%2C%20Sarkar%20Udaiyam%20patti%20%2C%20Narasingapuram%20%2C%20Attur%20%2C%20Salem%2C%20Tamilnadu%20-636108!5e0!3m2!1sen!2sin!4v1734343019348!5m2!1sen!2sin" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
     <!-- End Contact Map -->
     <!-- Start Footer Area -->
     <footer class="footer-area position-relative z-1 pt-136 pb-110">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="single-footer-widget logo-info" data-cue="slideInUp">
-                        <div class="logo">
-                            <a href="index.html">
-                                <img src="{{ asset('assetss/images/white-logo.svg') }}" alt="white-logo">
-                            </a>
-                        </div>
-                        <p>Lorem ipsum amet, consectetur adipiscing elit. Suspendis varius enim eros elementum tristique. Duis cursus.</p>
-                        <a href="mailto:themeies3@gmail.com" class="email">
-                            support.edugen@email.com
-                        </a>
-                        <ul class="list-unstyled ps-0 mb-0 social-link">
-                            <li class="d-inline-block">
-                                <a href="https://www.facebook.com/" target="_blank">
-                                    <i class="ri-facebook-fill"></i>
-                                </a>
-                            </li>
-                            <li class="d-inline-block">
-                                <a href="https://x.com/home" target="_blank">
-                                    <i class="ri-twitter-x-fill"></i>
-                                </a>
-                            </li>
-                            <li class="d-inline-block">
-                                <a href="https://www.linkedin.com/" target="_blank">
-                                    <i class="ri-linkedin-fill"></i>
-                                </a>
-                            </li>
-                            <li class="d-inline-block">
-                                <a href="https://www.google.com/" target="_blank">
-                                    <i class="ri-google-fill"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-sm-6 col-md-3">
-                    <div class="single-footer-widget links-info" data-cue="slideInUp">
-                        <h3>Links</h3>
-                        <ul class="list-unstyled ps-0 mb-0">
-                            <li>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="single-footer-widget logo-info" >
+                            <div class="logo">
                                 <a href="index.html">
-                                    Home
+                                    <img src="{{ asset('assetss/images/mudiu.png') }}" alt="white-logo">
                                 </a>
-                            </li>
-                            <li>
-                                <a href="about.html">
-                                    About Us
-                                </a>
-                            </li>
-                            <li>
-                                <a href="courses-list.html">
-                                    Courses
-                                </a>
-                            </li>
-                            <li>
-                                <a href="courses-details.html">
-                                    Courses Details
-                                </a>
-                            </li>
-                            <li>
-                                <a href="contact.html">
-                                    Contact Us
-                                </a>
-                            </li>
-                        </ul>
+                            </div>
+                            <!-- <p>The Common Services Centres (CSCs) are key to India's National e-Governance Plan (NeGP). They offer government and private services digitally, focusing on rural and remote areas.</p> -->
+                            <a href="mailto:pkrmsolution@gmail.com" class="email">
+                            pkrmsolution@gmail.com
+                            </a>
+                            <ul class="list-unstyled ps-0 mb-0 social-link">
+                                <li class="d-inline-block">
+                                    <a href="https://www.facebook.com/pkrmsolutioncsc" target="_blank">
+                                        <i class="ri-facebook-fill"></i>
+                                    </a>
+                                </li>
+                                <li class="d-inline-block">
+                                    <a href="https://www.instagram.com/pkrm.solution/profilecard/?igsh=ODlmZXoyZHN2djA=" target="_blank">
+                                    <i class="ri-instagram-fill"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-md-3">
-                    <div class="single-footer-widget links-info" data-cue="slideInUp">
-                        <h3>Legal</h3>
-                        <ul class="list-unstyled ps-0 mb-0">
-                            <li>
-                                <a href="blog-with-sidebar.html">
-                                    Trems of Use
-                                </a>
-                            </li>
-                            <li>
-                                <a href="terms-conditions.html">
-                                    Tearm & Condition
-                                </a>
-                            </li>
-                            <li>
-                                <a href="courses-details.html">
-                                    Payment Method
-                                </a>
-                            </li>
-                            <li>
-                                <a href="privacy-policy.html">
-                                    Privacy Policy
-                                </a>
-                            </li>
-                            <li>
-                                <a href="blog-standard.html">
-                                    Licensencing
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="col-lg-2 col-sm-6 col-md-3">
+                        <div class="single-footer-widget links-info" >
+                            <h3>Links</h3>
+                            <ul class="list-unstyled ps-0 mb-0">
+                                <li>
+                                    <a href="{{ url('/home') }}">
+                                        Home
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/about_us') }}">
+                                        About Us
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/contact_us') }}">
+                                        Contact us
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-footer-widget app-info" data-cue="slideInUp">
-                        <h3>Install Our App</h3>
-                        <span>From App Store Or Google Play</span>
-                        <ul class="list-unstyled ps-0 mb-0">
-                            <li class="d-inline-block">
-                                <a href="https://play.google.com/store/games?device=windows&amp;pli=1" target="_blank">
-                                    <img src="{{ asset('assetss/images/icon/google.svg') }}" alt="google">
+                    <div class="col-lg-3 col-sm-6 col-md-3">
+                        <div class="single-footer-widget links-info" >
+                            <p>The Common Services Centres (CSCs) are key to India's National e-Governance Plan (NeGP). They offer government and private services digitally, focusing on rural and remote areas.</p>
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-footer-widget app-info" >
+                            <div class="logo">
+                                <a href="index.html">
+                                    <img src="{{ asset('assetss/images/mudiu.png') }}" alt="white-logo">
                                 </a>
-                            </li>
-                            <li class="d-inline-block">
-                                <a href="https://www.apple.com/app-store/" target="_blank">
-                                    <img src="{{ asset('assetss/images/icon/app-store.svg') }}" alt="app-store">
-                                </a>
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="shapes">
-            <div class="shape12">
-                <img src="{{ asset('assetss/images/shapes/shape12.svg') }}" alt="shape">
+            <div class="shapes">
+                <div class="shape12">
+                    <img src="{{ asset('assetss/images/shapes/shape12.svg') }}" alt="shape">
+                </div>
+                <div class="shape13">
+                    <img src="{{ asset('assetss/images/shapes/shape13.svg') }}" alt="shape">
+                </div>
+                <div class="shape14">
+                    <img src="{{ asset('assetss/images/shapes/shape14.svg') }}" alt="shape">
+                </div>
             </div>
-            <div class="shape13">
-                <img src="{{ asset('assetss/images/shapes/shape13.svg') }}" alt="shape">
-            </div>
-            <div class="shape14">
-                <img src="{{ asset('assetss/images/shapes/shape14.svg') }}" alt="shape">
-            </div>
-        </div>
-    </footer>
-    <!-- End Footer Area -->
+        </footer>
+        <!-- End Footer Area -->
 
-    <!-- Start Copyright Area -->
-    <div class="copyright-area position-relative z-1">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-5">
-                    <div class="copyright-content" data-cue="slideInUp">
-                        <p>© Copyright 2024 | Edugen Template | All Rights Reserved</p>
+     <!-- Start Copyright Area -->
+     <div class="copyright-area position-relative z-1">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-5">
+                        <div class="copyright-content" >
+                            <p>© Copyright 2024 | Maran Software Solutions | All Rights Reserved</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-6 col-md-7">
-                    <div class="copyright-list" data-cue="slideInUp">
-                        <ul class="list-unstyled ps-0 mb-0">
-                            <li class="d-inline-block">
-                                <a href="blog-details.html" class="active">
-                                    Company
-                                </a>
-                            </li>
-                            <li class="d-inline-block">
-                                <a href="mailto:themeies3@gmail.com">
-                                    Support
-                                </a>
-                            </li>
-                            <li class="d-inline-block">
-                                <a href="privacy-policy.html">
-                                    Privacy
-                                </a>
-                            </li>
-                            <li class="d-inline-block">
-                                <a href="contact.html">
-                                    Contact
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="col-lg-6 col-md-7">
+                        <div class="copyright-list" >
+                            <ul class="list-unstyled ps-0 mb-0">
+                                <li class="d-inline-block">
+                                    <a href="{{ url('/home') }}">
+                                        Home
+                                    </a>
+                                </li>
+                                <li class="d-inline-block">
+                                    <a href="{{ url('about_us') }}">
+                                        About us
+                                    </a>
+                                </li>
+                                <li class="d-inline-block">
+                                    <a href="{{ url('contact_us') }}" class="active">
+                                        Contact us
+                                    </a>
+                                </li>
+                                <li class="d-inline-block" >
+                                    <a href="{{ url('login') }}">
+                                        Login
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="icon-info">
+                <a href="#top">
+                    <img src="{{ asset('assetss/images/icon/up-icon.svg') }}" alt="icon">
+                </a>
+            </div>
         </div>
-        <div class="icon-info">
-            <a href="#banner">
-                <img src="{{ asset('assetss/images/icon/up-icon.svg') }}" alt="icon">
-            </a>
-        </div>
-    </div>
-    <!-- End Copyright Area -->
+        <!-- End Copyright Area -->
 
     <!-- Link of JS files -->
     <script src="{{ asset('assetss/js/jquery.min.js') }}"></script>

@@ -253,3 +253,27 @@ Route::get('/smartcardpayment/{serviceid}', [App\Http\Controllers\ServicePayment
 Route::get('/get_smartcard_payment/{talukid}/{serviceid}', [App\Http\Controllers\ServicePaymentController::class, 'get_smartcard_payment'])->name('get_smartcard_payment');
 
 Route::post('/savesmart_payment', [App\Http\Controllers\ServicePaymentController::class, 'savesmart_payment'])->name('savesmart_payment');
+
+
+//PDFServiceController
+Route::get('/applypdfservice/{serviceid}', [App\Http\Controllers\PDFServiceController::class, 'applypdfservice'])->name('applypdfservice');
+
+Route::get('/addfindservice', [App\Http\Controllers\PDFServiceController::class, 'addfindservice'])->name('addfindservice');
+Route::post('/savefind', [App\Http\Controllers\PDFServiceController::class, 'savefind'])->name('savefind');
+Route::post('/updatefind', [App\Http\Controllers\PDFServiceController::class, 'updatefind'])->name('updatefind');
+Route::get('/viewfind', [App\Http\Controllers\PDFServiceController::class, 'viewfind'])->name('viewfind');
+Route::post('/updatestatusfind', [App\Http\Controllers\PDFServiceController::class, 'updatestatusfind'])->name('updatestatusfind');
+
+Route::get('/addutilityservice', [App\Http\Controllers\PDFServiceController::class, 'addutilityservice'])->name('addutilityservice');
+Route::post('/saveutility', [App\Http\Controllers\PDFServiceController::class, 'saveutility'])->name('saveutility');
+Route::post('/updateutility', [App\Http\Controllers\PDFServiceController::class, 'updateutility'])->name('updateutility');
+Route::get('/viewutility', [App\Http\Controllers\PDFServiceController::class, 'viewutility'])->name('viewutility');
+Route::post('/updatestatusuti', [App\Http\Controllers\PDFServiceController::class, 'updatestatusuti'])->name('updatestatusuti');
+
+Route::get('/pdfservices', [App\Http\Controllers\PDFServiceController::class, 'pdfservices'])->name('pdfservices');
+
+Route::post('/submitpanfind', [App\Http\Controllers\PDFServiceController::class, 'submitpanfind'])->name('submitpanfind');
+Route::post('/submitdlfind', [App\Http\Controllers\PDFServiceController::class, 'submitdlfind'])->name('submitdlfind');
+Route::post('/submitrcfind', [App\Http\Controllers\PDFServiceController::class, 'submitrcfind'])->name('submitrcfind');
+Route::post('/submitrationfind', [App\Http\Controllers\PDFServiceController::class, 'submitrationfind'])->name('submitrationfind');
+Route::post('/submitpanadvance', [App\Http\Controllers\PDFServiceController::class, 'submitpanadvance'])->name('submitpanadvance');
