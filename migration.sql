@@ -1021,6 +1021,47 @@ CREATE TABLE `service_details` (
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
 
+CREATE TABLE `pancard_find` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `aadhaar_no` varchar(12) DEFAULT NULL,
+  `pan_no` varchar(10) DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `father_name` varchar(200) DEFAULT NULL,
+  `gender` varchar(20) DEFAULT NULL,
+  `dob` varchar(20) DEFAULT NULL,
+  `message` varchar(1000) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `rc` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `rc_no` varchar(10) DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `pdf` longtext DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `dl` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `dlnumber` varchar(20) DEFAULT NULL,
+  `dob` varchar(10) DEFAULT NULL,
+  `pdf` longtext DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+
 CREATE TABLE `find_services` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) DEFAULT NULL,
@@ -1030,6 +1071,59 @@ CREATE TABLE `find_services` (
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
+
+CREATE TABLE `ration` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `name` varchar(200) DEFAULT NULL,
+  `aadhaar_no` varchar(12) DEFAULT NULL,
+  `dob` varchar(10) DEFAULT NULL,
+  `pdf` longtext DEFAULT NULL,
+  `message` varchar(1000) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `find_payment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `parent_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `distributor_amount` decimal(10,2) DEFAULT 0,
+  `retailer_amount` decimal(10,2) DEFAULT 0,
+  `customer_amount` decimal(10,2) DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+alter table pancard_find add amount decimal(10,2) after service_id;
+
+alter table dl add service_id int(11) after user_id;
+alter table rc add service_id int(11) after user_id;
+alter table ration add service_id int(11) after user_id;
+
+alter table dl add amount decimal(10,2) after service_id;
+alter table rc add amount decimal(10,2) after service_id;
+alter table ration add amount decimal(10,2) after service_id;
+
+CREATE TABLE `utility_services` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) DEFAULT NULL,
+  `ser_image` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `operator` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(20) DEFAULT NULL,
+  `service_type` varchar(50) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `commission` decimal(10,2) DEFAULT 0.00,
+  `retailer_commission` decimal(10,2) DEFAULT 0.00,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
 
 INSERT INTO `find_services` VALUES (1,'Adhaar to Pan Number',12.00,'1.jpg','Active','2024-12-19 09:38:31'),(2,'Pan To Pan Details',11.00,'2.jpg','Active','2024-12-19 09:45:15'),(3,'Driving License PDF',7.00,'3.jpg','Active','2024-12-19 09:48:00'),(4,'RC Pdf',10.00,'4.jpg','Active','2024-12-19 09:49:12'),(5,'Smart Card Pdf',7.00,'5.jpg','Active','2024-12-19 09:51:21');
 
