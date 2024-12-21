@@ -35,9 +35,10 @@
                                         <th>From ID</th>
                                         <th>To ID</th>
                                         <th>Title</th>
+                                        <th>Status</th>
                                         <th>Debit</th>
                                         <th>Credit</th>
-                                        <th>Status</th>
+                                        <th>Available Balance</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -47,6 +48,7 @@
                                         <td>{{ $am->paydate }}&nbsp;{{ $am->time }}</td>
                                         <td>{{ $am->from_id }}</td>
                                         <td>{{ $am->to_id }}</td>
+                                        <td>{{ $am->service_status }}</td>
                                         <td>{{ $am->ad_info }}</td>
                                         @if ($am->service_status == 'Out Payment')
                                             <td class="text-danger">- {{ $am->amount }}</td>
@@ -55,7 +57,7 @@
                                             <td></td>
                                             <td class="text-success">+ {{ $am->amount }}</td>
                                         @endif
-                                        <td>{{ $am->service_status }}</td>
+                                        <td>{{ $am->newbalance }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

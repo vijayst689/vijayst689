@@ -63,27 +63,29 @@
                                         <th>From ID</th>
                                         <th>To ID</th>
                                         <th>Title</th>
-                                         <th>Debit</th>
-                                        <th>Credit</th>
                                         <th>Status</th>
+                                        <th>Debit</th>
+                                        <th>Credit</th>
+                                        <th>Available Balance</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($viewamount as $key => $am)
                                         <tr>
-                                            <td>{{ $key + 1 }}</td>
-                                            <td>{{ $am->paydate }}&nbsp;{{ $am->time }}</td>
-                                            <td>{{ $am->from_id }}</td>
-                                            <td>{{ $am->to_id }}</td>
-                                            <td>{{ $am->ad_info }}</td>
-                                             @if ($am->service_status == 'Out Payment')
-                                                    <td class="text-danger">- {{ $am->amount }}</td>
-                                                    <td></td>
-                                                @else
-                                                    <td></td>
-                                                    <td class="text-success">+ {{ $am->amount }}</td>
-                                                @endif
-                                            <td>{{ $am->service_status }}</td>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $am->paydate }}&nbsp;{{ $am->time }}</td>
+                                        <td>{{ $am->from_id }}</td>
+                                        <td>{{ $am->to_id }}</td>
+                                        <td>{{ $am->service_status }}</td>
+                                        <td>{{ $am->ad_info }}</td>
+                                        @if ($am->service_status == 'Out Payment')
+                                            <td class="text-danger">- {{ $am->amount }}</td>
+                                            <td></td>
+                                        @else
+                                            <td></td>
+                                            <td class="text-success">+ {{ $am->amount }}</td>
+                                        @endif
+                                        <td>{{ $am->newbalance }}</td>
                                         </tr>
                                         @endforeach
                                 </tbody>
