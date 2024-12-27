@@ -33,5 +33,9 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('layouts.sidebar', function($view) {
            $view->with(['smartservice' => $this->smartservice]);
        });
+       $this->utilityservice = DB::table('utility_services')->where('status', '=', 'Active' )->orderBy( 'id' , 'Asc' )->get();
+        view()->composer('layouts.sidebar', function($view) {
+           $view->with(['utilityservice' => $this->utilityservice]);
+       });
     }
 }

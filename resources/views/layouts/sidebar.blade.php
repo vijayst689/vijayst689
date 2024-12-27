@@ -55,14 +55,20 @@
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
-                                            <div class="menu-title">Find Services</div>
+                                            <div class="menu-title">PDF Services</div>
                                         </a>
-                                        <ul class="mm-collapse">
+                                         <ul class="mm-collapse">
                                             <li><a href="{{ url('/addfindservice') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Add Find Services</a>
+                                                class="material-icons-outlined">arrow_right</i>Add Find Services</a>
+                                           </li>
+                                             <li><a href="{{ url('/viewfind') }}"><i
+                                                class="material-icons-outlined">arrow_right</i>View Find</a>
                                             </li>
-                                            <li><a href="{{ url('/viewfind') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>View Find</a>
+                                            <li><a href="{{ url('/findpayment') }}"><i
+                                                class="material-icons-outlined">arrow_right</i>Payment</a>
+                                            </li>
+                                            <li><a href="{{ url('/pdfservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>PDF SERVICE</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -79,20 +85,33 @@
                                             <li><a href="{{ url('/viewutility') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>View Utility</a>
                                             </li>
+                                            <li><a href="{{ url('/viewoperators') }}"><i
+                                                class="material-icons-outlined">arrow_right</i>View Operators</a>
+                                            </li>
+                                            <a href="javascript:;">
+                                                <div class="parent-icon">
+                                                </div>
+                                                <div class="menu-title">Utility Commission</div>
+                                            </a>
+                                            @foreach ($utilityservice as $uti)
+                                            <li><a
+                                                   href="{{ url('/rechargepayment', $uti->id) }}">{{ $uti->name }}</a>
+                                            </li>
+                                           @endforeach
                                         </ul>
                                     </li>
-                                    {{-- <li>
+                                    <li>
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
                                             <div class="menu-title">Admin</div>
                                         </a>
                                         <ul class="mm-collapse">
-                                            <li><a href="{{ url('admin') }}"><i
+                                            <li><a href="{{ url('admins') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>View Admin</a>
                                             </li>
                                         </ul>
-                                    </li> --}}
+                                    </li>
                                     <li>
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
@@ -274,6 +293,20 @@
                                             <li><a href="{{ url('/utility') }}"><i
                                                 class="material-icons-outlined">arrow_right</i>Utility</a>
                                             </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Utility Commission</div>
+                                        </a>
+                                        <ul class="sub-menu" aria-expanded="false">
+                                            @foreach ($utilityservice as $uti)
+                                             <li><a
+                                                    href="{{ url('/rechargepayment', $uti->id) }}">{{ $uti->name }}</a>
+                                             </li>
+                                            @endforeach
                                         </ul>
                                     </li>
                                     <li>

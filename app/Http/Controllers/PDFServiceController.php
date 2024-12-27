@@ -62,69 +62,12 @@ class PDFServiceController extends Controller
     return redirect()->back()->with( 'success', 'Find Service Updated Successfully' );
   }
 
-  public function updatestatusfind( Request $request ) {
+  public function updatestatus( Request $request ) {
     DB::table( 'find_services' )->where('id', $request->statusid)->update( [
       'status'     => $request->status,
     ] );
 
-    return redirect()->back()->with( 'success', 'Utility Status Updated Successfully' );
-  }
-
-  public function addutilityservice(){
-    return view( 'utility.addutilityservice');
-  }
-
-  public function viewutility(){
-    $utility = DB::table( 'utility_services' )->orderBy( 'id', 'Asc' )->get();
-    return view( 'utility.viewutility' ,compact('utility'));
-  }
-
-  public function saveutility( Request $request ) {
-    DB::table( 'utility_services' )->insert( [
-      'name'        => $request->name,
-      // 'amount'      => $request->amount,
-      'date'        => date("Y-m-d H:i:s"),
-      'status'      => 'Active',
-    ] );
-
-    $insertid = DB::getPdo()->lastInsertId();
-
-    $ser_image = '';
-    if ( $request->ser_image != null ) {
-      $ser_image = $insertid.'.'.$request->file( 'ser_image' )->extension();
-      $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'uti_image' . DIRECTORY_SEPARATOR );
-      move_uploaded_file( $_FILES[ 'ser_image' ][ 'tmp_name' ], $filepath . $ser_image );
-    }
-    $image = DB::table( 'utility_services' )->where( 'id', $insertid )->update( [
-      'ser_image' => $ser_image,
-    ] );
-    return redirect('/viewutility')->with('success', 'Utility Service Added Successfully ... !');
-  }
-
-  public function updateutility( Request $request ) {
-    DB::table( 'utility_services' )->where('id', $request->utilityid)->update( [
-      'name'     => $request->name,
-      'amount'   => $request->amount,
-    ] );
-
-    if ( $request->ser_image != null ) {
-      $ser_image = $request->utilityid.'.'.$request->file( 'ser_image' )->extension();
-      $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'uti_image' . DIRECTORY_SEPARATOR );
-      move_uploaded_file( $_FILES[ 'ser_image' ][ 'tmp_name' ], $filepath . $ser_image );
-      $image = DB::table( 'utility_services' )->where( 'id', $request->utilityid )->update( [
-        'ser_image' => $ser_image,
-      ] );
-    }
-
-    return redirect()->back()->with( 'success', 'Utility Service Updated Successfully' );
-  }
-
-  public function updatestatusuti( Request $request ) {
-    DB::table( 'utility_services' )->where('id', $request->utiid)->update( [
-      'status'     => $request->status,
-    ] );
-
-    return redirect()->back()->with( 'success', 'Utility Status Updated Successfully' );
+    return redirect()->back()->with( 'success', 'Status Updated Successfully' );
   }
 
   public function pdfservices(){
@@ -252,14 +195,27 @@ class PDFServiceController extends Controller
         $time = date( 'H:i:s' );
         $service_status = 'Out Payment';
         $ad_info = 'Ramji Wallet Debit(PanCard)';
-        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2')";
+        $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
+          $rawallet = 0;
+          if($getrawallet){
+            $balance1 = $getrawallet->rawallet;
+          }
+
+          $getrawallet1 = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+          $rawallet1 = 0;
+          if($getrawallet1){
+            $balance2 = $getrawallet1->rawallet;
+          }
+          $newbalance2 = $balance1 + $amount;
+          $newbalance3 = $balance2 - $amount;
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set rawallet = rawallet + $amount where id = 1";
         DB::update( DB::raw( $sql ) );
         $service_status = 'IN Payment';
         $ad_info = 'Ramji Wallet Credit(PanCard)';
 
-        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2')";
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set rawallet = rawallet - $amount where id = 2";
         DB::update( DB::raw( $sql ) );
@@ -283,12 +239,12 @@ class PDFServiceController extends Controller
           $newbalance = $balance + $servicepayment;
           $newbalance1 = Auth::user()->wallet - $servicepayment;
 
-          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','1','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
+          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
           DB::insert( DB::raw( $sql ) );
-          $sql = "update users set wallet = wallet + $servicepayment where id = 1";
+          $sql = "update users set wallet = wallet + $servicepayment where id = 2";
           DB::update( DB::raw( $sql ) );
           $service_status = 'IN Payment';
-          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','1','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
+          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
           DB::insert( DB::raw( $sql ) );
           $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
           DB::update( DB::raw( $sql ) );
@@ -313,13 +269,26 @@ class PDFServiceController extends Controller
         $time = date( 'H:i:s' );
         $service_status = 'Out Payment';
         $ad_info = 'Ramji Wallet Debit(PanCard)';
-        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2')";
+        $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
+        $rawallet = 0;
+        if($getrawallet){
+          $balance1 = $getrawallet->rawallet;
+        }
+
+        $getrawallet1 = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+        $rawallet1 = 0;
+        if($getrawallet1){
+          $balance2 = $getrawallet1->rawallet;
+        }
+        $newbalance2 = $balance1 + $amount;
+        $newbalance3 = $balance2 - $amount;
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set rawallet = rawallet + $amount where id = 1";
         DB::update( DB::raw( $sql ) );
         $service_status = 'IN Payment';
         $ad_info = 'Ramji Wallet Credit(PanCard)';
-        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2')";
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set rawallet = rawallet - $amount where id = 2";
         DB::update( DB::raw( $sql ) );
@@ -344,12 +313,12 @@ class PDFServiceController extends Controller
           $newbalance = $balance + $servicepayment;
           $newbalance1 = Auth::user()->wallet - $servicepayment;
 
-          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','1','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
+          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
           DB::insert( DB::raw( $sql ) );
-          $sql = "update users set wallet = wallet + $servicepayment where id = 1";
+          $sql = "update users set wallet = wallet + $servicepayment where id = 2";
           DB::update( DB::raw( $sql ) );
           $service_status = 'IN Payment';
-          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','1','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
+          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
           DB::insert( DB::raw( $sql ) );
           $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
           DB::update( DB::raw( $sql ) );
@@ -419,13 +388,26 @@ class PDFServiceController extends Controller
       $time = date( 'H:i:s' );
       $service_status = 'Out Payment';
       $ad_info = 'Ramji Wallet Debit(DL PDF)';
-      $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2')";
+      $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
+          $rawallet = 0;
+          if($getrawallet){
+            $balance1 = $getrawallet->rawallet;
+          }
+
+          $getrawallet1 = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+          $rawallet1 = 0;
+          if($getrawallet1){
+            $balance2 = $getrawallet1->rawallet;
+          }
+          $newbalance2 = $balance1 + $amount;
+          $newbalance3 = $balance2 - $amount;
+      $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
       DB::insert( DB::raw( $sql ) );
       $sql = "update users set rawallet = rawallet + $amount where id = 1";
       DB::update( DB::raw( $sql ) );
       $service_status = 'IN Payment';
       $ad_info = 'Ramji Wallet Credit(DL PDF)';
-      $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2')";
+      $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
       DB::insert( DB::raw( $sql ) );
       $sql = "update users set rawallet = rawallet - $amount where id = 2";
       DB::update( DB::raw( $sql ) );
@@ -502,7 +484,20 @@ class PDFServiceController extends Controller
        $time = date( 'H:i:s' );
        $service_status = 'Out Payment';
        $ad_info = 'Ramji Wallet Debit(RC PDF)';
-       $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2')";
+       $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
+          $rawallet = 0;
+          if($getrawallet){
+            $balance1 = $getrawallet->rawallet;
+          }
+
+          $getrawallet1 = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+          $rawallet1 = 0;
+          if($getrawallet1){
+            $balance2 = $getrawallet1->rawallet;
+          }
+          $newbalance2 = $balance1 + $amount;
+          $newbalance3 = $balance2 - $amount;
+       $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
        DB::insert( DB::raw( $sql ) );
        $sql = "update users set rawallet = rawallet + $amount where id = 1";
        DB::update( DB::raw( $sql ) );
@@ -510,7 +505,7 @@ class PDFServiceController extends Controller
        $ad_info = 'Ramji Wallet Credit(RC PDF)';
 
 
-       $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2')";
+       $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
        DB::insert( DB::raw( $sql ) );
        $sql = "update users set rawallet = rawallet - $amount where id = 2";
        DB::update( DB::raw( $sql ) );
@@ -605,7 +600,20 @@ public function submitrationfind(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Ramji Wallet Debit(RATION PDF)';
- $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2')";
+    $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
+          $rawallet = 0;
+          if($getrawallet){
+            $balance1 = $getrawallet->rawallet;
+          }
+
+          $getrawallet1 = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+          $rawallet1 = 0;
+          if($getrawallet1){
+            $balance2 = $getrawallet1->rawallet;
+          }
+          $newbalance2 = $balance1 + $amount;
+          $newbalance3 = $balance2 - $amount;
+ $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
     DB::insert( DB::raw( $sql ) );
     $sql = "update users set rawallet = rawallet + $amount where id = 1";
     DB::update( DB::raw( $sql ) );
@@ -613,7 +621,7 @@ public function submitrationfind(Request $request){
     $ad_info = 'Ramji Wallet Credit(RATION PDF)';
 
 
-    $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2')";
+    $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
     DB::insert( DB::raw( $sql ) );
     $sql = "update users set rawallet = rawallet - $amount where id = 2";
     DB::update( DB::raw( $sql ) );
@@ -710,14 +718,27 @@ public function submitpanadvance(Request $request){
         $time = date( 'H:i:s' );
         $service_status = 'Out Payment';
         $ad_info = 'Ramji Wallet Debit(PANADVANCE VERIFY)';
-        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2')";
+        $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
+          $rawallet = 0;
+          if($getrawallet){
+            $balance1 = $getrawallet->rawallet;
+          }
+
+          $getrawallet1 = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+          $rawallet1 = 0;
+          if($getrawallet1){
+            $balance2 = $getrawallet1->rawallet;
+          }
+          $newbalance2 = $balance1 + $amount;
+          $newbalance3 = $balance2 - $amount;
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set rawallet = rawallet + $amount where id = 1";
         DB::update( DB::raw( $sql ) );
         $service_status = 'IN Payment';
         $ad_info = 'Ramji Wallet Credit(PANADVANCE VERIFY)';
 
-        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2')";
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set rawallet = rawallet - $amount where id = 2";
         DB::update( DB::raw( $sql ) );

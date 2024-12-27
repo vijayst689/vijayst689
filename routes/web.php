@@ -254,6 +254,14 @@ Route::get('/get_smartcard_payment/{talukid}/{serviceid}', [App\Http\Controllers
 
 Route::post('/savesmart_payment', [App\Http\Controllers\ServicePaymentController::class, 'savesmart_payment'])->name('savesmart_payment');
 
+Route::get('/findpayment', [App\Http\Controllers\ServicePaymentController::class, 'findpayment'])->name('findpayment');
+
+Route::post('addfind_payment', [App\Http\Controllers\ServicePaymentController::class, 'addfind_payment'])->name('addfind_payment');
+
+Route::get('/rechargepayment/{serviceid}', [App\Http\Controllers\ServicePaymentController::class, 'rechargepayment'])->name('rechargepayment');
+
+Route::post('addrecharge_payment', [App\Http\Controllers\ServicePaymentController::class, 'addrecharge_payment'])->name('addrecharge_payment');
+
 
 //PDFServiceController
 Route::get('/applypdfservice/{serviceid}', [App\Http\Controllers\PDFServiceController::class, 'applypdfservice'])->name('applypdfservice');
@@ -263,12 +271,6 @@ Route::post('/savefind', [App\Http\Controllers\PDFServiceController::class, 'sav
 Route::post('/updatefind', [App\Http\Controllers\PDFServiceController::class, 'updatefind'])->name('updatefind');
 Route::get('/viewfind', [App\Http\Controllers\PDFServiceController::class, 'viewfind'])->name('viewfind');
 Route::post('/updatestatusfind', [App\Http\Controllers\PDFServiceController::class, 'updatestatusfind'])->name('updatestatusfind');
-
-Route::get('/addutilityservice', [App\Http\Controllers\PDFServiceController::class, 'addutilityservice'])->name('addutilityservice');
-Route::post('/saveutility', [App\Http\Controllers\PDFServiceController::class, 'saveutility'])->name('saveutility');
-Route::post('/updateutility', [App\Http\Controllers\PDFServiceController::class, 'updateutility'])->name('updateutility');
-Route::get('/viewutility', [App\Http\Controllers\PDFServiceController::class, 'viewutility'])->name('viewutility');
-Route::post('/updatestatusuti', [App\Http\Controllers\PDFServiceController::class, 'updatestatusuti'])->name('updatestatusuti');
 
 Route::get('/pdfservices', [App\Http\Controllers\PDFServiceController::class, 'pdfservices'])->name('pdfservices');
 
@@ -284,3 +286,20 @@ Route::post('proceedrecharge', [App\Http\Controllers\RechargeController::class, 
 Route::get('rechargehook', [App\Http\Controllers\RechargeController::class, 'rechargehook']);
 Route::get('panstatus', [App\Http\Controllers\ServiceController::class, 'panstatus']);
 Route::get('pancard_reapply/{txid}', [App\Http\Controllers\ServiceController::class, 'pancard_reapply']);
+
+//OperatorController
+
+Route::get('/operator/{id}', [App\Http\Controllers\OperatorController::class, 'operator'])->name('operator');
+Route::get('/viewoperators', [App\Http\Controllers\OperatorController::class, 'viewoperators'])->name('viewoperators');
+Route::post('/addoperator', [App\Http\Controllers\OperatorController::class, 'addoperator'])->name('addoperator');
+Route::post('/updateoperator', [App\Http\Controllers\OperatorController::class, 'updateoperator'])->name('updateoperator');
+Route::get('/deleteoperator/{id}', [App\Http\Controllers\OperatorController::class, 'deleteoperator'])->name('deleteoperator');
+
+//UtilityController
+
+Route::get('/addutilityservice', [App\Http\Controllers\UtilityController::class, 'addutilityservice'])->name('addutilityservice');
+Route::post('/saveutility', [App\Http\Controllers\UtilityController::class, 'saveutility'])->name('saveutility');
+Route::post('/updateutility', [App\Http\Controllers\UtilityController::class, 'updateutility'])->name('updateutility');
+Route::get('/viewutility', [App\Http\Controllers\UtilityController::class, 'viewutility'])->name('viewutility');
+
+Route::post('/updatestatusuti', [App\Http\Controllers\UtilityController::class, 'updatestatusuti'])->name('updatestatusuti');

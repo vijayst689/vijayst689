@@ -1197,3 +1197,13 @@ CREATE TABLE `callback` (
   message varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
+
+CREATE TABLE `recharge_payment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `parent_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `distributor_amount` decimal(10,2) DEFAULT 0,
+  `retailer_amount` decimal(10,2) DEFAULT 0,
+  `customer_amount` decimal(10,2) DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
