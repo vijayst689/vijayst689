@@ -108,5 +108,18 @@
 
         }
     }
+
+    $(function() {
+            var wallet = "{{ Auth::user()->wallet }}";
+            var amount = "{{ $payment }}";
+            if (parseFloat(amount) > parseInt(wallet)) {
+                $('#save').prop("disabled", true);
+                $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
+                    'color': 'red',
+                    'font-size': '150%',
+                    'font-weight': 'bold'
+                });
+            }
+        });
     </script>
 @endpush
