@@ -1207,3 +1207,41 @@ CREATE TABLE `recharge_payment` (
   `customer_amount` decimal(10,2) DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+
+CREATE TABLE `agentregister` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) DEFAULT NULL,
+  `mobile` varchar(10) DEFAULT NULL,
+  `email` varchar(30) DEFAULT NULL,
+  `door_no` varchar(20) DEFAULT NULL,
+  `district` varchar(50) DEFAULT NULL,
+  `taluk` varchar(50) DEFAULT NULL,
+  `post_office` varchar(50) DEFAULT NULL,
+  `state` varchar(50) DEFAULT NULL,
+  `pincode` varchar(50) DEFAULT NULL,
+  `village` varchar(50) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+alter table agentregister add userid int DEFAULT 0;
+alter table agentregister add parent_id int DEFAULT 0;
+
+//04-12-24
+
+CREATE TABLE `voterid_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `wrong_data` varchar(100) DEFAULT NULL,
+  `new_data` varchar(100) DEFAULT NULL,
+  `correction_documents` varchar(50) DEFAULT NULL,
+  `voterid_correction` varchar(20) DEFAULT NULL,
+  `doc` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+
+alter table tailor modify photo varchar(200);
+alter table tailor modify course_name varchar(100);
+
+alter table tailor add entity varchar(50) DEFAULT NULL;
