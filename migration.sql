@@ -1121,7 +1121,7 @@ CREATE TABLE `operator` (
   `service_type` varchar(50) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
   `commission` decimal(10,2) DEFAULT 0.00,
-  `retailer_commission` decimal(10,2) DEFAULT 0.00,
+  `admin_commission` decimal(10,2) DEFAULT 0.00,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 

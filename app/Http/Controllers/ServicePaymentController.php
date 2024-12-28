@@ -121,7 +121,7 @@ class ServicePaymentController extends Controller
   }
 
   public function rechargepayment($serviceid){
-    $services = DB::table('operator')->where('id',$serviceid)->orderBy( 'id' , 'Asc' )->get();
+    $services = DB::table('operator')->where('service_type',$serviceid)->orderBy( 'id' , 'Asc' )->get();
     $services = json_decode( json_encode( $services ), true );
     foreach ( $services as $key => $service ) {
       $services[ $key ][ 'payment' ] = array();
