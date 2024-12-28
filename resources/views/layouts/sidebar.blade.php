@@ -326,20 +326,6 @@
                                             </div>
                                             <div class="menu-title">Utility Commission</div>
                                         </a>
-                                        <ul class="sub-menu" aria-expanded="false">
-                                            @foreach ($utilityservice as $uti)
-                                             <li><a
-                                                    href="{{ url('/rechargepayment', $uti->id) }}">{{ $uti->name }}</a>
-                                             </li>
-                                            @endforeach
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">Utility Commission</div>
-                                        </a>
                                         <ul class="mm-collapse">
                                             @foreach ($utilityservice as $uti)
                                                 <li><a
