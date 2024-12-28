@@ -142,7 +142,7 @@
             $("#editservice").val(name);
             $("#editamount").val(amount);
             $("#corid").val(id);
-            $("#editpan").modal("show");
+            $("#editcor").modal("show");
         }
 
         function editstatus(id, status ) {
