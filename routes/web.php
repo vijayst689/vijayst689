@@ -90,7 +90,7 @@ Route::post('/checkphoneregistercustomer', [App\Http\Controllers\UserController:
 
 Route::get('/editcustomer/{id}', [App\Http\Controllers\UserController::class, 'editcustomer'])->name('editcustomer');
 
-
+Route::get('/admins', [App\Http\Controllers\UserController::class, 'admins'])->name('admins');
 
 Route::get('addretailer', [App\Http\Controllers\RetailerController::class, 'Addretailer']);
 
@@ -277,3 +277,23 @@ Route::post('/submitdlfind', [App\Http\Controllers\PDFServiceController::class, 
 Route::post('/submitrcfind', [App\Http\Controllers\PDFServiceController::class, 'submitrcfind'])->name('submitrcfind');
 Route::post('/submitrationfind', [App\Http\Controllers\PDFServiceController::class, 'submitrationfind'])->name('submitrationfind');
 Route::post('/submitpanadvance', [App\Http\Controllers\PDFServiceController::class, 'submitpanadvance'])->name('submitpanadvance');
+
+
+//PermissionController
+
+Route::get('/userpermission/{userid}', [App\Http\Controllers\PermissionController::class, 'userpermission'])->name('userpermission');
+Route::post('/savepermission', [App\Http\Controllers\PermissionController::class, 'savepermission'])->name('savepermission');
+Route::get('/utility', [App\Http\Controllers\RechargeController::class, 'utility'])->name('utility');
+Route::get('/utilityservice/{serviceid}', [App\Http\Controllers\RechargeController::class, 'utilityservice'])->name('utilityservice');
+Route::post('proceedrecharge', [App\Http\Controllers\RechargeController::class, 'proceedrecharge']);
+Route::get('rechargehook', [App\Http\Controllers\RechargeController::class, 'rechargehook']);
+Route::get('panstatus', [App\Http\Controllers\ServiceController::class, 'panstatus']);
+Route::get('pancard_reapply/{txid}', [App\Http\Controllers\ServiceController::class, 'pancard_reapply']);
+
+//OperatorController
+
+Route::get('/operator/{id}', [App\Http\Controllers\OperatorController::class, 'operator'])->name('operator');
+Route::get('/viewoperators', [App\Http\Controllers\OperatorController::class, 'viewoperators'])->name('viewoperators');
+Route::post('/addoperator', [App\Http\Controllers\OperatorController::class, 'addoperator'])->name('addoperator');
+Route::post('/updateoperator', [App\Http\Controllers\OperatorController::class, 'updateoperator'])->name('updateoperator');
+Route::get('/deleteoperator/{id}', [App\Http\Controllers\OperatorController::class, 'deleteoperator'])->name('deleteoperator');

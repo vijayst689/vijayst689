@@ -1063,3 +1063,12 @@ CREATE TABLE `utility_services` (
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
+
+CREATE TABLE `user_permission` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `parent_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;

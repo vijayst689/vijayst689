@@ -23,14 +23,24 @@ class ServiceController extends Controller
 
 public function allservice($customerid)
 {
-    $ourservice = DB::table('services')->where('status','=' , 'Active')->where('ser_id',1 )->orderBy( 'id' , 'Asc' )->get();
-    return view('services.allservice',compact('ourservice','customerid'));
+    $checkpermission = DB::table( 'user_permission' )->where('user_id' , Auth::user()->id)->where('parent_id' , 3)->get();
+    if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 5){
+        $ourservice = DB::table('services')->where('status','=' , 'Active')->where('ser_id',1 )->orderBy( 'id' , 'Asc' )->get();
+    }else{
+        $ourservice = DB::table('services')->where('status','=' , 'Active')->where('ser_id',1 )->whereIn('id',$checkpermission->pluck('service_id'))->orderBy( 'id' , 'Asc' )->get();
+    }
+        return view('services.allservice',compact('ourservice','customerid'));
 }
 
 public function allservices()
 {
-    $ourservice = DB::table('services')->where('status','=' , 'Active')->where('parent_id',0 )->where('ser_id',0 )->orderBy( 'id' , 'Asc' )->get();
-    return view('services.allservices',compact('ourservice'));
+    $checkpermission = DB::table( 'user_permission' )->where('user_id' , Auth::user()->id)->where('parent_id' , 3)->get();
+    if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 5){
+        $ourservice = DB::table('services')->where('status','=' , 'Active')->where('parent_id',0 )->where('ser_id',0 )->orderBy( 'id' , 'Asc' )->get();
+    }else{
+        $ourservice = DB::table('services')->where('status','=' , 'Active')->where('parent_id',0 )->where('ser_id',0 )->whereIn('id',$checkpermission->pluck('service_id'))->orderBy( 'id' , 'Asc' )->get();
+    }
+        return view('services.allservices',compact('ourservice'));
 }
 
 public function subservice( $id )

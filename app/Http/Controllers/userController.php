@@ -66,6 +66,14 @@ class userController extends Controller
         return view('customer.customers',compact('viewcustomers'));
     }
 
+    public function admins()
+    {
+
+        $viewadmin = DB::table('users')->where( 'user_type_id', '=', 2)->orderBy( 'id', 'Asc' )->get();
+
+        return view('admin.admins',compact('viewadmin'));
+    }
+    
     public function documents($id)
     {
         $documents = DB::table('cus_document')->where( 'customer_id', '=', $id )->orderBy( 'id', 'Asc' )->get();

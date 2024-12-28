@@ -83,6 +83,9 @@
                                                         type="button" class="btn-sm btn btn-success">Update Status</button>
                                                 @endif
 
+                                                <a href="{{ url('/userpermission', $dis->id) }}" type="button"
+                                                    style="font-size: small" class="btn btn-inverse-info px-1">Permission</a>
+
                                                 <a onclick="return confirm('Do you want to confirm delete distributor?')"
                                                     href="{{ url('/dropdistributor', $dis->id) }}" type="button"
                                                     style="font-size: small" class="btn btn-inverse-danger px-1">Drop</a>

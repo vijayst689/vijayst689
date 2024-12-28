@@ -81,18 +81,18 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    {{-- <li>
+                                    <li>
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
                                             <div class="menu-title">Admin</div>
                                         </a>
                                         <ul class="mm-collapse">
-                                            <li><a href="{{ url('admin') }}"><i
+                                            <li><a href="{{ url('admins') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>View Admin</a>
                                             </li>
                                         </ul>
-                                    </li> --}}
+                                    </li>
                                     <li>
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
