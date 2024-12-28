@@ -96,7 +96,7 @@
 
                                             <label style="font-size:20px;color: red;" for="amount"
                                                 class="form-label">Recharge Amount</label>
-                                            <input required type="text" id="amount" class="form-control number"
+                                            <input required type="text" id="1" class="form-control number"
                                                 name="amount" maxlength="5" placeholder="Amount" />
                                         </div>
                                     </div>
@@ -142,6 +142,42 @@
 @endsection
 @push('page_scripts')
     <script>
-   
+    $("#amount").keyup(function(){
+            var wallet = "{{ Auth::user()->wallet }}";
+            var amount = $("#amount").val();
+            if (parseFloat(amount) > parseInt(wallet)) {
+                $('#save').prop("disabled", true);
+                $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
+                    'color': 'red',
+                    'font-size': '150%',
+                    'font-weight': 'bold'
+                });
+            }else{
+                $("#nopayment").html("");
+                $("#save").attr("disabled",false);
+            }
+        });
+
+    var ramjibalance = "{{ $mainbalance->rawallet }}";
+    ramjibalance=parseFloat(ramjibalance);
+    function checkpayment(e){
+        var amount = $("#amount").val();
+        amount=parseInt(amount);
+        if(amount > ramjibalance){
+            alert("LOW BALANCE");
+            $('#save').prop("disabled", true);
+                    $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
+                        'color': 'red',
+                        'font-size': '130%',
+                        'font-weight': 'bold'
+                    });
+                    return false;
+        }else{
+            $("#nopayment").html("");
+            $("#save").attr("disabled",true);
+            return true;
+
+        }
+        }
     </script>
 @endpush
