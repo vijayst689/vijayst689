@@ -88,16 +88,41 @@
                                             <li><a href="{{ url('/viewoperators') }}"><i
                                                 class="material-icons-outlined">arrow_right</i>View Operators</a>
                                             </li>
-                                            <a href="javascript:;">
-                                                <div class="parent-icon">
-                                                </div>
-                                                <div class="menu-title">Utility Commission</div>
-                                            </a>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Utility Commission</div>
+                                        </a>
+                                        <ul class="mm-collapse">
                                             @foreach ($utilityservice as $uti)
-                                            <li><a
-                                                   href="{{ url('/rechargepayment', $uti->id) }}">{{ $uti->name }}</a>
+                                                <li><a
+                                                        href="{{ url('/rechargepayment', $uti->id) }}">{{ $uti->name }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">PanCard Services</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/addpan') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Add Pan</a>
                                             </li>
-                                           @endforeach
+                                            <li><a href="{{ url('/viewpan') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>View Pan</a>
+                                            </li>
+                                            <li><a href="{{ url('/panservicepayment') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>PanPayment</a>
+                                            </li>
+                                            <li><a href="{{ url('/panservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>PAN SERVICE</a>
+                                            </li>
                                         </ul>
                                     </li>
                                     <li>
@@ -307,6 +332,35 @@
                                                     href="{{ url('/rechargepayment', $uti->id) }}">{{ $uti->name }}</a>
                                              </li>
                                             @endforeach
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Utility Commission</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            @foreach ($utilityservice as $uti)
+                                                <li><a
+                                                        href="{{ url('/rechargepayment', $uti->id) }}">{{ $uti->name }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">PanCard Services</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/panservicepayment') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>PanPayment</a>
+                                            </li>
+                                            <li><a href="{{ url('/panservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>PAN SERVICE</a>
+                                            </li>
                                         </ul>
                                     </li>
                                     <li>

@@ -262,6 +262,9 @@ Route::get('/rechargepayment/{serviceid}', [App\Http\Controllers\ServicePaymentC
 
 Route::post('addrecharge_payment', [App\Http\Controllers\ServicePaymentController::class, 'addrecharge_payment'])->name('addrecharge_payment');
 
+Route::get('/panservicepayment', [App\Http\Controllers\ServicePaymentController::class, 'panservicepayment'])->name('panservicepayment');
+
+Route::post('addpan_payment', [App\Http\Controllers\ServicePaymentController::class, 'addpan_payment'])->name('addpan_payment');
 
 //PDFServiceController
 Route::get('/applypdfservice/{serviceid}', [App\Http\Controllers\PDFServiceController::class, 'applypdfservice'])->name('applypdfservice');
@@ -310,4 +313,18 @@ Route::post('/updateutility', [App\Http\Controllers\UtilityController::class, 'u
 Route::get('/viewutility', [App\Http\Controllers\UtilityController::class, 'viewutility'])->name('viewutility');
 
 Route::post('/updatestatusuti', [App\Http\Controllers\UtilityController::class, 'updatestatusuti'])->name('updatestatusuti');
+
+//PanController
+
+Route::get('/addpan', [App\Http\Controllers\PanController::class, 'addpan'])->name('addpan');
+
+Route::get('/viewpan', [App\Http\Controllers\PanController::class, 'viewpan'])->name('viewpan');
+
+Route::post('/savepan', [App\Http\Controllers\PanController::class, 'savepan'])->name('savepan');
+
+Route::post('/updatepan', [App\Http\Controllers\PanController::class, 'updatepan'])->name('updatepan');
+
+Route::get('/panservices', [App\Http\Controllers\PanController::class, 'panservices'])->name('panservices');
+
+Route::get('/applypanservice/{serviceid}', [App\Http\Controllers\PanController::class, 'applypanservice'])->name('applypanservice');
 
