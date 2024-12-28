@@ -55,7 +55,7 @@
                                             <td> <a class="btn btn-sm btn-danger text-white"><i
                                                         class='bx bx-btn'></i>{{ $p->status }}</a>
                                                 <button
-                                                    onclick="edit_course('{{ $p->id }}','{{ $p->name }}','{{ $p->amount }}')"
+                                                    onclick="edit_course('{{ $p->id }}','{{ $p->name }}')"
                                                     type="button" style="font-size: small"
                                                     class="btn btn-grd btn-grd-primary px-1">Edit</button>
 {{--
@@ -101,12 +101,6 @@
                                                                             placeholder="Name" />
                                                                     </div>
                                                                     <div class="col mb-3">
-                                                                        <label for="amount" class="form-label">Amount</label>
-                                                                        <input type="text" id="editamount"
-                                                                            name="amount" class="form-control number"
-                                                                            placeholder="Amount" />
-                                                                    </div>
-                                                                    <div class="col mb-3">
                                                                         <label for="ser_image" class="form-label">
                                                                             Image</label>
                                                                         <input type="file" name="ser_image"
@@ -138,9 +132,8 @@
 @endsection
 @push('page_scripts')
     <script>
-        function edit_course(id, name, amount ) {
+        function edit_course(id, name ) {
             $("#editservice").val(name);
-            $("#editamount").val(amount);
             $("#corid").val(id);
             $("#editcor").modal("show");
         }
