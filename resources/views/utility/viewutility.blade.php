@@ -59,10 +59,8 @@
                                                     type="button" style="font-size: small"
                                                     class="btn btn-grd btn-grd-primary px-1">Edit</button>
 
-                                                <button
-                                                    onclick="editstatus('{{ $u->id }}','{{ $u->status }}')"
-                                                    type="button" style="font-size: small"
-                                                    class="btn btn-grd btn-grd-success px-1">Status Update</button>
+                                                    <a href="{{ url('/operator', $u->id) }}" style="font-size: small"
+                                                        class="btn-sm btn btn-primary">Operator</a>
                                             </td>
 
                                         </tr>
