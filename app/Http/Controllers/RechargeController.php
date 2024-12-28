@@ -15,21 +15,34 @@ class RechargeController extends Controller
       $this->middleware('auth');
     }
 
-     public function utilityservices($serviceid)
-  {
-    if($serviceid == 187){
-        $sql="select * from operator where service_type = 'Mobile Prepaid' order by name";
-    }elseif($serviceid == 188){
-        $sql="select * from operator where service_type = 'DTH' order by name";
-    }
-    $operator=DB::select($sql);
-    $getservicename = DB::table( 'services' )->where('id',$serviceid)->first();
-   $servicename = "";
-   if($getservicename){
-    $servicename = $getservicename->service_name;
+public function utility(){
+
+    $utlityser = DB::table( 'utility_services' )->where('status' , 'Active')->orderBy( 'id', 'Asc' )->get();
+
+    return view('utility.utility',compact('utlityser'));
 }
-    return view('recharge.rechargeservice',compact('serviceid','operator','servicename'));
+
+public function utilityservice($serviceid) {
+    $getservicename = DB::table( 'utility_services' )->where('status' , 'Active')->where('id',$serviceid)->first();
+    // echo $serviceid;die;
+    $servicename = "";
+    if($getservicename){
+      $servicename = $getservicename->name;
+    }
+
+    if($serviceid == 1 || $serviceid == 2){
+        if($serviceid == 1){
+            $sql="select * from operator where service_type = 'Mobile Prepaid' order by name";
+        }elseif($serviceid == 2){
+            $sql="select * from operator where service_type = 'DTH' order by name";
+        }
+        $operator=DB::select($sql);
+        $mainbalance = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+      $recha = DB::table( 'recharge' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
+      return view( 'utility.utilityservice',compact('serviceid','servicename','operator','recha','mainbalance'));
+    }
   }
+
 
 public function proceedrecharge(Request $request){
 
@@ -75,29 +88,29 @@ public function proceedrecharge(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Recharge Out Payment';
-    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','$user_id','1','$newamount','$ad_info', '$service_status','$time','$date','$user_id')";
+    $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','$user_id','1','$newamount','$ad_info', '$service_status','$time','$date','$user_id')";
     DB::insert( DB::raw( $sql ) );
-    $sql = "update users set wallet = wallet + $newamount where id = 1";
+    $sql = "update users set rawallet = rawallet + $newamount where id = 1";
     DB::update( DB::raw( $sql ) );
     $service_status = 'IN Payment';
     $ad_info = 'Recharge In Payment';
-    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','1','$user_id','$newamount','$ad_info', '$service_status','$time','$date','$user_id')";
+    $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$user_id','1','$user_id','$newamount','$ad_info', '$service_status','$time','$date','$user_id')";
     DB::insert( DB::raw( $sql ) );
-    $sql = "update users set wallet = wallet - $newamount where id = $user_id";
+    $sql = "update users set rawallet = rawallet - $newamount where id = $user_id";
     DB::update( DB::raw( $sql ) );
-       
-        
+
+
         $sql = "update recharge set status='$status',message='$message' where id=$insert_id";
         DB::update($sql);
 
 //print_r($data);die;
         if(strtoupper($status) == "SUCCESS"){
-            return redirect("/utilityservices/".$serviceid)->with('success',ucwords($message));
+            return redirect("/utilityservice/".$serviceid)->with('success',ucwords($message));
         }else{
-            return redirect("/utilityservices/".$serviceid)->with('success',ucwords('Recharge is Pending.Please Wait..'));
+            return redirect("/utilityservice/".$serviceid)->with('success',ucwords('Recharge is Pending.Please Wait..'));
         }
     }else{
-        return redirect("/utilityservices/".$serviceid)->with('error',ucwords($message));
+        return redirect("/utilityservice/".$serviceid)->with('error',ucwords($message));
     }
 
 }
@@ -128,7 +141,7 @@ public function rechargehook(Request $request){
         $amount = $result[0]->amount;
         $commission_amount = $result[0]->commission_amount;
     }
-   
+
     $totalamount = $amount - $commission_amount;
     if(strtoupper($Status) == "FAILURE"){
         $date = date( 'Y-m-d' );

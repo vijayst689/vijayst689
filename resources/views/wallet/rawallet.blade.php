@@ -27,7 +27,7 @@
                     </div>
                     <div class="customer-table">
                         <div class="table-responsive white-space-nowrap">
-                            <table class="table align-middle">
+                            <table id="example2" class="table align-middle">
                                 <thead class="table-dark">
                                     <tr>
                                         <th>Sl No</th>
@@ -43,39 +43,40 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($raviewamount as $key => $am)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ $am->paydate }}&nbsp;{{ $am->time }}</td>
-                                        <td>{{ $am->from_id }}</td>
-                                        <td>{{ $am->to_id }}</td>
-                                        <td>{{ $am->service_status }}</td>
-                                        <td>{{ $am->ad_info }}</td>
-                                        @if ($am->service_status == 'Out Payment')
-                                            <td class="text-danger">- {{ $am->amount }}</td>
-                                            <td></td>
-                                        @else
-                                            <td></td>
-                                            <td class="text-success">+ {{ $am->amount }}</td>
-                                        @endif
-                                        <td>{{ $am->newbalance }}</td>
-                                    </tr>
-                                @endforeach
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $am->paydate }}&nbsp;{{ $am->time }}</td>
+                                            <td>{{ $am->from_id }}</td>
+                                            <td>{{ $am->to_id }}</td>
+                                            <td>{{ $am->service_status }}</td>
+                                            <td>{{ $am->ad_info }}</td>
+                                            @if ($am->service_status == 'Out Payment')
+                                                <td class="text-danger">- {{ $am->amount }}</td>
+                                                <td></td>
+                                            @else
+                                                <td></td>
+                                                <td class="text-success">+ {{ $am->amount }}</td>
+                                            @endif
+                                            <td>{{ $am->newbalance }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                                 <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Total</td>
-                                        <td>{{ Auth::user()->rawallet }}</td>
-                                        <td></td>
-
-                                    </tr>
-
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Total</td>
+                                    <td></td>
+                                    <td>{{ Auth::user()->rawallet }}</td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div>>
                 </div>
             </div>
         </div>

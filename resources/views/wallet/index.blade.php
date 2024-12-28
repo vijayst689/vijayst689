@@ -55,29 +55,29 @@
                     @endif
                     <div class="customer-table">
                         <div class="table-responsive white-space-nowrap">
-                            <table class="table align-middle">
+                            <table id="example2" class="table align-middle">
                                 <thead class="table-dark">
                                     <tr>
                                         <th>Sl No</th>
-                                        <th>Date Time</th>
-                                        <th>From ID</th>
-                                        <th>To ID</th>
-                                        <th>Title</th>
-                                        <th>Status</th>
-                                        <th>Debit</th>
-                                        <th>Credit</th>
-                                        <th>Available Balance</th>
+                                    <th>Date Time</th>
+                                    <th>From ID</th>
+                                    <th>To ID</th>
+                                    <th>Title</th>
+                                    <th>Status</th>
+                                    <th>Debit</th>
+                                    <th>Credit</th>
+                                    <th>Available Balance</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($viewamount as $key => $am)
-                                        <tr>
+                                    <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $am->paydate }}&nbsp;{{ $am->time }}</td>
                                         <td>{{ $am->from_id }}</td>
                                         <td>{{ $am->to_id }}</td>
-                                        <td>{{ $am->service_status }}</td>
                                         <td>{{ $am->ad_info }}</td>
+                                        <td>{{ $am->service_status }}</td>
                                         @if ($am->service_status == 'Out Payment')
                                             <td class="text-danger">- {{ $am->amount }}</td>
                                             <td></td>
@@ -86,10 +86,13 @@
                                             <td class="text-success">+ {{ $am->amount }}</td>
                                         @endif
                                         <td>{{ $am->newbalance }}</td>
-                                        </tr>
-                                        @endforeach
+                                    </tr>
+                                @endforeach
                                 </tbody>
                                 <tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -97,10 +100,8 @@
                                         <td></td>
                                         <td>Total</td>
                                         <td>{{ Auth::user()->wallet }}</td>
-                                        <td></td>
-
                                     </tr>
-
+                                    </tr>
                             </table>
                         </div>
                     </div>

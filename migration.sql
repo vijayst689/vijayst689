@@ -1021,6 +1021,47 @@ CREATE TABLE `service_details` (
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
 
+CREATE TABLE `pancard_find` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `aadhaar_no` varchar(12) DEFAULT NULL,
+  `pan_no` varchar(10) DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `father_name` varchar(200) DEFAULT NULL,
+  `gender` varchar(20) DEFAULT NULL,
+  `dob` varchar(20) DEFAULT NULL,
+  `message` varchar(1000) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `rc` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `rc_no` varchar(10) DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `pdf` longtext DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `dl` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `dlnumber` varchar(20) DEFAULT NULL,
+  `dob` varchar(10) DEFAULT NULL,
+  `pdf` longtext DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+
 CREATE TABLE `find_services` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) DEFAULT NULL,
@@ -1030,6 +1071,59 @@ CREATE TABLE `find_services` (
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
+
+CREATE TABLE `ration` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `name` varchar(200) DEFAULT NULL,
+  `aadhaar_no` varchar(12) DEFAULT NULL,
+  `dob` varchar(10) DEFAULT NULL,
+  `pdf` longtext DEFAULT NULL,
+  `message` varchar(1000) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `find_payment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `parent_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `distributor_amount` decimal(10,2) DEFAULT 0,
+  `retailer_amount` decimal(10,2) DEFAULT 0,
+  `customer_amount` decimal(10,2) DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+alter table pancard_find add amount decimal(10,2) after service_id;
+
+alter table dl add service_id int(11) after user_id;
+alter table rc add service_id int(11) after user_id;
+alter table ration add service_id int(11) after user_id;
+
+alter table dl add amount decimal(10,2) after service_id;
+alter table rc add amount decimal(10,2) after service_id;
+alter table ration add amount decimal(10,2) after service_id;
+
+CREATE TABLE `utility_services` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) DEFAULT NULL,
+  `ser_image` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `operator` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(20) DEFAULT NULL,
+  `service_type` varchar(50) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `commission` decimal(10,2) DEFAULT 0.00,
+  `retailer_commission` decimal(10,2) DEFAULT 0.00,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
 
 INSERT INTO `find_services` VALUES (1,'Adhaar to Pan Number',12.00,'1.jpg','Active','2024-12-19 09:38:31'),(2,'Pan To Pan Details',11.00,'2.jpg','Active','2024-12-19 09:45:15'),(3,'Driving License PDF',7.00,'3.jpg','Active','2024-12-19 09:48:00'),(4,'RC Pdf',10.00,'4.jpg','Active','2024-12-19 09:49:12'),(5,'Smart Card Pdf',7.00,'5.jpg','Active','2024-12-19 09:51:21');
 
@@ -1064,11 +1158,90 @@ CREATE TABLE `utility_services` (
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
 
-CREATE TABLE `user_permission` (
+CREATE TABLE `operator` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(20) DEFAULT NULL,
+  `service_type` varchar(50) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `commission` decimal(10,2) DEFAULT 0.00,
+  `retailer_commission` decimal(10,2) DEFAULT 0.00,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+INSERT INTO `operator` VALUES (1,'A','Mobile Prepaid','Airtel',2.00,2.00),(2,'BT','Mobile Prepaid','BSNL TOP UP',5.20,4.00),(3,'RC','Mobile Prepaid','JIO',1.30,1.00),(4,'V','Mobile Prepaid','Vodafone',3.50,3.50),(5,'ATV','DTH','Airtel Digital TV',4.20,3.50),(6,'DTV','DTH','Dish TV',4.40,3.40),(7,'STV','DTH','Sun Direct',3.25,3.00),(8,'TTV','DTH','Tata Sky',3.20,2.80),(9,'VTV','DTH','Videocon DTH',4.20,3.50),(10,'BR','Mobile Prepaid','BSNL STV',5.20,4.00),(11,'I','Mobile Prepaid','IDEA',3.50,3.50),(12,'FDF','Fastag','Federal Bank - Fastag',0.10,0.00),(13,'HDF','Fastag','Hdfc Bank - Fastag',0.10,0.00),(14,'ICF','Fastag','Icici Bank Fastag',0.10,0.00),(15,'IBF','Fastag','Idbi Bank Fastag',0.10,0.00),(16,'IFF','Fastag','Idfc First Bank- Fastag',0.10,0.00),(17,'PTF',NULL,'Paytm Payments Bank Fastag',0.10,0.10),(18,'AXF',NULL,'Axis Bank Fastag',0.10,0.10);
+
+CREATE TABLE `recharge` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int DEFAULT 0,
-  `parent_id` int DEFAULT 0,
-  `service_id` int DEFAULT 0,
-  `date` varchar(20) DEFAULT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `circle` varchar(10) DEFAULT NULL,
+  `operator` varchar(10) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT 0,
+  `commission_amount` decimal(10,2) DEFAULT 0,
+  `recharge_date` date not NULL,
+  `recharge_time` varchar(10) DEFAULT NULL,
+  user_id int DEFAULT 0,
+  plan_id int DEFAULT 0,
+  usertx varchar(20) DEFAULT NULL,
+  status varchar(20) DEFAULT NULL,
+  message varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
+
+CREATE TABLE `callback` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `operator` varchar(200) DEFAULT NULL,
+  `callback_date` varchar(10) DEFAULT NULL,
+  `callback_time` varchar(10) DEFAULT NULL,
+  `usertx` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  message varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `recharge_payment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `parent_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `distributor_amount` decimal(10,2) DEFAULT 0,
+  `retailer_amount` decimal(10,2) DEFAULT 0,
+  `customer_amount` decimal(10,2) DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `agentregister` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) DEFAULT NULL,
+  `mobile` varchar(10) DEFAULT NULL,
+  `email` varchar(30) DEFAULT NULL,
+  `door_no` varchar(20) DEFAULT NULL,
+  `district` varchar(50) DEFAULT NULL,
+  `taluk` varchar(50) DEFAULT NULL,
+  `post_office` varchar(50) DEFAULT NULL,
+  `state` varchar(50) DEFAULT NULL,
+  `pincode` varchar(50) DEFAULT NULL,
+  `village` varchar(50) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+alter table agentregister add userid int DEFAULT 0;
+alter table agentregister add parent_id int DEFAULT 0;
+
+//04-12-24
+
+CREATE TABLE `voterid_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `wrong_data` varchar(100) DEFAULT NULL,
+  `new_data` varchar(100) DEFAULT NULL,
+  `correction_documents` varchar(50) DEFAULT NULL,
+  `voterid_correction` varchar(20) DEFAULT NULL,
+  `doc` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+
+alter table tailor modify photo varchar(200);
+alter table tailor modify course_name varchar(100);
+
+alter table tailor add entity varchar(50) DEFAULT NULL;

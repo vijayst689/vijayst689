@@ -33,6 +33,8 @@
                     enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input type="hidden" name="amount" id="amount">
+                    <input type="hidden" name="serviceid"  value="{{ $serviceid }}">
+                    <input type="hidden" name="servicepayment" value="{{ $payment }}">
                     <div class="row">
                       <div class="mb-3 col-md-6">
                           <label for="pan_no" class="form-label">Pan No</label>
@@ -66,7 +68,7 @@
                                         <td>{{ $ser->pan_no }}</td>
                                         <td>{{ $ser->name }}</td>
                                         <td>{{ $ser->dob }}</td>
-                                        <td>10</td>
+                                        <td>{{ $ser->amount }}</td>
                                         <td>{{ $ser->date }}</td>
 
                                                 </tr>
@@ -85,9 +87,10 @@
 @push('page_scripts')
     <script>
     var ramjibalance = "{{ $mainbalance->rawallet }}";
+     var amount = "{{ $amount }}";
     ramjibalance=parseFloat(ramjibalance);
+    amount=parseInt(amount);
     function checkpayment(e){
-            var amount = 10;
         if(amount > ramjibalance){
             alert("LOW BALANCE");
             $('#save').prop("disabled", true);
@@ -105,5 +108,18 @@
 
         }
     }
+
+    $(function() {
+            var wallet = "{{ Auth::user()->wallet }}";
+            var amount = "{{ $payment }}";
+            if (parseFloat(amount) > parseInt(wallet)) {
+                $('#save').prop("disabled", true);
+                $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
+                    'color': 'red',
+                    'font-size': '150%',
+                    'font-weight': 'bold'
+                });
+            }
+        });
     </script>
 @endpush

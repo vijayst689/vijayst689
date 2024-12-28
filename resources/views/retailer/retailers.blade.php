@@ -48,7 +48,7 @@
                     @endif
                     <div class="customer-table">
                         <div class="table-responsive white-space-nowrap">
-                            <table class="table align-middle">
+                            <table id="example2" class="table align-middle">
                                 <thead class="table-dark">
                                     <tr>
                                         <th>User Id</th>
