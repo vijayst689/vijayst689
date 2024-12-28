@@ -225,12 +225,14 @@ class ServicePaymentController extends Controller
       foreach ( $request->parent_id as $key => $payment ) {
         $service_id = $request->service_id[ $key ];
         $distributor_amount = $request->distributor_amount[ $key ];
+        $admin_amount = $request->admin_amount[ $key ];
         $retailer_amount = $request->retailer_amount[ $key ];
         $customer_amount = $request->customer_amount[ $key ];
 
           DB::table( 'coursepayment' )->insert( [
             'parent_id'            => $payment,
             'service_id'           => $service_id,
+            'admin_amount'         => $admin_amount,
             'distributor_amount'   => $distributor_amount,
             'retailer_amount'      => $retailer_amount,
             'customer_amount'      => $customer_amount,
