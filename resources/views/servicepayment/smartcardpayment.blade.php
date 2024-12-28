@@ -65,10 +65,10 @@
 
                                         <input name="parent_id" type="hidden" value="{{ $serviceid }}" />
 
-                                        <td><input class="form-control number" name="distributor_amount" id="distributor_amount" type="text" maxlength="6" /></td>
-                                        <td><input class="form-control number" name="retailer_amount" type="text" maxlength="6" id="retailer_amount" /></td>
-                                        <td><input class="form-control number" name="customer_amount" type="text" maxlength="6" id="customer_amount" /></td>
-                                        <td><input class="form-control number" name="admin_amount" type="text" maxlength="6" id="admin_amount" /></td>
+                                        <td><input class="form-control decimal" name="distributor_amount" id="distributor_amount" type="text" maxlength="6" /></td>
+                                        <td><input class="form-control decimal" name="retailer_amount" type="text" maxlength="6" id="retailer_amount" /></td>
+                                        <td><input class="form-control decimal" name="customer_amount" type="text" maxlength="6" id="customer_amount" /></td>
+                                        <td><input class="form-control decimal" name="admin_amount" type="text" maxlength="6" id="admin_amount" /></td>
                                     </tr>
 
                                 </tbody>

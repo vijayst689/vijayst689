@@ -50,29 +50,29 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $ser->name }}</td>
-                                        <td><input class="form-control number"
+                                        <td><input class="form-control decimal"
                                             value="{{ $ser->amount }}" readonly /></td>
                                         <input name="parent_id[]" type="hidden" value="1" />
                                         <input name="service_id[]" type="hidden" value="{{ $ser->id }}" />
                                         @if (count($ser->payment) > 0)
                                             @foreach ($ser->payment as $key1 => $payment)
-                                                <td><input class="form-control number"
+                                                <td><input class="form-control decimal"
                                                         name="distributor_amount[]" type="text"
                                                         maxlength="6"
                                                         value="{{ $payment->distributor_amount }}" /></td>
-                                                <td><input class="form-control number" name="retailer_amount[]"
+                                                <td><input class="form-control decimal" name="retailer_amount[]"
                                                         type="text" maxlength="6"
                                                         value="{{ $payment->retailer_amount }}" /></td>
-                                                <td><input class="form-control number" name="customer_amount[]"
+                                                <td><input class="form-control decimal" name="customer_amount[]"
                                                         type="text" maxlength="6"
                                                         value="{{ $payment->customer_amount }}" /></td>
                                             @endforeach
                                         @else
-                                            <td><input class="form-control number" name="distributor_amount[]"
+                                            <td><input class="form-control decimal" name="distributor_amount[]"
                                                     type="text" maxlength="6" value="" /></td>
-                                            <td><input class="form-control number" name="retailer_amount[]"
+                                            <td><input class="form-control decimal" name="retailer_amount[]"
                                                     type="text" maxlength="6" value="" /></td>
-                                            <td><input class="form-control number" name="customer_amount[]"
+                                            <td><input class="form-control decimal" name="customer_amount[]"
                                                     type="text" maxlength="6" value="" /></td>
                                         @endif
                                     </tr>
