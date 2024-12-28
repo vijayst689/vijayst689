@@ -1245,3 +1245,45 @@ alter table tailor modify photo varchar(200);
 alter table tailor modify course_name varchar(100);
 
 alter table tailor add entity varchar(50) DEFAULT NULL;
+
+CREATE TABLE `panservice` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) DEFAULT NULL,
+  `ser_image` varchar(20) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT 0,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `panpayment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `parent_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `distributor_amount` decimal(10,2) DEFAULT 0,
+  `retailer_amount` decimal(10,2) DEFAULT 0,
+  `customer_amount` decimal(10,2) DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+28-12-2024
+
+CREATE TABLE `courses` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) DEFAULT NULL,
+  `ser_image` varchar(20) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT 0,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `coursepayment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `parent_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `distributor_amount` decimal(10,2) DEFAULT 0,
+  `retailer_amount` decimal(10,2) DEFAULT 0,
+  `customer_amount` decimal(10,2) DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;

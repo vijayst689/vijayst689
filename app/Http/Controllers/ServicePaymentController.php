@@ -200,4 +200,44 @@ class ServicePaymentController extends Controller
     return redirect('panservicepayment')->with('success' ,"PanSevice Payment Updated Succesfully !");
   }
 
+  public function coursepayment(){
+    $services = DB::table('courses')->orderBy( 'id' , 'Asc' )->get();
+    $services = json_decode( json_encode( $services ), true );
+    foreach ( $services as $key => $service ) {
+      $services[ $key ][ 'payment' ] = array();
+      $service_id = $service[ 'id' ];
+
+    //   print_r( $service_id );die();
+
+      $payment = DB::table('coursepayment')->where('service_id',$service_id)->get();
+      if(count($payment) > 0){
+        $services[ $key ][ 'payment' ] = $payment;
+      }
+    }
+    $services = json_decode( json_encode( $services ));
+    return view('servicepayment.coursepayment',compact('services'));
+  }
+
+  public function addcourse_payment(Request $request){
+    $parent_id = $request->parent_id;
+    DB::table('coursepayment')->where('parent_id',$parent_id )->delete();
+    if($request->has('parent_id')){
+      foreach ( $request->parent_id as $key => $payment ) {
+        $service_id = $request->service_id[ $key ];
+        $distributor_amount = $request->distributor_amount[ $key ];
+        $retailer_amount = $request->retailer_amount[ $key ];
+        $customer_amount = $request->customer_amount[ $key ];
+
+          DB::table( 'coursepayment' )->insert( [
+            'parent_id'            => $payment,
+            'service_id'           => $service_id,
+            'distributor_amount'   => $distributor_amount,
+            'retailer_amount'      => $retailer_amount,
+            'customer_amount'      => $customer_amount,
+          ] );
+      }
+    }
+    return redirect('coursepayment')->with('success' ,"Course Payment Updated Succesfully !");
+  }
+
 }

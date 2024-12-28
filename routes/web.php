@@ -266,6 +266,10 @@ Route::get('/panservicepayment', [App\Http\Controllers\ServicePaymentController:
 
 Route::post('addpan_payment', [App\Http\Controllers\ServicePaymentController::class, 'addpan_payment'])->name('addpan_payment');
 
+Route::get('/coursepayment', [App\Http\Controllers\ServicePaymentController::class, 'coursepayment'])->name('coursepayment');
+
+Route::post('addcourse_payment', [App\Http\Controllers\ServicePaymentController::class, 'addcourse_payment'])->name('addcourse_payment');
+
 //PDFServiceController
 Route::get('/applypdfservice/{serviceid}', [App\Http\Controllers\PDFServiceController::class, 'applypdfservice'])->name('applypdfservice');
 
@@ -327,4 +331,18 @@ Route::post('/updatepan', [App\Http\Controllers\PanController::class, 'updatepan
 Route::get('/panservices', [App\Http\Controllers\PanController::class, 'panservices'])->name('panservices');
 
 Route::get('/applypanservice/{serviceid}', [App\Http\Controllers\PanController::class, 'applypanservice'])->name('applypanservice');
+
+//CourseController
+
+Route::get('/addcourse', [App\Http\Controllers\CourseController::class, 'addcourse'])->name('addcourse');
+
+Route::get('/viewcourse', [App\Http\Controllers\CourseController::class, 'viewcourse'])->name('viewcourse');
+
+Route::post('/savecourse', [App\Http\Controllers\CourseController::class, 'savecourse'])->name('savecourse');
+
+Route::post('/updatecourse', [App\Http\Controllers\CourseController::class, 'updatecourse'])->name('updatecourse');
+
+Route::get('/courses', [App\Http\Controllers\CourseController::class, 'courses'])->name('courses');
+
+Route::get('/applycourseservice/{serviceid}', [App\Http\Controllers\CourseController::class, 'applycourseservice'])->name('applycourseservice');
 
