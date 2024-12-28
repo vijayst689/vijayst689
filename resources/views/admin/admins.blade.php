@@ -54,6 +54,7 @@
                                             <td><img src="/upload/profile_photo/{{ $ad->profile }}" class="rounded-circle"
                                                     width="40" height="40" alt=""></td>
                                             <td>{{ $ad->cpassword }}</td>
+                                            
                                              <td><a href="{{ url('/userpermission', $ad->id) }}" type="button"
                                                     style="font-size: small" class="btn btn-inverse-info px-1">Permission</a></td>
                                         </tr>
