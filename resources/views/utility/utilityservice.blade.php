@@ -32,7 +32,7 @@
                              background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);">
                         <h3 class="card-title">{{ $servicename }}</h3>
                         <div class="row">
-                            <form class="row g-4" action="{{ url('proceedrecharge') }}" enctype="multipart/form-data"
+                            <form class="row g-4" onsubmit="return checkpayment(event)" action="{{ url('proceedrecharge') }}" enctype="multipart/form-data"
                                 method="post">
                                 @csrf
                                 <input type="hidden" name="serviceid" value="{{ $serviceid }}">
