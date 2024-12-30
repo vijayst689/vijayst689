@@ -129,6 +129,27 @@
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
+                                            <div class="menu-title">Course Certificate</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/addcourse') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Add Course</a>
+                                            </li>
+                                            <li><a href="{{ url('/viewcourse') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>View Course</a>
+                                            </li>
+                                            <li><a href="{{ url('/coursepayment') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>CoursePayment</a>
+                                            </li>
+                                            <li><a href="{{ url('/courses') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Apply Certificate</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
                                             <div class="menu-title">Admin</div>
                                         </a>
                                         <ul class="mm-collapse">
@@ -353,6 +374,21 @@
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
+                                            <div class="menu-title">Course Certificate</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/coursepayment') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>CoursePayment</a>
+                                            </li>
+                                            <li><a href="{{ url('/courses') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Apply Certificate</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
                                             <div class="menu-title">Distributor</div>
                                         </a>
                                         <ul class="mm-collapse">
@@ -533,6 +569,30 @@
                                             </li>
                                         </ul>
                                     </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">PanCard Services</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/panservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>PAN SERVICE</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Course Certificate</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/courses') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Apply Certificate</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                     <li class="">
                                         <a href="javascript:;" class="has-arrow" aria-expanded="false">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
@@ -633,6 +693,30 @@
                                             </li>
                                         </ul>
                                     </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">PanCard Services</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/panservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>PAN SERVICE</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Course Certificate</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/courses') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Apply Certificate</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                     <li class="">
                                         <a href="javascript:;" class="has-arrow" aria-expanded="false">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
@@ -723,6 +807,30 @@
                                          <ul class="mm-collapse">
                                             <li><a href="{{ url('/utility') }}"><i
                                                 class="material-icons-outlined">arrow_right</i>Utility</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">PanCard Services</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/panservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>PAN SERVICE</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Course Certificate</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/courses') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Apply Certificate</a>
                                             </li>
                                         </ul>
                                     </li>
