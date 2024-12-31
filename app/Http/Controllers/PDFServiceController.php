@@ -78,7 +78,7 @@ class PDFServiceController extends Controller
     }else{
       $service = DB::table( 'find_services' )->where('status' , 'Active')->whereIn('id',$checkpermission->pluck('service_id'))->orderBy( 'id', 'ASC' )->get();
     }
-    
+
     $service = json_decode( json_encode( $service ), true );
     foreach ( $service as $key => $s ) {
 
@@ -214,14 +214,14 @@ class PDFServiceController extends Controller
           }
           $newbalance2 = $balance1 + $amount;
           $newbalance3 = $balance2 - $amount;
-        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set rawallet = rawallet + $amount where id = 1";
         DB::update( DB::raw( $sql ) );
         $service_status = 'IN Payment';
         $ad_info = 'Ramji Wallet Credit(PanCard)';
 
-        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set rawallet = rawallet - $amount where id = 2";
         DB::update( DB::raw( $sql ) );
@@ -407,13 +407,13 @@ class PDFServiceController extends Controller
           }
           $newbalance2 = $balance1 + $amount;
           $newbalance3 = $balance2 - $amount;
-      $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+      $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
       DB::insert( DB::raw( $sql ) );
       $sql = "update users set rawallet = rawallet + $amount where id = 1";
       DB::update( DB::raw( $sql ) );
       $service_status = 'IN Payment';
       $ad_info = 'Ramji Wallet Credit(DL PDF)';
-      $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+      $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
       DB::insert( DB::raw( $sql ) );
       $sql = "update users set rawallet = rawallet - $amount where id = 2";
       DB::update( DB::raw( $sql ) );
@@ -503,7 +503,7 @@ class PDFServiceController extends Controller
           }
           $newbalance2 = $balance1 + $amount;
           $newbalance3 = $balance2 - $amount;
-       $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+       $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
        DB::insert( DB::raw( $sql ) );
        $sql = "update users set rawallet = rawallet + $amount where id = 1";
        DB::update( DB::raw( $sql ) );
@@ -619,7 +619,7 @@ public function submitrationfind(Request $request){
           }
           $newbalance2 = $balance1 + $amount;
           $newbalance3 = $balance2 - $amount;
- $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+ $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
     DB::insert( DB::raw( $sql ) );
     $sql = "update users set rawallet = rawallet + $amount where id = 1";
     DB::update( DB::raw( $sql ) );
@@ -627,7 +627,7 @@ public function submitrationfind(Request $request){
     $ad_info = 'Ramji Wallet Credit(RATION PDF)';
 
 
-    $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+    $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
     DB::insert( DB::raw( $sql ) );
     $sql = "update users set rawallet = rawallet - $amount where id = 2";
     DB::update( DB::raw( $sql ) );
@@ -737,14 +737,14 @@ public function submitpanadvance(Request $request){
           }
           $newbalance2 = $balance1 + $amount;
           $newbalance3 = $balance2 - $amount;
-        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set rawallet = rawallet + $amount where id = 1";
         DB::update( DB::raw( $sql ) );
         $service_status = 'IN Payment';
         $ad_info = 'Ramji Wallet Credit(PANADVANCE VERIFY)';
 
-        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set rawallet = rawallet - $amount where id = 2";
         DB::update( DB::raw( $sql ) );

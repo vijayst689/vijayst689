@@ -29,17 +29,27 @@ class PaymentsController extends Controller {
         $date = date( 'Y-m-d' );
         $time = date( 'H:i:s' );
         $status = 'Approved';
+        $newbalance = Auth::user()->wallet - $amount;
         $sql = "update request_payment set status = '$status' where id = $request_id";
         DB::update( DB::raw( $sql ) );
         $service_status = 'Out Payment';
         $ad_info = 'Fund Transfer';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$login_id','$login_id','$from_id','$amount','$ad_info', '$service_status','$time','$date','$from_id')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$login_id','$login_id','$from_id','$amount','$ad_info', '$service_status','$time','$date','$from_id','$newbalance')";
         DB::insert( DB::raw( $sql ) );
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',$from_id)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $newbalance1 = $balance + $amount;
+
         $sql = "update users set wallet = wallet + $amount where id = $from_id";
         DB::update( DB::raw( $sql ) );
+
         $service_status = 'IN Payment';
         $ad_info = 'Fund Transfer';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$login_id','$from_id','$login_id','$amount','$ad_info', '$service_status','$time','$date','$from_id')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$login_id','$from_id','$login_id','$amount','$ad_info', '$service_status','$time','$date','$from_id','$newbalance1 ')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet - $amount where id = $login_id";
         DB::update( DB::raw( $sql ) );
@@ -57,17 +67,24 @@ class PaymentsController extends Controller {
         $date = date( 'Y-m-d' );
         $time = date( 'H:i:s' );
         $status = 'Approved';
+        $newbalance = Auth::user()->rawallet - $amount;
         $sql = "update request_payment set status = '$status' where id = $request_id";
         DB::update( DB::raw( $sql ) );
         $service_status = 'Out Payment';
         $ad_info = 'Fund Transfer';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$login_id','$login_id','$from_id','$amount','$ad_info', '$service_status','$time','$date','$from_id')";
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$login_id','$from_id','$login_id','$amount','$ad_info', '$service_status','$time','$date','$from_id','$newbalance')";
         DB::insert( DB::raw( $sql ) );
+        $getwallet = DB::table( 'users' )->select('rawallet')->where('id',$from_id)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->rawallet;
+        }
+        $newbalance1 = $balance + $amount;
         $sql = "update users set rawallet = rawallet + $amount where id = $from_id";
         DB::update( DB::raw( $sql ) );
         $service_status = 'IN Payment';
         $ad_info = 'Fund Transfer';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$login_id','$from_id','$login_id','$amount','$ad_info', '$service_status','$time','$date','$from_id')";
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$login_id','$login_id','$from_id','$amount','$ad_info', '$service_status','$time','$date','$from_id','$newbalance1')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set rawallet = rawallet - $amount where id = $login_id";
         DB::update( DB::raw( $sql ) );
