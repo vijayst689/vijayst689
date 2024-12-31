@@ -18,7 +18,7 @@ class WalletController extends Controller
     $userid = Auth::user()->id;
 
     if(Auth::user()->user_type_id == 2){
-        $viewamount = DB::table( 'payment' )->orderBy( 'id', 'Asc' )->get();
+        $viewamount = DB::table( 'payment' )->where( 'from_id', $userid )->orderBy( 'id', 'Asc' )->get();
     }else{
         $viewamount = DB::table( 'payment' )->where( 'from_id', $userid )->orderBy( 'id', 'Asc' )->get();
     }
@@ -30,7 +30,7 @@ class WalletController extends Controller
     $userid = Auth::user()->id;
 
     if(Auth::user()->user_type_id == 2){
-        $requestamount = DB::table( 'request_payment' )->orderBy( 'id', 'Asc' )->get();
+        $requestamount = DB::table( 'request_payment' )->where( 'to_id', $userid)->orderBy( 'id', 'Asc' )->get();
     }else{
         $requestamount = DB::table( 'request_payment' )->where( 'from_id', $userid )->orderBy( 'id', 'Asc' )->get();
     }
