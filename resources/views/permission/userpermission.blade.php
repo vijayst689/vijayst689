@@ -66,6 +66,17 @@
                 </div>
                 </div>
                 @endforeach
+                <h5 class="text-center text-danger mt-4">Pancard Services</h5>
+                        @foreach($panservices as $ser1)
+                <div class="col-6 col-xl-6">
+                    <div class="row row-padded">
+                    <label class="form-check-label col-sm-10" for="pan{{ $ser1->id }}">{{ $ser1->name }}</label>
+                    <div class="icheck-success d-inline col-sm-2">
+                        <input name="service_id[]"  @foreach($checkpermission4 as $c) @if($c->service_id == $ser1->id) checked @endif  @endforeach type="checkbox" id="pan{{ $ser1->id }}" value="{{ $ser1->id }}_4">
+                    </div> 
+                </div>
+                </div>
+                @endforeach
                         <h5 class="text-center text-danger mt-4">Other Services</h5>
                         @foreach($services as $ser2)
                 <div class="col-6 col-xl-6">
