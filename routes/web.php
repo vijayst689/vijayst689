@@ -332,6 +332,10 @@ Route::get('/panservices', [App\Http\Controllers\PanController::class, 'panservi
 
 Route::get('/applypanservice/{serviceid}', [App\Http\Controllers\PanController::class, 'applypanservice'])->name('applypanservice');
 
+Route::post('/submitnewpancard', [App\Http\Controllers\PanController::class, 'submitnewpancard'])->name('submitnewpancard');
+Route::post('/submitpancorrection', [App\Http\Controllers\PanController::class, 'submitpancorrection'])->name('submitpancorrection');
+Route::get('pancard_reapply/{txid}/{serviceid}', [App\Http\Controllers\PanController::class, 'pancard_reapply']);
+
 //CourseController
 
 Route::get('/addcourse', [App\Http\Controllers\CourseController::class, 'addcourse'])->name('addcourse');

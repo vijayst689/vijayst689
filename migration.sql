@@ -1287,3 +1287,5 @@ CREATE TABLE `coursepayment` (
   `customer_amount` decimal(10,2) DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+
+INSERT INTO `panservice` VALUES (1,'New Card','1.jpg',98.00,'Active','2024-12-27 12:44:39'),(2,'Correction Pan Card','2.png',98.00,'Active','2024-12-27 12:45:25');
