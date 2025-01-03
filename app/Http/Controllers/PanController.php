@@ -141,22 +141,293 @@ class PanController extends Controller
       $payment = 0;
     }
     $mainbalance = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
-    // if($serviceid == 1){
-    //   $pandetails = DB::table( 'pancard_find' )->where('user_id',Auth::user()->id)->where('service_id',$serviceid)->orderBy( 'id', 'Desc' )->get();
-    //   return view( 'panservice.panfind',compact('serviceid','servicename','payment','mainbalance','pandetails','amount'));
-    // }elseif($serviceid == 2){
-    //   $pandetails = DB::table( 'pancard_find' )->where('user_id',Auth::user()->id)->where('service_id',$serviceid)->orderBy( 'id', 'Desc' )->get();
-    //   return view( 'panservice.panadvance',compact('serviceid','servicename','payment','mainbalance','pandetails','amount'));
-    // }elseif( $serviceid == 3 ){
-    //   $dldetails = DB::table( 'dl' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
-    //   return view( 'pdfservice.dlservice',compact('serviceid','servicename','payment','mainbalance','dldetails','amount'));
-    // }elseif( $serviceid == 4 ){
-    //   $rcdetails = DB::table( 'rc' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
-    //   return view( 'pdfservice.rcservice',compact('serviceid','servicename','payment','mainbalance','rcdetails','amount'));
-    // }elseif( $serviceid == 5 ){
-    //   $rationdetails = DB::table( 'ration' )->where('user_id',Auth::user()->id)->orderBy( 'id', 'Desc' )->get();
-    //   return view( 'pdfservice.rationcardverify',compact('serviceid','servicename','payment','mainbalance','rationdetails','amount'));
-    // }
+    if($serviceid == 1){
+      $pandetails = DB::table( 'pancard' )->where('user_id',Auth::user()->id)->where('service_id',$serviceid)->orderBy( 'id', 'Desc' )->get();
+      return view( 'panservice.newpancard',compact('serviceid','servicename','payment','mainbalance','pandetails','amount'));
+    }elseif($serviceid == 2){
+      $pandetails = DB::table( 'pancard' )->where('user_id',Auth::user()->id)->where('service_id',$serviceid)->orderBy( 'id', 'Desc' )->get();
+      return view( 'panservice.pancorrection',compact('serviceid','servicename','payment','mainbalance','pandetails','amount'));
+    }
   }
+
+  public function submitnewpancard( Request $request ) {
+        $user_id = Auth::user()->id;
+        $serviceid = $request->serviceid;
+        $mobile = $request->mobile;
+        $mode = $request->mode;
+        $orderid = rand(000000,999999);
+        $panurl =  "https://connect.inspay.in/v4/nsdl/new_pan?username=IP7598984380&token=836a596851ed939b19a4b71157c47e1d&number=$mobile&mode=$mode&orderid=$orderid";
+        $crl = curl_init();
+        curl_setopt( $crl, CURLOPT_URL, $panurl );
+        curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
+        curl_setopt( $crl, CURLOPT_RETURNTRANSFER, true );
+        $result = curl_exec($crl);
+        $result = json_decode($result);
+        //echo "<pre>"; print_r($result);echo "</pre>";die;
+        $status = $result->status;
+        $url = "";
+        $message = "";
+        if($status == "Success"){
+            $url = $result->url;
+            $orderid = $result->orderid;
+            $message = $result->message;
+        }else{
+            $orderid = $result->orderid;
+            $message = $result->message;
+        }
+        curl_close($crl);
+
+        DB::table( 'pancard' )->insert( [
+
+           'user_id'      => $user_id,
+           'service_id'   => $request->serviceid,
+           'amount'       => $request->servicepayment,
+           'name'         => $request->name,
+           'mode'         => $request->mode,
+           'aadhaar_no'   => $request->aadhaar_no,
+           'mobile'       => $request->mobile,
+           'status'       => 'Pending',
+           'applied_date' => date("Y-m-d"),
+           'created_at'   => date("Y-m-d"),
+       ] );
+
+         $insertid = DB::getPdo()->lastInsertId();
+
+
+        if($status == "Success"){
+
+          DB::table('pancard')->where('id', $insertid)->update([
+            'api_url' => $url,
+            'api_status' => $status,
+            'api_txid' => $orderid,
+            'message' => $message,
+            'status' => 'Processing'
+          ]);
+          $amount = $request->amount;
+          $servicepayment = $request->servicepayment;
+          $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = 'Ramji Wallet Debit(PanCard)';
+        $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
+          $rawallet = 0;
+          if($getrawallet){
+            $balance1 = $getrawallet->rawallet;
+          }
+
+          $getrawallet1 = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+          $rawallet1 = 0;
+          if($getrawallet1){
+            $balance2 = $getrawallet1->rawallet;
+          }
+          $newbalance2 = $balance1 + $amount;
+          $newbalance3 = $balance2 - $amount;
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set rawallet = rawallet + $amount where id = 1";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $ad_info = 'Ramji Wallet Credit(PanCard)';
+
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set rawallet = rawallet - $amount where id = 2";
+        DB::update( DB::raw( $sql ) );
+
+        if(Auth::user()->user_type_id != 2){
+          $getservicename = DB::table( 'find_services' )->select('name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->name;
+          }
+          $date = date( 'Y-m-d' );
+          $time = date( 'H:i:s' );
+          $service_status = 'Out Payment';
+          $ad_info = 'Pan Card Payment'. ' '. $servicename;
+
+          $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+          $balance = 0;
+          if($getwallet){
+            $balance = $getwallet->wallet;
+          }
+          $newbalance = $balance + $servicepayment;
+          $newbalance1 = Auth::user()->wallet - $servicepayment;
+
+          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
+          DB::insert( DB::raw( $sql ) );
+          $sql = "update users set wallet = wallet + $servicepayment where id = 2";
+          DB::update( DB::raw( $sql ) );
+          $service_status = 'IN Payment';
+          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
+          DB::insert( DB::raw( $sql ) );
+          $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+          DB::update( DB::raw( $sql ) );
+           return redirect($url)->With("success",$message);
+         }
+        }else{
+           DB::table('pancard')->where('id', $insertid)->update([
+            'message' => $message,
+            'status' => 'Failure',
+            'amount' => 0,
+          ]);
+           return redirect('applypanservice/'.$serviceid)->With("error",$message);
+        }
+
+  }
+
+    public function submitpancorrection( Request $request ) {
+        $user_id = Auth::user()->id;
+        $serviceid = $request->serviceid;
+        $mobile = $request->mobile;
+        $mode = $request->mode;
+        $orderid = rand(000000,999999);
+        $panurl =  "https://connect.inspay.in/v4/nsdl/correction?username=IP7598984380&token=836a596851ed939b19a4b71157c47e1d&number=$mobile&mode=$mode&orderid=$orderid";
+        $crl = curl_init();
+        curl_setopt( $crl, CURLOPT_URL, $panurl );
+        curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
+        curl_setopt( $crl, CURLOPT_RETURNTRANSFER, true );
+        $result = curl_exec($crl);
+        $result = json_decode($result);
+        //echo "<pre>"; print_r($result);echo "</pre>";die;
+        $status = $result->status;
+        $url = "";
+        $message = "";
+        if($status == "Success"){
+            $url = $result->url;
+            $orderid = $result->orderid;
+            $message = $result->message;
+        }else{
+            $orderid = $result->orderid;
+            $message = $result->message;
+        }
+        curl_close($crl);
+
+        DB::table( 'pancard' )->insert( [
+
+           'user_id'      => $user_id,
+           'service_id'   => $request->serviceid,
+           'amount'       => $request->servicepayment,
+           'name'         => $request->name,
+           'mode'         => $request->mode,
+           'aadhaar_no'   => $request->aadhaar_no,
+           'mobile'       => $request->mobile,
+           'status'       => 'Pending',
+           'applied_date' => date("Y-m-d"),
+           'created_at'   => date("Y-m-d"),
+       ] );
+
+         $insertid = DB::getPdo()->lastInsertId();
+
+
+        if($status == "Success"){
+
+          DB::table('pancard')->where('id', $insertid)->update([
+            'api_url' => $url,
+            'api_status' => $status,
+            'api_txid' => $orderid,
+            'message' => $message,
+            'status' => 'Processing'
+          ]);
+          $amount = $request->amount;
+          $servicepayment = $request->servicepayment;
+          $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = 'Ramji Wallet Debit(PanCard)';
+        $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
+          $rawallet = 0;
+          if($getrawallet){
+            $balance1 = $getrawallet->rawallet;
+          }
+
+          $getrawallet1 = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+          $rawallet1 = 0;
+          if($getrawallet1){
+            $balance2 = $getrawallet1->rawallet;
+          }
+          $newbalance2 = $balance1 + $amount;
+          $newbalance3 = $balance2 - $amount;
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set rawallet = rawallet + $amount where id = 1";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $ad_info = 'Ramji Wallet Credit(PanCard)';
+
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set rawallet = rawallet - $amount where id = 2";
+        DB::update( DB::raw( $sql ) );
+
+        if(Auth::user()->user_type_id != 2){
+          $getservicename = DB::table( 'find_services' )->select('name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->name;
+          }
+          $date = date( 'Y-m-d' );
+          $time = date( 'H:i:s' );
+          $service_status = 'Out Payment';
+          $ad_info = 'Pan Card Payment'. ' '. $servicename;
+
+          $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+          $balance = 0;
+          if($getwallet){
+            $balance = $getwallet->wallet;
+          }
+          $newbalance = $balance + $servicepayment;
+          $newbalance1 = Auth::user()->wallet - $servicepayment;
+
+          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
+          DB::insert( DB::raw( $sql ) );
+          $sql = "update users set wallet = wallet + $servicepayment where id = 2";
+          DB::update( DB::raw( $sql ) );
+          $service_status = 'IN Payment';
+          $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
+          DB::insert( DB::raw( $sql ) );
+          $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+          DB::update( DB::raw( $sql ) );
+
+         }
+           return redirect($url)->With("success",$message);
+        }else{
+           DB::table('pancard')->where('id', $insertid)->update([
+            'message' => $message,
+            'status' => 'Failure',
+            'amount' => 0,
+          ]);
+           return redirect('applypanservice/'.$serviceid)->With("error",$message);
+        }
+
+  }
+
+  public function pancard_reapply($txid,$serviceid){
+
+    $panurl =  "https://connect.inspay.in/v4/nsdl/incomplete?username=IP7598984380&token=836a596851ed939b19a4b71157c47e1d&orderid=$txid";
+    $crl = curl_init();
+    curl_setopt( $crl, CURLOPT_URL, $panurl );
+    curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
+    curl_setopt( $crl, CURLOPT_RETURNTRANSFER, true );
+    $result = curl_exec($crl);
+    $result = json_decode($result);
+        //echo "<pre>"; print_r($result);echo "</pre>";die;
+    $status = $result->status;
+    $url = "";
+    $message = "";
+    if($status == "Success"){
+        $url = $result->url;
+        $orderid = $result->txid;
+        $message = $result->message;
+    }else{
+        $orderid = $result->orderid;
+        $message = $result->message;
+    }
+    curl_close($crl);
+    if($status == "Success"){
+           return redirect($url)->With("success",$message);
+    }else{
+     return redirect('applypanservice/'.$serviceid)->With("error",$message);
+}
+}
 
 }

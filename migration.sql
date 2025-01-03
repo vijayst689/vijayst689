@@ -1287,3 +1287,9 @@ CREATE TABLE `coursepayment` (
   `customer_amount` decimal(10,2) DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+
+INSERT INTO `panservice` VALUES (1,'New Card','1.jpg',98.00,'Active','2024-12-27 12:44:39'),(2,'Correction Pan Card','2.png',98.00,'Active','2024-12-27 12:45:25');
+
+alter table pancard add api_status varchar(30) DEFAULT Null after status;
+alter table pancard add api_url varchar(700) DEFAULT Null after api_status;
+alter table pancard add api_txid varchar(30) DEFAULT Null after api_url;
