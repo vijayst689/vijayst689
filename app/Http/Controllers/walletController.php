@@ -78,7 +78,7 @@ public function rawallet()
       $raviewamount = DB::table( 'ramji_payment' )->where( 'to_id', $userid )->orderBy( 'id', 'desc' )->get();
   }elseif (Auth::user()->user_type_id == 2) {
 
-      $raviewamount = DB::table( 'ramji_payment' )->where( 'to_id', 1 )->orderBy( 'id', 'desc' )->get();
+      $raviewamount = DB::table( 'ramji_payment' )->where( 'to_id', 2 )->orderBy( 'id', 'desc' )->get();
   }
   return view('wallet.rawallet',compact('raviewamount'));
 }

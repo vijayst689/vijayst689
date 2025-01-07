@@ -29,7 +29,7 @@
                         <div class="table-responsive white-space-nowrap">
                             <table id="example2" class="table align-middle">
                                 <thead class="table-dark">
-                                    <tr>
+                                <tr>
                                         <th>Sl No</th>
                                         <th>Date Time</th>
                                         <th>From ID</th>
