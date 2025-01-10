@@ -62,7 +62,129 @@
                                                         maxlength="15">
                                                 </div>
                                             </div>
-                                        </div>
+                                          
+                                            <div class="mb-3">
+
+<div class="row" id="dobhide" style="display: none;">
+    <h4 class="text-center">Can Details</h4>
+<div class="mb-3 col-md-4">
+<label style="color:#23e156" for="personalized" class="form-label">திரு/திருமதி/செல்வி</label>
+<select id="personalized" name="personalized" class="form-control">
+<option value="">Select</option>
+<option value="திரு">திரு.</option>
+<option value="திருமதி">திருமதி.</option>
+<option value="செல்வி">செல்வி.</option>
+</select>
+<label style="color:#23e156" for="relationship_1" class="form-label">உறவுமுறை</label>
+<select id="relationship_1" name="relationship_1" class="form-control">
+<option value="">Select</option>
+<option value="தந்தை">தந்தை.</option>                            
+</select>
+<label style="color:#23e156" for="relationship_2" class="form-label">உறவுமுறை</label>
+<select id="relationship_2" name="relationship_2" class="form-control">
+<option value="">Select</option>
+<option value="தாய்">தாய்.</option>
+</select>
+<label style="color:#23e156" for="relationship_3" class="form-label">உறவுமுறை</label>
+<select id="relationship_3" name="relationship_3" class="form-control">
+<option value="">Select</option>
+<option value="கணவர்">கணவர்.</option>
+<option value="மனைவி">மனைவி.</option>
+<option value="உறவினர்">உறவினர்.</option>
+</select>
+<label  style="color:#23e156" for="community" class="form-label">Community</label>
+<select name="community" id="community" class="form-control">
+<option value="">Select Community</option>
+<option value="BC">BC</option>
+<option value="OC">OC</option>
+<option value="OBC">OBC</option>
+<option value="MBC">MBC</option>
+<option value="SC">SC</option>
+<option value="ST">ST</option>
+<option value="BC(Muslim)">BC (Muslim)</option>
+</select>
+
+<label style="color:#23e156" for="maritial_status" class="form-label">Maritial Status</label>
+<select  id="maritial_status" name="maritial_status" class="form-control">
+<option value="">Select Maritial Status</option>
+<option value="Married">Married</option>
+<option value="Single">Single</option>
+<option value="Divorced">Divorced</option>
+</select>
+
+
+<label style="color:#23e156" for="door_no" class="form-label">Door No</label>
+<input type="text" maxlength="20" class="form-control"
+name="door_no" placeholder="Door No"/>
+<label style="color:#23e156" for="pin_code" class="form-label">Pin Code</label>
+<input type="text" maxlength="10" class="form-control"
+name="pin_code" placeholder="Pin Code"/>
+</div>
+<div class="mb-3 col-md-4">
+
+<label style="color:#e411dd" for="personalized_name_tamil" class="form-label">விண்ணப்பதாரர் பெயர் தமிழில்</label>
+<input type="text" maxlength="20" class="form-control"
+name="personalized_name_tamil" placeholder="பெயர் தமிழில்"/>
+<label style="color:#e411dd" for="relationship_name_tamil_1" class="form-label">பெயர் தமிழில்</label>
+<input type="text" maxlength="20" class="form-control"
+name="relationship_name_tamil" placeholder="பெயர் தமிழில்"/>
+<label style="color:#e411dd" for="relationship_name_tamil_2" class="form-label">பெயர் தமிழில்</label>
+<input type="text" maxlength="20" class="form-control"
+name="relationship_name_tamil" placeholder="பெயர் தமிழில்"/>
+<label style="color:#e411dd" for="relationship_name_tamil_3" class="form-label">பெயர் தமிழில்</label>
+<input type="text" maxlength="20" class="form-control"
+name="relationship_name_tamil" placeholder="பெயர் தமிழில்"/>
+<label style="color:#e411dd" for="caste" class="form-label">Caste</label>
+<input type="text" maxlength="20" class="form-control"
+name="caste" placeholder="Caste"/>
+<label style="color:#e411dd" for="education" class="form-label">Education</label>
+<input type="text" maxlength="50" class="form-control"
+name="education" placeholder="Education"/>
+
+<label style="color:#e411dd" for="street_name_tamil" class="form-label">தெரு பெயர்</label>
+<input type="text" maxlength="50" class="form-control"
+name="street_name_tamil" placeholder="தெரு பெயர்"/>
+<label style="color:#e411dd" for="postal_name" class="form-label">அஞ்சல் பெயர்</label>
+<input type="text" maxlength="50" class="form-control"
+name="postal_name" placeholder="அஞ்சல் பெயர்"/>
+<!--<label style="color:#e411dd" for="panchayath_id" class="form-label">கிராம நிர்வாக பகுதி</label>
+<select name="panchayath_id" id="panchayath"  class="form-control">
+</select>-->
+</div>
+<div class="mb-3 col-md-4">
+
+<label style="color:#23e156" for="personalized_name_english" class="form-label">Applicant Name</label>
+<input type="text" maxlength="20" class="form-control"
+name="personalized_name_english" placeholder="Name In English"/>
+<label style="color:#23e156" for="relationship_name_english_1" class="form-label">Name In English</label>
+<input type="text" maxlength="20" class="form-control"
+name="relationship_name_english_1" placeholder="Name In English"/>
+<label style="color:#23e156" for="relationship_name_english_2" class="form-label">Name In English</label>
+<input type="text" maxlength="20" class="form-control"
+name="relationship_name_english_2" placeholder="Name In English"/>
+<label style="color:#23e156" for="relationship_name_english_3" class="form-label">Name In English</label>
+<input type="text" maxlength="20" class="form-control"
+name="relationship_name_english_3" placeholder="Name In English"/>
+<label style="color:#23e156" for="religion" class="form-label">Religion</label>
+<input type="text" maxlength="20" class="form-control"
+name="religion" placeholder="Religion"/>
+<label style="color:#23e156" for="work" class="form-label">Work</label>
+<input type="text" maxlength="50" class="form-control"
+name="work" placeholder="Work"/>
+
+<label style="color:#23e156" for="street_name" class="form-label">Street Name</label>
+<input type="text" maxlength="30" class="form-control"
+name="street_name" placeholder="Street Name"/>
+
+<label style="color:#23e156" for="village_administrative_area" class="form-label">Postal Area</label>
+<input type="text" maxlength="20" class="form-control"
+name="village_administrative_area" placeholder="Postal Area"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+
                                         <h4 class="text-center"> Basic Details </h4>
 
                                         <div class="mb-3 col-md-6">
@@ -305,19 +427,26 @@
 
 
         var customerid = "{{ $customers->id }}";
-        $('#can_details').change(function() {
-            if ($('#can_details').val() == 'Yes') {
-                $('#cannumberhide').show("slow");
-                $('#cannumber').prop("required", true);
-            } else if ($('#can_details').val() == 'No') {
-                window.location.href = "{{ url('applyservice') }}/" + 60 + "/" + customerid;
-            } else if ($('#can_details').val() == 'Find') {
-                window.location.href = "{{ url('applyservice') }}/" + 121 + "/" + customerid;
-            } else {
-                $('#cannumberhide').hide("slow");
-                $('#cannumber').prop("required", false);
-            }
-        });
+    $('#can_details').change(function(){
+        if($('#can_details').val() == 'Yes') {
+            $('#cannumberhide').show("slow");
+            $('#cannumber').prop("required",true);
+            $('#dobhide').hide("slow");
+        }else if($('#can_details').val() == 'No'){
+            $('#dobhide').show("slow");
+            $('#cannumberhide').hide("slow");
+            $('#cannumber').prop("required",false);
+        }else if($('#can_details').val() == 'Find'){
+            $('#dobhide').hide("slow");
+            $('#cannumberhide').show("slow");
+            $('#cannumber').prop("required",false);
+            window.location.href = "{{ url('applyservice') }}/"+121+ "/" +customerid;
+        } else {
+            $('#dobhide').hide("slow");
+            $('#cannumberhide').hide("slow");
+            $('#cannumber').prop("required",false);
+        }
+    });
 
         $('#id_proof').change(function() {
             if ($('#id_proof').val() == 'Passport') {
