@@ -61,19 +61,29 @@
                                                 செல்வி.</option>
                                         </select>
 
-                                        <label for="relationship" class="form-label">உறவுமுறை</label>
-                                        <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif class="form-control"
-                                            name="relationship">
+                                        
+                                        <select @if (Auth::user()->id != $apply_user_id ) disabled @endif class="form-control"
+                                            name="relationship_1">
                                             <option value="">Select</option>
-                                            <option @if ($services->relationship == 'தந்தை') selected @endif value="தந்தை">தந்தை.
+                                            <option @if ($services->relationship_1 == 'தந்தை') selected @endif value="தந்தை">தந்தை.
                                             </option>
-                                            <option @if ($services->relationship == 'தாய்') selected @endif value="தாய்">தாய்.
+                                        </select>
+                                        <label style="color:#23e156" for="relationship_2" class="form-label">உறவுமுறை</label>
+                                        <select @if (Auth::user()->id != $apply_user_id ) disabled @endif class="form-control"
+                                            name="relationship_2">
+                                            <option value="">Select</option>
+                                            <option @if ($services->relationship_2 == 'தாய்') selected @endif value="தாய்">தாய்.
                                             </option>
-                                            <option @if ($services->relationship == 'கணவர்') selected @endif value="கணவர்">கணவர்.
+                                        </select>
+                                        <label style="color:#23e156" for="relationship_3" class="form-label">உறவுமுறை</label>
+                                        <select @if (Auth::user()->id != $apply_user_id ) disabled @endif class="form-control"
+                                            name="relationship_3">
+                                            <option value="">Select</option>
+                                            <option @if ($services->relationship_3 == 'கணவர்') selected @endif value="கணவர்">கணவர்.
                                             </option>
-                                            <option @if ($services->relationship == 'மனைவி') selected @endif value="மனைவி">மனைவி.
+                                            <option @if ($services->relationship_3 == 'மனைவி') selected @endif value="மனைவி">மனைவி.
                                             </option>
-                                            <option @if ($services->relationship == 'உறவினர்') selected @endif value="உறவினர்">உறவினர்.
+                                            <option @if ($services->relationship_3 == 'உறவினர்') selected @endif value="உறவினர்">உறவினர்.
                                             </option>
                                         </select>
                                         <label for="dob" class="form-label">DOB</label>
@@ -118,10 +128,19 @@
                                         <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
                                             value="{{ $services->personalized_name_tamil }}" class="form-control" name="personalized_name_tamil"
                                             maxlength="50" placeholder="பெயர் தமிழில்" />
-                                        <label for="relationship_name_tamil" class="form-label">பெயர் தமிழில்</label>
+                                        <label for="relationship_name_tamil_1" class="form-label">பெயர் தமிழில்</label>
                                         <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
-                                            value="{{ $services->relationship_name_tamil }}" class="form-control" name="relationship_name_tamil"
+                                            value="{{ $services->relationship_name_tamil_1 }}" class="form-control" name="relationship_name_tamil_1"
                                             maxlength="50" placeholder="பெயர் தமிழில்" />
+                                            <label for="relationship_name_tamil_2" class="form-label">பெயர் தமிழில்</label>
+                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                            value="{{ $services->relationship_name_tamil_2 }}" class="form-control" name="relationship_name_tamil_2"
+                                            maxlength="50" placeholder="பெயர் தமிழில்" />
+                                            <label for="relationship_name_tamil_3" class="form-label">பெயர் தமிழில்</label>
+                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                            value="{{ $services->relationship_name_tamil_3 }}" class="form-control" name="relationship_name_tamil_3"
+                                            maxlength="50" placeholder="பெயர் தமிழில்" />
+
                                         <label for="mobile" class="form-label">Mobile Number</label>
                                         <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
                                             value="{{ $services->mobile }}" class="form-control number" name="mobile"
@@ -171,9 +190,17 @@
                                             <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
                                                 value="{{ $services->personalized_name_english }}" class="form-control" name="personalized_name_english"
                                                 maxlength="50" placeholder="Name In English" />
-                                                <label for="relationship_name_english" class="form-label">Name In English</label>
+                                                <label for="relationship_name_english_1" class="form-label">Name In English</label>
                                             <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
-                                                value="{{ $services->relationship_name_english }}" class="form-control" name="relationship_name_english"
+                                                value="{{ $services->relationship_name_english_1 }}" class="form-control" name="relationship_name_english_1"
+                                                maxlength="50" placeholder="Name In English" />
+                                                <label for="relationship_name_english_2" class="form-label">Name In English</label>
+                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                                value="{{ $services->relationship_name_english_2 }}" class="form-control" name="relationship_name_english_2"
+                                                maxlength="50" placeholder="Name In English" />
+                                                <label for="relationship_name_english_3" class="form-label">Name In English</label>
+                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                                value="{{ $services->relationship_name_english_3 }}" class="form-control" name="relationship_name_english_3"
                                                 maxlength="50" placeholder="Name In English" />
                                             <label for="maritial_status" class="form-label">Maritial Status</label>
                                                 <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif class="form-control"

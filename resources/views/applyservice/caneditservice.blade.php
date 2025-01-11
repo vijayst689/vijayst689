@@ -49,16 +49,23 @@
                                                 <option value="திருமதி">திருமதி.</option>
                                                 <option value="செல்வி">செல்வி.</option>
                                             </select>
-                                            <label style="color:#23e156" for="relationship"
-                                                class="form-label">உறவுமுறை</label>
-                                            <select required id="relationship" name="relationship" class="form-control">
-                                                <option value="">Select</option>
-                                                <option value="தந்தை">தந்தை.</option>
-                                                <option value="தாய்">தாய்.</option>
-                                                <option value="கணவர்">கணவர்.</option>
-                                                <option value="மனைவி">மனைவி.</option>
-                                                <option value="உறவினர்">உறவினர்.</option>
-                                            </select>
+                                            <label style="color:#23e156" for="relationship_1" class="form-label">உறவுமுறை</label>
+<select id="relationship_1" name="relationship_1" class="form-control">
+<option value="">Select</option>
+<option value="தந்தை">தந்தை.</option>                            
+</select>
+                                             <label style="color:#23e156" for="relationship_2" class="form-label">உறவுமுறை</label>
+                        <select id="relationship_2" name="relationship_2" class="form-control">
+                            <option value="">Select</option>
+                            <option value="தாய்">தாய்.</option>
+                        </select>
+                        <label style="color:#23e156" for="relationship_3" class="form-label">உறவுமுறை</label>
+                        <select id="relationship_3" name="relationship_3" class="form-control">
+                            <option value="">Select</option>
+                            <option value="கணவர்">கணவர்.</option>
+                            <option value="மனைவி">மனைவி.</option>
+                            <option value="உறவினர்">உறவினர்.</option>
+                        </select>
                                             <label style="color:#23e156" for="dob" class="form-label">DOB</label>
                                             <input required type="date" maxlength="10" class="form-control"
                                                 name="dob" placeholder="DOB" />
@@ -94,10 +101,18 @@
                                                 class="form-label">விண்ணப்பதாரர் பெயர் தமிழில்</label>
                                             <input required type="text" maxlength="20" class="form-control"
                                                 name="personalized_name_tamil" placeholder="பெயர் தமிழில்" />
-                                            <label style="color:#e411dd" for="relationship_name_tamil"
+                                            <label style="color:#e411dd" for="relationship_name_tamil_1"
                                                 class="form-label">பெயர் தமிழில்</label>
                                             <input required type="text" maxlength="20" class="form-control"
-                                                name="relationship_name_tamil" placeholder="பெயர் தமிழில்" />
+                                                name="relationship_name_tamil_1" placeholder="பெயர் தமிழில்" />
+                                                <label style="color:#e411dd" for="relationship_name_tamil_2"
+                                                class="form-label">பெயர் தமிழில்</label>
+                                            <input required type="text" maxlength="20" class="form-control"
+                                                name="relationship_name_tamil_2" placeholder="பெயர் தமிழில்" />
+                                                <label style="color:#e411dd" for="relationship_name_tamil_3"
+                                                class="form-label">பெயர் தமிழில்</label>
+                                            <input required type="text" maxlength="20" class="form-control"
+                                                name="relationship_name_tamil_3" placeholder="பெயர் தமிழில்" />
                                             <label style="color:#e411dd" for="mobile" class="form-label"> Mobile
                                                 Number</label>
                                             <input required type="text" class="form-control number" name="mobile"
@@ -142,10 +157,18 @@
                                                 class="form-label">Applicant Name</label>
                                             <input required type="text" maxlength="20" class="form-control"
                                                 name="personalized_name_english" placeholder="Name In English" />
-                                            <label style="color:#23e156" for="relationship_name_english"
+                                            <label style="color:#23e156" for="relationship_name_english_1"
                                                 class="form-label">Name In English</label>
                                             <input required type="text" maxlength="20" class="form-control"
-                                                name="relationship_name_english" placeholder="Name In English" />
+                                                name="relationship_name_english_1" placeholder="Name In English" />
+                                                <label style="color:#23e156" for="relationship_name_english_2"
+                                                class="form-label">Name In English</label>
+                                            <input required type="text" maxlength="20" class="form-control"
+                                                name="relationship_name_english_2" placeholder="Name In English" />
+                                                <label style="color:#23e156" for="relationship_name_english_3"
+                                                class="form-label">Name In English</label>
+                                            <input required type="text" maxlength="20" class="form-control"
+                                                name="relationship_name_english_3" placeholder="Name In English" />
                                             <label style="color:#23e156" for="maritial_status"
                                                 class="form-label">Maritial Status</label>
                                             <select required id="maritial_status" name="maritial_status"
