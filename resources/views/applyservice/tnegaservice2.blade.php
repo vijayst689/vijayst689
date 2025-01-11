@@ -478,7 +478,7 @@ function gettaluk(dist_id) {
             $('#dobhide').hide("slow");
             $('#cannumberhide').show("slow");
             $('#cannumber').prop("required",false);
-            window.location.href = "{{ url('applyservices') }}/"+121;
+            window.location.href = "{{ url('applyservice') }}/"+121+ "/" +customerid;
         } else {
             $('#dobhide').hide("slow");
             $('#cannumberhide').hide("slow");
