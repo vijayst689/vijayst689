@@ -67,7 +67,7 @@
                                             name="can_number" value="{{ $services->can_number }}" maxlength="15">
                                         </div>
                                     </div>
-                                 <div class="mb-3">
+                        <div class="mb-3">
 
                                         <div class="row" id="dobhide" style="display: none;">
                                             <h4 class="text-center">Can Details</h4>
@@ -228,7 +228,7 @@
                             </div>
                     </div>
                 </div>
-            </div>
+            </div>                                 
                                 <h4 class="text-center"> Basic Details </h4>
 
                                 <div class="mb-3 col-md-6">
