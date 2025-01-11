@@ -839,17 +839,17 @@ alter table tec_exam add voterid varchar(20) DEFAULT NULL after bank_passbook;
 alter table tec_exam add bc_agent_certificate varchar(20) DEFAULT NULL after voterid;
 
 
-alter table tnega_services add family_plannnig_certificate varchar(20) after tailoring_certificate;
-alter table tnega_services add birth_certificate_children varchar(20) after family_plannnig_certificate;
-alter table tnega_services add id_proof varchar(20) after birth_certificate_children;
-alter table tnega_services add family_photo varchar(20) after id_proof;
-alter table tnega_services add handicapped_proof varchar(20) after family_photo;
-alter table tnega_services add udid_card varchar(20) after handicapped_proof;
-alter table tnega_services add registered_deed varchar(20) after udid_card;
-alter table tnega_services add chitta_and_villangam varchar(20) after registered_deed;
-alter table tnega_services add property_details varchar(20) after chitta_and_villangam;
-alter table tnega_services add residential_certificate varchar(20) after property_details;
-alter table tnega_services add damage_certificate varchar(20) after residential_certificate;
+alter table tnega_services add family_plannnig_certificate varchar(20) DEFAULT NULL; after tailoring_certificate;
+alter table tnega_services add birth_certificate_children varchar(20) DEFAULT NULL; after family_plannnig_certificate;
+alter table tnega_services add id_proof varchar(20) DEFAULT NULL after birth_certificate_children;
+alter table tnega_services add family_photo varchar(20) DEFAULT NULL after id_proof;
+alter table tnega_services add handicapped_proof varchar(20) DEFAULT NULL; after family_photo;
+alter table tnega_services add udid_card varchar(20) DEFAULT NULL; after handicapped_proof;
+alter table tnega_services add registered_deed varchar(20) DEFAULT NULL; after udid_card;
+alter table tnega_services add chitta_and_villangam varchar(20) DEFAULT NULL; after registered_deed;
+alter table tnega_services add property_details varchar(20) DEFAULT NULL; after chitta_and_villangam;
+alter table tnega_services add residential_certificate varchar(20) DEFAULT NULL; after property_details;
+alter table tnega_services add damage_certificate varchar(20) DEFAULT NULL; after residential_certificate;
 
 
 alter table tec_exam add csc_id_number varchar(20) DEFAULT NULL after bc_agent_certificate;

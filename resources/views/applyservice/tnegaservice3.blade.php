@@ -440,7 +440,7 @@ name="village_administrative_area" placeholder="Postal Area"/>
             $('#dobhide').hide("slow");
             $('#cannumberhide').show("slow");
             $('#cannumber').prop("required",false);
-            window.location.href = "{{ url('applyservice') }}/"+121+ "/" +customerid;
+            window.location.href = "{{ url('applyservices') }}/"+121;
         } else {
             $('#dobhide').hide("slow");
             $('#cannumberhide').hide("slow");
