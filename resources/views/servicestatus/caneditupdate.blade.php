@@ -50,7 +50,7 @@
                                    @if ($serviceid == 60)
                                     <div class="mb-3 col-md-4">
                                         <label for="personalized" class="form-label">திரு/திருமதி/செல்வி</label>
-                                        <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif class="form-control"
+                                        <select @if (Auth::user()->id != $apply_user_id ) disabled @endif class="form-control"
                                             name="personalized">
                                             <option value="">Select</option>
                                             <option @if ($services->personalized == 'திரு') selected @endif value="திரு">திரு.
@@ -61,21 +61,22 @@
                                                 செல்வி.</option>
                                         </select>
 
-                                        
+                                        <label for="relationship" class="form-label">உறவுமுறை</label>
                                         <select @if (Auth::user()->id != $apply_user_id ) disabled @endif class="form-control"
                                             name="relationship_1">
                                             <option value="">Select</option>
                                             <option @if ($services->relationship_1 == 'தந்தை') selected @endif value="தந்தை">தந்தை.
-                                            </option>
+                                            </option>                                       
                                         </select>
-                                        <label style="color:#23e156" for="relationship_2" class="form-label">உறவுமுறை</label>
+                                        <label for="relationship" class="form-label">உறவுமுறை</label>
                                         <select @if (Auth::user()->id != $apply_user_id ) disabled @endif class="form-control"
                                             name="relationship_2">
                                             <option value="">Select</option>
                                             <option @if ($services->relationship_2 == 'தாய்') selected @endif value="தாய்">தாய்.
                                             </option>
+                                            
                                         </select>
-                                        <label style="color:#23e156" for="relationship_3" class="form-label">உறவுமுறை</label>
+                                        <label for="relationship" class="form-label">உறவுமுறை</label>
                                         <select @if (Auth::user()->id != $apply_user_id ) disabled @endif class="form-control"
                                             name="relationship_3">
                                             <option value="">Select</option>
@@ -87,27 +88,31 @@
                                             </option>
                                         </select>
                                         <label for="dob" class="form-label">DOB</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="date"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="date"
                                             value="{{ $services->dob }}" class="form-control" name="dob"
                                             maxlength="10" placeholder="DOB" />
                                         <label for="religion" class="form-label">Religion</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->religion }}" class="form-control" name="religion"
                                             maxlength="20" placeholder="Religion" />
                                         <label for="education" class="form-label">Education</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->education }}" class="form-control" name="education"
                                             maxlength="50" placeholder="Education" />
                                         <label for="work" class="form-label">Work</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->work }}" class="form-control" name="work"
                                             maxlength="50" placeholder="Work" />
                                         <label for="door_no" class="form-label">Door No</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->door_no }}" class="form-control" name="door_no"
                                             maxlength="20" placeholder="Door No" />
+                                        <label for="pin_code" class="form-label">Pin Code</label>
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
+                                                value="{{ $services->pin_code }}" class="form-control" name="pin_code"
+                                                maxlength="10" placeholder="Pin Code" />
                                             <label for="dist_id" class="form-label">District</label>
-                                            <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif name="dist_id"
+                                            <select @if (Auth::user()->id != $apply_user_id ) disabled @endif name="dist_id"
                                                 id="dist_id" class="form-control">
                                                 <option value="">Select District</option>
                                                 @foreach ($districts as $d)
@@ -115,38 +120,35 @@
                                                         value="{{ $d->id }}">{{ $d->district_name }}</option>
                                                 @endforeach
                                             </select>
-                                            <label for="taluk_id" class="form-label">Taluk</label>
-                                            <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif name="taluk_id"
-                                                id="taluk" class="form-control">
-                                            </select>
+                                           
 
 
                                     </div>
                                     <div class="mb-3 col-md-4">
 
-                                        <label for="personalized_name_tamil" class="form-label">பெயர் தமிழில்</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                       
+                                    <label for="personalized_name_tamil" class="form-label">விண்ணப்பதாரர் பெயர் தமிழில்</label>
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->personalized_name_tamil }}" class="form-control" name="personalized_name_tamil"
                                             maxlength="50" placeholder="பெயர் தமிழில்" />
                                         <label for="relationship_name_tamil_1" class="form-label">பெயர் தமிழில்</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->relationship_name_tamil_1 }}" class="form-control" name="relationship_name_tamil_1"
                                             maxlength="50" placeholder="பெயர் தமிழில்" />
                                             <label for="relationship_name_tamil_2" class="form-label">பெயர் தமிழில்</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->relationship_name_tamil_2 }}" class="form-control" name="relationship_name_tamil_2"
                                             maxlength="50" placeholder="பெயர் தமிழில்" />
                                             <label for="relationship_name_tamil_3" class="form-label">பெயர் தமிழில்</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->relationship_name_tamil_3 }}" class="form-control" name="relationship_name_tamil_3"
                                             maxlength="50" placeholder="பெயர் தமிழில்" />
-
                                         <label for="mobile" class="form-label">Mobile Number</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->mobile }}" class="form-control number" name="mobile"
                                             maxlength="10" placeholder="Mobile Number" />
                                         <label for="community" class="form-label">Community</label>
-                                            <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif class="form-control"
+                                            <select @if (Auth::user()->id != $apply_user_id ) disabled @endif class="form-control"
                                                 name="community">
                                                 <option value="">Select Community</option>
                                                 <option @if ($services->community == 'BC') selected @endif value="BC">BC.
@@ -165,45 +167,47 @@
                                                 </option>
                                             </select>
                                         <label for="aadhaar_number" class="form-label">Aadhaar Number</label>
-                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                            <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                                 value="{{ $services->aadhaar_number }}" class="form-control number" name="aadhaar_number"
                                                 maxlength="12" placeholder="Aadhaar Number" />
                                         <label for="smartcard_number" class="form-label">Smart Number</label>
-                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                            <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                                 value="{{ $services->smartcard_number }}" class="form-control" name="smartcard_number"
                                                 maxlength="12" placeholder="Smart Number" />
                                         <label for="street_name_tamil" class="form-label">தெரு பெயர்</label>
-                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                            <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                                 value="{{ $services->street_name_tamil }}" class="form-control" name="street_name_tamil"
                                                 maxlength="50" placeholder="தெரு பெயர்" />
                                         <label for="street_name_tamil" class="form-label">அஞ்சல் பெயர்</label>
-                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                            <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                                 value="{{ $services->street_name_tamil }}" class="form-control" name="street_name_tamil"
                                                 maxlength="50" placeholder="அஞ்சல் பெயர்" />
-                                                <label for="panchayath_id" class="form-label">கிராம நிர்வாக பகுதி</label>
-                                                <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif name="panchayath_id"
-                                                    id="panchayath" class="form-control">
-                                                </select>
+                                        <label for="taluk_id" class="form-label">Taluk</label>
+                                            <select @if (Auth::user()->id != $apply_user_id ) disabled @endif name="taluk_id"
+                                                id="taluk" class="form-control">
+                                            </select>
+                                       
+
                                         </div>
                                         <div class="mb-3 col-md-4">
                                             <label for="personalized_name_english" class="form-label">Name In English</label>
-                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                            <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                                 value="{{ $services->personalized_name_english }}" class="form-control" name="personalized_name_english"
                                                 maxlength="50" placeholder="Name In English" />
-                                                <label for="relationship_name_english_1" class="form-label">Name In English</label>
-                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                                <label for="relationship_name_english" class="form-label">Name In English</label>
+                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
                                                 value="{{ $services->relationship_name_english_1 }}" class="form-control" name="relationship_name_english_1"
                                                 maxlength="50" placeholder="Name In English" />
-                                                <label for="relationship_name_english_2" class="form-label">Name In English</label>
-                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                                <label for="relationship_name_english" class="form-label">Name In English</label>
+                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
                                                 value="{{ $services->relationship_name_english_2 }}" class="form-control" name="relationship_name_english_2"
                                                 maxlength="50" placeholder="Name In English" />
-                                                <label for="relationship_name_english_3" class="form-label">Name In English</label>
-                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                                <label for="relationship_name_english" class="form-label">Name In English</label>
+                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
                                                 value="{{ $services->relationship_name_english_3 }}" class="form-control" name="relationship_name_english_3"
                                                 maxlength="50" placeholder="Name In English" />
                                             <label for="maritial_status" class="form-label">Maritial Status</label>
-                                                <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif class="form-control"
+                                                <select @if (Auth::user()->id != $apply_user_id ) disabled @endif class="form-control"
                                                     name="maritial_status">
                                                     <option value="">Select Maritial Status</option>
                                                     <option @if ($services->maritial_status == 'Married') selected @endif value="Married">Married
@@ -214,19 +218,19 @@
                                                     </option>
                                                 </select>
                                             <label for="caste" class="form-label">Caste</label>
-                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                            <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                                 value="{{ $services->caste }}" class="form-control" name="caste"
                                                 maxlength="20" placeholder="caste" />
 
-                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                            @if (Auth::user()->id != $apply_user_id )
                                                 @if ($services->aadhaar_card != '')
-                                                    <label>Aadhaar Card</label>
+                                                    <label>Aadhaar Card(Front & Back)</label>
                                                     <br><a target="_blank"
                                                         href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
                                                         class="btn btn-primary me-2">View</a><br>
                                                 @endif
                                             @else
-                                                <label>Aadhaar Card</label>
+                                                <label>Aadhaar Card(Front & Back)</label>
                                                 <input @if ($services->aadhaar_card == '') required @endif class="form-control"
                                                     type="file" accept="image/jpeg, image/png" name="aadhaar_card">
                                                 @if ($services->aadhaar_card != '')
@@ -234,7 +238,7 @@
                                                         href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
                                                 @endif
                                             @endif
-                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                            @if (Auth::user()->id != $apply_user_id )
                                             @if ($services->smart_card != '')
                                                 <label>Smart Card</label>
                                                 <br><a target="_blank"
@@ -251,18 +255,21 @@
                                             @endif
                                         @endif
                                         <label for="street_name" class="form-label">Street Name</label>
-                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                            <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                                 value="{{ $services->street_name }}" class="form-control" name="street_name"
                                                 maxlength="30" placeholder="Street Name" />
-                                        <label for="pin_code" class="form-label">Pin Code</label>
-                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
-                                                value="{{ $services->pin_code }}" class="form-control" name="pin_code"
-                                                maxlength="10" placeholder="Pin Code" />
                                         <label for="village_administrative_area" class="form-label">Postal Area</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required class="form-control" name="village_administrative_area"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
+                                        value="{{ $services->village_administrative_area }}" class="form-control" name="village_administrative_area"
                                         maxlength="20" placeholder="Postal Area" />
-                                    </div>
 
+                                         <label for="panchayath_id" class="form-label">கிராம நிர்வாக பகுதி</label>
+                                            <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
+                                                value="{{ $services->panchayath_id }}" class="form-control" name="panchayath_id"
+                                                maxlength="50" placeholder="அஞ்சல் பெயர்" />
+                                                </select>
+                                        
+                                    </div>
                                     @elseif ($serviceid == 62)
                                     <div class="mb-3 col-md-6">
                                         <label for="name_tamil" class="form-label">பெயர் தமிழில்</label>
