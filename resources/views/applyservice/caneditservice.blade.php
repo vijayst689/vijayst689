@@ -89,10 +89,7 @@
                                 @foreach($districts as $d)
                                 <option value="{{ $d->id }}">{{ $d->district_name }}</option>
                                 @endforeach
-                            </select>
-                           
-
-
+                            </select>                           
 
                     </div>
                     <div class="mb-3 col-md-4">
