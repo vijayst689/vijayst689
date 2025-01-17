@@ -64,15 +64,17 @@
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="mb-3 row">
-                                        <label for="example-text-input-lg" class="col-sm-3 form-label">Taluk</label>
+                                        <label for="dist_id" class="col-sm-3 form-label">District</label>
                                         <div class="col-sm-9">
-                                            <select required name="taluk_id" id="taluk" class="form-control">
+                                            <select required name="dist_id" id="dist_id" class="form-control">
+                                                <option value="">Select District</option>
+                                                @foreach ($districts as $d)
+                                                    <option value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="mb-3 row">
                                         <label for="aadhaar_no" class="col-sm-3 form-label">Aadhaar No</label>
                                         <div class="col-sm-9">
@@ -103,20 +105,11 @@
                                             No</label>
                                         <div class="col-sm-9">
                                             <input required type="text" class="form-control" name="smartcard_no"
-                                                maxlength="20" placeholder="SmartCard No" />
+                                                maxlength="15" placeholder="SmartCard No" />
                                         </div>
                                     </div>
 
                                 </div>
-
-                                <div class="mb-3 row">
-                                    <label class="col-sm-3 form-label">Gender</label>
-                                    <div class="col-sm-9">
-                                        <select required class="form-select" name="gender" required>
-                                            <option>Select</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                        </select>
 
                                 <div class="col-lg-6">
 
@@ -127,7 +120,7 @@
                                                 name="date_of_birth" id="example-url-input">
                                         </div>
                                     </div>
-
+                                    
                                     <div class="mb-3 row">
                                         <label for="example-month-input" class="col-sm-3 form-label">Phone</label>
                                         <div class="col-sm-9">
@@ -137,15 +130,10 @@
                                             <span id="dupphone" style="color:red"></span>
                                         </div>
                                     </div>
-
                                     <div class="mb-3 row">
-                                        <label for="dist_id" class="col-sm-3 form-label">District</label>
+                                        <label for="example-text-input-lg" class="col-sm-3 form-label">Taluk</label>
                                         <div class="col-sm-9">
-                                            <select required name="dist_id" id="dist_id" class="form-control">
-                                                <option value="">Select District</option>
-                                                @foreach ($districts as $d)
-                                                    <option value="{{ $d->id }}">{{ $d->district_name }}</option>
-                                                @endforeach
+                                            <select required name="taluk_id" id="taluk" class="form-control">
                                             </select>
                                         </div>
                                     </div>
@@ -153,17 +141,11 @@
                                     <div class="mb-3 row">
                                         <label for="panchayath" class="col-sm-3 form-label">VAO</label>
                                         <div class="col-sm-9">
-                                            <select required name="panchayath_id" id="panchayath" class="form-control">
-                                            </select>
+                                            <input required type="text" name="panchayath_id" id="panchayath" class="form-control"
+                                            maxlength="50" placeholder="Postel Area">
+                                            
                                         </div>
                                     </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="example-text-input-lg" class="col-sm-3 form-label">Smart Card No</label>
-                                    <div class="col-sm-9">
-                                        <input required type="text" class="form-control" name="smartcard_no"
-                                            maxlength="20" placeholder="SmartCard No" />
-
 
                                     <div class="mb-3 row">
                                         <label for="example-text-input-lg" class="col-sm-3 form-label">Aadhar Card</label>
@@ -171,7 +153,6 @@
                                             <input required accept="image/jpeg, image/png" type="file"
                                                 class="form-control" name="aadhaar_file" />
                                         </div>
-
                                     </div>
 
                                     <div class="mb-3 row">
@@ -181,19 +162,6 @@
                                                 id="example-text-input-lg">
                                         </div>
                                     </div>
-
-                                </div>
-
-                                <div class="mb-3 row">
-                                    <label for="example-month-input" class="col-sm-3 form-label">Phone</label>
-                                    <div class="col-sm-9">
-                                        <input required onkeyup="duplicatephone(0)" class="form-control number"
-                                            type="text" name="phone" maxlength="10" id="phone"
-                                            placeholder="Phone">
-                                        <span id="dupphone" style="color:red"></span>
-                                    </div>
-                                </div>
-
 
                                     <div class="mb-3 row">
                                         <label for="example-url-input" class="col-sm-3 form-label">Address</label>
@@ -336,5 +304,5 @@
             );
         }
     </script>
-    </script>
+    
 @endpush

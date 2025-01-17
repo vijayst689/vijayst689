@@ -324,9 +324,9 @@
 @endsection
 @push('page_scripts')
     <script>
- $(function() {
-    var wallet = "{{ Auth::user()->wallet }}";
-    var amount = "{{ $payment }}";
+var wallet = "{{ Auth::user()->wallet }}";
+var amount = "{{ $payment }}";
+$(function() {
     if (parseFloat(amount) > parseInt(wallet)) {
         $('#save').prop("disabled", true);
         $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
@@ -335,13 +335,12 @@
                         'font-weight': 'bold'
                     });
     }
+});
 
-        });
-
-    $('#district_id').on('change', function () {
-    var district_id = this.value;
+$('#dist_id').on('change', function () {
+    var dist_id = this.value;
     $("#taluk").html('');
-    var url = "{{ url('service/get_taluk') }}/" + district_id;
+    var url = "{{ url('service/get_taluk') }}/" + dist_id;
         $.ajax({
             url: url,
             type: "GET",
@@ -372,7 +371,6 @@
             }
         });
     });
-
 
     </script>
 @endpush
