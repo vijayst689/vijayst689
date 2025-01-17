@@ -732,11 +732,6 @@ class ServicestatusController extends Controller
         } elseif($service_id == 60 || $service_id == 62 || $service_id == 63 || $service_id == 64 || $service_id == 65 || $service_id == 66 || $service_id == 67 || $service_id  == 121 ){
             return view('servicestatus.caneditupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
 
-        }elseif($service_id == 69 || $service_id == 71 || $service_id == 70){
-            $mainbalance = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
-            $services = DB::table('pancard')->where('id',$id)->where('status',$status)->first();
-            return view('servicestatus.pancardstatusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
-
         } elseif($service_id == 72 ){
             return view('servicestatus.findaadhaar_numberupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
 
