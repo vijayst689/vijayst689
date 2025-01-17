@@ -88,11 +88,6 @@ class ServicestatusController extends Controller
             ->where('license.status',$status)
             ->orderBy('license.id', 'Desc')->get();
 
-            $pancard = DB::table('pancard')->select('services.service_name', 'pancard.*')
-            ->Join('services', 'services.id', '=', 'pancard.service_id')
-            ->where('pancard.status',$status)
-            ->orderBy('pancard.id', 'Desc')->get();
-
             $tailor = DB::table('tailor')->select('services.service_name', 'tailor.*')
             ->Join('services', 'services.id', '=', 'tailor.service_id')
             ->where('tailor.status',$status)
@@ -131,7 +126,6 @@ class ServicestatusController extends Controller
             $service = $service->merge($covid);
             $service = $service->merge($nalavariyam);
             $service = $service->merge($license);
-            $service = $service->merge($pancard);
             $service = $service->merge($tailor);
             $service = $service->merge($pmkissan);
             $service = $service->merge($birth_certificate);
@@ -258,12 +252,6 @@ class ServicestatusController extends Controller
             ->where('license.distributor_id',Auth::user()->id)
             ->orderBy('license.id', 'Desc')->get();
 
-            $pancard = DB::table('pancard')->select('services.service_name', 'pancard.*')
-            ->Join('services', 'services.id', '=', 'pancard.service_id')
-            ->where('pancard.status',$status)
-            ->where('pancard.distributor_id',Auth::user()->id)
-            ->orderBy('pancard.id', 'Desc')->get();
-
             $tailor = DB::table('tailor')->select('services.service_name', 'tailor.*')
             ->Join('services', 'services.id', '=', 'tailor.service_id')
             ->where('tailor.status',$status)
@@ -307,7 +295,6 @@ class ServicestatusController extends Controller
             $service = $service->merge($covid);
             $service = $service->merge($nalavariyam);
             $service = $service->merge($license);
-            $service = $service->merge($pancard);
             $service = $service->merge($tailor);
             $service = $service->merge($pmkissan);
             $service = $service->merge($birth_certificate);
@@ -401,11 +388,6 @@ class ServicestatusController extends Controller
             ->where('license.retailer_id',Auth::user()->id)
             ->orderBy('license.id', 'Desc')->get();
 
-            $pancard = DB::table('pancard')->select('services.service_name', 'pancard.*')
-            ->Join('services', 'services.id', '=', 'pancard.service_id')
-            ->where('pancard.status',$status)
-            ->where('pancard.retailer_id',Auth::user()->id)
-            ->orderBy('pancard.id', 'Desc')->get();
 
             $tailor = DB::table('tailor')->select('services.service_name', 'tailor.*')
             ->Join('services', 'services.id', '=', 'tailor.service_id')
@@ -451,7 +433,6 @@ class ServicestatusController extends Controller
             $service = $service->merge($covid);
             $service = $service->merge($nalavariyam);
             $service = $service->merge($license);
-            $service = $service->merge($pancard);
             $service = $service->merge($tailor);
             $service = $service->merge($pmkissan);
             $service = $service->merge($birth_certificate);
@@ -545,12 +526,6 @@ class ServicestatusController extends Controller
             ->where('license.user_id',Auth::user()->id)
             ->orderBy('license.id', 'Desc')->get();
 
-            $pancard = DB::table('pancard')->select('services.service_name', 'pancard.*')
-            ->Join('services', 'services.id', '=', 'pancard.service_id')
-            ->where('pancard.status',$status)
-            ->where('pancard.user_id',Auth::user()->id)
-            ->orderBy('pancard.id', 'Desc')->get();
-
             $tailor = DB::table('tailor')->select('services.service_name', 'tailor.*')
             ->Join('services', 'services.id', '=', 'tailor.service_id')
             ->where('tailor.status',$status)
@@ -594,7 +569,6 @@ class ServicestatusController extends Controller
             $service = $service->merge($covid);
             $service = $service->merge($nalavariyam);
             $service = $service->merge($license);
-            $service = $service->merge($pancard);
             $service = $service->merge($tailor);
             $service = $service->merge($pmkissan);
             $service = $service->merge($birth_certificate);
@@ -631,8 +605,6 @@ class ServicestatusController extends Controller
         } elseif($service_id == 60 || $service_id == 62 || $service_id == 63 || $service_id == 64 || $service_id == 65 || $service_id == 66 || $service_id == 67 || $service_id == 121){
             $services = DB::table('can_edit')->where('id',$id)->where('status',$status)->first();
 
-        }elseif($service_id == 69 || $service_id == 71){
-            $services = DB::table('pancard')->where('id',$id)->where('status',$status)->first();
 
         } elseif($service_id == 100 ){
             $services = DB::table('bond')->where('id',$id)->where('status',$status)->first();
@@ -759,11 +731,6 @@ class ServicestatusController extends Controller
             return view('servicestatus.aadhaarcardupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
         } elseif($service_id == 60 || $service_id == 62 || $service_id == 63 || $service_id == 64 || $service_id == 65 || $service_id == 66 || $service_id == 67 || $service_id  == 121 ){
             return view('servicestatus.caneditupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
-
-        }elseif($service_id == 69 || $service_id == 71 || $service_id == 70){
-            $mainbalance = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
-            $services = DB::table('pancard')->where('id',$id)->where('status',$status)->first();
-            return view('servicestatus.pancardstatusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
 
         } elseif($service_id == 72 ){
             return view('servicestatus.findaadhaar_numberupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
