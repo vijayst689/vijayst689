@@ -133,7 +133,7 @@
                         <label style="color:#e411dd" for="postal_name" class="form-label">அஞ்சல் பெயர்</label>
                         <input required type="text" maxlength="50" class="form-control"
                         name="postal_name" placeholder="அஞ்சல் பெயர்"/>
-                         <label style="color:#23e156" for="taluk_id" class="form-label">Taluk</label>
+                         <label style="color:#e411dd" for="taluk_id" class="form-label">Taluk</label>
                             <select name="taluk_id" id="taluk"  class="form-control">
                             </select>
                        
@@ -176,9 +176,9 @@
                             <label style="color:#23e156" for="village_administrative_area" class="form-label">Postal Area</label>
                             <input required type="text" maxlength="50" class="form-control"
                             name="village_administrative_area" placeholder="Postal Area"/>
-                              <label style="color:#e411dd" for="panchayath_id" class="form-label">கிராம நிர்வாக பகுதி</label>
+                              <label style="color:#23e156" for="vao_area" class="form-label">கிராம நிர்வாக பகுதி</label>
                               <input required type="text" maxlength="50" class="form-control"
-                            name="panchayath_id" placeholder="கிராம நிர்வாக பகுதி"/>
+                            name="vao_area" placeholder="கிராம நிர்வாக பகுதி"/>
                             
                         </div>
 

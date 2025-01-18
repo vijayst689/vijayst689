@@ -263,10 +263,10 @@
                                         value="{{ $services->village_administrative_area }}" class="form-control" name="village_administrative_area"
                                         maxlength="20" placeholder="Postal Area" />
 
-                                         <label for="panchayath_id" class="form-label">கிராம நிர்வாக பகுதி</label>
+                                         <label for="vao_area" class="form-label">கிராம நிர்வாக பகுதி</label>
                                             <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
-                                                value="{{ $services->panchayath_id }}" class="form-control" name="panchayath_id"
-                                                maxlength="50" placeholder="அஞ்சல் பெயர்" />
+                                                value="{{ $services->vao_area }}" class="form-control" name="panchayavao_areath_id"
+                                                maxlength="50" placeholder="கிராம நிர்வாக பகுதி" />
                                                 </select>
                                         
                                     </div>

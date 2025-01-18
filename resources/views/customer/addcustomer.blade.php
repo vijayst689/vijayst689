@@ -156,7 +156,7 @@
                                     </div>
 
                                     <div class="mb-3 row">
-                                        <label for="example-text-input-lg" class="col-sm-3 form-label">Profile</label>
+                                        <label for="example-text-input-lg" class="col-sm-3 form-label">Photo</label>
                                         <div class="col-sm-9">
                                             <input required class="form-control" type="file" name="profile"
                                                 id="example-text-input-lg">

@@ -3826,6 +3826,7 @@ public function submitapply_canedit(Request $request){
         'dist_id'                    => $request->dist_id,
         'taluk_id'                   => $request->taluk_id,
         'panchayath_id'              => $request->panchayath_id,
+        'vao_area'                   => $request->vao_area,
         'amount'                     => $request->amount,
         'mobile'                     => $request->mobile,
         'personalized_name_english'  => $request->personalized_name_english,
