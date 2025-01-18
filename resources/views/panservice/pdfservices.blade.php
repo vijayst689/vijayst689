@@ -29,7 +29,7 @@
                                             style="width: 200px; height: 150px;" alt="">
                                         </div>
                                         <div class="text-center mt-1 pt-1">
-                                            <p class="mb-0 text-success"><b>{{ $s->name }}</b></p>
+                                            <p class="text-lowercase text-success" class="mb-0 text-success"><b>{{ $s->name }}</b></p>
                                             <hr class="text-black">
                                             <h6 class="mb-2 text-danger">Amount: {{ $s->payment }}</h6>
                                         </div>

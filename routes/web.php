@@ -289,6 +289,15 @@ Route::post('/submitrcfind', [App\Http\Controllers\PDFServiceController::class, 
 Route::post('/submitrationfind', [App\Http\Controllers\PDFServiceController::class, 'submitrationfind'])->name('submitrationfind');
 Route::post('/submitpanadvance', [App\Http\Controllers\PDFServiceController::class, 'submitpanadvance'])->name('submitpanadvance');
 
+Route::post('/savevoter', [App\Http\Controllers\PDFServiceController::class, 'savevoter'])->name('savevoter');
+
+Route::get('/getepic/{epic_no}', [App\Http\Controllers\PDFServiceController::class, 'getepic'])->name('getepic');
+
+Route::get('/getotp/{otp}', [App\Http\Controllers\PDFServiceController::class, 'getotp'])->name('getotp');
+
+Route::get('/getpdfotp/{epic_no}', [App\Http\Controllers\PDFServiceController::class, 'getpdfotp'])->name('getpdfotp');
+
+Route::post('/submitvoterpdf', [App\Http\Controllers\PDFServiceController::class, 'submitvoterpdf'])->name('submitvoterpdf');
 
 //PermissionController
 

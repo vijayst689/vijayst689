@@ -1293,3 +1293,21 @@ INSERT INTO `panservice` VALUES (1,'New Card','1.jpg',98.00,'Active','2024-12-27
 alter table pancard add api_status varchar(30) DEFAULT Null after status;
 alter table pancard add api_url varchar(700) DEFAULT Null after api_status;
 alter table pancard add api_txid varchar(30) DEFAULT Null after api_url;
+
+CREATE TABLE `voter_find` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `epic_no` varchar(20) DEFAULT NULL,
+  `scode` varchar(20) DEFAULT NULL,
+  `amount` varchar(20) DEFAULT NULL,
+  `pdf` longtext DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `mobile` varchar(10) DEFAULT NULL,
+  `new_mobile` varchar(10) DEFAULT NULL,
+  `state_name` varchar(50) DEFAULT NULL,
+  `message` varchar(1000) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
