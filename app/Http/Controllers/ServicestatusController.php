@@ -113,6 +113,12 @@ class ServicestatusController extends Controller
             ->where('dharsan.status',$status)
             ->orderBy('dharsan.id', 'Desc')->get();
 
+            $software = DB::table('software')->select('services.service_name', 'software.*')
+            ->Join('services', 'services.id', '=', 'software.service_id')
+            ->where('software.status',$status)
+            ->orderBy('software.id', 'Desc')->get();
+
+
             $service = $service->merge($itr);
             $service = $service->merge($gst);
             $service = $service->merge($tec_exam);
@@ -131,6 +137,7 @@ class ServicestatusController extends Controller
             $service = $service->merge($birth_certificate);
             $service = $service->merge($medicalscheme);
             $service = $service->merge($dharsan);
+            $service = $service->merge($software);
 
             $service = json_decode( json_encode( $service ), true );
         foreach ( $service as $key => $s ) {
@@ -282,6 +289,12 @@ class ServicestatusController extends Controller
             ->where('dharsan.distributor_id',Auth::user()->id)
             ->orderBy('dharsan.id', 'Desc')->get();
 
+            $software = DB::table('software')->select('services.service_name', 'software.*')
+            ->Join('services', 'services.id', '=', 'software.service_id')
+            ->where('software.status',$status)
+            ->where('software.distributor_id',Auth::user()->id)
+            ->orderBy('software.id', 'Desc')->get();
+
             $service = $service->merge($itr);
             $service = $service->merge($gst);
             $service = $service->merge($tec_exam);
@@ -300,6 +313,7 @@ class ServicestatusController extends Controller
             $service = $service->merge($birth_certificate);
             $service = $service->merge($medicalscheme);
             $service = $service->merge($dharsan);
+            $service = $service->merge($software);
 
         }elseif(Auth::user()->user_type_id == 4){
 
@@ -419,6 +433,11 @@ class ServicestatusController extends Controller
             ->where('dharsan.retailer_id',Auth::user()->id)
             ->orderBy('dharsan.id', 'Desc')->get();
 
+            $software = DB::table('software')->select('services.service_name', 'software.*')
+            ->Join('services', 'services.id', '=', 'software.service_id')
+            ->where('software.status',$status)
+            ->where('software.retailer_id',Auth::user()->id)
+            ->orderBy('software.id', 'Desc')->get();
 
             $service = $service->merge($itr);
             $service = $service->merge($gst);
@@ -438,6 +457,7 @@ class ServicestatusController extends Controller
             $service = $service->merge($birth_certificate);
             $service = $service->merge($medicalscheme);
             $service = $service->merge($dharsan);
+            $service = $service->merge($software);
 
         }elseif(Auth::user()->user_type_id == 5){
 
@@ -556,6 +576,12 @@ class ServicestatusController extends Controller
             ->where('dharsan.user_id',Auth::user()->id)
             ->orderBy('dharsan.id', 'Desc')->get();
 
+            $software = DB::table('software')->select('services.service_name', 'software.*')
+            ->Join('services', 'services.id', '=', 'software.service_id')
+            ->where('software.status',$status)
+            ->where('software.user_id',Auth::user()->id)
+            ->orderBy('software.id', 'Desc')->get();
+
             $service = $service->merge($itr);
             $service = $service->merge($gst);
             $service = $service->merge($tec_exam);
@@ -574,6 +600,7 @@ class ServicestatusController extends Controller
             $service = $service->merge($birth_certificate);
             $service = $service->merge($medicalscheme);
             $service = $service->merge($dharsan);
+            $service = $service->merge($software);
         }
         return view( 'services.appliedservice',compact('service','status') );
     }
@@ -633,6 +660,8 @@ class ServicestatusController extends Controller
             $services = DB::table('medicalscheme')->where('id',$id)->where('status',$status)->first();
         }elseif($service_id == 183 || $service_id == 184 || $service_id == 185 || $service_id == 186 ){
             $services = DB::table('dharsan')->where('id',$id)->where('status',$status)->first();
+        }elseif($service_id == 187 || $service_id == 188 || $service_id == 189 || $service_id == 190 || $service_id == 191 || $service_id == 192 || $service_id == 193 || $service_id == 194 || $service_id == 195 || $service_id == 196 || $service_id == 197 || $service_id == 198 || $service_id == 199 || $service_id == 200 || $service_id == 201 || $service_id == 202 || $service_id == 203){
+            $services = DB::table('software')->where('id',$id)->where('status',$status)->first();
 
         }elseif($service_id == 181){
             $votercorrection_services = DB::table('voterid')->where('id',$id)->where('status',$status)->get();
@@ -779,6 +808,8 @@ class ServicestatusController extends Controller
         return view('servicestatus.medicalscheme_statusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
     }   elseif( $service_id == 183 || $service_id == 184 || $service_id == 185 || $service_id == 186 ){
         return view('servicestatus.dharsan_statusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
+    }   elseif( $service_id == 187 || $service_id == 188 || $service_id == 189 || $service_id == 190 || $service_id == 191 || $service_id == 192 || $service_id == 193 || $service_id == 194 || $service_id == 195 || $service_id == 196 || $service_id == 197 || $service_id == 198 || $service_id == 199 || $service_id == 200 || $service_id == 201 || $service_id == 202 || $service_id == 203 ){
+        return view('servicestatus.softwarestatusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
     }
 
 }
@@ -5161,6 +5192,66 @@ public function dharsan_update(Request $request){
 
     return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
+public function software_update(Request $request){
+    $apply_user_id = 0;
+    if($request->retailer_id == 0 && $request->distributor_id == 0){
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
+        $apply_user_id = $request->distributor_id;
+    }elseif($request->distributor_id == 0){
+        $apply_user_id = $request->retailer_id;
+    }
+    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+        $status = $request->status;
+        if($status == "Resubmit"){
+            DB::table( 'software' )->where('id', $request->applied_serviceid)->update( [
+                'remarks'  => $request->remarks,
+                'status'  => $status,
+            ] );
+        }elseif($status == "Processing"){
+            if ( $request->acknowledgement != null ) {
+                $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
+                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
+                move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
+                DB::table( 'software' )->where( 'id', $request->applied_serviceid )->update( [
+                    'acknowledgement' => $acknowledgement,
+                    'status' => $status,
+                    'application_no' => $request->application_no,
+                ] );
+            }
+        }elseif($status == "Approved"){
+            if ( $request->certificate != null ) {
+                $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
+                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'certificate'. DIRECTORY_SEPARATOR);
+                move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
+                DB::table( 'software' )->where( 'id', $request->applied_serviceid )->update( [
+                    'certificate' => $certificate,
+                    'status' => $status,
+                    'completed_date' => date("Y-m-d"),
+                ] );
+            }
+        }
+    }else{
+        $status = "Pending";
+        $serviceid = $request->serviceid;
+            DB::table('software')->where('id', $request->applied_serviceid)->update([
+                'service_id'   => $request ->serviceid,
+                'amount'       => $request->amount,
+                'device_name'         => $request->device_name,
+                'mobile'       => $request->mobile,
+                'status'       => 'Pending',
+                'applied_date' => date("Y-m-d"),
+                'created_at'   => date("Y-m-d"),
+            ]);
+            
+        
+        DB::table( 'software' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+        ] );
+    }
 
+    return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
+}
 }
 

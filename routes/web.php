@@ -365,3 +365,9 @@ Route::get('/courses', [App\Http\Controllers\CourseController::class, 'courses']
 
 Route::get('/applycourseservice/{serviceid}', [App\Http\Controllers\CourseController::class, 'applycourseservice'])->name('applycourseservice');
 
+// Software
+
+Route::get('softwareservices/{serviceid}', [App\Http\Controllers\RechargeController::class, 'softwareservices']);
+Route::post('/submitapply_software', [App\Http\Controllers\RechargeController::class, 'submitapply_software'])->name('submitapply_software');
+Route::post('/software_update', [App\Http\Controllers\ServicestatusController::class, 'software_update'])->name('software_update');
+
