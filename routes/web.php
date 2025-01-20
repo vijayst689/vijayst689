@@ -291,6 +291,10 @@ Route::post('/submitpanadvance', [App\Http\Controllers\PDFServiceController::cla
 
 Route::post('/savevoter', [App\Http\Controllers\PDFServiceController::class, 'savevoter'])->name('savevoter');
 
+Route::post('/submitvoterfind', [App\Http\Controllers\PDFServiceController::class, 'submitvoterfind'])->name('submitvoterfind');
+
+Route::post('/savevoter', [App\Http\Controllers\PDFServiceController::class, 'savevoter'])->name('savevoter');
+
 Route::get('/getepic/{epic_no}', [App\Http\Controllers\PDFServiceController::class, 'getepic'])->name('getepic');
 
 Route::get('/getotp/{otp}', [App\Http\Controllers\PDFServiceController::class, 'getotp'])->name('getotp');
