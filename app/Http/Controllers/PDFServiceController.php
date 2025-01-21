@@ -384,12 +384,17 @@ class PDFServiceController extends Controller
 
     if($resdata['StatusCode'] == "100"){
       $pdf = $resdata['pdf'];
+      $pdf_parts = explode(";base64", $pdf);
+      $pdf_types = explode("pdf/", $pdf_parts[0]);
+      $pdf_type = base64_decode($pdf_parts[1]);
+      $filename = uniqid().'.pdf';
+      file_put_contents('upload/dl/'.$filename,$pdf_type );
       $message = $resdata['message'];
       DB::table('dl')->insert([
         'user_id' => Auth::user()->id,
         'dlnumber' => $request->dl_no,
         'dob' => $dob,
-        'pdf' => $pdf,
+        'pdf' => $filename,
         'service_id' => $serviceid,
         'amount' => $servicepayment,
         'status'    => 'Approved',
@@ -481,11 +486,17 @@ class PDFServiceController extends Controller
        $name = $result->name;
        $message = $result->message;
        $pdf = $result->pdf;
+       $pdf_parts = explode(";base64", $pdf);
+       $pdf_types = explode("pdf/", $pdf_parts[0]);
+       $pdf_type = base64_decode($pdf_parts[1]);
+       $filename = uniqid().'.pdf';
+       file_put_contents('upload/rc/'.$filename,$pdf_type );
+
        DB::table('rc')->insert([
         'user_id' => Auth::user()->id,
         'rc_no' => $request->rc_no,
         'name' => $name,
-        'pdf' => $pdf,
+        'pdf' => $filename,
         'service_id' => $serviceid,
         'amount' => $servicepayment,
         'status'    => 'Approved',
@@ -596,12 +607,17 @@ public function submitrationfind(Request $request){
 
   if($resdata['StatusCode'] == "100"){
     $pdf=$resdata['pdf'];
+    $pdf_parts = explode(";base64", $pdf);
+    $pdf_types = explode("pdf/", $pdf_parts[0]);
+    $pdf_type = base64_decode($pdf_parts[1]);
+    $filename = uniqid().'.pdf';
+    file_put_contents('upload/smartpdf/'.$filename,$pdf_type );
     $name = $resdata['name'];
     DB::table('ration')->insert([
       'user_id'    => Auth::user()->id,
       'aadhaar_no' => $request->aadhaar_no,
       'name'       => $name,
-      'pdf'        => $pdf,
+      'pdf'        => $filename,
       'service_id' => $serviceid,
       'amount'     => $servicepayment,
       'status'     => 'Approved',
@@ -958,13 +974,18 @@ public function submitvoterpdf(Request $request){
     if($resdata->StatusCode == "100"){
         $message=$resdata->message;
         $pdf=$resdata->pdf;
+        $pdf_parts = explode(";base64", $pdf);
+        $pdf_types = explode("pdf/", $pdf_parts[0]);
+        $pdf_type = base64_decode($pdf_parts[1]);
+        $filename = uniqid().'.pdf';
+        file_put_contents('upload/voterpdf/'.$filename,$pdf_type );
             DB::table('voter_find')->insert([
             'user_id'    => Auth::user()->id,
             'service_id' => $serviceid,
             'epic_no'    => $request->epic_no,
             'scode'      => $request->stateCd,
             'name'       => $name,
-            'pdf'        => $pdf,
+            'pdf'        => $filename,
             'message'    => $message,
             'amount'     => $servicepayment,
             'status'     => 'Approved',
