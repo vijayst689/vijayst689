@@ -64,8 +64,11 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $ser->aadhaar_no }}</td>
-                                            <td><a href="<?php echo $ser->pdf; ?>" download="<?php echo $ser->pdf; ?>.pdf"
-                                                    class="btn btn-primary btn-sm">Download</a></td>
+                                            @if (pathinfo($ser->pdf, PATHINFO_EXTENSION) != 'pdf')
+                                            <td><a href="<?php echo $ser->pdf; ?>" download class="btn btn-primary btn-sm">Download</a></td>
+                                            @else
+                                            <td><a href="{{ url('/') }}/upload/smartpdf/{{ $ser->pdf }}" download class="btn btn-primary btn-sm">Download</a></td>
+                                            @endif
                                             <td>{{ $amount }}</td>
                                             <td>{{ $ser->date }}</td>
                                         </tr>
