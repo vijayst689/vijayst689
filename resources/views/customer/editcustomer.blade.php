@@ -149,12 +149,12 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="mb-3 row">
+                                       <div class="mb-3 row">
                                             <label for="example-text-input-lg" class="col-sm-2 form-label">VAO</label>
                                             <div class="col-sm-10">
-                                                <select required name="panchayath_id" id="panchayath"
-                                                    class="form-control">
-                                                </select>
+                                                <input class="form-control" type="text"
+                                                    value="{{ $cus->panchayath_name }}" name="panchayath_name" maxlength="50"
+                                                    placeholder="VAO">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
