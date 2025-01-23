@@ -164,10 +164,14 @@
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupphone").html("mobile no alredy exit!");
+                        $("#dupphone").html("mobile no alredy exists!");
                     } else {
-                        $("#save").prop('disabled', false);
                         $("#dupphone").html("");
+                    }
+                    if ($("#dupphone").html() == "" && $("#dupaadhar").html() == "") {
+                        $("#save").prop('disabled', false);
+                    } else {
+                        $("#save").prop('disabled', true);
                     }
                 },
 
@@ -176,6 +180,7 @@
                 }
             });
         }
+
     </script>
 </body>
 

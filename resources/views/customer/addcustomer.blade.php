@@ -141,8 +141,8 @@
                                     <div class="mb-3 row">
                                         <label for="panchayath" class="col-sm-3 form-label">VAO</label>
                                         <div class="col-sm-9">
-                                            <input required type="text" name="panchayath_id" id="panchayath" class="form-control"
-                                            maxlength="50" placeholder="Postel Area">
+                                            <input required type="text" name="panchayath_name" id="panchayath_name" class="form-control"
+                                            maxlength="50" placeholder="VAO">
                                             
                                         </div>
                                     </div>
