@@ -170,10 +170,10 @@ class PDFServiceController extends Controller
     $amount = $request->amount;
     $servicepayment = $request->servicepayment;
     $serviceid = $request->serviceid;
-    $api_key = base64_encode('e6890313368bd0f5c8c8e9383fa83763'); // Base 64 api Key Here
-    $application_no = "API-". rand(00000000,99999999); // Application Number
+    $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9'; // Base 64 api Key Here
+    $application_no = rand(00000000,99999999); // Application Number
 
-    $url = 'https://apipanel.online/api/panno/instant/submit.php?application_no=' . $application_no . '&api_key=' . $api_key . '&aadhaar_no=' . $aadhaar;
+    $url = "https://goodapi.in/serviceApi/V1/panFind?apiKey=$apikey&order_id=$application_no&uidNumber=$aadhaar";
     $curl = curl_init();
     curl_setopt_array($curl, array(
       CURLOPT_URL => $url,
@@ -188,10 +188,13 @@ class PDFServiceController extends Controller
     $response = curl_exec($curl);
     curl_close($curl);
     $resdata = json_decode($response,true);
+    //dd($resdata);
     if($resdata){
-      if($resdata['status'] == "100"){
+      if($resdata['Status'] == "Success"){
         $pan=$resdata['pan_no'];
         $message=$resdata['message'];
+        $name=$resdata['name'];
+        $dob=$resdata['dob'];
         DB::table('pancard_find')->insert([
           'user_id' => Auth::user()->id,
           'aadhaar_no' => $request->aadhaar_no,
@@ -199,6 +202,8 @@ class PDFServiceController extends Controller
           'service_id' => $serviceid,
           'amount' => $servicepayment,
           'message' => $message,
+          'name' => $name,
+          'dob' => $dob,
           'status'    => 'Approved',
           'date'    => date("Y-m-d "),
         ]);
@@ -468,24 +473,23 @@ class PDFServiceController extends Controller
   public function submitrcfind(Request $request){
     $user_id = Auth::user()->id;
     $rc_no = $request->rc_no;
-    $apikey = 'e6890313368bd0f5c8c8e9383fa83763';
+    $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
     $amount = $request->amount;
     $servicepayment = $request->servicepayment;
     $serviceid = $request->serviceid;
-    $url = "https://apipanel.online/api/rc/rcpdf.php?api_key=$apikey&rcno=$rc_no";
+    $url = "https://goodapi.in/serviceApi/V1/Rc-Verification.php?apiKey=$apikey&rcno=$rc_no";
     $crl = curl_init();
     curl_setopt( $crl, CURLOPT_URL, $url );
     curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
     curl_setopt( $crl, CURLOPT_RETURNTRANSFER, true );
     $result = curl_exec($crl);
-    $result = json_decode($result);
+    $result = json_decode($result,true);
     curl_close($crl);
-
     if($result){
-      if($result->status == "success"){
-       $name = $result->name;
-       $message = $result->message;
-       $pdf = $result->pdf;
+      if($result['Status'] == "Success"){
+       $name = $result['name'];
+       $message = $result['message'];
+       $pdf = $result['pdf'];
        $pdf_parts = explode(";base64", $pdf);
        $pdf_types = explode("pdf/", $pdf_parts[0]);
        $pdf_type = base64_decode($pdf_parts[1]);
@@ -564,7 +568,7 @@ class PDFServiceController extends Controller
 
       return redirect('/applypdfservice/'.$serviceid)->with('success',$message);
     }else{
-      $error=$result->error;
+        $error=$result['error'];
       return redirect('/applypdfservice/'.$serviceid)->with('error',$error);
     }
   }else{
