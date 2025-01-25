@@ -21,13 +21,13 @@ class PermissionController extends Controller
       $services = DB::table( 'services' )->where('parent_id',0)->whereIn('id',$checkpermission_services->pluck('service_id'))->where('status','Active')->orderBy( 'id', 'Asc' )->get();
     }
 
-    $checkpermission_findservices = DB::table( 'user_permission' )->where('user_id' , Auth::user()->id)->where('parent_id' , 2)->get();
+    $checkpermission_findservices = DB::table( 'user_permission' )->where('user_id' , Auth::user()->id)->where('parent_id' , 1)->get();
     if(Auth::user()->user_type_id == 1){
      $findservices = DB::table( 'find_services' )->where('status','Active')->orderBy( 'id', 'Asc' )->get();
    }else{
      $findservices = DB::table( 'find_services' )->where('status','Active')->whereIn('id',$checkpermission_findservices->pluck('service_id'))->orderBy( 'id', 'Asc' )->get();
    }
-   
+
 
    $checkpermission_utilityservices = DB::table( 'user_permission' )->where('user_id' , Auth::user()->id)->where('parent_id' , 1)->get();
    if(Auth::user()->user_type_id == 1){
@@ -36,18 +36,19 @@ class PermissionController extends Controller
     $utilityservices = DB::table( 'utility_services' )->where('status','Active')->whereIn('id',$checkpermission_utilityservices->pluck('service_id'))->orderBy( 'id', 'Asc' )->get();
   }
 
-  $checkpermission_utilityservices = DB::table( 'user_permission' )->where('user_id' , Auth::user()->id)->where('parent_id' , 4)->get();
+  $checkpermission_panservices = DB::table( 'user_permission' )->where('user_id' , Auth::user()->id)->where('parent_id' , 4)->get();
    if(Auth::user()->user_type_id == 1){
     $panservices = DB::table( 'panservice' )->where('status','Active')->orderBy( 'id', 'Asc' )->get();
   }else{
-    $panservices = DB::table( 'panservice' )->where('status','Active')->whereIn('id',$checkpermission_utilityservices->pluck('service_id'))->orderBy( 'id', 'Asc' )->get();
+    $panservices = DB::table( 'panservice' )->where('status','Active')->whereIn('id',$checkpermission_panservices->pluck('service_id'))->orderBy( 'id', 'Asc' )->get();
   }
+
 
   $checkpermission1 = DB::table( 'user_permission' )->where('user_id',$userid)->where('parent_id',1)->get();
   $checkpermission2 = DB::table( 'user_permission' )->where('user_id',$userid)->where('parent_id',2)->get();
   $checkpermission3 = DB::table( 'user_permission' )->where('user_id',$userid)->where('parent_id',3)->get();
   $checkpermission4 = DB::table( 'user_permission' )->where('user_id',$userid)->where('parent_id',4)->get();
-  return view( 'permission.userpermission',compact('userid','services','findservices','utilityservices','panservices','checkpermission1','checkpermission2','checkpermission3','checkpermission4'));
+  return view( 'permission.userpermission',compact('userid','services','findservices','utilityservices','checkpermission1','checkpermission2','checkpermission3','panservices','checkpermission4'));
 }
     //1 - Utility
     //2 - PDF
