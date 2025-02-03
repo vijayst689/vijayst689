@@ -40,7 +40,10 @@
                                     <input type="hidden" name="serviceid" value="{{ $services->service_id }}">
                                     @php
                                         $apply_user_id = 0;
-                                        if ($services->retailer_id == 0) {
+                                        if ($services->distributor_id == 0 && $services->retailer_id == 0) {
+                                            $apply_user_id = $services->user_id;
+                                        }
+                                        elseif ($services->retailer_id == 0) {
                                             $apply_user_id = $services->distributor_id;
                                         } elseif ($services->distributor_id == 0) {
                                             $apply_user_id = $services->retailer_id;
@@ -441,6 +444,14 @@
                                                     type="text" name="remarks" maxlength="100" id="remarks"
                                                     placeholder="Remarks" />
                                             </div>
+                                            <div class="mb-3 col-md-6" id="selecthide" style="display :none;">
+                                            <label for="select" class="form-label">Select</label>
+                                                <select class="form-control" name="selects" id="select">
+                                                    <option>select</option>
+                                                    <option @if ($services->selects == 'Text') selected @endif value = "Text">Text</option>
+                                                    <option @if ($services->selects == 'File') selected @endif value = "File">File</option>
+                                                </select>
+                                        </div>
                                             <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
                                                 <label for="acknowledgement" class="form-label">Acknowledgement</label>
                                                 <input class="form-control" type="file" name="acknowledgement"

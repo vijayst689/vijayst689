@@ -40,7 +40,10 @@
                                     <input type="hidden" name="serviceid" value="{{ $services->service_id }}">
                                     @php
                                         $apply_user_id = 0;
-                                        if ($services->retailer_id == 0) {
+                                        if ($services->distributor_id == 0 && $services->retailer_id == 0) {
+                                            $apply_user_id = $services->user_id;
+                                        }
+                                        elseif ($services->retailer_id == 0) {
                                             $apply_user_id = $services->distributor_id;
                                         } elseif ($services->distributor_id == 0) {
                                             $apply_user_id = $services->retailer_id;
@@ -494,6 +497,14 @@
                                             <input value="{{ $services->remarks }}" class="form-control" type="text"
                                                 name="remarks" maxlength="100" id="remarks" placeholder="Remarks" />
                                         </div>
+                                        <div class="mb-3 col-md-6" id="selecthide" style="display :none;">
+                                            <label for="select" class="form-label">Select</label>
+                                                <select class="form-control" name="selects" id="select">
+                                                    <option>select</option>
+                                                    <option @if ($services->selects == 'Text') selected @endif value = "Text">Text</option>
+                                                    <option @if ($services->selects == 'File') selected @endif value = "File">File</option>
+                                                </select>
+                                        </div>
                                         <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
                                             <label for="acknowledgement" class="form-label">Acknowledgement</label>
                                             <input class="form-control" type="file" name="acknowledgement"
@@ -550,19 +561,25 @@
             var acknowledgement = "{{ $services->acknowledgement }}";
             var dist_id = "{{ $services->dist_id }}";
             var taluk_id = "{{ $services->taluk_id }}";
+            var certificate = "{{ $services->certificate }}";
+            var selects = "{{ $services->selects }}";
             gettaluk(dist_id);
-            getpanchayath(taluk_id);
-
+            getpanchayath(taluk_id);          
+            
             if (status == "Resubmit") {
                 $('#remarkshide').show("slow");
                 $('#remarks').prop("required", true);
             } else if (status == "Processing") {
+            if(selects == "Text"){
                 $('#applicationnohide').show("slow");
-                $('#application_no').prop("required", true);
+            }
+            if(selects == "File"){
                 $('#acknowledgementhide').show("slow");
                 if (acknowledgement == "") {
                     $('#acknowledgement').prop("required", true);
                 }
+            }
+                $('#selecthide').show("slow");
             } else if (status == "Approved") {
                 $('#certhide').show("slow");
                 if (acknowledgement == "") {
@@ -572,45 +589,90 @@
         });
 
 
-        $('#service_status').change(function() {
-            if ($('#service_status').val() == 'Resubmit') {
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#remarkshide').show("slow");
-                $('#remarks').prop("required", true);
-            } else if ($('#service_status').val() == 'Processing') {
-                $('#acknowledgementhide').show("slow");
-                $('#acknowledgement').prop("required", true);
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationnohide').show("slow");
-                $('#application_no').prop("required", true);
-            } else if ($('#service_status').val() == 'Approved') {
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#certhide').show("slow");
-                $('#certificate').prop("required", true);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-            } else {
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
+        function gettaluk(dist_id) {
+        var url = "{{ url('service/get_taluk') }}/" + dist_id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
+                $.each(result, function (key, value) {
+                    $("#taluk").append('<option value="' + value
+                        .id + '">' + value.taluk_name + '</option>');
+                });
+                $("#taluk").val("{{ $services->taluk_id }}");
+
             }
         });
+    }
+
+
+    $('#service_status').change(function() {
+                if ($('#service_status').val() == 'Resubmit') {
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#remarkshide').show("slow");
+                    $('#remarks').prop("required", true);
+                    $('#select').prop("required", false);
+                    $('#selecthide').hide("slow");
+                } else if ($('#service_status').val() == 'Processing') {
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#remarkshide').hide("slow");
+                    $('#remarks').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#select').prop("required", true);
+                    $('#selecthide').show("slow");
+                } else if ($('#service_status').val() == 'Approved') {
+                    $('#remarkshide').hide("slow");
+                    $('#remarks').prop("required", false);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#certhide').show("slow");
+                    $('#certificate').prop("required", true);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#select').prop("required", false);
+                    $('#selecthide').hide("slow");
+                } else {
+                    $('#remarkshide').hide("slow");
+                    $('#remarks').prop("required", false);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#select').prop("required", false);
+                    $('#selecthide').hide("slow");
+                }
+            });
+
+            $('#select').change(function(){
+                if($('#select').val() == 'Text') {
+                    $('#applicationnohide').show("slow");
+                    $('#application_no').prop("required", true); 
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                }else if($('#select').val() == 'File'){
+                    $('#acknowledgementhide').show("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#applicationnohide').hide("slow"); 
+                    $('#application_no').prop("required", false);
+                }else{
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                }  
+            });
 
         function gettaluk(dist_id) {
         var url = "{{ url('service/get_taluk') }}/" + dist_id;
@@ -645,6 +707,7 @@
             }
         });
     }
+
     </script>
 @endpush
 
