@@ -237,61 +237,70 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label for="name" class="form-label">Name</label>
-                                    <input value="{{ $customers->name }}" readonly  required type="text" class="form-control"
-                                    name="name" placeholder="Name"/>
-
-
-                                    <label for="aadhaar_no" class="form-label">Aadhaar Number</label>
-                                    <input value="{{ $customers->aadhaar_no }}" readonly required type="text" maxlength="12" class="form-control"
-                                    name="aadhaar_no" placeholder="Aadhaar Number"/>
-
-                                    <label for="mobile" class="form-label number">Mobile Number</label>
-                                    <input value="{{ $customers->phone }}" readonly required type="text" maxlength="10" class="form-control"
-                                    name="mobile" placeholder="Mobile Number"/>
-
+                                    <input value="{{ $customers->name }}" readonly required type="text"
+                                        class="form-control" name="name" placeholder="Name" />
                                     <label for="dist_id" class="form-label">District</label>
                                     <select disabled name="dist_id" id="dist_id" class="form-control">
                                         <option value="">Select District</option>
-                                        @foreach($districts as $d)
-                                        <option @if($d->id == $customers->dist_id) selected @endif value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                        @foreach ($districts as $d)
+                                            <option @if ($d->id == $customers->dist_id) selected @endif
+                                                value="{{ $d->id }}">{{ $d->district_name }}</option>
                                         @endforeach
                                     </select>
+                                    <label for="panchayath_id" class="form-label">VAO</label>
+                                    <input class="form-control" type="text"
+                                        value="{{ $customers->panchayath_name }}" readonly required
+                                        name="panchayath_name" maxlength="50" placeholder="VAO">
+                                    <label for="aadhaar_no" class="form-label">Aadhaar Number</label>
+                                    <input value="{{ $customers->aadhaar_no }}" readonly required type="text"
+                                        maxlength="12" class="form-control" name="aadhaar_no"
+                                        placeholder="Aadhaar Number" />
+                                    <label for="signature" class="form-label">Signature</label>
+                                    @if ($customers->signature == '')
+                                        <br><a href="#" class="btn btn-primary me-2">No File Uploaded</a><br>
+                                    @else
+                                        <br><a target="_blank"
+                                            href="/upload/users/signature/{{ $customers->signature }}"
+                                            class="btn btn-primary me-2">View</a><br>
+                                    @endif
 
-                                    <label for="taluk_id" class="form-label">Taluk</label>
-                                    <select disabled name="taluk_id" id="taluk"  class="form-control">
-                                    </select>
+
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label for="panchayath_id" class="form-label">VAO</label>
-                                    <select disabled name="panchayath_id" id="panchayath"  class="form-control">
+                                    <label for="mobile" class="form-label number">Mobile Number</label>
+                                    <input value="{{ $customers->phone }}" readonly required type="text"
+                                        maxlength="10" class="form-control" name="mobile"
+                                        placeholder="Mobile Number" />
+                                    <label for="taluk_id" class="form-label">Taluk</label>
+                                    <select disabled name="taluk_id" id="taluk" class="form-control">
                                     </select>
-
-                                    <label for="aadhaar_card" class="form-label">Aadhaar Card</label>
-                                    @if($customers->aadhaar_file == "")
-                                    <br><a  href="#" class="btn btn-primary me-2">No File Uploaded</a><br>
+                                    <label for="photo" class="form-label">Photo</label>
+                                    @if ($customers->profile == '')
+                                        <br><a href="#" class="btn btn-primary me-2">No File Uploaded</a><br>
                                     @else
-                                    <br><a target="_blank" href="/upload/users/aadhaar_file/{{ $customers->aadhaar_file }}" class="btn btn-primary me-2">View</a><br>
+                                        <br><a target="_blank"
+                                            href="/upload/users/profile_photo/{{ $customers->profile }}"
+                                            class="btn btn-primary me-2">View</a><br>
+                                    @endif
+                                    <label for="aadhaar_card" class="form-label">Aadhaar Card</label>
+                                    @if ($customers->aadhaar_file == '')
+                                        <br><a href="#" class="btn btn-primary me-2">No File Uploaded</a><br>
+                                    @else
+                                        <br><a target="_blank"
+                                            href="/upload/users/aadhaar_file/{{ $customers->aadhaar_file }}"
+                                            class="btn btn-primary me-2">View</a><br>
                                     @endif
 
                                     <label for="smart_card" class="form-label">Smart Card</label>
-                                    @if($customers->smartcard == "")
-                                    <br><a  href="#" class="btn btn-primary me-2">No File Uploaded</a><br>
+                                    @if ($customers->smartcard == '')
+                                        <br><a href="#" class="btn btn-primary me-2">No File Uploaded</a><br>
                                     @else
-                                    <br><a target="_blank" href="/upload/users/smart_card/{{ $customers->smartcard }}" class="btn btn-primary me-2">View</a><br>
+                                        <br><a target="_blank"
+                                            href="/upload/users/smart_card/{{ $customers->smartcard }}"
+                                            class="btn btn-primary me-2">View</a><br>
                                     @endif
-                                    <label for="signature" class="form-label">Signature</label>
-                                    @if($customers->signature == "")
-                                    <br><a  href="#" class="btn btn-primary me-2">No File Uploaded</a><br>
-                                    @else
-                                    <br><a target="_blank" href="/upload/users/signature/{{ $customers->signature }}" class="btn btn-primary me-2">View</a><br>
-                                    @endif
-                                    <label for="photo" class="form-label">Photo</label>
-                                    @if($customers->profile == "")
-                                    <br><a  href="#" class="btn btn-primary me-2">No File Uploaded</a><br>
-                                    @else
-                                    <br><a target="_blank" href="/upload/users/profile_photo/{{ $customers->profile }}" class="btn btn-primary me-2">View</a><br>
-                                    @endif
+
 
                                 </div>
                             </div>

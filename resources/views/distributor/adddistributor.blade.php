@@ -57,6 +57,17 @@
                                     <span id="dupphone" style="color:red"></span>
                                 </div>
                                 <div class="col-md-6">
+                                    <label for="input4" class="form-label">Email</label>
+                                    <input onkeyup="duplicateemail(0)" id="email" type="email" name="email"
+                                        maxlength="40" class="form-control" id="input4" placeholder="Email">
+                                    <span id="dupemail" style="color:red"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="input5" class="form-label">Password</label>
+                                    <input type="password" name="password" maxlength="10" class="form-control"
+                                        id="input5">
+                                </div>
+                                <div class="col-md-6">
                                     <label for="input3" class="form-label">Aadhaar No</label>
                                     <input onkeyup="duplicateaadhar(0)" id="aadhaar_no" type="text" name="aadhaar_no"
                                         maxlength="12" class="form-control number" id="input3" placeholder="Aadhaar No">
@@ -70,17 +81,8 @@
                                         <option value="Female">Female</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="input4" class="form-label">Email</label>
-                                    <input onkeyup="duplicateemail(0)" id="email" type="email" name="email"
-                                        maxlength="40" class="form-control" id="input4" placeholder="Email">
-                                    <span id="dupemail" style="color:red"></span>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="input5" class="form-label">Password</label>
-                                    <input type="password" name="password" maxlength="10" class="form-control"
-                                        id="input5">
-                                </div>
+                               
+                               
                                 <div class="col-md-6">
                                     <label for="input6" class="form-label">DOB</label>
                                     <input name="date_of_birth" type="date" class="form-control" id="input6">

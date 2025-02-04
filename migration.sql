@@ -1485,3 +1485,6 @@ alter table smartcard add selects varchar(20) DEFAULT NULL after application_no;
 alter table software add selects varchar(20) DEFAULT NULL after application_no;
 alter table tailor add selects varchar(20) DEFAULT NULL after application_no;
 alter table voterid add selects varchar(20) DEFAULT NULL after application_no;
+
+
+alter table bond add certificate varchar(20) DEFAULT NULL after status;

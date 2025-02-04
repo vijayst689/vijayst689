@@ -76,6 +76,14 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
+                                        <label for="panchayath" class="col-sm-3 form-label">VAO</label>
+                                        <div class="col-sm-9">
+                                            <input required type="text" name="panchayath_name" id="panchayath_name" class="form-control"
+                                            maxlength="50" placeholder="VAO">
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
                                         <label for="aadhaar_no" class="col-sm-3 form-label">Aadhaar No</label>
                                         <div class="col-sm-9">
                                             <input required onkeyup="duplicateaadhar(0)" class="form-control number"
@@ -86,26 +94,19 @@
                                     </div>
 
                                     <div class="mb-3 row">
-                                        <label for="example-text-input-lg" class="col-sm-3 form-label">Signature</label>
-                                        <div class="col-sm-9">
-                                            <input required accept="image/jpeg, image/png" type="file"
-                                                class="form-control" name="signature" />
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3 row">
-                                        <label for="example-text-input-lg" class="col-sm-3 form-label">Smart Card</label>
-                                        <div class="col-sm-9">
-                                            <input required accept="image/jpeg, image/png" type="file"
-                                                class="form-control" name="smartcard" />
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row">
                                         <label for="example-text-input-lg" class="col-sm-3 form-label">Smart Card
                                             No</label>
                                         <div class="col-sm-9">
                                             <input required type="text" class="form-control" name="smartcard_no"
                                                 maxlength="15" placeholder="SmartCard No" />
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 row">
+                                        <label for="example-text-input-lg" class="col-sm-3 form-label">Signature</label>
+                                        <div class="col-sm-9">
+                                            <input required accept="image/jpeg, image/png" type="file"
+                                                class="form-control" name="signature" />
                                         </div>
                                     </div>
 
@@ -139,11 +140,10 @@
                                     </div>
 
                                     <div class="mb-3 row">
-                                        <label for="panchayath" class="col-sm-3 form-label">VAO</label>
+                                        <label for="example-text-input-lg" class="col-sm-3 form-label">Photo</label>
                                         <div class="col-sm-9">
-                                            <input required type="text" name="panchayath_name" id="panchayath_name" class="form-control"
-                                            maxlength="50" placeholder="VAO">
-                                            
+                                            <input required class="form-control" type="file" name="profile"
+                                                id="example-text-input-lg">
                                         </div>
                                     </div>
 
@@ -156,10 +156,10 @@
                                     </div>
 
                                     <div class="mb-3 row">
-                                        <label for="example-text-input-lg" class="col-sm-3 form-label">Photo</label>
+                                        <label for="example-text-input-lg" class="col-sm-3 form-label">Smart Card</label>
                                         <div class="col-sm-9">
-                                            <input required class="form-control" type="file" name="profile"
-                                                id="example-text-input-lg">
+                                            <input required accept="image/jpeg, image/png" type="file"
+                                                class="form-control" name="smartcard" />
                                         </div>
                                     </div>
 
