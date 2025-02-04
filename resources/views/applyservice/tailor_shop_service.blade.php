@@ -27,9 +27,10 @@
             <div class="row">
                 <div class="col-12 col-xl-12">
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
-                        <div class="card-body p-4">
+                    <div class="card-body p-4">
                             <h5 class="card-title">{{ $servicename }}</h5>
                             <h6 class="card-title">Service Payment : <span class="text-danger">{{ $payment }}</span></h6>
+                            <div class="card-body p-4">
                             <form class="row g-4" action="{{ url('submitapply_tailorshop') }}" enctype="multipart/form-data"
                             method="post">
                             @csrf
@@ -87,9 +88,9 @@
                             <label for="street_name" class="form-label">Street name</label>
                             <input required type="text" maxlength="30" class="form-control"
                             name="street_name" placeholder="Street name" />
-                            <label for="panchayath_id" class="form-label">Postal Area</label>
-                            <select required name="panchayath_id" id="panchayath"  class="form-control">
-                            </select>
+                            <label for="postal_area" class="form-label">Postal Area</label>
+                                <input  required type="text" maxlength="100" class="form-control"
+                                name="postal_area" placeholder="Postal Area" />
                             <label for="photo" class="form-label">Photo</label>
                             <input required type="file" maxlength="20" class="form-control"
                             name="Photo" />
@@ -149,9 +150,9 @@
                         <label for="street_name" class="form-label">Street name</label>
                         <input required type="text" maxlength="30" class="form-control"
                         name="street_name" placeholder="Street name" />
-                            <label for="panchayath_id" class="form-label">Postal Area</label>
-                            <select required name="panchayath_id" id="panchayath"  class="form-control">
-                            </select>
+                        <label for="postal_area" class="form-label">Postal Area</label>
+                                <input  required type="text" maxlength="100" class="form-control"
+                                name="postal_area" placeholder="Postal Area" />
                             <label for="photo" class="form-label">Photo</label>
                             <input required type="file" maxlength="20" class="form-control"
                             name="Photo" />
@@ -204,9 +205,9 @@
                             <label for="street_name" class="form-label">Street name</label>
                             <input required type="text" maxlength="30" class="form-control"
                             name="street_name" placeholder="Street name" />
-                            <label for="panchayath_id" class="form-label">Postal Area</label>
-                            <select required name="panchayath_id" id="panchayath"  class="form-control">
-                            </select>
+                            <label for="postal_area" class="form-label">Postal Area</label>
+                                <input  required type="text" maxlength="100" class="form-control"
+                                name="postal_area" placeholder="Postal Area" />
                             <label for="photo" class="form-label">Photo</label>
                             <input required type="file" maxlength="20" class="form-control"
                             name="Photo" />

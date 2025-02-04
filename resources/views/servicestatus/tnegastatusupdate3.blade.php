@@ -651,18 +651,16 @@
 
                                             </div>
                                         @endif
-                                        <div class="text-center">
-                                            <p id="nopayment"></p>
-                                        </div>
-                                        <div class="text-center">
-                                            <div class="col-12">
-                                                <div class="mb-0">
-                                                    <button id="save" type="submit"
-                                                        class="btn btn-primary">Apply</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                            </form>
+                                        <div class="mt-2 text-center">
+                                @if ($services->status == 'Resubmit' && ($apply_user_id != Auth::user()->id))
+                                    <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
+                                @elseif($services->status == 'Approved')
+                                    <button type="button" disabled class="btn btn-primary me-2">Completed</button>
+                                @else
+                                    <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                @endif
+                            </div>
+                        </form>
                         </div>
                     </div>
                 </div>
@@ -671,42 +669,39 @@
     </main>
 @endsection
 @push('page_scripts')
-    <script>
+<script>
         var dist_id = "{{ $customers->dist_id }}";
-        var taluk_id = "{{ $customers->taluk_id }}";
+     var taluk_id = "{{ $customers->taluk_id }}";
+     $(function() {
+        gettaluk(dist_id);
+        getpanchayath(taluk_id);
 
+        var status = "{{ $services->status }}";
+        var acknowledgement = "{{ $services->acknowledgement }}";
+        var certificate = "{{ $services->certificate }}";
+        var selects = "{{ $services->selects }}";
+        var candetails = "{{ $services->can_details }}";
+        var anyproof = "{{ $services->any_proof }}";
+        var marriagedoc = "{{ $services->mrg_docdetails }}";
+        if(anyproof == "Passport"){
+           $('#passporthide').show("slow");
+         }else if(anyproof == "PAN Card"){
+            $('#pancardhide').show("slow");
+         }else if(anyproof == "Voter Id"){
+            $('#voteridhide').show("slow");
+         }else if(anyproof == "Driving License"){
+             $('#driving_licensehide').show("slow");
+         }
 
-        $(function() {
-            gettaluk(dist_id);
-            getpanchayath(taluk_id);
+         if(marriagedoc == "Marriage Invitation"){
+             $('#mrg_invitationhide').show("slow");
+         }else if(marriagedoc == "Marriage Registration Certificate"){
+             $('#mrg_registration_certificatehide').show("slow");
+         }else if(marriagedoc == "Marriage Documents"){
+             $('#mrg_documentshide').show("slow");
+         }
 
-            var status = "{{ $services->status }}";
-            var acknowledgement = "{{ $services->acknowledgement }}";
-            var certificate = "{{ $services->certificate }}";
-            var candetails = "{{ $services->can_details }}";
-
-            var anyproof = "{{ $services->any_proof }}";
-            if (anyproof == "Passport") {
-                $('#pass_porthide').show("slow");
-            } else if (anyproof == "PAN Card") {
-                $('#pan_cardhide').show("slow");
-            } else if (anyproof == "Voter Id") {
-                $('#voteridhide').show("slow");
-            } else if (anyproof == "Driving License") {
-                $('#driving_licensehide').show("slow");
-            }
-
-            var mrgdocdetails = "{{ $services->mrg_docdetails }}";
-            if (mrgdocdetails == "Marriage Invitation") {
-                $('#mrg_invitationhide').show("slow");
-            } else if (mrgdocdetails == "Marriage Registration Certificate") {
-                $('#mrg_registration_certificatehide').show("slow");
-            } else if (mrgdocdetails == "Marriage Documents") {
-                $('#mrg_documentshide').show("slow");
-            }
-
-
-            if(candetails == "Yes"){
+        if(candetails == "Yes"){
             $('#cannumberhide').show("slow");
             $('#cannumber').prop("required",true);
         }else if(candetails == "No"){
@@ -717,12 +712,16 @@
                 $('#remarkshide').show("slow");
                 $('#remarks').prop("required", true);
             } else if (status == "Processing") {
+            if(selects == "Text"){
                 $('#applicationnohide').show("slow");
-                $('#application_no').prop("required", true);
+            }
+            if(selects == "File"){
                 $('#acknowledgementhide').show("slow");
                 if (acknowledgement == "") {
                     $('#acknowledgement').prop("required", true);
                 }
+            }
+                $('#selecthide').show("slow");
             } else if (status == "Approved") {
                 $('#certhide').show("slow");
                 if (acknowledgement == "") {
@@ -731,183 +730,212 @@
             }
         });
 
-        function gettaluk(dist_id) {
-            var url = "{{ url('service/get_taluk') }}/" + dist_id;
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function(result) {
-                    $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
-                    $.each(result, function(key, value) {
-                        $("#taluk").append('<option value="' + value
-                            .id + '">' + value.taluk_name + '</option>');
-                    });
-                    $("#taluk").val("{{ $customers->taluk_id }}");
+     function gettaluk(dist_id) {
+        var url = "{{ url('service/get_taluk') }}/" + dist_id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
+                $.each(result, function (key, value) {
+                    $("#taluk").append('<option value="' + value
+                        .id + '">' + value.taluk_name + '</option>');
+                });
+                $("#taluk").val("{{ $customers->taluk_id }}");
 
+            }
+        });
+    }
+
+    function getpanchayath(taluk_id) {
+        var url = "{{ url('service/get_panchayath') }}/" + taluk_id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function(result) {
+                $('#panchayath').html('<option value="">-- Select Panchayath Name --</option>');
+                $.each(result, function(key, value) {
+                    $("#panchayath").append('<option value="' + value
+                        .id + '">' + value.panchayath_name + '</option>');
+                });
+                $("#panchayath").val("{{ $customers->panchayath_id }}");
+
+            }
+        });
+    }
+
+
+    var customerid = "{{ $customers->id }}";
+    $('#can_details').change(function(){
+        if($('#can_details').val() == 'Yes') {
+            $('#cannumberhide').show("slow");
+            $('#cannumber').prop("required",true);
+        }else if($('#can_details').val() == 'No'){
+            window.location.href = "{{ url('applyservice') }}/"+60+"/"+customerid;
+        }else if($('#can_details').val() == 'Find'){
+            window.location.href = "{{ url('applyservice') }}/"+121+"/"+customerid;
+        } else {
+            $('#cannumberhide').hide("slow");
+            $('#cannumber').prop("required",false);
+        }
+    });
+
+    $('#service_status').change(function() {
+                if ($('#service_status').val() == 'Resubmit') {
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#remarkshide').show("slow");
+                    $('#remarks').prop("required", true);
+                    $('#select').prop("required", false);
+                    $('#selecthide').hide("slow");
+                } else if ($('#service_status').val() == 'Processing') {
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#remarkshide').hide("slow");
+                    $('#remarks').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#select').prop("required", true);
+                    $('#selecthide').show("slow");
+                } else if ($('#service_status').val() == 'Approved') {
+                    $('#remarkshide').hide("slow");
+                    $('#remarks').prop("required", false);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#certhide').show("slow");
+                    $('#certificate').prop("required", true);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#select').prop("required", false);
+                    $('#selecthide').hide("slow");
+                } else {
+                    $('#remarkshide').hide("slow");
+                    $('#remarks').prop("required", false);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#select').prop("required", false);
+                    $('#selecthide').hide("slow");
                 }
             });
-        }
 
-        function getpanchayath(taluk_id) {
-            var url = "{{ url('service/get_panchayath') }}/" + taluk_id;
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function(result) {
-                    $('#panchayath').html('<option value="">-- Select Panchayath Name --</option>');
-                    $.each(result, function(key, value) {
-                        $("#panchayath").append('<option value="' + value
-                            .id + '">' + value.panchayath_name + '</option>');
-                    });
-                    $("#panchayath").val("{{ $customers->panchayath_id }}");
-
-                }
+            $('#select').change(function(){
+                if($('#select').val() == 'Text') {
+                    $('#applicationnohide').show("slow");
+                    $('#application_no').prop("required", true); 
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                }else if($('#select').val() == 'File'){
+                    $('#acknowledgementhide').show("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#applicationnohide').hide("slow"); 
+                    $('#application_no').prop("required", false);
+                }else{
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                }  
             });
+
+    $('#id_proof').change(function(){
+        if($('#id_proof').val() == 'Passport') {
+             $('#passporthide').show("slow");
+             $('#pancardhide').hide("slow");
+             $('#voteridhide').hide("slow");
+             $('#driving_licensehide').hide("slow");
+             $('#pandcard').prop("required",false);
+            $('#voterid').prop("required",false);
+            $('#driving_license').prop("required",false);
+            $('#passport').prop("required",true);
+
+        } else if($('#id_proof').val() == 'PAN Card') {
+            $('#pancardhide').show("slow");
+            $('#passporthide').hide("slow");
+             $('#voteridhide').hide("slow");
+             $('#driving_licensehide').hide("slow");
+             $('#passport').prop("required",false);
+            $('#voterid').prop("required",false);
+            $('#driving_license').prop("required",false);
+            $('#pancard').prop("required",true);
+
+        } else if($('#id_proof').val() == 'Voter Id') {
+            $('#voteridhide').show("slow");
+            $('#passporthide').hide("slow");
+            $('#pancardhide').hide("slow");
+            $('#driving_licensehide').hide("slow");
+             $('#passport').prop("required",false);
+            $('#driving_license').prop("required",false);
+            $('#pancard').prop("required",false);
+            $('#voterid').prop("required",true);
+
+        } else if($('#id_proof').val() == 'Driving License') {
+            $('#driving_licensehide').show("slow");
+            $('#passporthide').hide("slow");
+            $('#pancardhide').hide("slow");
+            $('#voteridhide').hide("slow");
+             $('#passport').prop("required",false);
+            $('#voterid').prop("required",false);
+            $('#pancard').prop("required",false);
+            $('#driving_license').prop("required",true);
+        } else{
+            $('#driving_licensehide').hide("slow");
+            $('#passporthide').hide("slow");
+            $('#pancardhide').hide("slow");
+            $('#voteridhide').hide("slow");
+            $('#passport').prop("required",false);
+            $('#pancard').prop("required",false);
+            $('#voterid').prop("required",false);
+            $('#driving_license').prop("required",false);
+
         }
+    });
+
+    $('#m_certificate').change(function(){
+        if($('#m_certificate').val() == 'Marriage Invitation') {
+             $('#mrg_invitationhide').show("slow");
+             $('#mrg_registration_certificatehide').hide("slow");
+             $('#mrg_documentshide').hide("slow");
+             $('#mrg_registration_certificate').prop("required",false);
+            $('#mrg_documents').prop("required",false);
+            $('#mrg_invitation').prop("required",true);
+
+        } else if($('#m_certificate').val() == 'Marriage Registration Certificate') {
+            $('#mrg_registration_certificatehide').show("slow");
+            $('#mrg_invitationhide').hide("slow");
+            $('#mrg_documentshide').hide("slow");
+            $('#mrg_invitation').prop("required",false);
+            $('#mrg_documents').prop("required",false);
+            $('#mrg_registration_certificate').prop("required",true);
+
+        } else if($('#m_certificate').val() == 'Marriage Documents') {
+            $('#mrg_documentshide').show("slow");
+            $('#mrg_registration_certificatehide').hide("slow");
+            $('#mrg_invitationhide').hide("slow");
+            $('#mrg_invitation').prop("required",false);
+            $('#mrg_registration_certificate').prop("required",false);
+            $('#mrg_documents').prop("required",true);
+
+        } else{
+            $('#mrg_invitationhide').hide("slow");
+            $('#mrg_registration_certificatehide').hide("slow");
+            $('#mrg_documentshide').hide("slow");
+            $('#mrg_invitation').prop("required",false);
+            $('#mrg_registration_certificate').prop("required",false);
+            $('#mrg_documents').prop("required",false);
+
+        }
+    });
 
 
-        var customerid = "{{ $customers->id }}";
-        $('#can_details').change(function() {
-            if ($('#can_details').val() == 'Yes') {
-                $('#cannumberhide').show("slow");
-                $('#cannumber').prop("required", true);
-            } else if ($('#can_details').val() == 'No') {
-                window.location.href = "{{ url('applyservice') }}/" + 60 + "/" + customerid;
-            } else if ($('#can_details').val() == 'Find') {
-                window.location.href = "{{ url('applyservice') }}/" + 121 + "/" + customerid;
-            } else {
-                $('#cannumberhide').hide("slow");
-                $('#cannumber').prop("required", false);
-            }
-        });
-
-        $('#service_status').change(function() {
-            if ($('#service_status').val() == 'Resubmit') {
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#remarkshide').show("slow");
-                $('#remarks').prop("required", true);
-            } else if ($('#service_status').val() == 'Processing') {
-                $('#acknowledgementhide').show("slow");
-                $('#acknowledgement').prop("required", true);
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationnohide').show("slow");
-                $('#application_no').prop("required", true);
-            } else if ($('#service_status').val() == 'Approved') {
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#certhide').show("slow");
-                $('#certificate').prop("required", true);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-            } else {
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-            }
-        });
-
-        $('#other_certificate').change(function() {
-            if ($('#other_certificate').val() == 'Passport') {
-                $('#pass_porthide').show("slow");
-                $('#pan_cardhide').hide("slow");
-                $('#voter_idhide').hide("slow");
-                $('#driving_licensehide').hide("slow");
-                $('#pan_card').prop("required", false);
-                $('#voter_id').prop("required", false);
-                $('#drivinglicense').prop("required", false);
-                $('#pass_port').prop("required", true);
-
-            } else if ($('#other_certificate').val() == 'PAN Card') {
-                $('#pan_cardhide').show("slow");
-                $('#pass_porthide').hide("slow");
-                $('#voter_idhide').hide("slow");
-                $('#driving_licensehide').hide("slow");
-                $('#pass_port').prop("required", false);
-                $('#voter_id').prop("required", false);
-                $('#drivinglicense').prop("required", false);
-                $('#pan_card').prop("required", true);
-
-            } else if ($('#other_certificate').val() == 'Voter Id') {
-                $('#voteridhide').show("slow");
-                $('#pass_porthide').hide("slow");
-                $('#pan_cardhide').hide("slow");
-                $('#driving_licensehide').hide("slow");
-                $('#pass_port').prop("required", false);
-                $('#drivinglicense').prop("required", false);
-                $('#pan_card').prop("required", false);
-                $('#voter_id').prop("required", true);
-
-            } else if ($('#other_certificate').val() == 'Driving License') {
-                $('#driving_licensehide').show("slow");
-                $('#pass_porthide').hide("slow");
-                $('#pan_cardhide').hide("slow");
-                $('#voteridhide').hide("slow");
-                $('#pass_port').prop("required", false);
-                $('#voter_id').prop("required", false);
-                $('#pan_card').prop("required", false);
-                $('#drivinglicense').prop("required", true);
-            } else {
-                $('#driving_licensehide').hide("slow");
-                $('#pass_porthide').hide("slow");
-                $('#pan_cardhide').hide("slow");
-                $('#voteridhide').hide("slow");
-                $('#pass_port').prop("required", false);
-                $('#pan_card').prop("required", false);
-                $('#voter_id').prop("required", false);
-                $('#drivinglicense').prop("required", false);
-
-            }
-        });
-
-        $('#m_certificate').change(function() {
-            if ($('#m_certificate').val() == 'Marriage Invitation') {
-                $('#mrg_invitationhide').show("slow");
-                $('#mrg_registration_certificatehide').hide("slow");
-                $('#mrg_documentshide').hide("slow");
-                $('#mrg_registration_certificate').prop("required", false);
-                $('#mrg_documents').prop("required", false);
-                $('#mrg_invitation').prop("required", true);
-
-            } else if ($('#m_certificate').val() == 'Marriage Registration Certificate') {
-                $('#mrg_registration_certificatehide').show("slow");
-                $('#mrg_invitationhide').hide("slow");
-                $('#mrg_documentshide').hide("slow");
-                $('#mrg_invitation').prop("required", false);
-                $('#mrg_documents').prop("required", false);
-                $('#mrg_registration_certificate').prop("required", true);
-
-            } else if ($('#m_certificate').val() == 'Marriage Documents') {
-                $('#mrg_documentshide').show("slow");
-                $('#mrg_registration_certificatehide').hide("slow");
-                $('#mrg_invitationhide').hide("slow");
-                $('#mrg_invitation').prop("required", false);
-                $('#mrg_registration_certificate').prop("required", false);
-                $('#mrg_documents').prop("required", true);
-
-            } else {
-                $('#mrg_invitationhide').hide("slow");
-                $('#mrg_registration_certificatehide').hide("slow");
-                $('#mrg_documentshide').hide("slow");
-                $('#mrg_invitation').prop("required", false);
-                $('#mrg_registration_certificate').prop("required", false);
-                $('#mrg_documents').prop("required", false);
-
-            }
-        });
     </script>
 @endpush

@@ -64,12 +64,14 @@
                                             <td>{{ $ser->status }}</td>
                                             <td>{{ date('d-m-Y', strtotime($ser->applied_date)) }}</td>
                                             @if ($status == 'Processing')
-                                                <td>{{ $ser->application_no }}</td>
-                                                <td><a download
-                                                        href="{{ URL::to('/') }}/upload/services/acknowledgement/{{ $ser->acknowledgement }}" style="font-size: small" class="btn btn-grd btn-grd-primary px-1">Download</a></td>
+                                            <td>{{ $ser->application_no }}</td>
+                                            <td>
+                                            @if($ser->selects == "File")
+                                            <a download href="{{ URL::to('/') }}/upload/services/acknowledgement/{{ $ser->acknowledgement }}" class="btn btn-success me-2 btn-sm">Download</a>
+                                            @endif
+                                            </td>
                                             @elseif($status == 'Approved')
-                                                <td><a download
-                                                        href="{{ URL::to('/') }}/upload/services/certificate/{{ $ser->certificate }}" style="font-size: small" class="btn btn-grd btn-grd-branding px-1">Download</a></td>
+                                            <td><a download href="{{ URL::to('/') }}/upload/services/certificate/{{ $ser->certificate }}" style="font-size: small" class="btn btn-grd btn-grd-branding px-1">Download</a></td>
                                             @endif
                                             @php
                                             $apply_user_id = 0;

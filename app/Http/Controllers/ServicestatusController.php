@@ -816,12 +816,15 @@ class ServicestatusController extends Controller
 
 public function submit_statusupdate_tnegaservices1(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->user_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tnega_services' )->where('id', $request->applied_serviceid)->update( [
@@ -835,10 +838,13 @@ public function submit_statusupdate_tnegaservices1(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -981,12 +987,15 @@ public function submit_statusupdate_tnegaservices1(Request $request){
 
 public function submit_statusupdate_tnegaservices2(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->user_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tnega_services' )->where('id', $request->applied_serviceid)->update( [
@@ -1000,10 +1009,13 @@ public function submit_statusupdate_tnegaservices2(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -1264,12 +1276,15 @@ public function submit_statusupdate_tnegaservices2(Request $request){
 
 public function submit_statusupdate_tnegaservices3(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->user_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tnega_services' )->where('id', $request->applied_serviceid)->update( [
@@ -1283,10 +1298,13 @@ public function submit_statusupdate_tnegaservices3(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -1426,12 +1444,15 @@ return redirect("appliedservice/$status")->With("success","Application submitted
 }
 public function submit_statusupdate_tnegaservices4(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->user_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tnega_services' )->where('id', $request->applied_serviceid)->update( [
@@ -1445,10 +1466,13 @@ public function submit_statusupdate_tnegaservices4(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -1526,12 +1550,15 @@ public function submit_statusupdate_tnegaservices4(Request $request){
 
 public function submit_statusupdate_tnegaservices5(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->user_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tnega_services' )->where('id', $request->applied_serviceid)->update( [
@@ -1545,10 +1572,13 @@ public function submit_statusupdate_tnegaservices5(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -1890,7 +1920,7 @@ return redirect("appliedservice/$status")->With("success","Application submitted
 
 public function submit_statusupdate_msme(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -1898,8 +1928,7 @@ public function submit_statusupdate_msme(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'msme' )->where('id', $request->applied_serviceid)->update( [
@@ -1913,10 +1942,13 @@ public function submit_statusupdate_msme(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'msme' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'msme' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -1999,7 +2031,7 @@ public function submit_statusupdate_msme(Request $request){
 
 public function submit_statusupdate_itr(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -2007,8 +2039,7 @@ public function submit_statusupdate_itr(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'itr' )->where('id', $request->applied_serviceid)->update( [
@@ -2022,10 +2053,13 @@ public function submit_statusupdate_itr(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'itr' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'itr' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -2086,7 +2120,7 @@ public function submit_statusupdate_itr(Request $request){
 
 public function submit_statusupdate_gst(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -2094,8 +2128,7 @@ public function submit_statusupdate_gst(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'gst' )->where('id', $request->applied_serviceid)->update( [
@@ -2109,10 +2142,13 @@ public function submit_statusupdate_gst(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'gst' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'gst' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -2208,7 +2244,7 @@ public function submit_statusupdate_gst(Request $request){
 
 public function submit_statusupdate_tecexam(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -2216,8 +2252,7 @@ public function submit_statusupdate_tecexam(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
@@ -2231,10 +2266,13 @@ public function submit_statusupdate_tecexam(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -2286,7 +2324,7 @@ public function submit_statusupdate_tecexam(Request $request){
 
 public function submit_statusupdate_tecexamregister(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -2294,8 +2332,7 @@ public function submit_statusupdate_tecexamregister(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
@@ -2309,10 +2346,13 @@ public function submit_statusupdate_tecexamregister(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -2370,7 +2410,7 @@ public function submit_statusupdate_tecexamregister(Request $request){
 
 public function submit_statusupdate_teccorrection(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -2378,8 +2418,7 @@ public function submit_statusupdate_teccorrection(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
@@ -2393,10 +2432,13 @@ public function submit_statusupdate_teccorrection(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -2449,7 +2491,7 @@ public function submit_statusupdate_teccorrection(Request $request){
 }
 public function insexam_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -2457,8 +2499,7 @@ public function insexam_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
@@ -2472,10 +2513,13 @@ public function insexam_update(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -2520,34 +2564,36 @@ public function insexam_update(Request $request){
 
 public function iibfexam_update(Request $request){
         //dd($request->all());
-    $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
-        $apply_user_id = $request->user_id;
-    }
-    elseif($request->retailer_id == 0){
-        $apply_user_id = $request->distributor_id;
-    }elseif($request->distributor_id == 0){
-        $apply_user_id = $request->retailer_id;
-    }
-
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
-        $status = $request->status;
-        if($status == "Resubmit"){
-            DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
-                'remarks'  => $request->remarks,
-                'status'  => $status,
-            ] );
-        }elseif($status == "Processing"){
-            if ( $request->acknowledgement != null ) {
-                $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
-                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
-                move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
+        $apply_user_id = 0;
+        if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+            $apply_user_id = $request->user_id;
+        }
+        elseif($request->retailer_id == 0){
+            $apply_user_id = $request->distributor_id;
+        }elseif($request->distributor_id == 0){
+            $apply_user_id = $request->retailer_id;
+        }
+        if($apply_user_id != Auth::user()->id){
+            $status = $request->status;
+            if($status == "Resubmit"){
+                DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
+                    'remarks'  => $request->remarks,
+                    'status'  => $status,
+                ] );
+            }elseif($status == "Processing"){
+                if ( $request->acknowledgement != null ) {
+                    $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
+                    $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
+                    DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+                        'acknowledgement' => $acknowledgement,
+                    ] );
+                }
                 DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
-                    'acknowledgement' => $acknowledgement,
                     'status' => $status,
                     'application_no' => $request->application_no,
+                    'selects' => $request->selects,
                 ] );
-            }
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -2614,7 +2660,7 @@ public function iibfexam_update(Request $request){
 
 public function rapexam_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -2622,8 +2668,7 @@ public function rapexam_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
@@ -2637,10 +2682,13 @@ public function rapexam_update(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -2694,7 +2742,7 @@ public function rapexam_update(Request $request){
 
 public function vleinsurance_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -2702,8 +2750,7 @@ public function vleinsurance_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
@@ -2717,10 +2764,13 @@ public function vleinsurance_update(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -2765,7 +2815,7 @@ public function vleinsurance_update(Request $request){
 
 public function submitsmartcard_register_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -2773,12 +2823,11 @@ public function submitsmartcard_register_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'smartcard' )->where('id', $request->applied_serviceid)->update( [
-                'remarks' => $request->remarks,
+                'remarks'  => $request->remarks,
                 'status'  => $status,
             ] );
         }elseif($status == "Processing"){
@@ -2788,10 +2837,13 @@ public function submitsmartcard_register_update(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -3290,7 +3342,7 @@ public function submitsmartcard_register_update(Request $request){
 }
 public function aadhaarcardupdate(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -3298,12 +3350,11 @@ public function aadhaarcardupdate(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'aadhaarcard' )->where('id', $request->applied_serviceid)->update( [
-                'remarks' => $request->remarks,
+                'remarks'  => $request->remarks,
                 'status'  => $status,
             ] );
         }elseif($status == "Processing"){
@@ -3313,10 +3364,13 @@ public function aadhaarcardupdate(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -3526,34 +3580,36 @@ public function aadhaarcardupdate(Request $request){
 }
 public function findaadhaar_numberupdate(Request $request){
 //dd($request->all());
-    $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
-        $apply_user_id = $request->user_id;
-    }
-    elseif($request->retailer_id == 0){
-        $apply_user_id = $request->distributor_id;
-    }elseif($request->distributor_id == 0){
-        $apply_user_id = $request->retailer_id;
-    }
-
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
-        $status = $request->status;
-        if($status == "Resubmit"){
-            DB::table( 'aadhaarcard' )->where('id', $request->applied_serviceid)->update( [
-                'remarks' => $request->remarks,
-                'status'  => $status,
+$apply_user_id = 0;
+if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+    $apply_user_id = $request->user_id;
+}
+elseif($request->retailer_id == 0){
+    $apply_user_id = $request->distributor_id;
+}elseif($request->distributor_id == 0){
+    $apply_user_id = $request->retailer_id;
+}
+if($apply_user_id != Auth::user()->id){
+    $status = $request->status;
+    if($status == "Resubmit"){
+        DB::table( 'aadhaarcard' )->where('id', $request->applied_serviceid)->update( [
+            'remarks'  => $request->remarks,
+            'status'  => $status,
+        ] );
+    }elseif($status == "Processing"){
+        if ( $request->acknowledgement != null ) {
+            $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
+            $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
+            move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
+            DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
+                'acknowledgement' => $acknowledgement,
             ] );
-        }elseif($status == "Processing"){
-            if ( $request->acknowledgement != null ) {
-                $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
-                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
-                move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
-                DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
-                    'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
-                ] );
-            }
+        }
+        DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'application_no' => $request->application_no,
+            'selects' => $request->selects,
+        ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -3599,7 +3655,7 @@ public function findaadhaar_numberupdate(Request $request){
 }
 public function caneditupdate(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -3607,12 +3663,11 @@ public function caneditupdate(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'can_edit' )->where('id', $request->applied_serviceid)->update( [
-                'remarks' => $request->remarks,
+                'remarks'  => $request->remarks,
                 'status'  => $status,
             ] );
         }elseif($status == "Processing"){
@@ -3622,10 +3677,13 @@ public function caneditupdate(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'can_edit' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'can_edit' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -3839,7 +3897,7 @@ public function caneditupdate(Request $request){
 
 public function smartcard_update1(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -3847,12 +3905,11 @@ public function smartcard_update1(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'smartcard' )->where('id', $request->applied_serviceid)->update( [
-                'remarks' => $request->remarks,
+                'remarks'  => $request->remarks,
                 'status'  => $status,
             ] );
         }elseif($status == "Processing"){
@@ -3862,10 +3919,13 @@ public function smartcard_update1(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -4044,7 +4104,7 @@ public function smartcard_update1(Request $request){
 }
 public function voterid_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -4052,12 +4112,11 @@ public function voterid_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'voterid' )->where('id', $request->applied_serviceid)->update( [
-                'remarks' => $request->remarks,
+                'remarks'  => $request->remarks,
                 'status'  => $status,
             ] );
         }elseif($status == "Processing"){
@@ -4067,10 +4126,13 @@ public function voterid_update(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'voterid' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'voterid' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -4161,7 +4223,7 @@ public function voterid_update(Request $request){
 }
 public function bond_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -4169,12 +4231,11 @@ public function bond_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'bond' )->where('id', $request->applied_serviceid)->update( [
-                'remarks' => $request->remarks,
+                'remarks'  => $request->remarks,
                 'status'  => $status,
             ] );
         }elseif($status == "Processing"){
@@ -4184,10 +4245,13 @@ public function bond_update(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'bond' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'bond' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -4228,7 +4292,7 @@ public function bond_update(Request $request){
 
 public function fssaiservice_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -4236,12 +4300,11 @@ public function fssaiservice_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'fssai' )->where('id', $request->applied_serviceid)->update( [
-                'remarks' => $request->remarks,
+                'remarks'  => $request->remarks,
                 'status'  => $status,
             ] );
         }elseif($status == "Processing"){
@@ -4251,10 +4314,13 @@ public function fssaiservice_update(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'fssai' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'fssai' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -4329,7 +4395,7 @@ public function fssaiservice_update(Request $request){
 }
 public function covid_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -4337,8 +4403,7 @@ public function covid_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'covid' )->where('id', $request->applied_serviceid)->update( [
@@ -4352,10 +4417,13 @@ public function covid_update(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'covid' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'covid' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -4395,7 +4463,7 @@ public function covid_update(Request $request){
 
 public function nalavariyam_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -4403,12 +4471,11 @@ public function nalavariyam_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'nalavariyam' )->where('id', $request->applied_serviceid)->update( [
-                'remarks' => $request->remarks,
+                'remarks'  => $request->remarks,
                 'status'  => $status,
             ] );
         }elseif($status == "Processing"){
@@ -4418,10 +4485,13 @@ public function nalavariyam_update(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'nalavariyam' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'nalavariyam' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -4475,7 +4545,7 @@ public function nalavariyam_update(Request $request){
 
 public function driving_license_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -4483,12 +4553,11 @@ public function driving_license_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'license' )->where('id', $request->applied_serviceid)->update( [
-                'remarks' => $request->remarks,
+                'remarks'  => $request->remarks,
                 'status'  => $status,
             ] );
         }elseif($status == "Processing"){
@@ -4498,10 +4567,13 @@ public function driving_license_update(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'license' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'license' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -4555,7 +4627,7 @@ public function driving_license_update(Request $request){
 
 public function pancard_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -4563,25 +4635,27 @@ public function pancard_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
- if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
-     $status = $request->status;
-     if($status == "Resubmit"){
-         DB::table( 'pancard' )->where('id', $request->applied_serviceid)->update( [
-             'remarks'  => $request->remarks,
-             'status'  => $status,
-         ] );
-     }elseif($status == "Processing"){
-         if ( $request->acknowledgement != null ) {
-             $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
-             $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
-             move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
-             DB::table( 'pancard' )->where( 'id', $request->applied_serviceid )->update( [
-                 'acknowledgement' => $acknowledgement,
-                 'status' => $status,
-                 'application_no' => $request->application_no,
-             ] );
-         }
+    if($apply_user_id != Auth::user()->id){
+        $status = $request->status;
+        if($status == "Resubmit"){
+            DB::table( 'pancard' )->where('id', $request->applied_serviceid)->update( [
+                'remarks'  => $request->remarks,
+                'status'  => $status,
+            ] );
+        }elseif($status == "Processing"){
+            if ( $request->acknowledgement != null ) {
+                $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
+                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
+                move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
+                DB::table( 'pancard' )->where( 'id', $request->applied_serviceid )->update( [
+                    'acknowledgement' => $acknowledgement,
+                ] );
+            }
+            DB::table( 'pancard' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
      }elseif($status == "Approved"){
          if ( $request->certificate != null ) {
              $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -4663,7 +4737,7 @@ return redirect("appliedservice/$status")->With("success","Application submitted
 }
 public function tailorshop_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -4671,25 +4745,27 @@ public function tailorshop_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
- if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
-     $status = $request->status;
-     if($status == "Resubmit"){
-         DB::table( 'tailor' )->where('id', $request->applied_serviceid)->update( [
-             'remarks'  => $request->remarks,
-             'status'  => $status,
-         ] );
-     }elseif($status == "Processing"){
-         if ( $request->acknowledgement != null ) {
-             $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
-             $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
-             move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
-             DB::table( 'tailor' )->where( 'id', $request->applied_serviceid )->update( [
-                 'acknowledgement' => $acknowledgement,
-                 'status' => $status,
-                 'application_no' => $request->application_no,
-             ] );
-         }
+    if($apply_user_id != Auth::user()->id){
+        $status = $request->status;
+        if($status == "Resubmit"){
+            DB::table( 'tailor' )->where('id', $request->applied_serviceid)->update( [
+                'remarks'  => $request->remarks,
+                'status'  => $status,
+            ] );
+        }elseif($status == "Processing"){
+            if ( $request->acknowledgement != null ) {
+                $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
+                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
+                move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
+                DB::table( 'tailor' )->where( 'id', $request->applied_serviceid )->update( [
+                    'acknowledgement' => $acknowledgement,
+                ] );
+            }
+            DB::table( 'tailor' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
      }elseif($status == "Approved"){
          if ( $request->certificate != null ) {
              $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -4751,7 +4827,7 @@ return redirect("appliedservice/$status")->With("success","Application submitted
 
 public function update_pmkissan(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -4759,8 +4835,7 @@ public function update_pmkissan(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'pmkissan' )->where('id', $request->applied_serviceid)->update( [
@@ -4774,10 +4849,13 @@ public function update_pmkissan(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'pmkissan' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'pmkissan' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -4821,7 +4899,7 @@ public function update_pmkissan(Request $request){
 }
 public function tec_csc_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -4829,8 +4907,7 @@ public function tec_csc_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
@@ -4844,10 +4921,13 @@ public function tec_csc_update(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -4936,7 +5016,7 @@ public function tec_csc_update(Request $request){
 }
 public function medicalscheme_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -4944,8 +5024,7 @@ public function medicalscheme_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'medicalscheme' )->where('id', $request->applied_serviceid)->update( [
@@ -4959,10 +5038,13 @@ public function medicalscheme_update(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'medicalscheme' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'medicalscheme' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -5042,7 +5124,7 @@ public function medicalscheme_update(Request $request){
 }
 public function birthcertificate_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -5050,8 +5132,7 @@ public function birthcertificate_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'birth_certificate' )->where('id', $request->applied_serviceid)->update( [
@@ -5065,10 +5146,13 @@ public function birthcertificate_update(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'birth_certificate' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'birth_certificate' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -5114,7 +5198,7 @@ public function birthcertificate_update(Request $request){
 }
 public function dharsan_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -5122,7 +5206,7 @@ public function dharsan_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'dharsan' )->where('id', $request->applied_serviceid)->update( [
@@ -5136,10 +5220,13 @@ public function dharsan_update(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'dharsan' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'dharsan' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
@@ -5194,7 +5281,7 @@ public function dharsan_update(Request $request){
 }
 public function software_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0 && $request->distributor_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
     }
     elseif($request->retailer_id == 0){
@@ -5202,7 +5289,7 @@ public function software_update(Request $request){
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'software' )->where('id', $request->applied_serviceid)->update( [
@@ -5216,10 +5303,13 @@ public function software_update(Request $request){
                 move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
                 DB::table( 'software' )->where( 'id', $request->applied_serviceid )->update( [
                     'acknowledgement' => $acknowledgement,
-                    'status' => $status,
-                    'application_no' => $request->application_no,
                 ] );
             }
+            DB::table( 'software' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
         }elseif($status == "Approved"){
             if ( $request->certificate != null ) {
                 $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();

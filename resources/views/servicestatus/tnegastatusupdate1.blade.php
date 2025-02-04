@@ -298,36 +298,63 @@
                             <div class="row">
                                 <h4 class="text-center"> Additional Details </h4>
                                 @if($serviceid == 2)
-                                <div class="mb-3 col-md-6">
-                                    <label for="income_yearly " class="form-label">Income (Yearly)</label>
-                                    <input type="tel"  class="form-control"
-                                    name="income_yearly" id="incomeyearly" placeholder="Income Yearly"/>
+                            <div class="mb-3 col-md-6">
+                                <label for="income_yearly " class="form-label">Income (Yearly)</label>
+                                <input type="tel"  class="form-control"
+                                name="income_yearly" value="{{ $services->income_yearly }}" id="incomeyearly" placeholder="Income Yearly"/>
 
-                                    <label for="income_monthly " class="form-label">Income (Monthly)</label>
-                                    <input type="tel"  class="form-control"
-                                    name="income_monthly" id="incomemonthly" placeholder="Income Monthly"/>
+                                <label for="income_monthly " class="form-label">Income (Monthly)</label>
+                                <input type="tel"  class="form-control"
+                                name="income_monthly" value="{{ $services->income_monthly }}" id="incomemonthly" placeholder="Income Monthly"/>
 
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="job_type" class="form-label">Job Type</label>
-                                    <select required name="job_type" id="job_type" class="form-control">
-                                        <option value="">Select Job Type</option>
-                                        <option value="Govt">Govt Employee</option>
-                                        <option value="Private">Private Employee</option>
-                                        <option value="Agriculture">Agriculture</option>
-                                        <option value="Others">Others</option>
-                                    </select>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                            <label>Job Type</label>
+                            <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required class="form-control" id="other_certificate" name="job_type"  style="width: 100%;">
+                                <option value="">Select Job Type</option>
+                                <option @if($services->job_type == "Govt") selected @endif value="Govt">Govt Employee</option>
+                                <option @if($services->job_type == "Private") selected @endif value="Private">Private Employee</option>
+                                <option @if($services->job_type == "Agriculture") selected @endif value="Agriculture">Agriculture</option>
+                                <option @if($services->job_type == "Others") selected @endif value="Others">Others</option>
+                            </select>
+                                
+                                <div class="" id="incomecertgovthide" class="form-control" style="display: none;">
+                                @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                            @if ($services->salary_slip != '')
+                            <label>Salary Slip</label>
+                            <br><a target="_blank"
+                            href="{{ URL::to('/') }}/upload/services/salary_slip/{{ $services->salary_slip }}"
+                            class="btn btn-primary me-2">View</a><br>
+                            @endif
+                            @else
+                            <label>Salary Slip</label>
+                            <input @if ($services->salary_slip == '') required @endif class="form-control"
+                            type="file" id="salary_slip" accept="image/jpeg, image/png" name="salary_slip">
+                            @if ($services->salary_slip != '')
+                            <a target="_blank"
+                            href="{{ URL::to('/') }}/upload/services/salary_slip/{{ $services->salary_slip }}">Download</a><br>
+                            @endif
+                            @endif
 
-                                    <div class="" id="incomecertgovthide" class="form-control" style="display: none;">
-                                       <label>Salary Slip</label>
-                                       <input id="salary_slip"  class="form-control" type="file"
-                                       name="salary_slip">
-
-                                       <label>Pancard</label>
-                                       <input id="pancard"  class="form-control" type="file"
-                                       name="pancard">
-                                   </div>
+                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                            @if ($services->pancard != '')
+                            <label>Pancard</label>
+                            <br><a target="_blank"
+                            href="{{ URL::to('/') }}/upload/services/pancard/{{ $services->pancard }}"
+                            class="btn btn-primary me-2">View</a><br>
+                            @endif
+                            @else
+                            <label>Pancard</label>
+                            <input @if ($services->pancard == '') required @endif class="form-control"
+                            type="file" id="pancard" accept="image/jpeg, image/png" name="pancard">
+                            @if ($services->pancard != '')
+                            <a target="_blank"
+                            href="{{ URL::to('/') }}/upload/services/pancard/{{ $services->pancard }}">Download</a><br>
+                            @endif
+                            @endif
+                                   
                                </div>
+                           </div>
                                @elseif($serviceid == 3)
                                <div class="mb-3 col-md-6">
                                    <label class="form-label">Relationship</label>
@@ -621,15 +648,16 @@
 
                                     </div>
                                     @endif
-                                    <div class="text-center"><p id="nopayment"></p></div>
-                                    <div class="text-center">
-                                        <div class="col-12">
-                                            <div class="mb-0">
-                                                <button id="save" type="submit" class="btn btn-primary">Apply</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                                    <div class="mt-2 text-center">
+                                @if ($services->status == 'Resubmit' && ($apply_user_id != Auth::user()->id))
+                                    <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
+                                @elseif($services->status == 'Approved')
+                                    <button type="button" disabled class="btn btn-primary me-2">Completed</button>
+                                @else
+                                    <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                @endif
+                            </div>
+                        </form>
                         </div>
                     </div>
                 </div>
@@ -640,233 +668,268 @@
 @push('page_scripts')
 <script>
  var dist_id = "{{ $customers->dist_id }}";
- var taluk_id = "{{ $customers->taluk_id }}";
- $(function() {
-    gettaluk(dist_id);
-    getpanchayath(taluk_id);
+     var taluk_id = "{{ $customers->taluk_id }}";
+     $(function() {
+        gettaluk(dist_id);
+        getpanchayath(taluk_id);
 
-    var status = "{{ $services->status }}";
-    var acknowledgement = "{{ $services->acknowledgement }}";
-    var certificate = "{{ $services->certificate }}";
-    var candetails = "{{ $services->can_details }}";
-    var ageproof = "{{ $services->age_proof }}";
-    if(ageproof == "Tc/Community Certificate"){
-         $('#tc_community_certificatehide').show("slow");
-     }else if(ageproof == "Marksheet"){
-        $('#marksheethide').show("slow");
-     }else if(ageproof == "Voter Id"){
-        $('#voteridhide').show("slow");
-     }else if(ageproof == "Birth Certificate"){
-         $('#birth_certificatehide').show("slow");
-     }else if(ageproof == "Licence"){
-        $('#driving_licensehide').show("slow");
-     }
+        var status = "{{ $services->status }}";
+        var acknowledgement = "{{ $services->acknowledgement }}";
+        var certificate = "{{ $services->certificate }}";
+        var selects = "{{ $services->selects }}";
+        var candetails = "{{ $services->can_details }}";
+        var ageproof = "{{ $services->age_proof }}";
+        var job_type = "{{ $services->job_type }}";
+        if(job_type == "Govt"){
+            $('#incomecertgovthide').show("slow");
+        }
 
-     if(candetails == "Yes"){
+        if(ageproof == "Tc/Community Certificate"){
+             $('#tc_community_certificatehide').show("slow");
+         }else if(ageproof == "Marksheet"){
+            $('#marksheethide').show("slow");
+         }else if(ageproof == "Voter Id"){
+            $('#voteridhide').show("slow");
+         }else if(ageproof == "Birth Certificate"){
+             $('#birth_certificatehide').show("slow");
+         }else if(ageproof == "Licence"){
+            $('#driving_licensehide').show("slow");
+         }
+
+        if(candetails == "Yes"){
             $('#cannumberhide').show("slow");
             $('#cannumber').prop("required",true);
         }else if(candetails == "No"){
             $('#dobhide').show("slow");
         }
 
-    if (status == "Resubmit") {
-        $('#remarkshide').show("slow");
-        $('#remarks').prop("required", true);
-    } else if (status == "Processing") {
-        $('#applicationnohide').show("slow");
-        $('#application_no').prop("required", true);
-        $('#acknowledgementhide').show("slow");
-        if (acknowledgement == "") {
-            $('#acknowledgement').prop("required", true);
-        }
-    } else if (status == "Approved") {
-        $('#certhide').show("slow");
-        if (acknowledgement == "") {
-            $('#certificate').prop("required", true);
-        }
+        if (status == "Resubmit") {
+                $('#remarkshide').show("slow");
+                $('#remarks').prop("required", true);
+            } else if (status == "Processing") {
+            if(selects == "Text"){
+                $('#applicationnohide').show("slow");
+            }
+            if(selects == "File"){
+                $('#acknowledgementhide').show("slow");
+                if (acknowledgement == "") {
+                    $('#acknowledgement').prop("required", true);
+                }
+            }
+                $('#selecthide').show("slow");
+            } else if (status == "Approved") {
+                $('#certhide').show("slow");
+                if (acknowledgement == "") {
+                    $('#certificate').prop("required", true);
+                }
+            }
+        });
+
+     function gettaluk(dist_id) {
+        var url = "{{ url('service/get_taluk') }}/" + dist_id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
+                $.each(result, function (key, value) {
+                    $("#taluk").append('<option value="' + value
+                        .id + '">' + value.taluk_name + '</option>');
+                });
+                $("#taluk").val("{{ $customers->taluk_id }}");
+
+            }
+        });
     }
-});
 
- function gettaluk(dist_id) {
-    var url = "{{ url('service/get_taluk') }}/" + dist_id;
-    $.ajax({
-        url: url,
-        type: "GET",
-        success: function (result) {
-            $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
-            $.each(result, function (key, value) {
-                $("#taluk").append('<option value="' + value
-                    .id + '">' + value.taluk_name + '</option>');
-            });
-            $("#taluk").val("{{ $customers->taluk_id }}");
+    function getpanchayath(taluk_id) {
+        var url = "{{ url('service/get_panchayath') }}/" + taluk_id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function(result) {
+                $('#panchayath').html('<option value="">-- Select Panchayath Name --</option>');
+                $.each(result, function(key, value) {
+                    $("#panchayath").append('<option value="' + value
+                        .id + '">' + value.panchayath_name + '</option>');
+                });
+                $("#panchayath").val("{{ $customers->panchayath_id }}");
 
+            }
+        });
+    }
+
+
+    $('#incomeyearly').on('input',function() {
+        var yearly = parseInt($('#incomeyearly').val());
+        $('#incomemonthly').val((yearly / 12 ? yearly / 12 : 0).toFixed(2));
+    });
+    $('#can_details').change(function(){
+        if($('#can_details').val() == 'Yes') {
+            $('#cannumberhide').show("slow");
+            $('#cannumber').prop("required",true);
+        }else if($('#can_details').val() == 'No'){
+            // $('#dobhide').show("slow");
+        }else if($('#can_details').val() == 'Find'){
+            window.location.href = "{{ url('applyservice') }}/"+121;
+        } else {
+            $('#cannumberhide').hide("slow");
+            $('#cannumber').prop("required",false);
         }
     });
-}
-
-function getpanchayath(taluk_id) {
-    var url = "{{ url('service/get_panchayath') }}/" + taluk_id;
-    $.ajax({
-        url: url,
-        type: "GET",
-        success: function(result) {
-            $('#panchayath').html('<option value="">-- Select Panchayath Name --</option>');
-            $.each(result, function(key, value) {
-                $("#panchayath").append('<option value="' + value
-                    .id + '">' + value.panchayath_name + '</option>');
+    $('#service_status').change(function() {
+                if ($('#service_status').val() == 'Resubmit') {
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#remarkshide').show("slow");
+                    $('#remarks').prop("required", true);
+                    $('#select').prop("required", false);
+                    $('#selecthide').hide("slow");
+                } else if ($('#service_status').val() == 'Processing') {
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#remarkshide').hide("slow");
+                    $('#remarks').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#select').prop("required", true);
+                    $('#selecthide').show("slow");
+                } else if ($('#service_status').val() == 'Approved') {
+                    $('#remarkshide').hide("slow");
+                    $('#remarks').prop("required", false);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#certhide').show("slow");
+                    $('#certificate').prop("required", true);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#select').prop("required", false);
+                    $('#selecthide').hide("slow");
+                } else {
+                    $('#remarkshide').hide("slow");
+                    $('#remarks').prop("required", false);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#select').prop("required", false);
+                    $('#selecthide').hide("slow");
+                }
             });
-            $("#panchayath").val("{{ $customers->panchayath_id }}");
 
+            $('#select').change(function(){
+                if($('#select').val() == 'Text') {
+                    $('#applicationnohide').show("slow");
+                    $('#application_no').prop("required", true); 
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                }else if($('#select').val() == 'File'){
+                    $('#acknowledgementhide').show("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#applicationnohide').hide("slow"); 
+                    $('#application_no').prop("required", false);
+                }else{
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                }  
+            });
+
+    $('#job_type').change(function(){
+        if($('#job_type').val() == 'Govt') {
+            $('#incomecertgovthide').show("slow");
+            $('#salary_slip').prop("required",true);
+            $('#pancard').prop("required",true);
+        } else {
+            $('#incomecertgovthide').hide("slow");
+            $('#salary_slip').prop("required",false);
+            $('#pancard').prop("required",false);
         }
     });
-}
 
+    $('#age_proof').change(function(){
+        if($('#age_proof').val() == 'Tc/Community Certificate') {
+         $('#tc_community_certificatehide').show("slow");
+         $('#marksheethide').hide("slow");
+         $('#voteridhide').hide("slow");
+         $('#birth_certificatehide').hide("slow");
+         $('#driving_licensehide').hide("slow");
+         $('#marksheet').prop("required",false);
+         $('#voterid').prop("required",false);
+         $('#birth_certificate').prop("required",false);
+         $('#driving_license').prop("required",false);
+         $('#tc_community_certificate').prop("required",true);
 
-$('#incomeyearly').on('input',function() {
-    var yearly = parseInt($('#incomeyearly').val());
-    $('#incomemonthly').val((yearly / 12 ? yearly / 12 : 0).toFixed(2));
-});
-var customerid = "{{ $customers->id }}";
-$('#can_details').change(function(){
-    if($('#can_details').val() == 'Yes') {
-        $('#cannumberhide').show("slow");
-        $('#cannumber').prop("required",true);
-    }else if($('#can_details').val() == 'No'){
-        window.location.href = "{{ url('applyservice') }}/"+60+"/"+customerid;
-    }else if($('#can_details').val() == 'Find'){
-        window.location.href = "{{ url('applyservice') }}/"+121+"/"+customerid;
-    } else {
-        $('#cannumberhide').hide("slow");
-        $('#cannumber').prop("required",false);
+     } else if($('#age_proof').val() == 'Marksheet') {
+        $('#marksheethide').show("slow");
+        $('#tc_community_certificatehide').hide("slow");
+        $('#voteridhide').hide("slow");
+        $('#birth_certificatehide').hide("slow");
+        $('#driving_licensehide').hide("slow");
+        $('#tc_community_certificate').prop("required",false);
+        $('#voterid').prop("required",false);
+        $('#birth_certificate').prop("required",false);
+        $('#driving_license').prop("required",false);
+        $('#marksheet').prop("required",true);
+
+    } else if($('#age_proof').val() == 'Voter Id') {
+        $('#voteridhide').show("slow");
+        $('#marksheethide').hide("slow");
+        $('#tc_community_certificatehide').hide("slow");
+        $('#birth_certificatehide').hide("slow");
+        $('#driving_licensehide').hide("slow");
+        $('#tc_community_certificate').prop("required",false);
+        $('#marksheet').prop("required",false);
+        $('#birth_certificate').prop("required",false);
+        $('#driving_license').prop("required",false);
+        $('#voterid').prop("required",true);
+
+    } else if($('#age_proof').val() == 'Birth Certificate') {
+        $('#birth_certificatehide').show("slow");
+        $('#marksheethide').hide("slow");
+        $('#tc_community_certificatehide').hide("slow");
+        $('#voteridhide').hide("slow");
+        $('#driving_licensehide').hide("slow");
+        $('#tc_community_certificate').prop("required",false);
+        $('#marksheet').prop("required",false);
+        $('#voterid').prop("required",false);
+        $('#driving_license').prop("required",false);
+        $('#birth_certificate').prop("required",true);
+
+    } else if($('#age_proof').val() == 'Licence') {
+        $('#driving_licensehide').show("slow");
+        $('#marksheethide').hide("slow");
+        $('#tc_community_certificatehide').hide("slow");
+        $('#voteridhide').hide("slow");
+        $('#birth_certificatehide').hide("slow");
+        $('#tc_community_certificate').prop("required",false);
+        $('#marksheet').prop("required",false);
+        $('#voterid').prop("required",false);
+        $('#birth_certificate').prop("required",false);
+        $('#driving_license').prop("required",true);
+
+    } else{
+        $('#voteridhide').hide("slow");
+        $('#marksheethide').hide("slow");
+        $('#tc_community_certificatehide').hide("slow");
+        $('#birth_certificatehide').hide("slow");
+        $('#driving_licensehide').hide("slow");
+        $('#tc_community_certificate').prop("required",false);
+        $('#marksheet').prop("required",false);
+        $('#voterid').prop("required",false);
+        $('#birth_certificate').prop("required",false);
+        $('#driving_license').prop("required",false);
+
     }
-});
-
-$('#service_status').change(function() {
-    if ($('#service_status').val() == 'Resubmit') {
-        $('#acknowledgementhide').hide("slow");
-        $('#acknowledgement').prop("required", false);
-        $('#applicationnohide').hide("slow");
-        $('#application_no').prop("required", false);
-        $('#certhide').hide("slow");
-        $('#certificate').prop("required", false);
-        $('#remarkshide').show("slow");
-        $('#remarks').prop("required", true);
-    } else if ($('#service_status').val() == 'Processing') {
-        $('#acknowledgementhide').show("slow");
-        $('#acknowledgement').prop("required", true);
-        $('#remarkshide').hide("slow");
-        $('#remarks').prop("required", false);
-        $('#certhide').hide("slow");
-        $('#certificate').prop("required", false);
-        $('#applicationnohide').show("slow");
-        $('#application_no').prop("required", true);
-    } else if ($('#service_status').val() == 'Approved') {
-        $('#remarkshide').hide("slow");
-        $('#remarks').prop("required", false);
-        $('#acknowledgementhide').hide("slow");
-        $('#acknowledgement').prop("required", false);
-        $('#certhide').show("slow");
-        $('#certificate').prop("required", true);
-        $('#applicationnohide').hide("slow");
-        $('#application_no').prop("required", false);
-    } else {
-        $('#remarkshide').hide("slow");
-        $('#remarks').prop("required", false);
-        $('#acknowledgementhide').hide("slow");
-        $('#acknowledgement').prop("required", false);
-        $('#certhide').hide("slow");
-        $('#certificate').prop("required", false);
-        $('#applicationnohide').hide("slow");
-        $('#application_no').prop("required", false);
-    }
-});
-
-$('#job_type').change(function(){
-    if($('#job_type').val() == 'Govt') {
-        $('#incomecertgovthide').show("slow");
-        $('#salary_slip').prop("required",true);
-        $('#pancard').prop("required",true);
-    } else {
-        $('#incomecertgovthide').hide("slow");
-        $('#salary_slip').prop("required",false);
-        $('#pancard').prop("required",false);
-    }
-});
-
-$('#age_proof').change(function(){
-    if($('#age_proof').val() == 'Tc/Community Certificate') {
-     $('#tc_community_certificatehide').show("slow");
-     $('#marksheethide').hide("slow");
-     $('#voteridhide').hide("slow");
-     $('#birth_certificatehide').hide("slow");
-     $('#driving_licensehide').hide("slow");
-     $('#marksheet').prop("required",false);
-     $('#voterid').prop("required",false);
-     $('#birth_certificate').prop("required",false);
-     $('#driving_license').prop("required",false);
-     $('#tc_community_certificate').prop("required",true);
-
- } else if($('#age_proof').val() == 'Marksheet') {
-    $('#marksheethide').show("slow");
-    $('#tc_community_certificatehide').hide("slow");
-    $('#voteridhide').hide("slow");
-    $('#birth_certificatehide').hide("slow");
-    $('#driving_licensehide').hide("slow");
-    $('#tc_community_certificate').prop("required",false);
-    $('#voterid').prop("required",false);
-    $('#birth_certificate').prop("required",false);
-    $('#driving_license').prop("required",false);
-    $('#marksheet').prop("required",true);
-
-} else if($('#age_proof').val() == 'Voter Id') {
-    $('#voteridhide').show("slow");
-    $('#marksheethide').hide("slow");
-    $('#tc_community_certificatehide').hide("slow");
-    $('#birth_certificatehide').hide("slow");
-    $('#driving_licensehide').hide("slow");
-    $('#tc_community_certificate').prop("required",false);
-    $('#marksheet').prop("required",false);
-    $('#birth_certificate').prop("required",false);
-    $('#driving_license').prop("required",false);
-    $('#voterid').prop("required",true);
-
-} else if($('#age_proof').val() == 'Birth Certificate') {
-    $('#birth_certificatehide').show("slow");
-    $('#marksheethide').hide("slow");
-    $('#tc_community_certificatehide').hide("slow");
-    $('#voteridhide').hide("slow");
-    $('#driving_licensehide').hide("slow");
-    $('#tc_community_certificate').prop("required",false);
-    $('#marksheet').prop("required",false);
-    $('#voterid').prop("required",false);
-    $('#driving_license').prop("required",false);
-    $('#birth_certificate').prop("required",true);
-
-} else if($('#age_proof').val() == 'Licence') {
-    $('#driving_licensehide').show("slow");
-    $('#marksheethide').hide("slow");
-    $('#tc_community_certificatehide').hide("slow");
-    $('#voteridhide').hide("slow");
-    $('#birth_certificatehide').hide("slow");
-    $('#tc_community_certificate').prop("required",false);
-    $('#marksheet').prop("required",false);
-    $('#voterid').prop("required",false);
-    $('#birth_certificate').prop("required",false);
-    $('#driving_license').prop("required",true);
-
-} else{
-    $('#voteridhide').hide("slow");
-    $('#marksheethide').hide("slow");
-    $('#tc_community_certificatehide').hide("slow");
-    $('#birth_certificatehide').hide("slow");
-    $('#driving_licensehide').hide("slow");
-    $('#tc_community_certificate').prop("required",false);
-    $('#marksheet').prop("required",false);
-    $('#voterid').prop("required",false);
-    $('#birth_certificate').prop("required",false);
-    $('#driving_license').prop("required",false);
-
-}
 });
 </script>
 @endpush

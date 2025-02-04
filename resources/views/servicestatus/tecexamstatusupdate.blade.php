@@ -180,22 +180,26 @@
     </main>
 @endsection
 @push('page_scripts')
-    <script>
-        $(function() {
+<script>
+$(function() {
             var status = "{{ $services->status }}";
             var acknowledgement = "{{ $services->acknowledgement }}";
             var certificate = "{{ $services->certificate }}";
-
+            var selects = "{{ $services->selects }}";
             if (status == "Resubmit") {
                 $('#remarkshide').show("slow");
                 $('#remarks').prop("required", true);
             } else if (status == "Processing") {
+            if(selects == "Text"){
                 $('#applicationnohide').show("slow");
-                $('#application_no').prop("required", true);
+            }
+            if(selects == "File"){
                 $('#acknowledgementhide').show("slow");
                 if (acknowledgement == "") {
                     $('#acknowledgement').prop("required", true);
                 }
+            }
+                $('#selecthide').show("slow");
             } else if (status == "Approved") {
                 $('#certhide').show("slow");
                 if (acknowledgement == "") {
@@ -205,44 +209,72 @@
         });
 
 
+       
         $('#service_status').change(function() {
-            if ($('#service_status').val() == 'Resubmit') {
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#remarkshide').show("slow");
-                $('#remarks').prop("required", true);
-            } else if ($('#service_status').val() == 'Processing') {
-                $('#acknowledgementhide').show("slow");
-                $('#acknowledgement').prop("required", true);
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationnohide').show("slow");
-                $('#application_no').prop("required", true);
-            } else if ($('#service_status').val() == 'Approved') {
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#certhide').show("slow");
-                $('#certificate').prop("required", true);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-            } else {
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-            }
-        });
+                if ($('#service_status').val() == 'Resubmit') {
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#remarkshide').show("slow");
+                    $('#remarks').prop("required", true);
+                    $('#select').prop("required", false);
+                    $('#selecthide').hide("slow");
+                } else if ($('#service_status').val() == 'Processing') {
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#remarkshide').hide("slow");
+                    $('#remarks').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#select').prop("required", true);
+                    $('#selecthide').show("slow");
+                } else if ($('#service_status').val() == 'Approved') {
+                    $('#remarkshide').hide("slow");
+                    $('#remarks').prop("required", false);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#certhide').show("slow");
+                    $('#certificate').prop("required", true);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#select').prop("required", false);
+                    $('#selecthide').hide("slow");
+                } else {
+                    $('#remarkshide').hide("slow");
+                    $('#remarks').prop("required", false);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#select').prop("required", false);
+                    $('#selecthide').hide("slow");
+                }
+            });
+
+            $('#select').change(function(){
+                if($('#select').val() == 'Text') {
+                    $('#applicationnohide').show("slow");
+                    $('#application_no').prop("required", true); 
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                }else if($('#select').val() == 'File'){
+                    $('#acknowledgementhide').show("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#applicationnohide').hide("slow"); 
+                    $('#application_no').prop("required", false);
+                }else{
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                }  
+            });
     </script>
 @endpush

@@ -1337,3 +1337,151 @@ CREATE TABLE `software` (
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+
+//04-02-2025
+
+alter table users add panchayath_name varchar(50) after panchayath_id;
+
+CREATE TABLE `tnega_services` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `name` text DEFAULT NULL,
+  `aadhaar_no` varchar(20) DEFAULT NULL,
+  `mobile` varchar(10) DEFAULT NULL,
+  `dist_id` int(11) DEFAULT 0,
+  `taluk_id` int(11) DEFAULT 0,
+  `panchayath_id` int(11) DEFAULT 0,
+  `aadhaar_card` varchar(20) DEFAULT NULL,
+  `aadhaar_back` varchar(20) DEFAULT NULL,
+  `smart_card` varchar(20) DEFAULT NULL,
+  `signature` text DEFAULT NULL,
+  `photo` varchar(20) DEFAULT NULL,
+  `old_can_document` varchar(20) DEFAULT NULL,
+  `can_number` text DEFAULT NULL,
+  `can_details` varchar(20) DEFAULT NULL,
+  `job_type` varchar(20) DEFAULT NULL,
+  `salary_slip` varchar(20) DEFAULT NULL,
+  `pancard` varchar(20) DEFAULT NULL,
+  `income_yearly` text DEFAULT NULL,
+  `income_monthly` varchar(20) DEFAULT NULL,
+  `relationship` varchar(20) DEFAULT NULL,
+  `tc_community_certificate` varchar(20) DEFAULT NULL,
+  `income_certificate` varchar(20) DEFAULT NULL,
+  `community_certificate` varchar(20) DEFAULT NULL,
+  `birth_certificate` varchar(20) DEFAULT NULL,
+  `smartcard_online` varchar(20) DEFAULT NULL,
+  `age_proof` varchar(30) DEFAULT NULL,
+  `voterid` varchar(20) DEFAULT NULL,
+  `driving_license` varchar(20) DEFAULT NULL,
+  `marksheet` varchar(20) DEFAULT NULL,
+  `mrg_invitation` varchar(20) DEFAULT NULL,
+  `deed` varchar(20) DEFAULT NULL,
+  `bank_pass_book` varchar(20) DEFAULT NULL,
+  `personal_strap` varchar(20) DEFAULT NULL,
+  `joint_strap` varchar(20) DEFAULT NULL,
+  `deed_details` varchar(20) DEFAULT NULL,
+  `deed_yes` varchar(20) DEFAULT NULL,
+  `hus_wife_photo` varchar(20) DEFAULT NULL,
+  `permanent_social_certificate_groom` varchar(20) DEFAULT NULL,
+  `bride_permanent_social_certificate` varchar(20) DEFAULT NULL,
+  `mrg_registration_certificate` varchar(20) DEFAULT NULL,
+  `anyothers_certificate` varchar(20) DEFAULT NULL,
+  `chitta` varchar(20) DEFAULT NULL,
+  `aggregation` varchar(20) DEFAULT NULL,
+  `ec_certificate` varchar(20) DEFAULT NULL,
+  `villankam` varchar(20) DEFAULT NULL,
+  `vao_certificate` varchar(20) DEFAULT NULL,
+  `self_declaration_certificate` varchar(20) DEFAULT NULL,
+  `other_certificate` varchar(20) DEFAULT NULL,
+  `passport` text DEFAULT NULL,
+  `placement_registration` varchar(20) DEFAULT NULL,
+  `school_transfer_certificate` varchar(20) DEFAULT NULL,
+  `study_proof` text DEFAULT NULL,
+  `family_income_certificate` varchar(20) DEFAULT NULL,
+  `husband_death_certificate` varchar(20) DEFAULT NULL,
+  `legal_heir_certificate` varchar(20) DEFAULT NULL,
+  `widow_certificate` varchar(20) DEFAULT NULL,
+  `mrg_documents` varchar(20) DEFAULT NULL,
+  `mrg_docdetails` text DEFAULT NULL,
+  `any_proof` text DEFAULT NULL,
+  `smartcard_no` varchar(15) DEFAULT NULL,
+  `tailoring_certificate` varchar(20) DEFAULT NULL,
+  `family_plannnig_certificate` varchar(20) DEFAULT NULL,
+  `birth_certificate_children` varchar(20) DEFAULT NULL,
+  `id_proof` varchar(20) DEFAULT NULL,
+  `family_photo` text DEFAULT NULL,
+  `handicapped_proof` varchar(20) DEFAULT NULL,
+  `udid_card` varchar(20) DEFAULT NULL,
+  `registered_deed` text DEFAULT NULL,
+  `chitta_and_villangam` varchar(20) DEFAULT NULL,
+  `property_details` varchar(20) DEFAULT NULL,
+  `residential_certificate` varchar(20) DEFAULT NULL,
+  `damage_certificate` varchar(20) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` text DEFAULT NULL,
+  `application_no` text DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+alter table tnega_services add personalized text DEFAULT NULL after can_details;
+alter table tnega_services add relationship_1 varchar(50) DEFAULT NULL after personalized;
+alter table tnega_services add relationship_2 varchar(50) DEFAULT NULL after relationship_1;
+alter table tnega_services add relationship_3 varchar(50) DEFAULT NULL after relationship_2;
+alter table tnega_services add dob varchar(10) DEFAULT NULL after relationship_3;
+alter table tnega_services add religion varchar(50) DEFAULT NULL after dob;
+alter table tnega_services add education text DEFAULT NULL after religion;
+alter table tnega_services add work text DEFAULT NULL after education;
+alter table tnega_services add door_no varchar(20) DEFAULT NULL after work;
+alter table tnega_services add personalized_name_tamil text DEFAULT NULL after door_no;
+alter table tnega_services add relationship_name_tamil_1 text DEFAULT NULL after personalized_name_tamil;
+alter table tnega_services add relationship_name_tamil_2 text DEFAULT NULL after relationship_name_tamil_1;
+alter table tnega_services add relationship_name_tamil_3 text DEFAULT NULL after relationship_name_tamil_2;
+alter table tnega_services add community text DEFAULT NULL after relationship_name_tamil_3;
+alter table tnega_services add smartcard_number varchar(20) DEFAULT NULL after community;
+alter table tnega_services add street_name_tamil text DEFAULT NULL after smartcard_number;
+alter table tnega_services add postal_name text DEFAULT NULL after street_name_tamil;
+alter table tnega_services add personalized_name_english text DEFAULT NULL after postal_name;
+alter table tnega_services add relationship_name_english_1 text DEFAULT NULL after personalized_name_english;
+alter table tnega_services add relationship_name_english_2 text DEFAULT NULL after relationship_name_english_1;
+alter table tnega_services add relationship_name_english_3 text DEFAULT NULL after relationship_name_english_2;
+alter table tnega_services add maritial_status varchar(20) DEFAULT NULL after relationship_name_english_3;
+alter table tnega_services add caste text DEFAULT NULL after maritial_status;
+alter table tnega_services add street_name text DEFAULT NULL after caste;
+alter table tnega_services add pin_code text DEFAULT NULL after street_name;
+alter table tnega_services add village_administrative_area text DEFAULT NULL after pin_code;
+
+alter table tnega_services add selects varchar(20) DEFAULT NULL after application_no;
+alter table medicalscheme add selects varchar(20) DEFAULT NULL after application_no;
+
+alter table tec_exam add new_proof varchar(20) DEFAULT NULL after any_proof;
+alter table tec_exam add any_document varchar(100) DEFAULT NULL after application_no;
+
+alter table tec_exam add selects varchar(20) DEFAULT NULL after application_no;
+alter table aadhaarcard add selects varchar(20) DEFAULT NULL after application_no;
+alter table birth_certificate add selects varchar(20) DEFAULT NULL after application_no;
+alter table bond add selects varchar(20) DEFAULT NULL after application_no;
+alter table can_edit add selects varchar(20) DEFAULT NULL after application_no;
+alter table covid add selects varchar(20) DEFAULT NULL after application_no;
+alter table dharsan add selects varchar(20) DEFAULT NULL after application_no;
+alter table fssai add selects varchar(20) DEFAULT NULL after application_no;
+alter table gst add selects varchar(20) DEFAULT NULL after application_no;
+alter table itr add selects varchar(20) DEFAULT NULL after application_no;
+alter table license add selects varchar(20) DEFAULT NULL after application_no;
+alter table msme add selects varchar(20) DEFAULT NULL after application_no;
+alter table nalavariyam add selects varchar(20) DEFAULT NULL after application_no;
+alter table pancard add selects varchar(20) DEFAULT NULL after application_no;
+alter table pmkissan add selects varchar(20) DEFAULT NULL after application_no;
+alter table smartcard add selects varchar(20) DEFAULT NULL after application_no;
+alter table software add selects varchar(20) DEFAULT NULL after application_no;
+alter table tailor add selects varchar(20) DEFAULT NULL after application_no;
+alter table voterid add selects varchar(20) DEFAULT NULL after application_no;
