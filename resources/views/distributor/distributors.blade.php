@@ -145,12 +145,12 @@
                                                                     <option value="Female">Female</option>
                                                                 </select>
                                                             </div>
-                                                            <div class="col-md-12">
+                                                            <div class="col-md-6">
                                                                 <label for="input8" class="form-label">Profile</label>
                                                                 <input type="file" name="profile" class="form-control"
                                                                     id="input8">
                                                             </div>
-                                                            <div class="col-md-12">
+                                                            <div class="col-md-6">
                                                                 <label for="editaddress"
                                                                     class="form-label">Address</label>
                                                                 <textarea name="address" class="form-control" id="editaddress" placeholder="Address ..." rows="3"></textarea>

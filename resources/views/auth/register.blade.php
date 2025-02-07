@@ -191,7 +191,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="input2" class="form-label">Phone</label>
-                                                <input required onkeyup="duplicatephone1(0)" id="phone" type="text"
+                                                <input required onkeyup="duplicatephone1(0)" id="phone1" type="text"
                                                     maxlength="10" class="form-control number" name="phone"
                                                     placeholder="Phone">
                                                 <span id="dupphone1" style="color:red"></span>
@@ -199,7 +199,7 @@
 
                                             <div class="col-md-6">
                                                 <label for="input1" class="form-label">Aadhaar No</label>
-                                                <input required onkeyup="duplicateaadhar1(0)" id="aadhaar_no" type="text"
+                                                <input required onkeyup="duplicateaadhar1(0)" id="aadhaar_no1" type="text"
                                                     class="form-control number" maxlength="12" name="aadhaar_no"
                                                     placeholder="Aadhaar No">
                                                 <span id="dupaadhar1" style="color:red"></span>
@@ -211,7 +211,7 @@
 
                                             <div class="col-md-6">
                                                 <label for="input1" class="form-label">Pan No</label>
-                                                <input required onkeyup="duplicatepan1(0)" id="pan_no" type="text"
+                                                <input required onkeyup="duplicatepan1(0)" id="pan_no1" type="text"
                                                     class="form-control" maxlength="10" name="pan_no"
                                                     placeholder="Pan No">
                                                 <span id="duppan1" style="color:red"></span>
@@ -223,7 +223,7 @@
 
                                             <div class="col-md-6">
                                                 <label for="input1" class="form-label">Email</label>
-                                                <input required onkeyup="duplicateemail1(0)" id="email" type="email"
+                                                <input required onkeyup="duplicateemail1(0)" id="email1" type="email"
                                                     class="form-control" maxlength="30" name="email"
                                                     placeholder="Email">
                                                 <span id="dupemail1" style="color:red"></span>
@@ -275,7 +275,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="input2" class="form-label">Phone</label>
-                                                <input required onkeyup="duplicatephone2(0)" id="phone" type="text"
+                                                <input required onkeyup="duplicatephone2(0)" id="phone2" type="text"
                                                     maxlength="10" class="form-control number" name="phone"
                                                     placeholder="Phone">
                                                 <span id="dupphone2" style="color:red"></span>
@@ -283,7 +283,7 @@
 
                                             <div class="col-md-6">
                                                 <label for="aadhaar_no" class="form-label">Aadhaar No</label>
-                                                <input required onkeyup="duplicateaadhar2(0)" id="aadhaar_no" type="text"
+                                                <input required onkeyup="duplicateaadhar2(0)" id="aadhaar_no2" type="text"
                                                     class="form-control number" maxlength="12" name="aadhaar_no"
                                                     placeholder="Aadhaar No">
                                                 <span id="dupaadhar2" style="color:red"></span>
@@ -295,7 +295,7 @@
 
                                             <div class="col-md-6">
                                                 <label for="input1" class="form-label">Email</label>
-                                                <input required onkeyup="duplicateemail2(0)" id="email" type="email"
+                                                <input required onkeyup="duplicateemail2(0)" id="email2" type="email"
                                                     class="form-control" maxlength="30" name="email"
                                                     placeholder="Email">
                                                 <span id="dupemail2" style="color:red"></span>
