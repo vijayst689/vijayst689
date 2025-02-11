@@ -109,6 +109,8 @@
                                                     Pending</option>
                                                 <option @if ($services->status == 'Resubmit') selected @endif value="Resubmit">
                                                     Resubmit</option>
+                                                {{-- <option @if ($services->status == 'Reject') selected @endif value="Reject">
+                                                    Reject</option> --}}
                                                 <option @if ($services->status == 'Processing') selected @endif
                                                     value="Processing">Processing</option>
                                                     <option @if ($services->status == 'Approved') selected @endif
@@ -209,7 +211,7 @@ $(function() {
         });
 
 
-       
+
         $('#service_status').change(function() {
                 if ($('#service_status').val() == 'Resubmit') {
                     $('#acknowledgementhide').hide("slow");
@@ -261,20 +263,20 @@ $(function() {
             $('#select').change(function(){
                 if($('#select').val() == 'Text') {
                     $('#applicationnohide').show("slow");
-                    $('#application_no').prop("required", true); 
+                    $('#application_no').prop("required", true);
                     $('#acknowledgementhide').hide("slow");
                     $('#acknowledgement').prop("required", false);
                 }else if($('#select').val() == 'File'){
                     $('#acknowledgementhide').show("slow");
                     $('#acknowledgement').prop("required", false);
-                    $('#applicationnohide').hide("slow"); 
+                    $('#applicationnohide').hide("slow");
                     $('#application_no').prop("required", false);
                 }else{
                     $('#applicationnohide').hide("slow");
                     $('#application_no').prop("required", false);
                     $('#acknowledgementhide').hide("slow");
                     $('#acknowledgement').prop("required", false);
-                }  
+                }
             });
     </script>
 @endpush

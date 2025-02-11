@@ -46,6 +46,9 @@
                                             <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
                                             </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Reject"><i
+                                                        class="material-icons-outlined">arrow_right</i>Reject</a>
+                                            </li>
                                             <li><a href="{{ url('/appliedservice') }}/Approved"><i
                                                         class="material-icons-outlined">arrow_right</i>Approved</a>
                                             </li>
@@ -281,6 +284,9 @@
                                             <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
                                             </li>
+                                            {{-- <li><a href="{{ url('/appliedservice') }}/Reject"><i
+                                                class="material-icons-outlined">arrow_right</i>Reject</a>
+                                            </li> --}}
                                             <li><a href="{{ url('/appliedservice') }}/Approved"><i
                                                         class="material-icons-outlined">arrow_right</i>Approved</a>
                                             </li>
@@ -762,6 +768,9 @@
                                             <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
                                             </li>
+                                            {{-- <li><a href="{{ url('/appliedservice') }}/Reject"><i
+                                                        class="material-icons-outlined">arrow_right</i>Reject</a>
+                                            </li> --}}
                                             <li><a href="{{ url('/appliedservice') }}/Approved"><i
                                                         class="material-icons-outlined">arrow_right</i>Approved</a>
                                             </li>

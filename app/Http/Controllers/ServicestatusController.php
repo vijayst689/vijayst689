@@ -2243,6 +2243,9 @@ public function submit_statusupdate_gst(Request $request){
 }
 
 public function submit_statusupdate_tecexam(Request $request){
+    // dd($request->all());
+    // $status = $request->status;
+    // echo $status;die;
     $apply_user_id = 0;
     if ($request->distributor_id == 0 && $request->retailer_id == 0) {
         $apply_user_id = $request->user_id;
@@ -2285,7 +2288,49 @@ public function submit_statusupdate_tecexam(Request $request){
                 ] );
             }
         }
-    }else{
+    }
+    // elseif($status == "Reject"){
+    //     $status = $request->status;
+
+    //     $serviceid = $request->serviceid;
+    //     $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+    //     $servicename = "";
+    //     if($getservicename){
+    //         $servicename = $getservicename->service_name;
+    //     }
+    //     $date = date( 'Y-m-d' );
+    //     $time = date( 'H:i:s' );
+    //     $service_status = 'Out Payment';
+    //     $ad_info = 'Service Payment'. ' '. $servicename;
+    //     $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+    //     $balance = 0;
+    //     if($getwallet){
+    //         $balance = $getwallet->wallet;
+    //     }
+    //     $newbalance = $balance + $servicepayment;
+    //     $newbalance1 = Auth::user()->wallet - $servicepayment;
+
+    //     $from_id = 2;
+    //     $date = date( 'Y-m-d' );
+    //     $time = date( 'H:i:s' );
+    //     $service_status = 'Out Payment';
+    //     $ad_info = 'Service Payment';
+    //     $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$apply_user_id','$apply_user_id','$from_id','$serviceamount','$ad_info', '$service_status','$time','$date','$from_id')";
+    //     DB::insert( DB::raw( $sql ) );
+    //     $sql = "update users set wallet = wallet - $serviceamount where id = $from_id";
+    //     DB::update( DB::raw( $sql ) );
+    //     $service_status = 'IN Payment';
+    //     $ad_info = 'Service Payment';
+    //     $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$apply_user_id','$from_id','$apply_user_id','$serviceamount','$ad_info', '$service_status','$time','$date','$from_id')";
+    //     DB::insert( DB::raw( $sql ) );
+    //     $sql = "update users set wallet = wallet + $serviceamount where id = $apply_user_id";
+    //     DB::update( DB::raw( $sql ) );
+
+
+    //     DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+    //         'status' => $status,
+    //     ] );
+   else{
         $status = "Pending";
         $serviceid = $request->serviceid;
         if ($request->photo != null) {
@@ -5334,8 +5379,8 @@ public function software_update(Request $request){
                 'applied_date' => date("Y-m-d"),
                 'created_at'   => date("Y-m-d"),
             ]);
-            
-        
+
+
         DB::table( 'software' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
         ] );

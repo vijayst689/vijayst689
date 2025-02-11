@@ -39,6 +39,7 @@ class DistributorController extends Controller
 
     public function savedistributor(Request $request)
     {
+        dd($request->all());
       $userid = Auth::user()->id;
       $savedistributor = DB::table('users')->insert([
         'name'          => $request->name,
