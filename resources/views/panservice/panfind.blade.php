@@ -56,8 +56,6 @@
                                         <th>Sl No</th>
                                         <th>Aadhaar Number</th>
                                         <th>Pan No</th>
-                                        <th>Name</th>
-                                        <th>DOB</th>
                                         <th>Datetime</th>
                                     </tr>
                                 </thead>
@@ -67,8 +65,6 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $ser->aadhaar_no }}</td>
                                             <td>{{ $ser->pan_no }}</td>
-                                            <td>{{ $ser->name }}</td>
-                                            <td>{{ $ser->dob }}</td>
                                             <td>{{ $ser->date }}</td>
                                         </tr>
                                     @endforeach

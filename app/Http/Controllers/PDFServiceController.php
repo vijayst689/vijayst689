@@ -195,8 +195,6 @@ class PDFServiceController extends Controller
       if($resdata['Status'] == "Success"){
         $pan=$resdata['pan_no'];
         $message=$resdata['message'];
-         $name=$resdata['name'];
-        $dob=$resdata['dob'];
         DB::table('pancard_find')->insert([
           'user_id' => Auth::user()->id,
           'aadhaar_no' => $request->aadhaar_no,
@@ -204,8 +202,6 @@ class PDFServiceController extends Controller
           'service_id' => $serviceid,
           'amount' => $servicepayment,
           'message' => $message,
-          'name' => $name,
-          'dob' => $dob,
           'status'    => 'Approved',
           'date'    => date("Y-m-d "),
         ]);
