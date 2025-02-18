@@ -1488,3 +1488,75 @@ alter table voterid add selects varchar(20) DEFAULT NULL after application_no;
 
 
 alter table bond add certificate varchar(20) DEFAULT NULL after status;
+
+
+//18-02-2025
+alter table bond add certificate varchar(20) DEFAULT NULL after status;
+
+alter table can_edit add vao_area text DEFAULT NULL after vao_area;
+alter table can_edit drop column postal_name; 
+alter table can_edit drop village_administrative_area; 
+alter table can_edit add postal_area_tamil text DEFAULT NULL after vao_area;
+alter table can_edit add postal_area_english text DEFAULT NULL after postal_area_tamil;
+
+alter table tnega_services add postal_area_tamil text DEFAULT NULL after pin_code;
+alter table tnega_services add postal_area_english text DEFAULT NULL after postal_area_tamil;
+alter table tnega_services add family_relationship text DEFAULT NULL after postal_area_english;
+alter table tnega_services add relation_name text DEFAULT NULL after family_relationship;
+alter table tnega_services add relation_name_tamil text DEFAULT NULL after relation_name;
+alter table tnega_services add relation_age text DEFAULT NULL after relation_name_tamil;
+alter table tnega_services drop column relation_age; 
+alter table tnega_services drop column family_relationship; 
+alter table tnega_services drop column relation_name_tamil; 
+alter table tnega_services drop column relation_name; 
+alter table tnega_services add mother_name_tamil text DEFAULT NULL after relationship_name_tamil_1;
+alter table tnega_services add mother_name_english text DEFAULT NULL after mother_name_tamil;
+alter table family_member add relation_name_tamil text DEFAULT NULL after relation_name;
+alter table family_member add service_id int(11) DEFAULT 0 after user_id;
+
+alter table family_member add occupation text DEFAULT NULL after relation_name_tamil;
+alter table tnega_services add affidavit text DEFAULT NULL after relationship;
+alter table tnega_services add self_community_certificate text DEFAULT NULL after affidavit;
+alter table tnega_services add course_complete text DEFAULT NULL after affidavit;
+alter table tnega_services add year_of_passing text DEFAULT NULL after course_complete;
+alter table tnega_services add current_course text DEFAULT NULL after year_of_passing;
+alter table tnega_services add current_academy_yr text DEFAULT NULL after current_course;
+alter table tnega_services add institute_name_tamil text DEFAULT NULL after current_academy_yr;
+alter table tnega_services add institute_name_english text DEFAULT NULL after institute_name_tamil;
+alter table tnega_services add institute_address_tamil text DEFAULT NULL after institute_name_english;
+alter table tnega_services add institute_address_english text DEFAULT NULL after institute_address_tamil;
+alter table tnega_services drop column postal_name; 
+
+
+CREATE TABLE `pan_aadhaar` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `pan_no` varchar(20) DEFAULT NULL,
+  `aadhaar_no` varchar(20) DEFAULT NULL,
+  `amount` varchar(20) DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `dob` varchar(20) DEFAULT NULL,
+  `father_name` varchar(100) DEFAULT NULL,
+  `gender` varchar(20) DEFAULT NULL,
+  `email` varchar(200) DEFAULT NULL,
+  `address` varchar(700) DEFAULT NULL,
+  `message` varchar(1000) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+
+alter table family_member add education varchar(100) DEFAULT NULL;
+alter table family_member add doc varchar(20) DEFAULT NULL;
+alter table tnega_services add living_status_1 text DEFAULT NULL;
+alter table tnega_services add living_status_2 text DEFAULT NULL;
+alter table tnega_services add signature1 text DEFAULT NULL;
+alter table tnega_services add signature2 text DEFAULT NULL;
+
+alter table tnega_services add mother_community text DEFAULT NULL;
+alter table tnega_services add father_community text DEFAULT NULL;
+alter table tnega_services add father_caste text DEFAULT NULL;
+alter table tnega_services add mother_caste text DEFAULT NULL;

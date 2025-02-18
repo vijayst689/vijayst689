@@ -135,9 +135,13 @@
                                                 <select @if (Auth::user()->id != $apply_user_id ) disabled @endif class="form-control"
                                                     name="maritial_status">
                                                     <option value="">Select Maritial Status</option>
+                                                    <option @if ($services->maritial_status == 'Un Married') selected @endif value="Un Married">Un Married
+                                                    </option>
                                                     <option @if ($services->maritial_status == 'Married') selected @endif value="Married">Married
                                                     </option>
-                                                    <option @if ($services->maritial_status == 'Single') selected @endif value="Single">Single
+                                                    <option @if ($services->maritial_status == 'Widower') selected @endif value="Widower">Widower
+                                                    </option>
+                                                    <option @if ($services->maritial_status == 'Widow') selected @endif value="Widow">Widow
                                                     </option>
                                                     <option @if ($services->maritial_status == 'Divorced') selected @endif value="Divorced">Divorced
                                                     </option>
@@ -969,38 +973,60 @@
                             <option value="">Select</option>
                             <option @if ($services->status == 'Pending') selected @endif
                                 value="Pending">Pending</option>
-                                <option @if ($services->status == 'Resubmit') selected @endif
-                                    value="Resubmit">Resubmit</option>
-                                    <option @if ($services->status == 'Processing') selected @endif
-                                        value="Processing">Processing</option>
-                                        <option @if ($services->status == 'Approved') selected @endif
-                                            value="Approved">Approved</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
-                                        <label for="remarks" class="form-label">Remarks</label>
-                                        <input value="{{ $services->remarks }}" class="form-control" type="text"
-                                        name="remarks" maxlength="100" id="remarks" placeholder="Remarks" />
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="selecthide" style="display :none;">
-                                            <label for="select" class="form-label">Select</label>
-                                                <select class="form-control" name="selects" id="select">
-                                                    <option>select</option>
-                                                    <option @if ($services->selects == 'Text') selected @endif value = "Text">Text</option>
-                                                    <option @if ($services->selects == 'File') selected @endif value = "File">File</option>
-                                                </select>
-                                        </div>
-                                    <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
-                                        <label for="acknowledgement" class="form-label">Acknowledgement</label>
-                                        <input class="form-control" type="file" name="acknowledgement"
-                                        id="acknowledgement" />
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
-                                        <label for="application_no" class="form-label">Application No</label>
-                                        <input value="{{ $services->application_no }}" class="form-control"
-                                        type="text" maxlength="20" name="application_no"
-                                        id="application_no" />
-                                    </div>
+                            <option @if ($services->status == 'Resubmit') selected @endif
+                                value="Resubmit">Resubmit</option>
+                            <option @if ($services->status == 'Processing') selected @endif
+                                value="Processing">Processing</option>
+                                @if ($services->status != 'Approved')
+                            <option @if ($services->status == 'Rejected') selected @endif value="Rejected">
+                            Rejected</option>
+                            @endif
+                                <option @if ($services->status == 'Approved') selected @endif
+                                    value="Approved">Approved</option>
+                            </select>
+                    </div>
+                    <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
+                        <label for="remarks" class="form-label">Remarks</label>
+                        <input value="{{ $services->remarks }}" class="form-control" type="text"
+                            name="remarks" maxlength="100" id="remarks" placeholder="Remarks" />
+                    </div>
+                    <div class="mb-3 col-md-6" id="selecthide" style="display :none;">
+                        <label for="select" class="form-label">Select</label>
+                        <select class="form-control" name="selects" id="select">
+                            <option>select</option>
+                            <option @if ($services->selects == 'Text') selected @endif
+                                value = "Text">Text</option>
+                            <option @if ($services->selects == 'File') selected @endif
+                                value = "File">File</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
+                        <label for="acknowledgement" class="form-label">Acknowledgement</label>
+                        <input class="form-control" type="file" name="acknowledgement"
+                            id="acknowledgement" />
+                    </div>
+                    <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
+                        <label for="application_no" class="form-label">Application No</label>
+                        <input value="{{ $services->application_no }}" class="form-control"
+                            type="text" maxlength="20" name="application_no"
+                            id="application_no" />
+                    </div>
+                    <div class="mb-3 col-md-6" id="selectshide" style="display :none;">
+                        <label for="selects" class="form-label">Select</label>
+                        <select class="form-control" name="lects" id="selects">
+                            <option>select</option>
+                            <option @if ($services->lects == 'Text') selected @endif
+                                value = "Text">Text</option>
+                            <option @if ($services->lects == 'File') selected @endif
+                                value = "File">File</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 col-md-6" id="applicationhide" style="display :none;">
+                        <label for="application" class="form-label">Application</label>
+                        <input value="{{ $services->application }}" class="form-control"
+                            type="text" maxlength="150" name="application"
+                            id="application" />
+                    </div>
                                     <div class="mb-3 col-md-6" id="certhide" style="display :none;">
                                         <label for="certificate" class="form-label">Certificate</label>
                                         <input class="form-control" type="file" name="certificate"
@@ -1039,9 +1065,9 @@
 @endsection
 @push('page_scripts')
 <script>
- var dist_id = "{{ $customers->dist_id }}";
-     var taluk_id = "{{ $customers->taluk_id }}";
-     $(function() {
+    var dist_id = "{{ $customers->dist_id }}";
+    var taluk_id = "{{ $customers->taluk_id }}";
+    $(function() {
         gettaluk(dist_id);
         getpanchayath(taluk_id);
 
@@ -1050,45 +1076,54 @@
         var certificate = "{{ $services->certificate }}";
         var selects = "{{ $services->selects }}";
         var candetails = "{{ $services->can_details }}";
-       
+        var lects = "{{ $services->lects }}";
 
-       if(candetails == "Yes"){
+
+        if (candetails == "Yes") {
             $('#cannumberhide').show("slow");
-            $('#cannumber').prop("required",true);
-        }else if(candetails == "No"){
+            $('#cannumber').prop("required", true);
+        } else if (candetails == "No") {
             $('#dobhide').show("slow");
         }
 
         if (status == "Resubmit") {
-                $('#remarkshide').show("slow");
-                $('#remarks').prop("required", true);
-            } else if (status == "Processing") {
-            if(selects == "Text"){
-                $('#applicationnohide').show("slow");
+            $('#remarkshide').show("slow");
+            $('#remarks').prop("required", true);
+        } else if (status == "Processing") {
+        if(selects == "Text"){
+            $('#applicationnohide').show("slow");
+        }
+        if(selects == "File"){
+            $('#acknowledgementhide').show("slow");
+            if (acknowledgement == "") {
+                $('#acknowledgement').prop("required", true);
             }
-            if(selects == "File"){
-                $('#acknowledgementhide').show("slow");
-                if (acknowledgement == "") {
-                    $('#acknowledgement').prop("required", true);
-                }
-            }
-                $('#selecthide').show("slow");
-            } else if (status == "Approved") {
-                $('#certhide').show("slow");
-                if (acknowledgement == "") {
-                    $('#certificate').prop("required", true);
-                }
-            }
-        });
+        }
+            $('#selecthide').show("slow");
 
-     function gettaluk(dist_id) {
+
+        } else if (status == "Approved") {
+        if(lects == "Text"){
+            $('#applicationhide').show("slow");
+        }
+        if(lects == "File"){
+            $('#certhide').show("slow");
+            if (certificate == "") {
+                $('#certificate').prop("required", true);
+            }
+        }
+            $('#selectshide').show("slow")
+    }
+    });
+
+    function gettaluk(dist_id) {
         var url = "{{ url('service/get_taluk') }}/" + dist_id;
         $.ajax({
             url: url,
             type: "GET",
-            success: function (result) {
+            success: function(result) {
                 $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
-                $.each(result, function (key, value) {
+                $.each(result, function(key, value) {
                     $("#taluk").append('<option value="' + value
                         .id + '">' + value.taluk_name + '</option>');
                 });
@@ -1117,140 +1152,168 @@
 
 
     var customerid = "{{ $customers->id }}";
-    $('#can_details').change(function(){
-        if($('#can_details').val() == 'Yes') {
+    $('#can_details').change(function() {
+        if ($('#can_details').val() == 'Yes') {
             $('#cannumberhide').show("slow");
-            $('#cannumber').prop("required",true);
-        }else if($('#can_details').val() == 'No'){
-            window.location.href = "{{ url('applyservice') }}/"+60+"/"+customerid;
-        }else if($('#can_details').val() == 'Find'){
-            window.location.href = "{{ url('applyservice') }}/"+121+"/"+customerid;
+            $('#cannumber').prop("required", true);
+        } else if ($('#can_details').val() == 'No') {
+            window.location.href = "{{ url('applyservice') }}/" + 60 + "/" + customerid;
+        } else if ($('#can_details').val() == 'Find') {
+            window.location.href = "{{ url('applyservice') }}/" + 121 + "/" + customerid;
         } else {
             $('#cannumberhide').hide("slow");
-            $('#cannumber').prop("required",false);
+            $('#cannumber').prop("required", false);
         }
     });
 
     $('#service_status').change(function() {
-                if ($('#service_status').val() == 'Resubmit') {
-                    $('#acknowledgementhide').hide("slow");
-                    $('#acknowledgement').prop("required", false);
-                    $('#applicationnohide').hide("slow");
-                    $('#application_no').prop("required", false);
-                    $('#certhide').hide("slow");
-                    $('#certificate').prop("required", false);
-                    $('#remarkshide').show("slow");
-                    $('#remarks').prop("required", true);
-                    $('#select').prop("required", false);
-                    $('#selecthide').hide("slow");
-                } else if ($('#service_status').val() == 'Processing') {
-                    $('#acknowledgementhide').hide("slow");
-                    $('#acknowledgement').prop("required", false);
-                    $('#remarkshide').hide("slow");
-                    $('#remarks').prop("required", false);
-                    $('#certhide').hide("slow");
-                    $('#certificate').prop("required", false);
-                    $('#applicationnohide').hide("slow");
-                    $('#application_no').prop("required", false);
-                    $('#select').prop("required", true);
-                    $('#selecthide').show("slow");
-                } else if ($('#service_status').val() == 'Approved') {
-                    $('#remarkshide').hide("slow");
-                    $('#remarks').prop("required", false);
-                    $('#acknowledgementhide').hide("slow");
-                    $('#acknowledgement').prop("required", false);
-                    $('#certhide').show("slow");
-                    $('#certificate').prop("required", true);
-                    $('#applicationnohide').hide("slow");
-                    $('#application_no').prop("required", false);
-                    $('#select').prop("required", false);
-                    $('#selecthide').hide("slow");
-                } else {
-                    $('#remarkshide').hide("slow");
-                    $('#remarks').prop("required", false);
-                    $('#acknowledgementhide').hide("slow");
-                    $('#acknowledgement').prop("required", false);
-                    $('#certhide').hide("slow");
-                    $('#certificate').prop("required", false);
-                    $('#applicationnohide').hide("slow");
-                    $('#application_no').prop("required", false);
-                    $('#select').prop("required", false);
-                    $('#selecthide').hide("slow");
-                }
-            });
+            if ($('#service_status').val() == 'Resubmit') {
+                $('#acknowledgementhide').hide("slow");
+                $('#acknowledgement').prop("required", false);
+                $('#applicationnohide').hide("slow");
+                $('#application_no').prop("required", false);
+                $('#certhide').hide("slow");
+                $('#certificate').prop("required", false);
+                $('#remarkshide').show("slow");
+                $('#remarks').prop("required", true);
+                $('#select').prop("required", false);
+                $('#selecthide').hide("slow");
+                $('#selects').prop("required", false);
+                $('#selectshide').hide("slow");
+            } else if ($('#service_status').val() == 'Processing') {
+                $('#acknowledgementhide').hide("slow");
+                $('#acknowledgement').prop("required", false);
+                $('#remarkshide').hide("slow");
+                $('#remarks').prop("required", false);
+                $('#certhide').hide("slow");
+                $('#certificate').prop("required", false);
+                $('#applicationnohide').hide("slow");
+                $('#application_no').prop("required", false);
+                $('#select').prop("required", true);
+                $('#selecthide').show("slow");
+                $('#selects').prop("required", false);
+                $('#selectshide').hide("slow");
+            } else if ($('#service_status').val() == 'Approved') {
+                $('#remarkshide').hide("slow");
+                $('#remarks').prop("required", false);
+                $('#acknowledgementhide').hide("slow");
+                $('#acknowledgement').prop("required", false);
+                $('#certhide').hide("slow");
+                $('#certificate').prop("required", false);
+                $('#applicationnohide').hide("slow");
+                $('#application_no').prop("required", false);
+                $('#select').prop("required", false);
+                $('#selecthide').hide("slow");
+                $('#selects').prop("required", true);
+                $('#selectshide').show("slow");
+            } else {
+                $('#remarkshide').hide("slow");
+                $('#remarks').prop("required", false);
+                $('#acknowledgementhide').hide("slow");
+                $('#acknowledgement').prop("required", false);
+                $('#certhide').hide("slow");
+                $('#certificate').prop("required", false);
+                $('#applicationnohide').hide("slow");
+                $('#application_no').prop("required", false);
+                $('#select').prop("required", false);
+                $('#selecthide').hide("slow");
+                $('#selects').prop("required", false);
+                $('#selectshide').hide("slow");
+            }
+        });
 
-            $('#select').change(function(){
-                if($('#select').val() == 'Text') {
-                    $('#applicationnohide').show("slow");
-                    $('#application_no').prop("required", true); 
-                    $('#acknowledgementhide').hide("slow");
-                    $('#acknowledgement').prop("required", false);
-                }else if($('#select').val() == 'File'){
-                    $('#acknowledgementhide').show("slow");
-                    $('#acknowledgement').prop("required", false);
-                    $('#applicationnohide').hide("slow"); 
-                    $('#application_no').prop("required", false);
-                }else{
-                    $('#applicationnohide').hide("slow");
-                    $('#application_no').prop("required", false);
-                    $('#acknowledgementhide').hide("slow");
-                    $('#acknowledgement').prop("required", false);
-                }  
-            });
+        $('#select').change(function(){
+            if($('#select').val() == 'Text') {
+                $('#applicationnohide').show("slow");
+                $('#application_no').prop("required", true); 
+                $('#acknowledgementhide').hide("slow");
+                $('#acknowledgement').prop("required", false);
+            }else if($('#select').val() == 'File'){
+                $('#acknowledgementhide').show("slow");
+                $('#acknowledgement').prop("required", false);
+                $('#applicationnohide').hide("slow"); 
+                $('#application_no').prop("required", false);
+            }else{
+                $('#applicationnohide').hide("slow");
+                $('#application_no').prop("required", false);
+                $('#acknowledgementhide').hide("slow");
+                $('#acknowledgement').prop("required", false);
+            }  
+        });
 
-    
-    $('#handicapped_proof').change(function(){
-        if($('#handicapped_proof').val() == 'Passport') {
-             $('#passporthide').show("slow");
-             $('#pancardhide').hide("slow");
-             $('#voteridhide').hide("slow");
-             $('#driving_licensehide').hide("slow");
-             $('#pancard').prop("required",false);
-            $('#voterid').prop("required",false);
-            $('#driving_license').prop("required",false);
-            $('#passport').prop("required",true);
+        $('#selects').change(function(){
+            if($('#selects').val() == 'Text') {
+                $('#applicationhide').show("slow");
+                $('#application').prop("required", true); 
+                $('#certhide').hide("slow");
+                $('#certificate').prop("required", false);
+            }else if($('#selects').val() == 'File'){
+                $('#certhide').show("slow");
+                $('#certificate').prop("required", false);
+                $('#applicationhide').hide("slow"); 
+                $('#application').prop("required", false);
+            }else{
+                $('#applicationhide').hide("slow");
+                $('#application').prop("required", false);
+                $('#certhide').hide("slow");
+                $('#certificate').prop("required", false);
+            }  
+        });
 
-        } else if($('#handicapped_proof').val() == 'Pan Card') {
+
+
+    $('#handicapped_proof').change(function() {
+        if ($('#handicapped_proof').val() == 'Passport') {
+            $('#passporthide').show("slow");
+            $('#pancardhide').hide("slow");
+            $('#voteridhide').hide("slow");
+            $('#driving_licensehide').hide("slow");
+            $('#pancard').prop("required", false);
+            $('#voterid').prop("required", false);
+            $('#driving_license').prop("required", false);
+            $('#passport').prop("required", true);
+
+        } else if ($('#handicapped_proof').val() == 'Pan Card') {
             $('#pancardhide').show("slow");
             $('#passporthide').hide("slow");
-             $('#voteridhide').hide("slow");
-             $('#driving_licensehide').hide("slow");
-             $('#passport').prop("required",false);
-            $('#voterid').prop("required",false);
-            $('#driving_license').prop("required",false);
-            $('#pancard').prop("required",true);
+            $('#voteridhide').hide("slow");
+            $('#driving_licensehide').hide("slow");
+            $('#passport').prop("required", false);
+            $('#voterid').prop("required", false);
+            $('#driving_license').prop("required", false);
+            $('#pancard').prop("required", true);
 
-        } else if($('#handicapped_proof').val() == 'Voter Id') {
+        } else if ($('#handicapped_proof').val() == 'Voter Id') {
             $('#voteridhide').show("slow");
             $('#passporthide').hide("slow");
             $('#pancardhide').hide("slow");
             $('#driving_licensehide').hide("slow");
-            $('#passport').prop("required",false);
-            $('#driving_license').prop("required",false);
-            $('#pancard').prop("required",false);
-            $('#voterid').prop("required",true);
+            $('#passport').prop("required", false);
+            $('#driving_license').prop("required", false);
+            $('#pancard').prop("required", false);
+            $('#voterid').prop("required", true);
 
-        } else if($('#handicapped_proof').val() == 'Driving License') {
+        } else if ($('#handicapped_proof').val() == 'Driving License') {
             $('#driving_licensehide').show("slow");
             $('#passporthide').hide("slow");
             $('#pancardhide').hide("slow");
             $('#voteridhide').hide("slow");
-            $('#passport').prop("required",false);
-            $('#voterid').prop("required",false);
-            $('#pancard').prop("required",false);
-            $('#driving_license').prop("required",true);
-        } else{
+            $('#passport').prop("required", false);
+            $('#voterid').prop("required", false);
+            $('#pancard').prop("required", false);
+            $('#driving_license').prop("required", true);
+        } else {
             $('#driving_licensehide').hide("slow");
             $('#passporthide').hide("slow");
             $('#pancardhide').hide("slow");
             $('#voteridhide').hide("slow");
-            $('#pass_port').prop("required",false);
-            $('#pancard').prop("required",false);
-            $('#voterid').prop("required",false);
-            $('#driving_license').prop("required",false);
+            $('#pass_port').prop("required", false);
+            $('#pancard').prop("required", false);
+            $('#voterid').prop("required", false);
+            $('#driving_license').prop("required", false);
 
         }
     });
-
 </script>
 @endpush
+
