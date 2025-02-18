@@ -172,7 +172,7 @@
                                     </div>
 
                                 </div>
-                                <h3 class="text-center">Family Details</h3>
+                               <!--<h3 class="text-center">Family Details</h3>
                                 <table id="pricetable" class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -232,7 +232,7 @@
                                                         class='material-symbols-outlined'>Remove</i></a></td>
                                         </tr>
                                     </tbody>
-                                </table>
+                                </table>-->
                                 <div class="text-center">
                                     <div class="col-12">
                                         <div class="mb-0">
