@@ -1560,3 +1560,55 @@ alter table tnega_services add mother_community text DEFAULT NULL;
 alter table tnega_services add father_community text DEFAULT NULL;
 alter table tnega_services add father_caste text DEFAULT NULL;
 alter table tnega_services add mother_caste text DEFAULT NULL;
+
+
+alter table tec_exam add lects varchar(20) DEFAULT NULL after application_no;
+alter table aadhaarcard add lects varchar(20) DEFAULT NULL after application_no;
+alter table birth_certificate add lects varchar(20) DEFAULT NULL after application_no;
+alter table bond add lects varchar(20) DEFAULT NULL after application_no;
+alter table can_edit add lects varchar(20) DEFAULT NULL after application_no;
+alter table covid add lects varchar(20) DEFAULT NULL after application_no;
+alter table dharsan add lects varchar(20) DEFAULT NULL after application_no;
+alter table fssai add lects varchar(20) DEFAULT NULL after application_no;
+alter table gst add lects varchar(20) DEFAULT NULL after application_no;
+alter table itr add lects varchar(20) DEFAULT NULL after application_no;
+alter table license add lects varchar(20) DEFAULT NULL after application_no;
+alter table msme add lects varchar(20) DEFAULT NULL after application_no;
+alter table nalavariyam add lects varchar(20) DEFAULT NULL after application_no;
+alter table pancard add lects varchar(20) DEFAULT NULL after application_no;
+alter table pmkissan add lects varchar(20) DEFAULT NULL after application_no;
+alter table smartcard add lects varchar(20) DEFAULT NULL after application_no;
+alter table software add lects varchar(20) DEFAULT NULL after application_no;
+alter table tailor add lects varchar(20) DEFAULT NULL after application_no;
+alter table voterid add lects varchar(20) DEFAULT NULL after application_no;
+alter table tnega_services add lects varchar(20) DEFAULT NULL after application_no;
+alter table medicalscheme add lects varchar(20) DEFAULT NULL after application_no;
+
+alter table tec_exam add application varchar(20) DEFAULT NULL after application_no;
+alter table aadhaarcard add application varchar(20) DEFAULT NULL after application_no;
+alter table birth_certificate add application varchar(20) DEFAULT NULL after application_no;
+alter table bond add application varchar(20) DEFAULT NULL after application_no;
+alter table can_edit add application varchar(20) DEFAULT NULL after application_no;
+alter table covid add application varchar(20) DEFAULT NULL after application_no;
+alter table dharsan add application varchar(20) DEFAULT NULL after application_no;
+alter table fssai add application varchar(20) DEFAULT NULL after application_no;
+alter table gst add application varchar(20) DEFAULT NULL after application_no;
+alter table itr add application varchar(20) DEFAULT NULL after application_no;
+alter table license add application varchar(20) DEFAULT NULL after application_no;
+alter table msme add application varchar(20) DEFAULT NULL after application_no;
+alter table  nalavariyam add application varchar(50) DEFAULT NULL after acknowledgement;
+alter table pancard add application varchar(20) DEFAULT NULL after application_no;
+alter table pmkissan add application varchar(20) DEFAULT NULL after application_no;
+alter table smartcard add application varchar(20) DEFAULT NULL after application_no;
+alter table software add application varchar(20) DEFAULT NULL after application_no;
+alter table tailor add application varchar(20) DEFAULT NULL after application_no;
+alter table voterid add application varchar(20) DEFAULT NULL after application_no;
+alter table tnega_services add application varchar(20) DEFAULT NULL after application_no;
+alter table medicalscheme add application varchar(20) DEFAULT NULL after application_no;
+
+
+alter table tnega_services add father_community text DEFAULT NULL after postal_area_tamil;
+alter table tnega_services add father_caste text DEFAULT NULL after father_community;
+alter table tnega_services add mother_community text DEFAULT NULL after father_caste;
+alter table tnega_services add mother_caste text DEFAULT NULL after mother_community;
+

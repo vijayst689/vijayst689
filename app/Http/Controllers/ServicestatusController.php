@@ -1067,9 +1067,35 @@ public function submit_statusupdate_tnegaservices1(Request $request){
         DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
             'can_number'        => $request->can_number,
+            'can_details'        => $request->can_details,
+            'personalized'        => $request->personalized,
+            'relationship_1'        => $request->relationship_1,
+            'mother_name_tamil'        => $request->mother_name_tamil,
+            'mother_name_english'        => $request->mother_name_english,
+            'dob'        => $request->dob,
+            'religion'        => $request->religion,
+            'education'        => $request->education,
+            'work'        => $request->work,
+            'door_no'        => $request->door_no,
+            'personalized_name_tamil'        => $request->personalized_name_tamil,
+            'relationship_name_tamil_1'        => $request->relationship_name_tamil_1,
+            'community'        => $request->community,
+            'smartcard_number'        => $request->smartcard_number,
+            'street_name_tamil'        => $request->street_name_tamil,
+            'personalized_name_english'        => $request->personalized_name_english,
+            'relationship_name_english_1'        => $request->relationship_name_english_1,
+            'maritial_status'        => $request->maritial_status,
+            'caste'        => $request->caste,
+            'street_name'        => $request->street_name,
+            'pin_code'        => $request->pin_code,
+            'postal_area_tamil'        => $request->postal_area_tamil,
+            'postal_area_english'        => $request->postal_area_english,
+            'father_community'        => $request->father_community,
+            'father_caste'          => $request->father_caste,
+            'mother_community'        => $request->mother_community,
+            'mother_caste'        => $request->mother_caste,
         ] );
     }
-
     return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
 public function submit_statusupdate_incomecertificate(Request $request){
@@ -1233,6 +1259,9 @@ DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->updat
     'pin_code'        => $request->pin_code,
     'postal_area_tamil'        => $request->postal_area_tamil,
     'postal_area_english'        => $request->postal_area_english,
+    'mother_name_tamil'        => $request->mother_name_tamil,
+    'mother_name_english'        => $request->mother_name_english,
+   
 ] );
 
 if($request->has('family_relationship')){

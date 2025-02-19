@@ -92,11 +92,13 @@
                                                             <option @if ($services->personalized == 'திருமதி') selected @endif
                                                                 value="திருமதி">திருமதி.
                                                             </option>
+                                                            <option @if ($services->personalized == 'செல்வன்') selected @endif
+                                                                value="செல்வன்">
+                                                                செல்வன்.</option>
                                                             <option @if ($services->personalized == 'செல்வி') selected @endif
                                                                 value="செல்வி">
                                                                 செல்வி.</option>
                                                         </select>
-
                                                         <label style="color:#23e156" for="relationship_1"
                                                             class="form-label">உறவுமுறை</label>
                                                         <select @if (Auth::user()->id != $apply_user_id) disabled @endif
@@ -105,32 +107,21 @@
                                                             <option @if ($services->relationship_1 == 'தந்தை') selected @endif
                                                                 value="தந்தை">தந்தை.
                                                             </option>
-                                                        </select>
-                                                        <label style="color:#23e156" for="relationship_2"
-                                                            class="form-label">உறவுமுறை</label>
-                                                        <select @if (Auth::user()->id != $apply_user_id) disabled @endif
-                                                            class="form-control" name="relationship_2">
-                                                            <option value="">Select</option>
-                                                            <option @if ($services->relationship_2 == 'தாய்') selected @endif
-                                                                value="தாய்">தாய்.
-                                                            </option>
-                                                        </select>
-                                                        <label style="color:#23e156" for="relationship_3"
-                                                            class="form-label">உறவுமுறை</label>
-                                                        <select @if (Auth::user()->id != $apply_user_id) disabled @endif
-                                                            class="form-control" name="relationship_3">
-                                                            <option value="">Select</option>
-                                                            <option @if ($services->relationship_3 == 'கணவர்') selected @endif
+                                                            <option @if ($services->relationship_1 == 'கணவர்') selected @endif
                                                                 value="கணவர்">கணவர்.
                                                             </option>
-                                                            <option @if ($services->relationship_3 == 'மனைவி') selected @endif
-                                                                value="மனைவி">மனைவி.
-                                                            </option>
-                                                            <option @if ($services->relationship_3 == 'உறவினர்') selected @endif
+                                                            <option @if ($services->relationship_1 == 'உறவினர்') selected @endif
                                                                 value="உறவினர்">உறவினர்.
                                                             </option>
                                                         </select>
-                                                        <label style="color:#e411dd" for="community"
+                                                        <label style="color:#23e156" for="mother_name_tamil"
+                                                            class="form-label">தாயின் பெயர் தமிழில்</label>
+                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                            type="text" value="{{ $services->mother_name_tamil }}"
+                                                            class="form-control" name="mother_name_tamil" maxlength="100"
+                                                            placeholder="தாயின் பெயர் தமிழில்" />
+
+                                                        <label style="color:#23e156" for="community"
                                                             class="form-label">Community</label>
                                                         <select @if (Auth::user()->id != $apply_user_id) disabled @endif
                                                             class="form-control" name="community">
@@ -157,33 +148,15 @@
                                                                 value="BC(Muslim)">BC (Muslim).
                                                             </option>
                                                         </select>
-                                                        <label style="color:#23e156" for="maritial_status"
-                                                            class="form-label">Maritial Status</label>
-                                                        <select @if (Auth::user()->id != $apply_user_id) disabled @endif
-                                                            class="form-control" name="maritial_status">
-                                                            <option value="">Select Maritial Status</option>
-                                                            <option @if ($services->maritial_status == 'Un Married') selected @endif value="Un Married">Un Married
-                                                            </option>
-                                                            <option @if ($services->maritial_status == 'Married') selected @endif value="Married">Married
-                                                            </option>
-                                                            <option @if ($services->maritial_status == 'Widower') selected @endif value="Widower">Widower
-                                                            </option>
-                                                            <option @if ($services->maritial_status == 'Widow') selected @endif value="Widow">Widow
-                                                            </option>
-                                                            <option @if ($services->maritial_status == 'Divorced') selected @endif value="Divorced">Divorced
-                                                            </option>
-                                                        </select>
-
-
                                                         <label style="color:#23e156" for="door_no"
                                                             class="form-label">Door No</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif
                                                             type="text" value="{{ $services->door_no }}"
                                                             class="form-control" name="door_no" maxlength="20"
                                                             placeholder="Door No" />
                                                         <label style="color:#23e156" for="pin_code"
                                                             class="form-label">Pin Code</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif
                                                             type="text" value="{{ $services->pin_code }}"
                                                             class="form-control" name="pin_code" maxlength="10"
                                                             placeholder="Pin Code" />
@@ -191,123 +164,123 @@
                                                     <div class="mb-3 col-md-4">
 
                                                         <label style="color:#e411dd" for="personalized_name_tamil"
-                                                            class="form-label">பெயர் தமிழில்</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                            class="form-label">விண்ணப்பதாரர் பெயர் தமிழில்</label>
+                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif
                                                             type="text"
                                                             value="{{ $services->personalized_name_tamil }}"
                                                             class="form-control" name="personalized_name_tamil"
                                                             maxlength="50" placeholder="பெயர் தமிழில்" />
                                                         <label style="color:#e411dd" for="relationship_name_tamil_1"
                                                             class="form-label">பெயர் தமிழில்</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif
                                                             type="text"
                                                             value="{{ $services->relationship_name_tamil_1 }}"
                                                             class="form-control" name="relationship_name_tamil_1"
                                                             maxlength="50" placeholder="பெயர் தமிழில்" />
-                                                        <label style="color:#e411dd" for="relationship_name_tamil_2"
-                                                            class="form-label">பெயர் தமிழில்</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                            type="text"
-                                                            value="{{ $services->relationship_name_tamil_2 }}"
-                                                            class="form-control" name="relationship_name_tamil_2"
-                                                            maxlength="50" placeholder="பெயர் தமிழில்" />
-                                                        <label style="color:#e411dd" for="relationship_name_tamil_3"
-                                                            class="form-label">பெயர் தமிழில்</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                            type="text"
-                                                            value="{{ $services->relationship_name_tamil_3 }}"
-                                                            class="form-control" name="relationship_name_tamil_3"
-                                                            maxlength="50" placeholder="பெயர் தமிழில்" />
-                                                        <label style="color:#23e156" for="caste"
-                                                            class="form-label">Caste</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                            type="text" value="{{ $services->caste }}"
-                                                            class="form-control" name="caste" maxlength="20"
-                                                            placeholder="caste" />
-                                                        <label style="color:#23e156" for="education"
+                                                        <label style="color:#e411dd" for="mother_name_english"
+                                                            class="form-label">Mother Name (ENGLISH)</label>
+                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                            type="text" value="{{ $services->mother_name_english }}"
+                                                            class="form-control" name="mother_name_english"
+                                                            maxlength="50" placeholder="Mother Name (ENGLISH)" />  
+                                                        <label style="color:#e411dd" for="education"
                                                             class="form-label">Education</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                            type="text" value="{{ $services->education }}"
-                                                            class="form-control" name="education" maxlength="50"
-                                                            placeholder="Education" />
-
+                                                        <select @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                            class="form-control" name="education">
+                                                            <option value="">Select Education</option>
+                                                            <option @if ($services->education == 'Students') selected @endif
+                                                                value="Students">Students
+                                                            </option>
+                                                            <option @if ($services->education == 'No Education') selected @endif
+                                                                value="No Education">No Education
+                                                            </option>
+                                                            <option @if ($services->education == 'Private Employee') selected @endif
+                                                                value="Private Employee">Private Employee
+                                                            </option>
+                                                            <option @if ($services->education == 'Govt.Employee') selected @endif
+                                                                value="Govt.Employee">Govt.Employee
+                                                            </option>
+                                                            <option @if ($services->education == 'Daily Wages') selected @endif
+                                                                value="Daily Wages">Daily Wages
+                                                            </option>
+                                                            <option @if ($services->education == 'Others') selected @endif
+                                                                value="Others">Others
+                                                            </option>
+                                                        </select>
                                                         <label style="color:#e411dd" for="street_name_tamil"
                                                             class="form-label">தெரு பெயர்</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif
                                                             type="text" value="{{ $services->street_name_tamil }}"
                                                             class="form-control" name="street_name_tamil" maxlength="50"
                                                             placeholder="தெரு பெயர்" />
-                                                        <label style="color:#e411dd" for="street_name_tamil"
+                                                        <label style="color:#e411dd" for="postal_area_tamil"
                                                             class="form-label">அஞ்சல் பெயர்</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                            type="text" value="{{ $services->street_name_tamil }}"
-                                                            class="form-control" name="street_name_tamil" maxlength="50"
+                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                            type="text" value="{{ $services->postal_area_tamil }}"
+                                                            class="form-control" name="postal_area_tamil" maxlength="50"
                                                             placeholder="அஞ்சல் பெயர்" />
                                                     </div>
                                                     <div class="mb-3 col-md-4">
                                                         <label style="color:#23e156" for="personalized_name_english"
-                                                            class="form-label">Name In English</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                            class="form-label">Applicant Name</label>
+                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif
                                                             type="text"
                                                             value="{{ $services->personalized_name_english }}"
                                                             class="form-control" name="personalized_name_english"
                                                             maxlength="50" placeholder="Name In English" />
                                                         <label style="color:#23e156" for="relationship_name_english_1"
                                                             class="form-label">Name In English</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif
                                                             type="text"
                                                             value="{{ $services->relationship_name_english_1 }}"
                                                             class="form-control" name="relationship_name_english_1"
                                                             maxlength="50" placeholder="Name In English" />
-                                                        <label style="color:#23e156" for="relationship_name_english_2"
-                                                            class="form-label">Name In English</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                            type="text"
-                                                            value="{{ $services->relationship_name_english_2 }}"
-                                                            class="form-control" name="relationship_name_english_2"
-                                                            maxlength="50" placeholder="Name In English" />
-                                                        <label style="color:#23e156" for="relationship_name_english_3"
-                                                            class="form-label">Name In English</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                            type="text"
-                                                            value="{{ $services->relationship_name_english_3 }}"
-                                                            class="form-control" name="relationship_name_english_3"
-                                                            maxlength="50" placeholder="Name In English" />
-
+                                                        <label style="color:#23e156" for="maritial_status"
+                                                            class="form-label">Maritial Status</label>
+                                                        <select @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                            class="form-control" name="maritial_status">
+                                                            <option value="">Select Maritial Status</option>
+                                                            <option @if ($services->maritial_status == 'Un Married') selected @endif
+                                                                value="Un Married">Un Married
+                                                            </option>
+                                                            <option @if ($services->maritial_status == 'Married') selected @endif
+                                                                value="Married">Married
+                                                            </option>
+                                                            <option @if ($services->maritial_status == 'Widower') selected @endif
+                                                                value="Widower">Widower
+                                                            </option>
+                                                            <option @if ($services->maritial_status == 'Widow') selected @endif
+                                                                value="Widow">Widow
+                                                            </option>
+                                                            <option @if ($services->maritial_status == 'Divorced') selected @endif
+                                                                value="Divorced">Divorced
+                                                            </option>
+                                                        </select>
                                                         <label style="color:#23e156" for="religion"
                                                             class="form-label">Religion</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif
                                                             type="text" value="{{ $services->religion }}"
                                                             class="form-control" name="religion" maxlength="20"
                                                             placeholder="Religion" />
-
-                                                        <label style="color:#23e156" for="work"
-                                                            class="form-label">Work</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                            type="text" value="{{ $services->work }}"
-                                                            class="form-control" name="work" maxlength="50"
-                                                            placeholder="Work" />
-
                                                         <label style="color:#23e156" for="street_name"
                                                             class="form-label">Street Name</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif
                                                             type="text" value="{{ $services->street_name }}"
                                                             class="form-control" name="street_name" maxlength="30"
                                                             placeholder="Street Name" />
-
-                                                        <label style="color:#23e156" for="village_administrative_area"
+                                                        <label style="color:#23e156" for="postal_area_english"
                                                             class="form-label">Postal Area</label>
-                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                            type="text"
-                                                            value="{{ $services->village_administrative_area }}"
-                                                            class="form-control" name="village_administrative_area"
-                                                            maxlength="20" placeholder="Postal Area" />
+                                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                            type="text" value="{{ $services->postal_area_english }}"
+                                                            class="form-control" name="postal_area_english"
+                                                            maxlength="50" placeholder="Postal Area" />
 
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                            
                                     <h4 class="text-center"> Basic Details </h4>
 
                                     <div class="mb-3 col-md-6">
@@ -397,7 +370,7 @@
                                         <div class="mb-3 col-md-6">
                                             <label>Job Type</label>
                                             <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required
-                                                class="form-control" id="other_certificate" name="job_type"
+                                                class="form-control" id="job_type" name="job_type"
                                                 style="width: 100%;">
                                                 <option value="">Select Job Type</option>
                                                 <option @if ($services->job_type == 'Govt') selected @endif value="Govt">
@@ -421,7 +394,7 @@
                                                     @endif
                                                 @else
                                                     <label>Salary Slip</label>
-                                                    <input @if ($services->salary_slip == '') required @endif
+                                                    <input @if ($services->salary_slip == '' && $services->job_type == 'Govt') required @endif
                                                         class="form-control" type="file" id="salary_slip"
                                                         accept="image/jpeg, image/png" name="salary_slip">
                                                     @if ($services->salary_slip != '')
@@ -439,7 +412,7 @@
                                                     @endif
                                                 @else
                                                     <label>Pancard</label>
-                                                    <input @if ($services->pancard == '') required @endif
+                                                    <input @if ($services->pancard == '' && $services->job_type == 'Govt') required @endif
                                                         class="form-control" type="file" id="pancard"
                                                         accept="image/jpeg, image/png" name="pancard">
                                                     @if ($services->pancard != '')
@@ -452,70 +425,69 @@
                                         </div>
                                     @elseif($serviceid == 3)
                                     <div class="mb-3 col-md-6">
-                                        <label class="form-label">Father's Community</label>
-                                        <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required
-                                            name="father_community" id="father_community" class="form-control">
-                                            <option value="">Select Father's Community</option>
-                                            <option @if ($services->father_community == 'BC') selected @endif value="BC">BC</option>
-                                            <option @if ($services->father_community == 'BC Muslim') selected @endif value="BC Muslim">BC Muslim</option>
-                                            <option @if ($services->father_community == 'OC') selected @endif
-                                            value="OC">OC</option>
-                                            <option @if ($services->father_community == 'MBC') selected @endif value="MBC">
-                                            MBC</option>
-                                                <option @if ($services->father_community == 'DNC/DNT') selected @endif value="DNC/DNT">DNC/DNT</option>
-                                            <option @if ($services->father_community == 'SC') selected @endif value="SC">SC</option>
-                                            <option @if ($services->father_community == 'ST') selected @endif
-                                            value="ST">ST</option>
-                                            <option @if ($services->father_community == 'SC Arunthathiyar') selected @endif value="SC Arunthathiyar">
-                                            SC Arunthathiyar</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                    <label for="father_caste" class="form-label">Father's Caste</label>
-                                          <input @if (Auth::user()->id != $apply_user_id) disabled @endif
-                                           type="text" value="{{ $services->father_caste }}" class="form-control" name="father_caste" maxlength="100"
-                                            placeholder="Father's Caste" />
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label class="form-label">Mother's Community</label>
-                                        <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required
-                                            name="mother_community" id="mother_community" class="form-control">
-                                            <option value="">Select Mother's Community</option>
-                                            <option @if ($services->mother_community == 'BC') selected @endif value="BC">BC</option>
-                                            <option @if ($services->mother_community == 'BC Muslim') selected @endif value="BC Muslim">BC Muslim</option>
-                                            <option @if ($services->mother_community == 'OC') selected @endif
-                                            value="OC">OC</option>
-                                            <option @if ($services->mother_community == 'MBC') selected @endif value="MBC">
-                                            MBC</option>
-                                                <option @if ($services->mother_community == 'DNC/DNT') selected @endif value="DNC/DNT">DNC/DNT</option>
-                                            <option @if ($services->mother_community == 'SC') selected @endif value="SC">SC</option>
-                                            <option @if ($services->mother_community == 'ST') selected @endif
-                                            value="ST">ST</option>
-                                            <option @if ($services->mother_community == 'SC Arunthathiyar') selected @endif value="SC Arunthathiyar">
-                                            SC Arunthathiyar</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                    <label for="mother_name_tamil" class="form-label">Mother's Caste</label>
-                                          <input @if (Auth::user()->id != $apply_user_id) disabled @endif
-                                           type="text" value="{{ $services->mother_Caste }}" class="form-control" name="mother_Caste" maxlength="100"
-                                            placeholder="Mother's Caste" />
-                                    </div>
+                                            <label class="form-label">Father's Community</label>
+                                            <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required
+                                                name="father_community" id="father_community" class="form-control">
+                                                <option value="">Select Father's Community</option>
+                                                <option @if ($services->father_community == 'BC') selected @endif value="BC">BC</option>
+                                                <option @if ($services->father_community == 'BC Muslim') selected @endif value="BC Muslim">BC Muslim</option>
+                                                <option @if ($services->father_community == 'OC') selected @endif
+                                                value="OC">OC</option>
+                                                <option @if ($services->father_community == 'MBC') selected @endif value="MBC">
+                                                MBC</option>
+                                                    <option @if ($services->father_community == 'DNC/DNT') selected @endif value="DNC/DNT">DNC/DNT</option>
+                                                <option @if ($services->father_community == 'SC') selected @endif value="SC">SC</option>
+                                                <option @if ($services->father_community == 'ST') selected @endif
+                                                value="ST">ST</option>
+                                                <option @if ($services->father_community == 'SC Arunthathiyar') selected @endif value="SC Arunthathiyar">
+                                                SC Arunthathiyar</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                        <label for="father_caste" class="form-label">Father's Caste</label>
+                                              <input @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                               type="text" value="{{ $services->father_caste }}" class="form-control" name="father_caste" maxlength="100"
+                                                placeholder="Father's Caste" />
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Mother's Community</label>
+                                            <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required
+                                                name="mother_community" id="mother_community" class="form-control">
+                                                <option value="">Select Mother's Community</option>
+                                                <option @if ($services->mother_community == 'BC') selected @endif value="BC">BC</option>
+                                                <option @if ($services->mother_community == 'BC Muslim') selected @endif value="BC Muslim">BC Muslim</option>
+                                                <option @if ($services->mother_community == 'OC') selected @endif
+                                                value="OC">OC</option>
+                                                <option @if ($services->mother_community == 'MBC') selected @endif value="MBC">
+                                                MBC</option>
+                                                    <option @if ($services->mother_community == 'DNC/DNT') selected @endif value="DNC/DNT">DNC/DNT</option>
+                                                <option @if ($services->mother_community == 'SC') selected @endif value="SC">SC</option>
+                                                <option @if ($services->mother_community == 'ST') selected @endif
+                                                value="ST">ST</option>
+                                                <option @if ($services->mother_community == 'SC Arunthathiyar') selected @endif value="SC Arunthathiyar">
+                                                SC Arunthathiyar</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                        <label for="mother_caste" class="form-label">Mother's Caste</label>
+                                              <input @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                               type="text" value="{{ $services->mother_caste }}" class="form-control" name="mother_caste" maxlength="100"
+                                                placeholder="Mother's Caste" />
+                                        </div>
                                         <div class="mb-3 col-md-6">
                                             <label class="form-label">Relationship</label>
                                             <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required
-                                                name="relationship" class="form-control">
+                                                name="relationship" id="relation" class="form-control">
                                                 <option value="">Select Relationship</option>
-                                                <option @if ($services->relationship == 'Father') selected @endif value="Father">
-                                                    Father</option>
+                                                <option @if ($services->relationship == 'Father') selected @endif value="Father">Father</option>
+                                                <option @if ($services->relationship == 'Mother') selected @endif value="Mother">Mother</option>
                                                 <option @if ($services->relationship == 'Brother') selected @endif
-                                                    value="Brother">Brother</option>
+                                                value="Brother">Brother</option>
                                                 <option @if ($services->relationship == 'Sister') selected @endif value="Sister">
                                                     Sister</option>
                                             </select>
                                         </div>
-                                        <div class="mb-3 col-md-6">
-
+                                        <div class="mb-3 col-md-6" id="tc" style="display :none;">
                                             @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
                                                 @if ($services->tc_community_certificate != '')
                                                     <label>TC / Community Certificate</label>
@@ -531,6 +503,45 @@
                                                 @if ($services->tc_community_certificate != '')
                                                     <a target="_blank"
                                                         href="{{ URL::to('/') }}/upload/services/tc_community_certificate/{{ $services->tc_community_certificate }}">Download</a><br>
+                                                @endif
+                                            @endif
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="affidavithide" style="display :none;">
+                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                                @if ($services->affidavit != '')
+                                                    <label>Affidavit</label>
+                                                    <br><a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/affidavit/{{ $services->affidavit }}"
+                                                        class="btn btn-primary me-2">View</a><br>
+                                                @endif
+                                            @else
+                                                <label>Affidavit</label>
+                                                <input @if ($services->affidavit == '') @endif
+                                                    class="form-control" type="file" accept="image/jpeg, image/png"
+                                                    name="affidavit">
+                                                @if ($services->affidavit != '')
+                                                    <a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/affidavit/{{ $services->affidavit }}">Download</a><br>
+                                                @endif
+                                            @endif
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="self" style="display :none;">
+
+                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                                @if ($services->self_community_certificate != '')
+                                                    <label>Self Community Certificate (If Available)</label>
+                                                    <br><a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/self_community_certificate/{{ $services->self_community_certificate }}"
+                                                        class="btn btn-primary me-2">View</a><br>
+                                                @endif
+                                            @else
+                                                <label>Self Community Certificate (If Available)</label>
+                                                <input @if ($services->self_community_certificate == '') @endif
+                                                    class="form-control" type="file" accept="image/jpeg, image/png"
+                                                    name="self_community_certificate">
+                                                @if ($services->self_community_certificate != '')
+                                                    <a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/self_community_certificate/{{ $services->self_community_certificate }}">Download</a><br>
                                                 @endif
                                             @endif
                                         </div>
@@ -1194,3 +1205,4 @@
     }
 </script>
 @endpush
+

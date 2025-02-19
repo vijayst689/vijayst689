@@ -416,7 +416,7 @@ public function submit_applyservice( Request $request ) {
 }
 
 public function submitapply_tnegaservices1(Request $request){
-
+//dd($request->all());
     $user_id = 0;
     $retailer_id = 0;
     $distributor_id = 0;
@@ -466,6 +466,10 @@ public function submitapply_tnegaservices1(Request $request){
         'can_number'        => $request->can_number,
         'mother_name_tamil'        => $request->mother_name_tamil,
         'mother_name_english'        => $request->mother_name_english,
+        'father_community'        => $request->father_community,
+        'father_caste'        => $request->father_caste,
+        'mother_community'        => $request->mother_community,
+        'mother_caste'        => $request->mother_caste,
         'status'        => 'Pending',
         'applied_date'  => date("Y-m-d"),
         'created_at'    => date("Y-m-d"),
@@ -621,6 +625,21 @@ public function submitapply_tnegaservices1(Request $request){
         ]);
 
     }
+
+    if($request->has('family_relationship')){
+        foreach ( $request->family_relationship as $key => $relation ) {
+          $relation_name = $request->relation_name[ $key ];
+          $relation_name_tamil = $request->relation_name_tamil[ $key ];
+          $relation_age = $request->relation_age[ $key ];
+          $occupation = $request->occupation[ $key ];
+         
+          $sql = "insert into family_member (service_id,relation,relation_name,relation_name_tamil,relation_age,occupation) values ($insertid,'$relation','$relation_name','$relation_name_tamil','$relation_age','$occupation')";
+          DB::insert( $sql );
+          
+          
+        }
+      }
+
 
 
     $servicepayment = $request->service_amount;
