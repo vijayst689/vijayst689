@@ -46,8 +46,8 @@
                                             <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
                                             </li>
-                                            <li><a href="{{ url('/appliedservice') }}/Reject"><i
-                                                        class="material-icons-outlined">arrow_right</i>Reject</a>
+                                            <li><a href="{{ url('/appliedservice') }}/Rejected"><i
+                                                        class="material-icons-outlined">arrow_right</i>Rejected</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Approved"><i
                                                         class="material-icons-outlined">arrow_right</i>Approved</a>
@@ -60,15 +60,16 @@
                                             </div>
                                             <div class="menu-title">PDF Services</div>
                                         </a>
-                                         <ul class="mm-collapse">
+                                        <ul class="mm-collapse">
                                             <li><a href="{{ url('/addfindservice') }}"><i
-                                                class="material-icons-outlined">arrow_right</i>Add Find Services</a>
-                                           </li>
-                                             <li><a href="{{ url('/viewfind') }}"><i
-                                                class="material-icons-outlined">arrow_right</i>View Find</a>
+                                                        class="material-icons-outlined">arrow_right</i>Add Find
+                                                    Services</a>
+                                            </li>
+                                            <li><a href="{{ url('/viewfind') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>View Find</a>
                                             </li>
                                             <li><a href="{{ url('/findpayment') }}"><i
-                                                class="material-icons-outlined">arrow_right</i>Payment</a>
+                                                        class="material-icons-outlined">arrow_right</i>Payment</a>
                                             </li>
                                             <li><a href="{{ url('/pdfservices') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>PDF SERVICE</a>
@@ -83,13 +84,15 @@
                                         </a>
                                         <ul class="mm-collapse">
                                             <li><a href="{{ url('/addutilityservice') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Add Utility Services</a>
+                                                        class="material-icons-outlined">arrow_right</i>Add Utility
+                                                    Services</a>
                                             </li>
                                             <li><a href="{{ url('/viewutility') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>View Utility</a>
                                             </li>
                                             <li><a href="{{ url('/viewoperators') }}"><i
-                                                class="material-icons-outlined">arrow_right</i>View Operators</a>
+                                                        class="material-icons-outlined">arrow_right</i>View
+                                                    Operators</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -145,7 +148,8 @@
                                                         class="material-icons-outlined">arrow_right</i>CoursePayment</a>
                                             </li>
                                             <li><a href="{{ url('/courses') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Apply Certificate</a>
+                                                        class="material-icons-outlined">arrow_right</i>Apply
+                                                    Certificate</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -284,9 +288,9 @@
                                             <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
                                             </li>
-                                            {{-- <li><a href="{{ url('/appliedservice') }}/Reject"><i
-                                                class="material-icons-outlined">arrow_right</i>Reject</a>
-                                            </li> --}}
+                                            <li><a href="{{ url('/appliedservice') }}/Rejected"><i
+                                                        class="material-icons-outlined">arrow_right</i>Rejected</a>
+                                            </li>
                                             <li><a href="{{ url('/appliedservice') }}/Approved"><i
                                                         class="material-icons-outlined">arrow_right</i>Approved</a>
                                             </li>
@@ -326,9 +330,9 @@
                                             </div>
                                             <div class="menu-title">PDF Services</div>
                                         </a>
-                                         <ul class="mm-collapse">
+                                        <ul class="mm-collapse">
                                             <li><a href="{{ url('/findpayment') }}"><i
-                                                class="material-icons-outlined">arrow_right</i>Payment</a>
+                                                        class="material-icons-outlined">arrow_right</i>Payment</a>
                                             </li>
                                             <li><a href="{{ url('/pdfservices') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>PDF SERVICE</a>
@@ -341,9 +345,9 @@
                                             </div>
                                             <div class="menu-title">UTILITY Services</div>
                                         </a>
-                                         <ul class="mm-collapse">
+                                        <ul class="mm-collapse">
                                             <li><a href="{{ url('/utility') }}"><i
-                                                class="material-icons-outlined">arrow_right</i>Utility</a>
+                                                        class="material-icons-outlined">arrow_right</i>Utility</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -387,7 +391,8 @@
                                                         class="material-icons-outlined">arrow_right</i>CoursePayment</a>
                                             </li>
                                             <li><a href="{{ url('/courses') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Apply Certificate</a>
+                                                        class="material-icons-outlined">arrow_right</i>Apply
+                                                    Certificate</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -503,6 +508,9 @@
                                             <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
                                             </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Rejected"><i
+                                                        class="material-icons-outlined">arrow_right</i>Rejected</a>
+                                            </li>
                                             <li><a href="{{ url('/appliedservice') }}/Approved"><i
                                                         class="material-icons-outlined">arrow_right</i>Approved</a>
                                             </li>
@@ -556,7 +564,7 @@
                                             </div>
                                             <div class="menu-title">PDF Services</div>
                                         </a>
-                                         <ul class="mm-collapse">
+                                        <ul class="mm-collapse">
 
                                             <li><a href="{{ url('/pdfservices') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>PDF SERVICE</a>
@@ -569,9 +577,9 @@
                                             </div>
                                             <div class="menu-title">UTILITY Services</div>
                                         </a>
-                                         <ul class="mm-collapse">
+                                        <ul class="mm-collapse">
                                             <li><a href="{{ url('/utility') }}"><i
-                                                class="material-icons-outlined">arrow_right</i>Utility</a>
+                                                        class="material-icons-outlined">arrow_right</i>Utility</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -595,7 +603,8 @@
                                         </a>
                                         <ul class="mm-collapse">
                                             <li><a href="{{ url('/courses') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Apply Certificate</a>
+                                                        class="material-icons-outlined">arrow_right</i>Apply
+                                                    Certificate</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -642,6 +651,9 @@
                                             <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
                                             </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Rejected"><i
+                                                        class="material-icons-outlined">arrow_right</i>Rejected</a>
+                                            </li>
                                             <li><a href="{{ url('/appliedservice') }}/Approved"><i
                                                         class="material-icons-outlined">arrow_right</i>Approved</a>
                                             </li>
@@ -680,7 +692,7 @@
                                             </div>
                                             <div class="menu-title">PDF Services</div>
                                         </a>
-                                         <ul class="mm-collapse">
+                                        <ul class="mm-collapse">
 
                                             <li><a href="{{ url('/pdfservices') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>PDF SERVICE</a>
@@ -693,9 +705,9 @@
                                             </div>
                                             <div class="menu-title">UTILITY Services</div>
                                         </a>
-                                         <ul class="mm-collapse">
+                                        <ul class="mm-collapse">
                                             <li><a href="{{ url('/utility') }}"><i
-                                                class="material-icons-outlined">arrow_right</i>Utility</a>
+                                                        class="material-icons-outlined">arrow_right</i>Utility</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -719,7 +731,8 @@
                                         </a>
                                         <ul class="mm-collapse">
                                             <li><a href="{{ url('/courses') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Apply Certificate</a>
+                                                        class="material-icons-outlined">arrow_right</i>Apply
+                                                    Certificate</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -768,9 +781,9 @@
                                             <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
                                             </li>
-                                            {{-- <li><a href="{{ url('/appliedservice') }}/Reject"><i
-                                                        class="material-icons-outlined">arrow_right</i>Reject</a>
-                                            </li> --}}
+                                            <li><a href="{{ url('/appliedservice') }}/Rejected"><i
+                                                        class="material-icons-outlined">arrow_right</i>Rejected</a>
+                                            </li>
                                             <li><a href="{{ url('/appliedservice') }}/Approved"><i
                                                         class="material-icons-outlined">arrow_right</i>Approved</a>
                                             </li>
@@ -800,7 +813,7 @@
                                             </div>
                                             <div class="menu-title">PDF Services</div>
                                         </a>
-                                         <ul class="mm-collapse">
+                                        <ul class="mm-collapse">
 
                                             <li><a href="{{ url('/pdfservices') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>PDF SERVICE</a>
@@ -813,9 +826,9 @@
                                             </div>
                                             <div class="menu-title">UTILITY Services</div>
                                         </a>
-                                         <ul class="mm-collapse">
+                                        <ul class="mm-collapse">
                                             <li><a href="{{ url('/utility') }}"><i
-                                                class="material-icons-outlined">arrow_right</i>Utility</a>
+                                                        class="material-icons-outlined">arrow_right</i>Utility</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -839,7 +852,8 @@
                                         </a>
                                         <ul class="mm-collapse">
                                             <li><a href="{{ url('/courses') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Apply Certificate</a>
+                                                        class="material-icons-outlined">arrow_right</i>Apply
+                                                    Certificate</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -879,5 +893,3 @@
     </div>
 </aside>
 <!--  -->
-
-

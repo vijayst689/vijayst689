@@ -45,8 +45,8 @@
                                         <th>User Id</th>
                                         <th>Name</th>
                                         <th>Phone</th>
-                                        <th>Email</th>
-                                        <th>Password</th>
+                                        <!--<th>Email</th>
+                                        <th>Password</th>-->
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -65,8 +65,8 @@
                                                 </a>
                                             </td>
                                             <td>{{ $cus->phone }}</td>
-                                            <td>{{ $cus->email }}</td>
-                                            <td>{{ $cus->cpassword }}</td>
+                                           <!--<td>{{ $cus->email }}</td>
+                                            <td>{{ $cus->cpassword }}</td>-->
                                             <td style="white-space: nowrap">
                                                 <a href="{{ url('/editcustomer', $cus->id) }}" style="font-size: small"
                                                     class="btn-sm btn btn-primary">Edit</a>
