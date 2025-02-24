@@ -108,18 +108,18 @@
                                                     name="door_no" placeholder="Door No" />
                                                 <label style="color:#23e156" for="pin_code"
                                                     class="form-label">Pin Code</label>
-                                                <input type="text" maxlength="10" class="form-control"
+                                                <input type="text" maxlength="6" class="form-control number"
                                                     name="pin_code" placeholder="Pin Code" />
                                             </div>
                                             <div class="mb-3 col-md-4">
 
                                                 <label style="color:#e411dd" for="personalized_name_tamil"
                                                     class="form-label">விண்ணப்பதாரர் பெயர் தமிழில்</label>
-                                                <input type="text" maxlength="20" class="form-control"
+                                                <input type="text" maxlength="100" class="form-control"
                                                     name="personalized_name_tamil" placeholder="பெயர் தமிழில்" />
                                                 <label style="color:#e411dd" for="relationship_name_tamil_1"
                                                     class="form-label">பெயர் தமிழில்</label>
-                                                <input type="text" maxlength="20" class="form-control"
+                                                <input type="text" maxlength="100" class="form-control"
                                                     name="relationship_name_tamil_1"
                                                     placeholder="பெயர் தமிழில்" />
                                                 <label style="color:#e411dd" for="mother_name_english"
@@ -155,12 +155,12 @@
 
                                                 <label style="color:#23e156" for="personalized_name_english"
                                                     class="form-label">Applicant Name</label>
-                                                <input type="text" maxlength="20" class="form-control"
+                                                <input type="text" maxlength="100" class="form-control"
                                                     name="personalized_name_english"
                                                     placeholder="Name In English" />
                                                 <label style="color:#23e156" for="relationship_name_english_1"
                                                     class="form-label">Name In English</label>
-                                                <input type="text" maxlength="20" class="form-control"
+                                                <input type="text" maxlength="100" class="form-control"
                                                     name="relationship_name_english_1"
                                                     placeholder="Name In English" />
                                                 <label style="color:#23e156" for="maritial_status"
@@ -314,29 +314,54 @@
                         name="aggregation" />
                         </div>
                         <div class="mb-3 col-md-6">
-                        <label class="form-label">கூட்டுபட்டாவாக இருந்தால் EC சான்றிதழ்  அல்லது பத்திரம் வேண்டும்</label>
-                        <input required class="form-control" type="file"
-                        name="ec_certificate" />
+                        <label>பரப்பளவு(Sq.ft)</label>
+                        <input class="form-control" required type="text"
+                        name="area" maxlength="80" placeholder="Land Area (in Hectares)*">
                         </div>
-                        <div class="mb-3 col-md-6">
-                        <label class="form-label">வில்லங்கம்</label>
-                        <input required class="form-control" type="file"
-                        name="villankam" />
+                         <div class="mb-3 col-md-6">
+                       <label>Select Any</label>
+                        <select required class="form-control" id="strap_details" name="any_proof"  style="width: 100%;">
+                            <option value="">Select</option>
+                            <option value="Joint Strap">கூட்டு பட்டா</option>
+                            <option value="Strap">தனிபட்டா</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 col-md-6" style="display:none;" id="straphide">
+                        <label class="form-label">பத்திரம்</label>
+                        <input id="strap1" class="form-control" type="file"
+                        name="strap" />
                         </div>
-                        <div class="mb-3 col-md-6">
-                        <label class="form-label">வீ.ஏ.ஓ சான்று</label>
-                        <input required class="form-control" type="file"
-                        name="vao_certificate" />
-                        </div>
-                        <div class="mb-3 col-md-6">
-                        <label class="form-label">சுய வாக்குமூலம்</label>
-                        <input required class="form-control" type="file"
-                        name="self_declaration_certificate" />
-                        </div>
-                        <div class="mb-3 col-md-6">
-                        <label class="form-label">மற்றவைகள் இருந்தால் அதன் நகல்</label>
-                        <input required class="form-control" type="file"
-                        name="other_certificate" />
+                    <div class="row" id="dochide" style="display:none;">
+                        <h3 class="text-center">Document Details</h3>
+                            <table id="doc" class="table table-bordered">
+                                <thead>
+                                     <tr>
+                                        <th>Name of the document</th>
+                                        <th>File</th>
+                                         <th><a class="btn btn-sm btn-success" onclick="addnewrow()"><i
+                                                    class='material-symbols-outlined'>add</i></a></th>
+                                    </tr>
+                                   
+                                </thead>
+                                
+                                <tbody>
+                                    <tr>
+                                        <td> <select id="docdetails"  name="doc_name[]" class="form-control">
+                                                <option value="">Select</option>
+                                                <option value="Deed">பத்திரம்</option>
+                                                <option value="NOC">NOC</option>
+                                                <option value="Ec/Villankam">Ec/Villankam</option>
+                                                <option value="VAO Certificate">விஏஓ சான்றிதழ்</option>
+                                            </select></td>
+                                         
+                                        <td>
+                                            <input  class="form-control"
+                                                type="file" id="docimg"  name="doc[]" accept="image/jpeg, image/png">
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                         @elseif($serviceid == 24)
                         <div class="mb-3 col-md-6">
@@ -534,6 +559,35 @@ function gettaluk(dist_id) {
         });
 
 
+
+
+$('#strap_details').change(function(){
+        if($('#strap_details').val() == 'Joint Strap') {
+            $('#dochide').show("slow");
+            $('#docdetails').prop("required",true);
+            $('#docimg').prop("required",true);
+            $('#straphide').hide("slow");
+            $('#strap1').prop("required",false);
+
+        } else if($('#strap_details').val() == 'Strap'){
+            $('#straphide').show("slow");
+            $('#strap1').prop("required",true);
+            $('#dochide').hide("slow");
+             $('#docdetails').prop("required",false);
+            $('#docimg').prop("required",false);
+
+        }else{
+             $('#dochide').hide("slow");
+             $('#docdetails').prop("required",false);
+            $('#docimg').prop("required",false);
+            $('#straphide').hide("slow");
+            $('#strap1').prop("required",false);
+        }
+    });
+
+
+
+
     $('#age_proof').change(function(){
         if($('#age_proof').val() == 'Tc/Community Certificate') {
              $('#tc_community_certificatehide').show("slow");
@@ -661,6 +715,17 @@ function gettaluk(dist_id) {
 
         }
     });
+
+    $("#doc").on('click', '.btnDelete', function() {
+            $(this).closest('tr').remove();
+        });
+
+
+        function addnewrow() {
+            $("#doc tbody").append(
+                "<tr><td><select required name='doc_name[]' class='form-control'><option value=''>Select</option><option value='பத்திரம்'>பத்திரம்</option><option value='NOC'>NOC</option><option value='Ec/வில்லங்கம்'>Ec/வில்லங்கம்</option><option value='விஏஓ சான்றிதழ்'>விஏஓ சான்றிதழ்</option></select></td><td><input required class='form-control' type='file'  name='doc[]' accept='image/jpeg, image/png'></td><td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i class='mdi mdi-delete mdi-18px'></i></a></td></tr>"
+            );
+        }
 
 
     </script>
