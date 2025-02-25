@@ -1612,3 +1612,8 @@ alter table tnega_services add father_caste text DEFAULT NULL after father_commu
 alter table tnega_services add mother_community text DEFAULT NULL after father_caste;
 alter table tnega_services add mother_caste text DEFAULT NULL after mother_community;
 
+//25-02-2025
+alter table tnega_services add area text DEFAULT NULL;
+alter table tnega_services add application text DEFAULT NULL;
+alter table tnega_services add strap text DEFAULT NULL;
+

@@ -698,12 +698,25 @@ class ServicestatusController extends Controller
                 $services[ $key ][ 'family_details' ] = $result;
             }
             $services = json_decode( json_encode( $services ));
-        
-        }else{
-            $services = DB::table('tnega_services')->where('id',$id)->where('status',$status)->first();
         }
+            elseif($service_id == 23){
+                $services = DB::table('tnega_services')->where('id',$id)->where('status',$status)->get();
+                $services = json_decode( json_encode( $services ), true );
+                foreach ( $services as $key => $ser ) {
+                    $services[ $key ][ 'documents' ] = array();
+                    $ser_id = $ser[ 'id' ];
+                    $sql = "select * from document where service_id=$ser_id order by id Asc";
+                    $result = DB::select( $sql );
+                    $services[ $key ][ 'documents' ] = $result;
+                }
+                $services = json_decode( json_encode( $services ));
+               //dd($services);
+            }else{
+                $services = DB::table('tnega_services')->where('id',$id)->where('status',$status)->first();
+            }
+    
 
-        if($service_id == 181 || $service_id == 2 || $service_id == 15){
+        if($service_id == 181 || $service_id == 2 || $service_id == 15 || $service_id == 23){
             if(count($services) > 0){
                 $serviceid = $services[0]->service_id;
                 $user_id = $services[0]->user_id;
@@ -727,6 +740,9 @@ class ServicestatusController extends Controller
         }
         if($service_id == 2){
             return view( 'servicestatus.incomecertificateupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
+
+        }elseif($service_id == 23){
+        return view( 'servicestatus.smallagriserviceupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
 
         }
         elseif($service_id == 3 || $service_id == 4 || $service_id == 11 || $service_id == 14 || $service_id == 20 ){
@@ -1274,6 +1290,205 @@ if($request->has('family_relationship')){
       
       $sql = "insert into family_member (service_id,relation,relation_name,relation_name_tamil,relation_age,occupation) values ($request->applied_serviceid,'$relation','$relation_name','$relation_name_tamil','$relation_age','$occupation')";
       DB::insert( $sql );
+      
+      
+  }
+}
+}
+
+return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
+}
+
+public function submit_statusupdate_smallagriservice(Request $request){
+    //dd($request->all());
+$apply_user_id = 0;
+if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+    $apply_user_id = $request->user_id;
+}
+elseif($request->retailer_id == 0){
+    $apply_user_id = $request->distributor_id;
+}elseif($request->distributor_id == 0){
+    $apply_user_id = $request->retailer_id;
+}
+if($apply_user_id != Auth::user()->id){
+    $status = $request->status;
+    if($status == "Resubmit"){
+        DB::table( 'tnega_services' )->where('id', $request->applied_serviceid)->update( [
+            'remarks'  => $request->remarks,
+            'status'  => $status,
+        ] );
+    }elseif($status == "Processing"){
+        if ( $request->acknowledgement != null ) {
+            $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
+            $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
+            move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
+            DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+                'acknowledgement' => $acknowledgement,
+            ] );
+        }
+        DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'application_no' => $request->application_no,
+            'selects' => $request->selects,
+        ] );
+    }elseif($status == "Approved"){
+        if ( $request->certificate != null ) {
+            $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
+            $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'certificate'. DIRECTORY_SEPARATOR);
+            move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
+            DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+                'certificate' => $certificate,
+                'status' => $status,
+                'completed_date' => date("Y-m-d"),
+            ] );
+        }
+        DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'application' => $request->application,
+            'lects' => $request->lects,
+        ] );
+    }elseif($status == "Rejected"){
+        $serviceid = $request->serviceid;
+        $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+        $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+        $usertype = 0;
+        if($getusers){
+            $usertype = $getusers->user_type_id;
+        }
+        $payment = 0;
+        if($getservice_payment){
+            if($usertype == 3){
+              $payment = $getservice_payment->distributor_amount;
+          }elseif($usertype == 4){
+              $payment = $getservice_payment->retailer_amount;
+          }elseif($usertype == 5){
+              $payment = $getservice_payment->customer_amount;
+          }
+      } 
+
+      $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+      $servicename = "";
+      if($getservicename){
+        $servicename = $getservicename->service_name;
+    }
+    $date = date( 'Y-m-d' );
+    $time = date( 'H:i:s' );
+    $service_status = 'Out Payment';
+    $ad_info = "Service Refund For". ' ' .$servicename;
+
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $balance = 0;
+    if($getwallet){
+        $balance = $getwallet->wallet;
+    }
+    $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+    $balance1 = 0;
+    if($getuserswallet){
+        $balance1 = $getuserswallet->wallet;
+    }
+    $newbalance = $balance - $payment;
+    $newbalance1 = $balance1 + $payment;
+
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','1','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+    DB::insert( DB::raw( $sql ) );
+    $sql = "update users set wallet = wallet - $payment where id = 1";
+    DB::update( DB::raw( $sql ) );
+    $service_status = 'IN Payment';
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','1','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+    DB::insert( DB::raw( $sql ) );
+    $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+    DB::update( DB::raw( $sql ) );
+
+    DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+        'status' => $status,
+    ] );
+
+}
+}else{
+$status = "Pending";
+$serviceid = $request->serviceid;
+if($serviceid == 23){
+    if ($request->chitta != null) {
+         $chitta = uniqid().'.'.$request->file('chitta')->extension();
+         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'chitta' . DIRECTORY_SEPARATOR);
+         move_uploaded_file($_FILES['chitta']['tmp_name'], $filepath . $chitta);
+         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+             'chitta'         => $chitta,
+         ]);
+     }
+ 
+     if ($request->aggregation != null) {
+         $aggregation = uniqid().'.'.$request->file('aggregation')->extension();
+         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aggregation' . DIRECTORY_SEPARATOR);
+         move_uploaded_file($_FILES['aggregation']['tmp_name'], $filepath . $aggregation);
+         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+             'aggregation'         => $aggregation,
+         ]);
+     }
+
+    if ($request->strap != null) {
+        $strap = uniqid().'.'.$request->file('strap')->extension();
+        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'strap' . DIRECTORY_SEPARATOR);
+        move_uploaded_file($_FILES['strap']['tmp_name'], $filepath . $strap);
+        DB::table('tnega_services')->where('id', $insertid)->update([
+        'strap'         => $strap,
+    ]);
+    }
+    
+    DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+        'any_proof'            => $request->any_proof,
+        'area'       => $request->area,
+        
+    ]);
+    
+}
+
+DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+    'status' => $status,
+    'can_number'        => $request->can_number,
+    'can_details'        => $request->can_details,
+    'personalized'        => $request->personalized,
+    'relationship_1'        => $request->relationship_1,
+    'mother_name_tamil'        => $request->mother_name_tamil,
+    'mother_name_english'        => $request->mother_name_english,
+    'dob'        => $request->dob,
+    'religion'        => $request->religion,
+    'education'        => $request->education,
+    'work'        => $request->work,
+    'door_no'        => $request->door_no,
+    'personalized_name_tamil'        => $request->personalized_name_tamil,
+    'relationship_name_tamil_1'        => $request->relationship_name_tamil_1,
+    'community'        => $request->community,
+    'smartcard_number'        => $request->smartcard_number,
+    'street_name_tamil'        => $request->street_name_tamil,
+    'personalized_name_english'        => $request->personalized_name_english,
+    'relationship_name_english_1'        => $request->relationship_name_english_1,
+    'maritial_status'        => $request->maritial_status,
+    'caste'        => $request->caste,
+    'street_name'        => $request->street_name,
+    'pin_code'        => $request->pin_code,
+    'postal_area_tamil'        => $request->postal_area_tamil,
+    'postal_area_english'        => $request->postal_area_english,
+] );
+
+if($request->has('doc_id')){
+    foreach ( $request->doc_id as $key => $id ) {
+      $doc_name = $request->doc_name[ $key ];
+     DB::table( 'document' )->where( 'id', $id )->update( [
+              'doc_name'       => $doc_name,
+          ] );
+              if (isset($request->doc[$key])) {
+        if ($request->doc[$key] != null) {
+            $file1 = uniqid().'.'.$request->file('doc')[$key]->extension();
+      //dd($request->doc[$key]);
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'doc' . DIRECTORY_SEPARATOR);
+            move_uploaded_file($_FILES['doc']['tmp_name'][$key], $filepath . $file1);
+            DB::table( 'document' )->where( 'id', $id )->update( [
+              'doc'       => $file1,
+          ] );
+        }
+    }
+     
       
       
   }
