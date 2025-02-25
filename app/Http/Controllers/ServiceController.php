@@ -1399,7 +1399,6 @@ public function submitapply_tnegaservices5(Request $request){
         $user_id = Auth::user()->id;
     }
     $serviceid = $request ->serviceid;
-
     DB::table( 'tnega_services' )->insert( [
         'user_id'       =>   $user_id,
         'retailer_id'   =>   $retailer_id,

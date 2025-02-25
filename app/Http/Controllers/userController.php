@@ -85,7 +85,12 @@ class userController extends Controller
         $viewcustomers = DB::table('users')->where( 'user_type_id', '=', 5)->orderBy( 'id', 'Asc' )->get();
         return view('customer.customers',compact('viewcustomers'));
     }
+     
+    public function enquiry(){
+        $enquiry = DB::table('enquiry')->orderBy('id', 'Asc')->get();
+        return view('enquiry.enquiry',compact('enquiry'));
 
+   }
     public function savecustomer(Request $request)
     {
 

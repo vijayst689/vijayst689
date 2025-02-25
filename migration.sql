@@ -1617,3 +1617,19 @@ alter table tnega_services add area text DEFAULT NULL;
 alter table tnega_services add application text DEFAULT NULL;
 alter table tnega_services add strap text DEFAULT NULL;
 
+CREATE TABLE `document` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `service_id` int DEFAULT 0,
+  `doc_name` varchar(50) DEFAULT NULL,
+  `doc` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `enquiry` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) DEFAULT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `email` varchar(200) DEFAULT NULL,
+  `requirement` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;

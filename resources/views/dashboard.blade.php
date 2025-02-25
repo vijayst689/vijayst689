@@ -37,6 +37,7 @@
                                                 <p class="mb-0 fw-semibold">Welcome back</p>
                                                 <h4 class="fw-semibold mb-0 fs-4 mb-0">{{ Auth::user()->name }}</h4>
                                             </div>
+                                            <a class="copy_text btn btn-sm btn-primary" data-toggle="tooltip" title="Copy to Clipboard" href="https://pkrmsolution.com/enquiry"><i class="icon-share"></i> Copy Link</a>
                                         </div>
                                     </div>
                                 </div><!--end row-->
@@ -202,6 +203,8 @@
                                             <div class="">
                                                 <p class="mb-0 fw-semibold">Welcome back</p>
                                                 <h4 class="fw-semibold mb-0 fs-4 mb-0">{{ Auth::user()->name }}</h4>
+                                            <a class="copy_text btn btn-sm btn-primary" data-toggle="tooltip" title="Copy to Clipboard" href="https://pkrmsolution.com/enquiry"><i class="icon-share"></i> Copy Link</a>
+
                                             </div>
                                         </div>
                                     </div>
@@ -494,6 +497,8 @@
                                             <div class="">
                                                 <p class="mb-0 fw-semibold">Welcome back</p>
                                                 <h4 class="fw-semibold mb-0 fs-4 mb-0">{{ Auth::user()->name }}</h4>
+                                            <a class="copy_text btn btn-sm btn-primary" data-toggle="tooltip" title="Copy to Clipboard" href="https://pkrmsolution.com/enquiry"><i class="icon-share"></i> Copy Link</a>
+
                                             </div>
                                         </div>
                                     </div>
@@ -722,6 +727,8 @@
                                             <div class="">
                                                 <p class="mb-0 fw-semibold">Welcome back</p>
                                                 <h4 class="fw-semibold mb-0 fs-4 mb-0">{{ Auth::user()->name }}</h4>
+                                            <a class="copy_text btn btn-sm btn-primary" data-toggle="tooltip" title="Copy to Clipboard" href="https://pkrmsolution.com/enquiry"><i class="icon-share"></i> Copy Link</a>
+
                                             </div>
                                         </div>
                                     </div>
@@ -928,6 +935,8 @@
                                         <div class="">
                                             <p class="mb-0 fw-semibold">Welcome back</p>
                                             <h4 class="fw-semibold mb-0 fs-4 mb-0">{{ Auth::user()->name }}</h4>
+                                            <a class="copy_text btn btn-sm btn-primary" data-toggle="tooltip" title="Copy to Clipboard" href="https://pkrmsolution.com/enquiry"><i class="icon-share"></i> Copy Link</a>
+
                                         </div>
                                     </div>
                                 </div>
@@ -1130,5 +1139,19 @@
                 $('#paidstatuscheck').modal("hide")({});
             }
         });
+
+        $('.copy_text').click(function (e) {
+   e.preventDefault();
+   var copyText = $(this).attr('href');
+
+   document.addEventListener('copy', function(e) {
+      e.clipboardData.setData('text/plain', copyText);
+      e.preventDefault();
+   }, true);
+
+   document.execCommand('copy');
+   toastr.success('Link Copied Successfully');
+ });
+
     </script>
 @endpush

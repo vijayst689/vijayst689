@@ -33,6 +33,7 @@
     <link href="{{ asset('assets/sass/semi-dark.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/sass/bordered-theme.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/sass/responsive.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toaster/4.0.1/css/bootstrap-toaster.min.css" rel="stylesheet">
 
 </head>
 
@@ -75,6 +76,7 @@
 
     <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toaster/4.0.1/js/bootstrap-toaster.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#example').DataTable();
