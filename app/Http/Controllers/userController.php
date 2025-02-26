@@ -91,6 +91,14 @@ class userController extends Controller
         return view('enquiry.enquiry',compact('enquiry'));
 
    }
+   public function viewenquiry()
+   {
+       if(Auth::user()->user_type_id != 2){
+           return redirect("/dashboard");
+       }
+       $enquiry = DB::table('enquiry')->orderBy( 'id' , 'Asc' )->get();
+       return view('enquiry.viewenquiry',compact('enquiry'));
+   }
 
    public function saveenquiry(Request $request){
     

@@ -24,6 +24,12 @@ class DashboardController extends Controller
                 $servicecount = $users[0]->servicecount;
             }
 
+            $sql = "select count(*) as enquiry_count from users where user_type_id = 2";
+            $users = DB::select(DB::raw($sql));
+            if (count($users) > 0) {
+                $enquiry_count = $users[0]->enquiry_count;
+            }
+
             $sql = "select count(*) as distributor from users where user_type_id = 3";
             $users = DB::select(DB::raw($sql));
             if (count($users) > 0) {
@@ -1655,7 +1661,7 @@ class DashboardController extends Controller
 
         }
 
-            return view('dashboard',compact('servicecount','customercount','retailer','distributor','retailer_count','distributor_count','customer','pending','inpro','resub','approve','service','RequestAmount','activation','allservice','ramjirequestAmount'));
+            return view('dashboard',compact('servicecount','customercount','enquiry_count','retailer','distributor','retailer_count','distributor_count','customer','pending','inpro','resub','approve','service','RequestAmount','activation','allservice','ramjirequestAmount'));
         }
 
         return redirect("login")->withSuccess('You are not allowed to access');

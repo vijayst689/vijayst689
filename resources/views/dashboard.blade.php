@@ -466,6 +466,28 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col">
+                        <div class="card rounded-4 w-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div>
+                                        <p class="mb-1">Enquiry</p>
+                                        <h3 class="mb-0">{{ $enquiry_count }}</h3>
+                                    </div>
+                                    <a href="{{ url('/viewenquiry') }}"><div
+                                        class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
+                                        <span class="material-icons-outlined fs-5 text-white"><i
+                                            class="material-icons-outlined">supervisor_account</i></span>
+                                    </div></a>
+                                </div>
+                                <div class="progress mb-0" style="height:6px;">
+                                    <div class="progress-bar bg-grd-danger" role="progressbar" style="width: 60%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         @endif
