@@ -68,6 +68,8 @@ Route::post('/checkpan', [App\Http\Controllers\UserController::class, 'checkpan'
 
 Route::post('/checkemailregister', [App\Http\Controllers\UserController::class, 'checkemailregister']);
 Route::get('/enquiry', [App\Http\Controllers\UserController::class, 'enquiry']);
+Route::post('/saveenquiry', [App\Http\Controllers\UserController::class, 'saveenquiry']);
+
 
 Route::post('/checkaadharregister', [App\Http\Controllers\UserController::class, 'checkaadharregister']);
 

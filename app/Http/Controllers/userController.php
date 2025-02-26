@@ -91,6 +91,19 @@ class userController extends Controller
         return view('enquiry.enquiry',compact('enquiry'));
 
    }
+
+   public function saveenquiry(Request $request){
+    
+    $saveenquiry = DB::table('enquiry')->insert([
+        'name'          => $request->name,
+        'email'         => $request->email,
+        'mobile'         => $request->mobile,
+        'requirement'   => $request->requirement,
+    ]);
+   
+   
+   return redirect('/enquiry')->with('success', 'Enquiry Add Successfully ... !');
+}
     public function savecustomer(Request $request)
     {
 
