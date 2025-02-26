@@ -74,7 +74,18 @@
                                                 placeholder="Email">
                                         </div>
                                     </div>
-                                    
+                                    <div class="mb-3 row">
+                                        <label for="example-url-input" class="col-sm-3 form-label">Users</label>
+                                        <div class="col-sm-9">
+                                        <select id="requirement" name="distributor_or_retailor" class="form-control">
+                                            <option value="">Select</option>
+                                            <option value="Admin">Admin</option>
+                                            <option value="Distributor">Distributor</option>
+                                            <option value="Retailer">Retailer</option>
+                                            
+                                        </select>
+                                        </div>
+                                        </div>
 
                                 </div>
 
@@ -90,13 +101,22 @@
                                     </div>
                                   
                                     <div class="mb-3 row">
-                                        <label for="example-url-input" class="col-sm-3 form-label">Requirement</label>
-                                        <div class="col-sm-9">
-                                            <textarea required class="form-control" maxlength="500" type="text" rows="3" name="requirement"
-                                                id="example-url-input" placeholder="Requirement"></textarea>
-                                        </div>
+                                    <label for="example-url-input" class="col-sm-3 form-label">Requirement</label>
+                                    <div class="col-sm-9">
+                                    <select id="requirement" name="requirement" class="form-control">
+                                        <option value="">Select Requirement</option>
+                                        <option value="Pdf Services">Pdf Services.</option>
+                                        <option value="Pan Agent Id">Pan Agent Id.</option>
+                                        <option value="Recharge">Recharge.</option>
+                                        <option value="Nalavariyam">Nalavariyam.</option>
+                                        <option value="Tnega">Tnega.</option>
+                                        <option value="Can Work">Can Work.</option>
+                                        <option value="Own Website">Own Website(whitelable).</option>
+                                    </select>
                                     </div>
-
+                                    </div>
+                                   
+                                </div>
                                 </div>
                                
                                 <div class="text-center">
