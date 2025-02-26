@@ -84,7 +84,7 @@
                                         <label for="example-month-input" class="col-sm-3 form-label">Phone</label>
                                         <div class="col-sm-9">
                                             <input required  class="form-control number"
-                                                type="text" name="phone" maxlength="10" id="phone"
+                                                type="text" name="mobile" maxlength="10" id="mobile"
                                                 placeholder="Phone">
                                         </div>
                                     </div>
