@@ -699,22 +699,25 @@ class ServicestatusController extends Controller
             }
             $services = json_decode( json_encode( $services ));
         }
-            elseif($service_id == 23){
-                $services = DB::table('tnega_services')->where('id',$id)->where('status',$status)->get();
-                $services = json_decode( json_encode( $services ), true );
-                foreach ( $services as $key => $ser ) {
-                    $services[ $key ][ 'documents' ] = array();
-                    $ser_id = $ser[ 'id' ];
-                    $sql = "select * from document where service_id=$ser_id order by id Asc";
-                    $result = DB::select( $sql );
-                    $services[ $key ][ 'documents' ] = $result;
-                }
-                $services = json_decode( json_encode( $services ));
-               //dd($services);
-            }else{
-                $services = DB::table('tnega_services')->where('id',$id)->where('status',$status)->first();
+        elseif($service_id == 23){
+            $services = DB::table('tnega_services')->where('id',$id)->where('status',$status)->get();
+            $services = json_decode( json_encode( $services ), true );
+            foreach ( $services as $key => $ser ) {
+                $services[ $key ][ 'documents' ] = array();
+                $services[ $key ][ 'details' ] = array();
+                $ser_id = $ser[ 'id' ];
+                $sql = "select * from document where service_id=$ser_id order by id Asc";
+                $result = DB::select( $sql );
+                $services[ $key ][ 'documents' ] = $result;
+                $sql = "select * from agri_details where service_id=$ser_id order by id Asc";
+                $result1 = DB::select( $sql );
+                $services[ $key ][ 'details' ] = $result1;
             }
-    
+            $services = json_decode( json_encode( $services ));
+           //dd($services);
+        }else{
+            $services = DB::table('tnega_services')->where('id',$id)->where('status',$status)->first();
+        }
 
         if($service_id == 181 || $service_id == 2 || $service_id == 15 || $service_id == 23){
             if(count($services) > 0){
@@ -1487,11 +1490,26 @@ if($request->has('doc_id')){
               'doc'       => $file1,
           ] );
         }
-    }
-     
-      
-      
+    }   
   }
+}
+
+if($request->has('district')){
+DB::table( 'agri_details' )->where('service_id', $request->applied_serviceid)->delete();
+ foreach ( $request->proof as $key => $proof ) {
+  $district = $request->district[ $key ];
+  $taluk = $request->taluk[ $key ];
+  $village = $request->village[ $key ];
+  $patta_no = $request->patta_no[ $key ];
+  $field_no = $request->field_no[ $key ];
+  $subdivision_no = $request->subdivision_no[ $key ];
+  $area = $request->area1[ $key ];
+
+  $sql = "insert into agri_details (service_id,district,taluk,village,patta_no,field_no,subdivision_no,area,pattatype) values ($request->applied_serviceid,'$district','$taluk','$village','$patta_no','$field_no','$subdivision_no','$area','$proof')";
+  DB::insert( $sql );
+  
+  
+}
 }
 }
 

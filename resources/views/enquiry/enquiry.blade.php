@@ -77,7 +77,7 @@
                                     <div class="mb-3 row">
                                         <label for="example-url-input" class="col-sm-3 form-label">Users</label>
                                         <div class="col-sm-9">
-                                        <select id="requirement" name="distributor_or_retailor" class="form-control">
+                                        <select id="user_name" name="user_name" class="form-control">
                                             <option value="">Select</option>
                                             <option value="Admin">Admin</option>
                                             <option value="Distributor">Distributor</option>

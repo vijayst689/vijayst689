@@ -803,14 +803,14 @@ public function submitapply_tnegaservices2(Request $request){
         DB::table('tnega_services')->where('id', $insertid)->update([
             'aggregation'         => $aggregation,
         ]);
-        $ec_certificate = "";
-        if ($request->ec_certificate != null) {
-            $ec_certificate = uniqid().'.'.$request->file('ec_certificate')->extension();
-            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'ec_certificate' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['ec_certificate']['tmp_name'], $filepath . $ec_certificate);
+        $strap = "";
+        if ($request->strap != null) {
+            $strap = uniqid().'.'.$request->file('strap')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'strap' . DIRECTORY_SEPARATOR);
+            move_uploaded_file($_FILES['strap']['tmp_name'], $filepath . $strap);
         }
         DB::table('tnega_services')->where('id', $insertid)->update([
-            'ec_certificate'         => $ec_certificate,
+            'strap'         => $strap,
         ]);
         $villankam = "";
         if ($request->villankam != null) {
@@ -848,7 +848,53 @@ public function submitapply_tnegaservices2(Request $request){
         DB::table('tnega_services')->where('id', $insertid)->update([
             'other_certificate'         => $other_certificate,
         ]);
+
+         DB::table('tnega_services')->where('id', $insertid)->update([
+            'any_proof'         => $request->any_proof,
+            'area'         => $request->area,
+        ]);
+
+
+        if($request->has('doc_name')){
+        foreach ( $request->doc_name as $key => $r ) {
+
+          $sql = "insert into document (service_id,doc_name) values ($insertid,'$r')";
+          DB::insert( $sql );
+
+          $relation_id = DB::getPdo()->lastInsertId();
+          $file1 = "";
+          if (isset($request->doc[$key])) {
+            if ($request->doc[$key] != null) {
+                $file1 = uniqid().'.'.$request->file('doc')[$key]->extension();
+          //dd($request->doc[$key]);
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'doc' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['doc']['tmp_name'][$key], $filepath . $file1);
+                DB::table( 'document' )->where( 'id', $relation_id )->update( [
+                  'doc'       => $file1,
+              ] );
+            }
+        }
+
+
     }
+} 
+if($request->has('proof')){
+    foreach ( $request->proof as $key => $proof ) {
+      $district = $request->district[ $key ];
+      $taluk = $request->taluk[ $key ];
+      $village = $request->village[ $key ];
+      $patta_no = $request->patta_no[ $key ];
+      $field_no = $request->field_no[ $key ];
+      $subdivision_no = $request->subdivision_no[ $key ];
+      $area = $request->area1[ $key ];
+
+      $sql = "insert into agri_details (service_id,district,taluk,village,patta_no,field_no,subdivision_no,area,pattatype) values ($insertid,'$district','$taluk','$village','$patta_no','$field_no','$subdivision_no','$area','$proof')";
+      DB::insert( $sql );
+      
+      
+  }
+    }
+}
     elseif ($serviceid == 24) {
         $bank_pass_book = "";
         if ($request->bank_pass_book != null) {

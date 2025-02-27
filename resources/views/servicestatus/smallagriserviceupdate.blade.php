@@ -28,10 +28,10 @@
                 <div class="col-12 col-xl-12">
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                         <div class="card-body p-4">
-                            <form class="row g-4" action="{{ url('submit_statusupdate_smallagriservice') }}" enctype="multipart/form-data"
-                            method="post">
-                            @csrf
-                            @foreach ($services as $key => $ser)
+                            <form class="row g-4" action="{{ url('submit_statusupdate_smallagriservice') }}"
+                                enctype="multipart/form-data" method="post">
+                                @csrf
+                                @foreach ($services as $key => $ser)
                                     <div class="row">
                                         <input type="hidden" name="applied_serviceid" value="{{ $ser->id }}">
                                         <input type="hidden" name="user_id" value="{{ $ser->user_id }}">
@@ -247,19 +247,10 @@
                                                                 <option @if ($ser->maritial_status == 'Widower') selected @endif
                                                                     value="Widower">Widower
                                                                 </option>
-                                                                <option @if ($ser->maritial_status == 'Divorced') selected @endif
-                                                                    value="Divorced">Divorced
+                                                                <option @if ($ser->course_complete == 'Widow') selected @endif
+                                                                    value="Widow">Widow
                                                                 </option>
-                                                                <option @if ($ser->maritial_status == 'Divorced') selected @endif
-                                                                    value="Divorced">Divorced
-                                                                </option>
-                                                                <option @if ($ser->maritial_status == 'Divorced') selected @endif
-                                                                    value="Divorced">Divorced
-                                                                </option>
-                                                                <option @if ($ser->maritial_status == 'Divorced') selected @endif
-                                                                    value="Divorced">Divorced
-                                                                </option>
-                                                                <option @if ($ser->maritial_status == 'Divorced') selected @endif
+                                                                <option @if ($ser->course_complete == 'Divorced') selected @endif
                                                                     value="Divorced">Divorced
                                                                 </option>
                                                             </select>
@@ -363,230 +354,287 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <h4 class="text-center"> Additional Details </h4>
                                         @if ($serviceid == 23)
-
-                                         <div class="mb-3 col-md-6">
-                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id)
-                                                @if ($ser->chitta != '')
-                                                    <label>சிட்டா</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/chitta/{{ $ser->chitta }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>சிட்டா</label>
-                                                <input @if ($ser->chitta == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="chitta">
-                                                @if ($ser->chitta != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/chitta/{{ $ser->chitta }}">Download</a><br>
-                                                @endif
-                                            @endif
-
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id)
-                                                @if ($ser->aggregation != '')
-                                                    <label>அடங்கல்</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aggregation/{{ $ser->aggregation }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>அடங்கல்</label>
-                                                <input @if ($ser->aggregation == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="aggregation">
-                                                @if ($ser->aggregation != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aggregation/{{ $ser->aggregation }}">Download</a><br>
-                                                @endif
-                                            @endif
-
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                           
-                                                    <label>பரப்பளவு(Sq.ft)</label>
-                                                        <input  @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id) disabled @endif type="text" class="form-control" name="area"
-                                                    value="{{ $ser->area }}" 
-                                                    placeholder="Land Area (in Hectares)*" />
-                                            
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                           <label>Select Any</label>
-                            <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id) disabled @endif required class="form-control" id="strap_details" name="any_proof"  style="width: 100%;">
-                                <option value="">Select</option>
-                                <option @if($ser->any_proof == "Joint Strap") selected @endif value="Joint Strap">கூட்டு பட்டா</option>
-                                <option @if($ser->any_proof == "Strap") selected @endif value="Strap">தனிபட்டா</option>
-                            </select>
-                        </div>
-
-                         <div class="mb-3 col-md-6" id="straphide" style="display:none;">
-                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id)
-                                                @if ($ser->strap != '')
-                                                    <label>பத்திரம்</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/strap/{{ $ser->strap }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>பத்திரம்</label>
-                                                <input 
-                                                    class="form-control" id="strap1" type="file" accept="image/jpeg, image/png"
-                                                    name="strap">
-                                                @if ($ser->strap != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/strap/{{ $ser->strap }}">Download</a><br>
-                                                @endif
-                                            @endif
-
-                                        </div>
-                                        
-                                            </div>
-                                            <div class="row" id="dochide" style="display:none;">
-                            <h3 class="text-center">Document Details</h3>
-                                <table id="doc" class="table table-bordered">
-                                    <thead>
-                                         <tr>
-                                            <th>Name of the document</th>
-                                            <th>File</th>
-                                             
-                                        </tr>
-                                       
-                                    </thead>
-                                    
-                                    <tbody>
-                                        @foreach ($ser->documents as $key => $ser1)
-                                        <tr>
-                                            <input type="hidden" name="doc_id[{{ $ser1->id }}]" value="{{ $ser1->id }}">
-                                            <td> <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id) disabled @endif id="docdetails"  name="doc_name[{{ $ser1->id }}]" class="form-control">
-                                                    <option value="">Select</option>
-                                                    <option @if($ser1->doc_name == "Deed") selected @endif value="Deed">பத்திரம்</option>
-                                                    <option @if($ser1->doc_name == "NOC") selected @endif  value="NOC">NOC</option>
-                                                    <option @if($ser1->doc_name == "Ec/Villankam") selected @endif value="Ec/வில்லங்கம்">Ec/Villankam</option>
-                                                    <option @if($ser1->doc_name == "VAO Certificate") selected @endif value="VAO Certificate">விஏஓ சான்றிதழ்</option>
-                                                </select></td>
-                                             
-                                            <td>
-
-                                                @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id)
-                                                @if ($ser1->doc != '')
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/doc/{{ $ser1->doc }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <input @if ($ser1->doc == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="doc[{{ $ser1->id }}]">
-                                                @if ($ser1->doc != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/doc/{{ $ser1->doc }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                               
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                                        
-                                        @endif
-                                        @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id)
-                                            <div class="mb-3 col-md-6">
-                                                <label for="service_name" class="form-label">Service Status</label>
-                                                <select class="form-control" name="status" id="service_status">
-                                                    <option value="">Select</option>
-                                                    <option @if ($ser->status == 'Pending') selected @endif
-                                                        value="Pending">Pending</option>
-                                                    <option @if ($ser->status == 'Resubmit') selected @endif
-                                                        value="Resubmit">Resubmit</option>
-                                                    <option @if ($ser->status == 'Processing') selected @endif
-                                                        value="Processing">Processing</option>
-                                                            @if ($ser->status != 'Approved')
-                                                <option @if ($ser->status == 'Rejected') selected @endif value="Rejected">
-                                                Rejected</option>
-                                                @endif
-                                                    <option @if ($ser->status == 'Approved') selected @endif
-                                                        value="Approved">Approved</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
-                                                <label for="remarks" class="form-label">Remarks</label>
-                                                <input value="{{ $ser->remarks }}" class="form-control" type="text"
-                                                    name="remarks" maxlength="100" id="remarks"
-                                                    placeholder="Remarks" />
-                                            </div>
-                                            <div class="mb-3 col-md-6" id="selecthide" style="display :none;">
-                                                <label for="select" class="form-label">Select</label>
-                                                <select class="form-control" name="selects" id="select">
-                                                    <option>select</option>
-                                                    <option @if ($ser->selects == 'Text') selected @endif
-                                                        value = "Text">Text</option>
-                                                    <option @if ($ser->selects == 'File') selected @endif
-                                                        value = "File">File</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
-                                                <label for="acknowledgement" class="form-label">Acknowledgement</label>
-                                                <input class="form-control" type="file" name="acknowledgement"
-                                                    id="acknowledgement" />
-                                            </div>
-                                            <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
-                                                <label for="application_no" class="form-label">Application No</label>
-                                                <input value="{{ $ser->application_no }}" class="form-control"
-                                                    type="text" maxlength="20" name="application_no"
-                                                    id="application_no" />
-                                            </div>
-                                            <div class="mb-3 col-md-6" id="selectshide" style="display :none;">
-                                                <label for="selects" class="form-label">Select</label>
-                                                <select class="form-control" name="lects" id="selects">
-                                                    <option>select</option>
-                                                    <option @if ($ser->lects == 'Text') selected @endif
-                                                        value = "Text">Text</option>
-                                                    <option @if ($ser->lects == 'File') selected @endif
-                                                        value = "File">File</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3 col-md-6" id="applicationhide" style="display :none;">
-                                                <label for="application" class="form-label">Application</label>
-                                                <input value="{{ $ser->application }}" class="form-control"
-                                                    type="text" maxlength="150" name="application"
-                                                    id="application" />
-                                            </div>
-                                            <div class="mb-3 col-md-6" id="certhide" style="display :none;">
-                                                <label for="certificate" class="form-label">Certificate</label>
-                                                <input class="form-control" type="file" name="certificate"
-                                                    id="certificate" />
-                                            </div>
-                                        @else
                                             <div class="row">
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="service_name" class="form-label">Service Status</label>
-                                                    <input disabled value="{{ $ser->status }}" class="form-control"
-                                                        type="text" />
-                                                </div>
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="remarks" class="form-label">Remarks</label>
-                                                    <textarea rows="2" class="form-control" type="text" disabled placeholder="Remarks">{{ $ser->remarks }}</textarea>
-                                                </div>
+                                                <h3 class="text-center">சிறு குறு விவசாய சான்று தேவையான மொத்த பரப்பளவு</h3>
+                                                <table id="agri" class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>பட்டா வகை</th>
+                                                            <th>மாவட்டம்</th>
+                                                            <th>தாலுகா</th>
+                                                            <th>வருவாய் கிராமம்</th>
+                                                            <th>பட்டா எண்</th>
+                                                            <th>புல எண்</th>
+                                                            <th>உட்பிரிவு எண்</th>
+                                                            <th>தேவையான பரப்பளவு(Area/Hectares)</th>
+                                                            <th><a class="btn btn-sm btn-success"
+                                                                    onclick="addnewrows()"><i
+                                                                        class='material-symbols-outlined'>add</i></a></th>
+                                                        </tr>
+
+                                                    </thead>
+
+                                                    <tbody>
+                                                        @foreach ($ser->details as $key => $ser1)
+                                                            <tr>
+                                                                <td><select
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        required class="form-control" name="proof[]"
+                                                                        style="width: 100%;">
+                                                                        <option value="">Select</option>
+                                                                        <option
+                                                                            @if ($ser1->pattatype == 'Joint Strap') selected @endif
+                                                                            value="Joint Strap">கூட்டு பட்டா</option>
+                                                                        <option
+                                                                            @if ($ser1->pattatype == 'Strap') selected @endif
+                                                                            value="Strap">தனிபட்டா</option>
+                                                                    </select></td>
+                                                                <td><input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        value="{{ $ser1->district }}" required
+                                                                        class="form-control" type="text"
+                                                                        name="district[]" maxlength="50"></td>
+                                                                <td><input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        value="{{ $ser1->taluk }}" required
+                                                                        class="form-control" type="text"
+                                                                        name="taluk[]" maxlength="50"></td>
+                                                                <td><input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        value="{{ $ser1->village }}" required
+                                                                        class="form-control" type="text"
+                                                                        name="village[]" maxlength="50"></td>
+                                                                <td><input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        value="{{ $ser1->patta_no }}" required
+                                                                        class="form-control" type="text"
+                                                                        name="patta_no[]" maxlength="50"></td>
+                                                                <td><input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        value="{{ $ser1->field_no }}" required
+                                                                        class="form-control" type="text"
+                                                                        name="field_no[]" maxlength="50"></td>
+                                                                <td><input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        value="{{ $ser1->subdivision_no }}" required
+                                                                        class="form-control" type="text"
+                                                                        name="subdivision_no[]" maxlength="50"></td>
+                                                                <td><input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        value="{{ $ser1->area }}" required
+                                                                        class="form-control" type="text"
+                                                                        name="area1[]" maxlength="50"></td>
+
+
+                                                                <td></td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <h4 class="text-center"> Additional Details </h4>
+                                            <div class="mb-3 col-md-6">
+                                                @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id)
+                                                    @if ($ser->chitta != '')
+                                                        <label>சிட்டா</label>
+                                                        <br><a target="_blank"
+                                                            href="{{ URL::to('/') }}/upload/services/chitta/{{ $ser->chitta }}"
+                                                            class="btn btn-primary me-2">View</a><br>
+                                                    @endif
+                                                @else
+                                                    <label>சிட்டா</label>
+                                                    <input @if ($ser->chitta == '') required @endif
+                                                        class="form-control" type="file"
+                                                        accept="image/jpeg, image/png" name="chitta">
+                                                    @if ($ser->chitta != '')
+                                                        <a target="_blank"
+                                                            href="{{ URL::to('/') }}/upload/services/chitta/{{ $ser->chitta }}">Download</a><br>
+                                                    @endif
+                                                @endif
 
                                             </div>
-                                        @endif
-                                        <div class="mt-2 text-center">
-                                            @if ($ser->status == 'Resubmit' && $apply_user_id != Auth::user()->id)
-                                                <button type="submit" disabled
-                                                    class="btn btn-primary me-2">Resubmit</button>
-                                            @elseif($ser->status == 'Approved')
-                                                <button type="button" disabled
-                                                    class="btn btn-primary me-2">Completed</button>
-                                            @else
-                                                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                            <div class="mb-3 col-md-6">
+                                                @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id)
+                                                    @if ($ser->aggregation != '')
+                                                        <label>அடங்கல்</label>
+                                                        <br><a target="_blank"
+                                                            href="{{ URL::to('/') }}/upload/services/aggregation/{{ $ser->aggregation }}"
+                                                            class="btn btn-primary me-2">View</a><br>
+                                                    @endif
+                                                @else
+                                                    <label>அடங்கல்</label>
+                                                    <input @if ($ser->aggregation == '') required @endif
+                                                        class="form-control" type="file"
+                                                        accept="image/jpeg, image/png" name="aggregation">
+                                                    @if ($ser->aggregation != '')
+                                                        <a target="_blank"
+                                                            href="{{ URL::to('/') }}/upload/services/aggregation/{{ $ser->aggregation }}">Download</a><br>
+                                                    @endif
+                                                @endif
+
+                                            </div>
+
+                                            <div class="mb-3 col-md-6">
+                                                <label>Select Any</label>
+                                                <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id) disabled @endif required
+                                                    class="form-control" id="strap_details" name="any_proof"
+                                                    style="width: 100%;">
+                                                    <option value="">Select</option>
+                                                    <option @if ($ser->any_proof == 'Joint Strap') selected @endif
+                                                        value="Joint Strap">கூட்டு பட்டா</option>
+                                                    <option @if ($ser->any_proof == 'Strap') selected @endif
+                                                        value="Strap">தனிபட்டா</option>
+                                                </select>
+                                            </div>
+
+
+                                    </div>
+                                    <div class="row" id="dochide" style="display:none;">
+                                        <h3 class="text-center">Document Details</h3>
+                                        <table id="doc" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name of the document</th>
+                                                    <th>File</th>
+
+                                                </tr>
+
+                                            </thead>
+
+                                            <tbody>
+                                                @foreach ($ser->documents as $key => $ser1)
+                                                    <tr>
+                                                        <input type="hidden" name="doc_id[{{ $ser1->id }}]"
+                                                            value="{{ $ser1->id }}">
+                                                        <td> <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id) disabled @endif
+                                                                id="docdetails" name="doc_name[{{ $ser1->id }}]"
+                                                                class="form-control">
+                                                                <option value="">Select</option>
+                                                                <option @if ($ser1->doc_name == 'Deed') selected @endif
+                                                                    value="Deed">பத்திரம்</option>
+                                                                <option @if ($ser1->doc_name == 'NOC') selected @endif
+                                                                    value="NOC">NOC</option>
+                                                                <option @if ($ser1->doc_name == 'Ec/Villankam') selected @endif
+                                                                    value="Ec/Villankam">Ec/Villankam</option>
+                                                                <option @if ($ser1->doc_name == 'VAO Certificate') selected @endif
+                                                                    value="VAO Certificate">விஏஓ சான்றிதழ்</option>
+                                                            </select></td>
+
+                                                        <td>
+
+                                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id)
+                                                                @if ($ser1->doc != '')
+                                                                    <br><a target="_blank"
+                                                                        href="{{ URL::to('/') }}/upload/services/doc/{{ $ser1->doc }}"
+                                                                        class="btn btn-primary me-2">View</a><br>
+                                                                @endif
+                                                            @else
+                                                                <input @if ($ser1->doc == '' && $ser->any_proof == 'Joint Strap') required @endif
+                                                                    class="form-control" type="file"
+                                                                    accept="image/jpeg, image/png"
+                                                                    name="doc[{{ $ser1->id }}]">
+                                                                @if ($ser1->doc != '')
+                                                                    <a target="_blank"
+                                                                        href="{{ URL::to('/') }}/upload/services/doc/{{ $ser1->doc }}">Download</a><br>
+                                                                @endif
+                                                            @endif
+
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @endif
+                                @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id)
+                                    <div class="mb-3 col-md-6">
+                                        <label for="service_name" class="form-label">Service Status</label>
+                                        <select class="form-control" name="status" id="service_status">
+                                            <option value="">Select</option>
+                                            <option @if ($ser->status == 'Pending') selected @endif value="Pending">
+                                                Pending</option>
+                                            <option @if ($ser->status == 'Resubmit') selected @endif value="Resubmit">
+                                                Resubmit</option>
+                                            <option @if ($ser->status == 'Processing') selected @endif value="Processing">
+                                                Processing</option>
+                                            @if ($ser->status != 'Approved')
+                                                <option @if ($ser->status == 'Rejected') selected @endif
+                                                    value="Rejected">
+                                                    Rejected</option>
                                             @endif
+                                            <option @if ($ser->status == 'Approved') selected @endif value="Approved">
+                                                Approved</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
+                                        <label for="remarks" class="form-label">Remarks</label>
+                                        <input value="{{ $ser->remarks }}" class="form-control" type="text"
+                                            name="remarks" maxlength="100" id="remarks" placeholder="Remarks" />
+                                    </div>
+                                    <div class="mb-3 col-md-6" id="selecthide" style="display :none;">
+                                        <label for="select" class="form-label">Select</label>
+                                        <select class="form-control" name="selects" id="select">
+                                            <option>select</option>
+                                            <option @if ($ser->selects == 'Text') selected @endif value = "Text">Text
+                                            </option>
+                                            <option @if ($ser->selects == 'File') selected @endif value = "File">File
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
+                                        <label for="acknowledgement" class="form-label">Acknowledgement</label>
+                                        <input class="form-control" type="file" name="acknowledgement"
+                                            id="acknowledgement" />
+                                    </div>
+                                    <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
+                                        <label for="application_no" class="form-label">Application No</label>
+                                        <input value="{{ $ser->application_no }}" class="form-control" type="text"
+                                            maxlength="20" name="application_no" id="application_no" />
+                                    </div>
+                                    <div class="mb-3 col-md-6" id="selectshide" style="display :none;">
+                                        <label for="selects" class="form-label">Select</label>
+                                        <select class="form-control" name="lects" id="selects">
+                                            <option>select</option>
+                                            <option @if ($ser->lects == 'Text') selected @endif value = "Text">Text
+                                            </option>
+                                            <option @if ($ser->lects == 'File') selected @endif value = "File">File
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-md-6" id="applicationhide" style="display :none;">
+                                        <label for="application" class="form-label">Application</label>
+                                        <input value="{{ $ser->application }}" class="form-control" type="text"
+                                            maxlength="150" name="application" id="application" />
+                                    </div>
+                                    <div class="mb-3 col-md-6" id="certhide" style="display :none;">
+                                        <label for="certificate" class="form-label">Certificate</label>
+                                        <input class="form-control" type="file" name="certificate"
+                                            id="certificate" />
+                                    </div>
+                                @else
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6">
+                                            <label for="service_name" class="form-label">Service Status</label>
+                                            <input disabled value="{{ $ser->status }}" class="form-control"
+                                                type="text" />
                                         </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="remarks" class="form-label">Remarks</label>
+                                            <textarea rows="2" class="form-control" type="text" disabled placeholder="Remarks">{{ $ser->remarks }}</textarea>
+                                        </div>
+
+                                    </div>
+                                @endif
+                                <div class="mt-2 text-center">
+                                    @if ($ser->status == 'Resubmit' && $apply_user_id != Auth::user()->id)
+                                        <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
+                                    @elseif($ser->status == 'Approved')
+                                        <button type="button" disabled class="btn btn-primary me-2">Completed</button>
+                                    @else
+                                        <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                    @endif
+                                </div>
                                 @endforeach
                             </form>
                         </div>
@@ -596,353 +644,365 @@
             <div class="content-backdrop fade"></div>
         </div>
         <div class="layout-overlay layout-menu-toggle"></div>
-    </div>
-@endsection
-@push('page_scripts')
-    <script>
-        var dist_id = "{{ $customers->dist_id }}";
-        var taluk_id = "{{ $customers->taluk_id }}";
-        $(function() {
-            gettaluk(dist_id);
-            getpanchayath(taluk_id);
+        </div>
+    @endsection
+    @push('page_scripts')
+        <script>
+            var dist_id = "{{ $customers->dist_id }}";
+            var taluk_id = "{{ $customers->taluk_id }}";
+            $(function() {
+                gettaluk(dist_id);
+                getpanchayath(taluk_id);
 
-            var status = "{{ $ser->status }}";
-            var proof = "{{ $ser->any_proof }}";
-            var acknowledgement = "{{ $ser->acknowledgement }}";
-            var certificate = "{{ $ser->certificate }}";
-            var selects = "{{ $ser->selects }}";
-            var candetails = "{{ $ser->can_details }}";
-            var ageproof = "{{ $ser->age_proof }}";
-            var job_type = "{{ $ser->job_type }}";
-            var lects = "{{ $ser->lects }}";
+                var status = "{{ $ser->status }}";
+                var proof = "{{ $ser->any_proof }}";
+                var acknowledgement = "{{ $ser->acknowledgement }}";
+                var certificate = "{{ $ser->certificate }}";
+                var selects = "{{ $ser->selects }}";
+                var candetails = "{{ $ser->can_details }}";
+                var ageproof = "{{ $ser->age_proof }}";
+                var job_type = "{{ $ser->job_type }}";
+                var lects = "{{ $ser->lects }}";
 
-            if (job_type == "Govt") {
-                $('#incomecertgovthide').show("slow");
+                if (job_type == "Govt") {
+                    $('#incomecertgovthide').show("slow");
+                }
+                if (proof == "Joint Strap") {
+                    $('#dochide').show("slow");
+                } else {
+                    $('#straphide').show("slow");
+                }
+
+                if (ageproof == "Tc/Community Certificate") {
+                    $('#tc_community_certificatehide').show("slow");
+                } else if (ageproof == "Marksheet") {
+                    $('#marksheethide').show("slow");
+                } else if (ageproof == "Voter Id") {
+                    $('#voteridhide').show("slow");
+                } else if (ageproof == "Birth Certificate") {
+                    $('#birth_certificatehide').show("slow");
+                } else if (ageproof == "Licence") {
+                    $('#driving_licensehide').show("slow");
+                }
+
+                if (candetails == "Yes") {
+                    $('#cannumberhide').show("slow");
+                    $('#cannumber').prop("required", true);
+                } else if (candetails == "No") {
+                    $('#dobhide').show("slow");
+                }
+
+                if (status == "Resubmit") {
+                    $('#remarkshide').show("slow");
+                    $('#remarks').prop("required", true);
+                } else if (status == "Processing") {
+                    if (selects == "Text") {
+                        $('#applicationnohide').show("slow");
+                    }
+                    if (selects == "File") {
+                        $('#acknowledgementhide').show("slow");
+                        if (acknowledgement == "") {
+                            $('#acknowledgement').prop("required", true);
+                        }
+                    }
+                    $('#selecthide').show("slow");
+
+
+                } else if (status == "Approved") {
+                    if (lects == "Text") {
+                        $('#applicationhide').show("slow");
+                    }
+                    if (lects == "File") {
+                        $('#certhide').show("slow");
+                        if (certificate == "") {
+                            $('#certificate').prop("required", true);
+                        }
+                    }
+                    $('#selectshide').show("slow")
+                }
+            });
+
+            $('#strap_details').change(function() {
+                if ($('#strap_details').val() == 'Joint Strap') {
+                    $('#dochide').show("slow");
+                    $('#docdetails').prop("required", true);
+                    $('#docimg').prop("required", true);
+                    $('#straphide').hide("slow");
+                    $('#strap1').prop("required", false);
+
+                } else if ($('#strap_details').val() == 'Strap') {
+                    $('#straphide').show("slow");
+                    $('#strap1').prop("required", true);
+                    $('#dochide').hide("slow");
+                    $('#docdetails').prop("required", false);
+                    $('#docimg').prop("required", false);
+
+                } else {
+                    $('#dochide').hide("slow");
+                    $('#docdetails').prop("required", false);
+                    $('#docimg').prop("required", false);
+                    $('#straphide').hide("slow");
+                    $('#strap1').prop("required", false);
+                }
+            });
+
+
+
+            function gettaluk(dist_id) {
+                var url = "{{ url('service/get_taluk') }}/" + dist_id;
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    success: function(result) {
+                        $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
+                        $.each(result, function(key, value) {
+                            $("#taluk").append('<option value="' + value
+                                .id + '">' + value.taluk_name + '</option>');
+                        });
+                        $("#taluk").val("{{ $customers->taluk_id }}");
+
+                    }
+                });
             }
-             if (proof == "Joint Strap") {
-                $('#dochide').show("slow");
-            }else{
-                $('#straphide').show("slow");
+
+            function getpanchayath(taluk_id) {
+                var url = "{{ url('service/get_panchayath') }}/" + taluk_id;
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    success: function(result) {
+                        $('#panchayath').html('<option value="">-- Select Panchayath Name --</option>');
+                        $.each(result, function(key, value) {
+                            $("#panchayath").append('<option value="' + value
+                                .id + '">' + value.panchayath_name + '</option>');
+                        });
+                        $("#panchayath").val("{{ $customers->panchayath_id }}");
+
+                    }
+                });
             }
 
-            if (ageproof == "Tc/Community Certificate") {
-                $('#tc_community_certificatehide').show("slow");
-            } else if (ageproof == "Marksheet") {
-                $('#marksheethide').show("slow");
-            } else if (ageproof == "Voter Id") {
-                $('#voteridhide').show("slow");
-            } else if (ageproof == "Birth Certificate") {
-                $('#birth_certificatehide').show("slow");
-            } else if (ageproof == "Licence") {
-                $('#driving_licensehide').show("slow");
-            }
 
-            if (candetails == "Yes") {
-                $('#cannumberhide').show("slow");
-                $('#cannumber').prop("required", true);
-            } else if (candetails == "No") {
-                $('#dobhide').show("slow");
-            }
+            $('#incomeyearly').on('input', function() {
+                var yearly = parseInt($('#incomeyearly').val());
+                $('#incomemonthly').val((yearly / 12 ? yearly / 12 : 0).toFixed(2));
+            });
+            $('#can_details').change(function() {
+                if ($('#can_details').val() == 'Yes') {
+                    $('#cannumberhide').show("slow");
+                    $('#cannumber').prop("required", true);
+                    $('#dobhide').hide("slow");
+                } else if ($('#can_details').val() == 'No') {} else if ($('#can_details').val() == 'Find') {
+                    window.location.href = "{{ url('applyservice') }}/" + 121;
+                } else {
+                    $('#cannumberhide').hide("slow");
+                    $('#cannumber').prop("required", false);
+                }
+            });
 
-            if (status == "Resubmit") {
-                $('#remarkshide').show("slow");
-                $('#remarks').prop("required", true);
-            } else if (status == "Processing") {
-                if (selects == "Text") {
+            $('#service_status').change(function() {
+                if ($('#service_status').val() == 'Resubmit') {
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#remarkshide').show("slow");
+                    $('#remarks').prop("required", true);
+                    $('#select').prop("required", false);
+                    $('#selecthide').hide("slow");
+                    $('#selects').prop("required", false);
+                    $('#selectshide').hide("slow");
+                } else if ($('#service_status').val() == 'Processing') {
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#remarkshide').hide("slow");
+                    $('#remarks').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#select').prop("required", true);
+                    $('#selecthide').show("slow");
+                    $('#selects').prop("required", false);
+                    $('#selectshide').hide("slow");
+                } else if ($('#service_status').val() == 'Approved') {
+                    $('#remarkshide').hide("slow");
+                    $('#remarks').prop("required", false);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#select').prop("required", false);
+                    $('#selecthide').hide("slow");
+                    $('#selects').prop("required", true);
+                    $('#selectshide').show("slow");
+                } else {
+                    $('#remarkshide').hide("slow");
+                    $('#remarks').prop("required", false);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#select').prop("required", false);
+                    $('#selecthide').hide("slow");
+                    $('#selects').prop("required", false);
+                    $('#selectshide').hide("slow");
+                }
+            });
+
+            $('#select').change(function() {
+                if ($('#select').val() == 'Text') {
                     $('#applicationnohide').show("slow");
-                }
-                if (selects == "File") {
+                    $('#application_no').prop("required", true);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
+                } else if ($('#select').val() == 'File') {
                     $('#acknowledgementhide').show("slow");
-                    if (acknowledgement == "") {
-                        $('#acknowledgement').prop("required", true);
-                    }
+                    $('#acknowledgement').prop("required", false);
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                } else {
+                    $('#applicationnohide').hide("slow");
+                    $('#application_no').prop("required", false);
+                    $('#acknowledgementhide').hide("slow");
+                    $('#acknowledgement').prop("required", false);
                 }
-                $('#selecthide').show("slow");
+            });
 
-
-            } else if (status == "Approved") {
-                if (lects == "Text") {
+            $('#selects').change(function() {
+                if ($('#selects').val() == 'Text') {
                     $('#applicationhide').show("slow");
-                }
-                if (lects == "File") {
+                    $('#application').prop("required", true);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
+                } else if ($('#selects').val() == 'File') {
                     $('#certhide').show("slow");
-                    if (certificate == "") {
-                        $('#certificate').prop("required", true);
-                    }
+                    $('#certificate').prop("required", false);
+                    $('#applicationhide').hide("slow");
+                    $('#application').prop("required", false);
+                } else {
+                    $('#applicationhide').hide("slow");
+                    $('#application').prop("required", false);
+                    $('#certhide').hide("slow");
+                    $('#certificate').prop("required", false);
                 }
-                $('#selectshide').show("slow")
-            }
-        });
-
-        $('#strap_details').change(function(){
-        if($('#strap_details').val() == 'Joint Strap') {
-            $('#dochide').show("slow");
-            $('#docdetails').prop("required",true);
-            $('#docimg').prop("required",true);
-            $('#straphide').hide("slow");
-            $('#strap1').prop("required",false);
-
-        } else if($('#strap_details').val() == 'Strap'){
-            $('#straphide').show("slow");
-            $('#strap1').prop("required",true);
-            $('#dochide').hide("slow");
-             $('#docdetails').prop("required",false);
-            $('#docimg').prop("required",false);
-
-        }else{
-             $('#dochide').hide("slow");
-             $('#docdetails').prop("required",false);
-            $('#docimg').prop("required",false);
-            $('#straphide').hide("slow");
-            $('#strap1').prop("required",false);
-        }
-    });
+            });
 
 
+            $('#job_type').change(function() {
+                if ($('#job_type').val() == 'Govt') {
+                    $('#incomecertgovthide').show("slow");
+                    $('#salary_slip').prop("required", true);
+                    $('#pancard').prop("required", true);
+                } else {
+                    $('#incomecertgovthide').hide("slow");
+                    $('#salary_slip').prop("required", false);
+                    $('#pancard').prop("required", false);
+                }
+            });
 
-        function gettaluk(dist_id) {
-            var url = "{{ url('service/get_taluk') }}/" + dist_id;
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function(result) {
-                    $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
-                    $.each(result, function(key, value) {
-                        $("#taluk").append('<option value="' + value
-                            .id + '">' + value.taluk_name + '</option>');
-                    });
-                    $("#taluk").val("{{ $customers->taluk_id }}");
+            $('#age_proof').change(function() {
+                if ($('#age_proof').val() == 'Tc/Community Certificate') {
+                    $('#tc_community_certificatehide').show("slow");
+                    $('#marksheethide').hide("slow");
+                    $('#voteridhide').hide("slow");
+                    $('#birth_certificatehide').hide("slow");
+                    $('#driving_licensehide').hide("slow");
+                    $('#marksheet').prop("required", false);
+                    $('#voterid').prop("required", false);
+                    $('#birth_certificate').prop("required", false);
+                    $('#driving_license').prop("required", false);
+                    $('#tc_community_certificate').prop("required", true);
+
+                } else if ($('#age_proof').val() == 'Marksheet') {
+                    $('#marksheethide').show("slow");
+                    $('#tc_community_certificatehide').hide("slow");
+                    $('#voteridhide').hide("slow");
+                    $('#birth_certificatehide').hide("slow");
+                    $('#driving_licensehide').hide("slow");
+                    $('#tc_community_certificate').prop("required", false);
+                    $('#voterid').prop("required", false);
+                    $('#birth_certificate').prop("required", false);
+                    $('#driving_license').prop("required", false);
+                    $('#marksheet').prop("required", true);
+
+                } else if ($('#age_proof').val() == 'Voter Id') {
+                    $('#voteridhide').show("slow");
+                    $('#marksheethide').hide("slow");
+                    $('#tc_community_certificatehide').hide("slow");
+                    $('#birth_certificatehide').hide("slow");
+                    $('#driving_licensehide').hide("slow");
+                    $('#tc_community_certificate').prop("required", false);
+                    $('#marksheet').prop("required", false);
+                    $('#birth_certificate').prop("required", false);
+                    $('#driving_license').prop("required", false);
+                    $('#voterid').prop("required", true);
+
+                } else if ($('#age_proof').val() == 'Birth Certificate') {
+                    $('#birth_certificatehide').show("slow");
+                    $('#marksheethide').hide("slow");
+                    $('#tc_community_certificatehide').hide("slow");
+                    $('#voteridhide').hide("slow");
+                    $('#driving_licensehide').hide("slow");
+                    $('#tc_community_certificate').prop("required", false);
+                    $('#marksheet').prop("required", false);
+                    $('#voterid').prop("required", false);
+                    $('#driving_license').prop("required", false);
+                    $('#birth_certificate').prop("required", true);
+
+                } else if ($('#age_proof').val() == 'Licence') {
+                    $('#driving_licensehide').show("slow");
+                    $('#marksheethide').hide("slow");
+                    $('#tc_community_certificatehide').hide("slow");
+                    $('#voteridhide').hide("slow");
+                    $('#birth_certificatehide').hide("slow");
+                    $('#tc_community_certificate').prop("required", false);
+                    $('#marksheet').prop("required", false);
+                    $('#voterid').prop("required", false);
+                    $('#birth_certificate').prop("required", false);
+                    $('#driving_license').prop("required", true);
+
+                } else {
+                    $('#voteridhide').hide("slow");
+                    $('#marksheethide').hide("slow");
+                    $('#tc_community_certificatehide').hide("slow");
+                    $('#birth_certificatehide').hide("slow");
+                    $('#driving_licensehide').hide("slow");
+                    $('#tc_community_certificate').prop("required", false);
+                    $('#marksheet').prop("required", false);
+                    $('#voterid').prop("required", false);
+                    $('#birth_certificate').prop("required", false);
+                    $('#driving_license').prop("required", false);
 
                 }
             });
-        }
 
-        function getpanchayath(taluk_id) {
-            var url = "{{ url('service/get_panchayath') }}/" + taluk_id;
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function(result) {
-                    $('#panchayath').html('<option value="">-- Select Panchayath Name --</option>');
-                    $.each(result, function(key, value) {
-                        $("#panchayath").append('<option value="' + value
-                            .id + '">' + value.panchayath_name + '</option>');
-                    });
-                    $("#panchayath").val("{{ $customers->panchayath_id }}");
-
-                }
+            $("#doc").on('click', '.btnDelete', function() {
+                $(this).closest('tr').remove();
             });
-        }
 
 
-        $('#incomeyearly').on('input', function() {
-            var yearly = parseInt($('#incomeyearly').val());
-            $('#incomemonthly').val((yearly / 12 ? yearly / 12 : 0).toFixed(2));
-        });
-        $('#can_details').change(function() {
-            if ($('#can_details').val() == 'Yes') {
-                $('#cannumberhide').show("slow");
-                $('#cannumber').prop("required", true);
-                $('#dobhide').hide("slow");
-            } else if ($('#can_details').val() == 'No') {} else if ($('#can_details').val() == 'Find') {
-                window.location.href = "{{ url('applyservice') }}/" + 121;
-            } else {
-                $('#cannumberhide').hide("slow");
-                $('#cannumber').prop("required", false);
+            function addnewrow() {
+                $("#doc tbody").append(
+                    "<tr><td><select required name='doc_name[]' class='form-control'><option value=''>Select</option><option value='பத்திரம்'>பத்திரம்</option><option value='NOC'>NOC</option><option value='Ec/வில்லங்கம்'>Ec/வில்லங்கம்</option><option value='விஏஓ சான்றிதழ்'>விஏஓ சான்றிதழ்</option></select></td><td><input required class='form-control' type='file'  name='doc[]' accept='image/jpeg, image/png'></td><td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i class='mdi mdi-delete mdi-18px'></i></a></td></tr>"
+                );
             }
-        });
 
-        $('#service_status').change(function() {
-            if ($('#service_status').val() == 'Resubmit') {
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#remarkshide').show("slow");
-                $('#remarks').prop("required", true);
-                $('#select').prop("required", false);
-                $('#selecthide').hide("slow");
-                $('#selects').prop("required", false);
-                $('#selectshide').hide("slow");
-            } else if ($('#service_status').val() == 'Processing') {
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-                $('#select').prop("required", true);
-                $('#selecthide').show("slow");
-                $('#selects').prop("required", false);
-                $('#selectshide').hide("slow");
-            } else if ($('#service_status').val() == 'Approved') {
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-                $('#select').prop("required", false);
-                $('#selecthide').hide("slow");
-                $('#selects').prop("required", true);
-                $('#selectshide').show("slow");
-            } else {
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-                $('#select').prop("required", false);
-                $('#selecthide').hide("slow");
-                $('#selects').prop("required", false);
-                $('#selectshide').hide("slow");
+            $("#agri").on('click', '.btnDelete', function() {
+                $(this).closest('tr').remove();
+            });
+
+
+            function addnewrows() {
+                $("#agri tbody").append(
+                    "<tr><td><select required class='form-control' name='proof[]'  style='width: 100%;'><option value=''>Select</option><option value='Joint Strap'>கூட்டு பட்டா</option><option value='Strap'>தனிபட்டா</option></select></td><td><input class='form-control' required type='text' name='district[]' maxlength='80' placeholder='மாவட்டம்'></td><td><input class='form-control' required type='text' name='taluk[]' maxlength='80' placeholder='தாலுகா'></td><td><input class='form-control' required type='text' name='village[]' maxlength='80' placeholder='வருவாய் கிராமம்'></td><td><input class='form-control' required type='text' name='patta_no[]' maxlength='80' placeholder='பட்டா எண்'></td><td><input class='form-control' required type='text' name='field_no[]' maxlength='80' placeholder='புல எண்'></td><td><input class='form-control' required type='text' name='subdivision_no[]' maxlength='80' placeholder='உட்பிரிவு எண்'></td><td><input class='form-control' required type='text' name='area1[]' maxlength='80' placeholder='தேவையான பரப்பளவு(Area/Hectares)'></td><td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i class='mdi mdi-delete mdi-18px'></i></a></td></tr>"
+                );
             }
-        });
-
-        $('#select').change(function() {
-            if ($('#select').val() == 'Text') {
-                $('#applicationnohide').show("slow");
-                $('#application_no').prop("required", true);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-            } else if ($('#select').val() == 'File') {
-                $('#acknowledgementhide').show("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-            } else {
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-            }
-        });
-
-        $('#selects').change(function() {
-            if ($('#selects').val() == 'Text') {
-                $('#applicationhide').show("slow");
-                $('#application').prop("required", true);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-            } else if ($('#selects').val() == 'File') {
-                $('#certhide').show("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationhide').hide("slow");
-                $('#application').prop("required", false);
-            } else {
-                $('#applicationhide').hide("slow");
-                $('#application').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-            }
-        });
-
-
-        $('#job_type').change(function() {
-            if ($('#job_type').val() == 'Govt') {
-                $('#incomecertgovthide').show("slow");
-                $('#salary_slip').prop("required", true);
-                $('#pancard').prop("required", true);
-            } else {
-                $('#incomecertgovthide').hide("slow");
-                $('#salary_slip').prop("required", false);
-                $('#pancard').prop("required", false);
-            }
-        });
-
-        $('#age_proof').change(function() {
-            if ($('#age_proof').val() == 'Tc/Community Certificate') {
-                $('#tc_community_certificatehide').show("slow");
-                $('#marksheethide').hide("slow");
-                $('#voteridhide').hide("slow");
-                $('#birth_certificatehide').hide("slow");
-                $('#driving_licensehide').hide("slow");
-                $('#marksheet').prop("required", false);
-                $('#voterid').prop("required", false);
-                $('#birth_certificate').prop("required", false);
-                $('#driving_license').prop("required", false);
-                $('#tc_community_certificate').prop("required", true);
-
-            } else if ($('#age_proof').val() == 'Marksheet') {
-                $('#marksheethide').show("slow");
-                $('#tc_community_certificatehide').hide("slow");
-                $('#voteridhide').hide("slow");
-                $('#birth_certificatehide').hide("slow");
-                $('#driving_licensehide').hide("slow");
-                $('#tc_community_certificate').prop("required", false);
-                $('#voterid').prop("required", false);
-                $('#birth_certificate').prop("required", false);
-                $('#driving_license').prop("required", false);
-                $('#marksheet').prop("required", true);
-
-            } else if ($('#age_proof').val() == 'Voter Id') {
-                $('#voteridhide').show("slow");
-                $('#marksheethide').hide("slow");
-                $('#tc_community_certificatehide').hide("slow");
-                $('#birth_certificatehide').hide("slow");
-                $('#driving_licensehide').hide("slow");
-                $('#tc_community_certificate').prop("required", false);
-                $('#marksheet').prop("required", false);
-                $('#birth_certificate').prop("required", false);
-                $('#driving_license').prop("required", false);
-                $('#voterid').prop("required", true);
-
-            } else if ($('#age_proof').val() == 'Birth Certificate') {
-                $('#birth_certificatehide').show("slow");
-                $('#marksheethide').hide("slow");
-                $('#tc_community_certificatehide').hide("slow");
-                $('#voteridhide').hide("slow");
-                $('#driving_licensehide').hide("slow");
-                $('#tc_community_certificate').prop("required", false);
-                $('#marksheet').prop("required", false);
-                $('#voterid').prop("required", false);
-                $('#driving_license').prop("required", false);
-                $('#birth_certificate').prop("required", true);
-
-            } else if ($('#age_proof').val() == 'Licence') {
-                $('#driving_licensehide').show("slow");
-                $('#marksheethide').hide("slow");
-                $('#tc_community_certificatehide').hide("slow");
-                $('#voteridhide').hide("slow");
-                $('#birth_certificatehide').hide("slow");
-                $('#tc_community_certificate').prop("required", false);
-                $('#marksheet').prop("required", false);
-                $('#voterid').prop("required", false);
-                $('#birth_certificate').prop("required", false);
-                $('#driving_license').prop("required", true);
-
-            } else {
-                $('#voteridhide').hide("slow");
-                $('#marksheethide').hide("slow");
-                $('#tc_community_certificatehide').hide("slow");
-                $('#birth_certificatehide').hide("slow");
-                $('#driving_licensehide').hide("slow");
-                $('#tc_community_certificate').prop("required", false);
-                $('#marksheet').prop("required", false);
-                $('#voterid').prop("required", false);
-                $('#birth_certificate').prop("required", false);
-                $('#driving_license').prop("required", false);
-
-            }
-        });
-
-        $("#pricetable").on('click', '.btnDelete', function() {
-            $(this).closest('tr').remove();
-        });
-
-        function addnewrow() {
-            $("#pricetable tbody").append(
-                "<tr><td> <select required name='family_relationship[]' class='form-control'><option value=''>Select</option><option value='Father'>தகப்பன்</option><option value='Mother'>தாய்</option><option value='Husband'>கணவர்</option><option value='Wife'>மனைவி</option><option value='Son'>மகன்</option><option value='Daughter'>மகள்</option><option value='Younger Brother'>அண்ணன்</option><option value='Elder Brother'>தம்பி</option><option value='Younger Sister'>அக்கா</option><option value='Elder Sister'>தங்கை</option><option value='Relation'>உறவினர்</option><option value='Self'>தனக்கு</option></select></td><td><input class='form-control' required type='text' name='relation_name[]'maxlength='80'></td><td><input class='form-control' required type='text' name='relation_name_tamil[]'maxlength='80'></td><td width='10%'><input class='form-control number' required type='text' name='relation_age[]'maxlength='2'></td><td><select required name='occupation[]' class='form-control'><option value=''>Select</option><option value='Student'>Student</option><option value='Home Maker'>Home maker</option><option value='Govt Employee'>Govt employee</option><option value='Private Employee'>Private Employee</option><option value='Daily Wages'>Daily Wages</option><option value='Agriculture'>Agriculture</option><option value='Others'>Others</option></select></td><td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i class='mdi mdi-delete mdi-18px'></i></a></td></tr>"
-            );
-        }
-    </script>
-@endpush
+        </script>
+    @endpush

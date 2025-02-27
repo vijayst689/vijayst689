@@ -1633,3 +1633,22 @@ CREATE TABLE `enquiry` (
   `requirement` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
+
+//27-02-2025
+alter table enquiry add user_name text DEFAULT NULL after requirement;
+
+
+CREATE TABLE `agri_details` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `service_id` int DEFAULT 0,
+  `district` varchar(100) DEFAULT NULL,
+  `taluk` varchar(100) DEFAULT NULL,
+  `village` varchar(100) DEFAULT NULL,
+  `patta_no` varchar(100) DEFAULT NULL,
+  `field_no` varchar(100) DEFAULT NULL,
+  `subdivision_no` varchar(100) DEFAULT NULL,
+  `area` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+alter table agri_details add pattatype varchar(100) DEFAULT NULL;

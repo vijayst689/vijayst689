@@ -107,6 +107,7 @@ class userController extends Controller
         'email'         => $request->email,
         'mobile'         => $request->mobile,
         'requirement'   => $request->requirement,
+        'user_name'   => $request->user_name,
     ]);
    
    
