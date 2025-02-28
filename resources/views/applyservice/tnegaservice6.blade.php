@@ -32,7 +32,7 @@
                             id="canpayment">{{ $payment }}</span></h1>
                         <h5><span class="text-danger" id="cantext"></span></h5>
                         <div class="card-body p-4">
-                            <form class="row g-4" action="{{ url('submitapply_tnegaservices5') }}" enctype="multipart/form-data"
+                            <form class="row g-4" action="{{ url('submitapply_tnegaservices6') }}" enctype="multipart/form-data"
                             method="post">
                             @csrf
                            <div class="row">
