@@ -28,7 +28,6 @@
                 <div class="col-12 col-xl-12">
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                         <div class="card-body p-4">
-                            <h5 class="card-title">{{ $servicename }}</h5>
                             <form class="row g-4" action="{{ url('submit_statusupdate_tnegaservices4') }}"
                                 enctype="multipart/form-data" method="post">
                                 @csrf
@@ -51,6 +50,7 @@
                                     @endphp
                                     <div class="row mt-4">
                                         <div class="col-lg-12">
+                                            <h5 class="card-title">{{ $servicename }}</h5>
                                             <div class="mb-3 row">
                                                 <label for="example-text-input-lg" class="col-sm-3 form-label">Do You Have
                                                     Can Number</label>

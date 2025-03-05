@@ -48,7 +48,7 @@
                                             $apply_user_id = $services->retailer_id;
                                         }
                                     @endphp
-                            <div class="row">
+                            <div class="row mt-4">
                                 <div class="col-lg-12">
                                     <h5 class="card-title">{{ $servicename }}</h5>
                                     <div class="mb-3 row">
