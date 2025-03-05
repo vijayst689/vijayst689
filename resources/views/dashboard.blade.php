@@ -75,7 +75,7 @@
                                         <p class="mb-1">Ramji Wallet Request</p>
                                         <h3 class="mb-0">{{ $ramjirequestAmount }}</h3>
                                     </div>
-                                    <a href="{{ url('/paymentrequest') }}"><div
+                                    <a href="{{ url('/rapaymentrequest') }}"><div
                                         class="wh-42 d-flex align-items-center justify-content-center rounded-circle bg-grd-danger">
                                         <span class="material-icons-outlined fs-5 text-white"><i class="material-icons-outlined">alarm</i></span>
                                     </div></a>
