@@ -84,10 +84,10 @@
                                             <td>{{ $ser->status }}</td>
                                             <td>{{ $ser->amount }}</td>
                                             <td style="white-space: nowrap">
-                                                {{-- <button
+                                                <button
                                                     onclick="edit_service('{{ $ser->id }}','{{ $ser->service_name }}','{{ $ser->status }}')"
                                                     ype="button" style="font-size: small"
-                                                    class="btn btn-grd btn-grd-primary px-2">Edit</button> --}}
+                                                    class="btn btn-grd btn-grd-primary px-2">Edit</button>
 
                                                 <a onclick="return confirm('Do you want to confirm delete service?')"
                                                     href="{{ url('/dropsubservice', $ser->id) }}" type="button"
@@ -101,7 +101,7 @@
                             </table>
                         </div>
                     </div>
-                    {{-- <div class="col-12">
+                    <div class="col-12">
                         <div class="card rounded-4">
                             <div class="card-body">
                                 <div class="">
@@ -117,20 +117,20 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="form-body">
-                                                        <form class="row g-3" action="{{ url('/updatecustomer') }}"
+                                                        <form class="row g-3" action="{{ url('/updatesubservice') }}"
                                                             method="post" enctype="multipart/form-data">
                                                             {{ csrf_field() }}
                                                             <div class="col-md-6">
                                                                 <input type="hidden" name="service_id" id="serviceid" />
                                                                 <label for="editname" class="form-label">Service
                                                                     Name</label>
-                                                                <input name="name" maxlength="30" type="text"
+                                                                <input name="service_name" maxlength="30" type="text"
                                                                     class="form-control" id="editname"
                                                                     placeholder="Service Name">
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label for="editstatus" class="form-label">Status</label>
-                                                                <select type="text" name="status" class="form-select"
+            `                                                      <select type="text" name="status" class="form-select"
                                                                     id="editstatus">
                                                                     <option>Select</option>
                                                                     <option value="Active">Active</option>
@@ -152,7 +152,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </div>

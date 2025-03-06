@@ -201,6 +201,7 @@ Route::post('/submitapply_tnegaservices2', [App\Http\Controllers\ServiceControll
 Route::post('/submitapply_tnegaservices3', [App\Http\Controllers\ServiceController::class, 'submitapply_tnegaservices3'])->name('submitapply_tnegaservices3');
 Route::post('/submitapply_tnegaservices4', [App\Http\Controllers\ServiceController::class, 'submitapply_tnegaservices4'])->name('submitapply_tnegaservices4');
 Route::post('/submitapply_tnegaservices5', [App\Http\Controllers\ServiceController::class, 'submitapply_tnegaservices5'])->name('submitapply_tnegaservices5');
+Route::post('/submitapply_tnegaservices6', [App\Http\Controllers\ServiceController::class, 'submitapply_tnegaservices6'])->name('submitapply_tnegaservices6');
 Route::post('/submitapply_msme', [App\Http\Controllers\ServiceController::class, 'submitapply_msme'])->name('submitapply_msme');
 Route::post('/submitapply_itr', [App\Http\Controllers\ServiceController::class, 'submitapply_itr'])->name('submitapply_itr');
 Route::post('/submitapply_gst', [App\Http\Controllers\ServiceController::class, 'submitapply_gst'])->name('submitapply_gst');
@@ -230,6 +231,9 @@ Route::post('/submit_statusupdate', [App\Http\Controllers\ServicestatusControlle
 Route::post('/submit_statusupdate_tnegaservices1', [App\Http\Controllers\ServicestatusController::class, 'submit_statusupdate_tnegaservices1'])->name('submit_statusupdate_tnegaservices1');
 Route::post('/submit_statusupdate_tnegaservices2', [App\Http\Controllers\ServicestatusController::class, 'submit_statusupdate_tnegaservices2'])->name('submit_statusupdate_tnegaservices2');
 Route::post('/submit_statusupdate_tnegaservices3', [App\Http\Controllers\ServicestatusController::class, 'submit_statusupdate_tnegaservices3'])->name('submit_statusupdate_tnegaservices3');
+Route::post('/submit_statusupdate_tnegaservices4', [App\Http\Controllers\ServicestatusController::class, 'submit_statusupdate_tnegaservices4'])->name('submit_statusupdate_tnegaservices4');
+Route::post('/submit_statusupdate_tnegaservices5', [App\Http\Controllers\ServicestatusController::class, 'submit_statusupdate_tnegaservices5'])->name('submit_statusupdate_tnegaservices5');
+Route::post('/submit_statusupdate_tnegaservices6', [App\Http\Controllers\ServicestatusController::class, 'submit_statusupdate_tnegaservices6'])->name('submit_statusupdate_tnegaservices6');
 Route::post('/submit_statusupdate_msme', [App\Http\Controllers\ServicestatusController::class, 'submit_statusupdate_msme'])->name('submit_statusupdate_msme');
 Route::post('/submit_statusupdate_itr', [App\Http\Controllers\ServicestatusController::class, 'submit_statusupdate_itr'])->name('submit_statusupdate_itr');
 Route::post('/submit_statusupdate_gst', [App\Http\Controllers\ServicestatusController::class, 'submit_statusupdate_gst'])->name('submit_statusupdate_gst');

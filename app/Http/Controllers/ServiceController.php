@@ -1965,48 +1965,90 @@ public function submitapply_tnegaservices6(Request $request){
             'institute_name_english'        => $request->institute_name_english,
             'institute_address_tamil'        => $request->institute_address_tamil,
             'institute_address_english'        => $request->institute_address_english,
+            'living_status_1'        => $request->living_status_1,
+            'living_status_2'        => $request->living_status_2,
             'status'        => 'Pending',
             'applied_date'  => date("Y-m-d"),
             'created_at'    => date("Y-m-d"),
         ] );
         $insertid = DB::getPdo()->lastInsertId();
+    
+        $signature1 = "";
+    if ($request->signature1 != null) {
+        $signature1 = uniqid().'.'.$request->file('signature1')->extension();
+        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'signature1' . DIRECTORY_SEPARATOR);
+        move_uploaded_file($_FILES['signature1']['tmp_name'], $filepath . $signature1);
+    }
+    DB::table('tnega_services')->where('id', $insertid)->update([
+        'signature1'         => $signature1,
+    ]);
+    $signature2 = "";
+    if ($request->signature2 != null) {
+        $signature2 = uniqid().'.'.$request->file('signature2')->extension();
+        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'signature2' . DIRECTORY_SEPARATOR);
+        move_uploaded_file($_FILES['signature2']['tmp_name'], $filepath . $signature2);
+    }
+    DB::table('tnega_services')->where('id', $insertid)->update([
+        'signature2'         => $signature2,
+    ]);
 
-        if($request->has('relation')){
+    if($request->has('relation')){
         foreach ( $request->relation as $key => $r ) {
           $relation_name_tamil = $request->name_tamil[ $key ];
           $relation_name = $request->name_english[ $key ];
-          $relation_age = $request->age[ $key ];
           $living_status = $request->living_status[ $key ];
+          $age = $request->age[ $key ];
           $education = $request->education_type[ $key ];
-         
-          $sql = "insert into family_member (service_id,relation,relation_name,relation_name_tamil,relation_age,relation_status,education) values ($insertid,'$r','$relation_name','$relation_name_tamil','$relation_age','$living_status','$education')";
+
+          $sql = "insert into family_member (service_id,relation,relation_name,relation_name_tamil,relation_status,education,relation_age) values ($insertid,'$r','$relation_name','$relation_name_tamil','$living_status','$education','$age')";
           DB::insert( $sql );
-         
+
           $relation_id = DB::getPdo()->lastInsertId();
-          if($relation_status == "Alive"){
+          $file1 = "";
+          if (isset($request->doc[$key])) {
             if ($request->doc[$key] != null) {
-        $signature1 = $relation_id.'.'.$request->file('doc')[$key]->extension();
+                $file1 = uniqid().'.'.$request->file('doc')[$key]->extension();
           //dd($request->doc[$key]);
-        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'signature1' . DIRECTORY_SEPARATOR);
-        move_uploaded_file($_FILES['doc']['tmp_name'][$key], $filepath . $signature1);
-        DB::table( 'family_member' )->where( 'id', $relation_id )->update( [
-          'signature1'       => $signature1,
-        ] );
-      }
-          
-        }elseif($relation_status == "Alive"){
-            if ($request->doc[$key] != null) {
-        $signature2 = $relation_id.'.'.$request->file('doc')[$key]->extension();
-        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'signature2' . DIRECTORY_SEPARATOR);
-        move_uploaded_file($_FILES['doc']['tmp_name'][$key], $filepath . $signature2);
-        DB::table( 'family_member' )->where( 'id', $relation_id )->update( [
-          'signature2'       => $signature2,
-        ] );
-      }
-          
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'doc' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['doc']['tmp_name'][$key], $filepath . $file1);
+                DB::table( 'family_member' )->where( 'id', $relation_id )->update( [
+                  'doc'       => $file1,
+              ] );
+            }
         }
-      }
-    } 
+
+
+    }
+} 
+
+if($request->has('relationship_add')){
+    foreach ( $request->relationship_add as $key => $r ) {
+        $relation_name_tamil = $request->name_tamil_add[ $key ];
+        $relation_name = $request->name_english_add[ $key ];
+        $living_status = $request->living_status_add[ $key ];
+        $age = $request->age_add[ $key ];
+        $education = $request->education_type_add[ $key ];
+
+        $sql = "insert into family_member (user_id,service_id,relation,relation_name,relation_name_tamil,relation_status,education,relation_age) values ($insertid,$insertid,'$r','$relation_name','$relation_name_tamil','$living_status','$education','$age')";
+        DB::insert( $sql );
+
+        $relation_id = DB::getPdo()->lastInsertId();
+         $file1 = "";
+        if (isset($request->doc1[$key])) {
+            if ($request->doc1[$key] != null) {
+                $file1 = uniqid().'.'.$request->file('doc1')[$key]->extension();
+          //dd($request->doc[$key]);
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'doc' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['doc']['tmp_name'][$key], $filepath . $file1);
+                DB::table( 'family_member' )->where( 'id', $relation_id )->update( [
+                  'doc'       => $file1,
+              ] );
+            }
+        }
+
+
+    }
+} 
     
         $servicepayment = $request->service_amount;
         if(Auth::user()->user_type_id == 3){
