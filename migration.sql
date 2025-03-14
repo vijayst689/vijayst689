@@ -1652,3 +1652,6 @@ CREATE TABLE `agri_details` (
 )  ENGINE=InnoDB;
 
 alter table agri_details add pattatype varchar(100) DEFAULT NULL;
+
+/14-03-2025
+alter table pancard add opid text Default NULL;

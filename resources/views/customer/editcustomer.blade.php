@@ -182,7 +182,7 @@
                                         
 
                                     </div>
-                                    <h3 class="text-center">View Family Details</h3>
+                                    {{-- <h3 class="text-center">View Family Details</h3>
                                     <div class="table-responsive">
                                         <table id="pricetable" class="table table-bordered">
                                             <thead>
@@ -225,15 +225,15 @@
                                                             </select></td>
                                                         <td>
                                                             <P class="changename_{{ $key }}"> </P>
-                                                            {{--  @if ($fam->relationaadhaar_card != '')
+                                                             @if ($fam->relationaadhaar_card != '')
                                             <a target="_blank" href="/upload/users/relationaadhaar_card/{{ $fam->relationaadhaar_card }}" class="btn btn-primary me-2">View</a>
-                                          @endif --}}
+                                          @endif
                                                             <input class="form-control" type="file" name="doc[]"
                                                                 accept="image/jpeg, image/png">
                                                         </td>
 
 
-                                                        {{--  @if ($fam->relationdeath_cert != '')<input class="form-control"  type="hidden" name="doc2[]" value="{{ $fam->relationaadhaar_card }}" accept="image/jpeg, image/png"> @endif --}}
+                                                         @if ($fam->relationdeath_cert != '')<input class="form-control"  type="hidden" name="doc2[]" value="{{ $fam->relationaadhaar_card }}" accept="image/jpeg, image/png"> @endif
                                                         <td><a onClick='removerow()'
                                                                 class='btn btn-sm btn-danger btnDelete'><i
                                                                     class='mdi mdi-delete mdi-18px'></i></a></td>
@@ -241,7 +241,7 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="text-center">
                                         <div class="col-12">

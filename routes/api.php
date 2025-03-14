@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+// PAN STATUS
+Route::post('/get_panstatus', [App\Http\Controllers\api\ApiController::class, 'get_panstatus'])->name('get_panstatus');
