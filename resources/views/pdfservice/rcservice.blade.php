@@ -36,6 +36,18 @@
                     <input type="hidden" name="serviceid"  value="{{ $serviceid }}">
                     <input type="hidden" name="servicepayment" value="{{ $payment }}">
                     <div class="row">
+                        <div class="mb-3 col-md-4">
+                            <div class="form-check form-check-inline">
+                              <input required class="form-check-input" type="radio" name="ser" id="inlineRadio1" value="1" />
+                              <label class="form-check-label" for="inlineRadio1">Server 1</label>
+                          </div>
+    
+                          <div class="form-check form-check-inline">
+                              <input required class="form-check-input" type="radio" name="ser" id="inlineRadio2" value="2" />
+                              <label class="form-check-label" for="inlineRadio2">Server 2</label>
+                          </div>
+    
+                      </div>
                       <div class="mb-3 col-md-6">
                           <label for="rc_no" class="form-label">Vehicle Number</label>
                           <input class="form-control" type="text" name="rc_no" maxlength="10" required autofocus

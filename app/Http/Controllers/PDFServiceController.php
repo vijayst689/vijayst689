@@ -405,7 +405,13 @@ class PDFServiceController extends Controller
     $amount = $request->amount;
     $servicepayment = $request->servicepayment;
     $serviceid = $request->serviceid;
-    $url = "https://goodapi.in/serviceApi/V1/Rc-Verification.php?apiKey=$apikey&rcno=$rc_no";
+    if($request->ser == 1){
+      $url = "https://goodapi.in/serviceApi/V1/Rc-Verification.php?apiKey=$apikey&rcno=$rc_no";
+    }else{
+      $application_no = rand(00000000,99999999);
+      $url = "https://server.webtechly.co.in/rcpdf.php?api_key=3d7a47-5ca26a-a9f00f-83e41b-482ca3&application_no=$application_no&rc_number=$rc_no";
+    }
+    
     $crl = curl_init();
     curl_setopt( $crl, CURLOPT_URL, $url );
     curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
@@ -414,15 +420,29 @@ class PDFServiceController extends Controller
     $result = json_decode($result,true);
     curl_close($crl);
     if($result){
-      if($result['Status'] == "Success"){
-       $name = $result['name'];
-       $message = $result['message'];
-       $pdf = $result['pdf'];
+      $status = "";
+     if($request->ser == 1){
+       $status = $result['Status'];
+     }else{
+       $status = $result['status'];
+     }
+     if(($request->ser == 1 && $status == "Success") || ($request->ser == 2 && $status == "true")){
+       $name = "";
+       if($request->ser == 1){
+         $name = $result['name'];
+       }
+      $message = $result['message'];
+      $pdf = $result['pdf'];
+      if($request->ser == 1){
        $pdf_parts = explode(";base64", $pdf);
        $pdf_types = explode("pdf/", $pdf_parts[0]);
        $pdf_type = base64_decode($pdf_parts[1]);
-       $filename = uniqid().'.pdf';
-       file_put_contents('upload/rc/'.$filename,$pdf_type );
+      }else{
+       $pdf_type = base64_decode($pdf);
+      }
+      
+      $filename = uniqid().'.pdf';
+      file_put_contents('upload/rc/'.$filename,$pdf_type );
 
        DB::table('rc')->insert([
         'user_id' => Auth::user()->id,
