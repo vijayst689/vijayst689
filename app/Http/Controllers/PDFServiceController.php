@@ -317,44 +317,74 @@ class PDFServiceController extends Controller
     $dl_no = $request->dl_no;
     $dob = $request->dob;
     $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
+    $Apikey = 'cdf94c6d43b5367276d87107b1538aa50b50eb8f8c665fbcd9f1998abe73957e619d4e';
     $amount = $request->amount;
     $servicepayment = $request->servicepayment;
     $serviceid = $request->serviceid;
+    if($request->ser == 1){
 
-    $url = "https://goodapi.in/serviceApi/V1/driving_licence_hd.php";
+      $url = "https://goodapi.in/serviceApi/V1/driving_licence_hd.php";
 
+   }else{
+
+      $url = "https://authorized.p4point.co.in/api/v1/dlVerificationPDF?apiKey=$Apikey&dlNo=$dl_no&dob=$dob";
+   }
     $data = array(
       'apiKey' => $apikey,
       'dlNo' => $dl_no,
       'dob' => $dob
     );
 
-    $curl = curl_init();
-    curl_setopt_array($curl, array(
-      CURLOPT_URL => $url,
+    if($request->ser == 1){
+      $curl = curl_init();
+      curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => $data,
+      ));  
+    }elseif($request->ser == 2){
+      $curl = curl_init();
+      curl_setopt_array($curl, array(
+      CURLOPT_URL =>  $url,
       CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => '',
       CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 0,
+      CURLOPT_TIMEOUT => 30,
       CURLOPT_FOLLOWLOCATION => true,
       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => 'POST',
-      CURLOPT_POSTFIELDS => $data,
-    ));
-
-    $response = curl_exec($curl);
-    curl_close($curl);
-
-    $resdata = json_decode($response, true);
-
-    if($resdata['StatusCode'] == "100"){
-      $pdf = $resdata['pdf'];
-      $pdf_parts = explode(";base64", $pdf);
-      $pdf_types = explode("pdf/", $pdf_parts[0]);
-      $pdf_type = base64_decode($pdf_parts[1]);
-      $filename = uniqid().'.pdf';
-      file_put_contents('upload/dl/'.$filename,$pdf_type );
-      $message = $resdata['message'];
+      CURLOPT_CUSTOMREQUEST => 'GET',
+      CURLOPT_VERBOSE => true,
+      ));
+    }
+  
+      $response = curl_exec($curl);
+      curl_close($curl);
+      $resdata = json_decode($response, true);
+      // dd($resdata);
+      if($resdata){
+        $status = "";
+       if($request->ser == 1){
+         $status = $resdata['Status'];
+       }else{
+         $status = $resdata['status'];
+       }
+      if(($request->ser == 1 && $resdata['StatusCode'] == "100") || ($request->ser == 2 && $resdata['status'] == "100")){
+        $pdf = $resdata['pdf'];
+        $pdf_parts = explode(";base64", $pdf);
+         $pdf_types = explode("pdf/", $pdf_parts[0]);
+         $pdf_type = base64_decode($pdf_parts[1]);
+         $filename = uniqid().'.pdf';
+         file_put_contents('upload/dl/'.$filename,$pdf_type );
+        if($request->ser == 1){
+        $message = $resdata['message'];
+        }else{
+        $message = $resdata['statusMessage'];
+        }
 
       DB::table('dl')->insert([
         'user_id' => Auth::user()->id,
@@ -430,7 +460,8 @@ class PDFServiceController extends Controller
       return redirect('/applypdfservice/'.$serviceid)->with('error',$error);
     }
   }
-
+  }
+  
   public function submitrcfind(Request $request){
     $user_id = Auth::user()->id;
     $rc_no = $request->rc_no;
