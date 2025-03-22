@@ -155,7 +155,7 @@ class PanController extends Controller
         $serviceid = $request->serviceid;
         $mobile = $request->mobile;
         $mode = $request->mode;
-        $orderid = rand(000000,999999);
+        $orderid = rand(000000000,999999999);
         $panurl =  "https://connect.inspay.in/v4/nsdl/new_pan?username=IP7598984380&token=836a596851ed939b19a4b71157c47e1d&number=$mobile&mode=$mode&orderid=$orderid";
         $crl = curl_init();
         curl_setopt( $crl, CURLOPT_URL, $panurl );
@@ -304,7 +304,7 @@ class PanController extends Controller
         $serviceid = $request->serviceid;
         $mobile = $request->mobile;
         $mode = $request->mode;
-        $orderid = rand(000000,999999);
+        $orderid = rand(000000000,999999999);
         $panurl =  "https://connect.inspay.in/v4/nsdl/correction?username=IP7598984380&token=836a596851ed939b19a4b71157c47e1d&number=$mobile&mode=$mode&orderid=$orderid";
         $crl = curl_init();
         curl_setopt( $crl, CURLOPT_URL, $panurl );
