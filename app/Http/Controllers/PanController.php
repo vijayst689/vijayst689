@@ -268,19 +268,19 @@ class PanController extends Controller
 
           // API CALL
           $API_KEY = env( 'API_KEY', '' );
-          $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
-          $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
-          $ch = curl_init();
-          $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&api_url=$url&api_txn=$orderid&api_status=$status&message=$message";
-          $url1 = $RAMJIPAY_URL.'/api/get_pandata';
+            $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+            $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+            $ch = curl_init();
+            $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&api_url=$url&api_txn=$orderid&api_status=$status&message=$message";
+            $url1 = $RAMJIPAY_URL.'/api/get_pandata';
 
-          curl_setopt( $ch, CURLOPT_URL, $url1 );
-          curl_setopt( $ch, CURLOPT_POST, 1 );
-          curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
-          curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-          $server_output = curl_exec( $ch );
-          curl_close( $ch );
-          $resdata = json_decode($server_output, true);
+            curl_setopt( $ch, CURLOPT_URL, $url1 );
+            curl_setopt( $ch, CURLOPT_POST, 1 );
+            curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+            $server_output = curl_exec( $ch );
+            curl_close( $ch );
+            $resdata = json_decode($server_output, true);
 
          return redirect($url)->With("success",$message);
 
@@ -416,19 +416,19 @@ class PanController extends Controller
 
          // API CALL
          $API_KEY = env( 'API_KEY', '' );
-         $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
-         $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
-         $ch = curl_init();
-         $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&api_url=$url&api_txn=$orderid&api_status=$status&message=$message";
-         $url = $RAMJIPAY_URL.'/api/get_pandata';
+            $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+            $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+            $ch = curl_init();
+            $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&api_url=$url&api_txn=$orderid&api_status=$status&message=$message";
+            $url1 = $RAMJIPAY_URL.'/api/get_pandata';
 
-         curl_setopt( $ch, CURLOPT_URL, $url );
-         curl_setopt( $ch, CURLOPT_POST, 1 );
-         curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
-         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-         $server_output = curl_exec( $ch );
-         curl_close( $ch );
-         $resdata = json_decode($server_output, true);
+            curl_setopt( $ch, CURLOPT_URL, $url1 );
+            curl_setopt( $ch, CURLOPT_POST, 1 );
+            curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+            $server_output = curl_exec( $ch );
+            curl_close( $ch );
+            $resdata = json_decode($server_output, true);
 
            return redirect($url)->With("success",$message);
         }else{
