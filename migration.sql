@@ -1655,3 +1655,21 @@ alter table agri_details add pattatype varchar(100) DEFAULT NULL;
 
 /14-03-2025
 alter table pancard add opid text Default NULL;
+
+//22-03-2025
+
+CREATE TABLE `aadhaar_verify` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `aadhaar_no` varchar(20) DEFAULT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `gender` varchar(20) DEFAULT NULL,
+  `age` varchar(50) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `amount` varchar(20) DEFAULT NULL,
+  `message` varchar(1000) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
