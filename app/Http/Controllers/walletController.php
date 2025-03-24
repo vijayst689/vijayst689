@@ -120,7 +120,7 @@ public function superadminaddwallet( Request $request )
     DB::update( DB::raw( $sql ) );
     $service_status = 'IN Payment';
     $ad_info = 'ADD MONEY';
-    $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$login_id','$from_id','$login_id','$amount','$ad_info', '$service_status','$time','$date','$from_id')";
+    $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$login_id','$from_id','$login_id','$amount','$ad_info', '$service_status','$time','$date','$from_id','$newbalance1')";
     DB::insert( DB::raw( $sql ) );
 
     return redirect()->back()->with( 'success', 'Ramji wallet Updated Successfully' );
