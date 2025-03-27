@@ -72,10 +72,12 @@
                                     <tr>
                                         <th>Sl No</th>
                                         <th>Mobile</th>
-                                        <th width="30%">Message</th>
+                                        <th width="20%">Message</th>
                                         <th>Amount</th>
                                         <th>Datetime</th>
                                         <th>Status</th>
+                                        <th>Text</th>
+                                        <th width="20%">Remark</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -88,13 +90,16 @@
                                             <td>{{ $ser->amount }}</td>
                                             <td>{{ $ser->applied_date }}</td>
                                             <td>{{ $ser->status }}</td>
-                                            <td>
-                                                @if($ser->status != "Failure") 
+                                            @if($ser->status == "Failure")
+                                            <td>Refunded</td>
+                                            @else
+                                            <td>{{ $ser->status }}</td>
+                                            @endif
+                                            <td>{{ $ser->opid }}</td>
+                                            <td style="white-space: nowrap;">
+                                                @if($ser->status == "Pending" || $ser->status == "Processing")
                                                 <a href="{{ url('/pancard_reapply', $ser->api_txid) }}/{{ $ser->service_id }}" type="button"
-                                                    style="font-size: small" class="btn btn-inverse-info px-1">Reapply</a>
-
-                                                     <a href="{{ url('/raisedispute', $ser->id) }}" type="button"
-                                                    style="font-size: small" class="btn btn-inverse-primary px-1">Raise Dispute</a>
+                                                    style="font-size: small" class="btn-sm btn btn-primary">Reapply</a>
                                                 @endif
                                             </td>
 

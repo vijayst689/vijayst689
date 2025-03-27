@@ -152,7 +152,12 @@ class PanController extends Controller
 
   public function submitnewpancard( Request $request ) {
         $user_id = Auth::user()->id;
+        $wallet = Auth::user()->wallet;
+        $servicepayment = $request->servicepayment;
         $serviceid = $request->serviceid;
+        if($wallet < $servicepayment){
+          return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+        }
         $mobile = $request->mobile;
         $mode = $request->mode;
         $orderid = rand(000000000,999999999);
@@ -204,7 +209,6 @@ class PanController extends Controller
             'status' => 'Processing'
           ]);
           $amount = $request->amount;
-          $servicepayment = $request->servicepayment;
           $date = date( 'Y-m-d' );
         $time = date( 'H:i:s' );
         $service_status = 'Out Payment';
@@ -301,7 +305,13 @@ class PanController extends Controller
 
     public function submitpancorrection( Request $request ) {
         $user_id = Auth::user()->id;
+        $wallet = Auth::user()->wallet;
+        $servicepayment = $request->servicepayment;
         $serviceid = $request->serviceid;
+        if($wallet < $servicepayment){
+          return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+        }
+        
         $mobile = $request->mobile;
         $mode = $request->mode;
         $orderid = rand(000000000,999999999);
@@ -353,7 +363,6 @@ class PanController extends Controller
             'status' => 'Processing'
           ]);
           $amount = $request->amount;
-          $servicepayment = $request->servicepayment;
           $date = date( 'Y-m-d' );
         $time = date( 'H:i:s' );
         $service_status = 'Out Payment';
