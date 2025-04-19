@@ -629,7 +629,7 @@ class ServicestatusController extends Controller
         } elseif($service_id == 56 || $service_id == 58 || $service_id == 74 || $service_id == 158 || $service_id == 159 || $service_id == 160 || $service_id == 161 || $service_id == 162 || $service_id == 163 || $service_id == 72){
             $services = DB::table('aadhaarcard')->where('id',$id)->where('status',$status)->first();
 
-        } elseif($service_id == 60 || $service_id == 62 || $service_id == 63 || $service_id == 64 || $service_id == 65 || $service_id == 66 || $service_id == 67 || $service_id == 121){
+        } elseif($service_id == 60 || $service_id == 62 || $service_id == 63 || $service_id == 64 || $service_id == 65 || $service_id == 66 || $service_id == 67 || $service_id == 121 || $service_id == 204 || $service_id == 205 || $service_id == 206 || $service_id == 207){
             $services = DB::table('can_edit')->where('id',$id)->where('status',$status)->first();
 
 
@@ -861,6 +861,9 @@ class ServicestatusController extends Controller
         return view('servicestatus.dharsan_statusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
     }   elseif( $service_id == 187 || $service_id == 188 || $service_id == 189 || $service_id == 190 || $service_id == 191 || $service_id == 192 || $service_id == 193 || $service_id == 194 || $service_id == 195 || $service_id == 196 || $service_id == 197 || $service_id == 198 || $service_id == 199 || $service_id == 200 || $service_id == 201 || $service_id == 202 || $service_id == 203 ){
         return view('servicestatus.softwarestatusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
+   
+    }   elseif( $service_id == 204 || $service_id == 205 || $service_id == 206 || $service_id == 207 ){
+        return view('servicestatus.can_editupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
     }
 
 }
@@ -5762,10 +5765,33 @@ public function caneditupdate(Request $request){
                 'applied_date'               => date("Y-m-d"),
                 'created_at'                 => date("Y-m-d"),
             ]);
+        }   elseif($serviceid == 204 || $serviceid == 205 || $serviceid == 206 || $serviceid == 207){
+            DB::table( 'can_edit' )->insert( [
+                'service_id'                 => $request ->serviceid,
+            'amount'                     => $request->amount,
+            'can_number'                 => $request->can_number,
+            'mobile'                     => $request->mobile,
+            'dob'                        => $request->dob,
+            'name_tamil'                 => $request->name_tamil,
+            'name_english'               => $request->name_english,
+            'status'                     => 'Pending',
+            'applied_date'               => date("Y-m-d"),
+            'created_at'                 => date("Y-m-d"),
+            ] );
+        
+            $insertid = DB::getPdo()->lastInsertId();
+            $aadhaar_card = "";
+        
+            if ($request->aadhaar_card != null) {
+             $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
+             $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
+             move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
+        
+         }
+         DB::table('can_edit')->where('id', $insertid)->update([
+            'aadhaar_card' => $aadhaar_card,
+        ]);
         }
-
-
-
 
         DB::table( 'can_edit' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,

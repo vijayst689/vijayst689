@@ -352,7 +352,10 @@ public function applyservices($serviceid) {
 
 }  elseif ($serviceid == 183 || $serviceid == 184 || $serviceid == 185 || $serviceid == 186){
    return view( 'applyservice.dharsanservice',compact('serviceid','districts','servicename','amount','customers','payment'));
-}
+
+}  elseif ($serviceid == 204 || $serviceid == 205 || $serviceid == 206 || $serviceid == 207){
+    return view( 'applyservice.can_editservice',compact('serviceid','districts','servicename','amount','customers','payment'));
+ }
 
 }
 
@@ -365,7 +368,7 @@ public function get_subservice($parentid)
 
 public function get_taluk($distid)
 {
-    $response = DB::table('taluk')->where('district_id',$distid)->orderBy( 'id', 'Asc' )->get();
+    $response = DB::table('taluk')->where('dist_id',$distid)->orderBy( 'id', 'Asc' )->get();
     return response()->json( $response );
 }
 
@@ -4424,6 +4427,35 @@ DB::table('can_edit')->where('id', $insertid)->update([
         'can_number'                 => $request->can_number,
         'address_tamil'              => $request->address_tamil,
         'address_english'            => $request->address_english,
+        'status'                     => 'Pending',
+        'applied_date'               => date("Y-m-d"),
+        'created_at'                 => date("Y-m-d"),
+    ] );
+
+    $insertid = DB::getPdo()->lastInsertId();
+    $aadhaar_card = "";
+
+    if ($request->aadhaar_card != null) {
+     $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
+     $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
+     move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
+
+ }
+ DB::table('can_edit')->where('id', $insertid)->update([
+    'aadhaar_card' => $aadhaar_card,
+]);
+}  elseif($serviceid == 204 || $serviceid == 205 || $serviceid == 206 || $serviceid == 207){
+    DB::table( 'can_edit' )->insert( [
+        'user_id'                    => $user_id,
+        'retailer_id'                => $retailer_id,
+        'distributor_id'             => $distributor_id,
+        'service_id'                 => $request ->serviceid,
+        'amount'                     => $request->amount,
+        'can_number'                 => $request->can_number,
+        'mobile'                     => $request->mobile,
+        'dob'                        => $request->dob,
+        'name_tamil'                 => $request->name_tamil,
+        'name_english'               => $request->name_english,
         'status'                     => 'Pending',
         'applied_date'               => date("Y-m-d"),
         'created_at'                 => date("Y-m-d"),

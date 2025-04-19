@@ -173,7 +173,11 @@ class PDFServiceController extends Controller
     $aadhaar = $request->aadhaar_no;
     $amount = $request->amount;
     $servicepayment = $request->servicepayment;
+    $wallet = Auth::user()->wallet;
     $serviceid = $request->serviceid;
+    if($wallet < $servicepayment){
+      return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+    }
     $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9'; // Base 64 api Key Here
     $application_no = rand(00000000,99999999); // Application Number
 
@@ -319,11 +323,16 @@ class PDFServiceController extends Controller
     $user_id = Auth::user()->id;
     $dl_no = $request->dl_no;
     $dob = $request->dob;
-    $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
-    $Apikey = 'cdf94c6d43b5367276d87107b1538aa50b50eb8f8c665fbcd9f1998abe73957e619d4e';
     $amount = $request->amount;
     $servicepayment = $request->servicepayment;
+    $wallet = Auth::user()->wallet;
     $serviceid = $request->serviceid;
+    if($wallet < $servicepayment){
+      return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+    }
+    $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
+    $Apikey = 'cdf94c6d43b5367276d87107b1538aa50b50eb8f8c665fbcd9f1998abe73957e619d4e';
+    
     if($request->ser == 1){
 
       $url = "https://goodapi.in/serviceApi/V1/driving_licence_hd.php";
@@ -468,10 +477,15 @@ class PDFServiceController extends Controller
   public function submitrcfind(Request $request){
     $user_id = Auth::user()->id;
     $rc_no = $request->rc_no;
-    $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
     $amount = $request->amount;
     $servicepayment = $request->servicepayment;
+    $wallet = Auth::user()->wallet;
     $serviceid = $request->serviceid;
+    if($wallet < $servicepayment){
+      return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+    }
+    $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
+   
     if($request->ser == 1){
       $url = "https://goodapi.in/serviceApi/V1/Rc-Verification.php?apiKey=$apikey&rcno=$rc_no";
     }else{
@@ -599,7 +613,11 @@ public function submitrationfind(Request $request){
   $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
   $amount = $request->amount;
   $servicepayment = $request->servicepayment;
-  $serviceid = $request->serviceid;
+    $wallet = Auth::user()->wallet;
+    $serviceid = $request->serviceid;
+    if($wallet < $servicepayment){
+      return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+    }
 
   $curl = curl_init();
   curl_setopt_array($curl, array(
@@ -720,8 +738,11 @@ public function submitpanadvance(Request $request){
   $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
   $amount = $request->amount;
   $servicepayment = $request->servicepayment;
-  $serviceid = $request->serviceid;
-
+    $wallet = Auth::user()->wallet;
+    $serviceid = $request->serviceid;
+    if($wallet < $servicepayment){
+      return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+    }
   $curl = curl_init();
   curl_setopt_array($curl, array(
   CURLOPT_URL =>  "https://goodapi.in/serviceApi/V1/panVerification.php?apiKey=$apikey&panNumber=$pan_no",
@@ -865,7 +886,11 @@ public function submitvoterfind(Request $request){
   $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
   $amount = $request->amount;
   $servicepayment = $request->servicepayment;
-  $serviceid = $request->serviceid;
+    $wallet = Auth::user()->wallet;
+    $serviceid = $request->serviceid;
+    if($wallet < $servicepayment){
+      return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+    }
 
       $url = "https://goodapi.in/serviceApi/V1/VCM/Vcm-link.php?apiKey=$apikey&epic=$epic_no&otp=$otp&mobile_no=$phone";
       $crl = curl_init();
@@ -980,7 +1005,11 @@ public function submitvoterpdf(Request $request){
   $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
   $amount = $request->amount;
   $servicepayment = $request->servicepayment;
-  $serviceid = $request->serviceid;
+    $wallet = Auth::user()->wallet;
+    $serviceid = $request->serviceid;
+    if($wallet < $servicepayment){
+      return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+    }
 
       $url = "https://goodapi.in/serviceApi/V1/VCPFD/Vc_Verification_Tp.php?apiKey=$apikey&stateCd=$stateCd&otp=$otp&epic=$epic_no";
       $crl = curl_init();
@@ -1097,7 +1126,11 @@ public function submitaadhaar_verify(Request $request){
   $apikey = 'cdf94c6d43b5367276d87107b1538aa50b50eb8f8c665fbcd9f1998abe73957e619d4e';
   $amount = $request->amount;
   $servicepayment = $request->servicepayment;
+  $wallet = Auth::user()->wallet;
   $serviceid = $request->serviceid;
+  if($wallet < $servicepayment){
+    return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+  }
 
   $curl = curl_init();
   curl_setopt_array($curl, array(
