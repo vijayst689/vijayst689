@@ -662,7 +662,7 @@ public function submitapply_tnegaservices1(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -1040,7 +1040,7 @@ if($request->has('proof')){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -1256,7 +1256,7 @@ public function submitapply_tnegaservices3(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -1410,7 +1410,7 @@ public function submitapply_tnegaservices4(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -1887,7 +1887,7 @@ public function submitapply_tnegaservices5(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -2071,7 +2071,7 @@ if($request->has('relationship_add')){
         $service_status = 'Out Payment';
         $ad_info = "Service Payment". ' ' .$servicename;
     
-        $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
         $balance = 0;
         if($getwallet){
             $balance = $getwallet->wallet;
@@ -2192,7 +2192,7 @@ public function submitapply_msme(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -2298,7 +2298,7 @@ $getservicename = DB::table( 'services' )->select('service_name')->where('id',$s
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -2377,7 +2377,7 @@ public function submitapply_birthcertificate(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -2529,7 +2529,7 @@ $getservicename = DB::table( 'services' )->select('service_name')->where('id',$s
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -2621,7 +2621,7 @@ public function submitapply_tecexam(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -2714,7 +2714,7 @@ public function submitapply_rapexam(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -2827,7 +2827,7 @@ public function submitapply_iibf_exam_register(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -2909,7 +2909,7 @@ public function submitapply_insexam(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -2991,7 +2991,7 @@ public function submitapply_vle_insurance(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -3089,7 +3089,7 @@ public function submittecexam_register(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -3182,7 +3182,7 @@ public function submitapply_teccorrection(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -3828,7 +3828,7 @@ $getservicename = DB::table( 'services' )->select('service_name')->where('id',$s
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -4104,7 +4104,7 @@ $getservicename = DB::table( 'services' )->select('service_name')->where('id',$s
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -4189,7 +4189,7 @@ public function submitfindaadhaar_number(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -4491,7 +4491,7 @@ $getservicename = DB::table( 'services' )->select('service_name')->where('id',$s
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -4796,7 +4796,7 @@ $getservicename = DB::table( 'services' )->select('service_name')->where('id',$s
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -4868,7 +4868,7 @@ $getservicename = DB::table( 'services' )->select('service_name')->where('id',$s
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -4995,7 +4995,7 @@ $getservicename = DB::table( 'services' )->select('service_name')->where('id',$s
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -5110,7 +5110,7 @@ $getservicename = DB::table( 'services' )->select('service_name')->where('id',$s
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -5183,7 +5183,7 @@ public function submitapply_covid(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -5273,7 +5273,7 @@ public function submitapply_nalavariyam(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -5365,7 +5365,7 @@ public function submitapply_driving_license(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -5509,7 +5509,7 @@ public function submitapply_pancard(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -5599,7 +5599,7 @@ public function submitapply_pancard(Request $request){
             $time = date( 'H:i:s' );
             $service_status = 'Out Payment';
             $ad_info = 'Service Payment'. ' '. $servicename;
-            $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+            $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
             $balance = 0;
             if($getwallet){
                 $balance = $getwallet->wallet;
@@ -5750,7 +5750,7 @@ public function submitapply_tailorshop(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -5836,7 +5836,7 @@ public function savepmkissan(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -5970,7 +5970,7 @@ public function submitapply_csc_tec(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -6094,7 +6094,7 @@ $getservicename = DB::table( 'services' )->select('service_name')->where('id',$s
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -6188,7 +6188,7 @@ public function submitapply_dharsan(Request $request){
     $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Service Payment'. ' '. $servicename;
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
