@@ -38,7 +38,6 @@
                                             <th>Name</th>
                                             <th>Phone</th>
                                         @endif
-                                        <th>User Type Name</th>
                                         <th>Status</th>
                                         <th>Applied Date</th>
                                         @if ($status == 'Processing')
@@ -60,7 +59,6 @@
                                                 <td>{{ $ser->applyname }}</td>
                                                 <td>{{ $ser->applymobile }}</td>
                                             @endif
-                                            <td>{{ $ser->id }}</td>
                                             <td>{{ $ser->status }}</td>
                                             <td>{{ date('d-m-Y', strtotime($ser->applied_date)) }}</td>
                                             @if ($status == 'Processing')
