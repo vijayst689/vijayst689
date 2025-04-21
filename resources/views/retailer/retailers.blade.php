@@ -149,15 +149,6 @@
                                                 <input type="email" name="email" class="form-control" id="editemail"
                                                     maxlength="60" placeholder="Email">
                                             </div>
-                                            <div class="col-md-6">
-                                                <label for="editstatus" class="form-label">Status</label>
-                                                <select type="text" name="status" class="form-select"
-                                                    id="editstatus">
-                                                    <option>Select</option>
-                                                    <option value="Active">Active</option>
-                                                    <option value="Inactive">Inactive</option>
-                                                </select>
-                                            </div>
                                             <div class="col-md-12">
                                                 <label for="input8" class="form-label">Profile</label>
                                                 <input type="file" name="profile" class="form-control"
@@ -284,7 +275,7 @@
 @endsection
 @push('page_scripts')
     <script>
-        function edit_retailer(id, name, phone, aadhaar_no, gender, email, date_of_birth, address, status) {
+        function edit_retailer(id, name, phone, aadhaar_no, gender, email, date_of_birth, address) {
             $("#editname").val(name);
             $("#editphone").val(phone);
             $("#editadhar").val(aadhaar_no);
@@ -292,7 +283,6 @@
             $("#editemail").val(email);
             $("#editdob").val(date_of_birth);
             $("#editaddress").val(address);
-            $("#editstatus").val(status);
             $("#retailerid").val(id);
             $("#editretailer").modal("show");
         }

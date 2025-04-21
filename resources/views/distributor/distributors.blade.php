@@ -155,7 +155,7 @@
                                                                     class="form-label">Address</label>
                                                                 <textarea name="address" class="form-control" id="editaddress" placeholder="Address ..." rows="3"></textarea>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            {{-- <div class="col-md-6">
                                                                 <label for="editstatus" class="form-label">Status</label>
                                                                 <select type="text" name="status" class="form-select"
                                                                     id="editstatus">
@@ -163,7 +163,7 @@
                                                                     <option value="Active">Active</option>
                                                                     <option value="Inactive">Inactive</option>
                                                                 </select>
-                                                            </div>
+                                                            </div> --}}
                                                             <div class="col-md-12">
                                                                 <div class="d-md-flex d-grid align-items-center gap-3">
                                                                     <button type="submit"
@@ -236,7 +236,7 @@
 @endsection
 @push('page_scripts')
     <script>
-        function edit_customer(id, name, phone, aadhaar_no, gender, email, date_of_birth, address, status) {
+        function edit_customer(id, name, phone, aadhaar_no, gender, email, date_of_birth, address) {
             $("#editname").val(name);
             $("#editphone").val(phone);
             $("#editadhar").val(aadhaar_no);
@@ -244,7 +244,6 @@
             $("#editemail").val(email);
             $("#editdob").val(date_of_birth);
             $("#editaddress").val(address);
-            $("#editstatus").val(status);
             $("#distributorid").val(id);
             $("#editcustomer").modal("show");
         }
