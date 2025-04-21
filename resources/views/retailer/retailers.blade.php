@@ -149,7 +149,7 @@
                                                 <input type="email" name="email" class="form-control" id="editemail"
                                                     maxlength="60" placeholder="Email">
                                             </div>
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <label for="input8" class="form-label">Profile</label>
                                                 <input type="file" name="profile" class="form-control"
                                                     id="input8">
