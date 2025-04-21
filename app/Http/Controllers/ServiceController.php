@@ -217,6 +217,9 @@ public function applyservice($serviceid,$customerid) {
    }elseif ($serviceid == 170 || $serviceid == 171 || $serviceid == 172 || $serviceid == 176 || $serviceid == 177 ||$serviceid == 178 ){
        return view( 'applyservice.tnegaservice5',compact('serviceid','districts','servicename','amount','customers','payment'));
    
+    } elseif ($serviceid == 60 || $serviceid == 62 || $serviceid == 63 || $serviceid == 64 || $serviceid == 65 || $serviceid == 66 || $serviceid == 67 || $serviceid == 121){
+        return view( 'applyservice.caneditservice',compact('serviceid','districts','servicename','amount','customers','payment'));
+
 }  elseif ($serviceid == 15){
     return view( 'applyservice.tnegaservice6',compact('serviceid','districts','servicename','amount','customers','payment'));
 }
@@ -352,6 +355,9 @@ public function applyservices($serviceid) {
 
 }  elseif ($serviceid == 183 || $serviceid == 184 || $serviceid == 185 || $serviceid == 186){
    return view( 'applyservice.dharsanservice',compact('serviceid','districts','servicename','amount','customers','payment'));
+
+}elseif ($serviceid == 208 || $serviceid == 209 || $serviceid == 210 || $serviceid == 211){
+    return view( 'applyservice.can_editservice',compact('serviceid','districts','servicename','amount','customers','payment'));
 
 }  elseif ($serviceid == 204 || $serviceid == 205 || $serviceid == 206 || $serviceid == 207){
     return view( 'applyservice.can_editservice',compact('serviceid','districts','servicename','amount','customers','payment'));
@@ -4444,7 +4450,7 @@ DB::table('can_edit')->where('id', $insertid)->update([
  DB::table('can_edit')->where('id', $insertid)->update([
     'aadhaar_card' => $aadhaar_card,
 ]);
-}  elseif($serviceid == 204 || $serviceid == 205 || $serviceid == 206 || $serviceid == 207){
+}   elseif($serviceid == 208 || $serviceid == 209 || $serviceid == 210 || $serviceid == 211){
     DB::table( 'can_edit' )->insert( [
         'user_id'                    => $user_id,
         'retailer_id'                => $retailer_id,
