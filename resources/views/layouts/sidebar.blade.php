@@ -40,11 +40,11 @@
                                             <li><a href="{{ url('/appliedservice') }}/Pending"><i
                                                         class="material-icons-outlined">arrow_right</i>Pending</a>
                                             </li>
-                                            <li><a href="{{ url('/appliedservice') }}/Processing"><i
-                                                        class="material-icons-outlined">arrow_right</i>Processing</a>
-                                            </li>
                                             <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
+                                            </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Processing"><i
+                                                class="material-icons-outlined">arrow_right</i>Processing</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Rejected"><i
                                                         class="material-icons-outlined">arrow_right</i>Rejected</a>
@@ -70,9 +70,6 @@
                                             </li>
                                             <li><a href="{{ url('/findpayment') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>Payment</a>
-                                            </li>
-                                            <li><a href="{{ url('/pdfservices') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>PDF SERVICE</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -126,30 +123,17 @@
                                             <li><a href="{{ url('/panservicepayment') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>PanPayment</a>
                                             </li>
-                                            <li><a href="{{ url('/panservices') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>PAN SERVICE</a>
-                                            </li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                        <a href="javascript:;" class="has-arrow">
+                                            <div class="parent-icon"><i></i>
                                             </div>
-                                            <div class="menu-title">Course Certificate</div>
+                                            <div class="menu-title">Our Service</div>
                                         </a>
                                         <ul class="mm-collapse">
-                                            <li><a href="{{ url('/addcourse') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Add Course</a>
-                                            </li>
-                                            <li><a href="{{ url('/viewcourse') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>View Course</a>
-                                            </li>
-                                            <li><a href="{{ url('/coursepayment') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>CoursePayment</a>
-                                            </li>
-                                            <li><a href="{{ url('/courses') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Apply
-                                                    Certificate</a>
+                                            <li><a href="{{ url('allservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Our Service</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -193,21 +177,6 @@
                                             </li>
                                             <li><a href="{{ url('retailers') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>Retailers</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;" class="has-arrow">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">TNEGA</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('addcustomer') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Add Customer</a>
-                                            </li>
-                                            <li><a href="{{ url('customers') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Customers</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -282,11 +251,11 @@
                                             <li><a href="{{ url('/appliedservice') }}/Pending"><i
                                                         class="material-icons-outlined">arrow_right</i>Pending</a>
                                             </li>
-                                            <li><a href="{{ url('/appliedservice') }}/Processing"><i
-                                                        class="material-icons-outlined">arrow_right</i>Processing</a>
-                                            </li>
                                             <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
+                                            </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Processing"><i
+                                                class="material-icons-outlined">arrow_right</i>Processing</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Rejected"><i
                                                         class="material-icons-outlined">arrow_right</i>Rejected</a>
@@ -334,21 +303,6 @@
                                             <li><a href="{{ url('/findpayment') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>Payment</a>
                                             </li>
-                                            <li><a href="{{ url('/pdfservices') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>PDF SERVICE</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">UTILITY Services</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('/utility') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Utility</a>
-                                            </li>
                                         </ul>
                                     </li>
                                     <li>
@@ -374,25 +328,6 @@
                                         <ul class="mm-collapse">
                                             <li><a href="{{ url('/panservicepayment') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>PanPayment</a>
-                                            </li>
-                                            <li><a href="{{ url('/panservices') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>PAN SERVICE</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">Course Certificate</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('/coursepayment') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>CoursePayment</a>
-                                            </li>
-                                            <li><a href="{{ url('/courses') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Apply
-                                                    Certificate</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -427,7 +362,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="javascript:;" class="has-arrow">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
@@ -441,16 +376,16 @@
                                                         class="material-icons-outlined">arrow_right</i>Customers</a>
                                             </li>
                                         </ul>
-                                    </li>
+                                    </li> --}}
                                     <li>
                                         <a href="javascript:;" class="has-arrow">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
-                                            <div class="menu-title">Other Services</div>
+                                            <div class="menu-title">Our Service</div>
                                         </a>
                                         <ul class="mm-collapse">
                                             <li><a href="{{ url('allservices') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Services</a>
+                                                        class="material-icons-outlined">arrow_right</i>Our Service</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -502,11 +437,11 @@
                                             <li><a href="{{ url('/appliedservice') }}/Pending"><i
                                                         class="material-icons-outlined">arrow_right</i>Pending</a>
                                             </li>
-                                            <li><a href="{{ url('/appliedservice') }}/Processing"><i
-                                                        class="material-icons-outlined">arrow_right</i>Processing</a>
-                                            </li>
                                             <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
+                                            </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Processing"><i
+                                                class="material-icons-outlined">arrow_right</i>Processing</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Rejected"><i
                                                         class="material-icons-outlined">arrow_right</i>Rejected</a>
@@ -535,76 +470,11 @@
                                         <a href="javascript:;" class="has-arrow">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
-                                            <div class="menu-title">TNEGA</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('addcustomer') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Add Customer</a>
-                                            </li>
-                                            <li><a href="{{ url('customers') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Customers</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;" class="has-arrow">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">Other Services</div>
+                                            <div class="menu-title">Our Service</div>
                                         </a>
                                         <ul class="mm-collapse">
                                             <li><a href="{{ url('allservices') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Services</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">PDF Services</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-
-                                            <li><a href="{{ url('/pdfservices') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>PDF SERVICE</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">UTILITY Services</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('/utility') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Utility</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">PanCard Services</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('/panservices') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>PAN SERVICE</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">Course Certificate</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('/courses') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Apply
-                                                    Certificate</a>
+                                                        class="material-icons-outlined">arrow_right</i>Our Service</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -645,11 +515,11 @@
                                             <li><a href="{{ url('/appliedservice') }}/Pending"><i
                                                         class="material-icons-outlined">arrow_right</i>Pending</a>
                                             </li>
-                                            <li><a href="{{ url('/appliedservice') }}/Processing"><i
-                                                        class="material-icons-outlined">arrow_right</i>Processing</a>
-                                            </li>
                                             <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
+                                            </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Processing"><i
+                                                class="material-icons-outlined">arrow_right</i>Processing</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Rejected"><i
                                                         class="material-icons-outlined">arrow_right</i>Rejected</a>
@@ -659,7 +529,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="javascript:;" class="has-arrow">
                                             <div class="parent-icon"><i></i>
                                             </div>
@@ -673,66 +543,16 @@
                                                         class="material-icons-outlined">arrow_right</i>Customers</a>
                                             </li>
                                         </ul>
-                                    </li>
+                                    </li> --}}
                                     <li>
                                         <a href="javascript:;" class="has-arrow">
                                             <div class="parent-icon"><i></i>
                                             </div>
-                                            <div class="menu-title">Other Services</div>
+                                            <div class="menu-title">Our Service</div>
                                         </a>
                                         <ul class="mm-collapse">
                                             <li><a href="{{ url('allservices') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Services</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">PDF Services</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-
-                                            <li><a href="{{ url('/pdfservices') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>PDF SERVICE</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">UTILITY Services</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('/utility') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Utility</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">PanCard Services</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('/panservices') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>PAN SERVICE</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">Course Certificate</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('/courses') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Apply
-                                                    Certificate</a>
+                                                        class="material-icons-outlined">arrow_right</i>Our Service</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -775,11 +595,11 @@
                                             <li><a href="{{ url('/appliedservice') }}/Pending"><i
                                                         class="material-icons-outlined">arrow_right</i>Pending</a>
                                             </li>
-                                            <li><a href="{{ url('/appliedservice') }}/Processing"><i
-                                                        class="material-icons-outlined">arrow_right</i>Processing</a>
-                                            </li>
                                             <li><a href="{{ url('/appliedservice') }}/Resubmit"><i
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
+                                            </li>
+                                            <li><a href="{{ url('/appliedservice') }}/Processing"><i
+                                                class="material-icons-outlined">arrow_right</i>Processing</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Rejected"><i
                                                         class="material-icons-outlined">arrow_right</i>Rejected</a>
@@ -789,7 +609,18 @@
                                             </li>
                                         </ul>
                                     </li>
-
+                                    <li>
+                                        <a href="javascript:;" class="has-arrow">
+                                            <div class="parent-icon"><i></i>
+                                            </div>
+                                            <div class="menu-title">Our Service</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('allservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Our Service</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                     <li class="">
                                         <a href="javascript:;" class="has-arrow" aria-expanded="false">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
@@ -804,56 +635,6 @@
                                             <li><a href="{{ url('allservices') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>
                                                     Other Services</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">PDF Services</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-
-                                            <li><a href="{{ url('/pdfservices') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>PDF SERVICE</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">UTILITY Services</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('/utility') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Utility</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">PanCard Services</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('/panservices') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>PAN SERVICE</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">Course Certificate</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('/courses') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Apply
-                                                    Certificate</a>
                                             </li>
                                         </ul>
                                     </li>

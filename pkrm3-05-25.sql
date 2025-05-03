@@ -69,7 +69,7 @@ CREATE TABLE `aadhaarcard` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -92,7 +92,7 @@ CREATE TABLE `agentregister` (
   `status` varchar(20) DEFAULT NULL,
   `userid` int(11) DEFAULT 0,
   `parent_id` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -107,7 +107,7 @@ CREATE TABLE `applied_service` (
   `service_id` int(11) DEFAULT 0,
   `retailer_id` int(11) DEFAULT 0,
   `distributor_id` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -145,7 +145,7 @@ CREATE TABLE `birth_certificate` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -177,7 +177,7 @@ CREATE TABLE `bond` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -193,7 +193,7 @@ CREATE TABLE `callback` (
   `usertx` varchar(20) DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
   `message` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -256,7 +256,7 @@ CREATE TABLE `can_edit` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `can_edit`
@@ -279,7 +279,7 @@ CREATE TABLE `coursepayment` (
   `distributor_amount` decimal(10,2) DEFAULT 0.00,
   `retailer_amount` decimal(10,2) DEFAULT 0.00,
   `customer_amount` decimal(10,2) DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -294,7 +294,7 @@ CREATE TABLE `courses` (
   `amount` decimal(10,2) DEFAULT 0.00,
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -325,7 +325,7 @@ CREATE TABLE `covid` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -338,7 +338,7 @@ CREATE TABLE `cus_document` (
   `customer_id` varchar(10) DEFAULT NULL,
   `file_name` varchar(100) DEFAULT NULL,
   `cus_docx` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `cus_document`
@@ -379,7 +379,7 @@ CREATE TABLE `dharsan` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -393,7 +393,7 @@ CREATE TABLE `district` (
   `districtid` varchar(100) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `district`
@@ -455,7 +455,7 @@ CREATE TABLE `dl` (
   `pdf` longtext DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -471,7 +471,7 @@ CREATE TABLE `failed_jobs` (
   `payload` longtext NOT NULL,
   `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 
@@ -490,7 +490,7 @@ CREATE TABLE `family_member` (
   `profession` varchar(20) DEFAULT NULL,
   `relationaadhaar_card` varchar(20) DEFAULT NULL,
   `relationdeath_cert` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `family_member`
@@ -512,7 +512,7 @@ CREATE TABLE `find_payment` (
   `distributor_amount` decimal(10,2) DEFAULT 0.00,
   `retailer_amount` decimal(10,2) DEFAULT 0.00,
   `customer_amount` decimal(10,2) DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -527,7 +527,7 @@ CREATE TABLE `find_services` (
   `ser_image` varchar(20) DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `find_services`
@@ -572,7 +572,7 @@ CREATE TABLE `fssai` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -615,7 +615,7 @@ CREATE TABLE `gst` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -652,7 +652,7 @@ CREATE TABLE `itr` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `itr`
@@ -689,7 +689,7 @@ CREATE TABLE `license` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -724,7 +724,7 @@ CREATE TABLE `medicalscheme` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -736,7 +736,7 @@ CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
   `migration` varchar(191) NOT NULL,
   `batch` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `migrations`
@@ -796,7 +796,7 @@ CREATE TABLE `msme` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -827,7 +827,7 @@ CREATE TABLE `nalavariyam` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `nalavariyam`
@@ -851,7 +851,7 @@ CREATE TABLE `operator` (
   `name` varchar(50) DEFAULT NULL,
   `commission` decimal(10,2) DEFAULT 0.00,
   `retailer_commission` decimal(10,2) DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -900,7 +900,7 @@ CREATE TABLE `pancard` (
   `date` varchar(10) DEFAULT NULL,
   `message` varchar(500) DEFAULT NULL,
   `father_name` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `pancard`
@@ -929,7 +929,7 @@ CREATE TABLE `pancard_find` (
   `message` varchar(1000) DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `pancard_find`
@@ -947,10 +947,10 @@ INSERT INTO `pancard_find` (`id`, `user_id`, `service_id`, `amount`, `aadhaar_no
 
 CREATE TABLE `panchayath` (
   `id` int(11) NOT NULL,
-  `panchayath_name` text CHARACTER SET utf8 COLLATE utf8_croatian_ci NOT NULL,
+  `panchayath_name` text NOT NULL,
   `taluk_id` int(11) DEFAULT NULL,
   `status` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `panchayath`
@@ -18780,7 +18780,7 @@ CREATE TABLE `panpayment` (
   `distributor_amount` decimal(10,2) DEFAULT 0.00,
   `retailer_amount` decimal(10,2) DEFAULT 0.00,
   `customer_amount` decimal(10,2) DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -18795,7 +18795,7 @@ CREATE TABLE `panservice` (
   `amount` decimal(10,2) DEFAULT 0.00,
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `panservice`
@@ -18866,7 +18866,7 @@ CREATE TABLE `passport` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -18878,7 +18878,7 @@ CREATE TABLE `password_resets` (
   `email` varchar(191) NOT NULL,
   `token` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 
@@ -18906,7 +18906,7 @@ CREATE TABLE `payment` (
   `log_id` int(11) DEFAULT NULL,
   `k_status` int(11) DEFAULT 1,
   `service_entity` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `payment`
@@ -18933,7 +18933,7 @@ CREATE TABLE `personal_access_tokens` (
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 
@@ -18964,7 +18964,7 @@ CREATE TABLE `pmkissan` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -18992,7 +18992,7 @@ CREATE TABLE `ramji_payment` (
   `log_id` int(11) DEFAULT NULL,
   `k_status` int(11) DEFAULT 1,
   `service_entity` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `ramji_payment`
@@ -19025,7 +19025,7 @@ CREATE TABLE `ration` (
   `message` varchar(1000) DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -19043,7 +19043,7 @@ CREATE TABLE `rc` (
   `pdf` longtext DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `rc`
@@ -19072,7 +19072,7 @@ CREATE TABLE `recharge` (
   `usertx` varchar(20) DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
   `message` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -19087,7 +19087,7 @@ CREATE TABLE `recharge_payment` (
   `distributor_amount` decimal(10,2) DEFAULT 0.00,
   `retailer_amount` decimal(10,2) DEFAULT 0.00,
   `customer_amount` decimal(10,2) DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -19104,7 +19104,7 @@ CREATE TABLE `request_payment` (
   `req_date` varchar(20) DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
   `req_image` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `request_payment`
@@ -19144,7 +19144,7 @@ CREATE TABLE `services` (
   `sub_service_image` varchar(30) DEFAULT NULL,
   `software` varchar(50) DEFAULT NULL,
   `amount` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `services`
@@ -19336,7 +19336,7 @@ CREATE TABLE `service_payment` (
   `retailer_amount` decimal(10,2) DEFAULT 0.00,
   `customer_amount` decimal(10,2) DEFAULT 0.00,
   `admin_amount` decimal(10,2) DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `service_payment`
@@ -19444,7 +19444,7 @@ CREATE TABLE `smartcard` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -19462,7 +19462,7 @@ CREATE TABLE `smartcard_payment` (
   `customer_amount` decimal(10,2) DEFAULT 0.00,
   `admin_amount` decimal(10,2) DEFAULT 0.00,
   `time` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `smartcard_payment`
@@ -19496,7 +19496,7 @@ CREATE TABLE `software` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -19535,7 +19535,7 @@ CREATE TABLE `tailor` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   `entity` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -19545,10 +19545,10 @@ CREATE TABLE `tailor` (
 
 CREATE TABLE `taluk` (
   `id` int(11) NOT NULL,
-  `taluk_name` text CHARACTER SET utf8 COLLATE utf8_croatian_ci NOT NULL,
+  `taluk_name` text NOT NULL,
   `district_id` int(11) DEFAULT NULL,
   `status` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `taluk`
@@ -19934,7 +19934,7 @@ CREATE TABLE `tec_exam` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `tec_exam`
@@ -20026,7 +20026,7 @@ CREATE TABLE `tnega_services` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `tnega_services`
@@ -20073,7 +20073,7 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM;
 
 --
 -- Dumping data for table `users`
@@ -20106,7 +20106,7 @@ CREATE TABLE `user_permission` (
   `parent_id` int(11) DEFAULT 0,
   `service_id` int(11) DEFAULT 0,
   `date` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `user_permission`
@@ -20144,7 +20144,7 @@ CREATE TABLE `utility_services` (
   `ser_image` varchar(20) DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `utility_services`
@@ -20184,7 +20184,7 @@ CREATE TABLE `voterid` (
   `applied_date` varchar(10) DEFAULT NULL,
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `voterid`
@@ -20207,7 +20207,7 @@ CREATE TABLE `voterid_details` (
   `correction_documents` varchar(50) DEFAULT NULL,
   `voterid_correction` varchar(20) DEFAULT NULL,
   `doc` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -20230,7 +20230,7 @@ CREATE TABLE `voter_find` (
   `message` varchar(1000) DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Indexes for dumped tables

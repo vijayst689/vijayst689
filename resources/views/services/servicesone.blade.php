@@ -54,14 +54,15 @@
                                                     <div class="text-center">
                                                         <a href="{{ url('/softwareservices', $service->id) }}">
                                                             <img src="/upload/sub_service/{{ $service->sub_service_image }}"
-                                                                alt="user-avatar" style="width: 160px; height: 180px;"
-                                                                class="rounded-circle img-thumbnail avatar-xl"></a>
+                                                                 alt=""
+                                                                class="rounded-circle img-thumbnail avatar-xl" style="width: 100px; height: 100px;"></a>
                                                         <h5 class="text-danger">{{ $service->service_name }}</h5>
                                                     </div>
                                                 </div>
                                             @endforeach
                                     </div>
                                 </div>
+                                {{-- style="width: 160px; height: 180px;" --}}
                                         @else
                                         <label for="input1" class="form-label">Service</label>
                                         <div class="col-sm-10">
