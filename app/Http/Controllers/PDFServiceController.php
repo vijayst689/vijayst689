@@ -219,7 +219,7 @@ class PDFServiceController extends Controller
         $dob ="";
         $pan ="";
 
-        if($request->ser == 2){
+        if($request->ser == 2 || $request->ser == 1){
           $message=$resdata['message'];
           $pan=$resdata['pan_no'];
         }
