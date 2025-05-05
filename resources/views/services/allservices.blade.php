@@ -6,6 +6,7 @@
                 <div class="breadcrumb-title pe-3">Services</div>
             </div>
                     <div id="category_div" class="row">
+                        @if (Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2 || Auth::user()->user_type_id == 3 || Auth::user()->user_type_id == 4)
                         <div class="col-4 col-md-2 mb-3 category_data">
                             <div class="card p-2 h-100">
                                 <a href="{{ url('/addcustomer') }}">
@@ -17,6 +18,7 @@
                                 </a>
                             </div>
                         </div>
+                        @endif
                         <div class="col-4 col-md-2 mb-3 category_data">
                             <div class="card p-2 h-100">
                                 <a href="{{ url('/pdfservices') }}">
