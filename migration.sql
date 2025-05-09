@@ -1673,3 +1673,7 @@ CREATE TABLE `aadhaar_verify` (
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
+
+//9-05-2025
+
+alter table can_edit add applicant_name varchar(100) DEFAULT NULL after application_no;

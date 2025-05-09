@@ -239,21 +239,23 @@
                                         </div>
                                     @elseif($serviceid == 65)
                                         <div class="mb-3 col-md-6">
-                                            <label style="color:#23e156" for="can_number" class="form-label"> Can
-                                                Number</label>
-                                            <input required type="text" class="form-control" name="can_number"
-                                                placeholder="Can Number" maxlength="15" />
-                                            <label style="color:#23e156" for="certificate_name"
-                                                class="form-label number"> Certificate Name</label>
-                                            <input required type="text" class="form-control" name="certificate_name"
-                                                placeholder="Certificate Name" maxlength="50" />
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            <label for="aadhaar_card" class="form-label text-danger">Aadhaar Card (Front &
-                                                Back)</label>
-                                            <input required accept="image/jpeg, image/png" type="file"
-                                                class="form-control" name="aadhaar_card" />
-                                        </div>
+                            <label style="color:#23e156" for="applicant_name" class="form-label">Applicant Name</label>
+                            <input required type="text" maxlength="100" class="form-control"
+                            name="applicant_name" placeholder="Applicant Name"/>
+
+                            <label style="color:#23e156" for="can_number" class="form-label"> Can Number</label>
+                            <input required type="text" class="form-control"
+                            name="can_number" placeholder="Can Number" maxlength="30" />
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label style="color:#23e156" for="certificate_name" class="form-label number"> Certificate Name</label>
+                            <input required type="text" class="form-control"
+                            name="certificate_name" placeholder="Certificate Name" maxlength="50" />
+
+                            <label style="color:#23e156" for="aadhaar_number" class="form-label"> Aadhaar Number</label>
+                            <input required type="text" class="form-control number"
+                            name="aadhaar_number" placeholder="Aadhaar Number" maxlength="12" />
+                        </div>
                                     @elseif($serviceid == 66)
                                         <div class="mb-3 col-md-6">
                                             <label style="color:#23e156" for="can_number" class="form-label"> Can
@@ -261,12 +263,12 @@
                                             <input required type="text" class="form-control" name="can_number"
                                                 placeholder="Can Number" maxlength="15" />
                                         </div>
-                                        <div class="mb-3 col-md-6">
+                                        {{-- <div class="mb-3 col-md-6">
                                             <label for="aadhaar_card" class="form-label text-danger">Aadhaar Card (Front &
                                                 Back)</label>
                                             <input required accept="image/jpeg, image/png" type="file"
                                                 class="form-control" name="aadhaar_card" />
-                                        </div>
+                                        </div> --}}
                                     @elseif($serviceid == 67)
                                         <div class="mb-3 col-md-6">
                                             <label style="color:#23e156" for="can_number" class="form-label"> Can

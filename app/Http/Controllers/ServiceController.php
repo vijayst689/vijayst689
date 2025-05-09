@@ -4381,6 +4381,8 @@ DB::table('can_edit')->where('id', $insertid)->update([
         'amount'                     => $request->amount,
         'can_number'                 => $request->can_number,
         'certificate_name'           => $request->certificate_name,
+        'aadhaar_number'             => $request->aadhaar_number,
+        'applicant_name'             => $request->applicant_name,
         'status'                     => 'Pending',
         'applied_date'               => date("Y-m-d"),
         'created_at'                 => date("Y-m-d"),
