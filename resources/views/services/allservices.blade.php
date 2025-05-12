@@ -65,8 +65,10 @@
                                     <div class="card p-2 h-100">
                                         @if($ser->id == 119)
                                         <a href="{{ url('/licservices', $ser->id) }}">
-                                        @else
-                                         <a href="{{ url('/servicesone', $ser->id) }}">
+                                      @elseif ($ser->id == 224)
+                                    <a href="{{ url('/applyservices/225') }}">
+                                          @else
+                                        <a href="{{ url('/servicesone', $ser->id) }}">
                                             @endif
                                             <div class="mb-1">
                                                 <img src="/upload/service/{{ $ser->service_image }}" style="width: 140px; height: 150px;"/>

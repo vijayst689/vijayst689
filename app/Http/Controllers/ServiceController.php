@@ -359,10 +359,21 @@ public function applyservices($serviceid) {
 }elseif ($serviceid == 208 || $serviceid == 209 || $serviceid == 210 || $serviceid == 211){
     return view( 'applyservice.can_editservice',compact('serviceid','districts','servicename','amount','customers','payment'));
 
-}  elseif ($serviceid == 204 || $serviceid == 205 || $serviceid == 206 || $serviceid == 207){
+}elseif ($serviceid == 204 || $serviceid == 205 || $serviceid == 206 || $serviceid == 207){
     return view( 'applyservice.can_editservice',compact('serviceid','districts','servicename','amount','customers','payment'));
- }
 
+}elseif ( $serviceid == 221 ){
+    return view( 'applyservice.smartcard_otpservice',compact('serviceid','districts','servicename','amount','payment','customers'));
+
+}elseif ( $serviceid == 222 ){
+    return view( 'applyservice.smartcard_member',compact('serviceid','districts','servicename','amount','payment','customers'));
+
+}elseif ($serviceid == 223 ){
+    return view( 'applyservice.smartcard_nametransfer',compact('serviceid','districts','servicename','amount','customers','payment'));
+
+}elseif ( $serviceid == 225 ){
+    return view( 'applyservice.pstmservice',compact('serviceid','districts','servicename','amount','payment','customers'));
+}
 }
 
 
@@ -6219,6 +6230,261 @@ public function submitapply_dharsan(Request $request){
 
 }
 
+public function submitapply_pstm(Request $request){
+
+    $user_id = 0;
+    $retailer_id = 0;
+    $distributor_id = 0;
+    if(Auth::user()->user_type_id == 3){
+        $user_id = $request ->user_id;
+        $distributor_id = Auth::user()->id;
+    }elseif(Auth::user()->user_type_id == 4){
+        $user_id = $request ->user_id;
+        $retailer_id = Auth::user()->id;
+    } elseif(Auth::user()->user_type_id == 5){
+        $user_id = Auth::user()->id;
+    }
+    $serviceid = $request ->serviceid;
+    DB::table( 'pstm' )->insert( [
+     'user_id'           => $user_id,
+     'retailer_id'       => $retailer_id,
+     'distributor_id'    => $distributor_id,
+     'service_id'        => $request ->serviceid,
+     'name'              => $request->name,
+     'name_tamil'        => $request->name_tamil,
+     'dob'               => $request->dob,
+     'father_name'       => $request->father_name,
+     'father_name_tamil' => $request->father_name_tamil,
+     'mobile'            => $request->mobile,
+     'mother_name'       => $request->mother_name,
+     'mother_name_tamil'       => $request->mother_name_tamil,
+     'emis_id'       => $request->emis_id,
+     'academic_yr_from'       => $request->academic_yr_from,
+     'class_to'       => $request->class_to,
+     'school_type'       => $request->school_type,
+     'academic_yr_to'       => $request->academic_yr_to,
+     'dist_id'       => $request->dist_id,
+     'school_name'       => $request->school_name,
+     'class_from'       => $request->class_from,
+     'block'       => $request->block,
+     'status'            => 'Pending',
+     'applied_date'      => date("Y-m-d"),
+     'created_at'        => date("Y-m-d"),
+ ] );
+
+ $insertid = DB::getPdo()->lastInsertId();
+
+    $tc = "";
+    if ($request->tc != null) {
+        $tc = uniqid().'.'.$request->file('tc')->extension();
+        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'tc' . DIRECTORY_SEPARATOR);
+        move_uploaded_file($_FILES['tc']['tmp_name'], $filepath . $tc);
+    }
+    DB::table('pstm')->where('id', $insertid)->update([
+        'tc'         => $tc,
+    ]);
+    
+
+    $servicepayment = $request->service_amount;
+    if(Auth::user()->user_type_id == 3){
+        $user_id = $distributor_id;
+    }elseif(Auth::user()->user_type_id == 4){
+        $user_id = $retailer_id;
+    }elseif(Auth::user()->user_type_id == 5){
+        $user_id = $user_id;
+    }
+    $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+    $servicename = "";
+    if($getservicename){
+        $servicename = $getservicename->service_name;
+    }
+    $date = date( 'Y-m-d' );
+    $time = date( 'H:i:s' );
+    $service_status = 'Out Payment';
+    $ad_info = 'Service Payment'. ' '. $servicename;
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+    $balance = 0;
+    if($getwallet){
+        $balance = $getwallet->wallet;
+    }
+    $newbalance = $balance + $servicepayment;
+    $newbalance1 = Auth::user()->wallet - $servicepayment;
+
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
+    DB::insert( DB::raw( $sql ) );
+    $sql = "update users set wallet = wallet + $servicepayment where id = 2";
+    DB::update( DB::raw( $sql ) );
+    $service_status = 'IN Payment';
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
+    DB::insert( DB::raw( $sql ) );
+    $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+    DB::update( DB::raw( $sql ) );
+
+    return redirect("appliedservice/Pending")->With("success","Application submitted Succesfully");
+
+}
+
+public function submitapply_smartcardotp(Request $request){
+  $user_id = 0;
+    $retailer_id = 0;
+    $distributor_id = 0;
+    if(Auth::user()->user_type_id == 3){
+        $user_id = $request ->user_id;
+        $distributor_id = Auth::user()->id;
+    }elseif(Auth::user()->user_type_id == 4){
+        $user_id = $request ->user_id;
+        $retailer_id = Auth::user()->id;
+    } elseif(Auth::user()->user_type_id == 5){
+        $user_id = Auth::user()->id;
+    }
+    $serviceid = $request ->serviceid;
+        DB::table( 'smartcard_otp' )->insert( [
+         'user_id'      => $user_id,
+         'retailer_id'  => $retailer_id,
+         'distributor_id' => $distributor_id,
+         'service_id'   => $request ->serviceid,
+         'amount'       => $request->amount,
+         'status'       => 'Pending',
+         'applied_date' => date("Y-m-d"),
+         'created_at'   => date("Y-m-d"),
+     ] );
+
+        $insertid = DB::getPdo()->lastInsertId();
+        $aadhaar_card = "";
+        if ($request->aadhaar_card != null) {
+            $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
+            move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
+        }
+        DB::table('smartcard_otp')->where('id', $insertid)->update([
+           'aadhaar_card' => $aadhaar_card,
+       ]);
+
+    $servicepayment = $request->service_amount;
+    if(Auth::user()->user_type_id == 3){
+        $user_id = $distributor_id;
+    }elseif(Auth::user()->user_type_id == 4){
+        $user_id = $retailer_id;
+    }elseif(Auth::user()->user_type_id == 5){
+        $user_id = $user_id;
+    }
+    $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+    $servicename = "";
+    if($getservicename){
+        $servicename = $getservicename->service_name;
+    }
+    $date = date( 'Y-m-d' );
+    $time = date( 'H:i:s' );
+    $service_status = 'Out Payment';
+    $ad_info = 'Service Payment'. ' '. $servicename;
+
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+    $balance = 0;
+    if($getwallet){
+        $balance = $getwallet->wallet;
+    }
+    $newbalance = $balance + $servicepayment;
+    $newbalance1 = Auth::user()->wallet - $servicepayment;
+
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
+    DB::insert( DB::raw( $sql ) );
+    $sql = "update users set wallet = wallet + $servicepayment where id = 2";
+    DB::update( DB::raw( $sql ) );
+    $service_status = 'IN Payment';
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
+    DB::insert( DB::raw( $sql ) );
+    $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+    DB::update( DB::raw( $sql ) );
+
+    return redirect("appliedservice/Pending")->With("success","Application submitted Succesfully");
+
+}
+
+public function submitapply_smart_nametransfer(Request $request){
+
+    $user_id = 0;
+    $retailer_id = 0;
+    $distributor_id = 0;
+    if(Auth::user()->user_type_id == 3){
+        $user_id = $request ->user_id;
+        $distributor_id = Auth::user()->id;
+    }elseif(Auth::user()->user_type_id == 4){
+        $user_id = $request ->user_id;
+        $retailer_id = Auth::user()->id;
+    } elseif(Auth::user()->user_type_id == 5){
+        $user_id = Auth::user()->id;
+    }
+    $serviceid = $request ->serviceid;
+        DB::table( 'smartcard' )->insert( [
+         'user_id'      => $user_id,
+         'retailer_id'  => $retailer_id,
+         'distributor_id' => $distributor_id,
+         'service_id'   => $request ->serviceid,
+         'amount'       => $request->amount,
+         'smart_card'   => $request->smart_card,
+         'status'       => 'Pending',
+         'applied_date' => date("Y-m-d"),
+         'created_at'   => date("Y-m-d"),
+     ] );
+
+        $insertid = DB::getPdo()->lastInsertId();
+        $aadhaar_card = "";
+        if ($request->aadhaar_card != null) {
+            $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
+            move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
+        }
+        DB::table('smartcard')->where('id', $insertid)->update([
+           'aadhaar_card' => $aadhaar_card,
+       ]);
+       if ($request->smart_card != null) {
+            $smart_card = uniqid().'.'.$request->file('smart_card')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smart_card' . DIRECTORY_SEPARATOR);
+            move_uploaded_file($_FILES['smart_card']['tmp_name'], $filepath . $smart_card);
+        }
+        DB::table('smartcard')->where('id', $insertid)->update([
+           'smart_card' => $smart_card,
+       ]);
+
+    $servicepayment = $request->service_amount;
+    if(Auth::user()->user_type_id == 3){
+        $user_id = $distributor_id;
+    }elseif(Auth::user()->user_type_id == 4){
+        $user_id = $retailer_id;
+    }elseif(Auth::user()->user_type_id == 5){
+        $user_id = $user_id;
+    }
+    $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+    $servicename = "";
+    if($getservicename){
+        $servicename = $getservicename->service_name;
+    }
+    $date = date( 'Y-m-d' );
+    $time = date( 'H:i:s' );
+    $service_status = 'Out Payment';
+    $ad_info = 'Service Payment'. ' '. $servicename;
+
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+    $balance = 0;
+    if($getwallet){
+        $balance = $getwallet->wallet;
+    }
+    $newbalance = $balance + $servicepayment;
+    $newbalance1 = Auth::user()->wallet - $servicepayment;
+
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
+    DB::insert( DB::raw( $sql ) );
+    $sql = "update users set wallet = wallet + $servicepayment where id = 2";
+    DB::update( DB::raw( $sql ) );
+    $service_status = 'IN Payment';
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
+    DB::insert( DB::raw( $sql ) );
+    $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+    DB::update( DB::raw( $sql ) );
+
+    return redirect("appliedservice/Pending")->With("success","Application submitted Succesfully");
+
+}
 }
 
 
