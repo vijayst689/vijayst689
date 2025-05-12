@@ -8480,5 +8480,141 @@ public function smartcardotp_update(Request $request){
 
     return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
+
+public function smartcard_nametransfer_update(Request $request){
+    $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
+        $apply_user_id = $request->distributor_id;
+    }elseif($request->distributor_id == 0){
+        $apply_user_id = $request->retailer_id;
+    }
+    if($apply_user_id != Auth::user()->id){
+        $status = $request->status;
+        if($status == "Resubmit"){
+            DB::table( 'smartcard' )->where('id', $request->applied_serviceid)->update( [
+                'remarks'  => $request->remarks,
+                'status'  => $status,
+            ] );
+        }elseif($status == "Processing"){
+            if ( $request->acknowledgement != null ) {
+                $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
+                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
+                move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
+                DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
+                    'acknowledgement' => $acknowledgement,
+                ] );
+            }
+            DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
+        }elseif($status == "Approved"){
+            if ( $request->certificate != null ) {
+                $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
+                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'certificate'. DIRECTORY_SEPARATOR);
+                move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
+                DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
+                    'certificate' => $certificate,
+                    'status' => $status,
+                    'completed_date' => date("Y-m-d"),
+                ] );
+            }
+            DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application' => $request->application,
+                'lects' => $request->lects,
+            ] );
+        }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          } 
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks'  => $request->remarks,
+
+        ] );
+        }
+    }else{
+        $status = "Pending";
+        $serviceid = $request->serviceid;
+            
+            if ($request->aadhaar_card != null) {
+                $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
+                DB::table('smartcard')->where('id', $request->applied_serviceid)->update([
+                    'aadhaar_card'         => $aadhaar_card,
+                ]);
+            }
+            if ($request->smart_card != null) {
+                $smart_card = uniqid().'.'.$request->file('smart_card')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smart_card' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['smart_card']['tmp_name'], $filepath . $smart_card);
+                DB::table('smartcard')->where('id', $request->applied_serviceid)->update([
+                    'smart_card'         => $smart_card,
+                ]);
+            }
+
+        
+        DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+        ] );
+    }
+
+    return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
+}
+
 }
 
