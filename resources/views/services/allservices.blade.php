@@ -5,24 +5,78 @@
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
                 <div class="breadcrumb-title pe-3">Services</div>
             </div>
-
-            <div class="row">
-                <div class="col-xxl-8 d-flex align-items-stretch">
-                    <div class="overflow-hidden rounded-3">
-                        <div class="card-body position-relative p-4">
-                            <div class="row">
-                                @foreach ($ourservice as $ser)
-                                    <div class="col-md-3 col-lg-2 col-sm-4 mb-2">
-                                        <div class="text-center">
-                                            @if ($ser->id == 119)
-                                                <a href="{{ url('/licservices', $ser->id) }}">
-                                                @else
-                                                    <a href="{{ url('/servicesone', $ser->id) }}">
-                                            @endif
-                                            <img src="/upload/service/{{ $ser->service_image }}" alt=""
-                                            class="rounded-circle bg-grd-info p-1"  width="100" height="100"></a>
-                                        </div>
+                    <div id="category_div" class="row">
+                        @if (Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2 || Auth::user()->user_type_id == 3 || Auth::user()->user_type_id == 4)
+                        <div class="col-4 col-md-2 mb-3 category_data">
+                            <div class="card p-2 h-100">
+                                <a href="{{ url('/addcustomer') }}">
+                                    <div class="mb-1">
+                                        <img src="/upload/mylogo/tnega.jpg"
+                                             width="100%"/>
+                                        <p class="text-primary">TNEGA</p>
                                     </div>
+                                </a>
+                            </div>
+                        </div>
+                        @endif
+                        <div class="col-4 col-md-2 mb-3 category_data">
+                            <div class="card p-2 h-100">
+                                <a href="{{ url('/pdfservices') }}">
+                                    <div class="mb-1">
+                                        <img src="/upload/mylogo/pdf.jpg"
+                                             width="100%"/>
+                                        <p class="text-primary">PDF</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md-2 mb-3 category_data">
+                            <div class="card p-2 h-100">
+                                <a href="{{ url('/panservices') }}">
+                                    <div class="mb-1">
+                                        <img src="/upload/mylogo/nsdl.jpg"
+                                             width="100%"/>
+                                        <p class="text-primary">NSDL PAN</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md-2 mb-3 category_data">
+                            <div class="card p-2 h-100">
+                                <a href="{{ url('/utility') }}">
+                                    <div class="mb-1">
+                                        <img src="/upload/mylogo/uti.jpg"
+                                             width="100%"/>
+                                        <p class="text-primary">UTILITY</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>    
+        </div>
+        <div class="container-fluid mt-1">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="container-xxl flex-grow-1">
+                            <div id="category_div" class="row">
+                                @foreach ($ourservice as $ser)
+                                <div class="col-4 col-md-2 mb-3 category_data">
+                                    <div class="card p-2 h-100">
+                                        @if($ser->id == 119)
+                                        <a href="{{ url('/licservices', $ser->id) }}">
+                                      @elseif ($ser->id == 224)
+                                    <a href="{{ url('/applyservices/225') }}">
+                                          @else
+                                        <a href="{{ url('/servicesone', $ser->id) }}">
+                                            @endif
+                                            <div class="mb-1">
+                                                <img src="/upload/service/{{ $ser->service_image }}" style="width: 140px; height: 150px;"/>
+                                                <p class="text-primary">{{ $ser->service_name }}</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
                                 @endforeach
                             </div>
                         </div>
@@ -31,9 +85,10 @@
             </div>
         </div>
     </main>
+   
 @endsection
 @push('page_scripts')
-    <script>
+   <script>
         $('#serviceid').on('change', function() {
             var parentid = this.value;
             $("#subserviceid").html('');

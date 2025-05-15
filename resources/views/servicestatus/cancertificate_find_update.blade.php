@@ -52,37 +52,29 @@
                                     @endphp
 
                                    @if ($serviceid == 65)
-                                        <div class="mb-3 col-md-6">
-                                            <label for="can_number" class="form-label">Can Number</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
-                                                value="{{ $services->can_number }}" class="form-control" name="can_number"
-                                                maxlength="15" placeholder="Can Number" />
-                                            <label for="certificate_name" class="form-label">Certificate Name</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
-                                                value="{{ $services->certificate_name }}" class="form-control"
-                                                name="certificate_name" maxlength="50" placeholder="Certificate Name" />
-                                        </div>
-                                        <div class="mb-3 col-md-6">
+                                    <div class="mb-3 col-md-6">
+                                        <label for="applicant_name" class="form-label">Applicant Name</label>
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
+                                            value="{{ $services->applicant_name }}" class="form-control" name="applicant_name"
+                                            maxlength="100" placeholder="Applicant Name" />
 
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->aadhaar_card != '')
-                                                    <label>Aadhaar Card (Front & Back)</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Aadhaar Card (Front & Back)</label>
-                                                <input @if ($services->aadhaar_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="aadhaar_card">
-                                                @if ($services->aadhaar_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
-                                                @endif
-                                            @endif
+                                        <label for="can_number" class="form-label">Can Number</label>
+                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                            value="{{ $services->can_number }}" class="form-control" name="can_number"
+                                            maxlength="30" placeholder="Can Number" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="certificate_name" class="form-label">Certificate Name</label>
+                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                            value="{{ $services->certificate_name }}" class="form-control"
+                                            name="certificate_name" maxlength="100" placeholder="Certificate Name" />
 
-                                        </div>
+                                        <label for="aadhaar_number" class="form-label">Aadhaar Number</label>
+                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                            value="{{ $services->aadhaar_number }}" class="form-control number" name="aadhaar_number"
+                                            maxlength="100" placeholder="Aadhaar Number" />
+
+                                    </div>
 
                                     @endif
 

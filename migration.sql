@@ -1673,3 +1673,34 @@ CREATE TABLE `aadhaar_verify` (
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
+
+//9-05-2025
+
+alter table can_edit add applicant_name varchar(100) DEFAULT NULL after application_no;
+
+//12-05-2025
+
+CREATE TABLE `smartcard_otp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `aadhaar_card` varchar(20) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(50) DEFAULT NULL,
+  `application` varchar(50) DEFAULT NULL,
+  `lects` varchar(50) DEFAULT NULL,
+  `selects` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+alter table smartcard modify smart_card varchar(100) DEFAULT NULL;

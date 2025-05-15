@@ -597,7 +597,13 @@ class PDFServiceController extends Controller
 
       return redirect('/applypdfservice/'.$serviceid)->with('success',$message);
     }else{
-        $error=$result['error'];
+      if($request->ser == 1){
+      $error=$result['error'];
+    }elseif($request->ser == 2){
+      $error=$result['message'];
+    }else{
+      $error=$result['statusMessage'];
+    }
       return redirect('/applypdfservice/'.$serviceid)->with('error',$error);
     }
   }else{

@@ -171,6 +171,8 @@ Route::post('updatesubservice', [App\Http\Controllers\ServiceController::class, 
 
 Route::get('viewservice', [App\Http\Controllers\ServiceController::class, 'viewservice']);
 
+Route::get('/viewpstm', [App\Http\Controllers\ServiceController::class, 'viewpstm'])->name('viewpstm');
+
 Route::post('addservice', [App\Http\Controllers\ServiceController::class, 'addservice']);
 
 Route::post('updateservice', [App\Http\Controllers\ServiceController::class, 'updateservice']);
@@ -223,6 +225,10 @@ Route::post('/submitapply_nalavariyam', [App\Http\Controllers\ServiceController:
 Route::post('/submitapply_passport', [App\Http\Controllers\ServiceController::class, 'submitapply_passport'])->name('submitapply_passport');
 Route::post('/submitapply_pancard', [App\Http\Controllers\ServiceController::class, 'submitapply_pancard'])->name('submitapply_pancard');
 Route::get('pancard_reapply/{txid}', [App\Http\Controllers\ServiceController::class, 'pancard_reapply']);
+Route::post('/submitapply_smartcardotp', [App\Http\Controllers\ServiceController::class, 'submitapply_smartcardotp'])->name('submitapply_smartcardotp');
+Route::post('/submitapply_smart_member', [App\Http\Controllers\ServiceController::class, 'submitapply_smart_member'])->name('submitapply_smart_member');
+Route::post('/submitapply_smart_nametransfer', [App\Http\Controllers\ServiceController::class, 'submitapply_smart_nametransfer'])->name('submitapply_smart_nametransfer');
+Route::post('/submitapply_pstm', [App\Http\Controllers\ServiceController::class, 'submitapply_pstm'])->name('submitapply_pstm');
 
 
 Route::get('/appliedservice/{status}', [App\Http\Controllers\ServicestatusController::class, 'appliedservice'])->name('appliedservice');
@@ -256,6 +262,10 @@ Route::post('/pancard_update', [App\Http\Controllers\ServicestatusController::cl
 Route::post('/submit_statusupdate_incomecertificate', [App\Http\Controllers\ServicestatusController::class, 'submit_statusupdate_incomecertificate'])->name('submit_statusupdate_incomecertificate');
 Route::post('/submit_statusupdate_smallagriservice', [App\Http\Controllers\ServicestatusController::class, 'submit_statusupdate_smallagriservice'])->name('submit_statusupdate_smallagriservice');
 Route::post('/cancertificate_find_update', [App\Http\Controllers\ServicestatusController::class, 'cancertificate_find_update'])->name('cancertificate_find_update');
+Route::post('/smartcardotp_update', [App\Http\Controllers\ServicestatusController::class, 'smartcardotp_update'])->name('smartcardotp_update');
+Route::post('/smartcard_member_update', [App\Http\Controllers\ServicestatusController::class, 'smartcard_member_update'])->name('smartcard_member_update');
+Route::post('/smartcard_nametransfer_update', [App\Http\Controllers\ServicestatusController::class, 'smartcard_nametransfer_update'])->name('smartcard_nametransfer_update');
+Route::post('/pstm_update', [App\Http\Controllers\ServicestatusController::class, 'pstm_update'])->name('pstm_update');
 
 Route::get('/servicepayment/{serviceid}', [App\Http\Controllers\ServicePaymentController::class, 'servicepayment'])->name('servicepayment');
 

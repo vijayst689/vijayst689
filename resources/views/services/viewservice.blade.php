@@ -46,6 +46,7 @@
                                     <tr>
                                         <th>Sl No</th>
                                         <th>Service Name</th>
+                                        <th>Service Image</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -55,6 +56,12 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $ser->service_name }}</td>
+                                            <td>
+                                                <div class="customer-pic">
+                                                    <img src="/upload/service/{{ $ser->service_image }}"
+                                                        class="rounded-circle" width="30" height="30" alt="">
+                                                </div>
+                                            </td>
                                             <td>{{ $ser->status }}</td>
                                             <td style="white-space: nowrap">
                                                 <button
@@ -100,6 +107,12 @@
                                                                 <label for="editname" class="form-label">Service Name</label>
                                                                 <input name="service_name" maxlength="30" type="text"
                                                                     class="form-control" id="editname" placeholder="Service Name">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label for="" class="form-label">Service
+                                                                    Image</label>
+                                                                <input name="service_image" maxlength="30" type="file"
+                                                                    class="form-control" placeholder="Service Name">
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label for="editstatus" class="form-label">Status</label>
