@@ -250,7 +250,7 @@
         </div>
     </div>
 
-    <div class="col-12 col-xl-6">
+    {{-- <div class="col-12 col-xl-6">
         <div class="card rounded-4">
             <div class="">
                 <div class="modal fade" id="customer">
@@ -320,7 +320,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
   <!--authentication-->
 
