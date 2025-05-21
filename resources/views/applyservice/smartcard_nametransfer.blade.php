@@ -38,6 +38,7 @@
                                     <input type="hidden" name="amount" value="{{ $amount }}">
                                     <input type="hidden" name="service_amount" value="{{ $payment }}">
     
+                                @if ($serviceid == 223)
                                 <div class="mb-3 col-md-6">
                                     <label for="smart_card" class="form-label">பெயர் இணைக்க வேண்டிய குடும்ப அட்டை</label>
                                         <input required accept="image/jpeg, image/png" type="file" class="form-control"
@@ -48,6 +49,22 @@
                                         <input required accept="image/jpeg, image/png" type="file" class="form-control"
                                             name="aadhaar_card" />
                                     </div>
+                                @elseif($serviceid == 228)
+                                 <div class="mb-3 col-md-6">
+                                        <label for="aadhaar_card" class="form-label">Family Head Adhaar Card</label>
+                                        <input required accept="image/jpeg, image/png" type="file" class="form-control"
+                                        name="aadhaar_card" />
+                                      
+                                        <label for="mobile" class="form-label"> Mobile Number</label>
+                                        <input required type="text" class="form-control number"
+                                        name="mobile" placeholder="Mobile Number" maxlength="10" />
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                        <label for="smart_card" class="form-label">Smart Card</label>
+                                        <input required accept="image/jpeg, image/png" type="file" class="form-control"
+                                            name="smart_card" />
+                                </div>
+                                @endif
                                   
                                     <div class="text-center">
                                         <p id="nopayment"></p>

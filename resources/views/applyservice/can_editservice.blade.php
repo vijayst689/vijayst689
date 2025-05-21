@@ -39,90 +39,141 @@
                                     <input type="hidden" name="service_amount" value="{{ $payment }}">
                                     <input type="hidden" name="user_id" value="{{ $customers->id }}">
 
-                                    @if ($serviceid == 204)
+                                 @if ($serviceid == 208)
                         
-                                    <div class="mb-3 col-md-6">
-                                        <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
-                                        <input required type="text" class="form-control"
-                                        name="can_number" placeholder="Can Number" maxlength="15" />
-                                        <label style="color:#23e156" for="mobile" class="form-label number">Mobile Number</label>
-                                        <input required type="text" class="form-control"
-                                        name="mobile" placeholder="Mobile Number" maxlength="10" />
-                                    </div>
-                                    <div class="mb-3 col-md-6">  
-                                        <label style="color:#23e156" for="name_tamil" class="form-label">பெயர் தமிழில்</label>
-                                        <input required type="text" maxlength="100" class="form-control"
-                                        name="name_tamil" placeholder="பெயர் தமிழில்"/>
-                                        <label style="color:#23e156" for="name_english" class="form-label">Name In English</label>
-                                        <input required type="text" maxlength="100" class="form-control"
-                                        name="name_english" placeholder="Name In English"/>    
-                                        <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front & Back) </label>
-                                        <input required accept="image/jpeg, image/png"  type="file" class="form-control"
-                                        name="aadhaar_card" />                   
-                                    </div>
-            
-                                    @elseif($serviceid == 205)
-                                    <div class="mb-3 col-md-6">
-                                        <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
-                                        <input required type="text" class="form-control"
-                                        name="can_number" placeholder="Can Number" maxlength="15" />
-                                        <label style="color:#23e156" for="dob" class="form-label">Date Of Birth</label>
-                                        <input required type="date" class="form-control"
-                                        name="dob" placeholder="DOB" maxlength="10" />
-                                    </div>
-                                    <div class="mb-3 col-md-6">  
-                                        <label style="color:#23e156" for="name_tamil" class="form-label">பெயர் தமிழில்</label>
-                                        <input required type="text" maxlength="100" class="form-control"
-                                        name="name_tamil" placeholder="பெயர் தமிழில்"/>
-                                        <label style="color:#23e156" for="name_english" class="form-label">Name In English</label>
-                                        <input required type="text" maxlength="100" class="form-control"
-                                        name="name_english" placeholder="Name In English"/>    
-                                        <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front & Back) </label>
-                                        <input required accept="image/jpeg, image/png"  type="file" class="form-control"
-                                        name="aadhaar_card" />                   
-                                    </div>
-                                    @elseif($serviceid == 206)
-                                    <div class="mb-3 col-md-6">
-                                        <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
-                                        <input required type="text" class="form-control"
-                                        name="can_number" placeholder="Can Number" maxlength="15" />
-                                        <label style="color:#23e156" for="mobile" class="form-label number">Mobile Number</label>
-                                        <input required type="text" class="form-control"
-                                        name="mobile" placeholder="Mobile Number" maxlength="10" />
-                                    </div>
-                                    <div class="mb-3 col-md-6">  
-                                        <label style="color:#23e156" for="dob" class="form-label">Date Of Birth</label>
-                                        <input required type="date" class="form-control"
-                                        name="dob" placeholder="DOB" maxlength="10" />   
-                                        <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front & Back) </label>
-                                        <input required accept="image/jpeg, image/png"  type="file" class="form-control"
-                                        name="aadhaar_card" />                   
-                                    </div>
-                                    @elseif($serviceid == 207)
-                                    <div class="mb-3 col-md-6">
-                                        <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
-                                        <input required type="text" class="form-control"
-                                        name="can_number" placeholder="Can Number" maxlength="15" />
-                                        <label style="color:#23e156" for="mobile" class="form-label number">Mobile Number</label>
-                                        <input required type="text" class="form-control"
-                                        name="mobile" placeholder="Mobile Number" maxlength="10" />
-                                        <label style="color:#23e156" for="dob" class="form-label">Date Of Birth</label>
-                                        <input required type="date" class="form-control"
-                                        name="dob" placeholder="DOB" maxlength="10" /> 
-                                    </div>
-                                    <div class="mb-3 col-md-6">  
-                                        <label style="color:#23e156" for="name_tamil" class="form-label">பெயர் தமிழில்</label>
-                                        <input required type="text" maxlength="100" class="form-control"
-                                        name="name_tamil" placeholder="பெயர் தமிழில்"/>
-                                        <label style="color:#23e156" for="name_english" class="form-label">Name In English</label>
-                                        <input required type="text" maxlength="100" class="form-control"
-                                        name="name_english" placeholder="Name In English"/>    
-                                        <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front & Back) </label>
-                                        <input required accept="image/jpeg, image/png"  type="file" class="form-control"
-                                        name="aadhaar_card" />                   
-                                    </div>
+                        <div class="mb-3 col-md-6">
+                            <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
+                            <input required type="text" class="form-control"
+                            name="can_number" placeholder="Can Number" maxlength="30" />
+                             <label style="color:#23e156" for="name_tamil" class="form-label">பெயர் தமிழில்</label>
+                            <input required type="text" maxlength="100" class="form-control"
+                            name="name_tamil" placeholder="பெயர் தமிழில்"/>
+                             <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front) </label>
+                            <input required accept="image/jpeg, image/png"  type="file" class="form-control"
+                            name="aadhaar_card" />
+                        </div>
+                        <div class="mb-3 col-md-6"> 
+                            <label style="color:#23e156" for="name_english" class="form-label">Name In English</label>
+                            <input required type="text" maxlength="100" class="form-control"
+                            name="name_english" placeholder="Name In English"/> 
+                            <label style="color:#23e156" for="mobile" class="form-label number">Mobile Number</label>
+                            <input required type="text" class="form-control"
+                            name="mobile" placeholder="Mobile Number" maxlength="10" />                   
+                        </div>
+
+                        @elseif($serviceid == 209)
+                        <div class="mb-3 col-md-6">
+                            <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
+                            <input required type="text" class="form-control"
+                            name="can_number" placeholder="Can Number" maxlength="30" />
+                            <label style="color:#23e156" for="name_tamil" class="form-label">பெயர் தமிழில்</label>
+                            <input required type="text" maxlength="100" class="form-control"
+                            name="name_tamil" placeholder="பெயர் தமிழில்"/>
+                            <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front) </label>
+                            <input required accept="image/jpeg, image/png"  type="file" class="form-control"
+                            name="aadhaar_card" />
+                        </div>
+                        <div class="mb-3 col-md-6">  
+                            
+                            <label style="color:#23e156" for="name_english" class="form-label">Name In English</label>
+                            <input required type="text" maxlength="100" class="form-control"
+                            name="name_english" placeholder="Name In English"/>
+                            <label style="color:#23e156" for="dob" class="form-label">Date Of Birth [05041997]</label>
+                            <input required type="text" class="form-control"
+                            name="dob" placeholder="ddmmyyyy" maxlength="8" />    
+                                               
+                        </div>
+                        @elseif($serviceid == 210)
+                        <div class="mb-3 col-md-6">
+                            <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
+                            <input required type="text" class="form-control"
+                            name="can_number" placeholder="Can Number" maxlength="30" />
+                            <label style="color:#23e156" for="dob" class="form-label">Date Of Birth</label>
+                            <input required type="text" class="form-control"
+                            name="dob" placeholder="ddmmyyyy" maxlength="8" />
+                           
+                        </div>
+                        <div class="mb-3 col-md-6">  
+                             <label style="color:#23e156" for="mobile" class="form-label number">Mobile Number</label>
+                            <input required type="text" class="form-control"
+                            name="mobile" placeholder="Mobile Number" maxlength="10" />
+                              
+                            <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front) </label>
+                            <input required accept="image/jpeg, image/png"  type="file" class="form-control"
+                            name="aadhaar_card" />                   
+                        </div>
+                        @elseif($serviceid == 211)
+                        <div class="mb-3 col-md-6">
+                            <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
+                            <input required type="text" class="form-control"
+                            name="can_number" placeholder="Can Number" maxlength="30" />
+                             <label style="color:#23e156" for="name_tamil" class="form-label">பெயர் தமிழில்</label>
+                            <input required type="text" maxlength="100" class="form-control"
+                            name="name_tamil" placeholder="பெயர் தமிழில்"/>
+                            <label style="color:#23e156" for="dob" class="form-label">Date Of Birth [05041997]</label>
+                            <input required type="text" class="form-control"
+                            name="dob" placeholder="ddmmyyyy" maxlength="8" /> 
+                        </div>
+                        <div class="mb-3 col-md-6">  
+                           
+                            <label style="color:#23e156" for="name_english" class="form-label">Name In English</label>
+                            <input required type="text" maxlength="100" class="form-control"
+                            name="name_english" placeholder="Name In English"/>  
+                             <label style="color:#23e156" for="mobile" class="form-label number">Mobile Number</label>
+                            <input required type="text" class="form-control"
+                            name="mobile" placeholder="Mobile Number" maxlength="10" />  
+                            <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front) </label>
+                            <input required accept="image/jpeg, image/png"  type="file" class="form-control"
+                            name="aadhaar_card" />                   
+                        </div>
+                         @elseif($serviceid == 226)
+                         <div class="mb-3 col-md-6">
+                            <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
+                            <input required type="text" class="form-control"
+                            name="can_number" placeholder="Can Number" maxlength="30" />
+                            <label style="color:#23e156" class="form-label">Documents</label>
+                                <select required id="document" name="document" class="form-control">
+                                    <option value="">Select Documents</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
                                     
-                                    @endif
+                                </select>
+                         </div>
+                          <div class="mb-3 col-md-6">
+                                <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front) </label>
+                                <input required accept="image/jpeg, image/png"  type="file" class="form-control"
+                                name="aadhaar_card" />
+
+                                <div class="" id="save_application_numberhide" style="display: none;">
+                                <label class="form-label text-danger">Enter Application Number</label>
+                                <input id="save_application_number" class="form-control text-danger" type="text"
+                                 name="save_application_number" placeholder="Application Number" maxlength="60">
+                                </div>
+                                <div class="" id="save_certificatehide" style="display: none;">
+                                <label class="form-label text-danger">Certificate Name</label>
+                                <input id="save_certificate" class="form-control text-danger" type="text" 
+                                name="save_certificate" placeholder="Certificate Name" maxlength="60">
+                                </div>
+                          </div>
+                                                                                                                                                                         
+                         @elseif($serviceid == 227)
+                          <div class="mb-3 col-md-6">
+                            <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
+                            <input required type="text" class="form-control"
+                            name="can_number" placeholder="Can Number" maxlength="30" />
+                            <label style="color:#23e156" for="application_no" class="form-label">Application Name</label>
+                            <input required type="text" maxlength="100" class="form-control"
+                            name="application_no" placeholder="Application Name"/>
+                          </div>
+                           <div class="mb-3 col-md-6">
+                            <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front) </label>
+                            <input required accept="image/jpeg, image/png"  type="file" class="form-control"
+                            name="aadhaar_card" /> 
+                            <label style="color:#23e156" for="certificate_name" class="form-label">Certificate Name</label>
+                            <input required type="text" maxlength="100" class="form-control"
+                            name="certificate_name" placeholder="Certificate Name"/>
+                           </div>
+                        @endif
                                     <div class="text-center">
                                         <p id="nopayment"></p>
                                     </div>
@@ -143,10 +194,10 @@
     </main>
 @endsection
 @push('page_scripts')
-    <script>
-var wallet = "{{ Auth::user()->wallet }}";
-var amount = "{{ $payment }}";
-$(function() {
+<script>
+ $(function() {
+    var wallet = "{{ Auth::user()->wallet }}";
+    var amount = "{{ $payment }}";
     if (parseFloat(amount) > parseInt(wallet)) {
         $('#save').prop("disabled", true);
         $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
@@ -155,9 +206,9 @@ $(function() {
                         'font-weight': 'bold'
                     });
     }
-});
+        });
 
-$('#dist_id').on('change', function () {
+        $('#dist_id').on('change', function () {
     var dist_id = this.value;
     $("#taluk").html('');
     var url = "{{ url('service/get_taluk') }}/" + dist_id;
@@ -192,5 +243,25 @@ $('#dist_id').on('change', function () {
         });
     });
 
+$('#document').change(function() {
+            if ($('#document').val() == 'Yes') {
+                $('#save_application_numberhide').show("slow");
+                $('#save_certificatehide').hide("slow");
+                $('#save_certificate').prop("required", false);
+                $('#save_application_number').prop("required", true);
+
+            } else if ($('#document').val() == 'No') {
+                $('#save_certificatehide').show("slow");
+                $('#save_application_numberhide').hide("slow");
+                $('#save_application_number').prop("required", false);
+                $('#save_certificate').prop("required", true);
+
+            } else {
+                $('#save_certificatehide').hide("slow");
+                $('#save_application_numberhide').hide("slow");
+                $('#save_application_number').prop("required", false);
+                $('#save_certificate').prop("required", false);
+            }
+        });
     </script>
 @endpush

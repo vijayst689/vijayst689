@@ -356,10 +356,7 @@ public function applyservices($serviceid) {
 }  elseif ($serviceid == 183 || $serviceid == 184 || $serviceid == 185 || $serviceid == 186){
    return view( 'applyservice.dharsanservice',compact('serviceid','districts','servicename','amount','customers','payment'));
 
-}elseif ($serviceid == 208 || $serviceid == 209 || $serviceid == 210 || $serviceid == 211){
-    return view( 'applyservice.can_editservice',compact('serviceid','districts','servicename','amount','customers','payment'));
-
-}elseif ($serviceid == 204 || $serviceid == 205 || $serviceid == 206 || $serviceid == 207){
+}elseif ($serviceid == 208 || $serviceid == 209 || $serviceid == 210 || $serviceid == 211 || $serviceid == 226 || $serviceid == 227){
     return view( 'applyservice.can_editservice',compact('serviceid','districts','servicename','amount','customers','payment'));
 
 }elseif ( $serviceid == 221 ){
@@ -368,7 +365,7 @@ public function applyservices($serviceid) {
 }elseif ( $serviceid == 222 ){
     return view( 'applyservice.smartcard_member',compact('serviceid','districts','servicename','amount','payment','customers'));
 
-}elseif ($serviceid == 223 ){
+}elseif ($serviceid == 223 || $serviceid == 228){
     return view( 'applyservice.smartcard_nametransfer',compact('serviceid','districts','servicename','amount','customers','payment'));
 
 }elseif ( $serviceid == 225 ){
@@ -4358,6 +4355,7 @@ DB::table('can_edit')->where('id', $insertid)->update([
     'aadhaar_card' => $aadhaar_card,
 ]);
 }   elseif($serviceid == 64){
+    // dd(date("Y-m-d H:i:s"));die;
     DB::table( 'can_edit' )->insert( [
         'user_id'                    => $user_id,
         'retailer_id'                => $retailer_id,
@@ -4374,15 +4372,15 @@ DB::table('can_edit')->where('id', $insertid)->update([
     $insertid = DB::getPdo()->lastInsertId();
     $aadhaar_card = "";
 
-    if ($request->aadhaar_card != null) {
-     $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
-     $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
-     move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
+//     if ($request->aadhaar_card != null) {
+//      $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
+//      $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
+//      move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
 
- }
- DB::table('can_edit')->where('id', $insertid)->update([
-    'aadhaar_card' => $aadhaar_card,
-]);
+//  }
+//  DB::table('can_edit')->where('id', $insertid)->update([
+//     'aadhaar_card' => $aadhaar_card,
+// ]);
 }   elseif($serviceid == 65){
     DB::table( 'can_edit' )->insert( [
         'user_id'                    => $user_id,
@@ -4444,8 +4442,9 @@ DB::table('can_edit')->where('id', $insertid)->update([
         'service_id'                 => $request ->serviceid,
         'amount'                     => $request->amount,
         'can_number'                 => $request->can_number,
-        'address_tamil'              => $request->address_tamil,
-        'address_english'            => $request->address_english,
+        'certificate_number'           => $request->certificate_number,
+        'aadhaar_number'             => $request->aadhaar_number,
+        'applicant_name'             => $request->applicant_name,
         'status'                     => 'Pending',
         'applied_date'               => date("Y-m-d"),
         'created_at'                 => date("Y-m-d"),
@@ -4463,7 +4462,7 @@ DB::table('can_edit')->where('id', $insertid)->update([
  DB::table('can_edit')->where('id', $insertid)->update([
     'aadhaar_card' => $aadhaar_card,
 ]);
-}   elseif($serviceid == 208 || $serviceid == 209 || $serviceid == 210 || $serviceid == 211){
+}   elseif($serviceid == 208 || $serviceid == 209 || $serviceid == 210 || $serviceid == 211 || $serviceid == 226 || $serviceid == 227){
     DB::table( 'can_edit' )->insert( [
         'user_id'                    => $user_id,
         'retailer_id'                => $retailer_id,
@@ -4475,6 +4474,11 @@ DB::table('can_edit')->where('id', $insertid)->update([
         'dob'                        => $request->dob,
         'name_tamil'                 => $request->name_tamil,
         'name_english'               => $request->name_english,
+        'application_no'             => $request->application_no,
+        'certificate_name'           => $request->certificate_name,
+        'save_application_number'    => $request->save_application_number,
+        'save_certificate'           => $request->save_certificate,
+        'document'                   => $request->document,
         'status'                     => 'Pending',
         'applied_date'               => date("Y-m-d"),
         'created_at'                 => date("Y-m-d"),
@@ -6401,8 +6405,7 @@ public function submitapply_smartcardotp(Request $request){
 }
 
 public function submitapply_smart_nametransfer(Request $request){
-
-    $user_id = 0;
+  $user_id = 0;
     $retailer_id = 0;
     $distributor_id = 0;
     if(Auth::user()->user_type_id == 3){
@@ -6415,13 +6418,14 @@ public function submitapply_smart_nametransfer(Request $request){
         $user_id = Auth::user()->id;
     }
     $serviceid = $request ->serviceid;
+    if($serviceid == 225 || $serviceid == 226){
         DB::table( 'smartcard' )->insert( [
          'user_id'      => $user_id,
          'retailer_id'  => $retailer_id,
          'distributor_id' => $distributor_id,
          'service_id'   => $request ->serviceid,
          'amount'       => $request->amount,
-         'smart_card'   => $request->smart_card,
+         'mobile'       => $request->mobile,
          'status'       => 'Pending',
          'applied_date' => date("Y-m-d"),
          'created_at'   => date("Y-m-d"),
@@ -6445,7 +6449,7 @@ public function submitapply_smart_nametransfer(Request $request){
         DB::table('smartcard')->where('id', $insertid)->update([
            'smart_card' => $smart_card,
        ]);
-
+    }
     $servicepayment = $request->service_amount;
     if(Auth::user()->user_type_id == 3){
         $user_id = $distributor_id;
@@ -6485,6 +6489,7 @@ public function submitapply_smart_nametransfer(Request $request){
     return redirect("appliedservice/Pending")->With("success","Application submitted Succesfully");
 
 }
+
 }
 
 

@@ -279,31 +279,30 @@
                                     </div>
                                     @elseif ($serviceid == 62)
                                     <div class="mb-3 col-md-6">
-                                        <label for="name_tamil" class="form-label">பெயர் தமிழில்</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
-                                            value="{{ $services->name_tamil }}" class="form-control" name="name_tamil"
-                                            maxlength="30" placeholder="பெயர் தமிழில்" />
+                                        <label for="can_number" class="form-label">Can Number</label>
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
+                                            value="{{ $services->can_number }}" class="form-control" name="can_number"
+                                            maxlength="30" placeholder="Can Number" />
                                         <label for="name_english" class="form-label">Name In English</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->name_english }}" class="form-control" name="name_english"
-                                            maxlength="30" placeholder="Name In English" />
+                                            maxlength="100" placeholder="Name In English" />
                                     </div>
                                     <div class="mb-3 col-md-6">
-
-                                        <label for="can_number" class="form-label">Can Number</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
-                                            value="{{ $services->can_number }}" class="form-control" name="can_number"
-                                            maxlength="15" placeholder="Can Number" />
-
-                                        @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                        <label for="name_tamil" class="form-label">பெயர் தமிழில்</label>
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
+                                            value="{{ $services->name_tamil }}" class="form-control" name="name_tamil"
+                                            maxlength="100" placeholder="பெயர் தமிழில்" />
+                                       
+                                        @if (Auth::user()->id != $apply_user_id )
                                             @if ($services->aadhaar_card != '')
-                                                <label>Aadhaar Card (Front & Back)</label>
+                                                <label>Aadhaar Card (Front)</label>
                                                 <br><a target="_blank"
                                                     href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
                                                     class="btn btn-primary me-2">View</a><br>
                                             @endif
                                         @else
-                                            <label>Aadhaar Card (Front & Back)</label>
+                                            <label>Aadhaar Card (Front)</label>
                                             <input @if ($services->aadhaar_card == '') required @endif class="form-control"
                                                 type="file" accept="image/jpeg, image/png" name="aadhaar_card">
                                             @if ($services->aadhaar_card != '')
@@ -316,25 +315,25 @@
                                     @elseif ($serviceid == 63)
                                     <div class="mb-3 col-md-6">
                                         <label for="can_number" class="form-label">Can Number</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->can_number }}" class="form-control" name="can_number"
-                                            maxlength="15" placeholder="Can Number" />
-                                        <label for="original_dob" class="form-label">Original DOB</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                            maxlength="30" placeholder="Can Number" />
+                                        <label for="original_dob" class="form-label">DOB [05041997]</label>
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->original_dob }}" class="form-control" name="original_dob"
-                                            maxlength="10" placeholder="Original DOB" />
+                                            maxlength="8" placeholder="ddmmyyyy" />
                                     </div>
                                     <div class="mb-3 col-md-6">
 
-                                        @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                        @if (Auth::user()->id != $apply_user_id )
                                             @if ($services->aadhaar_card != '')
-                                                <label>Aadhaar Card (Front & Back)</label>
+                                                <label>Aadhaar Card (Front)</label>
                                                 <br><a target="_blank"
                                                     href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
                                                     class="btn btn-primary me-2">View</a><br>
                                             @endif
                                         @else
-                                            <label>Aadhaar Card (Front & Back)</label>
+                                            <label>Aadhaar Card (Front)</label>
                                             <input @if ($services->aadhaar_card == '') required @endif class="form-control"
                                                 type="file" accept="image/jpeg, image/png" name="aadhaar_card">
                                             @if ($services->aadhaar_card != '')
@@ -347,45 +346,29 @@
                                     @elseif ($serviceid == 64)
                                     <div class="mb-3 col-md-6">
                                         <label for="can_number" class="form-label">Can Number</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->can_number }}" class="form-control" name="can_number"
-                                            maxlength="15" placeholder="Can Number" />
+                                            maxlength="30" placeholder="Can Number" />
                                         <label for="new_mobile_no" class="form-label">New mobile Number</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->new_mobile_no }}" class="form-control" name="new_mobile_no"
                                             maxlength="10" placeholder="New mobile Number" />
                                     </div>
-                                    <div class="mb-3 col-md-6">
-
-                                        @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                            @if ($services->aadhaar_card != '')
-                                                <label>Aadhaar Card (Front & Back)</label>
-                                                <br><a target="_blank"
-                                                    href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
-                                                    class="btn btn-primary me-2">View</a><br>
-                                            @endif
-                                        @else
-                                            <label>Aadhaar Card (Front & Back)</label>
-                                            <input @if ($services->aadhaar_card == '') required @endif class="form-control"
-                                                type="file" accept="image/jpeg, image/png" name="aadhaar_card">
-                                            @if ($services->aadhaar_card != '')
-                                                <a target="_blank"
-                                                    href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
-                                            @endif
-                                        @endif
-
-                                    </div>
-
                                     @elseif ($serviceid == 66)
                                     <div class="mb-3 col-md-6">
                                         <label for="can_number" class="form-label">Can Number</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->can_number }}" class="form-control" name="can_number"
-                                            maxlength="15" placeholder="Can Number" />
+                                            maxlength="30" placeholder="Can Number" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="aadhaar_number" class="form-label">Aadhaar Number</label>
+                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                            value="{{ $services->aadhaar_number }}" class="form-control number" name="aadhaar_number"
+                                            maxlength="12" placeholder="Aadhaar Number" />
                                     </div>
                                     {{-- <div class="mb-3 col-md-6">
-
-                                        @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                        @if (Auth::user()->id != $apply_user_id )
                                             @if ($services->aadhaar_card != '')
                                                 <label>Aadhaar Card (Front & Back)</label>
                                                 <br><a target="_blank"
@@ -402,54 +385,21 @@
                                             @endif
                                         @endif
                                     </div> --}}
-                                    @elseif ($serviceid == 67)
-                                    <div class="mb-3 col-md-6">
-                                        <label for="can_number" class="form-label">Can Number</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
-                                            value="{{ $services->can_number }}" class="form-control" name="can_number"
-                                            maxlength="15" placeholder="Can Number" />
-
-                                        @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                            @if ($services->aadhaar_card != '')
-                                                <label>Aadhaar Card (Front & Back)</label>
-                                                <br><a target="_blank"
-                                                    href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
-                                                    class="btn btn-primary me-2">View</a><br>
-                                            @endif
-                                        @else
-                                            <label>Aadhaar Card (Front & Back)</label>
-                                            <input @if ($services->aadhaar_card == '') required @endif class="form-control"
-                                                type="file" accept="image/jpeg, image/png" name="aadhaar_card">
-                                            @if ($services->aadhaar_card != '')
-                                                <a target="_blank"
-                                                    href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
-                                            @endif
-                                        @endif
-                                    </div>
-                                        <div class="mb-3 col-md-6">
-                                            <label for="address_tamil" class="form-label">முகவரி தமிழில்</label>
-                                            <textarea @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
-                                                value="{{ $services->address_tamil }}" class="form-control" name="address_tamil" maxlength="200"
-                                                placeholder="முகவரி தமிழில்">{{ $services->address_tamil }}</textarea>
-                                            <label for="address_english" class="form-label">Address In English</label>
-                                            <textarea @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
-                                                value="{{ $services->address_english }}" class="form-control" name="address_english" maxlength="200"
-                                                placeholder="Address In English">{{ $services->address_english }}</textarea>
-                                    </div>
                                     @elseif ($serviceid == 121)
                                     <div class="mb-3 col-md-6">
                                         <label for="aadhaar_number" class="form-label">Aadhaar Number</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
                                             value="{{ $services->aadhaar_number }}" class="form-control number" name="aadhaar_number"
                                             maxlength="12" placeholder="Aadhaar Number" />
                                     </div>
-                                    <div class="mb-3 col-md-6">
+                                    {{-- <div class="mb-3 col-md-6">
                                         <label for="mobile" class="form-label">Mobile Number</label>
-                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->mobile }}" class="form-control number" name="mobile"
                                             maxlength="10" placeholder="Mobile Number" />
-                                    </div>
+                                    </div> --}}
                                     @endif
+
 
                                     @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
                                     <div class="mb-3 col-md-6">
@@ -525,53 +475,45 @@
     </main>
 @endsection
 @push('page_scripts')
-<script>
-     $(function() {
+ <script>
+        $(function() {
             var status = "{{ $services->status }}";
-            // var acknowledgement = "{{ $services->acknowledgement }}";
             var dist_id = "{{ $services->dist_id }}";
             var taluk_id = "{{ $services->taluk_id }}";
-            gettaluk(dist_id);
-            getpanchayath(taluk_id);
 
-            if (status == "Resubmit") {
+            gettaluk(dist_id);
+            getpanchayath(taluk_id);       
+            
+             if (status == "Resubmit") {
                 $('#remarkshide').show("slow");
                 $('#remarks').prop("required", true);
             } else if (status == "Processing") {
                 $('#applicationnohide').show("slow");
                 $('#application_no').prop("required", true);
-                // $('#acknowledgementhide').show("slow");
-                // if (acknowledgement == "") {
-                //     $('#acknowledgement').prop("required", true);
-                // }
             } else if (status == "Approved") {
                 $('#applicationhide').show("slow");
-               
-                    $('#application').prop("required", true);
-        
+                $('#application').prop("required", true);
             }
         });
 
+        function gettaluk(dist_id) {
+        var url = "{{ url('service/get_taluk') }}/" + dist_id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
+                $.each(result, function (key, value) {
+                    $("#taluk").append('<option value="' + value
+                        .id + '">' + value.taluk_name + '</option>');
+                });
+                $("#taluk").val("{{ $services->taluk_id }}");
 
+            }
+        });
+    }
 
-    function gettaluk(dist_id) {
-    var url = "{{ url('service/get_taluk') }}/" + dist_id;
-    $.ajax({
-        url: url,
-        type: "GET",
-        success: function (result) {
-            $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
-            $.each(result, function (key, value) {
-                $("#taluk").append('<option value="' + value
-                    .id + '">' + value.taluk_name + '</option>');
-            });
-            $("#taluk").val("{{ $services->taluk_id }}");
-
-        }
-    });
-}
-
-$('#service_status').change(function() {
+    $('#service_status').change(function() {
             if ($('#service_status').val() == 'Resubmit') {
                 $('#acknowledgementhide').hide("slow");
                 $('#acknowledgement').prop("required", false);
@@ -611,41 +553,41 @@ $('#service_status').change(function() {
             }
         });
 
-    function gettaluk(dist_id) {
-    var url = "{{ url('service/get_taluk') }}/" + dist_id;
-    $.ajax({
-        url: url,
-        type: "GET",
-        success: function (result) {
-            $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
-            $.each(result, function (key, value) {
-                $("#taluk").append('<option value="' + value
-                    .id + '">' + value.taluk_name + '</option>');
-            });
-            $("#taluk").val("{{ $services->taluk_id }}");
+        function gettaluk(dist_id) {
+        var url = "{{ url('service/get_taluk') }}/" + dist_id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
+                $.each(result, function (key, value) {
+                    $("#taluk").append('<option value="' + value
+                        .id + '">' + value.taluk_name + '</option>');
+                });
+                $("#taluk").val("{{ $services->taluk_id }}");
 
-        }
-    });
-}
+            }
+        });
+    }
 
-function getpanchayath(taluk_id) {
-    var url = "{{ url('service/get_panchayath') }}/" + taluk_id;
-    $.ajax({
-        url: url,
-        type: "GET",
-        success: function(result) {
-            $('#panchayath').html('<option value="">-- Select Panchayath Name --</option>');
-            $.each(result, function(key, value) {
-                $("#panchayath").append('<option value="' + value
-                    .id + '">' + value.panchayath_name + '</option>');
-            });
-            $("#panchayath").val("{{ $services->panchayath_id }}");
+    function getpanchayath(taluk_id) {
+        var url = "{{ url('service/get_panchayath') }}/" + taluk_id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function(result) {
+                $('#panchayath').html('<option value="">-- Select Panchayath Name --</option>');
+                $.each(result, function(key, value) {
+                    $("#panchayath").append('<option value="' + value
+                        .id + '">' + value.panchayath_name + '</option>');
+                });
+                $("#panchayath").val("{{ $services->panchayath_id }}");
 
-        }
-    });
-}
+            }
+        });
+    }
 
-</script>
+    </script>
 @endpush
 
 

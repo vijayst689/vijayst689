@@ -51,32 +51,85 @@
                                         }
                                     @endphp
 
-                                   @if ($serviceid == 65)
-                                    <div class="mb-3 col-md-6">
-                                        <label for="applicant_name" class="form-label">Applicant Name</label>
-                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
-                                            value="{{ $services->applicant_name }}" class="form-control" name="applicant_name"
-                                            maxlength="100" placeholder="Applicant Name" />
+                                 @if ($serviceid == 65)
+                                        <div class="mb-3 col-md-6">
+                                            <label for="applicant_name" class="form-label">Applicant Name</label>
+                                            <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
+                                                value="{{ $services->applicant_name }}" class="form-control" name="applicant_name"
+                                                maxlength="100" placeholder="Applicant Name" />
+                                            <label for="aadhaar_number" class="form-label">Aadhaar Number</label>
+                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                                value="{{ $services->aadhaar_number }}" class="form-control number" name="aadhaar_number"
+                                                maxlength="15" placeholder="Aadhaar Number" />
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                             <label for="can_number" class="form-label">Can Number</label>
+                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                                value="{{ $services->can_number }}" class="form-control" name="can_number"
+                                                maxlength="30" placeholder="Can Number" />
+                                            <label for="certificate_name" class="form-label">Certificate Name</label>
+                                            <select @if (Auth::user()->id != $apply_user_id ) disabled @endif class="form-control"
+                                                name="certificate_name">
+                                                <option value=""> Select certificate</option>
+                                                <option @if ($services->certificate_name == 'Income certificate') selected @endif value="Income certificate ">Income certificate 
+                                                </option>
+                                                <option @if ($services->certificate_name == 'Nativity certificate') selected @endif value="Nativity certificate">Nativity certificate
+                                                </option>
+                                                <option @if ($services->certificate_name == 'Residential certificate') selected @endif value="Residential certificate">Residential certificate
+                                                </option>
+                                                <option @if ($services->certificate_name == 'First Graduation certificate') selected @endif value="First Graduation certificate">First Graduation certificate
+                                                </option>
+                                                <option @if ($services->certificate_name == 'Community certificate') selected @endif value="Community certificate">Community certificate
+                                                </option>
+                                                <option @if ($services->certificate_name == 'Obc Certificate') selected @endif value="Obc Certificate">Obc Certificate
+                                                </option>
+                                                <option @if ($services->certificate_name == 'No marriage certificate') selected @endif value="No marriage certificate">No marriage certificate
+                                                </option>
+                                                <option @if ($services->certificate_name == 'Small farmer certificate') selected @endif value="Small farmer certificate">Small farmer certificate
+                                                </option>
+                                                <option @if ($services->certificate_name == 'Old age pension certificate') selected @endif value="Old age pension certificate">Old age pension certificate
+                                                </option>
+                                                <option @if ($services->certificate_name == 'No male child certificate') selected @endif value="No male child certificate">No male child certificate
+                                                </option>
+                                                <option @if ($services->certificate_name == 'Widow certificate') selected @endif value="Widow certificate">Widow certificate
+                                                </option>
+                                            </select>
+                                        </div>
 
-                                        <label for="can_number" class="form-label">Can Number</label>
-                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
-                                            value="{{ $services->can_number }}" class="form-control" name="can_number"
-                                            maxlength="30" placeholder="Can Number" />
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="certificate_name" class="form-label">Certificate Name</label>
-                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
-                                            value="{{ $services->certificate_name }}" class="form-control"
-                                            name="certificate_name" maxlength="100" placeholder="Certificate Name" />
+                                        @elseif($serviceid == 67)
+                                        <div class="mb-3 col-md-6">
+                                            <label for="applicant_name" class="form-label">Applicant Name</label>
+                                            <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
+                                                value="{{ $services->applicant_name }}" class="form-control" name="applicant_name"
+                                                maxlength="100" placeholder="Applicant Name" />
+                                            <label for="aadhaar_number" class="form-label">Aadhaar Number</label>
+                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                                value="{{ $services->aadhaar_number }}" class="form-control number" name="aadhaar_number"
+                                                maxlength="100" placeholder="Aadhaar Number" />
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                             <label for="can_number" class="form-label">Can Number</label>
+                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                                value="{{ $services->can_number }}" class="form-control" name="can_number"
+                                                maxlength="30" placeholder="Can Number" />
 
-                                        <label for="aadhaar_number" class="form-label">Aadhaar Number</label>
-                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
-                                            value="{{ $services->aadhaar_number }}" class="form-control number" name="aadhaar_number"
-                                            maxlength="100" placeholder="Aadhaar Number" />
-
-                                    </div>
-
+                                             <label for="certificate_number" class="form-label">Legal Heir Certificate Number</label>
+                                            <select @if (Auth::user()->id != $apply_user_id ) disabled @endif class="form-control"
+                                                name="certificate_number">
+                                                <option value=""> Select certificate</option>
+                                                <option @if ($services->certificate_number == 'Legal Heir Certificate') selected @endif value="Legal Heir Certificate">Legal Heir Certificate
+                                                </option>
+                        
+                                            </select>
+                                             {{-- <label for="certificate_number" class="form-label">Legal Heir Certificate Number</label>
+                                            <select @if (Auth::user()->id != $apply_user_id ) disabled @endif class="form-control"
+                                                name="certificate_number">
+                                                <option value=""> Select certificate</option>
+                                                <option @if ($services->certificate_number == 'Legal Heir Certificate') selected @endif value="Legal Heir Certificate">Legal Heir Certificate 
+                                                </option> --}}
+                                        </div>
                                     @endif
+
 
                                     @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
                                     <div class="mb-3 col-md-6">

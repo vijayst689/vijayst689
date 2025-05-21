@@ -49,6 +49,7 @@
                                             $apply_user_id = $services->retailer_id;
                                         }
                                     @endphp
+                                      @if ($serviceid == 223)
                                     <div class="mb-3 col-md-6">
                                         @if (Auth::user()->id != $apply_user_id)
                                             @if ($services->smart_card != '')
@@ -86,6 +87,49 @@
                                             @endif
                                         @endif
                                     </div>
+                                    @elseif ($serviceid == 228)
+                                     <div class="mb-3 col-md-6">
+                                        @if (Auth::user()->id != $apply_user_id)
+                                            @if ($services->aadhaar_card != '')
+                                                <label>Family Head Adhaar Card</label>
+                                                <br><a target="_blank"
+                                                    href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
+                                                    class="btn btn-primary me-2">View</a><br>
+                                            @endif
+                                        @else
+                                            <label>Family Head Adhaar Card</label>
+                                            <input @if ($services->aadhaar_card == '') required @endif class="form-control"
+                                                type="file" accept="image/jpeg, image/png" name="aadhaar_card">
+                                            @if ($services->aadhaar_card != '')
+                                                <a target="_blank"
+                                                    href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
+                                            @endif
+                                        @endif
+
+                                        <label for="mobile" class="form-label">Mobile Number</label>
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
+                                        value="{{ $services->mobile }}" class="form-control number" name="mobile"
+                                        maxlength="10" placeholder="Mobile Number" />
+                                    </div>  
+                                    <div class="mb-3 col-md-6">
+                                        @if (Auth::user()->id != $apply_user_id )
+                                        @if ($services->smart_card != '')
+                                            <label>Smart Card</label>
+                                            <br><a target="_blank"
+                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
+                                                class="btn btn-primary me-2">View</a><br>
+                                        @endif
+                                    @else
+                                        <label>Smart Card</label>
+                                        <input @if ($services->smart_card == '') required @endif class="form-control"
+                                            type="file" accept="image/jpeg, image/png" name="smart_card">
+                                        @if ($services->smart_card != '')
+                                            <a target="_blank"
+                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
+                                        @endif
+                                    @endif
+                                    </div>
+                                    @endif
 
                                     @if (Auth::user()->id != $apply_user_id)
                                         <div class="mb-3 col-md-6">
