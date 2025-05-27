@@ -38,9 +38,11 @@
                                             <tr>
                                                 <th>Sl No</th>
                                                 <th>Service Name</th>
+                                                <th>Admin</th>
                                                 <th>Distributor</th>
                                                 <th>Retailer</th>
                                                 <th>Customer</th>
+                                                <th>Need Coordinator</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -52,24 +54,54 @@
                                                     <input name="service_id[]" type="hidden" value="{{ $ser->id }}" />
                                                     @if (count($ser->payment) > 0)
                                                         @foreach ($ser->payment as $key1 => $payment)
-                                                            <td><input class="form-control decimal"
+                                                            <td><input class="form-control number" name="admin_amount[]"
+                                                                    type="text" maxlength="6"
+                                                                    value="{{ $payment->admin_amount }}"
+                                                                    @if (Auth::user()->user_type_id == 2) readonly @endif />
+                                                            </td>
+
+                                                            <td><input class="form-control number"
                                                                     name="distributor_amount[]" type="text"
                                                                     maxlength="6"
                                                                     value="{{ $payment->distributor_amount }}" /></td>
-                                                            <td><input class="form-control decimal" name="retailer_amount[]"
+                                                            <td><input class="form-control number" name="retailer_amount[]"
                                                                     type="text" maxlength="6"
                                                                     value="{{ $payment->retailer_amount }}" /></td>
-                                                            <td><input class="form-control decimal" name="customer_amount[]"
+                                                            <td><input class="form-control number" name="customer_amount[]"
                                                                     type="text" maxlength="6"
                                                                     value="{{ $payment->customer_amount }}" /></td>
+                                                            <td>
+                                                                <div class="row row-padded">
+                                                                    <div class="icheck-success d-inline col-sm-2">
+                                                                        <input name="check_{{ $ser->id }}"
+                                                                            @if ($payment->coordinator_permission == 1) checked @endif
+                                                                            type="checkbox" value="1">
+                                                                    </div>
+                                                                </div>
+                                                            </td>
                                                         @endforeach
                                                     @else
-                                                        <td><input class="form-control decimal" name="distributor_amount[]"
+                                                        <td><input class="form-control number" name="admin_amount[]"
+                                                                type="text" maxlength="6"
+                                                                value="{{ $ser->admin_amount }}"
+                                                                @if (Auth::user()->user_type_id == 2) readonly @endif /></td>
+
+                                                        <td><input class="form-control number" name="distributor_amount[]"
                                                                 type="text" maxlength="6" value="" /></td>
-                                                        <td><input class="form-control decimal" name="retailer_amount[]"
+                                                        <td><input class="form-control number" name="retailer_amount[]"
                                                                 type="text" maxlength="6" value="" /></td>
-                                                        <td><input class="form-control decimal" name="customer_amount[]"
+                                                        <td><input class="form-control number" name="customer_amount[]"
                                                                 type="text" maxlength="6" value="" /></td>
+
+                                                        <td>
+                                                            <div class="row row-padded">
+
+                                                                <div class="icheck-success d-inline col-sm-2">
+                                                                    <input name="check_{{ $ser->id }}" type="checkbox"
+                                                                        value="1">
+                                                                </div>
+                                                            </div>
+                                                        </td>
                                                     @endif
                                                 </tr>
                                         </tbody>

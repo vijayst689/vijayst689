@@ -22,6 +22,12 @@ class ServicePaymentController extends Controller
       if(count($payment) > 0){
         $services[ $key ][ 'payment' ] = $payment;
       }
+      $admin_amount = 0;
+       $payment1 = DB::table('service_payment')->where('service_id',$service_id)->get();
+        $services[ $key ][ 'admin_amount' ] = 0;
+       if(count($payment1) > 0){
+        $services[ $key ][ 'admin_amount' ] = $payment1[0]->admin_amount;
+      }
     }
     $services = json_decode( json_encode( $services ));
     return view('servicepayment.servicepayment',compact('services','serviceid'));
@@ -30,24 +36,34 @@ class ServicePaymentController extends Controller
   public function addservice_payment(Request $request){
     $parent_id = $request->parent_id;
     DB::table('service_payment')->where('parent_id',$parent_id )->delete();
-    if($request->has('parent_id')){
-      foreach ( $request->parent_id as $key => $payment ) {
-        $service_id = $request->service_id[ $key ];
+     if($request->has('parent_id')){
+      foreach ( $request->service_id as $key => $payment ) {
+         $name = 'check_'.$payment;
+                $pre = $request[ $name ];
+                $coordinator_permission = $pre == '1' ? 1 : 0;
+        $parent_id = $request->parent_id[ $key ];
         $distributor_amount = $request->distributor_amount[ $key ];
         $retailer_amount = $request->retailer_amount[ $key ];
         $customer_amount = $request->customer_amount[ $key ];
+        $admin_amount = $request->admin_amount[ $key ];
+       
+        
 
           DB::table( 'service_payment' )->insert( [
-            'parent_id'  => $payment,
-            'service_id'  => $service_id,
+            'parent_id'                 => $parent_id,
+            'service_id'                => $payment,
+            'admin_amount'        => $admin_amount,
             'distributor_amount'        => $distributor_amount,
-            'retailer_amount'        => $retailer_amount,
-            'customer_amount'        => $customer_amount,
+            'retailer_amount'           => $retailer_amount,
+            'customer_amount'           => $customer_amount,
+            'coordinator_permission'    => $coordinator_permission,
+
           ] );
       }
     }
-    return redirect('servicepayment/'.$payment)->with('success' ,"Service Payment Update Succesfully !");
+    return redirect('servicepayment/'.$parent_id);
   }
+
 
   public function smartcardpayment($serviceid){
     $services = DB::table('services')->where('parent_id', $serviceid )->orderBy( 'id' , 'Asc' )->get();

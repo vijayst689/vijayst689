@@ -1704,3 +1704,89 @@ CREATE TABLE `smartcard_otp` (
 ) ENGINE=InnoDB;
 
 alter table smartcard modify smart_card varchar(100) DEFAULT NULL;
+
+//27-05-2025
+CREATE TABLE `pstm` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `dist_id` int(11) DEFAULT 0,
+  `name` varchar(100) DEFAULT NULL,
+  `name_tamil` varchar(100) DEFAULT NULL,
+  `dob` varchar(10) DEFAULT NULL,
+  `father_name` varchar(100) DEFAULT NULL,
+  `father_name_tamil` varchar(100) DEFAULT NULL,
+  `mobile` varchar(12) DEFAULT NULL,
+  `mother_name` varchar(100) DEFAULT NULL,
+  `mother_name_tamil` varchar(100) DEFAULT NULL,
+  `emis_id` varchar(30) DEFAULT NULL,
+  `academic_yr_from` varchar(30) DEFAULT NULL,
+  `class_to` varchar(20) DEFAULT NULL,
+  `school_type` varchar(30) DEFAULT NULL,
+  `academic_yr_to` varchar(30) DEFAULT NULL,
+  `school_name` varchar(200) DEFAULT NULL,
+  `class_from` varchar(20) DEFAULT NULL,
+  `block` varchar(200) DEFAULT NULL,
+  `tc` varchar(20) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(50) DEFAULT NULL,
+  `application` varchar(50) DEFAULT NULL,
+  `lects` varchar(50) DEFAULT NULL,
+  `selects` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+alter table service_payment add coordinator_permission int(11) DEFAULT 0 after admin_amount;
+
+alter table can_edit add certificate_number varchar(20) DEFAULT NULL after application_no;
+alter table can_edit add certificate_name varchar(20) DEFAULT NULL after application_no;
+
+alter table can_edit add document varchar(20) Default NULL;
+alter table can_edit add save_application_number varchar(20) Default NULL;
+alter table can_edit add save_certificate varchar(20) Default NULL;
+
+alter table can_edit modify can_number varchar(30);
+alter table can_edit modify certificate_number varchar(50);
+alter table can_edit add applicant_name varchar(100) DEFAULT NULL after application_no;
+
+CREATE TABLE `smartcard_otp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `aadhaar_card` varchar(20) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(50) DEFAULT NULL,
+  `application` varchar(50) DEFAULT NULL,
+  `lects` varchar(50) DEFAULT NULL,
+  `selects` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+alter table smartcard add add_member varchar(50) DEFAULT NULL after aadhaar_card;
+alter table smartcard add aadhaar_card2 varchar(20) DEFAULT NULL after add_member;
+alter table smartcard add aadhaar_card3 varchar(20) DEFAULT NULL after aadhaar_card2;
+alter table smartcard add aadhaar_card4 varchar(20) DEFAULT NULL after aadhaar_card3;
+alter table smartcard add aadhaar_card5 varchar(20) DEFAULT NULL after aadhaar_card4;
+
+alter table can_edit add api_response varchar(20) DEFAULT NULL;
+

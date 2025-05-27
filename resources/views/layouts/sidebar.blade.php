@@ -58,6 +58,20 @@
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
+                                            <div class="menu-title">Service Payment</div>
+                                        </a>
+                                        <ul class="sub-menu" aria-expanded="false">
+                                            @foreach ($services as $service)
+                                                <li><a
+                                                        href="{{ url('/servicepayment', $service->id) }}">{{ $service->service_name }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
                                             <div class="menu-title">PDF Services</div>
                                         </a>
                                         <ul class="mm-collapse">

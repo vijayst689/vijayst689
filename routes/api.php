@@ -21,3 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // PAN STATUS
 Route::post('/get_panstatus', [App\Http\Controllers\api\ApiController::class, 'get_panstatus'])->name('get_panstatus');
+
+// CAN NUMBER
+Route::post('/get_cannumberstatus', [App\Http\Controllers\api\ApiController::class, 'get_cannumberstatus'])->name('get_cannumberstatus');
