@@ -67,7 +67,7 @@ class DistributorController extends Controller
         'profile'    => $profile,
       ] );
 
-      return redirect('/distributors')->with('success', 'retailer Add Successfully ... !');
+      return redirect('/distributors')->with('success', 'Distributor Add Successfully ... !');
     }
 
     public function updatedistributor(Request $request)
