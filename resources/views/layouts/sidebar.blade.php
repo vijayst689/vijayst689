@@ -345,6 +345,30 @@
                                             </li>
                                         </ul>
                                     </li>
+                                     <li>
+                                        <a href="javascript:;" class="has-arrow">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Our Service</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('allservices') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Our Service</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                     <li>
+                                        <a href="javascript:;" class="has-arrow">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Services</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('viewservice') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>View Services</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                     <li>
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
@@ -373,33 +397,6 @@
                                             </li>
                                             <li><a href="{{ url('retailers') }}"><i
                                                         class="material-icons-outlined">arrow_right</i>Retailers</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    {{-- <li>
-                                        <a href="javascript:;" class="has-arrow">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">TNEGA</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('addcustomer') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Add Customer</a>
-                                            </li>
-                                            <li><a href="{{ url('customers') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Customers</a>
-                                            </li>
-                                        </ul>
-                                    </li> --}}
-                                    <li>
-                                        <a href="javascript:;" class="has-arrow">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">Our Service</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('allservices') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Our Service</a>
                                             </li>
                                         </ul>
                                     </li>

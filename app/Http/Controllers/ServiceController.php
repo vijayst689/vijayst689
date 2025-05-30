@@ -45,7 +45,7 @@ public function allservices()
 
 public function subservice( $id )
 {
-    if(Auth::user()->user_type_id != 1){
+    if( Auth::user()->user_type_id != 1 && Auth::user()->user_type_id != 2 ){
         return redirect("/dashboard");
     }
     $service = DB::table('services')->where('parent_id',$id)->orderBy('id', 'Asc')->get();
@@ -59,7 +59,7 @@ public function subservice( $id )
 
 public function viewservice()
 {
-    if(Auth::user()->user_type_id != 1){
+    if(Auth::user()->user_type_id != 1 && Auth::user()->user_type_id != 2){
         return redirect("/dashboard");
     }
     $allservice = DB::table('services')->where('parent_id',0)->orderBy( 'id' , 'Asc' )->get();
@@ -216,7 +216,7 @@ public function applyservice($serviceid,$customerid) {
 
    }elseif ($serviceid == 170 || $serviceid == 171 || $serviceid == 172 || $serviceid == 176 || $serviceid == 177 ||$serviceid == 178 ){
        return view( 'applyservice.tnegaservice5',compact('serviceid','districts','servicename','amount','customers','payment'));
-   
+
     } elseif ($serviceid == 60 || $serviceid == 62 || $serviceid == 63 || $serviceid == 64 || $serviceid == 65 || $serviceid == 66 || $serviceid == 67 || $serviceid == 121){
         return view( 'applyservice.caneditservice',compact('serviceid','districts','servicename','amount','customers','payment'));
 
@@ -513,7 +513,7 @@ public function submitapply_tnegaservices1(Request $request){
             'pancard'             => $pancard,
             'income_yearly'       => $request->income_yearly,
             'income_monthly'       => $request->income_monthly,
-            
+
         ]);
     }elseif($serviceid == 3){
         $tc_community_certificate = "";
@@ -649,11 +649,11 @@ public function submitapply_tnegaservices1(Request $request){
           $relation_name_tamil = $request->relation_name_tamil[ $key ];
           $relation_age = $request->relation_age[ $key ];
           $occupation = $request->occupation[ $key ];
-         
+
           $sql = "insert into family_member (service_id,relation,relation_name,relation_name_tamil,relation_age,occupation) values ($insertid,'$relation','$relation_name','$relation_name_tamil','$relation_age','$occupation')";
           DB::insert( $sql );
-          
-          
+
+
         }
       }
 
@@ -894,7 +894,7 @@ public function submitapply_tnegaservices2(Request $request){
 
 
     }
-} 
+}
 if($request->has('proof')){
     foreach ( $request->proof as $key => $proof ) {
       $district = $request->district[ $key ];
@@ -907,8 +907,8 @@ if($request->has('proof')){
 
       $sql = "insert into agri_details (service_id,district,taluk,village,patta_no,field_no,subdivision_no,area,pattatype) values ($insertid,'$district','$taluk','$village','$patta_no','$field_no','$subdivision_no','$area','$proof')";
       DB::insert( $sql );
-      
-      
+
+
   }
     }
 }
@@ -1989,7 +1989,7 @@ public function submitapply_tnegaservices6(Request $request){
             'created_at'    => date("Y-m-d"),
         ] );
         $insertid = DB::getPdo()->lastInsertId();
-    
+
         $signature1 = "";
     if ($request->signature1 != null) {
         $signature1 = uniqid().'.'.$request->file('signature1')->extension();
@@ -2036,7 +2036,7 @@ public function submitapply_tnegaservices6(Request $request){
 
 
     }
-} 
+}
 
 if($request->has('relationship_add')){
     foreach ( $request->relationship_add as $key => $r ) {
@@ -2065,8 +2065,8 @@ if($request->has('relationship_add')){
 
 
     }
-} 
-    
+}
+
         $servicepayment = $request->service_amount;
         if(Auth::user()->user_type_id == 3){
             $user_id = $distributor_id;
@@ -2084,7 +2084,7 @@ if($request->has('relationship_add')){
         $time = date( 'H:i:s' );
         $service_status = 'Out Payment';
         $ad_info = "Service Payment". ' ' .$servicename;
-    
+
         $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
         $balance = 0;
         if($getwallet){
@@ -2092,7 +2092,7 @@ if($request->has('relationship_add')){
         }
         $newbalance = $balance + $servicepayment;
         $newbalance1 = Auth::user()->wallet - $servicepayment;
-    
+
         $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','1','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet + $servicepayment where id = 1";
@@ -2102,10 +2102,10 @@ if($request->has('relationship_add')){
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
         DB::update( DB::raw( $sql ) );
-    
-        
+
+
         return redirect("appliedservice/Pending")->With("success","Application submitted Succesfully");
-    
+
     }
 
 public function submitapply_msme(Request $request){
@@ -4566,11 +4566,11 @@ if($coordinator_permission == 1){
      $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
      $ch = curl_init();
      if($serviceid == 62){
-     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&name_tamil=$name_tamil&name_english=$name_english";    
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&name_tamil=$name_tamil&name_english=$name_english";
      }elseif($serviceid == 64){
      $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&mobile=$mobile";
      }elseif($serviceid == 65){
-     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&mobile=$mobile&certificate_name=$certificate_name&certificate_number=$certificate_number&aadhaar_number=$aadhaar_number&applicant_name=$applicant_name";    
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&mobile=$mobile&certificate_name=$certificate_name&certificate_number=$certificate_number&aadhaar_number=$aadhaar_number&applicant_name=$applicant_name";
      }
 
     //dd($post_data);
@@ -5718,7 +5718,7 @@ public function submitapply_pancard(Request $request){
             }
             $newbalance = $balance + $servicepayment;
             $newbalance1 = Auth::user()->wallet - $servicepayment;
-        
+
             $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
             DB::insert( DB::raw( $sql ) );
             $sql = "update users set wallet = wallet + $servicepayment where id = 2";
@@ -6376,7 +6376,7 @@ public function submitapply_pstm(Request $request){
     DB::table('pstm')->where('id', $insertid)->update([
         'tc'         => $tc,
     ]);
-    
+
 
     $servicepayment = $request->service_amount;
     if(Auth::user()->user_type_id == 3){

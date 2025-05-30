@@ -14,11 +14,11 @@
                 </div>
                 <div class="ms-auto">
                     <div class="col-auto">
-                        @if( Auth::user()->user_type_id == 1 )
-                        <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                            <a href="{{ url('/service') }}" class="btn btn-grd btn-grd-info px-3"><i
-                                    class="bi bi-chat me-2"></i>Add Services</a>
-                        </div>
+                        @if (Auth::user()->user_type_id == 1)
+                            <div class="d-flex align-items-center gap-2 justify-content-lg-end">
+                                <a href="{{ url('/service') }}" class="btn btn-grd btn-grd-info px-3"><i
+                                        class="bi bi-chat me-2"></i>Add Services</a>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                     @endif
                     <div class="customer-table">
                         <div class="table-responsive white-space-nowrap">
-                            <table class="table align-middle">
+                            <table id="example2" class="table align-middle">
                                 <thead class="table-dark">
                                     <tr>
                                         <th>Sl No</th>
@@ -55,7 +55,7 @@
                                     @foreach ($allservice as $key => $ser)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $ser->service_name }}</td>
+                                            <td class="text-danger">{{ $ser->service_name }}</td>
                                             <td>
                                                 <div class="customer-pic">
                                                     <img src="/upload/service/{{ $ser->service_image }}"
@@ -68,14 +68,16 @@
                                                     onclick="edit_service('{{ $ser->id }}','{{ $ser->service_name }}','{{ $ser->status }}')"
                                                     ype="button" style="font-size: small"
                                                     class="btn btn-grd btn-grd-primary px-2">Edit</button>
+                                                @if (Auth::user()->user_type_id == 1)
+                                                    <button
+                                                        onclick="return confirm('Do you want to confirm delete service?')"
+                                                        href="{{ url('/dropservice', $ser->id) }}" type="button"
+                                                        style="font-size: small"
+                                                        class="btn btn-inverse-danger px-2">Drop</button>
 
-                                                <button onclick="return confirm('Do you want to confirm delete service?')"
-                                                    href="{{ url('/dropservice', $ser->id) }}" type="button"
-                                                    style="font-size: small"
-                                                    class="btn btn-inverse-danger px-2">Drop</button>
-
-                                                <a href="{{ url('/subservice', $ser->id) }}" style="font-size: small"
-                                                    class="btn btn-grd btn-grd-branding px-1">Sub Service</a>
+                                                    <a href="{{ url('/subservice', $ser->id) }}" style="font-size: small"
+                                                        class="btn btn-grd btn-grd-branding px-1">Sub Service</a>
+                                                @endif
                                             </td>
                                         </tr>
                                 </tbody>
@@ -102,12 +104,24 @@
                                                         <form class="row g-3" action="{{ url('/updateservice') }}"
                                                             method="post" enctype="multipart/form-data">
                                                             {{ csrf_field() }}
+                                                        <input type="hidden" name="service_id" id="serviceid" />
+                                                            @if( Auth::user()->user_type_id == 1)
                                                             <div class="col-md-6">
-                                                                <input type="hidden" name="service_id" id="serviceid" />
-                                                                <label for="editname" class="form-label">Service Name</label>
+                                                                <label for="editname" class="form-label">Service
+                                                                    Name</label>
                                                                 <input name="service_name" maxlength="30" type="text"
-                                                                    class="form-control" id="editname" placeholder="Service Name">
+                                                                    class="form-control" id="editname"
+                                                                    placeholder="Service Name">
                                                             </div>
+                                                            @endif
+                                                            @if( Auth::user()->user_type_id == 2)
+                                                            <div class="col-md-6">
+                                                                <label for="editname" class="form-label">Service
+                                                                    Name</label>
+                                                                <input readonly name="service_name" maxlength="30" type="text"class="form-control" id="editname"
+                                                                    placeholder="Service Name">
+                                                            </div>
+                                                            @endif
                                                             <div class="col-md-6">
                                                                 <label for="" class="form-label">Service
                                                                     Image</label>
