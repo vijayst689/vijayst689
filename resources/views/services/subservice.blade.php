@@ -14,11 +14,11 @@
                 </div>
                 <div class="ms-auto">
                     <div class="col-auto">
-                        @if( Auth::user()->user_type_id == 1 )
-                        <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                            <a href="{{ url('/service') }}" class="btn btn-grd btn-grd-info px-3"><i
-                                    class="bi bi-chat me-2"></i>Add Service</a>
-                        </div>
+                        @if (Auth::user()->user_type_id == 1)
+                            <div class="d-flex align-items-center gap-2 justify-content-lg-end">
+                                <a href="{{ url('/service') }}" class="btn btn-grd btn-grd-info px-3"><i
+                                        class="bi bi-chat me-2"></i>Add Service</a>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -44,29 +44,57 @@
                         {{ csrf_field() }}
                         <div class="row">
                             <input type="hidden" name="service_id" value="{{ $id }}">
-                            <div class="mb-3 col-md-6">
-                                <label for="service_name" class="form-label">Service Name</label>
-                                <input class="form-control" readonly type="text" maxlength="30"
-                                    value="{{ $servicename }}" placeholder="Service Name" />
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Name</label>
+                                    <input class="form-control" readonly type="text" maxlength="70"
+                                        value="{{ $servicename }}" placeholder="Service Name" />
+                                </div>
                             </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="service_name" class="form-label">Sub Service Name</label>
-                                <input class="form-control" type="text" name="service_name" maxlength="30" autofocus
-                                    placeholder="Service Name" />
+                            <div class="col-md-6">
+                                @if (Auth::user()->user_type_id == 1)
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Sub Service Name</label>
+                                        <input class="form-control" type="text" name="service_name" maxlength="100"
+                                            autofocus placeholder="Service Name" />
+                                    </div>
+                                @endif
+                                @if (Auth::user()->user_type_id == 2)
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Sub Service Name</label>
+                                        <input readonly class="form-control" type="text" name="service_name"
+                                            maxlength="100" autofocus placeholder="Service Name" />
+                                    </div>
+                                @endif
                             </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="amount" class="form-label">Amount</label>
-                                <input class="form-control number" type="text" name="amount" maxlength="5"
-                                    placeholder="Amount" />
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                @if (Auth::user()->user_type_id == 1)
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Amount</label>
+                                        <input class="form-control number" type="text" name="amount" maxlength="5"
+                                            placeholder="Amount" />
+                                    </div>
+                                @endif
+                                @if (Auth::user()->user_type_id == 2)
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Amount</label>
+                                        <input readonly class="form-control number" type="text" name="amount"
+                                            maxlength="5" placeholder="Amount" />
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="mt-2 text-center">
-                            <button type="submit" class="btn btn-primary me-2">Save</button>
+                            @if (Auth::user()->user_type_id == 1)
+                                <button type="submit" class="btn btn-primary me-2">Save</button>
+                            @endif
                         </div>
                     </form>
                     <div class="customer-table">
                         <div class="table-responsive white-space-nowrap">
-                            <table class="table align-middle">
+                            <table id="example2" class="table align-middle">
                                 <thead class="table-dark">
                                     <tr>
                                         <th>Sl No</th>
@@ -85,15 +113,16 @@
                                             <td>{{ $ser->amount }}</td>
                                             <td style="white-space: nowrap">
                                                 <button
-                                                    onclick="edit_service('{{ $ser->id }}','{{ $ser->service_name }}','{{ $ser->status }}')"
+                                                    onclick="edit_service('{{ $ser->id }}','{{ $ser->service_name }}','{{ $ser->status }}','{{ $ser->amount }}')"
                                                     ype="button" style="font-size: small"
                                                     class="btn btn-grd btn-grd-primary px-2">Edit</button>
 
-                                                <a onclick="return confirm('Do you want to confirm delete service?')"
-                                                    href="{{ url('/dropsubservice', $ser->id) }}" type="button"
-                                                    style="font-size: small"
-                                                    class="btn btn-inverse-danger px-2">Drop</a>
-
+                                                @if (Auth::user()->user_type_id == 1)
+                                                    <a onclick="return confirm('Do you want to confirm delete service?')"
+                                                        href="{{ url('/dropsubservice', $ser->id) }}" type="button"
+                                                        style="font-size: small"
+                                                        class="btn btn-inverse-danger px-2">Drop</a>
+                                                @endif
                                             </td>
                                         </tr>
                                 </tbody>
@@ -109,7 +138,7 @@
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header border-bottom-0 py-2 bg-grd-info">
-                                                    <h5 class="modal-title">Update Service</h5>
+                                                    <h5 class="modal-title">Update SubService</h5>
                                                     <a href="javascript:;" class="primaery-menu-close"
                                                         data-bs-dismiss="modal">
                                                         <i class="material-icons-outlined">close</i>
@@ -120,32 +149,68 @@
                                                         <form class="row g-3" action="{{ url('/updatesubservice') }}"
                                                             method="post" enctype="multipart/form-data">
                                                             {{ csrf_field() }}
-                                                            <div class="col-md-6">
+                                                            <div class="row">
                                                                 <input type="hidden" name="service_id" id="serviceid" />
-                                                                <label for="editname" class="form-label">Service
-                                                                    Name</label>
-                                                                <input name="service_name" maxlength="30" type="text"
-                                                                    class="form-control" id="editname"
-                                                                    placeholder="Service Name">
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <label for="editstatus" class="form-label">Status</label>
-            `                                                      <select type="text" name="status" class="form-select"
-                                                                    id="editstatus">
-                                                                    <option>Select</option>
-                                                                    <option value="Active">Active</option>
-                                                                    <option value="Inactive">Inactive</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <div class="d-md-flex d-grid align-items-center gap-3">
-                                                                    <button type="submit"
-                                                                        class="btn btn-grd-danger px-4">Submit</button>
+                                                                <div class="col-md-6">
+                                                                    @if (Auth::user()->user_type_id == 1)
+                                                                        <div class="mb-3">
+                                                                            <label for="editname"
+                                                                                class="form-label">SubService Name</label>
+                                                                            <input name="service_name" type="text"
+                                                                                maxlength="100" class="form-control"
+                                                                                id="editname"
+                                                                                placeholder="SubService Name">
+                                                                        </div>
+                                                                        <label for="editam"
+                                                                            class="form-label">Amount</label>
+                                                                        <input name="amount" maxlength="6"
+                                                                            type="text" class="form-control number"
+                                                                            id="editam" placeholder="Amount">
+                                                                    @endif
+                                                                    @if (Auth::user()->user_type_id == 2)
+                                                                        <div class="mb-3">
+                                                                            <label for="editname"
+                                                                                class="form-label">SubService Name</label>
+                                                                            <input readonly name="service_name"
+                                                                                type="text" maxlength="100"
+                                                                                class="form-control" id="editname"
+                                                                                placeholder="SubService Name">
+                                                                        </div>
+                                                                        <label for="editam"
+                                                                            class="form-label">Amount</label>
+                                                                        <input readonly name="amount" maxlength="6"
+                                                                            type="text" class="form-control number"
+                                                                            id="editam" placeholder="Amount">
+                                                                    @endif
                                                                 </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="mb-3">
+                                                                        <label for="editstatus"
+                                                                            class="form-label">Status</label>
+                                                                        <select type="text" name="status"
+                                                                            class="form-control" maxlength="10"
+                                                                            id="editstatus" placeholder="Status">
+                                                                            <option value="">Select</option>
+                                                                            <option value="Active">Active</option>
+                                                                            <option value="Inactive">Inactive</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="mb-3 col-md-6">
+                                                                        <label>Software</label>
+                                                                        <input class="form-control" type="file"
+                                                                            name="software">
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
-                                                        </form>
                                                     </div>
                                                 </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -156,13 +221,16 @@
                 </div>
             </div>
         </div>
+        </div>
+        </div>
     </main>
 @endsection
 @push('page_scripts')
     <script>
-        function edit_service(id, service_name, status) {
+        function edit_service(id, service_name, status, amount) {
             $("#editname").val(service_name);
             $("#editstatus").val(status);
+            $("#editam").val(amount);
             $("#serviceid").val(id);
             $("#editser").modal("show");
         }

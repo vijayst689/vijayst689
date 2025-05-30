@@ -134,8 +134,26 @@ public function updatesubservice( Request $request ) {
     DB::table( 'services' )->where('id', $request->service_id)->update( [
         'service_name'  => $request->service_name,
         'status'        => $request->status,
+        'amount'        => $request->amount,
     ] );
+    if ($request->sub_service_image != null) {
+        $sub_service_image = uniqid().'.'.$request->file('sub_service_image')->extension();
+        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'sub_service' . DIRECTORY_SEPARATOR);
+        move_uploaded_file($_FILES['sub_service_image']['tmp_name'], $filepath . $sub_service_image);
 
+        $sql = "update services set sub_service_image='$sub_service_image' where id = $request->service_id";
+        DB::update(DB::raw($sql));
+    }
+
+     if ($request->software != null) {
+        $filename = $request->file('software')->getClientOriginalName();
+        $software = $filename;
+        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'software' . DIRECTORY_SEPARATOR);
+        move_uploaded_file($_FILES['software']['tmp_name'], $filepath . $software);
+
+        $sql = "update services set software='$software' where id = $request->service_id";
+        DB::update(DB::raw($sql));
+    }
     return redirect()->back()->with( 'success', 'SubService Updated Successfully' );
 }
 

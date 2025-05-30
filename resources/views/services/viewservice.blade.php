@@ -74,10 +74,9 @@
                                                         href="{{ url('/dropservice', $ser->id) }}" type="button"
                                                         style="font-size: small"
                                                         class="btn btn-inverse-danger px-2">Drop</button>
-
+                                                @endif
                                                     <a href="{{ url('/subservice', $ser->id) }}" style="font-size: small"
                                                         class="btn btn-grd btn-grd-branding px-1">Sub Service</a>
-                                                @endif
                                             </td>
                                         </tr>
                                 </tbody>
