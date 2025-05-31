@@ -62,7 +62,12 @@ public function viewservice()
     if(Auth::user()->user_type_id != 1 && Auth::user()->user_type_id != 2){
         return redirect("/dashboard");
     }
-    $allservice = DB::table('services')->where('parent_id',0)->orderBy( 'id' , 'Asc' )->get();
+    // $allservice = DB::table('services')->where('parent_id',0)->orderBy( 'id' , 'Asc' )->get();
+
+    $checkpermission = DB::table( 'user_permission' )->where('user_id' , Auth::user()->id)->where('parent_id' , 3)->get();
+    if( Auth::user()->user_type_id == 2 ){
+        $allservice = DB::table('services')->where('parent_id',0 )->where('ser_id',0 )->whereIn('id',$checkpermission->pluck('service_id'))->orderBy( 'id' , 'Asc' )->get();
+    }
     return view('services.viewservice',compact('allservice'));
 }
 
