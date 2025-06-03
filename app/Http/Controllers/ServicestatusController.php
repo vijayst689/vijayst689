@@ -5739,7 +5739,7 @@ public function caneditupdate(Request $request){
                     'created_at'                 => date("Y-m-d"),
                 ]);
 
-            } elseif($serviceid == 63){
+           } elseif($serviceid == 63){
 
                 if ($request->aadhaar_card != null) {
                     $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
@@ -5820,7 +5820,7 @@ public function caneditupdate(Request $request){
        //dd($resdata);
     }
 }
-            } elseif($serviceid == 66){
+             } elseif($serviceid == 66){
 
                 if ($request->aadhaar_card != null) {
                     $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
@@ -5835,59 +5835,42 @@ public function caneditupdate(Request $request){
                     'service_id'                 => $request ->serviceid,
                     'amount'                     => $request->amount,
                     'can_number'                 => $request->can_number,
+                    'aadhaar_number'             => $request->aadhaar_number,
                     'status'                     => 'Pending',
                     'applied_date'               => date("Y-m-d"),
                     'created_at'                 => date("Y-m-d"),
                 ]);
 
-            }  elseif($serviceid == 67){
+          }   elseif($serviceid == 208 || $serviceid == 209 || $serviceid == 210 || $serviceid == 211 || $serviceid == 226 || $serviceid == 227){
 
-                if ($request->aadhaar_card != null) {
-                    $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
-                    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR. 'aadhaar_card' . DIRECTORY_SEPARATOR);
-                    move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
-                    DB::table( 'can_edit' )->where( 'id', $request->applied_serviceid )->update( [
-                        'aadhaar_card'         => $aadhaar_card,
-                    ] );
-                }
-
-                DB::table('can_edit')->where('id', $request->applied_serviceid)->update([
-                    'service_id'                 => $request ->serviceid,
-                    'amount'                     => $request->amount,
-                    'can_number'                 => $request->can_number,
-                    'address_tamil'              => $request->address_tamil,
-                    'address_english'            => $request->address_english,
-                    'status'                     => 'Pending',
-                    'applied_date'               => date("Y-m-d"),
-                    'created_at'                 => date("Y-m-d"),
-                ]);
-            } elseif($serviceid == 208 || $serviceid == 209 || $serviceid == 210 || $serviceid == 211 || $service_id == 226 || $service_id == 227){
-
-                if ($request->aadhaar_card != null) {
-                    $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
-                    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR. 'aadhaar_card' . DIRECTORY_SEPARATOR);
-                    move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
-                    DB::table( 'can_edit' )->where( 'id', $request->applied_serviceid )->update( [
-                        'aadhaar_card'         => $aadhaar_card,
-                    ] );
-                }
-    
-                DB::table('can_edit')->where('id', $request->applied_serviceid)->update([
-    
-                    'service_id'                 => $request ->serviceid,
-                    'amount'                     => $request->amount,
-                    'can_number'                 => $request->can_number,
-                    'mobile'                     => $request->mobile,
-                    'dob'                        => $request->dob,
-                    'name_tamil'                 => $request->name_tamil,
-                    'name_english'               => $request->name_english,
-                    'status'                     => 'Pending',
-                    'applied_date'               => date("Y-m-d"),
-                    'created_at'                 => date("Y-m-d"),
-                ]);
-    
+                 if ($request->aadhaar_card != null) {
+                $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR. 'aadhaar_card' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
+                DB::table( 'can_edit' )->where( 'id', $request->applied_serviceid )->update( [
+                    'aadhaar_card'         => $aadhaar_card,
+                ] );
             }
-    
+
+            DB::table('can_edit')->where('id', $request->applied_serviceid)->update([
+
+                'service_id'                 => $request ->serviceid,
+                'amount'                     => $request->amount,
+                'can_number'                 => $request->can_number,
+                'mobile'                     => $request->mobile,
+                'dob'                        => $request->dob,
+                'name_tamil'                 => $request->name_tamil,
+                'name_english'               => $request->name_english,
+                'application_name'           => $request->application_name,
+                'certificate_name'           => $request->certificate_name,
+                'save_application_number'    => $request->save_application_number,
+                'save_certificate'           => $request->save_certificate,
+                'document'                   => $request->document,
+                'status'                     => 'Pending',
+                'applied_date'               => date("Y-m-d"),
+                'created_at'                 => date("Y-m-d"),
+            ]);
+        }
             DB::table( 'can_edit' )->where( 'id', $request->applied_serviceid )->update( [
                 'status' => $status,
             ] );
@@ -6007,7 +5990,7 @@ public function caneditupdate(Request $request){
         }else{
             $status = "Pending";
             $serviceid = $request->serviceid;
-            if($serviceid == 65){
+            if($serviceid == 65 || $serviceid == 67){
 
                 if ($request->aadhaar_card != null) {
                     $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
@@ -6018,15 +6001,18 @@ public function caneditupdate(Request $request){
                     ] );
                 }
 
-                DB::table('can_edit')->where('id', $request->applied_serviceid)->update([
-                    'service_id'                 => $request ->serviceid,
-                    'amount'                     => $request->amount,
-                    'can_number'                 => $request->can_number,
-                    'certificate_name'           => $request->certificate_name,
-                    'status'                     => 'Pending',
-                    'applied_date'               => date("Y-m-d"),
-                    'created_at'                 => date("Y-m-d"),
-                ]);
+                 DB::table('can_edit')->where('id', $request->applied_serviceid)->update([
+                'service_id'   => $request ->serviceid,
+                'amount'       => $request->amount,
+                'can_number'             => $request->can_number,
+                'certificate_name'       => $request->certificate_name,
+                'certificate_number'     => $request->certificate_number,
+                'aadhaar_number'         => $request->aadhaar_number,
+                'applicant_name'         => $request->applicant_name,
+                'status'       => 'Pending',
+                'applied_date' => date("Y-m-d"),
+                'created_at'   => date("Y-m-d"),
+            ]);
 
     $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
     $coordinator_permission = 0;
