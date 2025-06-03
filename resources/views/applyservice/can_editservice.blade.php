@@ -39,7 +39,7 @@
                                     <input type="hidden" name="service_amount" value="{{ $payment }}">
                                     <input type="hidden" name="user_id" value="{{ $customers->id }}">
 
-                                 @if ($serviceid == 208)
+                                @if ($serviceid == 208)
                         
                         <div class="mb-3 col-md-6">
                             <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
@@ -127,7 +127,7 @@
                             name="aadhaar_card" />                   
                         </div>
                          @elseif($serviceid == 226)
-                         <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-6">
                             <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
                             <input required type="text" class="form-control"
                             name="can_number" placeholder="Can Number" maxlength="30" />
@@ -145,7 +145,7 @@
                                 name="aadhaar_card" />
 
                                 <div class="" id="save_application_numberhide" style="display: none;">
-                                <label class="form-label text-danger">Enter Application Number</label>
+                                <label class="form-label text-danger">Application Number</label>
                                 <input id="save_application_number" class="form-control text-danger" type="text"
                                  name="save_application_number" placeholder="Application Number" maxlength="60">
                                 </div>
@@ -157,13 +157,13 @@
                           </div>
                                                                                                                                                                          
                          @elseif($serviceid == 227)
-                          <div class="mb-3 col-md-6">
+                           <div class="mb-3 col-md-6">
                             <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
                             <input required type="text" class="form-control"
                             name="can_number" placeholder="Can Number" maxlength="30" />
-                            <label style="color:#23e156" for="application_no" class="form-label">Application Name</label>
+                            <label style="color:#23e156" for="application_name" class="form-label">Application Name</label>
                             <input required type="text" maxlength="100" class="form-control"
-                            name="application_no" placeholder="Application Name"/>
+                            name="application_name" placeholder="Application Name"/>
                           </div>
                            <div class="mb-3 col-md-6">
                             <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front) </label>

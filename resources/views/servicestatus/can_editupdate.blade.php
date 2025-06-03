@@ -49,7 +49,7 @@
                                         }
                                     @endphp
 
-                                   @if ($serviceid == 208)
+                                                                     @if ($serviceid == 208)
                                         <div class="mb-3 col-md-6">
                                             <label for="can_number" class="form-label">Can Number</label>
                                             <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
@@ -211,15 +211,19 @@
                                             @endif
                                         </div>
                                     @elseif ($serviceid == 226)
-                                     <div class="mb-3 col-md-6">
-                                        <label for="application_no" class="form-label">Application Number</label>
-                                        <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                            type="text" value="{{ $services->application_no }}" class="form-control"
-                                            name="application_no" maxlength="30" placeholder="Application Number" />
+                                      <div class="mb-3 col-md-6">
                                         <label for="can_number" class="form-label">Can Number</label>
                                         <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
                                             type="text" value="{{ $services->can_number }}" class="form-control"
                                             name="can_number" maxlength="30" placeholder="Can Number" />
+
+                                        <label class="form-label">Documents</label>
+                                        <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required id="document"
+                                        name="document" class="form-control">
+                                        <option value="">Select Documents</option>
+                                        <option @if ($services->document == 'Yes') selected @endif value="Yes">Yes</option>
+                                        <option @if ($services->document == 'No') selected @endif value="No">No</option>
+                                    </select>
                                     </div> 
                                      <div class="mb-3 col-md-6">
                                          @if (Auth::user()->id != $apply_user_id)
@@ -239,24 +243,17 @@
                                                         href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
                                                 @endif
                                             @endif
-                                             <label class="form-label">Documents</label>
-                                        <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required id="document"
-                                        name="document" class="form-control">
-                                        <option value="">Select Documents</option>
-                                        <option @if ($services->document == 'Yes') selected @endif value="Yes">Yes</option>
-                                        <option @if ($services->document == 'No') selected @endif value="No">No</option>
-                                    </select>
                                     </div>
-                                     <div class="mb-3 col-md-6">
+                                    <div class="mb-3 col-md-6">
                                     <div class="" id="save_application_numberhide" style="display: none;">
-                                     <label for="save_application_number" class="form-label">Enter Application Number</label>
+                                        <label for="save_application_number" class="form-label">Application Number</label>
                                         <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->save_application_number }}" class="form-control" name="save_application_number"
                                             maxlength="60" placeholder="Application Number" />
                                      </div>
 
                                      <div class="" id="save_certificatehide" style="display: none;">
-                                        <label for="save_certificate" class="form-label">Applicant Mobile Number</label>
+                                        <label for="save_certificate" class="form-label">Certificate Name</label>
                                         <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->save_certificate }}" class="form-control number" name="save_certificate"
                                             maxlength="60" placeholder="Certificate Name" />
@@ -268,10 +265,10 @@
                                         <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
                                             type="text" value="{{ $services->can_number }}" class="form-control"
                                             name="can_number" maxlength="30" placeholder="Can Number" />
-                                        <label for="application_no" class="form-label">Application Name</label>
+                                        <label for="application_name" class="form-label">Application Name</label>
                                         <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                            type="text" value="{{ $services->application_no }}" class="form-control"
-                                            name="application_no" maxlength="30" placeholder="Application Name" />
+                                            type="text" value="{{ $services->application_name }}" class="form-control"
+                                            name="application_name" maxlength="30" placeholder="Application Name" />
                                     </div>      
                                     <div class="mb-3 col-md-6">
                                         @if (Auth::user()->id != $apply_user_id)
@@ -291,7 +288,7 @@
                                                         href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
                                                 @endif
                                             @endif
-                                        <label for="certificate_name" class="form-label">Application Name</label>
+                                        <label for="certificate_name" class="form-label">Certificate Name</label>
                                         <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
                                             type="text" value="{{ $services->certificate_name }}" class="form-control"
                                             name="certificate_name" maxlength="30" placeholder="Certificate Name" />

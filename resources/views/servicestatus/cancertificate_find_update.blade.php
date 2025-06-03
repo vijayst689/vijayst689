@@ -51,7 +51,7 @@
                                         }
                                     @endphp
 
-                                 @if ($serviceid == 65)
+                                  @if ($serviceid == 65)
                                         <div class="mb-3 col-md-6">
                                             <label for="applicant_name" class="form-label">Applicant Name</label>
                                             <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
@@ -60,7 +60,7 @@
                                             <label for="aadhaar_number" class="form-label">Aadhaar Number</label>
                                             <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
                                                 value="{{ $services->aadhaar_number }}" class="form-control number" name="aadhaar_number"
-                                                maxlength="15" placeholder="Aadhaar Number" />
+                                                maxlength="100" placeholder="Aadhaar Number" />
                                         </div>
                                         <div class="mb-3 col-md-6">
                                              <label for="can_number" class="form-label">Can Number</label>
@@ -112,24 +112,16 @@
                                             <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
                                                 value="{{ $services->can_number }}" class="form-control" name="can_number"
                                                 maxlength="30" placeholder="Can Number" />
-
-                                             <label for="certificate_number" class="form-label">Legal Heir Certificate Number</label>
-                                            <select @if (Auth::user()->id != $apply_user_id ) disabled @endif class="form-control"
-                                                name="certificate_number">
-                                                <option value=""> Select certificate</option>
-                                                <option @if ($services->certificate_number == 'Legal Heir Certificate') selected @endif value="Legal Heir Certificate">Legal Heir Certificate
-                                                </option>
-                        
-                                            </select>
-                                             {{-- <label for="certificate_number" class="form-label">Legal Heir Certificate Number</label>
+                                            <label for="certificate_number" class="form-label">Legal Heir Certificate Number</label>
                                             <select @if (Auth::user()->id != $apply_user_id ) disabled @endif class="form-control"
                                                 name="certificate_number">
                                                 <option value=""> Select certificate</option>
                                                 <option @if ($services->certificate_number == 'Legal Heir Certificate') selected @endif value="Legal Heir Certificate">Legal Heir Certificate 
-                                                </option> --}}
+                                                </option>
+                        
+                                            </select>
                                         </div>
                                     @endif
-
 
                                     @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
                                     <div class="mb-3 col-md-6">

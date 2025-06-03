@@ -277,7 +277,7 @@
                                                 </select>
                                         
                                     </div>
-                                    @elseif ($serviceid == 62)
+ @elseif ($serviceid == 62)
                                     <div class="mb-3 col-md-6">
                                         <label for="can_number" class="form-label">Can Number</label>
                                         <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
@@ -361,13 +361,14 @@
                                             value="{{ $services->can_number }}" class="form-control" name="can_number"
                                             maxlength="30" placeholder="Can Number" />
                                     </div>
-                                    <div class="mb-3 col-md-6">
+                                     <div class="mb-3 col-md-6">
                                         <label for="aadhaar_number" class="form-label">Aadhaar Number</label>
                                         <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
                                             value="{{ $services->aadhaar_number }}" class="form-control number" name="aadhaar_number"
                                             maxlength="12" placeholder="Aadhaar Number" />
                                     </div>
                                     {{-- <div class="mb-3 col-md-6">
+
                                         @if (Auth::user()->id != $apply_user_id )
                                             @if ($services->aadhaar_card != '')
                                                 <label>Aadhaar Card (Front & Back)</label>
