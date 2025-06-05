@@ -4577,13 +4577,17 @@ if($coordinator_permission == 1){
      $can_number = $getdata->can_number;
      $name_tamil = $getdata->name_tamil;
      $name_english = $getdata->name_english;
-     $mobile = $getdata->new_mobile_no;
+     $dob1 = $getdata->original_dob;
+     $mobile1 = $getdata->new_mobile_no;
+     $mobile = $getdata->mobile;
      $certificate_name = $getdata->certificate_name;
      $certificate_number = $getdata->certificate_number;
      $aadhaar_number = $getdata->aadhaar_number;
+     $application_name = $getdata->application_name;
+     $applicant_name = $getdata->applicant_name;
+     $dob = $getdata->dob;
      $save_application_number = $getdata->save_application_number;
      $save_certificate = $getdata->save_certificate;
-     $applicant_name = $getdata->applicant_name;
      $document = $getdata->document;
      $url = url('/');
      $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
@@ -4593,11 +4597,20 @@ if($coordinator_permission == 1){
      $ch = curl_init();
      if($serviceid == 62){
      $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&name_tamil=$name_tamil&name_english=$name_english";
+     }elseif($serviceid == 63){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&dob=$dob1";
      }elseif($serviceid == 64){
-     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&mobile=$mobile";
-     }elseif($serviceid == 65){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&mobile=$mobile1";
+     }elseif($serviceid == 65 || $serviceid == 67){
      $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&mobile=$mobile&certificate_name=$certificate_name&certificate_number=$certificate_number&aadhaar_number=$aadhaar_number&applicant_name=$applicant_name";
+     }elseif($serviceid == 66){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number";
+     }elseif($serviceid == 121){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&aadhaar_number=$aadhaar_number";
+     }elseif($serviceid == 208 || $serviceid == 209 || $serviceid == 210 || $serviceid == 211 || $serviceid == 226 || $serviceid == 227){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&name_tamil=$name_tamil&name_english=$name_english&mobile=$mobile&dob=$dob&application_name=$application_name&certificate_name=$certificate_name&save_application_number=$save_application_number&save_certificate=$save_certificate&document=$document";
      }
+
 
     //dd($post_data);
      $url1 = $RAMJIPAY_URL.'/api/get_cannumber_api';

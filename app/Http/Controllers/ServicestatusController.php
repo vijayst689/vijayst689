@@ -5679,42 +5679,77 @@ public function caneditupdate(Request $request){
                     'dist_id'                    => $request->dist_id,
                     'taluk_id'                   => $request->taluk_id,
                     'panchayath_id'              => $request->panchayath_id,
-                    'vao_area'                   => $request->vao_area,
-                    'amount'                     => $request->amount,
-                    'mobile'                     => $request->mobile,
-                    'personalized_name_english'  => $request->personalized_name_english,
-                    'personalized'               => $request->personalized,
-                    'personalized_name_tamil'    => $request->personalized_name_tamil,
-                    'relationship_1'               => $request->relationship_1,
-                    'relationship_2'               => $request->relationship_2,
-                    'relationship_3'               => $request->relationship_3,
-                    'relationship_name_tamil_1'    => $request->relationship_name_tamil_1,
-                    'relationship_name_tamil_2'    => $request->relationship_name_tamil_2,
-                    'relationship_name_tamil_3'    => $request->relationship_name_tamil_3,
-                    'relationship_name_english_1'  => $request->relationship_name_english_1,
-                    'relationship_name_english_2'  => $request->relationship_name_english_2,
-                    'relationship_name_english_3'  => $request->relationship_name_english_3,
-                    'dob'                        => $request->dob,
-                    'religion'                   => $request->religion,
-                    'education'                  => $request->education,
-                    'work'                       => $request->work,
-                    'door_no'                    => $request->door_no,
-                    'community'                  => $request->community,
-                    'caste'                      => $request->caste,
-                    'maritial_status'            => $request->maritial_status,
-                    'aadhaar_number'             => $request->aadhaar_number,
-                    'smartcard_number'           => $request->smartcard_number,
-                    'street_name_tamil'          => $request->street_name_tamil,
-                    'street_name'                => $request->street_name,
-                    'pin_code'                   => $request->pin_code,
-                    'mother_name_tamil'          => $request->mother_name_tamil,
-                    'mother_name_english'        => $request->mother_name_english,
-                    'postal_area_tamil'          => $request->postal_area_tamil,
-                    'postal_area_english'        => $request->postal_area_english,
+                   'vao_area'              => $request->vao_area,
+                'amount'                     => $request->amount,
+                'mobile'                     => $request->mobile,
+                'personalized_name_english'  => $request->personalized_name_english,
+                'personalized'               => $request->personalized,
+                'mother_name_tamil'               => $request->mother_name_tamil,
+                'mother_name_english'               => $request->mother_name_english,
+                'personalized_name_tamil'    => $request->personalized_name_tamil,
+                'relationship_1'               => $request->relationship_1,
+                'relationship_2'               => $request->relationship_2,
+                'relationship_3'               => $request->relationship_3,
+                'relationship_name_tamil_1'    => $request->relationship_name_tamil_1,
+                'relationship_name_tamil_2'    => $request->relationship_name_tamil_2,
+                'relationship_name_tamil_3'    => $request->relationship_name_tamil_3,
+                'relationship_name_english_1'  => $request->relationship_name_english_1,
+                'relationship_name_english_2'  => $request->relationship_name_english_2,
+                'relationship_name_english_3'  => $request->relationship_name_english_3,
+                'dob'                        => $request->dob,
+                'religion'                   => $request->religion,
+                'education'                  => $request->education,
+                'work'                       => $request->work,
+                'door_no'                    => $request->door_no,
+                'community'                  => $request->community,
+                'caste'                      => $request->caste,
+                'maritial_status'            => $request->maritial_status,
+                'aadhaar_number'             => $request->aadhaar_number,
+                'smartcard_number'           => $request->smartcard_number,
+                'street_name_tamil'          => $request->street_name_tamil,
+                'street_name'                => $request->street_name,
+                'pin_code'                   => $request->pin_code,
                     'status'                     => 'Pending',
                     'applied_date'               => date("Y-m-d"),
                     'created_at'                 => date("Y-m-d"),
                 ]);
+ $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    //echo$coordinator_permission;die;
+    if($coordinator_permission == 1){
+     $getdata = DB::table( 'can_edit' )->where('id',$request->applied_serviceid)->first();
+     if($getdata){
+     $aadhaar_card = $getdata->aadhaar_card;
+     $service_id = $getdata->service_id;
+     $rowid = $getdata->id;
+     $status = $getdata->status;
+     $can_number = $getdata->can_number;
+     $aadhaar_number = $getdata->aadhaar_number;
+     $url = url('/');
+     $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+
+     $ch = curl_init();
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&aadhaar_number=$aadhaar_number";
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_cannumber_api';
+        //echo $url1;die;
+
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+}
 
             }elseif($serviceid == 62){
 
@@ -5739,6 +5774,45 @@ public function caneditupdate(Request $request){
                     'created_at'                 => date("Y-m-d"),
                 ]);
 
+    $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    //echo$coordinator_permission;die;
+    if($coordinator_permission == 1){
+     $getdata = DB::table( 'can_edit' )->where('id',$request->applied_serviceid)->first();
+     if($getdata){
+         $aadhaar_card = $getdata->aadhaar_card;
+     $service_id = $getdata->service_id;
+     $rowid = $getdata->id;
+     $status = $getdata->status;
+     $can_number = $getdata->can_number;
+     $name_tamil = $getdata->name_tamil;
+     $name_english = $getdata->name_english;
+     $url = url('/');
+     $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+
+     $ch = curl_init();
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&name_tamil=$name_tamil&name_english=$name_english";
+            //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_cannumber_api';
+        // echo $url1;die;
+
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+    //    dd($resdata);
+    }
+}
+
            } elseif($serviceid == 63){
 
                 if ($request->aadhaar_card != null) {
@@ -5752,7 +5826,7 @@ public function caneditupdate(Request $request){
 
                 DB::table('can_edit')->where('id', $request->applied_serviceid)->update([
 
-                    'service_id'                 => $request ->serviceid,
+                     'service_id'                 => $request ->serviceid,
                     'amount'                     => $request->amount,
                     'can_number'                 => $request->can_number,
                     'original_dob'               => $request->original_dob,
@@ -5760,6 +5834,43 @@ public function caneditupdate(Request $request){
                     'applied_date'               => date("Y-m-d"),
                     'created_at'                 => date("Y-m-d"),
                 ]);
+$getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    //echo$coordinator_permission;die;
+    if($coordinator_permission == 1){
+     $getdata = DB::table( 'can_edit' )->where('id',$request->applied_serviceid)->first();
+     if($getdata){
+     $aadhaar_card = $getdata->aadhaar_card;
+     $service_id = $getdata->service_id;
+     $rowid = $getdata->id;
+     $status = $getdata->status;
+     $can_number = $getdata->can_number;
+     $dob1 = $getdata->original_dob;
+     $url = url('/');
+     $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+
+     $ch = curl_init();
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&dob=$dob1";
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_cannumber_api';
+        //echo $url1;die;
+
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+}
 
             } elseif($serviceid == 64){
 
@@ -5797,7 +5908,7 @@ public function caneditupdate(Request $request){
      $rowid = $getdata->id;
      $status = $getdata->status;
      $can_number = $getdata->can_number;
-     $mobile = $getdata->new_mobile_no;
+     $mobile1 = $getdata->new_mobile_no;
      $url = url('/');
      $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
      $API_KEY = env( 'API_KEY', '' );
@@ -5805,7 +5916,7 @@ public function caneditupdate(Request $request){
      $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
 
      $ch = curl_init();
-     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&mobile=$mobile";
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&mobile=$mobile1";
         //dd($post_data);
         $url1 = $RAMJIPAY_URL.'/api/update_cannumber_api';
         //echo $url1;die;
@@ -5841,6 +5952,42 @@ public function caneditupdate(Request $request){
                     'created_at'                 => date("Y-m-d"),
                 ]);
 
+    $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    //echo$coordinator_permission;die;
+    if($coordinator_permission == 1){
+     $getdata = DB::table( 'can_edit' )->where('id',$request->applied_serviceid)->first();
+     if($getdata){
+     $service_id = $getdata->service_id;
+     $rowid = $getdata->id;
+     $status = $getdata->status;
+     $can_number = $getdata->can_number;
+     $aadhaar_number = $getdata->aadhaar_number;
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+
+     $ch = curl_init();
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&aadhaar_number=$aadhaar_number";
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_cannumber_api';
+        //echo $url1;die;
+
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+}
+
+
           }   elseif($serviceid == 208 || $serviceid == 209 || $serviceid == 210 || $serviceid == 211 || $serviceid == 226 || $serviceid == 227){
 
                  if ($request->aadhaar_card != null) {
@@ -5854,7 +6001,7 @@ public function caneditupdate(Request $request){
 
             DB::table('can_edit')->where('id', $request->applied_serviceid)->update([
 
-                'service_id'                 => $request ->serviceid,
+               'service_id'                 => $request ->serviceid,
                 'amount'                     => $request->amount,
                 'can_number'                 => $request->can_number,
                 'mobile'                     => $request->mobile,
@@ -5870,6 +6017,52 @@ public function caneditupdate(Request $request){
                 'applied_date'               => date("Y-m-d"),
                 'created_at'                 => date("Y-m-d"),
             ]);
+
+    $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    //echo$coordinator_permission;die;
+    if($coordinator_permission == 1){
+     $getdata = DB::table( 'can_edit' )->where('id',$request->applied_serviceid)->first();
+     if($getdata){
+     $aadhaar_card = $getdata->aadhaar_card;
+     $service_id = $getdata->service_id;
+     $rowid = $getdata->id;
+     $status = $getdata->status;
+     $can_number = $getdata->can_number;
+     $name_tamil = $getdata->name_tamil;
+     $name_english = $getdata->name_english;
+     $mobile = $getdata->mobile;
+     $dob = $getdata->dob;
+     $application_name = $getdata->application_name;
+     $certificate_name = $getdata->certificate_name;
+     $save_application_number = $getdata->save_application_number;
+     $save_certificate = $getdata->save_certificate;
+     $document = $getdata->document;
+     $url = url('/');
+     $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+
+     $ch = curl_init();
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&can_number=$can_number&name_tamil=$name_tamil&name_english=$name_english&mobile=$mobile&dob=$dob&certificate_name=$certificate_name&application_name=$application_name&save_application_number=$save_application_number&save_certificate=$save_certificate&document=$document";
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_cannumber_api';
+        //echo $url1;die;
+
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+}
         }
             DB::table( 'can_edit' )->where( 'id', $request->applied_serviceid )->update( [
                 'status' => $status,
