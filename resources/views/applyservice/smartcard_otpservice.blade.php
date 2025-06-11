@@ -33,19 +33,16 @@
                              <form class="row g-4" action="{{ url('submitapply_smartcardotp') }}" enctype="multipart/form-data"
                                 method="post">
                                 @csrf
-                                <div class="row">
-                                    <input type="hidden" name="serviceid" value="{{ $serviceid }}">
-                                    <input type="hidden" name="amount" value="{{ $amount }}">
-                                    <input type="hidden" name="service_amount" value="{{ $payment }}">
-
-                                    <div class="mb-3 col-md-6">
+                               <div class="mb-3 col-md-6">
                                         <label for="aadhaar_card" class="form-label">Aadhaar Card</label>
                                         <input required accept="image/jpeg, image/png" type="file" class="form-control"
                                             name="aadhaar_card" />
-
-
                                     </div>
-
+                                    <div class="mb-3 col-md-6">
+                                        <label for="smart_card" class="form-label">Smart Card</label>
+                                        <input required type="file" class="form-control" name="smart_card"
+                                            placeholder="Smart Card" />
+                                    </div>
 
                                     <div class="text-center">
                                         <p id="nopayment"></p>
