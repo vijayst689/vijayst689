@@ -4507,6 +4507,7 @@ DB::table('can_edit')->where('id', $insertid)->update([
         'save_application_number'    => $request->save_application_number,
         'save_certificate'           => $request->save_certificate,
         'document'                   => $request->document,
+        'dist_id'                    => $request->dist_id,
         'status'                     => 'Pending',
         'applied_date'               => date("Y-m-d"),
         'created_at'                 => date("Y-m-d"),
