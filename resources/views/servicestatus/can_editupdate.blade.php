@@ -49,7 +49,7 @@
                                         }
                                     @endphp
 
-                                                                     @if ($serviceid == 208)
+                                      @if ($serviceid == 208)
                                         <div class="mb-3 col-md-6">
                                             <label for="can_number" class="form-label">Can Number</label>
                                             <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
@@ -87,6 +87,16 @@
                                             <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
                                                 value="{{ $services->mobile }}" class="form-control" name="mobile"
                                                 maxlength="10" placeholder="Mobile Number" />
+
+                                            <label style="color:#23e156" for="dist_id" class="form-label">District</label>
+                                    <select @if (Auth::user()->id != $apply_user_id ) disabled @endif name="dist_id"
+                                        id="dist_id" class="form-control">
+                                            <option value="">Select District</option>
+                                            @foreach ($districts as $d)
+                                                <option @if ($d->id == $services->dist_id) selected @endif
+                                                    value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                            @endforeach
+                                        </select>
                                         </div>
                                     @elseif ($serviceid == 209)
                                         <div class="mb-3 col-md-6">
@@ -128,6 +138,16 @@
                                             <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
                                                 type="text" value="{{ $services->dob }}" class="form-control"
                                                 name="dob" maxlength="8" placeholder="ddmmyyyy" />
+
+                                                <label style="color:#23e156" for="dist_id" class="form-label">District</label>
+                                    <select @if (Auth::user()->id != $apply_user_id ) disabled @endif name="dist_id"
+                                        id="dist_id" class="form-control">
+                                            <option value="">Select District</option>
+                                            @foreach ($districts as $d)
+                                                <option @if ($d->id == $services->dist_id) selected @endif
+                                                    value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                            @endforeach
+                                        </select>
                                             
                                         </div>
                                     @elseif ($serviceid == 210)
@@ -141,6 +161,15 @@
                                                 type="text" value="{{ $services->dob }}" class="form-control"
                                                 name="dob" maxlength="8" placeholder="ddmmyyyy" />
                                             
+                                            <label style="color:#23e156" for="dist_id" class="form-label">District</label>
+                                    <select @if (Auth::user()->id != $apply_user_id ) disabled @endif name="dist_id"
+                                        id="dist_id" class="form-control">
+                                            <option value="">Select District</option>
+                                            @foreach ($districts as $d)
+                                                <option @if ($d->id == $services->dist_id) selected @endif
+                                                    value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                            @endforeach
+                                        </select>
                                         </div>
                                         <div class="mb-3 col-md-6">
                                             <label for="mobile" class="form-label">Mobile Number</label>
@@ -180,6 +209,16 @@
                                             <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
                                                 type="text" value="{{ $services->dob }}" class="form-control"
                                                 name="dob" maxlength="8" placeholder="ddmmyyyy" />
+
+                                            <label style="color:#23e156" for="dist_id" class="form-label">District</label>
+                                            <select @if (Auth::user()->id != $apply_user_id ) disabled @endif name="dist_id"
+                                            id="dist_id" class="form-control">
+                                            <option value="">Select District</option>
+                                            @foreach ($districts as $d)
+                                                <option @if ($d->id == $services->dist_id) selected @endif
+                                                    value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                            @endforeach
+                                        </select>
                                         </div>
                                         <div class="mb-3 col-md-6">
                                            

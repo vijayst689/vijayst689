@@ -277,22 +277,32 @@
                                                 </select>
                                         
                                     </div>
- @elseif ($serviceid == 62)
+                  @elseif ($serviceid == 62)
                                     <div class="mb-3 col-md-6">
                                         <label for="can_number" class="form-label">Can Number</label>
                                         <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->can_number }}" class="form-control" name="can_number"
                                             maxlength="30" placeholder="Can Number" />
-                                        <label for="name_english" class="form-label">Name In English</label>
-                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
-                                            value="{{ $services->name_english }}" class="form-control" name="name_english"
-                                            maxlength="100" placeholder="Name In English" />
-                                    </div>
-                                    <div class="mb-3 col-md-6">
                                         <label for="name_tamil" class="form-label">பெயர் தமிழில்</label>
                                         <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
                                             value="{{ $services->name_tamil }}" class="form-control" name="name_tamil"
                                             maxlength="100" placeholder="பெயர் தமிழில்" />
+                                             <label style="color:#23e156" for="dist_id" class="form-label">District</label>
+                                    <select @if (Auth::user()->id != $apply_user_id ) disabled @endif name="dist_id"
+                                        id="dist_id" class="form-control">
+                                            <option value="">Select District</option>
+                                            @foreach ($districts as $d)
+                                                <option @if ($d->id == $services->dist_id) selected @endif
+                                                    value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                    <label for="name_english" class="form-label">Name In English</label>
+                                        <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text"
+                                            value="{{ $services->name_english }}" class="form-control" name="name_english"
+                                            maxlength="100" placeholder="Name In English" />
+                                    
                                        
                                         @if (Auth::user()->id != $apply_user_id )
                                             @if ($services->aadhaar_card != '')
@@ -342,6 +352,15 @@
                                             @endif
                                         @endif
 
+                                        <label style="color:#23e156" for="dist_id" class="form-label">District</label>
+                                    <select @if (Auth::user()->id != $apply_user_id ) disabled @endif name="dist_id"
+                                        id="dist_id" class="form-control">
+                                            <option value="">Select District</option>
+                                            @foreach ($districts as $d)
+                                                <option @if ($d->id == $services->dist_id) selected @endif
+                                                    value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     @elseif ($serviceid == 64)
                                     <div class="mb-3 col-md-6">

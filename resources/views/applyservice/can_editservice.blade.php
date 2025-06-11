@@ -39,93 +39,138 @@
                                     <input type="hidden" name="service_amount" value="{{ $payment }}">
                                     <input type="hidden" name="user_id" value="{{ $customers->id }}">
 
-                                @if ($serviceid == 208)
-                        
-                        <div class="mb-3 col-md-6">
-                            <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
-                            <input required type="text" class="form-control"
-                            name="can_number" placeholder="Can Number" maxlength="30" />
-                             <label style="color:#23e156" for="name_tamil" class="form-label">பெயர் தமிழில்</label>
-                            <input required type="text" maxlength="100" class="form-control"
-                            name="name_tamil" placeholder="பெயர் தமிழில்"/>
-                             <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front) </label>
-                            <input required accept="image/jpeg, image/png"  type="file" class="form-control"
-                            name="aadhaar_card" />
-                        </div>
-                        <div class="mb-3 col-md-6"> 
-                            <label style="color:#23e156" for="name_english" class="form-label">Name In English</label>
-                            <input required type="text" maxlength="100" class="form-control"
-                            name="name_english" placeholder="Name In English"/> 
-                            <label style="color:#23e156" for="mobile" class="form-label number">Mobile Number</label>
-                            <input required type="text" class="form-control"
-                            name="mobile" placeholder="Mobile Number" maxlength="10" />                   
-                        </div>
+                              @if ($serviceid == 208)
+                                        <div class="mb-3 col-md-6">
+                                            <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
+                                            <input required type="text" class="form-control" name="can_number"
+                                                placeholder="Can Number" maxlength="30" />
+                                            <label style="color:#23e156" for="name_tamil" class="form-label">பெயர்
+                                                தமிழில்</label>
+                                            <input required type="text" maxlength="100" class="form-control" name="name_tamil"
+                                                placeholder="பெயர் தமிழில்" />
+                                            <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front)
+                                            </label>
+                                            <input required accept="image/jpeg, image/png" type="file" class="form-control"
+                                                name="aadhaar_card" />
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label style="color:#23e156" for="name_english" class="form-label">Name In
+                                                English</label>
+                                            <input required type="text" maxlength="100" class="form-control" name="name_english"
+                                                placeholder="Name In English" />
+                                            <label style="color:#23e156" for="mobile" class="form-label number">Mobile
+                                                Number</label>
+                                            <input required type="text" class="form-control" name="mobile"
+                                                placeholder="Mobile Number" maxlength="10" />
 
-                        @elseif($serviceid == 209)
-                        <div class="mb-3 col-md-6">
-                            <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
-                            <input required type="text" class="form-control"
-                            name="can_number" placeholder="Can Number" maxlength="30" />
-                            <label style="color:#23e156" for="name_tamil" class="form-label">பெயர் தமிழில்</label>
-                            <input required type="text" maxlength="100" class="form-control"
-                            name="name_tamil" placeholder="பெயர் தமிழில்"/>
-                            <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front) </label>
-                            <input required accept="image/jpeg, image/png"  type="file" class="form-control"
-                            name="aadhaar_card" />
-                        </div>
-                        <div class="mb-3 col-md-6">  
-                            
-                            <label style="color:#23e156" for="name_english" class="form-label">Name In English</label>
-                            <input required type="text" maxlength="100" class="form-control"
-                            name="name_english" placeholder="Name In English"/>
-                            <label style="color:#23e156" for="dob" class="form-label">Date Of Birth [05041997]</label>
-                            <input required type="text" class="form-control"
-                            name="dob" placeholder="ddmmyyyy" maxlength="8" />    
-                                               
-                        </div>
-                        @elseif($serviceid == 210)
-                        <div class="mb-3 col-md-6">
-                            <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
-                            <input required type="text" class="form-control"
-                            name="can_number" placeholder="Can Number" maxlength="30" />
-                            <label style="color:#23e156" for="dob" class="form-label">Date Of Birth</label>
-                            <input required type="text" class="form-control"
-                            name="dob" placeholder="ddmmyyyy" maxlength="8" />
-                           
-                        </div>
-                        <div class="mb-3 col-md-6">  
-                             <label style="color:#23e156" for="mobile" class="form-label number">Mobile Number</label>
-                            <input required type="text" class="form-control"
-                            name="mobile" placeholder="Mobile Number" maxlength="10" />
-                              
-                            <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front) </label>
-                            <input required accept="image/jpeg, image/png"  type="file" class="form-control"
-                            name="aadhaar_card" />                   
-                        </div>
-                        @elseif($serviceid == 211)
-                        <div class="mb-3 col-md-6">
-                            <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
-                            <input required type="text" class="form-control"
-                            name="can_number" placeholder="Can Number" maxlength="30" />
-                             <label style="color:#23e156" for="name_tamil" class="form-label">பெயர் தமிழில்</label>
-                            <input required type="text" maxlength="100" class="form-control"
-                            name="name_tamil" placeholder="பெயர் தமிழில்"/>
-                            <label style="color:#23e156" for="dob" class="form-label">Date Of Birth [05041997]</label>
-                            <input required type="text" class="form-control"
-                            name="dob" placeholder="ddmmyyyy" maxlength="8" /> 
-                        </div>
-                        <div class="mb-3 col-md-6">  
-                           
-                            <label style="color:#23e156" for="name_english" class="form-label">Name In English</label>
-                            <input required type="text" maxlength="100" class="form-control"
-                            name="name_english" placeholder="Name In English"/>  
-                             <label style="color:#23e156" for="mobile" class="form-label number">Mobile Number</label>
-                            <input required type="text" class="form-control"
-                            name="mobile" placeholder="Mobile Number" maxlength="10" />  
-                            <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front) </label>
-                            <input required accept="image/jpeg, image/png"  type="file" class="form-control"
-                            name="aadhaar_card" />                   
-                        </div>
+                                            <label style="color:#23e156" for="dist_id" class="form-label">District</label>
+                                            <select name="dist_id" id="dist_id" class="form-control">
+                                                <option value="">Select District</option>
+                                                @foreach ($districts as $d)
+                                                    <option value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                    @elseif($serviceid == 209)
+                                        <div class="mb-3 col-md-6">
+                                            <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
+                                            <input required type="text" class="form-control" name="can_number"
+                                                placeholder="Can Number" maxlength="30" />
+                                            <label style="color:#23e156" for="name_tamil" class="form-label">பெயர்
+                                                தமிழில்</label>
+                                            <input required type="text" maxlength="100" class="form-control" name="name_tamil"
+                                                placeholder="பெயர் தமிழில்" />
+                                            <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front)
+                                            </label>
+                                            <input required accept="image/jpeg, image/png" type="file" class="form-control"
+                                                name="aadhaar_card" />
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+
+                                            <label style="color:#23e156" for="name_english" class="form-label">Name In
+                                                English</label>
+                                            <input required type="text" maxlength="100" class="form-control" name="name_english"
+                                                placeholder="Name In English" />
+                                            <label style="color:#23e156" for="dob" class="form-label">Date Of Birth
+                                                [05041997]</label>
+                                            <input required type="text" class="form-control" name="dob" placeholder="ddmmyyyy"
+                                                maxlength="8" />
+
+                                            <label style="color:#23e156" for="dist_id" class="form-label">District</label>
+                                            <select name="dist_id" id="dist_id" class="form-control">
+                                                <option value="">Select District</option>
+                                                @foreach ($districts as $d)
+                                                    <option value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                                @endforeach
+                                            </select>
+
+                                        </div>
+                                    @elseif($serviceid == 210)
+                                        <div class="mb-3 col-md-6">
+                                            <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
+                                            <input required type="text" class="form-control" name="can_number"
+                                                placeholder="Can Number" maxlength="30" />
+                                            <label style="color:#23e156" for="dob" class="form-label">Date Of Birth</label>
+                                            <input required type="text" class="form-control" name="dob" placeholder="ddmmyyyy"
+                                                maxlength="8" />
+
+                                            <label style="color:#23e156" for="dist_id" class="form-label">District</label>
+                                            <select name="dist_id" id="dist_id" class="form-control">
+                                                <option value="">Select District</option>
+                                                @foreach ($districts as $d)
+                                                    <option value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label style="color:#23e156" for="mobile" class="form-label number">Mobile
+                                                Number</label>
+                                            <input required type="text" class="form-control" name="mobile"
+                                                placeholder="Mobile Number" maxlength="10" />
+
+                                            <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front)
+                                            </label>
+                                            <input required accept="image/jpeg, image/png" type="file" class="form-control"
+                                                name="aadhaar_card" />
+                                        </div>
+                                    @elseif($serviceid == 211)
+                                        <div class="mb-3 col-md-6">
+                                            <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>
+                                            <input required type="text" class="form-control" name="can_number"
+                                                placeholder="Can Number" maxlength="30" />
+                                            <label style="color:#23e156" for="name_tamil" class="form-label">பெயர்
+                                                தமிழில்</label>
+                                            <input required type="text" maxlength="100" class="form-control" name="name_tamil"
+                                                placeholder="பெயர் தமிழில்" />
+                                            <label style="color:#23e156" for="dob" class="form-label">Date Of Birth
+                                                [05041997]</label>
+                                            <input required type="text" class="form-control" name="dob" placeholder="ddmmyyyy"
+                                                maxlength="8" />
+
+                                            <label style="color:#23e156" for="dist_id" class="form-label">District</label>
+                                            <select name="dist_id" id="dist_id" class="form-control">
+                                                <option value="">Select District</option>
+                                                @foreach ($districts as $d)
+                                                    <option value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+
+                                            <label style="color:#23e156" for="name_english" class="form-label">Name In
+                                                English</label>
+                                            <input required type="text" maxlength="100" class="form-control" name="name_english"
+                                                placeholder="Name In English" />
+                                            <label style="color:#23e156" for="mobile" class="form-label number">Mobile
+                                                Number</label>
+                                            <input required type="text" class="form-control" name="mobile"
+                                                placeholder="Mobile Number" maxlength="10" />
+                                            <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front)
+                                            </label>
+                                            <input required accept="image/jpeg, image/png" type="file" class="form-control"
+                                                name="aadhaar_card" />
+                                        </div>
                          @elseif($serviceid == 226)
                         <div class="mb-3 col-md-6">
                             <label style="color:#23e156" for="can_number" class="form-label">Can Number</label>

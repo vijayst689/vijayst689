@@ -181,7 +181,7 @@
                             name="vao_area" placeholder="கிராம நிர்வாக பகுதி"/>
                             
                         </div>
-@elseif($serviceid == 62)
+                            @elseif($serviceid == 62)
                                         <div class="mb-3 col-md-6">
                                             <label style="color:#23e156" for="can_number" class="form-label"> Can
                                                 Number</label>
@@ -191,6 +191,15 @@
                                                 தமிழில்</label>
                                             <input required type="text" maxlength="100" class="form-control"
                                                 name="name_tamil" placeholder="பெயர் தமிழில்" />
+
+                                             <label style="color:#23e156" for="dist_id"
+                                                class="form-label">District</label>
+                                            <select name="dist_id" id="dist_id" class="form-control">
+                                                <option value="">Select District</option>
+                                                @foreach ($districts as $d)
+                                                    <option value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="mb-3 col-md-6">
                                             <label style="color:#23e156" for="name_english" class="form-label">Name In
@@ -218,6 +227,15 @@
                                                 (Front)</label>
                                             <input required accept="image/jpeg, image/png" type="file"
                                                 class="form-control" name="aadhaar_card" />
+
+                                             <label style="color:#23e156" for="dist_id"
+                                                class="form-label">District</label>
+                                            <select name="dist_id" id="dist_id" class="form-control">
+                                                <option value="">Select District</option>
+                                                @foreach ($districts as $d)
+                                                    <option value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     @elseif($serviceid == 64)
                                         <div class="mb-3 col-md-6">
