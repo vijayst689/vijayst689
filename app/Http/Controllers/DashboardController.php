@@ -176,7 +176,11 @@ class DashboardController extends Controller
             ->where('status','Pending')
             ->orderBy('id', 'Desc')->count();
 
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+            $smartcard_otp  = DB::table('smartcard_otp ')
+            ->where('status','Pending')
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
 
             $service = DB::table('msme')
             ->where('status','Processing')
@@ -259,6 +263,13 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+            
+            $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Processing')
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
 
             $service = DB::table('msme')
             ->where('status','Resubmit')
@@ -341,6 +352,14 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+             
+
+            $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
 
             $service = DB::table('msme')
             ->where('status','Rejected')
@@ -423,6 +442,13 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+            
+            $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
 
             $service = DB::table('msme')
             ->where('status','Approved')
@@ -505,6 +531,13 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+ 
+             $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Approved')
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
 
         }elseif(Auth::user()->user_type_id == 3){
 
@@ -609,6 +642,14 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+            
+           $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Pending')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
 
             $service = DB::table('msme')
             ->where('status','Processing')
@@ -711,6 +752,14 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+             
+             $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Processing')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
 
             $service = DB::table('msme')
             ->where('status','Resubmit')
@@ -813,6 +862,14 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+             
+            $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Resubmit')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
 
             $service = DB::table('msme')
             ->where('status','Rejected')
@@ -916,6 +973,15 @@ class DashboardController extends Controller
 
             $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
 
+            
+           $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
+
             $service = DB::table('msme')
             ->where('status','Approved')
             ->where('distributor_id',Auth::user()->id)
@@ -1017,6 +1083,13 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+
+           $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
 
 
 
@@ -1123,6 +1196,14 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+             
+            $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
 
             $service = DB::table('msme')
             ->where('status','Processing')
@@ -1225,6 +1306,14 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+            
+            $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Processing')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
 
             $service = DB::table('msme')
             ->where('status','Resubmit')
@@ -1327,6 +1416,14 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+            
+           $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Resubmit')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
 
             $service = DB::table('msme')
             ->where('status','Rejected')
@@ -1429,6 +1526,14 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+            
+            $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Rejected')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
 
             $service = DB::table('msme')
             ->where('status','Approved')
@@ -1531,6 +1636,13 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+
+            $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Approved')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
 
 
 
@@ -1637,6 +1749,14 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard;
+             
+             $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Pending')
+            ->where('user_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
 
             $service = DB::table('msme')
             ->where('status','Processing')
@@ -1739,6 +1859,14 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+            
+           $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Processing')
+            ->where('user_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+          $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
 
             $service = DB::table('msme')
             ->where('status','Resubmit')
@@ -1842,6 +1970,14 @@ class DashboardController extends Controller
 
             $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
 
+            $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Resubmit')
+            ->where('user_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
+            
             $service = DB::table('msme')
             ->where('status','Rejected')
             ->where('user_id',Auth::user()->id)
@@ -1944,6 +2080,14 @@ class DashboardController extends Controller
 
             $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
 
+            $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Rejected')
+            ->where('user_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
+
             $service = DB::table('msme')
             ->where('status','Approved')
             ->where('user_id',Auth::user()->id)
@@ -2045,6 +2189,14 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+
+
+           $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Approved')
+            ->where('user_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
 
 
         }
