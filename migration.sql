@@ -1798,3 +1798,49 @@ alter table can_edit add document varchar(20) Default NULL;
 alter table can_edit add save_application_number varchar(20) Default NULL;
 alter table can_edit add save_certificate varchar(20) Default NULL;
 
+//11-06-2025
+
+CREATE TABLE smartcard_otp (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  service_id int(11) DEFAULT 0,
+  user_id int(11) DEFAULT 0,
+  retailer_id int(11) DEFAULT 0,
+  distributor_id int(11) DEFAULT 0,
+  
+  admin_id int(11) DEFAULT 0,
+  amount decimal(10,2) DEFAULT 0.00,
+  aadhaar_card varchar(20) DEFAULT NULL,
+  acknowledgement varchar(20) DEFAULT NULL,
+  application_no varchar(50) DEFAULT NULL,
+  application varchar(50) DEFAULT NULL,
+  lects varchar(50) DEFAULT NULL,
+  selects varchar(50) DEFAULT NULL,
+  certificate varchar(20) DEFAULT NULL,
+  status varchar(20) DEFAULT NULL,
+  remarks varchar(100) DEFAULT NULL,
+  applied_date varchar(10) DEFAULT NULL,
+  completed_date varchar(10) DEFAULT NULL,
+  created_at varchar(10) DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+alter table smartcard_otp add smartcard varchar(20) DEFAULT NULL after application_no;
+
+alter table smartcard add add_member varchar(50) DEFAULT NULL after aadhaar_card;
+alter table smartcard add aadhaar_card2 varchar(20) DEFAULT NULL after add_member;
+alter table smartcard add aadhaar_card3 varchar(20) DEFAULT NULL after aadhaar_card2;
+alter table smartcard add aadhaar_card4 varchar(20) DEFAULT NULL after aadhaar_card3;
+alter table smartcard add aadhaar_card5 varchar(20) DEFAULT NULL after aadhaar_card4;
+
+alter table smartcard add member varchar(50) DEFAULT NULL after aadhaar_card;
+alter table smartcard add aadhaar varchar(50) DEFAULT NULL after member;
+alter table smartcard add aadhaar2 varchar(20) DEFAULT NULL after aadhaar;
+alter table smartcard add aadhaar3 varchar(20) DEFAULT NULL after aadhaar2;
+alter table smartcard add aadhaar4 varchar(20) DEFAULT NULL after aadhaar3;
+alter table smartcard add aadhaar5 varchar(20) DEFAULT NULL after aadhaar4;
+
+alter table smartcard add documents varchar(20) DEFAULT NULL after aadhaar3;
+alter table smartcard add patta varchar(20) DEFAULT NULL after documents;
+alter table smartcard add rental_agreement varchar(20) DEFAULT NULL after patta;
+alter table smartcard add already_applied_application text DEFAULT NULL after rental_agreement;
+alter table smartcard add family_head_aadhaar text DEFAULT NULL after family_head_photo;
