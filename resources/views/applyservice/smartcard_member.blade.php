@@ -37,8 +37,9 @@
                                     <input type="hidden" name="serviceid" value="{{ $serviceid }}">
                                     <input type="hidden" name="amount" value="{{ $amount }}">
                                     <input type="hidden" name="service_amount" value="{{ $payment }}">
+                                    <input type="hidden" name="user_id" value="{{ $customers->id }}">
 
-                                   @if ($serviceid == 219)
+                                    @if ($serviceid == 223)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select required name="dist_id" id="dist_id" class="form-control">
@@ -126,7 +127,7 @@
                                                     type="file" name="gas_cylinder_receipt">
                                             </div>
                                         </div>
-                                    @elseif($serviceid == 235)
+                                    @elseif($serviceid == 227)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select required name="dist_id" id="dist_id" class="form-control">
@@ -187,26 +188,26 @@
                                     @endif
                                 </div>
                         </div>
-                                    <div class="text-center">
-                                        <p id="nopayment"></p>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="col-12">
-                                            <div class="mb-0">
-                                                <button id="save" type="submit" class="btn btn-primary">Apply</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                            </form>
+                        <div class="text-center">
+                            <p id="nopayment"></p>
                         </div>
+                        <div class="text-center">
+                            <div class="col-12">
+                                <div class="mb-0">
+                                    <button id="save" type="submit" class="btn btn-primary">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
     </main>
 @endsection
 @push('page_scripts')
-   <script>
+    <script>
         $(function() {
             var wallet = "{{ Auth::user()->wallet }}";
             var amount = "{{ $payment }}";
@@ -459,5 +460,5 @@
 
             }
         });
-    </script>
+    </script> 
 @endpush

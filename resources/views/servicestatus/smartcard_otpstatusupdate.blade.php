@@ -29,7 +29,7 @@
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                         <div class="card-body p-4">
                             <h5 class="card-title">{{ $servicename }}</h5>
-                              <form action="{{ url('/smartcardotp_update') }}" id="formAccountSettings" method="POST"
+                            <form action="{{ url('/smartcardotp_update') }}" id="formAccountSettings" method="POST"
                                 enctype="multipart/form-data">
                                 {{ csrf_field() }}
 
@@ -68,68 +68,86 @@
                                             @endif
                                         @endif
                                     </div>
+                                    <div class="mb-3 col-md-6">
+                                        @if (Auth::user()->id != $apply_user_id)
+                                            @if ($services->smart_card != '')
+                                                <label>Smart Card</label>
+                                                <br><a target="_blank"
+                                                    href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
+                                                    class="btn btn-primary me-2">View</a><br>
+                                            @endif
+                                        @else
+                                            <label>Smart Card</label>
+                                            <input @if ($services->smart_card == '') required @endif class="form-control"
+                                                type="file" accept="image/jpeg, image/png" name="smart_card">
+                                            @if ($services->smart_card != '')
+                                                <a target="_blank"
+                                                    href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
+                                            @endif
+                                        @endif
+                                    </div>
 
                                     @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                    <div class="mb-3 col-md-6">
-                                        <label for="service_name" class="form-label">Service Status</label>
-                                        <select class="form-control" name="status" id="service_status">
-                                            <option value="">Select</option>
-                                            <option @if ($services->status == 'Pending') selected @endif
-                                                value="Pending">Pending</option>
-                                            <option @if ($services->status == 'Resubmit') selected @endif
-                                                value="Resubmit">Resubmit</option>
-                                            <option @if ($services->status == 'Processing') selected @endif
-                                                value="Processing">Processing</option>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="service_name" class="form-label">Service Status</label>
+                                            <select class="form-control" name="status" id="service_status">
+                                                <option value="">Select</option>
+                                                <option @if ($services->status == 'Pending') selected @endif value="Pending">
+                                                    Pending</option>
+                                                <option @if ($services->status == 'Resubmit') selected @endif value="Resubmit">
+                                                    Resubmit</option>
+                                                <option @if ($services->status == 'Processing') selected @endif
+                                                    value="Processing">Processing</option>
                                                 @if ($services->status != 'Approved')
-                                            <option @if ($services->status == 'Rejected') selected @endif value="Rejected">
-                                            Rejected</option>
-                                            @endif
-                                                <option @if ($services->status == 'Approved') selected @endif
-                                                    value="Approved">Approved</option>
+                                                    <option @if ($services->status == 'Rejected') selected @endif
+                                                        value="Rejected">
+                                                        Rejected</option>
+                                                @endif
+                                                <option @if ($services->status == 'Approved') selected @endif value="Approved">
+                                                    Approved</option>
                                             </select>
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
-                                        <label for="remarks" class="form-label">Remarks</label>
-                                        <input value="{{ $services->remarks }}" class="form-control" type="text"
-                                            name="remarks" maxlength="100" id="remarks" placeholder="Remarks" />
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="selecthide" style="display :none;">
-                                        <label for="select" class="form-label">Select</label>
-                                        <select class="form-control" name="selects" id="select">
-                                            <option>select</option>
-                                            <option @if ($services->selects == 'Text') selected @endif
-                                                value = "Text">Text</option>
-                                            <option @if ($services->selects == 'File') selected @endif
-                                                value = "File">File</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
-                                        <label for="acknowledgement" class="form-label">Acknowledgement</label>
-                                        <input class="form-control" type="file" name="acknowledgement"
-                                            id="acknowledgement" />
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
-                                        <label for="application_no" class="form-label">Application No</label>
-                                        <input value="{{ $services->application_no }}" class="form-control"
-                                            type="text" maxlength="20" name="application_no"
-                                            id="application_no" />
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="selectshide" style="display :none;">
-                                        <label for="selects" class="form-label">Select</label>
-                                        <select class="form-control" name="lects" id="selects">
-                                            <option>select</option>
-                                            <option @if ($services->lects == 'Text') selected @endif
-                                                value = "Text">Text</option>
-                                            <option @if ($services->lects == 'File') selected @endif
-                                                value = "File">File</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="applicationhide" style="display :none;">
-                                        <label for="application" class="form-label">Application</label>
-                                        <input value="{{ $services->application }}" class="form-control"
-                                            type="text" maxlength="150" name="application"
-                                            id="application" />
-                                    </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
+                                            <label for="remarks" class="form-label">Remarks</label>
+                                            <input value="{{ $services->remarks }}" class="form-control" type="text"
+                                                name="remarks" maxlength="100" id="remarks" placeholder="Remarks" />
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="selecthide" style="display :none;">
+                                            <label for="select" class="form-label">Select</label>
+                                            <select class="form-control" name="selects" id="select">
+                                                <option>select</option>
+                                                <option @if ($services->selects == 'Text') selected @endif value = "Text">
+                                                    Text</option>
+                                                <option @if ($services->selects == 'File') selected @endif value = "File">
+                                                    File</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
+                                            <label for="acknowledgement" class="form-label">Acknowledgement</label>
+                                            <input class="form-control" type="file" name="acknowledgement"
+                                                id="acknowledgement" />
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
+                                            <label for="application_no" class="form-label">Application No</label>
+                                            <input value="{{ $services->application_no }}" class="form-control"
+                                                type="text" maxlength="20" name="application_no"
+                                                id="application_no" />
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="selectshide" style="display :none;">
+                                            <label for="selects" class="form-label">Select</label>
+                                            <select class="form-control" name="lects" id="selects">
+                                                <option>select</option>
+                                                <option @if ($services->lects == 'Text') selected @endif value = "Text">
+                                                    Text</option>
+                                                <option @if ($services->lects == 'File') selected @endif value = "File">
+                                                    File</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="applicationhide" style="display :none;">
+                                            <label for="application" class="form-label">Application</label>
+                                            <input value="{{ $services->application }}" class="form-control"
+                                                type="text" maxlength="150" name="application" id="application" />
+                                        </div>
                                         <div class="mb-3 col-md-6" id="certhide" style="display :none;">
                                             <label for="certificate" class="form-label">Certificate</label>
                                             <input class="form-control" type="file" name="certificate"
@@ -169,47 +187,47 @@
     </main>
 @endsection
 @push('page_scripts')
-<script>
-    $(function() {
-        var status = "{{ $services->status }}";
-        var acknowledgement = "{{ $services->acknowledgement }}";
-        var certificate = "{{ $services->certificate }}";
-        var selects = "{{ $services->selects }}";
-        var lects = "{{ $services->lects }}";
-        
-        if (status == "Resubmit") {
-            $('#remarkshide').show("slow");
-            $('#remarks').prop("required", true);
-        } else if (status == "Processing") {
-        if(selects == "Text"){
-            $('#applicationnohide').show("slow");
-        }
-        if(selects == "File"){
-            $('#acknowledgementhide').show("slow");
-            if (acknowledgement == "") {
-                $('#acknowledgement').prop("required", true);
+    <script>
+        $(function() {
+            var status = "{{ $services->status }}";
+            var acknowledgement = "{{ $services->acknowledgement }}";
+            var certificate = "{{ $services->certificate }}";
+            var selects = "{{ $services->selects }}";
+            var lects = "{{ $services->lects }}";
+
+            if (status == "Resubmit") {
+                $('#remarkshide').show("slow");
+                $('#remarks').prop("required", true);
+            } else if (status == "Processing") {
+                if (selects == "Text") {
+                    $('#applicationnohide').show("slow");
+                }
+                if (selects == "File") {
+                    $('#acknowledgementhide').show("slow");
+                    if (acknowledgement == "") {
+                        $('#acknowledgement').prop("required", true);
+                    }
+                }
+                $('#selecthide').show("slow");
+
+
+            } else if (status == "Approved") {
+                if (lects == "Text") {
+                    $('#applicationhide').show("slow");
+                }
+                if (lects == "File") {
+                    $('#certhide').show("slow");
+                    if (certificate == "") {
+                        $('#certificate').prop("required", true);
+                    }
+                }
+                $('#selectshide').show("slow")
             }
-        }
-            $('#selecthide').show("slow");
+        });
 
 
-        } else if (status == "Approved") {
-        if(lects == "Text"){
-            $('#applicationhide').show("slow");
-        }
-        if(lects == "File"){
-            $('#certhide').show("slow");
-            if (certificate == "") {
-                $('#certificate').prop("required", true);
-            }
-        }
-            $('#selectshide').show("slow")
-    }
-    });
 
-
-   
-    $('#service_status').change(function() {
+        $('#service_status').change(function() {
             if ($('#service_status').val() == 'Resubmit') {
                 $('#acknowledgementhide').hide("slow");
                 $('#acknowledgement').prop("required", false);
@@ -265,43 +283,42 @@
             }
         });
 
-        $('#select').change(function(){
-            if($('#select').val() == 'Text') {
+        $('#select').change(function() {
+            if ($('#select').val() == 'Text') {
                 $('#applicationnohide').show("slow");
-                $('#application_no').prop("required", true); 
+                $('#application_no').prop("required", true);
                 $('#acknowledgementhide').hide("slow");
                 $('#acknowledgement').prop("required", false);
-            }else if($('#select').val() == 'File'){
+            } else if ($('#select').val() == 'File') {
                 $('#acknowledgementhide').show("slow");
                 $('#acknowledgement').prop("required", false);
-                $('#applicationnohide').hide("slow"); 
+                $('#applicationnohide').hide("slow");
                 $('#application_no').prop("required", false);
-            }else{
+            } else {
                 $('#applicationnohide').hide("slow");
                 $('#application_no').prop("required", false);
                 $('#acknowledgementhide').hide("slow");
                 $('#acknowledgement').prop("required", false);
-            }  
+            }
         });
 
-        $('#selects').change(function(){
-            if($('#selects').val() == 'Text') {
+        $('#selects').change(function() {
+            if ($('#selects').val() == 'Text') {
                 $('#applicationhide').show("slow");
-                $('#application').prop("required", true); 
+                $('#application').prop("required", true);
                 $('#certhide').hide("slow");
                 $('#certificate').prop("required", false);
-            }else if($('#selects').val() == 'File'){
+            } else if ($('#selects').val() == 'File') {
                 $('#certhide').show("slow");
                 $('#certificate').prop("required", false);
-                $('#applicationhide').hide("slow"); 
+                $('#applicationhide').hide("slow");
                 $('#application').prop("required", false);
-            }else{
+            } else {
                 $('#applicationhide').hide("slow");
                 $('#application').prop("required", false);
                 $('#certhide').hide("slow");
                 $('#certificate').prop("required", false);
-            }  
+            }
         });
-
-</script>
+    </script>
 @endpush

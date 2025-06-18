@@ -176,7 +176,7 @@ class DashboardController extends Controller
             ->where('status','Pending')
             ->orderBy('id', 'Desc')->count();
 
-            $smartcard_otp  = DB::table('smartcard_otp ')
+            $smartcard_otp  = DB::table('smartcard_otp')
             ->where('status','Pending')
             ->orderBy('id', 'Desc')->count();
 
@@ -262,194 +262,185 @@ class DashboardController extends Controller
             ->where('status','Processing')
             ->orderBy('id', 'Desc')->count();
 
-            $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
-            
-            $smartcard_otp = DB::table('smartcard_otp')
+             $smartcard_otp = DB::table('smartcard_otp')
             ->where('status','Processing')
             ->orderBy('id', 'Desc')->count();
 
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-
-
-            $service = DB::table('msme')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $itr = DB::table('itr')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $gst = DB::table('gst')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $tec_exam = DB::table('tec_exam')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $tnegaservices = DB::table('tnega_services')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $smartcard = DB::table('smartcard')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $aadhaarcard = DB::table('aadhaarcard')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $can_edit = DB::table('can_edit')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $bond = DB::table('bond')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $voterid = DB::table('voterid')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $fssai = DB::table('fssai')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $covid = DB::table('covid')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $nalavariyam = DB::table('nalavariyam')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $license = DB::table('license')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $pancard = DB::table('pancard')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $tailor = DB::table('tailor')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $pmkissan = DB::table('pmkissan')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $birth_certificate = DB::table('birth_certificate')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $medicalscheme = DB::table('medicalscheme')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $dharsan = DB::table('dharsan')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
-             
-
-            $smartcard_otp = DB::table('smartcard_otp')
-            ->where('status','Resubmit')
-            ->orderBy('id', 'Desc')->count();
-
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-
-
-            $service = DB::table('msme')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $itr = DB::table('itr')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $gst = DB::table('gst')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $tec_exam = DB::table('tec_exam')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $tnegaservices = DB::table('tnega_services')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $smartcard = DB::table('smartcard')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $aadhaarcard = DB::table('aadhaarcard')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $can_edit = DB::table('can_edit')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $bond = DB::table('bond')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $voterid = DB::table('voterid')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $fssai = DB::table('fssai')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $covid = DB::table('covid')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $nalavariyam = DB::table('nalavariyam')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $license = DB::table('license')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $pancard = DB::table('pancard')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $tailor = DB::table('tailor')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $pmkissan = DB::table('pmkissan')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $birth_certificate = DB::table('birth_certificate')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $medicalscheme = DB::table('medicalscheme')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $dharsan = DB::table('dharsan')
-            ->where('status','Rejected')
-            ->orderBy('id', 'Desc')->count();
-
-            $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+            $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
             
+           
+            $service = DB::table('msme')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $itr = DB::table('itr')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $gst = DB::table('gst')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $tec_exam = DB::table('tec_exam')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $tnegaservices = DB::table('tnega_services')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $smartcard = DB::table('smartcard')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $aadhaarcard = DB::table('aadhaarcard')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $can_edit = DB::table('can_edit')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $bond = DB::table('bond')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $voterid = DB::table('voterid')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $fssai = DB::table('fssai')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $covid = DB::table('covid')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $nalavariyam = DB::table('nalavariyam')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $license = DB::table('license')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $pancard = DB::table('pancard')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $tailor = DB::table('tailor')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $pmkissan = DB::table('pmkissan')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $birth_certificate = DB::table('birth_certificate')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $medicalscheme = DB::table('medicalscheme')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $dharsan = DB::table('dharsan')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
             $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
+            $service = DB::table('msme')
             ->where('status','Rejected')
             ->orderBy('id', 'Desc')->count();
 
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+            $itr = DB::table('itr')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
 
+            $gst = DB::table('gst')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
 
+            $tec_exam = DB::table('tec_exam')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $tnegaservices = DB::table('tnega_services')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $smartcard = DB::table('smartcard')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $aadhaarcard = DB::table('aadhaarcard')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $can_edit = DB::table('can_edit')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $bond = DB::table('bond')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $voterid = DB::table('voterid')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $fssai = DB::table('fssai')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $covid = DB::table('covid')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $nalavariyam = DB::table('nalavariyam')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $license = DB::table('license')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $pancard = DB::table('pancard')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $tailor = DB::table('tailor')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $pmkissan = DB::table('pmkissan')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $birth_certificate = DB::table('birth_certificate')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $medicalscheme = DB::table('medicalscheme')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $dharsan = DB::table('dharsan')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+             $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+            
             $service = DB::table('msme')
             ->where('status','Approved')
             ->orderBy('id', 'Desc')->count();
@@ -530,14 +521,11 @@ class DashboardController extends Controller
             ->where('status','Approved')
             ->orderBy('id', 'Desc')->count();
 
-            $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
- 
              $smartcard_otp = DB::table('smartcard_otp')
             ->where('status','Approved')
             ->orderBy('id', 'Desc')->count();
 
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-
+            $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
 
         }elseif(Auth::user()->user_type_id == 3){
 
@@ -641,17 +629,14 @@ class DashboardController extends Controller
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
-            
-           $smartcard_otp = DB::table('smartcard_otp')
+             $smartcard_otp = DB::table('smartcard_otp')
             ->where('status','Pending')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-
-
-            $service = DB::table('msme')
+            
+             $service = DB::table('msme')
             ->where('status','Processing')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
@@ -751,461 +736,445 @@ class DashboardController extends Controller
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
-             
              $smartcard_otp = DB::table('smartcard_otp')
             ->where('status','Processing')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-
-
-            $service = DB::table('msme')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $itr = DB::table('itr')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $gst = DB::table('gst')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $tec_exam = DB::table('tec_exam')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $tnegaservices = DB::table('tnega_services')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $smartcard = DB::table('smartcard')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $aadhaarcard = DB::table('aadhaarcard')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $can_edit = DB::table('can_edit')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $bond = DB::table('bond')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $voterid = DB::table('voterid')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $fssai = DB::table('fssai')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $covid = DB::table('covid')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $nalavariyam = DB::table('nalavariyam')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $license = DB::table('license')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $pancard = DB::table('pancard')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $tailor = DB::table('tailor')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $pmkissan = DB::table('pmkissan')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $birth_certificate = DB::table('birth_certificate')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $medicalscheme = DB::table('medicalscheme')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $dharsan = DB::table('dharsan')
-            ->where('status','Resubmit')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+            $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp ;
              
-            $smartcard_otp = DB::table('smartcard_otp')
+             $service = DB::table('msme')
             ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-
-
-            $service = DB::table('msme')
-            ->where('status','Rejected')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
             $itr = DB::table('itr')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $gst = DB::table('gst')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $tec_exam = DB::table('tec_exam')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $tnegaservices = DB::table('tnega_services')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $smartcard = DB::table('smartcard')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $aadhaarcard = DB::table('aadhaarcard')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $can_edit = DB::table('can_edit')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $bond = DB::table('bond')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $voterid = DB::table('voterid')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $fssai = DB::table('fssai')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $covid = DB::table('covid')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $nalavariyam = DB::table('nalavariyam')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $license = DB::table('license')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $pancard = DB::table('pancard')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $tailor = DB::table('tailor')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $pmkissan = DB::table('pmkissan')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $birth_certificate = DB::table('birth_certificate')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $medicalscheme = DB::table('medicalscheme')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $dharsan = DB::table('dharsan')
-            ->where('status','Rejected')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
-
-            
-           $smartcard_otp = DB::table('smartcard_otp')
-            ->where('status','Rejected')
+             $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-
-
-            $service = DB::table('msme')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $itr = DB::table('itr')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $gst = DB::table('gst')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $tec_exam = DB::table('tec_exam')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $tnegaservices = DB::table('tnega_services')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $smartcard = DB::table('smartcard')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $aadhaarcard = DB::table('aadhaarcard')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $can_edit = DB::table('can_edit')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $bond = DB::table('bond')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $voterid = DB::table('voterid')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $fssai = DB::table('fssai')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $covid = DB::table('covid')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $nalavariyam = DB::table('nalavariyam')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $license = DB::table('license')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $pancard = DB::table('pancard')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $tailor = DB::table('tailor')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $pmkissan = DB::table('pmkissan')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $birth_certificate = DB::table('birth_certificate')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $medicalscheme = DB::table('medicalscheme')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $dharsan = DB::table('dharsan')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
-
-           $smartcard_otp = DB::table('smartcard_otp')
-            ->where('status','Approved')
-            ->where('distributor_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-
-
-
-        }elseif(Auth::user()->user_type_id == 4){
-
-            $service = DB::table('msme')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $itr = DB::table('itr')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $gst = DB::table('gst')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $tec_exam = DB::table('tec_exam')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $tnegaservices = DB::table('tnega_services')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $smartcard = DB::table('smartcard')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $aadhaarcard = DB::table('aadhaarcard')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $can_edit = DB::table('can_edit')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $bond = DB::table('bond')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $voterid = DB::table('voterid')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $fssai = DB::table('fssai')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $covid = DB::table('covid')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $nalavariyam = DB::table('nalavariyam')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $license = DB::table('license')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $pancard = DB::table('pancard')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $tailor = DB::table('tailor')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $pmkissan = DB::table('pmkissan')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $birth_certificate = DB::table('birth_certificate')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $medicalscheme = DB::table('medicalscheme')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $dharsan = DB::table('dharsan')
-            ->where('status','Pending')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+            $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
              
-            $smartcard_otp = DB::table('smartcard_otp')
+            $service = DB::table('msme')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $itr = DB::table('itr')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $gst = DB::table('gst')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $tec_exam = DB::table('tec_exam')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $tnegaservices = DB::table('tnega_services')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $smartcard = DB::table('smartcard')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $aadhaarcard = DB::table('aadhaarcard')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $can_edit = DB::table('can_edit')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $bond = DB::table('bond')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $voterid = DB::table('voterid')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $fssai = DB::table('fssai')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $covid = DB::table('covid')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $nalavariyam = DB::table('nalavariyam')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $license = DB::table('license')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pancard = DB::table('pancard')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $tailor = DB::table('tailor')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pmkissan = DB::table('pmkissan')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $birth_certificate = DB::table('birth_certificate')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $medicalscheme = DB::table('medicalscheme')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $dharsan = DB::table('dharsan')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+             $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan +$smartcard_otp;
+
+            $service = DB::table('msme')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $itr = DB::table('itr')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $gst = DB::table('gst')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $tec_exam = DB::table('tec_exam')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $tnegaservices = DB::table('tnega_services')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $smartcard = DB::table('smartcard')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $aadhaarcard = DB::table('aadhaarcard')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $can_edit = DB::table('can_edit')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $bond = DB::table('bond')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $voterid = DB::table('voterid')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $fssai = DB::table('fssai')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $covid = DB::table('covid')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $nalavariyam = DB::table('nalavariyam')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $license = DB::table('license')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pancard = DB::table('pancard')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $tailor = DB::table('tailor')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pmkissan = DB::table('pmkissan')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $birth_certificate = DB::table('birth_certificate')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $medicalscheme = DB::table('medicalscheme')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $dharsan = DB::table('dharsan')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+             $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+
+          
+           }elseif(Auth::user()->user_type_id == 4){
+
+            $service = DB::table('msme')
             ->where('status','Pending')
             ->where('retailer_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+            $itr = DB::table('itr')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
 
+            $gst = DB::table('gst')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
 
-            $service = DB::table('msme')
+            $tec_exam = DB::table('tec_exam')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $tnegaservices = DB::table('tnega_services')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $smartcard = DB::table('smartcard')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $aadhaarcard = DB::table('aadhaarcard')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $can_edit = DB::table('can_edit')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $bond = DB::table('bond')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $voterid = DB::table('voterid')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $fssai = DB::table('fssai')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $covid = DB::table('covid')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $nalavariyam = DB::table('nalavariyam')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $license = DB::table('license')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pancard = DB::table('pancard')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $tailor = DB::table('tailor')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pmkissan = DB::table('pmkissan')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $birth_certificate = DB::table('birth_certificate')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $medicalscheme = DB::table('medicalscheme')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $dharsan = DB::table('dharsan')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+             $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
+             
+           $service = DB::table('msme')
             ->where('status','Processing')
             ->where('retailer_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
@@ -1305,17 +1274,14 @@ class DashboardController extends Controller
             ->where('retailer_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+             $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Processing')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
             
-            $smartcard_otp = DB::table('smartcard_otp')
-            ->where('status','Processing')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-
-
-            $service = DB::table('msme')
+              $service = DB::table('msme')
             ->where('status','Resubmit')
             ->where('retailer_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
@@ -1415,17 +1381,16 @@ class DashboardController extends Controller
             ->where('retailer_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+              $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Resubmit')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+
+            $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
             
-           $smartcard_otp = DB::table('smartcard_otp')
-            ->where('status','Resubmit')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-
-
-            $service = DB::table('msme')
+         
+             $service = DB::table('msme')
             ->where('status','Rejected')
             ->where('retailer_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
@@ -1525,16 +1490,13 @@ class DashboardController extends Controller
             ->where('retailer_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
+             $smartcard_otp = DB::table('smartcard_otp')
+            ->where('status','Rejected')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
             
-            $smartcard_otp = DB::table('smartcard_otp')
-            ->where('status','Rejected')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
-
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-
-
             $service = DB::table('msme')
             ->where('status','Approved')
             ->where('retailer_id',Auth::user()->id)
@@ -1631,18 +1593,19 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $dharsan = DB::table('dharsan')
+            ->where('status','Approved')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+             $smartcard_otp = DB::table('smartcard_otp')
             ->where('status','Approved')
             ->where('retailer_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
             $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
 
-            $smartcard_otp = DB::table('smartcard_otp')
-            ->where('status','Approved')
-            ->where('retailer_id',Auth::user()->id)
-            ->orderBy('id', 'Desc')->count();
+           
 
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
 
 
 

@@ -29,7 +29,7 @@
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                         <div class="card-body p-4">
                             <h5 class="card-title">{{ $servicename }}</h5>
-                             <form action="{{ url('/smartcard_member_update') }}" id="formAccountSettings" method="POST"
+                            <form action="{{ url('/smartcard_member_update') }}" id="formAccountSettings" method="POST"
                                 enctype="multipart/form-data">
                                 {{ csrf_field() }}
 
@@ -49,7 +49,8 @@
                                             $apply_user_id = $services->retailer_id;
                                         }
                                     @endphp
-                                    @if ($serviceid == 219)
+
+                                    @if ($serviceid == 223)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="dist_id"
@@ -295,7 +296,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                    @elseif ($serviceid == 235)
+                                    @elseif ($serviceid == 227)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="dist_id"
@@ -448,66 +449,72 @@
                                     @endif
 
                                     @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                    <div class="mb-3 col-md-6">
-                                        <label for="service_name" class="form-label">Service Status</label>
-                                        <select class="form-control" name="status" id="service_status">
-                                            <option value="">Select</option>
-                                            <option @if ($services->status == 'Pending') selected @endif
-                                                value="Pending">Pending</option>
-                                            <option @if ($services->status == 'Resubmit') selected @endif
-                                                value="Resubmit">Resubmit</option>
-                                            <option @if ($services->status == 'Processing') selected @endif
-                                                value="Processing">Processing</option>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="service_name" class="form-label">Service Status</label>
+                                            <select class="form-control" name="status" id="service_status">
+                                                <option value="">Select</option>
+                                                <option @if ($services->status == 'Pending') selected @endif
+                                                    value="Pending">
+                                                    Pending</option>
+                                                <option @if ($services->status == 'Resubmit') selected @endif
+                                                    value="Resubmit">
+                                                    Resubmit</option>
+                                                <option @if ($services->status == 'Processing') selected @endif
+                                                    value="Processing">Processing</option>
                                                 @if ($services->status != 'Approved')
-                                            <option @if ($services->status == 'Rejected') selected @endif value="Rejected">
-                                            Rejected</option>
-                                            @endif
+                                                    <option @if ($services->status == 'Rejected') selected @endif
+                                                        value="Rejected">
+                                                        Rejected</option>
+                                                @endif
                                                 <option @if ($services->status == 'Approved') selected @endif
-                                                    value="Approved">Approved</option>
+                                                    value="Approved">
+                                                    Approved</option>
                                             </select>
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
-                                        <label for="remarks" class="form-label">Remarks</label>
-                                        <input value="{{ $services->remarks }}" class="form-control" type="text"
-                                            name="remarks" maxlength="100" id="remarks" placeholder="Remarks" />
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="selecthide" style="display :none;">
-                                        <label for="select" class="form-label">Select</label>
-                                        <select class="form-control" name="selects" id="select">
-                                            <option>select</option>
-                                            <option @if ($services->selects == 'Text') selected @endif
-                                                value = "Text">Text</option>
-                                            <option @if ($services->selects == 'File') selected @endif
-                                                value = "File">File</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
-                                        <label for="acknowledgement" class="form-label">Acknowledgement</label>
-                                        <input class="form-control" type="file" name="acknowledgement"
-                                            id="acknowledgement" />
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
-                                        <label for="application_no" class="form-label">Application No</label>
-                                        <input value="{{ $services->application_no }}" class="form-control"
-                                            type="text" maxlength="20" name="application_no"
-                                            id="application_no" />
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="selectshide" style="display :none;">
-                                        <label for="selects" class="form-label">Select</label>
-                                        <select class="form-control" name="lects" id="selects">
-                                            <option>select</option>
-                                            <option @if ($services->lects == 'Text') selected @endif
-                                                value = "Text">Text</option>
-                                            <option @if ($services->lects == 'File') selected @endif
-                                                value = "File">File</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="applicationhide" style="display :none;">
-                                        <label for="application" class="form-label">Application</label>
-                                        <input value="{{ $services->application }}" class="form-control"
-                                            type="text" maxlength="150" name="application"
-                                            id="application" />
-                                    </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
+                                            <label for="remarks" class="form-label">Remarks</label>
+                                            <input value="{{ $services->remarks }}" class="form-control" type="text"
+                                                name="remarks" maxlength="100" id="remarks" placeholder="Remarks" />
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="selecthide" style="display :none;">
+                                            <label for="select" class="form-label">Select</label>
+                                            <select class="form-control" name="selects" id="select">
+                                                <option>select</option>
+                                                <option @if ($services->selects == 'Text') selected @endif value = "Text">
+                                                    Text</option>
+                                                <option @if ($services->selects == 'File') selected @endif
+                                                    value = "File">
+                                                    File</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
+                                            <label for="acknowledgement" class="form-label">Acknowledgement</label>
+                                            <input class="form-control" type="file" name="acknowledgement"
+                                                id="acknowledgement" />
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
+                                            <label for="application_no" class="form-label">Application No</label>
+                                            <input value="{{ $services->application_no }}" class="form-control"
+                                                type="text" maxlength="20" name="application_no"
+                                                id="application_no" />
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="selectshide" style="display :none;">
+                                            <label for="selects" class="form-label">Select</label>
+                                            <select class="form-control" name="lects" id="selects">
+                                                <option>select</option>
+                                                <option @if ($services->lects == 'Text') selected @endif
+                                                    value = "Text">
+                                                    Text</option>
+                                                <option @if ($services->lects == 'File') selected @endif
+                                                    value = "File">
+                                                    File</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="applicationhide" style="display :none;">
+                                            <label for="application" class="form-label">Application</label>
+                                            <input value="{{ $services->application }}" class="form-control"
+                                                type="text" maxlength="150" name="application" id="application" />
+                                        </div>
                                         <div class="mb-3 col-md-6" id="certhide" style="display :none;">
                                             <label for="certificate" class="form-label">Certificate</label>
                                             <input class="form-control" type="file" name="certificate"
@@ -547,7 +554,7 @@
     </main>
 @endsection
 @push('page_scripts')
- <script>
+    <script>
         $(function() {
             var status = "{{ $services->status }}";
             var acknowledgement = "{{ $services->acknowledgement }}";

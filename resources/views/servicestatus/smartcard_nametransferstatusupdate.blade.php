@@ -29,7 +29,7 @@
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                         <div class="card-body p-4">
                             <h5 class="card-title">{{ $servicename }}</h5>
-                             <form action="{{ url('/smartcard_nametransfer_update') }}" id="formAccountSettings" method="POST"
+                            <form action="{{ url('/smartcard_nametransfer_update') }}" id="formAccountSettings" method="POST"
                                 enctype="multipart/form-data">
                                 {{ csrf_field() }}
 
@@ -49,7 +49,8 @@
                                             $apply_user_id = $services->retailer_id;
                                         }
                                     @endphp
-                                     @if ($serviceid == 224)
+
+                                    @if ($serviceid == 224)
                                         <div class="mb-3 col-md-6">
                                             @if (Auth::user()->id != $apply_user_id)
                                                 @if ($services->smart_card != '')
@@ -146,7 +147,7 @@
                                                 @endif
                                             @endif
                                         </div>
-                                    @elseif ($serviceid == 234)
+                                    @elseif ($serviceid == 226)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="dist_id"
@@ -412,7 +413,7 @@
                                                 @endif
                                             @endif
                                         </div>
-                                    @elseif ($serviceid == 236)
+                                    @elseif ($serviceid == 228)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="dist_id"
@@ -562,7 +563,7 @@
                                                 @endif
                                             @endif
                                         </div>
-                                    @elseif ($serviceid == 237)
+                                    @elseif ($serviceid == 229)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="dist_id"
@@ -613,15 +614,59 @@
                                                 @endif
                                             @endif
                                         </div>
+
+                                        @if ($serviceid == 230)
+                                        <div class="mb-3 col-md-6">
+                                            @if (Auth::user()->id != $apply_user_id)
+                                                @if ($services->smart_card != '')
+                                                    <label>பெயர் இணைக்க வேண்டிய குடும்ப அட்டை</label>
+                                                    <br><a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
+                                                        class="btn btn-primary me-2">View</a><br>
+                                                @endif
+                                            @else
+                                                <label>பெயர் இணைக்க வேண்டிய குடும்ப அட்டை</label>
+                                                <input @if ($services->smart_card == '') required @endif
+                                                    class="form-control" type="file" accept="image/jpeg, image/png"
+                                                    name="smart_card">
+                                                @if ($services->smart_card != '')
+                                                    <a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
+                                                @endif
+                                            @endif
+                                        </div>
+
+                                        <div class="mb-3 col-md-6">
+                                            @if (Auth::user()->id != $apply_user_id)
+                                                @if ($services->aadhaar_card != '')
+                                                    <label>Aadhaar Card</label>
+                                                    <br><a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
+                                                        class="btn btn-primary me-2">View</a><br>
+                                                @endif
+                                            @else
+                                                <label>Aadhaar Card</label>
+                                                <input @if ($services->aadhaar_card == '') required @endif
+                                                    class="form-control" type="file" accept="image/jpeg, image/png"
+                                                    name="aadhaar_card">
+                                                @if ($services->aadhaar_card != '')
+                                                    <a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
+                                                @endif
+                                            @endif
+                                        </div>
                                     @endif
-                                    @if (Auth::user()->id != $apply_user_id)
+
+                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
                                         <div class="mb-3 col-md-6">
                                             <label for="service_name" class="form-label">Service Status</label>
                                             <select class="form-control" name="status" id="service_status">
                                                 <option value="">Select</option>
-                                                <option @if ($services->status == 'Pending') selected @endif value="Pending">
+                                                <option @if ($services->status == 'Pending') selected @endif
+                                                    value="Pending">
                                                     Pending</option>
-                                                <option @if ($services->status == 'Resubmit') selected @endif value="Resubmit">
+                                                <option @if ($services->status == 'Resubmit') selected @endif
+                                                    value="Resubmit">
                                                     Resubmit</option>
                                                 <option @if ($services->status == 'Processing') selected @endif
                                                     value="Processing">Processing</option>
@@ -630,7 +675,8 @@
                                                         value="Rejected">
                                                         Rejected</option>
                                                 @endif
-                                                <option @if ($services->status == 'Approved') selected @endif value="Approved">
+                                                <option @if ($services->status == 'Approved') selected @endif
+                                                    value="Approved">
                                                     Approved</option>
                                             </select>
                                         </div>
@@ -643,9 +689,11 @@
                                             <label for="select" class="form-label">Select</label>
                                             <select class="form-control" name="selects" id="select">
                                                 <option>select</option>
-                                                <option @if ($services->selects == 'Text') selected @endif value = "Text">
+                                                <option @if ($services->selects == 'Text') selected @endif
+                                                    value = "Text">
                                                     Text</option>
-                                                <option @if ($services->selects == 'File') selected @endif value = "File">
+                                                <option @if ($services->selects == 'File') selected @endif
+                                                    value = "File">
                                                     File</option>
                                             </select>
                                         </div>
@@ -664,9 +712,11 @@
                                             <label for="selects" class="form-label">Select</label>
                                             <select class="form-control" name="lects" id="selects">
                                                 <option>select</option>
-                                                <option @if ($services->lects == 'Text') selected @endif value = "Text">
+                                                <option @if ($services->lects == 'Text') selected @endif
+                                                    value = "Text">
                                                     Text</option>
-                                                <option @if ($services->lects == 'File') selected @endif value = "File">
+                                                <option @if ($services->lects == 'File') selected @endif
+                                                    value = "File">
                                                     File</option>
                                             </select>
                                         </div>
@@ -694,11 +744,10 @@
 
                                         </div>
                                     @endif
-
                                 </div>
 
                                 <div class="mt-2 text-center">
-                                    @if ($services->status == 'Resubmit' && $apply_user_id != Auth::user()->id)
+                                    @if ($services->status == 'Resubmit' && ($services->user_id != Auth::user()->id && $apply_user_id != Auth::user()->id))
                                         <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
                                     @elseif($services->status == 'Approved')
                                         <button type="button" disabled class="btn btn-primary me-2">Completed</button>
@@ -715,7 +764,7 @@
     </main>
 @endsection
 @push('page_scripts')
-<script>
+    <script>
         $(function() {
             var status = "{{ $services->status }}";
             var acknowledgement = "{{ $services->acknowledgement }}";

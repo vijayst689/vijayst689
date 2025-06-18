@@ -37,8 +37,9 @@
                                     <input type="hidden" name="serviceid" value="{{ $serviceid }}">
                                     <input type="hidden" name="amount" value="{{ $amount }}">
                                     <input type="hidden" name="service_amount" value="{{ $payment }}">
-    
-                                @if ($serviceid == 224)
+                                    <input type="hidden" name="user_id" value="{{ $customers->id }}">
+
+                                    @if ($serviceid == 224)
                                         <div class="mb-3 col-md-6">
                                             <label for="smart_card" class="form-label">பெயர் இணைக்க வேண்டிய குடும்ப
                                                 அட்டை</label>
@@ -75,7 +76,7 @@
                                             <input required accept="image/jpeg, image/png" type="file"
                                                 class="form-control" name="smart_card" />
                                         </div>
-                                    @elseif($serviceid == 234)
+                                    @elseif($serviceid == 226)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select required name="dist_id" id="dist_id" class="form-control">
@@ -168,7 +169,7 @@
                                             <input required accept="image/jpeg, image/png" type="file"
                                                 class="form-control" name="already_applied_application" />
                                         </div>
-                                    @elseif($serviceid == 236)
+                                    @elseif($serviceid == 228)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select required name="dist_id" id="dist_id" class="form-control">
@@ -226,7 +227,7 @@
                                             <input required accept="image/jpeg, image/png" type="file"
                                                 class="form-control" name="smart_card" />
                                         </div>
-                                    @elseif($serviceid == 237)
+                                    @elseif($serviceid == 229)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select required name="dist_id" id="dist_id" class="form-control">
@@ -248,15 +249,28 @@
                                             <input required accept="image/jpeg, image/png" type="file"
                                                 class="form-control" name="smart_card" />
                                         </div>
-                                    @endif
 
+                                     @elseif ($serviceid == 230)
+                                        <div class="mb-3 col-md-6">
+                                            <label for="smart_card" class="form-label">பெயர் இணைக்க வேண்டிய குடும்ப
+                                                அட்டை</label>
+                                            <input required accept="image/jpeg, image/png" type="file"
+                                                class="form-control" name="smart_card" />
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="aadhaar_card" class="form-label">Aadhaar Card</label>
+                                            <input required accept="image/jpeg, image/png" type="file"
+                                                class="form-control" name="aadhaar_card" />
+                                        </div>
+                                    @endif
                                     <div class="text-center">
                                         <p id="nopayment"></p>
                                     </div>
                                     <div class="text-center">
                                         <div class="col-12">
                                             <div class="mb-0">
-                                                <button id="save" type="submit" class="btn btn-primary">Apply</button>
+                                                <button id="save" type="submit"
+                                                    class="btn btn-primary">Apply</button>
                                             </div>
                                         </div>
                                     </div>
@@ -447,7 +461,7 @@
             }
         });
 
-        $('#member').change(function() {
+         $('#member').change(function() {
             if ($('#member').val() == 'Add 1 Member') {
                 $('#aadhaarhide').show("slow");
                 $('#aadhaar2hide').hide("slow");
