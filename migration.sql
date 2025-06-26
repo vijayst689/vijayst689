@@ -1744,6 +1744,7 @@ CREATE TABLE `pstm` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
+  
 ) ENGINE=InnoDB;
 
 alter table service_payment add coordinator_permission int(11) DEFAULT 0 after admin_amount;
@@ -1824,7 +1825,7 @@ CREATE TABLE smartcard_otp (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
-alter table smartcard_otp add smartcard varchar(20) DEFAULT NULL after application_no;
+alter table smartcard_otp add smart_card varchar(20) DEFAULT NULL after application_no;
 
 alter table smartcard add add_member varchar(50) DEFAULT NULL after aadhaar_card;
 alter table smartcard add aadhaar_card2 varchar(20) DEFAULT NULL after add_member;
