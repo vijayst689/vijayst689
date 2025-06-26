@@ -1845,3 +1845,11 @@ alter table smartcard add patta varchar(20) DEFAULT NULL after documents;
 alter table smartcard add rental_agreement varchar(20) DEFAULT NULL after patta;
 alter table smartcard add already_applied_application text DEFAULT NULL after rental_agreement;
 alter table smartcard add family_head_aadhaar text DEFAULT NULL after family_head_photo;
+
+//26-06-2025
+alter table aadhaarcard add door_no text DEFAULT NULL after smart_link_no;
+alter table aadhaarcard add street_name text DEFAULT NULL after door_no;
+alter table aadhaarcard add postal_area_english text DEFAULT NULL after street_name;
+alter table aadhaarcard add pin_code text DEFAULT NULL after postal_area_english;
+alter table aadhaarcard add street_name_tamil text DEFAULT NULL after pin_code;
+alter table aadhaarcard add postal_area_tamil text DEFAULT NULL after street_name_tamil;

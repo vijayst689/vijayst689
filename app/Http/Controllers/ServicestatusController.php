@@ -5275,9 +5275,18 @@ public function aadhaarcardupdate(Request $request){
                 'name_english'      => $request->name_english,
                 'address_tamil'     => $request->address_tamil,
                 'address_english'   => $request->address_english,
+                'dist_id'           => $request->dist_id,
+                'taluk_id'          => $request->taluk_id,
+                'door_no'           => $request->door_no,
+                'street_name'       => $request->street_name,
+                'postal_area_english'=> $request->postal_area_english,
+                'pin_code'           => $request->pin_code,
+                'street_name_tamil'  => $request->street_name_tamil,
+                'postal_area_tamil'  => $request->postal_area_tamil,
                 'status'            => 'Pending',
                 'applied_date'      => date("Y-m-d"),
                 'created_at'        => date("Y-m-d"),
+               
             ]);
 
         }elseif($serviceid == 58){
