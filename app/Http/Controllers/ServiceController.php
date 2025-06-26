@@ -3930,6 +3930,7 @@ public function submitaadhaar(Request $request){
            'status'            => 'Pending',
            'applied_date'      => date("Y-m-d"),
            'created_at'        => date("Y-m-d"),
+           
           
           
        ] );
