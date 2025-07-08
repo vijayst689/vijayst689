@@ -29,7 +29,7 @@
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                         <div class="card-body p-4">
                             <h5 class="card-title">{{ $servicename }}</h5>
-                            <form action="{{ url('/submit_statusupdate_gst') }}" id="formAccountSettings" method="POST"
+                            <form action="{{ url('/smartcard_update') }}" id="formAccountSettings" method="POST"
                                 enctype="multipart/form-data">
                                 {{ csrf_field() }}
 

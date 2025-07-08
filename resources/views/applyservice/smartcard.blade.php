@@ -30,7 +30,7 @@
                         <h5 class="card-title mt-2">{{ $servicename }}</h5>
                         <h6 class="card-title">Service Payment : <span class="text-danger">{{ $payment }}</span></h6>
                         <div class="card-body p-4">
-                            <form class="row g-4" action="{{ url('submitapply_gst') }}" enctype="multipart/form-data"
+                            <form class="row g-4" action="{{ url('submitapply_smartcard') }}" enctype="multipart/form-data"
                                 method="post">
                                 @csrf
                                 <div class="row">
