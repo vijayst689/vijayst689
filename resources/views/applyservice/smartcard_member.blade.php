@@ -39,7 +39,7 @@
                                     <input type="hidden" name="service_amount" value="{{ $payment }}">
                                     <input type="hidden" name="user_id" value="{{ $customers->id }}">
 
-                                    @if ($serviceid == 223)
+                                    @if ($serviceid == 222)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select required name="dist_id" id="dist_id" class="form-control">
@@ -127,7 +127,7 @@
                                                     type="file" name="gas_cylinder_receipt">
                                             </div>
                                         </div>
-                                    @elseif($serviceid == 227)
+                                    @elseif($serviceid == 230)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select required name="dist_id" id="dist_id" class="form-control">

@@ -39,7 +39,7 @@
                                     <input type="hidden" name="service_amount" value="{{ $payment }}">
                                     <input type="hidden" name="user_id" value="{{ $customers->id }}">
 
-                                    @if ($serviceid == 224)
+                                    @if ($serviceid == 223)
                                         <div class="mb-3 col-md-6">
                                             <label for="smart_card" class="form-label">பெயர் இணைக்க வேண்டிய குடும்ப
                                                 அட்டை</label>
@@ -51,7 +51,7 @@
                                             <input required accept="image/jpeg, image/png" type="file"
                                                 class="form-control" name="aadhaar_card" />
                                         </div>
-                                    @elseif($serviceid == 225)
+                                    @elseif($serviceid == 228)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select required name="dist_id" id="dist_id" class="form-control">
@@ -76,7 +76,7 @@
                                             <input required accept="image/jpeg, image/png" type="file"
                                                 class="form-control" name="smart_card" />
                                         </div>
-                                    @elseif($serviceid == 226)
+                                    @elseif($serviceid == 229)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select required name="dist_id" id="dist_id" class="form-control">
@@ -169,7 +169,7 @@
                                             <input required accept="image/jpeg, image/png" type="file"
                                                 class="form-control" name="already_applied_application" />
                                         </div>
-                                    @elseif($serviceid == 228)
+                                    @elseif($serviceid == 231)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select required name="dist_id" id="dist_id" class="form-control">
@@ -227,7 +227,7 @@
                                             <input required accept="image/jpeg, image/png" type="file"
                                                 class="form-control" name="smart_card" />
                                         </div>
-                                    @elseif($serviceid == 229)
+                                    @elseif($serviceid == 232)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select required name="dist_id" id="dist_id" class="form-control">
@@ -250,7 +250,7 @@
                                                 class="form-control" name="smart_card" />
                                         </div>
 
-                                     @elseif ($serviceid == 230)
+                                     @elseif ($serviceid == 233)
                                         <div class="mb-3 col-md-6">
                                             <label for="smart_card" class="form-label">பெயர் இணைக்க வேண்டிய குடும்ப
                                                 அட்டை</label>

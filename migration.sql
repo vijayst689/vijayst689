@@ -1853,3 +1853,90 @@ alter table aadhaarcard add postal_area_english text DEFAULT NULL after street_n
 alter table aadhaarcard add pin_code text DEFAULT NULL after postal_area_english;
 alter table aadhaarcard add street_name_tamil text DEFAULT NULL after pin_code;
 alter table aadhaarcard add postal_area_tamil text DEFAULT NULL after street_name_tamil;
+
+//8-07-2025
+
+alter table smartcard add vao_area text DEFAULT NULL after family_head_aadhaar;
+alter table smartcard add door_no text DEFAULT NULL after vao_area;
+alter table smartcard add street_name text DEFAULT NULL after door_no;
+alter table smartcard add street_name_tamil text DEFAULT NULL after street_name;
+alter table smartcard add postal_area_english text DEFAULT NULL after street_name_tamil;
+alter table smartcard add postal_area_tamil text DEFAULT NULL after postal_area_english;
+
+alter table tailor add api_processing text DEFAULT NULL after certificate;
+alter table tailor add api_approved text DEFAULT NULL after api_processing;
+
+alter table can_edit add api_processing text DEFAULT NULL after certificate;
+alter table can_edit add api_approved text DEFAULT NULL after api_processing;
+
+alter table itr add api_processing text DEFAULT NULL after certificate;
+alter table itr add api_approved text DEFAULT NULL after api_processing;
+
+alter table gst add api_processing text DEFAULT NULL after certificate;
+alter table gst add api_approved text DEFAULT NULL after api_processing;
+
+alter table tec_exam add api_processing text DEFAULT NULL after certificate;
+alter table tec_exam add api_approved text DEFAULT NULL after api_processing;
+
+alter table tnega_services add api_processing text DEFAULT NULL after certificate;
+alter table tnega_services add api_approved text DEFAULT NULL after api_processing;
+
+alter table smartcard add api_processing text DEFAULT NULL after certificate;
+alter table smartcard add api_approved text DEFAULT NULL after api_processing;
+
+alter table aadhaarcard add api_processing text DEFAULT NULL after certificate;
+alter table aadhaarcard add api_approved text DEFAULT NULL after api_processing;
+
+alter table bond add api_processing text DEFAULT NULL after certificate;
+alter table bond add api_approved text DEFAULT NULL after api_processing;
+
+alter table voterid add api_processing text DEFAULT NULL after certificate;
+alter table voterid add api_approved text DEFAULT NULL after api_processing;
+
+alter table fssai add api_processing text DEFAULT NULL after certificate;
+alter table fssai add api_approved text DEFAULT NULL after api_processing;
+
+alter table covid add api_processing text DEFAULT NULL after certificate;
+alter table covid add api_approved text DEFAULT NULL after api_processing;
+
+alter table nalavariyam add api_processing text DEFAULT NULL after certificate;
+alter table nalavariyam add api_approved text DEFAULT NULL after api_processing;
+
+alter table license add api_processing text DEFAULT NULL after certificate;
+alter table license add api_approved text DEFAULT NULL after api_processing;
+
+alter table pmkissan add api_processing text DEFAULT NULL after certificate;
+alter table pmkissan add api_approved text DEFAULT NULL after api_processing;
+
+alter table birth_certificate add api_processing text DEFAULT NULL after certificate;
+alter table birth_certificate add api_approved text DEFAULT NULL after api_processing;
+
+alter table medicalscheme add api_processing text DEFAULT NULL after certificate;
+alter table medicalscheme add api_approved text DEFAULT NULL after api_processing;
+
+alter table dharsan add api_processing text DEFAULT NULL after certificate;
+alter table dharsan add api_approved text DEFAULT NULL after api_processing;
+
+alter table software add api_processing text DEFAULT NULL after certificate;
+alter table software add api_approved text DEFAULT NULL after api_processing;
+
+alter table utislpan add api_processing text DEFAULT NULL after certificate;
+alter table utislpan add api_approved text DEFAULT NULL after api_processing;
+
+alter table patta add api_processing text DEFAULT NULL after certificate;
+alter table patta add api_approved text DEFAULT NULL after api_processing;
+
+alter table smartcard_otp add api_processing text DEFAULT NULL after certificate;
+alter table smartcard_otp add api_approved text DEFAULT NULL after api_processing;
+
+alter table msme add api_processing text DEFAULT NULL after certificate;
+alter table msme add api_approved text DEFAULT NULL after api_processing;
+
+alter table pancard add api_processing text DEFAULT NULL after certificate;
+alter table pancard add api_approved text DEFAULT NULL after api_processing;
+
+alter table banner add api_processing text DEFAULT NULL after certificate;
+alter table banner add api_approved text DEFAULT NULL after api_processing;
+
+alter table pstm add api_processing text DEFAULT NULL after certificate;
+alter table pstm add api_approved text DEFAULT NULL after api_processing;

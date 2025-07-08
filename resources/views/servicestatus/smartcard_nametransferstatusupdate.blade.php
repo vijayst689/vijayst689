@@ -50,7 +50,7 @@
                                         }
                                     @endphp
 
-                                    @if ($serviceid == 224)
+                                    @if ($serviceid == 223)
                                         <div class="mb-3 col-md-6">
                                             @if (Auth::user()->id != $apply_user_id)
                                                 @if ($services->smart_card != '')
@@ -90,7 +90,7 @@
                                                 @endif
                                             @endif
                                         </div>
-                                    @elseif ($serviceid == 225)
+                                    @elseif ($serviceid == 228)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="dist_id"
@@ -147,7 +147,7 @@
                                                 @endif
                                             @endif
                                         </div>
-                                    @elseif ($serviceid == 226)
+                                    @elseif ($serviceid == 229)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="dist_id"
@@ -413,7 +413,7 @@
                                                 @endif
                                             @endif
                                         </div>
-                                    @elseif ($serviceid == 228)
+                                    @elseif ($serviceid == 231)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="dist_id"
@@ -563,7 +563,7 @@
                                                 @endif
                                             @endif
                                         </div>
-                                    @elseif ($serviceid == 229)
+                                    @elseif ($serviceid == 232)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="dist_id"
@@ -615,7 +615,7 @@
                                             @endif
                                         </div>
 
-                                        @if ($serviceid == 230)
+                                        @if ($serviceid == 233)
                                         <div class="mb-3 col-md-6">
                                             @if (Auth::user()->id != $apply_user_id)
                                                 @if ($services->smart_card != '')

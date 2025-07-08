@@ -50,7 +50,7 @@
                                         }
                                     @endphp
 
-                                    @if ($serviceid == 223)
+                                    @if ($serviceid == 222)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="dist_id"
@@ -296,7 +296,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                    @elseif ($serviceid == 227)
+                                    @elseif ($serviceid == 230)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="dist_id"
@@ -448,7 +448,7 @@
                                         </div>
                                     @endif
 
-                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                    @if (Auth::user()->id != $apply_user_id)
                                         <div class="mb-3 col-md-6">
                                             <label for="service_name" class="form-label">Service Status</label>
                                             <select class="form-control" name="status" id="service_status">
@@ -537,7 +537,7 @@
                                 </div>
 
                                 <div class="mt-2 text-center">
-                                    @if ($services->status == 'Resubmit' && ($services->user_id != Auth::user()->id && $apply_user_id != Auth::user()->id))
+                                    @if ($services->status == 'Resubmit' && $apply_user_id != Auth::user()->id)
                                         <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
                                     @elseif($services->status == 'Approved')
                                         <button type="button" disabled class="btn btn-primary me-2">Completed</button>
