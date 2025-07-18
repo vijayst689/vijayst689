@@ -485,7 +485,8 @@ class PDFServiceController extends Controller
       return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
     }
     $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
-   
+    $Apikey = 'cdf94c6d43b5367276d87107b1538aa50b50eb8f8c665fbcd9f1998abe73957e619d4e';
+
     if($request->ser == 1){
       $url = "https://goodapi.in/serviceApi/V1/Rc-Verification.php?apiKey=$apikey&rcno=$rc_no";
     }else{
