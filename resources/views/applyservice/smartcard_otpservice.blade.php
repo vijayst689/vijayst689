@@ -30,8 +30,8 @@
                         <h5 class="card-title mt-2">{{ $servicename }}</h5>
                         <h6 class="card-title">Service Payment : <span class="text-danger">{{ $payment }}</span></h6>
                         <div class="card-body p-4">
-                            <form class="row g-4" action="{{ url('submitapply_smartcardotp') }}" enctype="multipart/form-data"
-                                method="post">
+                            <form class="row g-4" action="{{ url('submitapply_smartcardotp') }}"
+                                enctype="multipart/form-data" method="post">
                                 @csrf
                                 <div class="row">
                                     <input type="hidden" name="serviceid" value="{{ $serviceid }}">
@@ -40,14 +40,28 @@
                                     <input type="hidden" name="user_id" value="{{ $customers->id }}">
 
                                     <div class="mb-3 col-md-6">
-                                        <label for="aadhaar_card" class="form-label">Aadhaar Card</label>
-                                        <input required accept="image/jpeg, image/png" type="file" class="form-control"
-                                            name="aadhaar_card" />
+                                        <label for="name" class="form-label">Name</label>
+                                        <input required type="text" maxlength="100" class="form-control" name="name"
+                                            placeholder="Name" />
                                     </div>
                                     <div class="mb-3 col-md-6">
-                                        <label for="smart_card" class="form-label">Smart Card</label>
-                                        <input required type="file" class="form-control" name="smart_card"
-                                            placeholder="Smart Card" />
+                                        <label class="form-label">Documents</label>
+                                        <select required id="documents" name="documents" class="form-control">
+                                            <option value="">Select Documents</option>
+                                            <option value="Aadhaar Card">Aadhaar Card</option>
+                                            <option value="Smart Card">Smart Card</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <div class="" id="aadhaar_cardhide" style="display: none;">
+                                            <label>Aadhaar Card</label>
+                                            <input id="aadhaar_card" class="form-control" type="file"
+                                                name="aadhaar_card">
+                                        </div>
+                                        <div class="" id="smart_cardhide" style="display: none;">
+                                            <label>Smart Card</label>
+                                            <input id="smart_card" class="form-control" type="file" name="smart_card">
+                                        </div>
                                     </div>
                                     <div class="text-center">
                                         <p id="nopayment"></p>
@@ -79,6 +93,28 @@
                     'font-size': '150%',
                     'font-weight': 'bold'
                 });
+            }
+        });
+
+        $('#documents').change(function() {
+            if ($('#documents').val() == 'Aadhaar Card') {
+                $('#aadhaar_cardhide').show("slow");
+                $('#smart_cardhide').hide("slow");
+                $('#smart_card').prop("required", false);
+                $('#aadhaar_card').prop("required", true);
+
+            } else if ($('#documents').val() == 'Smart Card') {
+                $('#smart_cardhide').show("slow");
+                $('#aadhaar_cardhide').hide("slow");
+                $('#aadhaar_card').prop("required", false);
+                $('#smart_card').prop("required", true);
+
+            } else {
+                $('#aadhaar_cardhide').hide("slow");
+                $('#smart_cardhide').hide("slow");
+                $('#aadhaar_card').prop("required", false);
+                $('#smart_card').prop("required", false);
+
             }
         });
     </script>

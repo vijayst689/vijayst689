@@ -1940,3 +1940,16 @@ alter table banner add api_approved text DEFAULT NULL after api_processing;
 
 alter table pstm add api_processing text DEFAULT NULL after certificate;
 alter table pstm add api_approved text DEFAULT NULL after api_processing;
+
+//18-07-2025
+
+alter table smartcard add relationship text DEFAULT NULL;
+alter table smartcard add dob text DEFAULT NULL;
+alter table smartcard_otp add name varchar(100) DEFAULT NULL;
+alter table smartcard_otp add documents varchar(20) DEFAULT NULL;
+alter table smartcard_otp add name_tamil varchar(100) DEFAULT NULL;
+alter table smartcard_otp add name_english varchar(100) DEFAULT NULL;
+
+alter table fssai add food_service varchar(20) Default NULL;
+alter table fssai add shop_photo varchar(20) Default NULL;
+alter table fssai add mobile_no varchar(20) Default NULL;
