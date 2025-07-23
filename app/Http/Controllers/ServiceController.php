@@ -343,6 +343,7 @@ public function applyservices($serviceid) {
     return view( 'applyservice.bondapply',compact('serviceid','districts','servicename','amount','payment','customers'));
 
 }  elseif ( $serviceid == 122 || $serviceid == 123 ){
+    $mainbalance = DB::table( 'users' )->select('wallet')->where('id',2)->first();
    return view( 'applyservice.fssaiservice_apply',compact('serviceid','districts','servicename','amount','payment','customers','mainbalance','coordinator_permission','admin_payment'));
 
 }  elseif ( $serviceid == 125 ){
@@ -385,9 +386,11 @@ public function applyservices($serviceid) {
     return view( 'applyservice.can_editservice',compact('serviceid','districts','servicename','amount','customers','payment'));
 
 }  elseif ( $serviceid == 221 ){
+    $mainbalance = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     return view( 'applyservice.smartcard_otpservice',compact('serviceid','districts','servicename','amount','payment','customers','mainbalance','coordinator_permission','admin_payment'));
 
 }elseif ($serviceid == 222 || $serviceid == 223 || $serviceid == 228 || $serviceid == 229 || $serviceid == 230 || $serviceid == 231  || $serviceid == 232 || $serviceid == 233 || $serviceid == 234 || $serviceid == 235){
+    $mainbalance = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     return view( 'applyservice.smartcard_nametransfer',compact('serviceid','districts','servicename','amount','customers','payment','mainbalance','coordinator_permission','admin_payment'));
 
 }elseif ( $serviceid == 225 ){
