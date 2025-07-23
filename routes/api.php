@@ -24,3 +24,15 @@ Route::post('/get_panstatus', [App\Http\Controllers\api\ApiController::class, 'g
 
 // CAN NUMBER
 Route::post('/get_cannumberstatus', [App\Http\Controllers\api\ApiController::class, 'get_cannumberstatus'])->name('get_cannumberstatus');
+
+// TAILOR 
+Route::post('/get_tailorstatus', [App\Http\Controllers\api\ApiController::class, 'get_tailorstatus'])->name('get_tailorstatus');
+
+// SMART CARD OTP
+Route::post('/get_smartcardotpstatus', [App\Http\Controllers\api\ApiController::class, 'get_smartcardotpstatus'])->name('get_smartcardotpstatus');
+
+// SMART CARD 
+Route::post('/get_smartcardstatus', [App\Http\Controllers\api\ApiController::class, 'get_smartcardstatus'])->name('get_smartcardstatus');
+
+// FSSAI SERVICE 
+Route::post('/get_fssaistatus', [App\Http\Controllers\api\ApiController::class, 'get_fssaistatus'])->name('get_fssaistatus');

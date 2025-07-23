@@ -1953,3 +1953,20 @@ alter table smartcard_otp add name_english varchar(100) DEFAULT NULL;
 alter table fssai add food_service varchar(20) Default NULL;
 alter table fssai add shop_photo varchar(20) Default NULL;
 alter table fssai add mobile_no varchar(20) Default NULL;
+alter table fssai add documents varchar(20) Default NULL;
+alter table fssai add rental_agreement varchar(20) Default NULL;
+alter table fssai add electricity_bill varchar(20) Default NULL;
+alter table fssai add property_tax varchar(20) Default NULL;
+alter table fssai add food_service varchar(20) Default NULL;
+alter table fssai add shop_photo varchar(20) Default NULL;
+
+//22-07-2025
+
+CREATE TABLE `coordinator_permission` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `parent_id` int DEFAULT 0,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;

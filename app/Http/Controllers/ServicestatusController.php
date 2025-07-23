@@ -703,7 +703,7 @@ class ServicestatusController extends Controller
             $services = DB::table('voterid')->where('id',$id)->where('status',$status)->first();
 
         }
-        elseif($service_id == 113 || $service_id == 122 || $service_id == 123 ){
+        elseif($service_id == 122 || $service_id == 123 ){
             $services = DB::table('fssai')->where('id',$id)->where('status',$status)->first();
 
         } elseif($service_id == 95 || $service_id == 96 || $service_id == 97 || $service_id == 98){
@@ -945,14 +945,8 @@ class ServicestatusController extends Controller
    }   elseif( $service_id == 221 ){
         return view('servicestatus.smartcard_otpstatusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
 
-    }   elseif( $service_id == 222 || $service_id == 230 ){
-        return view('servicestatus.smartcard_memberstatusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
-
-    }   elseif($service_id == 223 || $service_id == 228 || $service_id == 229 || $service_id == 231 || $service_id == 232 || $service_id == 233 ){
+    }   elseif($service_id == 222 || $service_id == 223 || $service_id == 228 || $service_id == 229 || $service_id == 230 || $service_id == 231 || $service_id == 232 || $service_id == 233 || $service_id == 234 || $service_id == 235 ){
         return view('servicestatus.smartcard_nametransferstatusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
-
-    }  elseif($service_id == 234 || $service_id == 235 || $service_id == 236 || $service_id == 237 || $service_id == 238 || $service_id == 239 || $service_id == 240 || $service_id == 241){
-       return view('servicestatus.smartcardupdate',compact('id','services','servicename','customers','serviceid','amount','districts','taluk') );
 
     }   elseif( $service_id == 225 ){
     //dd($services);
@@ -6966,18 +6960,31 @@ public function fssaiservice_update(Request $request){
                 'amount'            => $request->amount,
                 'shop_name'         => $request->shop_name,
                 'mobile'            => $request->mobile,
+                'mobile_no'         => $request->mobile_no,
                 'email_id'          => $request->email_id,
+                'documents'         => $request->documents,
+                'food_service'      => $request->food_service,
                 'status'            => 'Pending',
                 'applied_date'      => date("Y-m-d"),
                 'created_at'        => date("Y-m-d"),
             ] );
 
-            if ($request->photo != null) {
+           if ($request->photo != null) {
                 $photo = uniqid().'.'.$request->file('photo')->extension();
                 $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
                 move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
+                
                 DB::table('fssai')->where( 'id', $request->applied_serviceid )->update( [
                     'photo' => $photo,
+                ]);
+            }
+            if ($request->shop_photo != null) {
+                $shop_photo = uniqid().'.'.$request->file('shop_photo')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'shop_photo' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['shop_photo']['tmp_name'], $filepath . $shop_photo);
+
+                DB::table('fssai')->where( 'id', $request->applied_serviceid )->update( [
+                    'shop_photo' => $shop_photo,
                 ]);
             }
             if ($request->aadhaar_card != null) {
@@ -7008,7 +7015,99 @@ public function fssaiservice_update(Request $request){
                 ]);
             }
 
-        }
+            if ($request->rental_agreement != null) {
+                $rental_agreement = uniqid().'.'.$request->file('rental_agreement')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'rental_agreement' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['rental_agreement']['tmp_name'], $filepath . $rental_agreement);
+
+                DB::table('fssai')->where( 'id', $request->applied_serviceid )->update( [
+                    'rental_agreement' => $rental_agreement,
+                ]);
+            }
+
+            if ($request->electricity_bill != null) {
+                $electricity_bill = uniqid().'.'.$request->file('electricity_bill')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'electricity_bill' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['electricity_bill']['tmp_name'], $filepath . $electricity_bill);
+
+                DB::table('fssai')->where( 'id', $request->applied_serviceid )->update( [
+                    'electricity_bill' => $electricity_bill,
+                ]);
+            }
+
+            if ($request->property_tax != null) {
+                $property_tax = uniqid().'.'.$request->file('property_tax')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'property_tax' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['property_tax']['tmp_name'], $filepath . $property_tax);
+
+                DB::table('fssai')->where( 'id', $request->applied_serviceid )->update( [
+                    'property_tax' => $property_tax,
+                ]);
+            }
+
+        $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    //echo$coordinator_permission;die;
+    if($coordinator_permission == 1){
+     $getdata = DB::table( 'fssai' )->where('id',$request->applied_serviceid)->first();
+     if($getdata){
+     $aadhaar_card = $getdata->aadhaar_card;
+     $photo = $getdata->photo;
+     $shop_photo = $getdata->shop_photo;
+     $pan_card = $getdata->pan_card;
+     $rental_agreement = $getdata->rental_agreement;
+     $electricity_bill = $getdata->electricity_bill;
+     $property_tax = $getdata->property_tax;
+     $old_food_license = $getdata->old_food_license;
+     $service_id = $getdata->service_id;
+     $rowid = $getdata->id;
+     $food_service = $getdata->food_service;
+     $shop_name = $getdata->shop_name;
+     $email_id = $getdata->email_id;
+     $mobile = $getdata->mobile;
+     $documents = $getdata->documents;
+     $mobile_no = $getdata->mobile_no;
+     $status = $getdata->status;
+     $url = url('/');
+     $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
+     $photo_url = $url.'/upload/services/photo/'.$photo;
+     $shopphoto_url = $url.'/upload/services/shop_photo/'.$shop_photo;
+     $pancard_url = $url.'/upload/services/pan_card/'.$pan_card;
+     $rentalagreement_url = $url.'/upload/services/rental_agreement/'.$rental_agreement;
+     $electricitybill_url = $url.'/upload/services/electricity_bill/'.$electricity_bill;
+     $propertytax_url = $url.'/upload/services/property_tax/'.$property_tax;
+     $oldfoodlicense_url = $url.'/upload/services/old_food_license/'.$old_food_license;
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+
+     $ch = curl_init();
+    
+    if($serviceid == 122){
+    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo_file=$photo_url&photo_file=$photo_url&aadhaar_file=$aadhaar_url&shop_photo_file=$shopphoto_url&pan_card_file=$pancard_url&rental_agreement_file=$rentalagreement_url&electricity_bill_file=$electricitybill_url&property_tax_file=$propertytax_url&service_id=$service_id&rowid=$rowid&status=$status&food_service=$food_service&shop_name=$shop_name&email_id=$email_id&mobile=$mobile&documents=$documents&mobile_no=$mobile_no";
+    }elseif($serviceid == 123){
+    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&old_food_license_file=$oldfoodlicense_url&photo_file=$photo_url&aadhaar_file=$aadhaar_url&shop_photo_file=$shopphoto_url&pan_card_file=$pancard_url&service_id=$service_id&rowid=$rowid&status=$status&shop_name=$shop_name&email_id=$email_id&mobile=$mobile"; 
+    }else{
+    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo_file=$photo_url&photo_file=$photo_url&aadhaar_file=$aadhaar_url&shop_photo_file=$shopphoto_url&pan_card_file=$pancard_url&rental_agreement_file=$rentalagreement_url&electricity_bill_file=$electricitybill_url&property_tax_file=$propertytax_url&old_food_license_file=$oldfoodlicense_url&service_id=$service_id&rowid=$rowid&status=$status&food_service=$food_service&shop_name=$shop_name&email_id=$email_id&mobile=$mobile&documents=$documents&mobile_no=$mobile_no";
+    }
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_fssai_api';
+        //echo $url1;die;
+
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+}
+    }
         DB::table( 'fssai' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
         ] );
@@ -8746,7 +8845,15 @@ public function smartcardotp_update(Request $request){
     }else{
         $status = "Pending";
         $serviceid = $request->serviceid;
-
+            DB::table('smartcard_otp')->where('id', $request->applied_serviceid)->update([
+                'service_id'   => $request ->serviceid,
+                'amount'       => $request->amount,
+                'name'         => $request->name,
+                'documents'    => $request->documents,
+                'status'       => 'Pending',
+                'applied_date' => date("Y-m-d"),
+                'created_at'   => date("Y-m-d"),
+            ]);
             if ($request->aadhaar_card != null) {
                 $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
                 $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
@@ -8763,6 +8870,46 @@ public function smartcardotp_update(Request $request){
                     'smart_card'         => $smart_card,
                 ]);
             }
+    $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    if($coordinator_permission == 1){
+     $getdata = DB::table( 'smartcard_otp' )->where('id',$request->applied_serviceid)->first();
+     if($getdata){
+     $aadhaar_card = $getdata->aadhaar_card;
+     $smart_card = $getdata->smart_card;
+     $service_id = $getdata->service_id;
+     $rowid = $getdata->id;
+     $name = $getdata->name;
+     $documents = $getdata->documents;
+     $status = $getdata->status;
+     $url = url('/');
+     $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
+     $smartcard_url = $url.'/upload/services/smart_card/'.$smart_card;
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+
+     $ch = curl_init();
+    if($serviceid == 221){
+        $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&smartcard_file=$smartcard_url&service_id=218&rowid=$rowid&name=$name&documents=$documents&status=$status";
+
+    }
+        $url1 = $RAMJIPAY_URL.'/api/update_smartcardotp_api';
+        //echo $url1;die;
+// dd($post_data);
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+}
         DB::table( 'smartcard_otp' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
         ] );
@@ -8771,283 +8918,6 @@ public function smartcardotp_update(Request $request){
     return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
 
-public function smartcard_member_update(Request $request){
-    $apply_user_id = 0;
-    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
-        $apply_user_id = $request->user_id;
-    }
-    elseif($request->retailer_id == 0){
-        $apply_user_id = $request->distributor_id;
-    }elseif($request->distributor_id == 0){
-        $apply_user_id = $request->retailer_id;
-    }
-    if($apply_user_id != Auth::user()->id){
-        $status = $request->status;
-        if($status == "Resubmit"){
-            DB::table( 'smartcard' )->where('id', $request->applied_serviceid)->update( [
-                'remarks'  => $request->remarks,
-                'status'  => $status,
-            ] );
-        }elseif($status == "Processing"){
-            if ( $request->acknowledgement != null ) {
-                $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
-                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
-                move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
-                DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-                    'acknowledgement' => $acknowledgement,
-                ] );
-            }
-            DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-                'status' => $status,
-                'application_no' => $request->application_no,
-                'selects' => $request->selects,
-            ] );
-        }elseif($status == "Approved"){
-            if ( $request->certificate != null ) {
-                $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
-                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'certificate'. DIRECTORY_SEPARATOR);
-                move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
-                DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-                    'certificate' => $certificate,
-                    'status' => $status,
-                    'completed_date' => date("Y-m-d"),
-                ] );
-            }
-            DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-                'status' => $status,
-                'application' => $request->application,
-                'lects' => $request->lects,
-            ] );
-        }elseif($status == "Rejected"){
-            $serviceid = $request->serviceid;
-            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
-            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
-            $usertype = 0;
-            if($getusers){
-                $usertype = $getusers->user_type_id;
-            }
-            $payment = 0;
-            if($getservice_payment){
-                if($usertype == 3){
-                  $payment = $getservice_payment->distributor_amount;
-              }elseif($usertype == 4){
-                  $payment = $getservice_payment->retailer_amount;
-              }elseif($usertype == 5){
-                  $payment = $getservice_payment->customer_amount;
-              }
-          } 
-
-          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
-          $servicename = "";
-          if($getservicename){
-            $servicename = $getservicename->service_name;
-        }
-        $date = date( 'Y-m-d' );
-        $time = date( 'H:i:s' );
-        $service_status = 'Out Payment';
-        $ad_info = "Service Refund For". ' ' .$servicename;
-
-        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
-        $balance = 0;
-        if($getwallet){
-            $balance = $getwallet->wallet;
-        }
-        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
-        $balance1 = 0;
-        if($getuserswallet){
-            $balance1 = $getuserswallet->wallet;
-        }
-        $newbalance = $balance - $payment;
-        $newbalance1 = $balance1 + $payment;
-
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
-        DB::insert( DB::raw( $sql ) );
-        $sql = "update users set wallet = wallet - $payment where id = 2";
-        DB::update( DB::raw( $sql ) );
-        $service_status = 'IN Payment';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
-        DB::insert( DB::raw( $sql ) );
-        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
-        DB::update( DB::raw( $sql ) );
-
-        DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-            'status' => $status,
-            'remarks'  => $request->remarks,
-
-        ] );
-
-    }
-    }else{
-        $status = "Pending";
-        $serviceid = $request->serviceid;
- if( $serviceid == 222 ){
-            DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-                'service_id'                => $request ->serviceid,
-                'dist_id'                   => $request->dist_id,
-                'taluk_id'                  => $request->taluk_id,
-                'add_member'                => $request->add_member,
-                'mobile'                    => $request->mobile,
-                'documents'                 => $request->documents,
-                'status'                    => 'Pending',
-                'applied_date'              => date("Y-m-d"),
-                'created_at'                => date("Y-m-d"),
-            ] );
-            if ($request->aadhaar_card != null) {
-                $aadhaarimg = uniqid().'.'.$request->file('aadhaar_card')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaarimg);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar_card' => $aadhaarimg,
-                ]);
-            }
-            if ($request->aadhaar_card2 != null) {
-                $aadhaarimg2 = uniqid().'.'.$request->file('aadhaar_card2')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card2' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar_card2']['tmp_name'], $filepath . $aadhaarimg2);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar_card2' => $aadhaarimg2,
-                ]);
-            }
-            if ($request->aadhaar_card3 != null) {
-                $aadhaarimg3 = uniqid().'.'.$request->file('aadhaar_card3')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card3' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar_card3']['tmp_name'], $filepath . $aadhaarimg3);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar_card3' => $aadhaarimg3,
-                ]);
-            }
-            if ($request->aadhaar_card4 != null) {
-                $aadhaarimg4 = uniqid().'.'.$request->file('aadhaar_card4')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card4' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar_card4']['tmp_name'], $filepath . $aadhaarimg4);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar_card4' => $aadhaarimg4,
-                ]);
-            }
-            if ($request->aadhaar_card5 != null) {
-                $aadhaarimg5 = uniqid().'.'.$request->file('aadhaar_card5')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card5' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar_card5']['tmp_name'], $filepath . $aadhaarimg5);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar_card5' => $aadhaarimg5,
-                ]);
-            }
-            if ($request->smart_card != null) {
-                $smart_card = uniqid().'.'.$request->file('smart_card')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smart_card' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['smart_card']['tmp_name'], $filepath . $smart_card);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'smart_card' => $smart_card,
-                ]);
-            }
-            if ($request->family_head_photo != null) {
-                $family_head_photo = uniqid().'.'.$request->file('family_head_photo')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR. 'family_head_photo' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['family_head_photo']['tmp_name'], $filepath . $family_head_photo);
-                DB::table('smartcard')->where('id', $request->applied_serviceid)->update([
-                    'family_head_photo'         => $family_head_photo,
-                ]);
-            }
-            if ($request->rental_agreement != null) {
-                $rental_agreement = uniqid().'.'.$request->file('rental_agreement')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR. 'rental_agreement' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['rental_agreement']['tmp_name'], $filepath . $rental_agreement);
-                DB::table('smartcard')->where('id', $request->applied_serviceid)->update([
-                    'rental_agreement'         => $rental_agreement,
-                ]);
-            }
-            if ($request->electricity_bill_receipt != null) {
-                $electricity_bill_receipt = uniqid().'.'.$request->file('electricity_bill_receipt')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR. 'electricity_bill_receipt' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['electricity_bill_receipt']['tmp_name'], $filepath . $electricity_bill_receipt);
-                DB::table('smartcard')->where('id', $request->applied_serviceid)->update([
-                    'electricity_bill_receipt'         => $electricity_bill_receipt,
-                ]);
-            }
-            if ($request->patta != null) {
-                $patta = uniqid().'.'.$request->file('patta')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR. 'patta' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['patta']['tmp_name'], $filepath . $patta);
-                DB::table('smartcard')->where('id', $request->applied_serviceid)->update([
-                    'patta'         => $patta,
-                ]);
-            }
-            if ($request->gas_cylinder_receipt != null) {
-                $gas_cylinder_receipt = uniqid().'.'.$request->file('gas_cylinder_receipt')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR. 'gas_cylinder_receipt' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['gas_cylinder_receipt']['tmp_name'], $filepath . $gas_cylinder_receipt);
-                DB::table('smartcard')->where('id', $request->applied_serviceid)->update([
-                    'gas_cylinder_receipt'         => $gas_cylinder_receipt,
-                ]);
-            }
-        }elseif( $serviceid == 230 ){
-                DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-                'service_id'                => $request ->serviceid,
-                'dist_id'                   => $request->dist_id,
-                'taluk_id'                  => $request->taluk_id,
-                'member'                    => $request->member,
-                'status'                    => 'Pending',
-                'applied_date'              => date("Y-m-d"),
-                'created_at'                => date("Y-m-d"),
-            ] );
-            if ($request->aadhaar != null) {
-                $aadhaarimg = uniqid().'.'.$request->file('aadhaar')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar']['tmp_name'], $filepath . $aadhaarimg);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar' => $aadhaarimg,
-                ]);
-            }
-            if ($request->aadhaar2 != null) {
-                $aadhaarimg2 = uniqid().'.'.$request->file('aadhaar2')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar2' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar2']['tmp_name'], $filepath . $aadhaarimg2);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar2' => $aadhaarimg2,
-                ]);
-            }
-            if ($request->aadhaar3 != null) {
-                $aadhaarimg3 = uniqid().'.'.$request->file('aadhaar3')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar3' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar3']['tmp_name'], $filepath . $aadhaarimg3);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar3' => $aadhaarimg3,
-                ]);
-            }
-            if ($request->aadhaar4 != null) {
-                $aadhaarimg4 = uniqid().'.'.$request->file('aadhaar4')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar4' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar4']['tmp_name'], $filepath . $aadhaarimg4);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar4' => $aadhaarimg4,
-                ]);
-            }
-            if ($request->aadhaar5 != null) {
-                $aadhaarimg5 = uniqid().'.'.$request->file('aadhaar5')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar5' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar5']['tmp_name'], $filepath . $aadhaarimg5);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar5' => $aadhaarimg5,
-                ]);
-            }
-            if ($request->smart_card != null) {
-                $smart_card = uniqid().'.'.$request->file('smart_card')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smart_card' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['smart_card']['tmp_name'], $filepath . $smart_card);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'smart_card' => $smart_card,
-                ]);
-            }
-
-        }
-
-        DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-            'status' => $status,
-        ] );
-    }
-
-    return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
-}
 
 public function smartcard_nametransfer_update(Request $request){
     $apply_user_id = 0;
@@ -9158,13 +9028,16 @@ public function smartcard_nametransfer_update(Request $request){
     }else{
          $status = "Pending";
         $serviceid = $request->serviceid;
-           if($serviceid == 223 || $serviceid == 228 || $serviceid == 233){
+           if($serviceid == 222 || $serviceid == 223 || $serviceid == 228 || $serviceid == 229 || $serviceid == 230 || $serviceid == 231 || $serviceid == 232 || $serviceid == 233 || $serviceid == 234){
             DB::table('smartcard')->where('id', $request->applied_serviceid)->update([
                 'service_id'   => $request ->serviceid,
                 'amount'       => $request->amount,
                 'dist_id'      => $request->dist_id,
                 'taluk_id'     => $request->taluk_id,
-                'mobile'       => $request->mobile,
+                'dob'          => $request->dob,
+                'relationship' => $request->relationship,
+                'name_tamil'   => $request->name_tamil,
+                'name_english' => $request->name_english,
                 'status'       => 'Pending',
                 'applied_date' => date("Y-m-d"),
                 'created_at'   => date("Y-m-d"),
@@ -9186,11 +9059,69 @@ public function smartcard_nametransfer_update(Request $request){
                 ]);
             }
 
+    $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    //echo$coordinator_permission;die;
+    if($coordinator_permission == 1){
+     $getdata = DB::table( 'smartcard' )->where('id',$request->applied_serviceid)->first();
+     if($getdata){
+     $aadhaar_card = $getdata->aadhaar_card;
+     $smart_card = $getdata->smart_card;
+     $service_id = $getdata->service_id;
+     $rowid = $getdata->id;
+     $status = $getdata->status;
+     $dob = $getdata->dob;
+     $dist_id = $getdata->dist_id;
+     $taluk_id = $getdata->taluk_id;
+     $relationship = $getdata->relationship;
+     $name_tamil = $getdata->name_tamil;
+     $name_english = $getdata->name_english;
+     $url = url('/');
+     $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
+     $smartcard_url = $url.'/upload/services/smart_card/'.$smart_card;
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
 
-        DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-            'status' => $status,
-        ] );
-        }elseif( $serviceid == 229 ){
+     $ch = curl_init();
+    if($serviceid == 222){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=219&rowid=$rowid&status=$status&smartcard_file=$smartcard_url&dist_id=$dist_id&taluk_id=$taluk_id&relationship=$relationship&name_tamil=$name_tamil&name_english=$name_english&dob=$dob";
+    }elseif($serviceid == 223){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=224&rowid=$rowid&status=$status&smartcard_file=$smartcard_url&relationship=$relationship";
+    }elseif($serviceid == 228){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=225&rowid=$rowid&status=$status&smartcard_file=$smartcard_url&name_tamil=$name_tamil&name_english=$name_english";
+    }elseif($serviceid == 229){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=234&rowid=$rowid&status=$status&smartcard_file=$smartcard_url&dob=$dob";
+    }elseif($serviceid == 230){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=235&rowid=$rowid&status=$status&smartcard_file=$smartcard_url&relationship=$relationship";
+    }elseif($serviceid == 231){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=236&rowid=$rowid&status=$status&smartcard_file=$smartcard_url&name_tamil=$name_tamil&name_english=$name_english&dob=$dob";
+    }elseif($serviceid == 232){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=237&rowid=$rowid&status=$status&smartcard_file=$smartcard_url&dist_id=$dist_id&taluk_id=$taluk_id&relationship=$relationship&name_tamil=$name_tamil&name_english=$name_english&dob=$dob";
+    }elseif($serviceid == 233){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=238&rowid=$rowid&status=$status&smartcard_file=$smartcard_url&relationship=$relationship&name_tamil=$name_tamil&name_english=$name_english";
+    }elseif($serviceid == 234){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=245&rowid=$rowid&status=$status&smartcard_file=$smartcard_url&relationship=$relationship&dob=$dob";
+    }else{
+    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&smartcard_file=$smartcard_url&service_id=$service_id&rowid=$rowid&status=$status&dist_id=$dist_id&taluk_id=$taluk_id&relationship=$relationship&name_tamil=$name_tamil&name_english=$name_english&dob=$dob";
+    }
+        $url1 = $RAMJIPAY_URL.'/api/update_smartcard_api';
+        //echo $url1;die;
+// dd($post_data);
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+}
+       }elseif( $serviceid == 235 ){
             DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
                 'service_id'                => $request ->serviceid,
                 'dist_id'                   => $request->dist_id,
@@ -9290,340 +9221,72 @@ public function smartcard_nametransfer_update(Request $request){
                     'gas_cylinder_receipt'         => $gas_cylinder_receipt,
                 ]);
             }
-            if ($request->already_applied_application != null) {
-                $already_applied_application = uniqid().'.'.$request->file('already_applied_application')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'already_applied_application' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['already_applied_application']['tmp_name'], $filepath . $already_applied_application);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'already_applied_application' => $already_applied_application,
-                ]);
-            }
-     }elseif( $serviceid == 231 ){
-                DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-                'service_id'                => $request ->serviceid,
-                'dist_id'                   => $request->dist_id,
-                'taluk_id'                  => $request->taluk_id,
-                'member'                    => $request->member,
-                'status'                    => 'Pending',
-                'applied_date'              => date("Y-m-d"),
-                'created_at'                => date("Y-m-d"),
-            ] );
-            if ($request->aadhaar != null) {
-                $aadhaarimg = uniqid().'.'.$request->file('aadhaar')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar']['tmp_name'], $filepath . $aadhaarimg);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar' => $aadhaarimg,
-                ]);
-            }
-            if ($request->aadhaar2 != null) {
-                $aadhaarimg2 = uniqid().'.'.$request->file('aadhaar2')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar2' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar2']['tmp_name'], $filepath . $aadhaarimg2);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar2' => $aadhaarimg2,
-                ]);
-            }
-            if ($request->aadhaar3 != null) {
-                $aadhaarimg3 = uniqid().'.'.$request->file('aadhaar3')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar3' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar3']['tmp_name'], $filepath . $aadhaarimg3);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar3' => $aadhaarimg3,
-                ]);
-            }
-            if ($request->aadhaar4 != null) {
-                $aadhaarimg4 = uniqid().'.'.$request->file('aadhaar4')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar4' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar4']['tmp_name'], $filepath . $aadhaarimg4);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar4' => $aadhaarimg4,
-                ]);
-            }
-            if ($request->aadhaar5 != null) {
-                $aadhaarimg5 = uniqid().'.'.$request->file('aadhaar5')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar5' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar5']['tmp_name'], $filepath . $aadhaarimg5);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar5' => $aadhaarimg5,
-                ]);
-            }
-            if ($request->smart_card != null) {
-                $smart_card = uniqid().'.'.$request->file('smart_card')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smart_card' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['smart_card']['tmp_name'], $filepath . $smart_card);
-                DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                    'smart_card' => $smart_card,
-                ]);
-            }
-
-        }elseif( $serviceid == 232 ){
-                DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-                'service_id'                => $request ->serviceid,
-                'dist_id'                   => $request->dist_id,
-                'taluk_id'                  => $request->taluk_id,
-                'status'                    => 'Pending',
-                'applied_date'              => date("Y-m-d"),
-                'created_at'                => date("Y-m-d"),
-            ] );
-            if ($request->aadhaar_card != null) {
-                $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
-                DB::table('smartcard')->where('id', $request->applied_serviceid)->update([
-                    'aadhaar_card'         => $aadhaar_card,
-                ]);
-            }
-            if ($request->smart_card != null) {
-                $smart_card = uniqid().'.'.$request->file('smart_card')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smart_card' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['smart_card']['tmp_name'], $filepath . $smart_card);
-                DB::table('smartcard')->where('id', $request->applied_serviceid)->update([
-                    'smart_card'         => $smart_card,
-                ]);
-            }
-
-        }
+    $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
     }
+    //echo$coordinator_permission;die;
+    if($coordinator_permission == 1){
+     $getdata = DB::table( 'smartcard' )->where('id',$request->applied_serviceid)->first();
+     if($getdata){
+     $aadhaar_card = $getdata->aadhaar_card;
+     $service_id = $getdata->service_id;
+     $rowid = $getdata->id;
+     $status = $getdata->status;
+     $dist_id = $getdata->dist_id;
+     $taluk_id = $getdata->taluk_id;
+     $add_member = $getdata->add_member;
+     $aadhaar2 = $getdata->aadhaar_card2;
+     $aadhaar3 = $getdata->aadhaar_card3;
+     $aadhaar4 = $getdata->aadhaar_card4;
+     $aadhaar5 = $getdata->aadhaar_card5;
+     $family_head = $getdata->family_head_photo;
+     $mobile = $getdata->mobile;
+     $documents = $getdata->documents;
+     $electricity_bill = $getdata->electricity_bill_receipt;
+     $patta = $getdata->patta;
+     $rental_agreement = $getdata->rental_agreement;
+     $gas_cylinder = $getdata->gas_cylinder_receipt;
+     $url = url('/');
+     $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
+     $aadhaar2_url = $url.'/upload/services/aadhaar_card2/'.$aadhaar_card2;
+     $aadhaar3_url = $url.'/upload/services/aadhaar_card3/'.$aadhaar_card3;
+     $aadhaar4_url = $url.'/upload/services/aadhaar_card4/'.$aadhaar_card4;
+     $aadhaar5_url = $url.'/upload/services/aadhaar_card5/'.$aadhaar_card5;
+     $family_head_url = $url.'/upload/services/family_head_photo/'.$family_head_photo;
+     $mobile_url = $url.'/upload/services/mobile/'.$moblie;
+     $patta_url = $url.'/upload/services/patta/'.$patta;
+     $electricity_bill_url = $url.'/upload/services/electricity_bill_receipt/'.$electricity_bill_receipt;
+     $rental_agreement_url = $url.'/upload/services/rental_agreement/'.$rental_agreement;
+     $gas_cylinder_url = $url.'/upload/services/gas_cylinder_receipt/'.$gas_cylinder_receipt;
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
 
-    return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
+     $ch = curl_init();
+    if($serviceid == 235){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&dist_id=$dist_id&taluk_id=$taluk_id&service_id=246&rowid=$rowid&status=$status&moblie=$moblie&aadhaar_file=$aadhaar_url&aadhaar_file2=$aadhaar_url2&aadhaar_file3=$aadhaar_url3&aadhaar_file4=$aadhaar_url4&aadhaar_file5=$aadhaar_url5&patta_file=$patta_url&family_head_photo_file=$family_head_url&electricity_bill_receipt_file=$electricity_bill_url&rental_agreement_file=$rental_agreement_url&gas_cylinder_receipt_file=$gas_cylinder_url";
+    }
+        $url1 = $RAMJIPAY_URL.'/api/update_smartcard_api';
+        //echo $url1;die;
+    // dd($post_data);
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
 }
-
-public function smartcard_update(Request $request){
-    $apply_user_id = 0;
-    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
-        $apply_user_id = $request->user_id;
-    }
-    elseif($request->retailer_id == 0){
-        $apply_user_id = $request->distributor_id;
-    }elseif($request->distributor_id == 0){
-        $apply_user_id = $request->retailer_id;
-    }
-    if($apply_user_id != Auth::user()->id){
-        $status = $request->status;
-        if($status == "Resubmit"){
-            DB::table( 'smartcard' )->where('id', $request->applied_serviceid)->update( [
-                'remarks'  => $request->remarks,
-                'status'  => $status,
-            ] );
-        }elseif($status == "Processing"){
-            if ( $request->acknowledgement != null ) {
-                $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
-                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
-                move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
-                DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-                    'acknowledgement' => $acknowledgement,
-                ] );
-            }
-            DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-                'status' => $status,
-                'application_no' => $request->application_no,
-                'selects' => $request->selects,
-            ] );
-        }elseif($status == "Approved"){
-            if ( $request->certificate != null ) {
-                $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
-                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'certificate'. DIRECTORY_SEPARATOR);
-                move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
-                DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-                    'certificate' => $certificate,
-                    'status' => $status,
-                    'completed_date' => date("Y-m-d"),
-                ] );
-            }
-            DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-                'status' => $status,
-                'application' => $request->application,
-                'lects' => $request->lects,
-            ] );
-        }elseif($status == "Rejected"){
-            $serviceid = $request->serviceid;
-            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
-            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
-            $usertype = 0;
-            if($getusers){
-                $usertype = $getusers->user_type_id;
-            }
-            $payment = 0;
-            if($getservice_payment){
-                if($usertype == 3){
-                  $payment = $getservice_payment->distributor_amount;
-              }elseif($usertype == 4){
-                  $payment = $getservice_payment->retailer_amount;
-              }elseif($usertype == 5){
-                  $payment = $getservice_payment->customer_amount;
-              }
-          } 
-
-          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
-          $servicename = "";
-          if($getservicename){
-            $servicename = $getservicename->service_name;
         }
-        $date = date( 'Y-m-d' );
-        $time = date( 'H:i:s' );
-        $service_status = 'Out Payment';
-        $ad_info = "Service Refund For". ' ' .$servicename;
-
-        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
-        $balance = 0;
-        if($getwallet){
-            $balance = $getwallet->wallet;
-        }
-        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
-        $balance1 = 0;
-        if($getuserswallet){
-            $balance1 = $getuserswallet->wallet;
-        }
-        $newbalance = $balance - $payment;
-        $newbalance1 = $balance1 + $payment;
-
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
-        DB::insert( DB::raw( $sql ) );
-        $sql = "update users set wallet = wallet - $payment where id = 2";
-        DB::update( DB::raw( $sql ) );
-        $service_status = 'IN Payment';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
-        DB::insert( DB::raw( $sql ) );
-        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
-        DB::update( DB::raw( $sql ) );
 
         DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
-            'remarks'  => $request->remarks,
-
         ] );
-        }
-    }else{
-        $status = "Pending";
-        $serviceid = $request->serviceid;
-        if($serviceid == 234){
-        DB::table('smartcard')->where('id', $request->applied_serviceid)->update([
-            'service_id'                => $request ->serviceid,
-            'dist_id'                   => $request->dist_id,
-            'taluk_id'                  => $request->taluk_id,
-            'mobile'                    => $request->mobile,
-            'status'                    => 'Pending',
-            'applied_date'              => date("Y-m-d"),
-            'created_at'                => date("Y-m-d"),
-        ] );
-
-        if ($request->family_head_aadhaar != null) {
-            $family_head_aadhaar = uniqid().'.'.$request->file('family_head_aadhaar')->extension();
-            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'family_head_aadhaar' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['family_head_aadhaar']['tmp_name'], $filepath . $family_head_aadhaar);
-            DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                'family_head_aadhaar' => $family_head_aadhaar,
-            ]);
-        }
-        if ($request->already_applied_application != null) {
-            $already_applied_application = uniqid().'.'.$request->file('already_applied_application')->extension();
-            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'already_applied_application' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['already_applied_application']['tmp_name'], $filepath . $already_applied_application);
-
-            DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                'already_applied_application' => $already_applied_application,
-            ]);
-        }
-        if ($request->smart_card != null) {
-            $smart_card = uniqid().'.'.$request->file('smart_card')->extension();
-            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smart_card' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['smart_card']['tmp_name'], $filepath . $smart_card);
-
-            DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                'smart_card' => $smart_card,
-            ]);
-        }
-    }elseif($serviceid == 235){
-        // dd($request->all());
-        DB::table('smartcard')->where('id',  $request->applied_serviceid)->update([
-        'service_id'                => $request ->serviceid,
-        'dist_id'                   => $request->dist_id,
-        'taluk_id'                  => $request->taluk_id,
-        'vao_area'                  => $request->vao_area,
-        'pin_code'                  => $request->pin_code,
-        'door_no'                   => $request->door_no,
-        'mobile'                    => $request->mobile,
-        'street_name'               => $request->street_name,
-        'street_name_tamil'         => $request->street_name_tamil,
-        'postal_area_english'       => $request->postal_area_english,
-        'postal_area_tamil'         => $request->postal_area_tamil,
-        'status'                    => 'Pending',
-        'applied_date'              => date("Y-m-d"),
-        'created_at'                => date("Y-m-d"),
-         ] );
-
-        if ($request->aadhaar_card != null) {
-            $aadhaarimg = uniqid().'.'.$request->file('aadhaar_card')->extension();
-            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaarimg);
-
-            DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                'aadhaar_card' => $aadhaarimg,
-            ]);
-        }
-        if ($request->smart_card != null) {
-            $smart_card = uniqid().'.'.$request->file('smart_card')->extension();
-            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smart_card' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['smart_card']['tmp_name'], $filepath . $smart_card);
-
-            DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                'smart_card' => $smart_card,
-            ]);
-        }
-    }elseif($serviceid == 236 || $serviceid == 237 || $serviceid == 238 || $serviceid == 239 || $serviceid == 240 || $serviceid == 241 ){
-    DB::table('smartcard')->where('id', $request->applied_serviceid)->update([
-        'service_id'                => $request ->serviceid,
-        'name'                      => $request->name,
-        'mobile'                    => $request->mobile,
-        'dist_id'                   => $request->dist_id,
-        'taluk_id'                  => $request->taluk_id,
-        'vao_area'                  => $request->vao_area,
-        'pin_code'                  => $request->pin_code,
-        'door_no'                   => $request->door_no,
-        'mobile'                    => $request->mobile,
-        'street_name'               => $request->street_name,
-        'street_name_tamil'         => $request->street_name_tamil,
-        'postal_area_english'       => $request->postal_area_english,
-        'postal_area_tamil'         => $request->postal_area_tamil,
-        'smart_mobile'              => $request->smart_mobile,
-        'status'                    => 'Pending',
-        'applied_date'              => date("Y-m-d"),
-        'created_at'                => date("Y-m-d"),
-        ]);
-     if ($request->aadhaar_card != null) {
-            $aadhaarimg = uniqid().'.'.$request->file('aadhaar_card')->extension();
-            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaarimg);
-
-            DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                'aadhaar_card' => $aadhaarimg,
-            ]);
-        }
-        if ($request->smart_card != null) {
-            $smart_card = uniqid().'.'.$request->file('smart_card')->extension();
-            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smart_card' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['smart_card']['tmp_name'], $filepath . $smart_card);
-
-            DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                'smart_card' => $smart_card,
-            ]);
-        }
-         if ($request->photo != null) {
-            $photo = uniqid().'.'.$request->file('photo')->extension();
-            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
-
-            DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
-                'photo' => $photo,
-            ]);
-        }
     }
-      }
-      DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
-        'status' => $status,
-    ] );
-
     return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
 

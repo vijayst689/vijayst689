@@ -61,26 +61,40 @@
                                             @endif
                                             <td>{{ $ser->status }}</td>
                                             <td>{{ date('d-m-Y', strtotime($ser->applied_date)) }}</td>
-                                            @if($status == "Processing")
-                                            <td>{{ $ser->application_no }}</td>
-                                            <td>
-                                           @if($ser->selects == "File")
-                                            <a download href="{{ URL::to('/') }}/upload/services/acknowledgement/{{ $ser->acknowledgement }}" class="btn btn-success me-2 btn-sm">Download</a>
-                                            @elseif($ser->acknowledgement != "")
-                                            <a download href="{{ URL::to('/') }}/upload/services/acknowledgement/{{ $ser->acknowledgement }}" class="btn btn-success me-2 btn-sm">Download</a>
+                                            @if ($status == 'Processing')
+                                                <td>{{ $ser->application_no }}</td>
+                                                <td>
+                                                    @if ($ser->api_processing != '' && $ser->application_no == '')
+                                                        <a download href="{{ $ser->api_processing }}"
+                                                            class="btn btn-success me-2 btn-sm">Download</a>
+                                                    @elseif ($ser->selects == 'File')
+                                                        <a download
+                                                            href="{{ URL::to('/') }}/upload/services/acknowledgement/{{ $ser->acknowledgement }}"
+                                                            class="btn btn-success me-2 btn-sm">Download</a>
+                                                    @elseif($ser->acknowledgement != '')
+                                                        <a download
+                                                            href="{{ URL::to('/') }}/upload/services/acknowledgement/{{ $ser->acknowledgement }}"
+                                                            class="btn btn-success me-2 btn-sm">Download</a>
+                                                    @endif
+                                                </td>
+                                            @elseif($status == 'Approved')
+                                                <td>{{ $ser->application }}</td>
+                                                <td>
+                                                    @if ($ser->api_approved != '' && $ser->application == '')
+                                                        <a download href="{{ $ser->api_approved }}"
+                                                            class="btn btn-success me-2 btn-sm">Download</a>
+                                                    @elseif ($ser->lects == 'File')
+                                                        <a download
+                                                            href="{{ URL::to('/') }}/upload/services/certificate/{{ $ser->certificate }}"
+                                                            class="btn btn-success me-2 btn-sm">Download</a>
+                                                    @elseif($ser->certificate != '')
+                                                        <a download
+                                                            href="{{ URL::to('/') }}/upload/services/certificate/{{ $ser->certificate }}"
+                                                            class="btn btn-success me-2 btn-sm">Download</a>
+                                                    @endif
+                                                </td>
                                             @endif
-                                           </td>
-                                            @elseif($status == "Approved")
-                                            <td>{{ $ser->application }}</td>
-                                            <td>
-                                           @if($ser->lects == "File")
-                                            <a download href="{{ URL::to('/') }}/upload/services/certificate/{{ $ser->certificate }}" class="btn btn-success me-2 btn-sm">Download</a>
-                                            @elseif($ser->certificate != "")
-                                            <a download href="{{ URL::to('/') }}/upload/services/certificate/{{ $ser->certificate }}" class="btn btn-success me-2 btn-sm">Download</a>
-                                            @endif
-                                           </td>
-                                            @endif
-                                            @php 
+                                            @php
                                                 $apply_user_id = 0;
                                                 if ($ser->distributor_id == 0 && $ser->retailer_id == 0) {
                                                     $apply_user_id = $ser->user_id;
@@ -95,10 +109,9 @@
                                                     @if ($ser->status == 'Resubmit')
                                                         <a href="{{ url('/servicestatus') }}/{{ $ser->status }}/{{ $ser->id }}/{{ $ser->service_id }}"
                                                             class="btn btn-sm btn-warning">{{ $ser->status }}</a>
-
-                                                            @elseif($ser->status == "Approved")
-                                                            <a href="{{ url('/servicestatus') }}/{{ $ser->status }}/{{ $ser->id }}/{{ $ser->service_id }}"
-                                                                class="btn btn-sm btn-warning">{{ $ser->status }}</a>
+                                                    @elseif($ser->status == 'Approved')
+                                                        <a href="{{ url('/servicestatus') }}/{{ $ser->status }}/{{ $ser->id }}/{{ $ser->service_id }}"
+                                                            class="btn btn-sm btn-warning">{{ $ser->status }}</a>
                                                     @else
                                                         <button type="button" class="btn btn-sm btn-warning"
                                                             disabled>{{ $ser->status }}</button>
