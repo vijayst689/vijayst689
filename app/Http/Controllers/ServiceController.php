@@ -197,8 +197,14 @@ public function applyservice($serviceid,$customerid) {
    }
    $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
    $payment = 0;
+   $coordinator_permission = 0;
+   $admin_payment = 0;
 
    if($getservice_payment){
+    $coordinator_permission = $getservice_payment->coordinator_permission;
+    if($coordinator_permission == 1){
+        $admin_payment = $getservice_payment->admin_amount;
+    }
        if(Auth::user()->user_type_id == 3){
            $payment = $getservice_payment->distributor_amount;
        }elseif(Auth::user()->user_type_id == 4){
