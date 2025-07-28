@@ -72,7 +72,7 @@
                                             <td><img src="/upload/retailer/{{ $cus->profile }}" class="rounded-circle"
                                                     width="40" height="40" alt=""></td>
                                             <td>{{ $cus->cpassword }}</td>
-                                            <td>
+                                            <td style="white-space: nowrap">
                                                 <button
                                                     onclick="edit_retailer('{{ $cus->id }}','{{ $cus->name }}','{{ $cus->phone }}','{{ $cus->aadhaar_no }}','{{ $cus->gender }}','{{ $cus->email }}','{{ $cus->date_of_birth }}','{{ $cus->address }}')"
                                                     ype="button" style="font-size: small"
