@@ -80,7 +80,7 @@
                                                 @if (Auth::user()->user_type_id == 2)
                                                     <button
                                                         onclick="edit_status('{{ $dis->id }}','{{ $dis->status }}')"
-                                                        type="button" class="btn-sm btn btn-success">Update Status</button>
+                                                        type="button" class="btn-sm btn btn-success">Update</button>
                                                 @endif
 
                                                 <a href="{{ url('/userpermission', $dis->id) }}" type="button"

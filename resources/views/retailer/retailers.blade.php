@@ -81,7 +81,7 @@
                                                 @if (Auth::user()->user_type_id == 2)
                                                     <button
                                                         onclick="statusupdates('{{ $cus->id }}','{{ $cus->status }}')"
-                                                        type="button" class="btn-sm btn btn-success">Update Status</button>
+                                                        type="button" class="btn-sm btn btn-success">Update</button>
                                                 @endif
 
                                                 @if (Auth::user()->user_type_id == 3)
