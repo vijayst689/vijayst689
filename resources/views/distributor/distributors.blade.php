@@ -85,6 +85,14 @@
 
                                                 <a href="{{ url('/userpermission', $dis->id) }}" type="button"
                                                     style="font-size: small" class="btn btn-inverse-info px-1">Permission</a>
+
+                                                    @if ($dis->verified == '')
+                                                    <a href="{{ url('/nalavariyam_permission', $dis->id) }}" type="button"
+                                                        style="font-size: small" class="btn-sm btn btn-info">Ramji</a>
+                                                @else
+                                                    <a type="button" style="font-size: small"
+                                                        class="btn-sm btn btn-success">Verified</a>
+                                                @endif
                                             </td>
                                         </tr>
                                 </tbody>

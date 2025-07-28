@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        $this->services = DB::table('services')->where('status', '=', 'Active' )->where('parent_id',0 )->orderBy( 'id' , 'Asc' )->get();
+        $this->services = DB::table('services')->where('status', '=', 'Active' )->where('parent_id',0 )->where('id','!=',6)->orderBy( 'id' , 'Asc' )->get();
          view()->composer('layouts.sidebar', function($view) {
             $view->with(['services' => $this->services]);
         });

@@ -94,6 +94,8 @@ class DashboardController extends Controller
 
             $activation = DB::table( 'users' )->where('id',$logid)->get();
 
+            $ourservice = DB::table('services')->where('status','=' , 'Active')->where('api_id',2 )->orderBy( 'id' , 'Asc' )->get();
+
             if(Auth::user()->user_type_id == 2 || Auth::user()->user_type_id == 1){
 
             $service = DB::table('msme')
@@ -267,8 +269,8 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-            
-           
+
+
             $service = DB::table('msme')
             ->where('status','Resubmit')
             ->orderBy('id', 'Desc')->count();
@@ -440,7 +442,7 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-            
+
             $service = DB::table('msme')
             ->where('status','Approved')
             ->orderBy('id', 'Desc')->count();
@@ -635,7 +637,7 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-            
+
              $service = DB::table('msme')
             ->where('status','Processing')
             ->where('distributor_id',Auth::user()->id)
@@ -742,7 +744,7 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp ;
-             
+
              $service = DB::table('msme')
             ->where('status','Resubmit')
             ->where('distributor_id',Auth::user()->id)
@@ -849,7 +851,7 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-             
+
             $service = DB::table('msme')
             ->where('status','Rejected')
             ->where('distributor_id',Auth::user()->id)
@@ -1064,7 +1066,7 @@ class DashboardController extends Controller
 
             $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
 
-          
+
            }elseif(Auth::user()->user_type_id == 4){
 
             $service = DB::table('msme')
@@ -1173,7 +1175,7 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-             
+
            $service = DB::table('msme')
             ->where('status','Processing')
             ->where('retailer_id',Auth::user()->id)
@@ -1280,7 +1282,7 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-            
+
               $service = DB::table('msme')
             ->where('status','Resubmit')
             ->where('retailer_id',Auth::user()->id)
@@ -1388,8 +1390,8 @@ class DashboardController extends Controller
 
 
             $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-            
-         
+
+
              $service = DB::table('msme')
             ->where('status','Rejected')
             ->where('retailer_id',Auth::user()->id)
@@ -1496,7 +1498,7 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
-            
+
             $service = DB::table('msme')
             ->where('status','Approved')
             ->where('retailer_id',Auth::user()->id)
@@ -1604,7 +1606,7 @@ class DashboardController extends Controller
 
             $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
 
-           
+
 
 
 
@@ -1712,7 +1714,7 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard;
-             
+
              $smartcard_otp = DB::table('smartcard_otp')
             ->where('status','Pending')
             ->where('user_id',Auth::user()->id)
@@ -1822,7 +1824,7 @@ class DashboardController extends Controller
             ->orderBy('id', 'Desc')->count();
 
             $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan;
-            
+
            $smartcard_otp = DB::table('smartcard_otp')
             ->where('status','Processing')
             ->where('user_id',Auth::user()->id)
@@ -1940,7 +1942,7 @@ class DashboardController extends Controller
 
             $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
 
-            
+
             $service = DB::table('msme')
             ->where('status','Rejected')
             ->where('user_id',Auth::user()->id)
@@ -2161,10 +2163,66 @@ class DashboardController extends Controller
 
             $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp;
 
-
         }
 
-            return view('dashboard',compact('servicecount','customercount','enquiry_count','retailer','distributor','retailer_count','distributor_count','customer','pending','inpro','resub','rerej','approve','service','RequestAmount','activation','allservice','ramjirequestAmount'));
+                     if ( Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2) {
+
+        $sql = "select count(*) as pending from nalavariyam_form a,nalavariyam_district b,users c where a.dist_id=b.id and a.log_id=c.id and a.service_status = 'Pending'";
+        $result = DB::select(DB::raw($sql));
+        if (count($result) > 0) {
+            $pendingcount = $result[0]->pending;
+        }
+
+        } else {
+            $log_id = Auth::user()->id;
+            $sql = "select count(*) as pending from nalavariyam_form a,nalavariyam_district b,nalavariyam_customer c where a.dist_id=b.id and a.customer_id=c.id and a.service_status = 'Pending' and a.log_id = $log_id";
+            $result = DB::select( DB::raw( $sql ) );
+            if ( count( $result ) > 0 ) {
+                $pendingcount = $result[ 0 ]->pending;
+            }
+        }
+
+        if ( Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2) {
+
+        $sql = "select count(*) as resubmit from nalavariyam_form a,nalavariyam_district b,users c where a.dist_id=b.id and a.log_id=c.id and a.service_status = 'Resubmit'";
+        $result = DB::select(DB::raw($sql));
+        if (count($result) > 0) {
+            $resubmitcount = $result[0]->resubmit;
+        }
+
+        } else {
+            $log_id = Auth::user()->id;
+            $sql = "select count(*) as resubmit from nalavariyam_form a,nalavariyam_district b,nalavariyam_customer c where a.dist_id=b.id and a.customer_id=c.id and a.service_status = 'Resubmit' and a.log_id = $log_id";
+            $result = DB::select( DB::raw( $sql ) );
+            if ( count( $result ) > 0 ) {
+                $resubmitcount = $result[ 0 ]->resubmit;
+            }
+        }
+
+        if ( Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2) {
+
+        $sql = "select count(*) as approved from nalavariyam_form a,nalavariyam_district b,users c where a.dist_id=b.id and a.log_id=c.id and a.service_status = 'Completed'";
+        $result = DB::select(DB::raw($sql));
+        if (count($result) > 0) {
+            $approvedcount = $result[0]->approved;
+        }
+
+        } else {
+            $log_id = Auth::user()->id;
+            $sql = "select count(*) as approved from nalavariyam_form a,nalavariyam_district b,nalavariyam_customer c where a.dist_id=b.id and a.customer_id=c.id and a.service_status = 'Completed' and a.log_id = $log_id";
+            $result = DB::select( DB::raw( $sql ) );
+            if ( count( $result ) > 0 ) {
+                $approvedcount = $result[ 0 ]->approved;
+            }
+        }
+        $log_id = Auth::user()->id;
+         $sql = "select count(*) as memcount from nalavariyam_customer where refferal = $log_id";
+            $users = DB::select(DB::raw($sql));
+            if (count($users) > 0) {
+                $memcount = $users[0]->memcount;
+            }
+
+            return view('dashboard',compact('servicecount','customercount','enquiry_count','retailer','distributor','retailer_count','distributor_count','customer','pending','inpro','resub','rerej','approve','service','RequestAmount','activation','allservice','ramjirequestAmount','ourservice','pendingcount','resubmitcount','approvedcount','memcount'));
         }
 
         return redirect("login")->withSuccess('You are not allowed to access');

@@ -68,6 +68,22 @@
                                             @endforeach
                                         </ul>
                                     </li>
+                                     <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">Nalavariyam</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/nalavariyampayment') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Payment</a>
+                                            </li>
+                                            <li><a href="{{ url('/nalauseractivationpayment') }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>User
+                                                    Activation</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                     <li>
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
@@ -276,6 +292,27 @@
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Approved"><i
                                                         class="material-icons-outlined">arrow_right</i>Approved</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                     <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
+                                            <div class="menu-title">User Activation</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/useractivation') }}/3"><i
+                                                        class="material-icons-outlined">arrow_right</i>Services</a>
+                                            </li>
+                                            <li><a href="{{ url('/useractivation') }}/1"><i
+                                                        class="material-icons-outlined">arrow_right</i>Pdf</a>
+                                            </li>
+                                            <li><a href="{{ url('/useractivation') }}/2"><i
+                                                        class="material-icons-outlined">arrow_right</i>Utility</a>
+                                            </li>
+                                            <li><a href="{{ url('/useractivation') }}/4"><i
+                                                        class="material-icons-outlined">arrow_right</i>Pan</a>
                                             </li>
                                         </ul>
                                     </li>

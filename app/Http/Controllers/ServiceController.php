@@ -34,13 +34,13 @@ public function allservice($customerid)
 
 public function allservices()
 {
-    $checkpermission = DB::table( 'user_permission' )->where('user_id' , Auth::user()->id)->where('parent_id' , 3)->get();
+    $checkpermission = DB::table( 'user_permission' )->where('service_id','!=',6)->where('user_id' , Auth::user()->id)->where('parent_id' , 3)->get();
     if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 5){
         $ourservice = DB::table('services')->where('status','=' , 'Active')->where('parent_id',0 )->where('ser_id',0 )->orderBy( 'id' , 'Asc' )->get();
     }else{
-        $ourservice = DB::table('services')->where('status','=' , 'Active')->where('parent_id',0 )->where('ser_id',0 )->whereIn('id',$checkpermission->pluck('service_id'))->orderBy( 'id' , 'Asc' )->get();
+        $ourservice = DB::table('services')->where('status','=' , 'Active')->where('parent_id',0 )->where('ser_id',0 )->whereIn('id',$checkpermission->pluck('service_id')->push(6))->orderBy( 'id' , 'Asc' )->get();
     }
-        return view('services.allservices',compact('ourservice'));
+    return view('services.allservices',compact('ourservice'));
 }
 
 public function subservice( $id )
@@ -62,8 +62,6 @@ public function viewservice()
     if(Auth::user()->user_type_id != 1 && Auth::user()->user_type_id != 2){
         return redirect("/dashboard");
     }
-    // $allservice = DB::table('services')->where('parent_id',0)->orderBy( 'id' , 'Asc' )->get();
-
     $checkpermission = DB::table( 'user_permission' )->where('user_id' , Auth::user()->id)->where('parent_id' , 3)->get();
     if( Auth::user()->user_type_id == 2 ){
         $allservice = DB::table('services')->where('parent_id',0 )->where('ser_id',0 )->whereIn('id',$checkpermission->pluck('service_id'))->orderBy( 'id' , 'Asc' )->get();
@@ -182,8 +180,79 @@ return view('services.services',compact( 'services','customers','customerid','se
 }
 
 public function servicesone($serviceid) {
+    $userid = Auth::user()->id;
+
     $services = DB::table('services')->where('status', '=' , 'Active')->where('parent_id',$serviceid)->orderBy( 'id' , 'Asc' )->get();
-    return view('services.servicesone',compact( 'services','serviceid'));
+    $sql = "select count(*) as activecount from users where verified = 1 ";
+            $users = DB::select(DB::raw($sql));
+            if (count($users) > 0) {
+                $activecount = $users[0]->activecount;
+    }
+    $sql = "select count(*) as memcount from nalavariyam_customer where refferal = $userid";
+            $users = DB::select(DB::raw($sql));
+            if (count($users) > 0) {
+                $memcount = $users[0]->memcount;
+    }
+    $sql = "select count(*) as memcountref from nalavariyam_customer where refferal = $userid";
+            $users = DB::select(DB::raw($sql));
+            if (count($users) > 0) {
+                $memcountref = $users[0]->memcountref;
+    }
+
+    if ( Auth::user()->id == 1 || Auth::user()->id == 2) {
+
+        $sql = "select count(*) as pending from nalavariyam_form a,nalavariyam_district b,users c where a.dist_id=b.id and a.log_id=c.id and a.service_status = 'Pending'";
+        $result = DB::select(DB::raw($sql));
+        if (count($result) > 0) {
+            $pendingcount = $result[0]->pending;
+        }
+
+        } else {
+            $log_id = Auth::user()->id;
+            $sql = "select count(*) as pending from nalavariyam_form a,nalavariyam_district b,nalavariyam_customer c where a.dist_id=b.id and a.customer_id=c.id and a.service_status = 'Pending' and a.log_id = $log_id";
+            $result = DB::select( DB::raw( $sql ) );
+            if ( count( $result ) > 0 ) {
+                $pendingcount = $result[ 0 ]->pending;
+            }
+        }
+
+        if ( Auth::user()->id == 1 || Auth::user()->id == 2) {
+
+        $sql = "select count(*) as resubmit from nalavariyam_form a,nalavariyam_district b,users c where a.dist_id=b.id and a.log_id=c.id and a.service_status = 'Resubmit'";
+        $result = DB::select(DB::raw($sql));
+        if (count($result) > 0) {
+            $resubmitcount = $result[0]->resubmit;
+        }
+
+        } else {
+            $log_id = Auth::user()->id;
+            $sql = "select count(*) as resubmit from nalavariyam_form a,nalavariyam_district b,nalavariyam_customer c where a.dist_id=b.id and a.customer_id=c.id and a.service_status = 'Resubmit' and a.log_id = $log_id";
+            $result = DB::select( DB::raw( $sql ) );
+            if ( count( $result ) > 0 ) {
+                $resubmitcount = $result[ 0 ]->resubmit;
+            }
+        }
+
+        if ( Auth::user()->id == 1 || Auth::user()->id == 2) {
+
+        $sql = "select count(*) as approved from nalavariyam_form a,nalavariyam_district b,users c where a.dist_id=b.id and a.log_id=c.id and a.service_status = 'Completed'";
+        $result = DB::select(DB::raw($sql));
+        if (count($result) > 0) {
+            $approvedcount = $result[0]->approved;
+        }
+
+        } else {
+            $log_id = Auth::user()->id;
+            $sql = "select count(*) as approved from nalavariyam_form a,nalavariyam_district b,nalavariyam_customer c where a.dist_id=b.id and a.customer_id=c.id and a.service_status = 'Completed' and a.log_id = $log_id";
+            $result = DB::select( DB::raw( $sql ) );
+            if ( count( $result ) > 0 ) {
+                $approvedcount = $result[ 0 ]->approved;
+            }
+        }
+          $districts = DB::table( 'nalavariyam_district' )->get();
+          $rawallet = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+
+ return view('services.servicesone',compact( 'services','serviceid','activecount','memcount','memcountref','pendingcount','resubmitcount','approvedcount','districts','rawallet'));
 }
 
 public function applyservice($serviceid,$customerid) {
@@ -270,7 +339,7 @@ public function applyservices($serviceid) {
    $coordinator_permission = 0;
    $admin_payment = 0;
 
-   
+
 if($getservice_payment){
     $coordinator_permission = $getservice_payment->coordinator_permission;
        if($coordinator_permission == 1){
@@ -421,6 +490,12 @@ public function get_subservice($parentid)
 public function get_taluk($distid)
 {
     $response = DB::table('taluk')->where('dist_id',$distid)->orderBy( 'id', 'Asc' )->get();
+    return response()->json( $response );
+}
+
+public function variyamget_taluk($districtid)
+{
+    $response = DB::table('nalavariyam_taluk')->where('parent',$districtid)->orderBy( 'id', 'Asc' )->get();
     return response()->json( $response );
 }
 
@@ -3943,9 +4018,9 @@ public function submitaadhaar(Request $request){
            'status'            => 'Pending',
            'applied_date'      => date("Y-m-d"),
            'created_at'        => date("Y-m-d"),
-           
-          
-          
+
+
+
        ] );
 
         $insertid = DB::getPdo()->lastInsertId();
@@ -5393,13 +5468,13 @@ if($coordinator_permission == 1){
      $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
      $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
      $ch = curl_init();
-    
+
      if($serviceid == 122){
      $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo_file=$photo_url&aadhaar_file=$aadhaar_url&shop_photo_file=$shopphoto_url&pan_card_file=$pancard_url&rental_agreement_file=$rentalagreement_url&electricity_bill_file=$electricitybill_url&property_tax_file=$propertytax_url&service_id=$service_id&rowid=$rowid&status=$status&food_service=$food_service&shop_name=$shop_name&email_id=$email_id&mobile=$mobile&documents=$documents&mobile_no=$mobile_no";
      }elseif($serviceid == 123){
-     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&old_food_license_file=$oldfoodlicense_url&photo_file=$photo_url&aadhaar_file=$aadhaar_url&shop_photo_file=$shopphoto_url&pan_card_file=$pancard_url&service_id=$service_id&rowid=$rowid&status=$status&shop_name=$shop_name&email_id=$email_id&mobile=$mobile";      
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&old_food_license_file=$oldfoodlicense_url&photo_file=$photo_url&aadhaar_file=$aadhaar_url&shop_photo_file=$shopphoto_url&pan_card_file=$pancard_url&service_id=$service_id&rowid=$rowid&status=$status&shop_name=$shop_name&email_id=$email_id&mobile=$mobile";
 }
-    
+
      $url1 = $RAMJIPAY_URL.'/api/get_fssai_api';
   //echo $url1;die;
     //   dd($post_data);
@@ -6705,7 +6780,7 @@ public function submitapply_smartcardotp(Request $request){
     DB::insert( DB::raw( $sql ) );
     $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
     DB::update( DB::raw( $sql ) );
-    
+
 $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
 $coordinator_permission = 0;
 $admin_payment = 0;
@@ -6730,9 +6805,9 @@ if($coordinator_permission == 1){
      $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
      $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
      $ch = curl_init();
-    
+
      $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=218&rowid=$rowid&status=$status&smartcard_file=$smartcard_url&name=$name&documents=$documents";
-    
+
     //dd($post_data);
      $url1 = $RAMJIPAY_URL.'/api/get_smartcardotp_api';
   //echo $url1;die;
@@ -7083,7 +7158,7 @@ if($coordinator_permission == 1){
      curl_close( $ch );
      $resdata = json_decode($server_output, true);
     //  dd($resdata);
-     
+
      if($resdata){
         $status = $resdata['message'];
         if($status == "Success"){

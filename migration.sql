@@ -1494,8 +1494,8 @@ alter table bond add certificate varchar(20) DEFAULT NULL after status;
 alter table bond add certificate varchar(20) DEFAULT NULL after status;
 
 alter table can_edit add vao_area text DEFAULT NULL after vao_area;
-alter table can_edit drop column postal_name; 
-alter table can_edit drop village_administrative_area; 
+alter table can_edit drop column postal_name;
+alter table can_edit drop village_administrative_area;
 alter table can_edit add postal_area_tamil text DEFAULT NULL after vao_area;
 alter table can_edit add postal_area_english text DEFAULT NULL after postal_area_tamil;
 
@@ -1505,10 +1505,10 @@ alter table tnega_services add family_relationship text DEFAULT NULL after posta
 alter table tnega_services add relation_name text DEFAULT NULL after family_relationship;
 alter table tnega_services add relation_name_tamil text DEFAULT NULL after relation_name;
 alter table tnega_services add relation_age text DEFAULT NULL after relation_name_tamil;
-alter table tnega_services drop column relation_age; 
-alter table tnega_services drop column family_relationship; 
-alter table tnega_services drop column relation_name_tamil; 
-alter table tnega_services drop column relation_name; 
+alter table tnega_services drop column relation_age;
+alter table tnega_services drop column family_relationship;
+alter table tnega_services drop column relation_name_tamil;
+alter table tnega_services drop column relation_name;
 alter table tnega_services add mother_name_tamil text DEFAULT NULL after relationship_name_tamil_1;
 alter table tnega_services add mother_name_english text DEFAULT NULL after mother_name_tamil;
 alter table family_member add relation_name_tamil text DEFAULT NULL after relation_name;
@@ -1525,7 +1525,7 @@ alter table tnega_services add institute_name_tamil text DEFAULT NULL after curr
 alter table tnega_services add institute_name_english text DEFAULT NULL after institute_name_tamil;
 alter table tnega_services add institute_address_tamil text DEFAULT NULL after institute_name_english;
 alter table tnega_services add institute_address_english text DEFAULT NULL after institute_address_tamil;
-alter table tnega_services drop column postal_name; 
+alter table tnega_services drop column postal_name;
 
 
 CREATE TABLE `pan_aadhaar` (
@@ -1744,7 +1744,7 @@ CREATE TABLE `pstm` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-  
+
 ) ENGINE=InnoDB;
 
 alter table service_payment add coordinator_permission int(11) DEFAULT 0 after admin_amount;
@@ -1807,7 +1807,7 @@ CREATE TABLE smartcard_otp (
   user_id int(11) DEFAULT 0,
   retailer_id int(11) DEFAULT 0,
   distributor_id int(11) DEFAULT 0,
-  
+
   admin_id int(11) DEFAULT 0,
   amount decimal(10,2) DEFAULT 0.00,
   aadhaar_card varchar(20) DEFAULT NULL,
@@ -1970,3 +1970,151 @@ CREATE TABLE `coordinator_permission` (
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
+
+-- Nalavariyam
+
+alter table services add api_id int(11) Default 0 after ser_id;
+alter table users add verified int(11) Default NULL after refferal_id;
+
+CREATE TABLE `nalavariyam_customer` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `district` varchar(100) DEFAULT NULL,
+  `taluk` varchar(100) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `phone` varchar(100) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+alter table nalavariyam_customer add aadhaar_no varchar(12) Default NULL;
+alter table nalavariyam_customer add refferal int(11) Default NULL after aadhaar_no;
+alter table nalavariyam_customer add customer_user_type_id int DEFAULT 0 after refferal;
+alter table nalavariyam_customer add date varchar(10) DEFAULT NULL;
+alter table nalavariyam_customer add customer_user_type_id int DEFAULT 0 after refferal;
+alter table nalavariyam_customer add date varchar(10) DEFAULT NULL;
+
+CREATE TABLE `nalavariyam_form` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int(11) DEFAULT 0,
+  `dist_id` int(11) DEFAULT 0,
+  `taluk_id` int(11) DEFAULT 0,
+  `user_type_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0,
+  `service_id` int(11) DEFAULT 0,
+  `customer_user_type_id` int(11) DEFAULT 0,
+  `service_status` varchar(100) DEFAULT NULL,
+  `time` varchar(10) DEFAULT NULL,
+  `date` varchar(10) DEFAULT NULL,
+  `from_image` varchar(300) DEFAULT NULL,
+  `log_id` int(11) DEFAULT 0,
+  `online_status` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+alter table nalavariyam_form add reason text DEFAULT NULL;
+alter table nalavariyam_form add application_no varchar(50) DEFAULT NULL;
+alter table nalavariyam_form add online_reason text DEFAULT NULL;
+alter table nalavariyam_form add bill int(11) DEFAULT 0;
+
+CREATE TABLE `nalavariyam_district` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `district_name` varchar(100) DEFAULT NULL,
+  `districtid` varchar(100) DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+INSERT INTO `nalavariyam_district` VALUES (1,'அரியலூர்','01',20,'Active'),(2,'செங்கல்பட்டு','02',29,'Active'),(3,'சென்னை','03',24,'Active'),(4,'கோயம்புத்தூர் ','04',12,'Active'),(5,'கடலூர்','05',83,'Active'),(6,'தர்மபுரி','06',108,'Active'),(7,'திண்டுக்கல்','07',80,'Active'),(8,'ஈரோடு','08',45,'Active'),(9,'கள்ளக்குறிச்சி','09',25,'Active'),(10,'காஞ்சிபுரம்','10',32,'Active'),(11,'நாகர்கோவில்','11',4,'Active'),(12,'கரூர்','12',39,'Active'),(13,'கிருஷ்ணகிரி','13',27,'Active'),(14,'மதுரை','14',62,'Active'),(15,'மயிலாடுதுறை','15',1,'Active'),(16,'நாகப்பட்டினம்','16',41,'Active'),(17,'நாமக்கல்','17',110,'Active'),(18,'பெரம்பலூர்','18',78,'Active'),(19,'புதுக்கோட்டை','19',82,'Active'),(20,'ராமநாதபுரம்','20',35,'Active'),(21,'ராணிப்பேட்டை','21',33,'Active'),(22,'சேலம்','22',1521,'Active'),(23,'சிவகங்கை','23',36,'Active'),(24,'தென்காசி','24',42,'Active'),(25,'தஞ்சாவூர்','25',44,'Active'),(26,'நீலகிரி','26',85,'Active'),(27,'தேனி','27',5,'Active'),(28,'திருச்சிராப்பள்ளி','28',77,'Active'),(29,'திருவாரூர்','29',79,'Active'),(30,'தூத்துக்குடி','30',31,'Active'),(31,'திருநெல்வேலி','31',70,'Active'),(32,'திருப்பத்தூர்','32',2191,'Active'),(33,'திருப்பூர்','33',26,'Active'),(34,'திருவள்ளூர்','34',43,'Active'),(35,'திருவண்ணாமலை','35',34,'Active'),(36,'வேலூர்','36',65,'Active'),(37,'விழுப்புரம்','38',81,'Active'),(38,'விருதுநகர்','38',109,'Active'),(39,'பொன்னேரி','',NULL,'Active'),(40,'மார்த்தாண்டம்','',NULL,'Active'),(42,'விருத்தாசலம்',NULL,NULL,'Active');
+
+alter table users add nalavariyam_usertype int(11) Default NULL after user_type_id;
+alter table users add nalavariyam_dist_id int(11) Default NULL after panchayath_id;
+alter table users add nalavariyam_taluk_id int(11) Default NULL after nalavariyam_dist_id;
+
+CREATE TABLE `nalavariyam_service` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `service_name` varchar(100) DEFAULT NULL,
+  `service_payment` varchar(10) DEFAULT NULL,
+  `additional_url` varchar(50) DEFAULT NULL,
+  `next_url` int DEFAULT NULL,
+  `nexts` varchar(100) DEFAULT NULL,
+  `from_image` varchar(500) DEFAULT NULL,
+  `from_pdf` varchar(200) DEFAULT NULL,
+  `download` varchar(5000) DEFAULT NULL,
+  `upload` varchar(5000) DEFAULT NULL,
+  `submitting_url` varchar(1000) DEFAULT NULL,
+  `marge_right` varchar(10) DEFAULT NULL,
+  `marge_bottom` varchar(10) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
+  `from_date` varchar(10) DEFAULT NULL,
+  `to_date` varchar(10) DEFAULT NULL,
+  `servicetype` int DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23;
+
+CREATE TABLE `service_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT NULL,
+  `district_id` int(11) DEFAULT 0,
+  `service_type` int(11) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `nalavariyam_payment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) DEFAULT 0,
+  `service_id` int(11) DEFAULT 0,
+  `distributor_amount` decimal(10,2) DEFAULT 0,
+  `retailer_amount` decimal(10,2) DEFAULT 0,
+  `customer_amount` decimal(10,2) DEFAULT 0,
+  `admin_amount` decimal(10,2) DEFAULT 0,
+  `time` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+alter table service_payment add admin_amount decimal(10,2) DEFAULT NULL after service_id;
+alter table service_payment add coordinator_permission int(11) DEFAULT 0 after admin_amount;
+
+CREATE TABLE `useractivation` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `parent_id` int DEFAULT '0',
+  `service_id` int DEFAULT '0',
+  `user_id` int DEFAULT '0',
+  `admin_id` int DEFAULT '0',
+  `distributor_amount` decimal(10,2) DEFAULT '0.00',
+  `retailer_amount` decimal(10,2) DEFAULT '0.00',
+  `admin_amount` decimal(10,2) DEFAULT '0.00',
+  `superadmin_amount` decimal(10,2) DEFAULT '0.00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `nalavariyam_taluk` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `taluk_name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_croatian_ci NOT NULL,
+  `parent` int NOT NULL,
+  `status` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=329;
+
+INSERT INTO `nalavariyam_taluk` VALUES (1,'ஆண்டிமடம்',1,1),(2,'அரியலூர்',1,1),(3,'செந்துறை',1,1),(4,'உடையார்பாளையம்',1,1),(5,'செங்கல்பட்டு',2,1),(6,'செய்யூர்',2,1),(7,'மதுரந்தகம்',2,1),(8,'பல்லாவரம்',2,1),(9,'தாம்பரம்',2,1),(10,'திருக்கழுகுன்றம்',2,1),(11,'திருப்போரூர்',2,1),(12,'வண்டலூர்',2,1),(13,'ஆலந்தூர்',3,1),(14,'அம்பத்தூர்',3,1),(15,'அமிஞ்சிகரை',3,1),(16,'அயனாவரம்',3,1),(17,'எக்மோர்',3,1),(18,'கிண்டி',3,1),(19,'மாதவரம்',39,1),(20,'மதுரவாயல்',3,1),(21,'மாம்பலம்',3,1),(22,'மயிலாப்பூர்',3,1),(23,'பெரம்பூர்',3,1),(24,'புரசைவாக்கம்',3,1),(25,'சோளிங்கநல்லூர்',3,1),(26,'திருவொற்றியூர்',39,1),(27,'தண்டையார்பேட்டை',3,1),(28,'வேளசெரி',3,1),(29,'ஆணைமலை',4,1),(30,'அன்னூர்',4,1),(31,'கோயம்புத்தூர்(வடக்கு)',4,1),(32,'கோயம்புத்தூர்(தெற்கு)',4,1),(33,'கிணத்துகடவு',4,1),(34,'மதுக்கரை',4,1),(35,'மேட்டுபாளையம்',4,1),(36,'பேரூர்',4,1),(37,'பொள்ளாச்சி',4,1),(38,'சூலூர்',4,1),(39,'வால்பாறை',4,1),(40,'புவனகிரி',5,1),(41,'சிதம்பரம்',42,1),(42,'கடலூர்',5,1),(43,'காட்டுமன்னார்கோவில்',5,1),(44,'குறிஞ்சிபாடி',42,1),(45,'பண்ருட்டி',42,1),(46,'ஸ்ரீமுஷ்ணம்',5,1),(47,'திட்டக்குடி',42,1),(48,'வேப்பூர்',5,1),(49,'விருத்தாசலம்',42,1),(50,'தர்மபுரி',6,1),(51,'ஆரூர்',6,1),(52,'காரிமங்கலம்',6,1),(53,'நல்லாம்பள்ளி',6,1),(54,'பாலக்கோடு',6,1),(55,'பப்பிரேட்டிபட்டி',6,1),(56,'பென்னகராம்',6,1),(57,'ஆத்தூர்',7,1),(58,'திண்டுக்கல்(கிழக்கு)',7,1),(59,'திண்டுக்கல்(மேற்கு)',7,1),(60,'குஜிலியாம்பறை',7,1),(61,'கொடைக்கானல்',7,1),(62,'நத்தம்',7,1),(63,'நிலகோட்டை',7,1),(64,'ஒட்டன்சத்திரம்',7,1),(65,'பழனி',7,1),(66,'வடசந்தூர்',7,1),(67,'அந்தியூர்',8,1),(68,'பவானி',8,1),(69,'ஈரோடு',8,1),(70,'கோபிசெட்டிபாளையம்',8,1),(71,'கொடுமுடி',8,1),(72,'மொடக்குறிச்சி',8,1),(73,'நம்பியூர்',8,1),(74,'பெருந்துறை',8,1),(75,'சத்தியமங்கலம்',8,1),(76,'தளவடி',8,1),(77,'சின்னசேலம்',9,1),(78,'கல்வராயன் மலை',9,1),(79,'கள்ளகுறிச்சி',9,1),(80,'சங்கரபுரம்',9,1),(81,'திருக்கோயிலூர்',9,1),(82,'உளுந்தூர்பேட்டை',9,1),(83,'காஞ்சிபுரம்',10,1),(84,'குன்றத்தூர்',10,1),(85,'ஸ்ரீபெரும்புதூர்',10,1),(86,'உத்திரமேரூர்',10,1),(87,'வாலாஜாபாத்',10,1),(88,'அகஸ்தீஸ்வரம்',11,1),(89,'கல்குளம்',11,1),(90,'கிள்ளியூர்',40,1),(91,'திருவட்டார்',40,1),(92,'தோவாளை',11,1),(93,'விளவன்கோடு',40,1),(94,'அரவக்குறிச்சி',12,1),(95,'கடவூர்',12,1),(96,'கரூர்',12,1),(97,'கிருஷ்ணராயபுரம்',12,1),(98,'குளித்தலை',12,1),(99,'மண்மங்கலம்',12,1),(100,'புகலூர்',12,1),(101,'அஞ்செட்டி',13,1),(102,'பர்கூர்',13,1),(103,'தேன்கனிகோட்டை',13,1),(104,'ஓசூர்',13,1),(105,'கிருஷ்ணகிரி',13,1),(106,'போச்சம்பள்ளி',13,1),(107,'சூளகிரி',13,1),(108,'ஊத்தங்கரை',13,1),(109,'கள்ளிகுடி',14,1),(110,'மதுரை(கிழக்கு)',14,1),(111,'மதுரை(வடக்கு)',14,1),(112,'மதுரை(மேற்கு)',14,1),(113,'மதுரை(தெற்கு)',14,1),(114,'மேலூர்',14,1),(115,'பேரையூர்',14,1),(116,'திருப்பரங்குன்றம்',14,1),(117,'திருமங்கலம்',14,1),(118,'உசிலம்பட்டி',14,1),(119,'வாடிபட்டி',14,1),(120,'குத்தாலம்',15,1),(121,'மயிலாடுதுறை',15,1),(122,'சீர்காழி',15,1),(123,'தரங்கம்பாடி',15,1),(124,'கில்வேலூர்',16,1),(125,'நாகப்பட்டினம்',16,1),(126,'திருக்குவளை',16,1),(127,'வேதாரண்யம்',16,1),(128,'கொல்லிமலை',17,1),(129,'குமாரபாளையம்',17,1),(130,'மோகனூர்',17,1),(131,'நாமக்கல்',17,1),(132,'பரமத்திவேலூர்',17,1),(133,'ராசிபுரம்',17,1),(134,'சேந்தமங்கலம்',17,1),(135,'திருச்செங்கோடு',17,1),(136,'ஆலத்தூர்',18,1),(137,'குன்னம்',18,1),(138,'பெரம்பலூர்',18,1),(139,'வேப்பந்தட்டை',18,1),(140,'ஆலங்குடி',19,1),(141,'அறந்தாங்கி',19,1),(142,'அவடையார்கோயில்',19,1),(143,'கந்தர்வகோட்டை',19,1),(144,'இல்லுப்பூர்',19,1),(145,'கரம்பக்குடி',19,1),(146,'குளத்தூர்',19,1),(147,'மணமேல்குடி',19,1),(148,'பொன்னமராவதி',19,1),(149,'புதுக்கோட்டை',19,1),(150,'திருமயம்',19,1),(151,'விராலிமலை',19,1),(152,'கடலாடி',20,1),(153,'கமுதி',20,1),(154,'கிழகரை',20,1),(155,'முதுகுளத்தூர்',20,1),(156,'பரமக்குடி',20,1),(157,'ராஜசிங்கமங்கலம்',20,1),(158,'இராமநாதபுரம்',20,1),(159,'ராமேஸ்வரம்',20,1),(160,'திருவாடனை',20,1),(161,'அரக்கோணம்',21,1),(162,'ஆற்காடு',21,1),(163,'கலவை',21,1),(164,'நெமிலி',21,1),(165,'சோளிங்கர்',21,1),(166,'வாலாஜாபேட்டை',21,1),(167,'ஆத்தூர்',22,1),(168,'எடப்பாடி',22,1),(169,'கங்காவள்ளி',22,1),(170,'கடையம்பட்டி',22,1),(171,'மேட்டூர்',22,1),(172,'ஓமலூர்',22,1),(173,'பெத்தனைக்கன்பாளையம்',22,1),(174,'சேலம்',22,1),(175,'சேலம் தெற்கு',22,1),(176,'சேலம் மேற்கு',22,1),(177,'சங்ககிரி',22,1),(178,'தலைவாசல்',22,1),(179,'வாலபடி',22,1),(180,'ஏர்காடு',22,1),(181,'தேவக்கோட்டை',23,1),(182,'இளையான்குடி',23,1),(183,'காளையர்கோவில்',23,1),(184,'காரைக்குடி',23,1),(185,'மானாமதுரை',23,1),(186,'சிங்கம்புணரி',23,1),(187,'சிவகங்கை',23,1),(188,'திருப்புவனம்',23,1),(189,'திருப்பத்தூர்',23,1),(190,'ஆலங்குளம்',24,1),(191,'கடையநல்லூர்',24,1),(192,'சங்கரன்கோவில்',24,1),(193,'செங்கோட்டை',24,1),(194,'சிவகிரி',24,1),(195,'தென்காசி',24,1),(196,'திருவேங்கடம்',24,1),(197,'வீரகேரளபுரம்',24,1),(198,'பூதலூர்',25,1),(199,'கும்பகோணம்',25,1),(200,'ஒரத்தநாடு',25,1),(201,'பாபநாசம்',25,1),(202,'பட்டுக்கோட்டை',25,1),(203,'பேராவூரணி',25,1),(204,'தஞ்சாவூர்',25,1),(205,'திருவையாறு',25,1),(206,'திருவிடைமருதூர்',25,1),(207,'குன்னூர்',26,1),(208,'கூடலூர்',26,1),(209,'கோத்தகிரி',26,1),(210,'குந்தா',26,1),(211,'பந்தலூர்',26,1),(212,'உதகமண்டலம்',26,1),(213,'ஆண்டிப்பட்டி',27,1),(214,'போடினயகனுர்',27,1),(215,'பெரியகுளம்',27,1),(216,'தேனி',27,1),(217,'உத்தமபாளையம்',27,1),(218,'லால்குடி',28,1),(219,'மணச்சநல்லூர்',28,1),(220,'மணப்பாறை',28,1),(221,'மருங்காபுரி',28,1),(222,'முசிறி',28,1),(223,'ஸ்ரீரங்கம்',28,1),(224,'திருச்சிராப்பள்ளி-தெற்கு',28,1),(225,'திருவெரம்பூர்',28,1),(226,'தொட்டியம்',28,1),(227,'துறையூர்',28,1),(228,'திருச்சிராப்பள்ளி-கிழக்கு',28,1),(229,'கூத்தநல்லூர்',29,1),(230,'குடவாசல்',29,1),(231,'மன்னார்குடி',29,1),(232,'நன்னிலம்',29,1),(233,'நீடமங்கலம்',29,1),(234,'திருத்துறைப்பூண்டி',29,1),(235,'திருவாரூர்',29,1),(236,'வலங்கைமான்',29,1),(237,'ஏரல்',30,1),(238,'எட்டயபுரம்',30,1),(239,'கயத்தாறு',30,1),(240,'கோவில்பட்டி',30,1),(241,'ஓட்டபிடாரம்',30,1),(242,'சாத்தன்குளம்',30,1),(243,'ஸ்ரீவைகுண்டம்',30,1),(244,'தூத்துக்குடி',30,1),(245,'திருச்செந்தூர்',30,1),(246,'விளாத்திகுளம்',30,1),(247,'அம்பாசமுத்திரம்',31,1),(248,'சேரன்மாதேவி',31,1),(249,'மானூர்',31,1),(250,'நாங்குநேரி',31,1),(251,'பாளையங்கோட்டை',31,1),(252,'ராதாபுரம்',31,1),(253,'திசையன்விளை',31,1),(254,'திருநெல்வேலி',31,1),(255,'ஆம்பூர்',32,1),(256,'நற்றம்பள்ளி',32,1),(257,'திருபத்தூர் தெற்கு',32,1),(258,'வாணியம்பாடி',32,1),(259,'அவினாசி',33,1),(260,'தாராபுரம்',33,1),(261,'காங்கேயம்',33,1),(262,'மாடத்துக்குளம்',33,1),(263,'பல்லடம்',33,1),(264,'திருப்பூர் வடக்கு',33,1),(265,'திருப்பூர் தெற்கு',33,1),(266,'உடுமலைப்பேட்டை',33,1),(267,'ஊத்துக்குளி',33,1),(268,'ஆவடி',34,1),(269,'கும்மிடிப்பூண்டி',39,1),(270,'பள்ளிப்பட்டு',34,1),(271,'பொன்னேரி',39,1),(272,'பூந்தமல்லி',34,1),(273,'R.K.பேட்டை',34,1),(274,'திருத்தணி',34,1),(275,'திருவள்ளூர்',34,1),(276,'உதக்கோட்டை',34,1),(277,'ஆரணி',35,1),(278,'செங்கம்',35,1),(279,'செத்பேட்டை',35,1),(280,'செய்யூர்',35,1),(281,'ஜமுனமரதூர்',35,1),(282,'கலசபாக்கம்',35,1),(283,'கீழ்பென்னதூர்',35,1),(284,'போலூர்',35,1),(285,'தண்டராம்பட்டு',35,1),(286,'திருவண்ணாமலை',35,1),(287,'வந்தவாசி',35,1),(288,'வெம்பாக்கம்',35,1),(289,'அணைகட்டு',36,1),(290,'குடியாத்தம்',36,1),(291,'K V குப்பம்',36,1),(292,'காட்பாடி வடக்கு',36,1),(293,'பேர்ணாம்பட்டு',36,1),(294,'வேலூர் வடக்கு',36,1),(295,'செஞ்சி',37,1),(296,'கண்டாச்சிபுரம்',37,1),(297,'மரக்காணம்',37,1),(298,'மேல்மலையனூர்',37,1),(299,'திருவெண்ணெய்நல்லூர்',37,1),(300,'திண்டிவனம்',37,1),(301,'வானூர்',37,1),(302,'விக்கிரவாண்டி',37,1),(303,'விழுப்புரம்',37,1),(304,'அருப்புகோட்டை',38,1),(305,'காரியாபட்டி',38,1),(306,'ராஜபாளையம்',38,1),(307,'சாத்தூர்',38,1),(308,'சிவகாசி',38,1),(309,'ஸ்ரீவில்லிபுத்தூர்',38,1),(310,'திருச்சுழி',38,1),(311,'வெம்பக்கோட்டை',38,1),(312,'விருதுநகர்',38,1),(313,'வத்திராயிருப்பு',38,1),(315,'இராசிபுரம்',17,1),(317,'காட்பாடி தெற்கு',36,1),(319,'திருவண்ணாமலை(நகரம்)',35,1),(320,'தஞ்சாவூர் நகரம்',25,1),(322,'திருப்பத்தூர் வடக்கு',32,1),(323,'தக்கலை',11,1),(324,'கல்குளம் NEW',26,1),(325,'வேலூர் தெற்கு',36,1),(328,'கோவில்பட்டி நகரம்',30,1);
+
+CREATE TABLE `nalavariyam_remarks` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `remarks` text DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+
+INSERT INTO `nalavariyam_remarks` VALUES (1,'Crop and Resize (800*1100)','Active'),
+(2,'Fill All Columns','Active'),
+(3,'Use Blue Ink','Active'),
+(4,'Fill Academic Year(Example : 2025-2026)','Active'),
+(5,'Fill studying year (Example: 1st Year, 2nd Year ,3rd Year,4th Year)','Active'),
+(6,'Signature (Dont Cut & Paste)','Active'),
+(7,'Fill Date Of Birth ( Expect Adhaar)','Active'),
+(8,'Degree Name (Example BA, MBA,MA,BE, Diploma, ITI,....)','Active'),
+(9,'Fill Registration Number & Date','Active'),
+(10,'Fill Working Years','Active'),
+(11,'Fill Work Name As Per Labour Department work list Chart','Active');

@@ -92,6 +92,14 @@
 
                                                 <a href="{{ url('/userpermission', $cus->id) }}" type="button"
                                                     style="font-size: small" class="btn btn-inverse-info px-1">Permission</a>
+
+                                                    @if ($cus->verified == '')
+                                                    <a href="{{ url('/nalavariyam_permission', $cus->id) }}" type="button"
+                                                        style="font-size: small" class="btn-sm btn btn-info">Ramji</a>
+                                                @else
+                                                    <a type="button" style="font-size: small"
+                                                        class="btn-sm btn btn-success">Verified</a>
+                                                @endif
                                             </td>
                                         </tr>
                                 </tbody>

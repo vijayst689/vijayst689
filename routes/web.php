@@ -190,6 +190,7 @@ Route::get('applyservices/{serviceid}', [App\Http\Controllers\ServiceController:
 Route::get('service/get_taluk/{distid}', [App\Http\Controllers\ServiceController::class, 'get_taluk'])->name('gettaluk');
 
 Route::get('service/get_panchayath/{taluk_id}', [App\Http\Controllers\ServiceController::class, 'get_panchayath'])->name('getpanchayath');
+Route::get('nalavariyam/variyamget_taluk/{districtid}', [App\Http\Controllers\ServiceController::class, 'variyamget_taluk'])->name('variyamget_taluk');
 
 Route::get('services/{serviceid}/{customerid}', [App\Http\Controllers\ServiceController::class, 'services']);
 Route::post('submit_applyservice', [App\Http\Controllers\ServiceController::class, 'submit_applyservice']);
@@ -297,6 +298,10 @@ Route::get('/coursepayment', [App\Http\Controllers\ServicePaymentController::cla
 
 Route::post('addcourse_payment', [App\Http\Controllers\ServicePaymentController::class, 'addcourse_payment'])->name('addcourse_payment');
 
+Route::get('/useractivation/{activation_id}', [App\Http\Controllers\ServicePaymentController::class, 'useractivation'])->name('useractivation');
+
+Route::post('adduser_activation', [App\Http\Controllers\ServicePaymentController::class, 'adduser_activation'])->name('adduser_activation');
+
 //PDFServiceController
 Route::get('/getcaptcha', [App\Http\Controllers\PDFServiceController::class, 'getcaptcha'])->name('getcaptcha');
 Route::post('/submitaadhaar_verify', [App\Http\Controllers\PDFServiceController::class, 'submitaadhaar_verify'])->name('submitaadhaar_verify');
@@ -335,6 +340,10 @@ Route::post('/submitvoterpdf', [App\Http\Controllers\PDFServiceController::class
 
 Route::get('/userpermission/{userid}', [App\Http\Controllers\PermissionController::class, 'userpermission'])->name('userpermission');
 Route::post('/savepermission', [App\Http\Controllers\PermissionController::class, 'savepermission'])->name('savepermission');
+Route::get('/nalavariyam_permission/{userid}', [App\Http\Controllers\PermissionController::class, 'nalavariyam_permission'])->name('nalavariyam_permission');
+Route::get('activation/get_activationamount/{userid}/{activation_userid}/{service_id}', [App\Http\Controllers\PermissionController::class, 'get_activationamount'])->name('get_activationamount');
+
+// RechargeController
 
 Route::get('/utility', [App\Http\Controllers\RechargeController::class, 'utility'])->name('utility');
 Route::get('/utilityservice/{serviceid}', [App\Http\Controllers\RechargeController::class, 'utilityservice'])->name('utilityservice');
@@ -378,6 +387,51 @@ Route::get('/applypanservice/{serviceid}', [App\Http\Controllers\PanController::
 Route::post('/submitnewpancard', [App\Http\Controllers\PanController::class, 'submitnewpancard'])->name('submitnewpancard');
 Route::post('/submitpancorrection', [App\Http\Controllers\PanController::class, 'submitpancorrection'])->name('submitpancorrection');
 Route::get('pancard_reapply/{txid}/{serviceid}', [App\Http\Controllers\PanController::class, 'pancard_reapply']);
+
+//Nalavariyam
+
+Route::get('/nalavariyam_services', [App\Http\Controllers\NalavariyamServiceController::class, 'nalavariyam_services'])->name('nalavariyam_services');
+Route::post('/addnalavariyam_service', [App\Http\Controllers\NalavariyamServiceController::class, 'addnalavariyam_service'])->name('addnalavariyam_service');
+Route::post('/addnalavariyam_customer', [App\Http\Controllers\NalavariyamServiceController::class, 'addnalavariyam_customer'])->name('addnalavariyam_customer');
+Route::get('/editnalavariyam_service/{id}', [App\Http\Controllers\NalavariyamServiceController::class, 'editnalavariyam_service'])->name('editnalavariyam_service');
+Route::POST('/updatenalavariyam_service', [App\Http\Controllers\NalavariyamServiceController::class, 'updatenalavariyam_service'])->name('updatenalavariyam_service');
+Route::get('/online_services/{id}', [App\Http\Controllers\NalavariyamServiceController::class, 'online_services'])->name('online_services');
+
+Route::get('/member', [App\Http\Controllers\NalavariyamServiceController::class, 'member'])->name('member');
+Route::get('/nalavariyam_customer', [App\Http\Controllers\NalavariyamServiceController::class, 'nalavariyam_customer'])->name('nalavariyam_customer');
+Route::post('/addnalavariyam_member', [App\Http\Controllers\NalavariyamServiceController::class, 'addnalavariyam_member'])->name('addnalavariyam_member');
+
+Route::get('/nalavariyampayment', [App\Http\Controllers\NalavariyamServiceController::class, 'nalavariyampayment'])->name('nalavariyampayment');
+Route::post('/savenalavariyam_payment', [App\Http\Controllers\NalavariyamServiceController::class, 'savenalavariyam_payment'])->name('savenalavariyam_payment');
+
+Route::get('/nalavariyamactivation_payment', [App\Http\Controllers\NalavariyamServiceController::class, 'nalavariyamactivation_payment'])->name('nalavariyamactivation_payment');
+
+Route::get('/activationmember', [App\Http\Controllers\NalavariyamServiceController::class, 'activationmember'])->name('activationmember');
+
+Route::get('/getaadhaar_otpf/{aadhaar}', [App\Http\Controllers\NalavariyamServiceController::class, 'getaadhaar_otpf'])->name('getaadhaar_otpf');
+
+Route::get('/getaadhaar_dataf/{otp}/{refid}/{aadhaar}/{userid}', [App\Http\Controllers\NalavariyamServiceController::class, 'getaadhaar_dataf'])->name('getaadhaar_dataf');
+
+Route::post('/updatenalavariyam_activation', [App\Http\Controllers\NalavariyamServiceController::class, 'updatenalavariyam_activation'])->name('updatenalavariyam_activation');
+
+Route::post('/nalavariyam_checkaadhar', [App\Http\Controllers\NalavariyamServiceController::class, 'nalavariyam_checkaadhar'])->name('nalavariyam_checkaadhar');
+Route::post('/nalavariyam_checkphone', [App\Http\Controllers\NalavariyamServiceController::class, 'nalavariyam_checkphone'])->name('nalavariyam_checkphone');
+Route::post('/nalavariyam_servicepayment', [App\Http\Controllers\NalavariyamServiceController::class, 'nalavariyam_servicepayment'])->name('nalavariyam_servicepayment');
+Route::post('/nalavariyam_createapplication', [App\Http\Controllers\NalavariyamServiceController::class, 'nalavariyam_createapplication'])->name('nalavariyam_createapplication');
+Route::get('/nalavariyam/form/pending', [App\Http\Controllers\NalavariyamServiceController::class, 'pending'])->name('pending');
+Route::get('/nalavariyam/form/resubmit', [App\Http\Controllers\NalavariyamServiceController::class, 'Resubmit'])->name('resubmit');
+Route::get('/nalavariyam/form/approved', [App\Http\Controllers\NalavariyamServiceController::class, 'Approved'])->name('approved');
+Route::post('/nalavariyam_formstatus', [App\Http\Controllers\NalavariyamServiceController::class, 'nalavariyam_formstatus'])->name('nalavariyam_formstatus');
+Route::post('/updatecompleteddetails', [App\Http\Controllers\NalavariyamServiceController::class, 'updatecompleteddetails'])->name('updatecompleteddetails');
+Route::get('/createbill/{id}', [App\Http\Controllers\NalavariyamServiceController::class, 'createbill'])->name('createbill');
+Route::get('/receipt/{id}/{custid}', [App\Http\Controllers\NalavariyamServiceController::class, 'receipt'])->name('receipt');
+Route::get('application_status', [App\Http\Controllers\NalavariyamServiceController::class, 'application_status'])->name('application_status');
+Route::get('nalavariyam/get_activationamount/{usertype}', [App\Http\Controllers\NalavariyamServiceController::class, 'get_activationamount'])->name('get_activationamount');
+Route::get('getnalavariyam_data/{distid}', [App\Http\Controllers\NalavariyamServiceController::class, 'getnalavariyam_data'])->name('getnalavariyam_data');
+Route::get('getsvn_data/{distid}', [App\Http\Controllers\NalavariyamServiceController::class, 'getsvn_data'])->name('getsvn_data');
+Route::get('nalauseractivationpayment', [App\Http\Controllers\NalavariyamServiceController::class, 'nalauseractivationpayment'])->name('nalauseractivationpayment');
+Route::post('savenalavariyamactivation', [App\Http\Controllers\NalavariyamServiceController::class, 'savenalavariyamactivation'])->name('savenalavariyamactivation');
+
 
 //CourseController
 

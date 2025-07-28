@@ -46,8 +46,8 @@ class ServicePaymentController extends Controller
         $retailer_amount = $request->retailer_amount[ $key ];
         $customer_amount = $request->customer_amount[ $key ];
         $admin_amount = $request->admin_amount[ $key ];
-       
-        
+
+
 
           DB::table( 'service_payment' )->insert( [
             'parent_id'                 => $parent_id,
@@ -256,6 +256,77 @@ class ServicePaymentController extends Controller
       }
     }
     return redirect('coursepayment')->with('success' ,"Course Payment Updated Succesfully !");
+  }
+
+  public function useractivation($activation_id){
+
+      //$payment = DB::table('useractivation')->get();
+       if( $activation_id == 3 ){
+        $services = DB::table('services')->select('services.*','services.service_name as name')->where('parent_id',0)->where('status','Active')->where('id','!=',6)->orderBy( 'id' , 'Asc' )->get();
+        foreach ( $services as $key => $service ) {
+          $service->activation_id = 3;
+        }
+        }elseif( $activation_id == 2 ){
+        $services = DB::table('utility_services')->where('status','Active')->orderBy( 'id' , 'Asc' )->get();
+        foreach ( $services as $key => $service ) {
+            $service->activation_id = 2;
+        }
+        }elseif( $activation_id == 1 ){
+        $services = DB::table('find_services')->where('status','Active')->orderBy( 'id' , 'Asc' )->get();
+        foreach ( $services as $key => $service ) {
+            $service->activation_id = 1;
+        }
+        }elseif( $activation_id == 4 ){
+        $services = DB::table('panservice')->where('status','Active')->orderBy( 'id' , 'Asc' )->get();
+        foreach ( $services as $key => $service ) {
+            $service->activation_id = 4;
+        }
+        }
+
+        $services = json_decode( json_encode( $services ), true );
+    //dd($services);
+    foreach ( $services as $key => $service ) {
+      $service_id = $service[ 'id' ];
+      $activation_id = $service[ 'activation_id' ];
+      $services[ $key ][ 'payment' ] = array();
+
+      $payment = DB::table('useractivation')->where('service_id',$service_id)->where('parent_id',$activation_id)->get();
+      if(count($payment) > 0){
+        $services[ $key ][ 'payment' ] = $payment;
+      }
+    }
+    $services = json_decode( json_encode( $services ));
+
+         //dd($services);
+       return view( 'servicepayment.useractivation',compact('activation_id','services'));
+
+}
+
+  public function adduser_activation(Request $request){
+    //dd($request->all());
+    $parent_id = $request->parent_id;
+    if (count(array_unique($parent_id)) === 1 && $parent_id[0] == 3) {
+     DB::table('useractivation')->where('parent_id',$parent_id )->where('service_id','!=',6)->delete();
+    }else{
+      DB::table('useractivation')->where('parent_id',$parent_id )->delete();
+    }
+    if($request->has('parent_id')){
+      foreach ( $request->parent_id as $key => $payment ) {
+        $user_id = $request->user_id[ $key ];
+        $service_id = $request->service_id[ $key ];
+        $distributor_amount = $request->distributor_amount[ $key ];
+        $retailer_amount = $request->retailer_amount[ $key ];
+
+          DB::table( 'useractivation' )->insert( [
+            'parent_id'            => $payment,
+            'user_id'              => $user_id,
+            'service_id'            => $service_id,
+            'distributor_amount'   => $distributor_amount,
+            'retailer_amount'      => $retailer_amount,
+          ] );
+      }
+    }
+    return redirect('useractivation/'.$payment)->with('success' ,"Payment Updated Succesfully !");
   }
 
 }
