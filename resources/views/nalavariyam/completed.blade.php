@@ -65,12 +65,12 @@
                                                     href="{{ url('/createbill',$c->form_id) }}"><i
                                                         class="fas fa-arrow-circle-right"></i> Create Bill</a>
                                    @else
-                                   <a class="btn btn-sm btn-info" 
+                                   <a class="btn btn-sm btn-info"
                                                     href="{{ url('/createbill',$c->form_id) }}"><i
                                                         class="fas fa-arrow-circle-right"></i> Create Bill</a>
                                     @endif
                                    @else
-                                   <a class="btn btn-sm btn-success"  
+                                   <a class="btn btn-sm btn-success"
                                                     href="{{ url('/receipt',$c->form_id) }}/{{ $c->customersID }}"><i
                                                         class="fas fa-arrow-circle-right"></i> View Bill</a>
                                    @endif
@@ -97,6 +97,10 @@
                                 <img id="formimage" src="" style="opacity: .8; width:100%;">
                             </div>
                             <br>
+                            <div class="form-group text-center">
+                                <a id="fromimages" href="" type="button" class="btn-sm btn btn-primary"
+                                download>Download</a>
+                            </div>
                             <input type="hidden" name="payments_id" id="paymentid">
                             <div class="col-md-12">
                                 <div class="form-group row">
