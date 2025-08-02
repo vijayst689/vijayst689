@@ -854,6 +854,7 @@ public function updatenalavariyam_activation(Request $request)
         $newbalance = $balance + $activationamount;
         $newbalance1 = Auth::user()->wallet - $activationamount;
         if($activationamount != 0){
+        if(Auth::user()->id != 2){
            $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','$userid','2','$activationamount','$ad_info', '$service_status','$time','$date','$userid','$newbalance1')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet + $activationamount where id = 2";
@@ -864,6 +865,7 @@ public function updatenalavariyam_activation(Request $request)
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet - $activationamount where id = $userid";
         DB::update( DB::raw( $sql ) );
+        }
 
         $service_status = 'Out Payment';
        $ad_info = 'Activation Payment';
