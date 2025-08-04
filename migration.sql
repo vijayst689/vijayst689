@@ -2118,3 +2118,23 @@ INSERT INTO `nalavariyam_remarks` VALUES (1,'Crop and Resize (800*1100)','Active
 (9,'Fill Registration Number & Date','Active'),
 (10,'Fill Working Years','Active'),
 (11,'Fill Work Name As Per Labour Department work list Chart','Active');
+
+//4-8-2025
+
+CREATE TABLE `serverpayment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `website_index` varchar(50) DEFAULT NULL,
+  `payment` decimal(10,2) DEFAULT 0,
+  `activation_date` varchar(20) DEFAULT NULL,
+  `date` varchar(30) DEFAULT NULL,
+  `status` varchar(30) DEFAULT NULL,
+  `payment_proof` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+alter table serverpayment add website_name text DEFAULT NULL;
+
+alter table users add payment_date varchar(20) DEFAULT NULL;
+alter table users add server_amount decimal(10,2) DEFAULT 0;
+alter table users add payment_status int(11) DEFAULT 0;

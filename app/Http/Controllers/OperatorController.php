@@ -8,10 +8,15 @@ use Auth;
 
 class OperatorController extends Controller {
 
-    public function __construct() {
-        $this->middleware( 'auth' );
-    }
-
+    public function __construct()
+  {
+    $this->middleware(function ($request, $next) {
+            $this->restrictIfNotActivated();
+            return $next($request);
+        });
+    $this->middleware('auth');
+  }
+  
     public function operator () {
         return view( 'operator/operator');
     }

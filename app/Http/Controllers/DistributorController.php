@@ -13,10 +13,14 @@ use Illuminate\Support\Facades\DB;
 class DistributorController extends Controller
 {
 
-    public function adddistributor()
-    {
-        return view('distributor.adddistributor');
-    }
+    public function __construct()
+  {
+    $this->middleware(function ($request, $next) {
+            $this->restrictIfNotActivated();
+            return $next($request);
+        });
+    $this->middleware('auth');
+  }
 
     public function distributors()
     {

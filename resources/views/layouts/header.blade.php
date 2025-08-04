@@ -171,6 +171,8 @@
                 <button type="button" class="btn-sm btn btn-success px-4" data-bs-toggle="modal"
                     data-bs-target="#addmoney">Add Payment</button>
             </div>
+         
+
         @endif
         @if (Auth::user()->user_type_id == 1 )
         <div class="d-flex align-items-center gap-2 justify-content-lg-end">
@@ -178,6 +180,9 @@
             <button type="button" class="btn-sm btn btn-success px-4" data-bs-toggle="modal"
                 data-bs-target="#addramji">Add Payment</button>
         </div>
+        
+
+        
         @endif
 
         <ul class="navbar-nav gap-1 nav-right-links align-items-center">
@@ -368,6 +373,34 @@
                 </div>
             </li>
         </ul>
+        </nav>
 
-    </nav>
+ <nav class="alert  align-items-bottom gap-4 top-50">
+        <div class="btn-toggle">
+            {{-- <a href="javascript:;"><i class="material-icons-outlined">menu</i></a> --}}
+        </div>   
+ <div class="d-flex flex-column align-items-end gap-2 justify-content-lg-end">
+    {{-- Payment Buttons --}}
+    {{-- Place your button(s) here --}}
+    {{-- <button type="button" class="btn btn-grd-primary px-4" data-bs-toggle="modal"
+        data-bs-target="#FormModal">Add Money</button> --}}
+
+
+</div>
+</nav>
+  
 </header>
+
+@if ($showPopup)
+    <div id="headerAlert" class="alert alert-danger alert-dismissible fade show text-center w-100 m-0" role="alert" style="border-radius: 0; position: fixed; top: 0; left: 0; z-index: 1055;">
+        <strong>Reminder:</strong> Your Server activation is due in {{ $daysLeft }} day{{ $daysLeft > 1 ? 's' : '' }}.
+        Please make your payment.
+        <div class="mt-3">
+            <a href="{{ url('/serverpayment') }}" class="btn btn-sm btn-primary px-4">
+                💳 Make Payment
+            </a>
+        </div>
+        <button type="button" class="btn-close" onclick="closeHeaderPopup()" aria-label="Close"></button>
+    </div>
+@endif
+

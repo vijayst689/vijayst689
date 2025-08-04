@@ -8,10 +8,15 @@ use Illuminate\Support\Facades\DB;
 
 class ServicePaymentController extends Controller
 {
-  public function __construct(){
+ public function __construct()
+  {
+    $this->middleware(function ($request, $next) {
+            $this->restrictIfNotActivated();
+            return $next($request);
+        });
     $this->middleware('auth');
   }
-
+  
   public function servicepayment($serviceid){
     $services = DB::table('services')->where('parent_id',$serviceid )->orderBy( 'id' , 'Asc' )->get();
     $services = json_decode( json_encode( $services ), true );

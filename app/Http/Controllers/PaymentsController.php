@@ -8,9 +8,14 @@ use Auth;
 
 class PaymentsController extends Controller {
 
-    public function __construct() {
-        $this->middleware( 'auth' );
-    }
+   public function __construct()
+  {
+    $this->middleware(function ($request, $next) {
+            $this->restrictIfNotActivated();
+            return $next($request);
+        });
+    $this->middleware('auth');
+  }
 
     public function declinerequest_payment($toid) {
 

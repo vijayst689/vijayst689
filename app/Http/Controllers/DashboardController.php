@@ -9,9 +9,13 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public function __construct()
-    {
-      $this->middleware('auth');
-    }
+  {
+    $this->middleware(function ($request, $next) {
+            $this->restrictIfNotActivated();
+            return $next($request);
+        });
+    $this->middleware('auth');
+  }
 
     public function dashboard()
     {
