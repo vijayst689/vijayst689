@@ -731,7 +731,7 @@ public function get_fssaistatus(Request $request){
     return response()->json($response);
 }
 
-<<<<<<< HEAD
+
 public function get_tnegaservicesstatus(Request $request){
         $API_KEY = env('API_KEY','');
         $WEBSITE_INDEX = env('WEBSITE_INDEX','');
@@ -863,7 +863,16 @@ public function get_tnegaservicesstatus(Request $request){
             ]);
         }
 
-=======
+        $message = "Success";
+    }else{
+        $message = "Access Denied";
+    }
+    $response["message"] = $message;
+    $response["index"] = $index;
+    return response()->json($response);
+}
+
+
 public function get_website_activation(Request $request){
     $API_KEY = env('API_KEY','');
     $WEBSITE_INDEX = env('WEBSITE_INDEX','');
@@ -878,7 +887,7 @@ public function get_website_activation(Request $request){
             'payment_date' => $request->payment_date,
             'server_amount' => $request->amount,
         ]);
->>>>>>> c1c2813e58ec84b1b57938adcc552fd77f8a1b45
+
         $message = "Success";
     }else{
         $message = "Access Denied";
@@ -887,8 +896,7 @@ public function get_website_activation(Request $request){
     $response["index"] = $index;
     return response()->json($response);
 }
-<<<<<<< HEAD
-=======
+
 
 public function update_serverpayment_status(Request $request){
     $API_KEY = env('API_KEY','');
@@ -925,6 +933,4 @@ public function update_serverpayment_status(Request $request){
     return response()->json($response);
 }
 
-
->>>>>>> c1c2813e58ec84b1b57938adcc552fd77f8a1b45
 }
