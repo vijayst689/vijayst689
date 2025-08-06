@@ -8,10 +8,14 @@ use Illuminate\Support\Facades\DB;
 class ServicestatusController extends Controller
 {
     public function __construct()
-    {
-        $this->middleware( 'auth' );
-    }
-
+  {
+    $this->middleware(function ($request, $next) {
+            $this->restrictIfNotActivated();
+            return $next($request);
+        });
+    $this->middleware('auth');
+  }
+  
     public function appliedservice($status)
     {
         if(Auth::user()->user_type_id == 2 || Auth::user()->user_type_id == 1){

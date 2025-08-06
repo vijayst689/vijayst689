@@ -10,6 +10,10 @@ class UtilityController extends Controller
 {
   public function __construct()
   {
+    $this->middleware(function ($request, $next) {
+            $this->restrictIfNotActivated();
+            return $next($request);
+        });
     $this->middleware('auth');
   }
 

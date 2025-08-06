@@ -8,11 +8,14 @@ use Illuminate\Support\Facades\DB;
 
 class PanController extends Controller
 {
-  public function __construct()
+ public function __construct()
   {
+    $this->middleware(function ($request, $next) {
+            $this->restrictIfNotActivated();
+            return $next($request);
+        });
     $this->middleware('auth');
   }
-
 
   public function addpan(){
     return view( 'pancard.addpan');

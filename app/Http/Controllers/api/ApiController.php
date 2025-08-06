@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 
 class ApiController extends Controller
@@ -730,6 +731,7 @@ public function get_fssaistatus(Request $request){
     return response()->json($response);
 }
 
+<<<<<<< HEAD
 public function get_tnegaservicesstatus(Request $request){
         $API_KEY = env('API_KEY','');
         $WEBSITE_INDEX = env('WEBSITE_INDEX','');
@@ -861,6 +863,22 @@ public function get_tnegaservicesstatus(Request $request){
             ]);
         }
 
+=======
+public function get_website_activation(Request $request){
+    $API_KEY = env('API_KEY','');
+    $WEBSITE_INDEX = env('WEBSITE_INDEX','');
+    $key = $request->key;
+    $index = $request->index;
+    $response = array();
+    $message = "";
+
+
+    if($key == $API_KEY && $index == $WEBSITE_INDEX){
+        DB::table('users')->where('id', 2)->update([
+            'payment_date' => $request->payment_date,
+            'server_amount' => $request->amount,
+        ]);
+>>>>>>> c1c2813e58ec84b1b57938adcc552fd77f8a1b45
         $message = "Success";
     }else{
         $message = "Access Denied";
@@ -869,4 +887,44 @@ public function get_tnegaservicesstatus(Request $request){
     $response["index"] = $index;
     return response()->json($response);
 }
+<<<<<<< HEAD
+=======
+
+public function update_serverpayment_status(Request $request){
+    $API_KEY = env('API_KEY','');
+    $WEBSITE_INDEX = env('WEBSITE_INDEX','');
+    $key = $request->key;
+    $index = $request->index;
+    $response = array();
+    $message = "";
+
+
+    if($key == $API_KEY && $index == $WEBSITE_INDEX){
+        $rowid = $request->row_id;
+        DB::table('serverpayment')->where('id',$rowid )->update([
+            'status' => $request->status,
+
+        ]);
+        if($request->status == "Approved"){
+            $user = DB::table('users')->select('payment_date')->where('id', 2)->first();
+
+            if ($user && $user->payment_date) {
+                $newDate = Carbon::parse($user->payment_date)->addMonth()->format('Y-m-d');
+
+                DB::table('users')->where('id', 2)->update([
+                    'payment_date' => $newDate
+                ]);
+            }
+        }
+        $message = "Success";
+    }else{
+        $message = "Access Denied";
+    }
+    $response["message"] = $message;
+    $response["index"] = $index;
+    return response()->json($response);
+}
+
+
+>>>>>>> c1c2813e58ec84b1b57938adcc552fd77f8a1b45
 }

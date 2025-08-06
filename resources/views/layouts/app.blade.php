@@ -33,7 +33,8 @@
     <link href="{{ asset('assets/sass/semi-dark.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/sass/bordered-theme.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/sass/responsive.css') }}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toaster/4.0.1/css/bootstrap-toaster.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toaster/4.0.1/css/bootstrap-toaster.min.css"
+        rel="stylesheet">
 
 </head>
 
@@ -182,7 +183,39 @@
                 }
             });
         }
+    </script>
 
+    <script>
+        function shouldShowPopup() {
+            const lastClosed = localStorage.getItem('headerPopupLastClosed');
+            const now = new Date().getTime();
+
+            // If never closed or 1 hour has passed since close
+            if (!lastClosed || (now - parseInt(lastClosed)) > 60 * 60 * 1000) {
+                return true;
+            }
+
+            return false;
+        }
+
+        function showHeaderPopup() {
+            const alertBox = document.getElementById('headerAlert');
+            alertBox.style.display = 'block';
+        }
+
+        function closeHeaderPopup() {
+            const alertBox = document.getElementById('headerAlert');
+            alertBox.style.display = 'none';
+
+            // Store current time as "last closed"
+            localStorage.setItem('headerPopupLastClosed', new Date().getTime());
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (shouldShowPopup()) {
+                showHeaderPopup();
+            }
+        });
     </script>
 </body>
 

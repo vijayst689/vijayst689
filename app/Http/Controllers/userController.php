@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\DB;
 class userController extends Controller
 {
 
+    public function __construct()
+  {
+    $this->middleware(function ($request, $next) {
+            $this->restrictIfNotActivated();
+            return $next($request);
+        });
+    $this->middleware('auth');
+  }
+  
     public function addcustomer()
     {
         $districts = DB::table( 'district' )->get();

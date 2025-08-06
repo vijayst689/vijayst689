@@ -37,5 +37,12 @@ Route::post('/get_smartcardstatus', [App\Http\Controllers\api\ApiController::cla
 // FSSAI SERVICE 
 Route::post('/get_fssaistatus', [App\Http\Controllers\api\ApiController::class, 'get_fssaistatus'])->name('get_fssaistatus');
 
+<<<<<<< HEAD
 // TNEGA SERVICE 
 Route::post('/get_tnegaservicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_tnegaservicesstatus'])->name('get_tnegaservicesstatus');
+=======
+// SERVER PAYMENT DATE
+
+Route::post('/get_website_activation', [App\Http\Controllers\api\ApiController::class, 'get_website_activation'])->name('get_website_activation');
+Route::post('/update_serverpayment_status', [App\Http\Controllers\api\ApiController::class, 'update_serverpayment_status'])->name('update_serverpayment_status');
+>>>>>>> c1c2813e58ec84b1b57938adcc552fd77f8a1b45

@@ -110,7 +110,7 @@
   background-color: var(--bs-body-bg);
   border: 0px solid var(--bs-border-color-translucent);
 }
-[data-bs-theme=blue-theme] body .top-header .navbar .nav-item .dropdown-notify .option:hover {
+[data-bs-theme=blue-theme] body .top-header .navbar  .nav-item .dropdown-notify .option:hover {
   background-color: var(--bs-body-bg-2);
 }
 [data-bs-theme=blue-theme] body .top-header .navbar .nav-item .dropdown-notify .notify-title {
@@ -644,3 +644,13 @@
   width: -moz-max-content;
   width: max-content;
 }/*# sourceMappingURL=blue-theme.css.map */
+.alert {
+  position: fixed;
+  top: 10%;
+  width: 100px; /* so nav stretches full width */
+  left: 10px;
+  z-index: 1000;
+  /* background-color: transparent; */
+  border: none;
+  
+}

@@ -9,10 +9,14 @@ use Illuminate\Support\Facades\DB;
 class WalletController extends Controller
 {
     public function __construct()
-    {
-      $this->middleware('auth');
-    }
-
+  {
+    $this->middleware(function ($request, $next) {
+            $this->restrictIfNotActivated();
+            return $next($request);
+        });
+    $this->middleware('auth');
+  }
+  
     public function index()
   {
     $userid = Auth::user()->id;

@@ -13,11 +13,15 @@ use Illuminate\Support\Facades\DB;
 class RetailerController extends Controller
 {
 
-    public function addretailer()
-    {
-        return view('retailer.addretailer');
-    }
-
+    public function __construct()
+  {
+    $this->middleware(function ($request, $next) {
+            $this->restrictIfNotActivated();
+            return $next($request);
+        });
+    $this->middleware('auth');
+  }
+  
     public function Retailer()
     {
         $userid = Auth::user()->id;
