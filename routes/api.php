@@ -36,3 +36,6 @@ Route::post('/get_smartcardstatus', [App\Http\Controllers\api\ApiController::cla
 
 // FSSAI SERVICE 
 Route::post('/get_fssaistatus', [App\Http\Controllers\api\ApiController::class, 'get_fssaistatus'])->name('get_fssaistatus');
+
+// TNEGA SERVICE 
+Route::post('/get_tnegaservicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_tnegaservicesstatus'])->name('get_tnegaservicesstatus');

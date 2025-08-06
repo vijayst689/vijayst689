@@ -2118,3 +2118,9 @@ INSERT INTO `nalavariyam_remarks` VALUES (1,'Crop and Resize (800*1100)','Active
 (9,'Fill Registration Number & Date','Active'),
 (10,'Fill Working Years','Active'),
 (11,'Fill Work Name As Per Labour Department work list Chart','Active');
+
+
+//04-08-2025
+alter table family_member add relation_name_tamil text DEFAULT NULL after relation_name;
+alter table family_member add service_id int(11) DEFAULT 0 after user_id;
+alter table family_member add occupation text DEFAULT NULL after relation_name_tamil;

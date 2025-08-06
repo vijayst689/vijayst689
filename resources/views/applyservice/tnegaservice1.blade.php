@@ -409,7 +409,7 @@
                                     <div class="mb-3 col-md-6">
                                         <label>Mother's Caste</label>
                                         <input required class="form-control" type="text"
-                                            name="mother_caste" placeholder="Mather's Caste" />
+                                            name="mother_Caste" placeholder="Mather's Caste" />
                                     </div>
                                         <div class="mb-3 col-md-6">
                                             <label class="form-label">Relationship</label>

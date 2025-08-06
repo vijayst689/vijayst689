@@ -829,7 +829,7 @@ class ServicestatusController extends Controller
             return view( 'servicestatus.tnegastatusupdate1',compact('id','services','servicename','customers','serviceid','amount','districts') );
         }
 
-        elseif($service_id == 22 || $service_id == 23 || $service_id == 24 || $service_id == 25 || $service_id == 26){
+        elseif($service_id == 22 || $service_id == 24 || $service_id == 25 || $service_id == 26){
 
             return view('servicestatus.tnegastatusupdate2',compact('id','services','servicename','customers','serviceid','amount','districts') );
         }
@@ -1208,6 +1208,56 @@ public function submit_statusupdate_tnegaservices1(Request $request){
             'mother_community'        => $request->mother_community,
             'mother_caste'        => $request->mother_caste,
         ] );
+
+    $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    if($coordinator_permission == 1){
+      $post_data = array();
+     $getdata = DB::table( 'tnega_services' )->where('id',$request->applied_serviceid)->get();
+     $getdata = json_decode( json_encode( $getdata ), true );
+            foreach ( $getdata as $key => $ser ) {
+                $getdata[ $key ][ 'family_details' ] = array();
+                $getdata[ $key ][ 'customer_details' ] = array();
+                $ser_id = $ser[ 'id' ];
+                $user_id = $ser[ 'user_id' ];
+                $sql = "select * from family_member where service_id=$ser_id order by id Asc";
+                $result = DB::select( $sql );
+                $sql = "select * from users where id=$user_id";
+                $result1 = DB::select( $sql );
+                $getdata[ $key ][ 'family_details' ] = $result;
+                $getdata[ $key ][ 'customer_details' ] = $result1;
+            }
+    if(count($getdata) > 0){
+
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+      $post_data['data'] = $getdata;
+      $post_data['key'] = $API_KEY;
+      $post_data['index'] = $WEBSITE_INDEX;
+     $ch = curl_init();
+       
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_tnegaservices_api';
+        //echo $url1;die;
+
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS,json_encode($post_data) );
+         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+    //dd($resdata);
+    }
+    }
+     DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+        ] );
     }
     return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
@@ -1338,45 +1388,41 @@ if($serviceid == 2){
         ]);
     }
     DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
-        'job_type'            => $request->job_type,
-        'income_yearly'       => $request->income_yearly,
-        'income_monthly'       => $request->income_monthly,
+            'job_type'            => $request->job_type,
+            'income_yearly'       => $request->income_yearly,
+            'income_monthly'       => $request->income_monthly,            
+        ]);
         
-    ]);
+    }
+
+    DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+        'status' => $status,
+        'can_number'        => $request->can_number,
+        'can_details'        => $request->can_details,
+        'personalized'        => $request->personalized,
+        'relationship_1'        => $request->relationship_1,
+        'mother_name_tamil'        => $request->mother_name_tamil,
+        'mother_name_english'        => $request->mother_name_english,
+        'dob'        => $request->dob,
+        'religion'        => $request->religion,
+        'education'        => $request->education,
+        'work'        => $request->work,
+        'door_no'        => $request->door_no,
+        'personalized_name_tamil'        => $request->personalized_name_tamil,
+        'relationship_name_tamil_1'        => $request->relationship_name_tamil_1,
+        'community'        => $request->community,
+        'smartcard_number'        => $request->smartcard_number,
+        'street_name_tamil'        => $request->street_name_tamil,
+        'personalized_name_english'        => $request->personalized_name_english,
+        'relationship_name_english_1'        => $request->relationship_name_english_1,
+        'maritial_status'        => $request->maritial_status,
+        'caste'        => $request->caste,
+        'street_name'        => $request->street_name,
+        'pin_code'        => $request->pin_code,
+        'postal_area_tamil'        => $request->postal_area_tamil,
+        'postal_area_english'        => $request->postal_area_english,
+    ] );
     
-}
-
-DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
-    'status' => $status,
-    'can_number'        => $request->can_number,
-    'can_details'        => $request->can_details,
-    'personalized'        => $request->personalized,
-    'relationship_1'        => $request->relationship_1,
-    'mother_name_tamil'        => $request->mother_name_tamil,
-    'mother_name_english'        => $request->mother_name_english,
-    'dob'        => $request->dob,
-    'religion'        => $request->religion,
-    'education'        => $request->education,
-    'work'        => $request->work,
-    'door_no'        => $request->door_no,
-    'personalized_name_tamil'        => $request->personalized_name_tamil,
-    'relationship_name_tamil_1'        => $request->relationship_name_tamil_1,
-    'community'        => $request->community,
-    'smartcard_number'        => $request->smartcard_number,
-    'street_name_tamil'        => $request->street_name_tamil,
-    'personalized_name_english'        => $request->personalized_name_english,
-    'relationship_name_english_1'        => $request->relationship_name_english_1,
-    'maritial_status'        => $request->maritial_status,
-    'caste'        => $request->caste,
-    'street_name'        => $request->street_name,
-    'pin_code'        => $request->pin_code,
-    'postal_area_tamil'        => $request->postal_area_tamil,
-    'postal_area_english'        => $request->postal_area_english,
-    'mother_name_tamil'        => $request->mother_name_tamil,
-    'mother_name_english'        => $request->mother_name_english,
-   
-] );
-
 if($request->has('family_relationship')){
     DB::table( 'family_member' )->where('service_id', $request->applied_serviceid)->delete();
     foreach ( $request->family_relationship as $key => $relation ) {
@@ -1387,11 +1433,60 @@ if($request->has('family_relationship')){
       
       $sql = "insert into family_member (service_id,relation,relation_name,relation_name_tamil,relation_age,occupation) values ($request->applied_serviceid,'$relation','$relation_name','$relation_name_tamil','$relation_age','$occupation')";
       DB::insert( $sql );
-      
-      
+        }
   }
-}
-}
+      
+ $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    if($coordinator_permission == 1){
+      $post_data = array();
+     $getdata = DB::table( 'tnega_services' )->where('id',$request->applied_serviceid)->get();
+     $getdata = json_decode( json_encode( $getdata ), true );
+            foreach ( $getdata as $key => $ser ) {
+                $getdata[ $key ][ 'family_details' ] = array();
+                $getdata[ $key ][ 'customer_details' ] = array();
+                $ser_id = $ser[ 'id' ];
+                $user_id = $ser[ 'user_id' ];
+                $sql = "select * from family_member where service_id=$ser_id order by id Asc";
+                $result = DB::select( $sql );
+                $sql = "select * from users where id=$user_id";
+                $result1 = DB::select( $sql );
+                $getdata[ $key ][ 'family_details' ] = $result;
+                $getdata[ $key ][ 'customer_details' ] = $result1;
+            }
+    if(count($getdata) > 0){
+
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+      $post_data['data'] = $getdata;
+      $post_data['key'] = $API_KEY;
+      $post_data['index'] = $WEBSITE_INDEX;
+      $ch = curl_init();
+       
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_tnegaservices_api';
+        //echo $url1;die;
+
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS,json_encode($post_data) );
+         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+
+        }
+        DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+        ] );
+    }
 
 return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
@@ -1541,32 +1636,32 @@ if($serviceid == 23){
 }
 
 DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
-    'status' => $status,
-    'can_number'        => $request->can_number,
-    'can_details'        => $request->can_details,
-    'personalized'        => $request->personalized,
-    'relationship_1'        => $request->relationship_1,
-    'mother_name_tamil'        => $request->mother_name_tamil,
-    'mother_name_english'        => $request->mother_name_english,
-    'dob'        => $request->dob,
-    'religion'        => $request->religion,
-    'education'        => $request->education,
-    'work'        => $request->work,
-    'door_no'        => $request->door_no,
-    'personalized_name_tamil'        => $request->personalized_name_tamil,
-    'relationship_name_tamil_1'        => $request->relationship_name_tamil_1,
-    'community'        => $request->community,
-    'smartcard_number'        => $request->smartcard_number,
-    'street_name_tamil'        => $request->street_name_tamil,
-    'personalized_name_english'        => $request->personalized_name_english,
-    'relationship_name_english_1'        => $request->relationship_name_english_1,
-    'maritial_status'        => $request->maritial_status,
-    'caste'        => $request->caste,
-    'street_name'        => $request->street_name,
-    'pin_code'        => $request->pin_code,
-    'postal_area_tamil'        => $request->postal_area_tamil,
-    'postal_area_english'        => $request->postal_area_english,
-] );
+        'status' => $status,
+        'can_number'        => $request->can_number,
+        'can_details'        => $request->can_details,
+        'personalized'        => $request->personalized,
+        'relationship_1'        => $request->relationship_1,
+        'mother_name_tamil'        => $request->mother_name_tamil,
+        'mother_name_english'        => $request->mother_name_english,
+        'dob'        => $request->dob,
+        'religion'        => $request->religion,
+        'education'        => $request->education,
+        'work'        => $request->work,
+        'door_no'        => $request->door_no,
+        'personalized_name_tamil'        => $request->personalized_name_tamil,
+        'relationship_name_tamil_1'        => $request->relationship_name_tamil_1,
+        'community'        => $request->community,
+        'smartcard_number'        => $request->smartcard_number,
+        'street_name_tamil'        => $request->street_name_tamil,
+        'personalized_name_english'        => $request->personalized_name_english,
+        'relationship_name_english_1'        => $request->relationship_name_english_1,
+        'maritial_status'        => $request->maritial_status,
+        'caste'        => $request->caste,
+        'street_name'        => $request->street_name,
+        'pin_code'        => $request->pin_code,
+        'postal_area_tamil'        => $request->postal_area_tamil,
+        'postal_area_english'        => $request->postal_area_english,
+    ] );
 
 if($request->has('doc_id')){
     foreach ( $request->doc_id as $key => $id ) {
@@ -1605,7 +1700,65 @@ DB::table( 'agri_details' )->where('service_id', $request->applied_serviceid)->d
   
 }
 }
-}
+$getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    if($coordinator_permission == 1){
+     $post_data = array();
+     $getdata = DB::table( 'tnega_services' )->where('id',$request->applied_serviceid)->get();
+     $getdata = json_decode( json_encode( $getdata ), true );
+            foreach ( $getdata as $key => $ser ) {
+                $getdata[ $key ][ 'family_details' ] = array();
+                $getdata[ $key ][ 'customer_details' ] = array();
+                $getdata[ $key ][ 'agri_details' ] = array();
+                $getdata[ $key ][ 'agri_documents' ] = array();
+                $ser_id = $ser[ 'id' ];
+                $user_id = $ser[ 'user_id' ];
+                $sql = "select * from family_member where service_id=$ser_id order by id Asc";
+                $result = DB::select( $sql );
+                $sql = "select * from users where id=$user_id";
+                $result1 = DB::select( $sql );
+                 $sql = "select * from agri_details where service_id=$ser_id order by id Asc";
+                $result2 = DB::select( $sql );
+                 $sql = "select * from document where service_id=$ser_id order by id Asc";
+                $result3 = DB::select( $sql );
+                $getdata[ $key ][ 'family_details' ] = $result;
+                $getdata[ $key ][ 'customer_details' ] = $result1;
+                $getdata[ $key ][ 'agri_details' ] = $result2;
+                $getdata[ $key ][ 'agri_documents' ] = $result3;
+
+            }
+    if(count($getdata) > 0){
+
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+      $post_data['data'] = $getdata;
+      $post_data['key'] = $API_KEY;
+      $post_data['index'] = $WEBSITE_INDEX;
+     $ch = curl_init();
+       
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_tnegaservices_api';
+        //echo $url1;die;
+
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS,json_encode($post_data) );
+         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+    }
+     DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+        ] );
+    }
 
 return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
@@ -1763,69 +1916,69 @@ public function submit_statusupdate_tnegaservices2(Request $request){
                 ]);
             }
 
-        }elseif($serviceid == 23){
-            if ($request->chitta != null) {
-                $chitta = uniqid().'.'.$request->file('chitta')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'chitta' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['chitta']['tmp_name'], $filepath . $chitta);
-                DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
-                    'chitta'         => $chitta,
-                ]);
-            }
+        // }elseif($serviceid == 23){
+        //     if ($request->chitta != null) {
+        //         $chitta = uniqid().'.'.$request->file('chitta')->extension();
+        //         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'chitta' . DIRECTORY_SEPARATOR);
+        //         move_uploaded_file($_FILES['chitta']['tmp_name'], $filepath . $chitta);
+        //         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+        //             'chitta'         => $chitta,
+        //         ]);
+        //     }
 
-            if ($request->aggregation != null) {
-                $aggregation = uniqid().'.'.$request->file('aggregation')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aggregation' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aggregation']['tmp_name'], $filepath . $aggregation);
-                DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
-                    'aggregation'         => $aggregation,
-                ]);
-            }
+        //     if ($request->aggregation != null) {
+        //         $aggregation = uniqid().'.'.$request->file('aggregation')->extension();
+        //         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aggregation' . DIRECTORY_SEPARATOR);
+        //         move_uploaded_file($_FILES['aggregation']['tmp_name'], $filepath . $aggregation);
+        //         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+        //             'aggregation'         => $aggregation,
+        //         ]);
+        //     }
 
-            if ($request->ec_certificate != null) {
-                $ec_certificate = uniqid().'.'.$request->file('ec_certificate')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'ec_certificate' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['ec_certificate']['tmp_name'], $filepath . $ec_certificate);
-                DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
-                    'ec_certificate'         => $ec_certificate,
-                ]);
-            }
+        //     if ($request->ec_certificate != null) {
+        //         $ec_certificate = uniqid().'.'.$request->file('ec_certificate')->extension();
+        //         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'ec_certificate' . DIRECTORY_SEPARATOR);
+        //         move_uploaded_file($_FILES['ec_certificate']['tmp_name'], $filepath . $ec_certificate);
+        //         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+        //             'ec_certificate'         => $ec_certificate,
+        //         ]);
+        //     }
 
-            if ($request->villankam != null) {
-                $villankam = uniqid().'.'.$request->file('villankam')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'villankam' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['villankam']['tmp_name'], $filepath . $villankam);
-                DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
-                    'villankam'         => $villankam,
-                ]);
-            }
+        //     if ($request->villankam != null) {
+        //         $villankam = uniqid().'.'.$request->file('villankam')->extension();
+        //         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'villankam' . DIRECTORY_SEPARATOR);
+        //         move_uploaded_file($_FILES['villankam']['tmp_name'], $filepath . $villankam);
+        //         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+        //             'villankam'         => $villankam,
+        //         ]);
+        //     }
 
-            if ($request->vao_certificate != null) {
-                $vao_certificate = uniqid().'.'.$request->file('vao_certificate')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'vao_certificate' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['vao_certificate']['tmp_name'], $filepath . $vao_certificate);
-                DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
-                    'vao_certificate'         => $vao_certificate,
-                ]);
-            }
+        //     if ($request->vao_certificate != null) {
+        //         $vao_certificate = uniqid().'.'.$request->file('vao_certificate')->extension();
+        //         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'vao_certificate' . DIRECTORY_SEPARATOR);
+        //         move_uploaded_file($_FILES['vao_certificate']['tmp_name'], $filepath . $vao_certificate);
+        //         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+        //             'vao_certificate'         => $vao_certificate,
+        //         ]);
+        //     }
 
-            if ($request->self_declaration_certificate != null) {
-                $self_declaration_certificate = uniqid().'.'.$request->file('self_declaration_certificate')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'self_declaration_certificate' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['self_declaration_certificate']['tmp_name'], $filepath . $self_declaration_certificate);
-                DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
-                    'self_declaration_certificate'         => $self_declaration_certificate,
-                ]);
-            }
+        //     if ($request->self_declaration_certificate != null) {
+        //         $self_declaration_certificate = uniqid().'.'.$request->file('self_declaration_certificate')->extension();
+        //         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'self_declaration_certificate' . DIRECTORY_SEPARATOR);
+        //         move_uploaded_file($_FILES['self_declaration_certificate']['tmp_name'], $filepath . $self_declaration_certificate);
+        //         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+        //             'self_declaration_certificate'         => $self_declaration_certificate,
+        //         ]);
+        //     }
 
-            if ($request->other_certificate != null) {
-                $other_certificate = uniqid().'.'.$request->file('other_certificate')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'other_certificate' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['other_certificate']['tmp_name'], $filepath . $other_certificate);
-                DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
-                    'other_certificate'         => $other_certificate,
-                ]);
-            }
+        //     if ($request->other_certificate != null) {
+        //         $other_certificate = uniqid().'.'.$request->file('other_certificate')->extension();
+        //         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'other_certificate' . DIRECTORY_SEPARATOR);
+        //         move_uploaded_file($_FILES['other_certificate']['tmp_name'], $filepath . $other_certificate);
+        //         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+        //             'other_certificate'         => $other_certificate,
+        //         ]);
+        //     }
 
         }elseif ($serviceid == 24) {
             if ($request->bank_pass_book != null) {
@@ -1954,6 +2107,56 @@ public function submit_statusupdate_tnegaservices2(Request $request){
         DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
             'can_number'        => $request->can_number,
+        ] );
+    
+    $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    if($coordinator_permission == 1){
+      $post_data = array();
+     $getdata = DB::table( 'tnega_services' )->where('id',$request->applied_serviceid)->get();
+     $getdata = json_decode( json_encode( $getdata ), true );
+            foreach ( $getdata as $key => $ser ) {
+                $getdata[ $key ][ 'family_details' ] = array();
+                $getdata[ $key ][ 'customer_details' ] = array();
+                $ser_id = $ser[ 'id' ];
+                $user_id = $ser[ 'user_id' ];
+                $sql = "select * from family_member where service_id=$ser_id order by id Asc";
+                $result = DB::select( $sql );
+                $sql = "select * from users where id=$user_id";
+                $result1 = DB::select( $sql );
+                $getdata[ $key ][ 'family_details' ] = $result;
+                $getdata[ $key ][ 'customer_details' ] = $result1;
+            }
+    if(count($getdata) > 0){
+
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+      $post_data['data'] = $getdata;
+      $post_data['key'] = $API_KEY;
+      $post_data['index'] = $WEBSITE_INDEX;
+     $ch = curl_init();
+       
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_tnegaservices_api';
+        //echo $url1;die;
+
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS,json_encode($post_data) );
+         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+    }
+     DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
         ] );
     }
 
@@ -2185,7 +2388,56 @@ public function submit_statusupdate_tnegaservices3(Request $request){
         }
 
     }
-}
+ $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    if($coordinator_permission == 1){
+     $post_data = array();
+     $getdata = DB::table( 'tnega_services' )->where('id',$request->applied_serviceid)->get();
+     $getdata = json_decode( json_encode( $getdata ), true );
+            foreach ( $getdata as $key => $ser ) {
+                $getdata[ $key ][ 'family_details' ] = array();
+                $getdata[ $key ][ 'customer_details' ] = array();
+                $ser_id = $ser[ 'id' ];
+                $user_id = $ser[ 'user_id' ];
+                $sql = "select * from family_member where service_id=$ser_id order by id Asc";
+                $result = DB::select( $sql );
+                $sql = "select * from users where id=$user_id";
+                $result1 = DB::select( $sql );
+                $getdata[ $key ][ 'family_details' ] = $result;
+                $getdata[ $key ][ 'customer_details' ] = $result1;
+            }
+    if(count($getdata) > 0){
+
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+      $post_data['data'] = $getdata;
+      $post_data['key'] = $API_KEY;
+      $post_data['index'] = $WEBSITE_INDEX;
+     $ch = curl_init();
+       
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_tnegaservices_api';
+        //echo $url1;die;
+
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS,json_encode($post_data) );
+         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+    }
+     DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+        ] );
+    }
 
 return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
@@ -2350,7 +2602,90 @@ public function submit_statusupdate_tnegaservices4(Request $request){
             ]);
         }
 
+         DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+                    'status' => $status,
+                    'can_number'        => $request->can_number,
+                    'can_details'        => $request->can_details,
+                    'personalized'        => $request->personalized,
+                    'relationship_1'        => $request->relationship_1,
+                    'relationship_2'        => $request->relationship_2,
+                    'relationship_3'        => $request->relationship_3,
+                    'dob'        => $request->dob,
+                    'religion'        => $request->religion,
+                    'education'        => $request->education,
+                    'work'        => $request->work,
+                    'door_no'        => $request->door_no,
+                    'personalized_name_tamil'        => $request->personalized_name_tamil,
+                    'relationship_name_tamil_1'        => $request->relationship_name_tamil_1,
+                    'relationship_name_tamil_2'        => $request->relationship_name_tamil_2,
+                    'relationship_name_tamil_3'        => $request->relationship_name_tamil_3,
+                    'community'        => $request->community,
+                    'smartcard_number'        => $request->smartcard_number,
+                    'street_name_tamil'        => $request->street_name_tamil,
+                    'personalized_name_english'        => $request->personalized_name_english,
+                    'relationship_name_english_1'        => $request->relationship_name_english_1,
+                    'relationship_name_english_2'        => $request->relationship_name_english_2,
+                    'relationship_name_english_3'        => $request->relationship_name_english_3,
+                    'maritial_status'        => $request->maritial_status,
+                    'caste'        => $request->caste,
+                    'street_name'        => $request->street_name,
+                    'pin_code'        => $request->pin_code,
+                    'postal_area_tamil'        => $request->postal_area_tamil,
+                    'postal_area_english'        => $request->postal_area_english,
+                    'mother_name_tamil'        => $request->mother_name_tamil,
+                    'mother_name_english'        => $request->mother_name_english,
+                ] );
 
+   $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    if($coordinator_permission == 1){
+      $post_data = array();
+     $getdata = DB::table( 'tnega_services' )->where('id',$request->applied_serviceid)->get();
+     $getdata = json_decode( json_encode( $getdata ), true );
+            foreach ( $getdata as $key => $ser ) {
+                $getdata[ $key ][ 'family_details' ] = array();
+                $getdata[ $key ][ 'customer_details' ] = array();
+                $ser_id = $ser[ 'id' ];
+                $user_id = $ser[ 'user_id' ];
+                $sql = "select * from family_member where service_id=$ser_id order by id Asc";
+                $result = DB::select( $sql );
+                $sql = "select * from users where id=$user_id";
+                $result1 = DB::select( $sql );
+                $getdata[ $key ][ 'family_details' ] = $result;
+                $getdata[ $key ][ 'customer_details' ] = $result1;
+            }
+    if(count($getdata) > 0){
+
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+      $post_data['data'] = $getdata;
+      $post_data['key'] = $API_KEY;
+      $post_data['index'] = $WEBSITE_INDEX;
+     $ch = curl_init();
+       
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_tnegaservices_api';
+        //echo $url1;die;
+
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS,json_encode($post_data) );
+         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+
+        }
+        DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+        ] );
     }
 
     return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
@@ -2776,12 +3111,60 @@ if ($request->it_return_document != null) {
           'damage_certificate'         => $damage_certificate,
       ]);
     }
-
-
-
 }
 
-}
+$getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    if($coordinator_permission == 1){
+      $post_data = array();
+     $getdata = DB::table( 'tnega_services' )->where('id',$request->applied_serviceid)->get();
+     $getdata = json_decode( json_encode( $getdata ), true );
+            foreach ( $getdata as $key => $ser ) {
+                $getdata[ $key ][ 'family_details' ] = array();
+                $getdata[ $key ][ 'customer_details' ] = array();
+                $ser_id = $ser[ 'id' ];
+                $user_id = $ser[ 'user_id' ];
+                $sql = "select * from family_member where service_id=$ser_id order by id Asc";
+                $result = DB::select( $sql );
+                $sql = "select * from users where id=$user_id";
+                $result1 = DB::select( $sql );
+                $getdata[ $key ][ 'family_details' ] = $result;
+                $getdata[ $key ][ 'customer_details' ] = $result1;
+            }
+    if(count($getdata) > 0){
+
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+      $post_data['data'] = $getdata;
+      $post_data['key'] = $API_KEY;
+      $post_data['index'] = $WEBSITE_INDEX;
+      $ch = curl_init();
+       
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_tnegaservices_api';
+        //echo $url1;die;
+
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS,json_encode($post_data) );
+         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+
+        }
+        DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+        ] );
+    }
+
 
 return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
@@ -2975,7 +3358,7 @@ public function submit_statusupdate_tnegaservices6(Request $request){
                   'relation_age'       => $age,
               ] );
 
-                        if (isset($request->doc[$key])) {
+        if (isset($request->doc[$key])) {
             if ($request->doc[$key] != null) {
                 $file1 = uniqid().'.'.$request->file('doc')[$key]->extension();
           //dd($request->doc[$key]);
@@ -2986,8 +3369,6 @@ public function submit_statusupdate_tnegaservices6(Request $request){
               ] );
             }
         } 
-
-
     }
 } 
 
@@ -3025,9 +3406,60 @@ if($request->has('doc_id')){
     }
 } 
    
+     $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
     }
+    if($coordinator_permission == 1){
+      $post_data = array();
+     $getdata = DB::table( 'tnega_services' )->where('id',$request->applied_serviceid)->get();
+     $getdata = json_decode( json_encode( $getdata ), true );
+            foreach ( $getdata as $key => $ser ) {
+                $getdata[ $key ][ 'family_details' ] = array();
+                $getdata[ $key ][ 'details' ] = array();
+                $getdata[ $key ][ 'customer_details' ] = array();
+                $ser_id = $ser[ 'id' ];
+                $user_id = $ser[ 'user_id' ];
+                $sql = "select * from family_member where service_id=$ser_id order by id Asc";
+                $result = DB::select( $sql );
+                $sql = "select * from users where id=$user_id";
+                $result1 = DB::select( $sql );
+                 $sql = "select * from family_member where service_id=$ser_id and user_id=$ser_id order by id Asc";
+                $result3 = DB::select( $sql );
+                $getdata[ $key ][ 'family_details' ] = $result;
+                $getdata[ $key ][ 'details' ] = $result3;
+                $getdata[ $key ][ 'customer_details' ] = $result1;             
+            }
+    if(count($getdata) > 0){
 
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+      $post_data['data'] = $getdata;
+      $post_data['key'] = $API_KEY;
+      $post_data['index'] = $WEBSITE_INDEX;
+     $ch = curl_init();
+       
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_tnegaservices_api';
+        //echo $url1;die;
 
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS,json_encode($post_data) );
+         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+    }
+     DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+        ] );
+    }
   return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
 public function submit_statusupdate_msme(Request $request){
