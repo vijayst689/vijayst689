@@ -1920,69 +1920,69 @@ public function submit_statusupdate_tnegaservices2(Request $request){
                 ]);
             }
 
-        // }elseif($serviceid == 23){
-        //     if ($request->chitta != null) {
-        //         $chitta = uniqid().'.'.$request->file('chitta')->extension();
-        //         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'chitta' . DIRECTORY_SEPARATOR);
-        //         move_uploaded_file($_FILES['chitta']['tmp_name'], $filepath . $chitta);
-        //         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
-        //             'chitta'         => $chitta,
-        //         ]);
-        //     }
+        }elseif($serviceid == 23){
+            if ($request->chitta != null) {
+                $chitta = uniqid().'.'.$request->file('chitta')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'chitta' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['chitta']['tmp_name'], $filepath . $chitta);
+                DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+                    'chitta'         => $chitta,
+                ]);
+            }
 
-        //     if ($request->aggregation != null) {
-        //         $aggregation = uniqid().'.'.$request->file('aggregation')->extension();
-        //         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aggregation' . DIRECTORY_SEPARATOR);
-        //         move_uploaded_file($_FILES['aggregation']['tmp_name'], $filepath . $aggregation);
-        //         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
-        //             'aggregation'         => $aggregation,
-        //         ]);
-        //     }
+            if ($request->aggregation != null) {
+                $aggregation = uniqid().'.'.$request->file('aggregation')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aggregation' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['aggregation']['tmp_name'], $filepath . $aggregation);
+                DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+                    'aggregation'         => $aggregation,
+                ]);
+            }
 
-        //     if ($request->ec_certificate != null) {
-        //         $ec_certificate = uniqid().'.'.$request->file('ec_certificate')->extension();
-        //         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'ec_certificate' . DIRECTORY_SEPARATOR);
-        //         move_uploaded_file($_FILES['ec_certificate']['tmp_name'], $filepath . $ec_certificate);
-        //         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
-        //             'ec_certificate'         => $ec_certificate,
-        //         ]);
-        //     }
+            if ($request->ec_certificate != null) {
+                $ec_certificate = uniqid().'.'.$request->file('ec_certificate')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'ec_certificate' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['ec_certificate']['tmp_name'], $filepath . $ec_certificate);
+                DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+                    'ec_certificate'         => $ec_certificate,
+                ]);
+            }
 
-        //     if ($request->villankam != null) {
-        //         $villankam = uniqid().'.'.$request->file('villankam')->extension();
-        //         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'villankam' . DIRECTORY_SEPARATOR);
-        //         move_uploaded_file($_FILES['villankam']['tmp_name'], $filepath . $villankam);
-        //         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
-        //             'villankam'         => $villankam,
-        //         ]);
-        //     }
+            if ($request->villankam != null) {
+                $villankam = uniqid().'.'.$request->file('villankam')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'villankam' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['villankam']['tmp_name'], $filepath . $villankam);
+                DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+                    'villankam'         => $villankam,
+                ]);
+            }
 
-        //     if ($request->vao_certificate != null) {
-        //         $vao_certificate = uniqid().'.'.$request->file('vao_certificate')->extension();
-        //         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'vao_certificate' . DIRECTORY_SEPARATOR);
-        //         move_uploaded_file($_FILES['vao_certificate']['tmp_name'], $filepath . $vao_certificate);
-        //         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
-        //             'vao_certificate'         => $vao_certificate,
-        //         ]);
-        //     }
+            if ($request->vao_certificate != null) {
+                $vao_certificate = uniqid().'.'.$request->file('vao_certificate')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'vao_certificate' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['vao_certificate']['tmp_name'], $filepath . $vao_certificate);
+                DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+                    'vao_certificate'         => $vao_certificate,
+                ]);
+            }
 
-        //     if ($request->self_declaration_certificate != null) {
-        //         $self_declaration_certificate = uniqid().'.'.$request->file('self_declaration_certificate')->extension();
-        //         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'self_declaration_certificate' . DIRECTORY_SEPARATOR);
-        //         move_uploaded_file($_FILES['self_declaration_certificate']['tmp_name'], $filepath . $self_declaration_certificate);
-        //         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
-        //             'self_declaration_certificate'         => $self_declaration_certificate,
-        //         ]);
-        //     }
+            if ($request->self_declaration_certificate != null) {
+                $self_declaration_certificate = uniqid().'.'.$request->file('self_declaration_certificate')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'self_declaration_certificate' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['self_declaration_certificate']['tmp_name'], $filepath . $self_declaration_certificate);
+                DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+                    'self_declaration_certificate'         => $self_declaration_certificate,
+                ]);
+            }
 
-        //     if ($request->other_certificate != null) {
-        //         $other_certificate = uniqid().'.'.$request->file('other_certificate')->extension();
-        //         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'other_certificate' . DIRECTORY_SEPARATOR);
-        //         move_uploaded_file($_FILES['other_certificate']['tmp_name'], $filepath . $other_certificate);
-        //         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
-        //             'other_certificate'         => $other_certificate,
-        //         ]);
-        //     }
+            if ($request->other_certificate != null) {
+                $other_certificate = uniqid().'.'.$request->file('other_certificate')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'other_certificate' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['other_certificate']['tmp_name'], $filepath . $other_certificate);
+                DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+                    'other_certificate'         => $other_certificate,
+                ]);
+            }
 
         }elseif ($serviceid == 24) {
             if ($request->bank_pass_book != null) {
