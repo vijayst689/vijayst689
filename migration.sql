@@ -1596,7 +1596,7 @@ alter table gst add application varchar(20) DEFAULT NULL after application_no;
 alter table itr add application varchar(20) DEFAULT NULL after application_no;
 alter table license add application varchar(20) DEFAULT NULL after application_no;
 alter table msme add application varchar(20) DEFAULT NULL after application_no;
-alter table  nalavariyam add application varchar(50) DEFAULT NULL after acknowledgement;
+alter table nalavariyam add application varchar(50) DEFAULT NULL after acknowledgement;
 alter table pancard add application varchar(20) DEFAULT NULL after application_no;
 alter table pmkissan add application varchar(20) DEFAULT NULL after application_no;
 alter table smartcard add application varchar(20) DEFAULT NULL after application_no;
@@ -2145,3 +2145,19 @@ alter table users add payment_status int(11) DEFAULT 0;
 
 
 alter table tnega_services add tc varchar(30) DEFAULT NULL after mother_form;
+
+//9-07-2025
+
+alter table voterid add dist_id int(11) DEFAULT 0;
+alter table voterid add taluk_id int(11) DEFAULT 0;
+alter table voterid add panchayath_id  int(11) DEFAULT 0;
+alter table voterid add constituent_assembly varchar(100) DEFAULT NULL after application_no;
+alter table voterid add name_in_tamil varchar(100) DEFAULT NULL after application_no;
+alter table voterid add name_in_english varchar(100) DEFAULT NULL after application_no;
+alter table voterid add door_no varchar(20) DEFAULT NULL after application_no;
+alter table voterid add postal_area_tamil text DEFAULT NULL after application_no;
+alter table voterid add postal_area_english text DEFAULT NULL after application_no;
+alter table voterid add street_name_tamil text DEFAULT NULL after application_no;
+alter table voterid add street_name_english text DEFAULT NULL after application_no;
+alter table voterid add voterid_no varchar(10) DEFAULT NULL after application_no;
+alter table voterid add pin_code varchar(12) DEFAULT NULL after application_no;
