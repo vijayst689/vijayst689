@@ -417,7 +417,8 @@ if($getservice_payment){
        return view( 'applyservice.techcorrectionservice',compact('serviceid','districts','servicename','amount','payment','customers'));
 
    }  elseif ($serviceid == 56 || $serviceid == 58 || $serviceid == 158){
-       return view( 'applyservice.aadhaarcard_apply',compact('serviceid','districts','servicename','amount','payment','customers'));
+    $mainbalance = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+       return view( 'applyservice.aadhaarcard_apply',compact('serviceid','districts','servicename','amount','payment','customers','mainbalance','coordinator_permission','admin_payment'));
 
    }  elseif ($serviceid == 71 || $serviceid == 69 || $serviceid == 70){
     $mainbalance = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
@@ -4552,9 +4553,6 @@ public function submitaadhaar(Request $request){
            'status'            => 'Pending',
            'applied_date'      => date("Y-m-d"),
            'created_at'        => date("Y-m-d"),
-
-
-
        ] );
 
         $insertid = DB::getPdo()->lastInsertId();
@@ -4615,7 +4613,6 @@ public function submitaadhaar(Request $request){
     $photo = "";
     $signature = "";
 
-
     if ($request->aadhaar_card != null) {
        $aadhaarimg = uniqid().'.'.$request->file('aadhaar_card')->extension();
        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
@@ -4670,7 +4667,6 @@ public function submitaadhaar(Request $request){
     $aadhaarimg = "";
     $photo = "";
     $signature = "";
-
 
     if ($request->aadhaar_card != null) {
        $aadhaarimg = uniqid().'.'.$request->file('aadhaar_card')->extension();
@@ -4758,7 +4754,6 @@ public function submitaadhaar(Request $request){
 
 }
 
-
 $servicepayment = $request->service_amount;
 if(Auth::user()->user_type_id == 3){
   $user_id = $distributor_id;
@@ -4795,6 +4790,91 @@ $getservicename = DB::table( 'services' )->select('service_name')->where('id',$s
     $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
     DB::update( DB::raw( $sql ) );
 
+$getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+$coordinator_permission = 0;
+$admin_payment = 0;
+if($getpermission){
+    $coordinator_permission = $getpermission->coordinator_permission;
+    $admin_payment = $getpermission->admin_amount;
+}
+if($coordinator_permission == 1){
+    $getdata = DB::table( 'aadhaarcard' )->where('id',$insertid)->first();
+    if($getdata){
+     $aadhaar_card = $getdata->aadhaar_card;
+     $photo = $getdata->photo;
+     $signature = $getdata->signature;
+     $service_id = $getdata->service_id;
+     $rowid = $getdata->id;
+     $name = $getdata->name;
+     $door_no = $getdata->door_no;
+     $dist_id = $getdata->dist_id;
+     $taluk_id = $getdata->taluk_id;
+     $street_name = $getdata->street_name;
+     $postal_area_english = $getdata->postal_area_english;
+     $address_english = $getdata->address_english;
+     $mobile = $getdata->mobile;
+     $pin_code = $getdata->pin_code;
+     $street_name_tamil = $getdata->street_name_tamil;
+     $postal_area_tamil = $getdata->postal_area_tamil;
+     $address_tamil = $getdata->address_tamil;
+     $status = $getdata->status;
+     $url = url('/');
+     $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
+     $photo_url = $url.'/upload/services/photo/'.$photo;
+     $signature_url = $url.'/upload/services/signature/'.$signature;
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+     $ch = curl_init();
+
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&photo=$photo_url&signature=$signature_url&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&street_name=$street_name&postal_area_english=$postal_area_english&address_english=$address_english&mobile=$mobile&pin_code=$pin_code&street_name_tamil=$street_name_tamil&postal_area_tamil=$postal_area_tamil&address_tamil=$address_tamil";
+
+    //dd($post_data);
+     $url1 = $RAMJIPAY_URL.'/api/get_aadhaarcard_api';
+     curl_setopt( $ch, CURLOPT_URL, $url1 );
+     curl_setopt( $ch, CURLOPT_POST, 1 );
+     curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+     $server_output = curl_exec( $ch );
+     curl_close( $ch );
+     $resdata = json_decode($server_output, true);
+     //dd($resdata);
+     if($resdata){
+        $status = $resdata['message'];
+        if($status == "Success"){
+         $date = date( 'Y-m-d' );
+         $time = date( 'H:i:s' );
+         $service_status = 'Out Payment';
+         $ad_info = 'Ramji Wallet Debit'.' '.$servicename;
+         $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
+         $rawallet = 0;
+         if($getrawallet){
+             $balance1 = $getrawallet->rawallet;
+         }
+
+         $getrawallet1 = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+         $rawallet1 = 0;
+         if($getrawallet1){
+             $balance2 = $getrawallet1->rawallet;
+         }
+         $newbalance2 = $balance1 + $admin_payment;
+         $newbalance3 = $balance2 - $admin_payment;
+         $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+         DB::insert( DB::raw( $sql ) );
+         $sql = "update users set rawallet = rawallet + $admin_payment where id = 1";
+         DB::update( DB::raw( $sql ) );
+         $service_status = 'IN Payment';
+         $ad_info = 'Ramji Wallet Credit'.' '.$servicename;
+
+         $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+         DB::insert( DB::raw( $sql ) );
+         $sql = "update users set rawallet = rawallet - $admin_payment where id = 2";
+          DB::update( DB::raw( $sql ) );
+   }
+ }
+
+}
+}
 return redirect("appliedservice/Pending")->With("success","Application submitted Succesfully");
 
 }

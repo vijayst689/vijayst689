@@ -933,4 +933,148 @@ public function update_serverpayment_status(Request $request){
     return response()->json($response);
 }
 
+public function get_aadhaarcardstatus(Request $request){
+        $API_KEY = env('API_KEY','');
+        $WEBSITE_INDEX = env('WEBSITE_INDEX','');
+        $key = $request->key;
+        $index = $request->index;
+        $response = array();
+        $message = "";
+
+        if($key == $API_KEY && $index == $WEBSITE_INDEX){
+            $row_id = $request->row_id;
+            $status = $request->status;
+
+            if($status == "Resubmit"){
+                DB::table('aadhaarcard')->where('id', $row_id)->update([
+                    'status' => $status,
+                    'remarks' => $request->remarks,
+                ]);
+            }elseif($status == "Processing"){
+                DB::table('aadhaarcard')->where('id', $row_id)->update([
+                    'status' => $status,
+                    'application_no' => $request->application_no,
+                    'selects' => $request->selects,
+                    'api_processing' => $request->processingfile,
+                ]);
+
+            }elseif($status == "Approved"){
+                DB::table('aadhaarcard')->where('id', $row_id)->update([
+                    'status' => $status,
+                    'application' => $request->application,
+                    'lects' => $request->lects,
+                    'api_approved' => $request->approvedfile,
+                ]);
+
+            }elseif($status == "Rejected"){
+                $getdata = DB::table('aadhaarcard')->where('id', $row_id)->first();
+                if($getdata){
+                   $apply_user_id = 0;
+                   if ($getdata->distributor_id == 0 && $getdata->retailer_id == 0) {
+                     $apply_user_id = $getdata->user_id;
+                 }elseif($getdata->retailer_id == 0){
+                     $apply_user_id = $getdata->distributor_id;
+                 }elseif($getdata->distributor_id == 0){
+                     $apply_user_id = $getdata->retailer_id;
+                 }
+
+                 $serviceid = $getdata->service_id;
+                 $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+                 $usertype = 0;
+                 if($getusers){
+                    $usertype = $getusers->user_type_id;
+                }
+                $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+                $admin_payment = 0;
+                $payment = 0;
+                if($getservice_payment){
+                    $admin_payment = $getservice_payment->admin_amount;
+                    if($usertype == 3){
+                        $payment = $getservice_payment->distributor_amount;
+                    }elseif($usertype == 4){
+                        $payment = $getservice_payment->retailer_amount;
+                    }elseif($usertype == 5){
+                        $payment = $getservice_payment->customer_amount;
+                    }
+                }
+
+                if($apply_user_id != 2){
+
+                    $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+                    $servicename = "";
+                    if($getservicename){
+                        $servicename = $getservicename->service_name;
+                    }
+                    $date = date( 'Y-m-d' );
+                    $time = date( 'H:i:s' );
+                    $service_status = 'Out Payment';
+                    $ad_info = "Service Refund For". ' ' .$servicename;
+
+                    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+                    $balance = 0;
+                    if($getwallet){
+                        $balance = $getwallet->wallet;
+                    }
+                    $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+                    $balance1 = 0;
+                    if($getuserswallet){
+                        $balance1 = $getuserswallet->wallet;
+                    }
+                    $newbalance = $balance - $payment;
+                    $newbalance1 = $balance1 + $payment;
+
+                    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+                    DB::insert( DB::raw( $sql ) );
+                    $sql = "update users set wallet = wallet - $payment where id = 2";
+                    DB::update( DB::raw( $sql ) );
+                    $service_status = 'IN Payment';
+                    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+                    DB::insert( DB::raw( $sql ) );
+                    $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+                    DB::update( DB::raw( $sql ) );  
+
+                }
+
+                $date = date( 'Y-m-d' );
+                $time = date( 'H:i:s' );
+                $service_status = 'Out Payment';
+                $ad_info = "Ramji Wallet Refund" .' '.$servicename;
+                $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
+                $rawallet = 0;
+                if($getrawallet){
+                    $balance1 = $getrawallet->rawallet;
+                }
+
+                $getrawallet1 = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+                $rawallet1 = 0;
+                if($getrawallet1){
+                    $balance2 = $getrawallet1->rawallet;
+                }
+                $newbalance2 = $balance1 - $admin_payment;
+                $newbalance3 = $balance2 + $admin_payment;
+                $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('1','2','1','$admin_payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance2')";
+                DB::insert( DB::raw( $sql ) );
+                $sql = "update users set rawallet = rawallet - $admin_payment where id = 1";
+                DB::update( DB::raw( $sql ) );
+                $service_status = 'IN Payment';
+                $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('1','1','2','$admin_payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance3')";
+                DB::insert( DB::raw( $sql ) );
+                $sql = "update users set rawallet = rawallet + $admin_payment where id = 2";
+                DB::update( DB::raw( $sql ) );
+
+            }
+            DB::table('aadhaarcard')->where('id', $row_id)->update([
+                    'status' => $status,
+            ]);
+        }
+
+        $message = "Success";
+
+    }else{
+        $message = "Access Denied";
+    }
+    $response["message"] = $message;
+    $response["index"] = $index;
+    return response()->json($response);
+}
 }

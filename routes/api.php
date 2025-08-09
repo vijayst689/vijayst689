@@ -43,3 +43,6 @@ Route::post('/get_tnegaservicesstatus', [App\Http\Controllers\api\ApiController:
 
 Route::post('/get_website_activation', [App\Http\Controllers\api\ApiController::class, 'get_website_activation'])->name('get_website_activation');
 Route::post('/update_serverpayment_status', [App\Http\Controllers\api\ApiController::class, 'update_serverpayment_status'])->name('update_serverpayment_status');
+
+// AADHAAR CARD SERVICE 
+Route::post('/get_aadhaarcardstatus', [App\Http\Controllers\api\ApiController::class, 'get_aadhaarcardstatus'])->name('get_aadhaarcardstatus');

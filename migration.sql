@@ -1793,8 +1793,8 @@ alter table can_edit add api_response varchar(20) DEFAULT NULL;
 
 //05-06-2025
 alter table can_edit add application_name varchar(100) Default NULL;
-alter table can_edit add certificate_number varchar(100) DEFAULT NULL after application_no;
-alter table can_edit add certificate_name varchar(100) DEFAULT NULL after application_no;
+alter table can_edit add certificate_number varchar(100) DEFAULT NULL;
+alter table can_edit add certificate_name varchar(100) DEFAULT NULL;
 alter table can_edit add document varchar(20) Default NULL;
 alter table can_edit add save_application_number varchar(20) Default NULL;
 alter table can_edit add save_certificate varchar(20) Default NULL;

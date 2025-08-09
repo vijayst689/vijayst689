@@ -5722,6 +5722,57 @@ public function aadhaarcardupdate(Request $request){
                 'created_at'        => date("Y-m-d"),
                
             ]);
+ $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    //echo$coordinator_permission;die;
+    if($coordinator_permission == 1){
+     $getdata = DB::table( 'aadhaarcard' )->where('id',$request->applied_serviceid)->first();
+     if($getdata){
+     $aadhaar_card = $getdata->aadhaar_card;
+     $photo = $getdata->photo;
+     $signature = $getdata->signature;
+     $service_id = $getdata->service_id;
+     $rowid = $getdata->id;
+     $name = $getdata->name;
+     $door_no = $getdata->door_no;
+     $dist_id = $getdata->dist_id;
+     $taluk_id = $getdata->taluk_id;
+     $street_name = $getdata->street_name;
+     $postal_area_english = $getdata->postal_area_english;
+     $address_english = $getdata->address_english;
+     $mobile = $getdata->mobile;
+     $pin_code = $getdata->pin_code;
+     $street_name_tamil = $getdata->street_name_tamil;
+     $postal_area_tamil = $getdata->postal_area_tamil;
+     $address_tamil = $getdata->address_tamil;
+     $status = $getdata->status;
+     $url = url('/');
+     $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
+     $photo_url = $url.'/upload/services/photo/'.$photo;
+     $signature_url = $url.'/upload/services/signature/'.$signature;
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+
+     $ch = curl_init();
+        $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&photo=$photo_url&signature=$signature_url&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&street_name=$street_name&postal_area_english=$postal_area_english&address_english=$address_english&mobile=$mobile&pin_code=$pin_code&street_name_tamil=$street_name_tamil&postal_area_tamil=$postal_area_tamil&address_tamil=$address_tamil";    
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_cannumber_api';
+        //echo $url1;die;
+
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+}
 
         }elseif($serviceid == 58){
 
