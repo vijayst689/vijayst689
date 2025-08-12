@@ -1957,8 +1957,6 @@ alter table fssai add documents varchar(20) Default NULL;
 alter table fssai add rental_agreement varchar(20) Default NULL;
 alter table fssai add electricity_bill varchar(20) Default NULL;
 alter table fssai add property_tax varchar(20) Default NULL;
-alter table fssai add food_service varchar(20) Default NULL;
-alter table fssai add shop_photo varchar(20) Default NULL;
 
 //22-07-2025
 

@@ -5760,7 +5760,7 @@ public function aadhaarcardupdate(Request $request){
      $ch = curl_init();
         $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&photo=$photo_url&signature=$signature_url&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&street_name=$street_name&postal_area_english=$postal_area_english&address_english=$address_english&mobile=$mobile&pin_code=$pin_code&street_name_tamil=$street_name_tamil&postal_area_tamil=$postal_area_tamil&address_tamil=$address_tamil";    
         //dd($post_data);
-        $url1 = $RAMJIPAY_URL.'/api/update_cannumber_api';
+        $url1 = $RAMJIPAY_URL.'/api/update_aadhaarcard_api';
         //echo $url1;die;
 
         curl_setopt( $ch, CURLOPT_URL, $url1 );
