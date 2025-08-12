@@ -7054,22 +7054,12 @@ public function voterid_update(Request $request){
                 'application_no' => $request->application_no,
                 'selects' => $request->selects,
             ] );
-        }elseif($status == "Approved"){
-            if ( $request->certificate != null ) {
-                $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
-                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'certificate'. DIRECTORY_SEPARATOR);
-                move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
+       }elseif($status == "Approved"){
                 DB::table( 'voterid' )->where( 'id', $request->applied_serviceid )->update( [
-                    'certificate' => $certificate,
                     'status' => $status,
-                    'completed_date' => date("Y-m-d"),
+                    'application' => $request->application,
                 ] );
-            }
-            DB::table( 'voterid' )->where( 'id', $request->applied_serviceid )->update( [
-                'status' => $status,
-                'application' => $request->application,
-                'lects' => $request->lects,
-            ] );
+
         }elseif($status == "Rejected"){
             $serviceid = $request->serviceid;
             $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
@@ -7124,6 +7114,7 @@ public function voterid_update(Request $request){
 
         DB::table( 'voterid' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
+            'remarks'  => $request->remarks,
         ] );
 
     }
@@ -7132,15 +7123,28 @@ public function voterid_update(Request $request){
         $serviceid = $request->serviceid;
         if($serviceid == 113 || $serviceid == 120 || $serviceid == 164 || $serviceid == 181 || $service_id == 182){
             DB::table('voterid')->where('id', $request->applied_serviceid)->update([
-                'service_id'        => $request ->serviceid,
-                'amount'            => $request->amount,
-                'name'              => $request->name,
-                'mobile'            => $request->mobile,
-                'epic_no'           => $request->epic_no,
-                'relationship'      => $request->relationship,
-                'status'            => 'Pending',
-                'applied_date'      => date("Y-m-d"),
-                'created_at'        => date("Y-m-d"),
+                'service_id'           => $request ->serviceid,
+                'amount'               => $request->amount,
+                'name'                 => $request->name,
+                'mobile'               => $request->mobile,
+                'epic_no'              => $request->epic_no,
+                'relationship'         => $request->relationship,
+                'dist_id'              => $request->dist_id,
+                'taluk_id'             => $request->taluk_id,
+                'panchayath_id'        => $request->panchayath_id,
+                'constituent_assembly' => $request->constituent_assembly,
+                'name_in_tamil'        => $request->name_in_tamil,
+                'name_in_english'      => $request->name_in_english,
+                'door_no'              => $request->door_no,
+                'postal_area_tamil'    => $request->postal_area_tamil,
+                'postal_area_english'  => $request->postal_area_english,
+                'street_name_tamil'    => $request->street_name_tamil,
+                'street_name_english'  => $request->street_name_english,
+                'voterid_no'           => $request->voterid_no,
+                'pin_code'             => $request->pin_code,
+                'status'               => 'Pending',
+                'applied_date'         => date("Y-m-d"),
+                'created_at'           => date("Y-m-d"),
             ] );
 
             if ($request->photo != null) {
