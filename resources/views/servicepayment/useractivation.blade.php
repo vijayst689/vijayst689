@@ -39,6 +39,7 @@
                                                 <tr>
                                                     <th>Sl No</th>
                                                     <th>Service Name</th>
+                                                    <th>Admin</th>
                                                     <th>Distributor</th>
                                                     <th>Retailer</th>
                                                 </tr>
@@ -57,6 +58,10 @@
                                                                     value="{{ Auth::user()->id }}" />
                                                                 <input name="service_id[]" type="hidden"
                                                                     value="{{ $ser->id }}" />
+                                                                <td><input @if (Auth::user()->user_type_id == 2) readonly @endif
+                                                                        class="form-control decimal" name="admin_amount[]"
+                                                                        type="text" maxlength="6"
+                                                                        value="{{ $payment->admin_amount }}" /></td>
 
                                                                 <td><input class="form-control decimal"
                                                                         name="distributor_amount[]" type="text"
@@ -74,6 +79,9 @@
                                                                 value="{{ Auth::user()->id }}" />
                                                             <input name="service_id[]" type="hidden"
                                                                 value="{{ $ser->id }}" />
+                                                            <td><input @if (Auth::user()->user_type_id == 2) readonly @endif
+                                                                    class="form-control decimal" name="admin_amount[]"
+                                                                    type="text" maxlength="6" value="" /></td>
                                                             <td><input class="form-control decimal"
                                                                     name="distributor_amount[]" type="text"
                                                                     maxlength="6" value="" /></td>

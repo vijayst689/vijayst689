@@ -34,6 +34,27 @@
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
+                                            <div class="menu-title">User Activation</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/useractivation') }}/3"><i
+                                                        class="material-icons-outlined">arrow_right</i>Services</a>
+                                            </li>
+                                            <li><a href="{{ url('/useractivation') }}/1"><i
+                                                        class="material-icons-outlined">arrow_right</i>Pdf</a>
+                                            </li>
+                                            <li><a href="{{ url('/useractivation') }}/2"><i
+                                                        class="material-icons-outlined">arrow_right</i>Utility</a>
+                                            </li>
+                                            <li><a href="{{ url('/useractivation') }}/4"><i
+                                                        class="material-icons-outlined">arrow_right</i>Pan</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
                                             <div class="menu-title">Service Status</div>
                                         </a>
                                         <ul class="mm-collapse">
@@ -44,7 +65,7 @@
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Processing"><i
-                                                class="material-icons-outlined">arrow_right</i>Processing</a>
+                                                        class="material-icons-outlined">arrow_right</i>Processing</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Rejected"><i
                                                         class="material-icons-outlined">arrow_right</i>Rejected</a>
@@ -68,7 +89,7 @@
                                             @endforeach
                                         </ul>
                                     </li>
-                                     <li>
+                                    <li>
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
@@ -275,6 +296,18 @@
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
+                                            <div class="menu-title">User Permission</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/userpermission') }}/{{ Auth::user()->id }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Permission</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
                                             <div class="menu-title">Service Status</div>
                                         </a>
                                         <ul class="mm-collapse">
@@ -285,7 +318,7 @@
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Processing"><i
-                                                class="material-icons-outlined">arrow_right</i>Processing</a>
+                                                        class="material-icons-outlined">arrow_right</i>Processing</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Rejected"><i
                                                         class="material-icons-outlined">arrow_right</i>Rejected</a>
@@ -295,7 +328,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                     <li>
+                                    <li>
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
@@ -382,7 +415,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                     <li>
+                                    <li>
                                         <a href="javascript:;" class="has-arrow">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
@@ -394,7 +427,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                     <li>
+                                    <li>
                                         <a href="javascript:;" class="has-arrow">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
@@ -402,7 +435,8 @@
                                         </a>
                                         <ul class="mm-collapse">
                                             <li><a href="{{ url('viewservice') }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>View Services</a>
+                                                        class="material-icons-outlined">arrow_right</i>View
+                                                    Services</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -479,6 +513,18 @@
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
+                                            <div class="menu-title">User Permission</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/userpermission') }}/{{ Auth::user()->id }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Permission</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
                                             <div class="menu-title">Service Status</div>
                                         </a>
                                         <ul class="mm-collapse">
@@ -489,25 +535,13 @@
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Processing"><i
-                                                class="material-icons-outlined">arrow_right</i>Processing</a>
+                                                        class="material-icons-outlined">arrow_right</i>Processing</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Rejected"><i
                                                         class="material-icons-outlined">arrow_right</i>Rejected</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Approved"><i
                                                         class="material-icons-outlined">arrow_right</i>Approved</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">User Permission</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('/userpermission') }}/{{ Auth::user()->id }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Permission</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -569,6 +603,18 @@
                                         <a class="has-arrow" href="javascript:;">
                                             <div class="parent-icon"><i class="material-icons-outlined"></i>
                                             </div>
+                                            <div class="menu-title">User Permission</div>
+                                        </a>
+                                        <ul class="mm-collapse">
+                                            <li><a href="{{ url('/userpermission') }}/{{ Auth::user()->id }}"><i
+                                                        class="material-icons-outlined">arrow_right</i>Permission</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="has-arrow" href="javascript:;">
+                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
+                                            </div>
                                             <div class="menu-title">Service Status</div>
                                         </a>
                                         <ul class="mm-collapse">
@@ -579,25 +625,13 @@
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Processing"><i
-                                                class="material-icons-outlined">arrow_right</i>Processing</a>
+                                                        class="material-icons-outlined">arrow_right</i>Processing</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Rejected"><i
                                                         class="material-icons-outlined">arrow_right</i>Rejected</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Approved"><i
                                                         class="material-icons-outlined">arrow_right</i>Approved</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                   <li>
-                                        <a class="has-arrow" href="javascript:;">
-                                            <div class="parent-icon"><i class="material-icons-outlined"></i>
-                                            </div>
-                                            <div class="menu-title">User Permission</div>
-                                        </a>
-                                        <ul class="mm-collapse">
-                                            <li><a href="{{ url('/userpermission') }}/{{ Auth::user()->id }}"><i
-                                                        class="material-icons-outlined">arrow_right</i>Permission</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -656,7 +690,7 @@
                                                         class="material-icons-outlined">arrow_right</i>Resubmit</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Processing"><i
-                                                class="material-icons-outlined">arrow_right</i>Processing</a>
+                                                        class="material-icons-outlined">arrow_right</i>Processing</a>
                                             </li>
                                             <li><a href="{{ url('/appliedservice') }}/Rejected"><i
                                                         class="material-icons-outlined">arrow_right</i>Rejected</a>

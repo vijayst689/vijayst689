@@ -73,33 +73,33 @@
                                                     width="40" height="40" alt=""></td>
                                             <td>{{ $cus->cpassword }}</td>
                                             <td style="white-space: nowrap">
-                                                <button
-                                                    onclick="edit_retailer('{{ $cus->id }}','{{ $cus->name }}','{{ $cus->phone }}','{{ $cus->aadhaar_no }}','{{ $cus->gender }}','{{ $cus->email }}','{{ $cus->date_of_birth }}','{{ $cus->address }}')"
-                                                    ype="button" style="font-size: small"
-                                                    class="btn btn-grd btn-grd-primary px-1">Edit</button>
 
                                                 @if (Auth::user()->user_type_id == 2)
                                                     <button
+                                                        onclick="edit_retailer('{{ $cus->id }}','{{ $cus->name }}','{{ $cus->phone }}','{{ $cus->aadhaar_no }}','{{ $cus->gender }}','{{ $cus->email }}','{{ $cus->date_of_birth }}','{{ $cus->address }}')"
+                                                        ype="button" style="font-size: small"
+                                                        class="btn btn-grd btn-grd-primary px-1">Edit</button>
+                                                    <button
                                                         onclick="statusupdates('{{ $cus->id }}','{{ $cus->status }}')"
                                                         type="button" class="btn-sm btn btn-success">Update</button>
+                                                    @if ($cus->verified == '')
+                                                        <a href="{{ url('/nalavariyam_permission', $cus->id) }}"
+                                                            type="button" style="font-size: small"
+                                                            class="btn-sm btn btn-info">Ramji</a>
+                                                    @else
+                                                        <a type="button" style="font-size: small"
+                                                            class="btn-sm btn btn-success">Verified</a>
+                                                    @endif
                                                 @endif
 
-                                                @if (Auth::user()->user_type_id == 3)
+                                                {{-- @if (Auth::user()->user_type_id == 3)
                                                     <button
                                                         onclick="edit_status('{{ $cus->id }}','{{ $cus->status }}','{{ $cus->status }}')"
                                                         type="button" class="btn-sm btn btn-success">Status Update</button>
                                                 @endif
 
                                                 <a href="{{ url('/userpermission', $cus->id) }}" type="button"
-                                                    style="font-size: small" class="btn btn-inverse-info px-1">Permission</a>
-
-                                                    @if ($cus->verified == '')
-                                                    <a href="{{ url('/nalavariyam_permission', $cus->id) }}" type="button"
-                                                        style="font-size: small" class="btn-sm btn btn-info">Ramji</a>
-                                                @else
-                                                    <a type="button" style="font-size: small"
-                                                        class="btn-sm btn btn-success">Verified</a>
-                                                @endif
+                                                    style="font-size: small" class="btn btn-inverse-info px-1">Permission</a> --}}
                                             </td>
                                         </tr>
                                 </tbody>

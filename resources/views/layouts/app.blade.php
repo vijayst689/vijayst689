@@ -51,7 +51,13 @@
 
     <!--start main wrapper-->
     @yield('content')
-    <!--end main wrapper-->
+    <div id="fullscreen-spinner" style="display: none;">
+        <div class="spinner-overlay">
+            <div class="spinner-border text-light" style="width: 4rem; height: 4rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div> <!--end main wrapper-->
 
 
     <!--bootstrap js-->
@@ -78,6 +84,8 @@
     <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toaster/4.0.1/js/bootstrap-toaster.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(document).ready(function() {
             $('#example').DataTable();

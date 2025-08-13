@@ -2141,7 +2141,6 @@ alter table users add payment_date varchar(20) DEFAULT NULL;
 alter table users add server_amount decimal(10,2) DEFAULT 0;
 alter table users add payment_status int(11) DEFAULT 0;
 
-
 alter table tnega_services add tc varchar(30) DEFAULT NULL after mother_form;
 
 //9-07-2025

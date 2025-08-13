@@ -321,6 +321,7 @@ class ServicePaymentController extends Controller
         $service_id = $request->service_id[ $key ];
         $distributor_amount = $request->distributor_amount[ $key ];
         $retailer_amount = $request->retailer_amount[ $key ];
+        $admin_amount = $request->admin_amount[ $key ];
 
           DB::table( 'useractivation' )->insert( [
             'parent_id'            => $payment,
@@ -328,6 +329,8 @@ class ServicePaymentController extends Controller
             'service_id'            => $service_id,
             'distributor_amount'   => $distributor_amount,
             'retailer_amount'      => $retailer_amount,
+            'admin_amount'         => $admin_amount,
+
           ] );
       }
     }

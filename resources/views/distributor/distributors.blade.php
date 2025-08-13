@@ -39,7 +39,7 @@
                     @endif
                     <div class="customer-table">
                         <div class="table-responsive white-space-nowrap">
-                           <table id="example2" class="table align-middle">
+                            <table id="example2" class="table align-middle">
                                 <thead class="table-dark">
                                     <tr>
                                         <th>User Id</th>
@@ -72,26 +72,24 @@
                                             <td>{{ $dis->email }}</td>
                                             <td>{{ $dis->cpassword }}</td>
                                             <td style="white-space: nowrap">
-                                                <button
-                                                    onclick="edit_customer('{{ $dis->id }}','{{ $dis->name }}','{{ $dis->phone }}','{{ $dis->aadhaar_no }}','{{ $dis->gender }}','{{ $dis->email }}','{{ $dis->date_of_birth }}','{{ $dis->address }}')"
-                                                    ype="button" style="font-size: small"
-                                                    class="btn btn-grd btn-grd-primary px-1">Edit</button>
 
                                                 @if (Auth::user()->user_type_id == 2)
                                                     <button
+                                                        onclick="edit_customer('{{ $dis->id }}','{{ $dis->name }}','{{ $dis->phone }}','{{ $dis->aadhaar_no }}','{{ $dis->gender }}','{{ $dis->email }}','{{ $dis->date_of_birth }}','{{ $dis->address }}')"
+                                                        ype="button" style="font-size: small"
+                                                        class="btn btn-grd btn-grd-primary px-1">Edit</button>
+                                                    <button
                                                         onclick="edit_status('{{ $dis->id }}','{{ $dis->status }}')"
                                                         type="button" class="btn-sm btn btn-success">Update</button>
-                                                @endif
-
-                                                <a href="{{ url('/userpermission', $dis->id) }}" type="button"
-                                                    style="font-size: small" class="btn btn-inverse-info px-1">Permission</a>
 
                                                     @if ($dis->verified == '')
-                                                    <a href="{{ url('/nalavariyam_permission', $dis->id) }}" type="button"
-                                                        style="font-size: small" class="btn-sm btn btn-info">Ramji</a>
-                                                @else
-                                                    <a type="button" style="font-size: small"
-                                                        class="btn-sm btn btn-success">Verified</a>
+                                                        <a href="{{ url('/nalavariyam_permission', $dis->id) }}"
+                                                            type="button" style="font-size: small"
+                                                            class="btn-sm btn btn-info">Ramji</a>
+                                                    @else
+                                                        <a type="button" style="font-size: small"
+                                                            class="btn-sm btn btn-success">Verified</a>
+                                                    @endif
                                                 @endif
                                             </td>
                                         </tr>
