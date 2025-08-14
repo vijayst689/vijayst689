@@ -315,7 +315,7 @@
                                         </div>
 
                                     @endif
-                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                    @if (Auth::user()->id != $apply_user_id)
                                         <div class="mb-3 col-md-6">
                                             <label for="service_name" class="form-label">Service Status</label>
                                             <select class="form-control" name="status" id="service_status">
