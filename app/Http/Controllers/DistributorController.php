@@ -22,6 +22,11 @@ class DistributorController extends Controller
     $this->middleware('auth');
   }
 
+  public function adddistributor()
+    {
+        return view('distributor.adddistributor');
+    }
+
     public function distributors()
     {
         $userid = Auth::user()->id;

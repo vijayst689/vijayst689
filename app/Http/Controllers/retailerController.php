@@ -22,6 +22,11 @@ class RetailerController extends Controller
     $this->middleware('auth');
   }
   
+  public function addretailer()
+    {
+        return view('retailer.addretailer');
+    }
+    
     public function Retailer()
     {
         $userid = Auth::user()->id;
