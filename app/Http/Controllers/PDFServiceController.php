@@ -230,7 +230,7 @@ class PDFServiceController extends Controller
         if($request->ser == 3){
         $message=$resdata['statusMessage'];
         $pan=$resdata['panNumber'];
-       
+
         }
         DB::table('pancard_find')->insert([
           'user_id' => Auth::user()->id,
@@ -336,7 +336,7 @@ class PDFServiceController extends Controller
     }
     $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
     $Apikey = 'cdf94c6d43b5367276d87107b1538aa50b50eb8f8c665fbcd9f1998abe73957e619d4e';
-    
+
     if($request->ser == 1){
 
       $url = "https://goodapi.in/serviceApi/V1/driving_licence_hd.php";
@@ -363,7 +363,7 @@ class PDFServiceController extends Controller
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
         CURLOPT_POSTFIELDS => $data,
-      ));  
+      ));
     }elseif($request->ser == 2){
       $curl = curl_init();
       curl_setopt_array($curl, array(
@@ -377,7 +377,7 @@ class PDFServiceController extends Controller
       CURLOPT_VERBOSE => true,
       ));
     }
-  
+
       $response = curl_exec($curl);
       curl_close($curl);
       $resdata = json_decode($response, true);
@@ -477,7 +477,7 @@ class PDFServiceController extends Controller
     }
   }
   }
-  
+
   public function submitrcfind(Request $request){
     $user_id = Auth::user()->id;
     $rc_no = $request->rc_no;
@@ -495,9 +495,9 @@ class PDFServiceController extends Controller
       $url = "https://goodapi.in/serviceApi/V1/Rc-Verification.php?apiKey=$apikey&rcno=$rc_no";
     }else{
       $application_no = rand(00000000,99999999);
-      $url = "https://server.webtechly.co.in/rcpdf.php?api_key=3d7a47-5ca26a-a9f00f-83e41b-482ca3&application_no=$application_no&rc_number=$rc_no";
+      $url = "https://server.webtechly.co.in/rcpdf.php?api_key=3d77fb-c95462-6d17f3-a92b88-9b8b9c&application_no=$application_no&rc_number=$rc_no";
     }
-    
+
     $crl = curl_init();
     curl_setopt( $crl, CURLOPT_URL, $url );
     curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
@@ -526,7 +526,7 @@ class PDFServiceController extends Controller
       }else{
        $pdf_type = base64_decode($pdf);
       }
-      
+
       $filename = uniqid().'.pdf';
       file_put_contents('upload/rc/'.$filename,$pdf_type );
 
@@ -1166,7 +1166,7 @@ public function submitaadhaar_verify(Request $request){
   if($resdata['status'] == "100"){
       $aadhar = $resdata['uidNumber'];
       $address=$resdata['address'];
-      $age=$resdata['ageBand']; 
+      $age=$resdata['ageBand'];
       $gender=$resdata['gender'];
       $message=$resdata['uidMessage'];
       $mobile=$resdata['maskedMobileNumber'];
@@ -1210,7 +1210,7 @@ public function submitaadhaar_verify(Request $request){
       $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
       DB::insert( DB::raw( $sql ) );
       $sql = "update users set rawallet = rawallet - $amount where id = 2";
-      DB::update( DB::raw( $sql ) );               
+      DB::update( DB::raw( $sql ) );
       $date = date( 'Y-m-d' );
       $time = date( 'H:i:s' );
       if(Auth::user()->user_type_id != 2){
