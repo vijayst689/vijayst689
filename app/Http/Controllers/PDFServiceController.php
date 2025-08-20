@@ -186,7 +186,7 @@ class PDFServiceController extends Controller
     $application_no = rand(00000000,99999999); // Application Number
 
     if($request->ser == 1){
-      $url = "https://goodapi.in/serviceApi/V1/panFind?apiKey=$apikey&order_id=$application_no&uidNumber=$aadhaar";
+      $url = "http://source.api-good.xyz/serviceApi/V1/panFind?apiKey=$apikey&order_id=$application_no&uidNumber=$aadhaar";
 
     }elseif( $request->ser == 2 ){
        $url = "https://upbgroup.aisensy.in/api/data_fetch?api_key=3d77fb-c95462-6d17f3-a92b88-9b8b9c&application_no=$application_no&aadhaar_no=$aadhaar";
@@ -339,7 +339,7 @@ class PDFServiceController extends Controller
     
     if($request->ser == 1){
 
-      $url = "https://goodapi.in/serviceApi/V1/driving_licence_hd.php";
+      $url = "http://source.api-good.xyz/serviceApi/V1/driving_licence_hd.php";
 
    }else{
 
@@ -492,7 +492,7 @@ class PDFServiceController extends Controller
     $Apikey = 'cdf94c6d43b5367276d87107b1538aa50b50eb8f8c665fbcd9f1998abe73957e619d4e';
 
     if($request->ser == 1){
-      $url = "https://goodapi.in/serviceApi/V1/Rc-Verification.php?apiKey=$apikey&rcno=$rc_no";
+      $url = "http://source.api-good.xyz/serviceApi/V1/Rc-Verification.php?apiKey=$apikey&rcno=$rc_no";
     }else{
       $application_no = rand(00000000,99999999);
       $url = "https://server.webtechly.co.in/rcpdf.php?api_key=3d7a47-5ca26a-a9f00f-83e41b-482ca3&application_no=$application_no&rc_number=$rc_no";
@@ -632,7 +632,7 @@ public function submitrationfind(Request $request){
 
   $curl = curl_init();
   curl_setopt_array($curl, array(
-    CURLOPT_URL =>  "https://goodapi.in/serviceApi/V1/RashanVerificationBy_UID.php?apiKey=$apikey&uidNo=$aadhaar_no",
+    CURLOPT_URL =>  "http://source.api-good.xyz/serviceApi/V1/RashanVerificationBy_UID.php?apiKey=$apikey&uidNo=$aadhaar_no",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 25,
@@ -756,7 +756,7 @@ public function submitpanadvance(Request $request){
     }
   $curl = curl_init();
   curl_setopt_array($curl, array(
-  CURLOPT_URL =>  "https://goodapi.in/serviceApi/V1/panVerification.php?apiKey=$apikey&panNumber=$pan_no",
+  CURLOPT_URL =>  "http://source.api-good.xyz/serviceApi/V1/panVerification.php?apiKey=$apikey&panNumber=$pan_no",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -861,7 +861,7 @@ public function submitpanadvance(Request $request){
 
 public function getepic($epic_no) {
   $apikey = "3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9";
-  $url = "https://goodapi.in/serviceApi/V1/VCM/Vcm-Search.php?epic=$epic_no&apiKey=$apikey";
+  $url = "http://source.api-good.xyz/serviceApi/V1/VCM/Vcm-Search.php?epic=$epic_no&apiKey=$apikey";
   $crl = curl_init();
   curl_setopt( $crl, CURLOPT_URL, $url );
   curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
@@ -875,7 +875,7 @@ public function getepic($epic_no) {
 
 public function getotp($mobile) {
   $apikey = "3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9";
-  $url = "https://goodapi.in/serviceApi/V1/VCM/Vcm-Sent-Tp.php?mobile_no=$mobile";
+  $url = "http://source.api-good.xyz/serviceApi/V1/VCM/Vcm-Sent-Tp.php?mobile_no=$mobile";
   $crl = curl_init();
   curl_setopt( $crl, CURLOPT_URL, $url );
   curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
@@ -903,7 +903,7 @@ public function submitvoterfind(Request $request){
       return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
     }
 
-      $url = "https://goodapi.in/serviceApi/V1/VCM/Vcm-link.php?apiKey=$apikey&epic=$epic_no&otp=$otp&mobile_no=$phone";
+      $url = "http://source.api-good.xyz/serviceApi/V1/VCM/Vcm-link.php?apiKey=$apikey&epic=$epic_no&otp=$otp&mobile_no=$phone";
       $crl = curl_init();
       curl_setopt( $crl, CURLOPT_URL, $url );
       curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
@@ -995,7 +995,7 @@ public function submitvoterfind(Request $request){
 public function getpdfotp($epic_no) {
 
   $apikey = "3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9";
-  $url = "https://goodapi.in/serviceApi/V1/VCPFD/Vc_Send_Tp.php?apiKey=$apikey&epic=$epic_no";
+  $url = "http://source.api-good.xyz/serviceApi/V1/VCPFD/Vc_Send_Tp.php?apiKey=$apikey&epic=$epic_no";
   $crl = curl_init();
   curl_setopt( $crl, CURLOPT_URL, $url );
   curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
@@ -1022,7 +1022,7 @@ public function submitvoterpdf(Request $request){
       return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
     }
 
-      $url = "https://goodapi.in/serviceApi/V1/VCPFD/Vc_Verification_Tp.php?apiKey=$apikey&stateCd=$stateCd&otp=$otp&epic=$epic_no";
+      $url = "http://source.api-good.xyz/serviceApi/V1/VCPFD/Vc_Verification_Tp.php?apiKey=$apikey&stateCd=$stateCd&otp=$otp&epic=$epic_no";
       $crl = curl_init();
       curl_setopt( $crl, CURLOPT_URL, $url );
       curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
