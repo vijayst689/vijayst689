@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/dark-theme.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
-    <title>pkrmsolutions.com</title>
+    <title>pkrmsolution.com</title>
 </head>
 
 <body onload="info_noti()">

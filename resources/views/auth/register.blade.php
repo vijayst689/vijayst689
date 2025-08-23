@@ -20,7 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
     <link href="assets/css/app.css" rel="stylesheet">
     <link href="assets/css/icons.css" rel="stylesheet">
-    <title>pkrmsolutions.com</title>
+    <title>pkrmsolution.com</title>
 </head>
 
 <body class="">
@@ -37,7 +37,7 @@
                                         <img src="assets/images/logo-icon.png" width="60" alt="" />
                                     </div>
                                     <div class="text-center mb-4">
-                                        <h5 class="">pkrmsolutions.com</h5>
+                                        <h5 class="">pkrmsolution.com</h5>
                                         <button type="button" class="btn btn-info">Distributor</button>
                                     </div>
                                     <div class="form-body">
@@ -178,7 +178,7 @@
                                         <img src="assets/images/logo-icon.png" width="60" alt="" />
                                     </div>
                                     <div class="text-center mb-4">
-                                        <h5 class="">pkrmsolutions.com</h5>
+                                        <h5 class="">pkrmsolution.com</h5>
                                         <button type="button" class="btn btn-info">Retailer</button>
                                     </div>
                                     <div class="form-body">
