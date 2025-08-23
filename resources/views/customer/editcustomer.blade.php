@@ -1,8 +1,10 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
+    <div class="page-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                <div class="breadcrumb-title pe-3">pkrmsolutions.com</div>
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
@@ -55,14 +57,20 @@
                                                     placeholder="Name">
                                             </div>
                                         </div>
-                                        <div class="mb-3 row">
+                                        {{-- <div class="mb-3 row">
                                             <label for="example-email-input" class="col-sm-2 form-label">Email</label>
                                             <div class="col-sm-10">
                                                 <input value="{{ $cus->email }}" class="form-control" type="email"
                                                     maxlength="30" name="email" placeholder="Email">
                                             </div>
+                                        </div> --}}
+                                        <div class="mb-3 row">
+                                            <label for="example-url-input" class="col-sm-2 form-label">DOB</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" value="{{ $cus->date_of_birth }}" type="date"
+                                                    name="date_of_birth" id="example-url-input">
+                                            </div>
                                         </div>
-                                       
                                         <div class="mb-3 row">
                                             <label for="example-url-input" class="col-sm-2 form-label">District</label>
                                             <div class="col-sm-10">
@@ -75,7 +83,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        
                                         <div class="mb-3 row">
                                             <label for="example-text-input-lg" class="col-sm-2 form-label">VAO</label>
                                             <div class="col-sm-10">
@@ -91,16 +98,8 @@
                                                     value="{{ $cus->aadhaar_no }}" type="text" name="aadhaar_no"
                                                     placeholder="Aadhaar No">
                                             </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label for="example-text-input-lg" class="col-sm-2 form-label">Smart
-                                                Card No</label>
-                                            <div class="col-sm-10">
-                                                <input required  type="text" maxlength="15"
-                                                    class="form-control" name="smartcard_no" placeholder="SmartCard No" />
-                                            </div>
-                                        </div>
-                                       
+                                        </div>                                       
+                                        
                                         <div class="mb-3 row">
                                             <label for="example-text-input-lg" class="col-sm-2 form-label">Signature</label>
                                             <div class="col-sm-10">
@@ -111,12 +110,20 @@
                                         <div class="mb-3 row">
                                             <label for="example-url-input" class="col-sm-2 form-label">Address</label>
                                             <div class="col-sm-10">
-                                                <textarea class="form-control" maxlength="100" type="text" rows="3" name="address" id="example-url-input"
-                                                    placeholder="Address"></textarea>
+                                                <textarea value="{{ $cus->address }}" class="form-control" maxlength="100" type="text" rows="3" name="address" id="example-url-input"
+                                                    placeholder="Address">{{ $cus->address }}</textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
+                                        <div class="mb-3 row">
+                                            <label for="example-month-input" class="col-sm-2 form-label">Username</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text"
+                                                    value="{{ $cus->username }}" name="username" maxlength="20"
+                                                    placeholder="Username">
+                                            </div>
+                                        </div>
                                         <div class="mb-3 row">
                                             <label for="example-month-input" class="col-sm-2 form-label">Phone</label>
                                             <div class="col-sm-10">
@@ -125,7 +132,7 @@
                                                     placeholder="Phone">
                                             </div>
                                         </div>
-                                        
+
                                         <div class="mb-3 row">
                                             <label class="col-sm-2 form-label">Gender</label>
                                             <div class="col-sm-10" name="gender">
@@ -138,38 +145,12 @@
                                                         Female</option>
                                                 </select>
                                             </div>
-                                        </div>
-
+                                        </div>                                      
                                         <div class="mb-3 row">
-                                            <label for="example-url-input" class="col-sm-2 form-label">Taluk</label>
+                                            <label for="example-text-input-lg" class="col-sm-2 form-label">Taluk</label>
                                             <div class="col-sm-10">
-                                            <select disabled name="taluk_id" id="taluk"  class="form-control">
-                                            </select>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label for="example-url-input" class="col-sm-2 form-label">DOB</label>
-                                            <div class="col-sm-10">
-                                                <input class="form-control" value="{{ $cus->date_of_birth }}" type="date"
-                                                    name="date_of_birth" id="example-url-input">
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="mb-3 row">
-                                            <label for="example-text-input-lg" class="col-sm-2 form-label">Aadhar
-                                                Card</label>
-                                            <div class="col-sm-10">
-                                                <input required accept="image/jpeg, image/png" type="file"
-                                                    class="form-control" name="aadhaar_file" />
-                                            </div>
-                                        </div>                                       
-                                       
-                                        <div class="mb-3 row">
-                                            <label for="example-text-input-lg" class="col-sm-2 form-label">Smart
-                                                Card</label>
-                                            <div class="col-sm-10">
-                                                <input required accept="image/jpeg, image/png" type="file"
-                                                    class="form-control" name="smartcard" />
+                                                <select required name="taluk_id" id="taluk" class="form-control">
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -179,8 +160,24 @@
                                                     placeholder="Profile" id="example-text-input-lg">
                                             </div>
                                         </div>
+                                        <div class="mb-3 row">
+                                            <label for="example-text-input-lg" class="col-sm-2 form-label">Aadhar
+                                                Card</label>
+                                            <div class="col-sm-10">
+                                                <input required accept="image/jpeg, image/png" type="file"
+                                                    class="form-control" name="aadhaar_file" />
+                                            </div>
+                                        </div>
                                         
-
+                                        <div class="mb-3 row">
+                                            <label for="example-text-input-lg" class="col-sm-2 form-label">Smart
+                                                Card</label>
+                                            <div class="col-sm-10">
+                                                <input required accept="image/jpeg, image/png" type="file"
+                                                    class="form-control" name="smartcard" />
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                     {{-- <h3 class="text-center">View Family Details</h3>
                                     <div class="table-responsive">
@@ -225,23 +222,23 @@
                                                             </select></td>
                                                         <td>
                                                             <P class="changename_{{ $key }}"> </P>
-                                                             @if ($fam->relationaadhaar_card != '')
+                                                            {{--  @if ($fam->relationaadhaar_card != '')
                                             <a target="_blank" href="/upload/users/relationaadhaar_card/{{ $fam->relationaadhaar_card }}" class="btn btn-primary me-2">View</a>
-                                          @endif
-                                                            <input class="form-control" type="file" name="doc[]"
+                                          @endif --}}
+                                                            {{-- <input class="form-control" type="file" name="doc[]"
                                                                 accept="image/jpeg, image/png">
-                                                        </td>
+                                                        </td> --}}
 
 
-                                                         @if ($fam->relationdeath_cert != '')<input class="form-control"  type="hidden" name="doc2[]" value="{{ $fam->relationaadhaar_card }}" accept="image/jpeg, image/png"> @endif
-                                                        <td><a onClick='removerow()'
+                                                        {{--  @if ($fam->relationdeath_cert != '')<input class="form-control"  type="hidden" name="doc2[]" value="{{ $fam->relationaadhaar_card }}" accept="image/jpeg, image/png"> @endif --}}
+                                                        {{-- <td><a onClick='removerow()'
                                                                 class='btn btn-sm btn-danger btnDelete'><i
                                                                     class='mdi mdi-delete mdi-18px'></i></a></td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
-                                        </table>
-                                    </div> --}}
+                                        </table> --}} 
+                                    </div>
 
                                     <div class="text-center">
                                         <div class="col-12">
@@ -258,7 +255,6 @@
                 </div>
             </div><!--end row-->
         </div>
-    </main>
 @endsection
 @push('page_scripts')
     <script>

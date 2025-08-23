@@ -17,6 +17,7 @@ class PanController extends Controller
     $this->middleware('auth');
   }
 
+
   public function addpan(){
     return view( 'pancard.addpan');
   }
@@ -76,12 +77,7 @@ class PanController extends Controller
 
   public function panservices(){
     $usertype = Auth::user()->user_type_id;
-    $checkpermission = DB::table( 'user_permission' )->where('user_id' , Auth::user()->id)->where('parent_id' , 4)->get();
-    if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 5){
-      $service = DB::table( 'panservice' )->where('status' , 'Active')->orderBy( 'id', 'ASC' )->get();
-    }else{
-      $service = DB::table( 'panservice' )->where('status' , 'Active')->whereIn('id',$checkpermission->pluck('service_id'))->orderBy( 'id', 'ASC' )->get();
-    }
+    $service = DB::table( 'panservice' )->where('status' , 'Active')->orderBy( 'id', 'ASC' )->get();
     $service = json_decode( json_encode( $service ), true );
     foreach ( $service as $key => $s ) {
 
@@ -154,13 +150,9 @@ class PanController extends Controller
   }
 
   public function submitnewpancard( Request $request ) {
+    // dd($request->all());
         $user_id = Auth::user()->id;
-        $wallet = Auth::user()->wallet;
-        $servicepayment = $request->servicepayment;
         $serviceid = $request->serviceid;
-        if($wallet < $servicepayment){
-          return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
-        }
         $mobile = $request->mobile;
         $mode = $request->mode;
         $orderid = rand(000000000,999999999);
@@ -171,7 +163,7 @@ class PanController extends Controller
         curl_setopt( $crl, CURLOPT_RETURNTRANSFER, true );
         $result = curl_exec($crl);
         $result = json_decode($result);
-        //echo "<pre>"; print_r($result);echo "</pre>";die;
+        // echo "<pre>"; print_r($result);echo "</pre>";die;
         $status = $result->status;
         $url = "";
         $message = "";
@@ -203,7 +195,7 @@ class PanController extends Controller
 
 
         if($status == "Success"){
-
+       
           DB::table('pancard')->where('id', $insertid)->update([
             'api_url' => $url,
             'api_status' => $status,
@@ -212,6 +204,7 @@ class PanController extends Controller
             'status' => 'Processing'
           ]);
           $amount = $request->amount;
+          $servicepayment = $request->servicepayment;
           $date = date( 'Y-m-d' );
         $time = date( 'H:i:s' );
         $service_status = 'Out Payment';
@@ -242,7 +235,7 @@ class PanController extends Controller
         DB::update( DB::raw( $sql ) );
 
         if(Auth::user()->user_type_id != 2){
-          $getservicename = DB::table( 'find_services' )->select('name')->where('id',$serviceid)->first();
+          $getservicename = DB::table( 'panservice' )->select('name')->where('id',$serviceid)->first();
           $servicename = "";
           if($getservicename){
             $servicename = $getservicename->name;
@@ -270,37 +263,49 @@ class PanController extends Controller
           $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
           DB::update( DB::raw( $sql ) );
 
-          
          }
 
-          // API CALL
-          $API_KEY = env( 'API_KEY', '' );
-            $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
-            $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
-            $ch = curl_init();
-            $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&api_url=$url&api_txn=$orderid&api_status=$status&message=$message";
-            $url1 = $RAMJIPAY_URL.'/api/get_pandata';
+         // API CALL
+         $API_KEY = env( 'API_KEY', '' );
+         $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+         $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+         $ch = curl_init();
+         $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&api_url=$url&api_txn=$orderid&api_status=$status&message=$message";
+         $url1 = $RAMJIPAY_URL.'/api/get_pandata';
 
-            curl_setopt( $ch, CURLOPT_URL, $url1 );
-            curl_setopt( $ch, CURLOPT_POST, 1 );
-            curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
-            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-            $server_output = curl_exec( $ch );
-            curl_close( $ch );
-            $resdata = json_decode($server_output, true);
+         curl_setopt( $ch, CURLOPT_URL, $url1 );
+         curl_setopt( $ch, CURLOPT_POST, 1 );
+         curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+         $server_output = curl_exec( $ch );
+         curl_close( $ch );
+         $resdata = json_decode($server_output, true);
 
          return redirect($url)->With("success",$message);
 
-        }else{ 
-
-
+        }else{
+            
            DB::table('pancard')->where('id', $insertid)->update([
             'message' => $message,
             'status' => 'Failure',
-            'amount' => 0, 
+            'amount' => 0,
             'api_txid' => $orderid,
-
           ]);
+          $API_KEY = env( 'API_KEY', '' );
+          $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+          $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+          $ch = curl_init();
+          $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&api_url=$url&api_txn=$orderid&api_status=$status&message=$message";
+          $url1 = $RAMJIPAY_URL.'/api/get_pandata';
+ 
+          curl_setopt( $ch, CURLOPT_URL, $url1 );
+          curl_setopt( $ch, CURLOPT_POST, 1 );
+          curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+          curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+          $server_output = curl_exec( $ch );
+          curl_close( $ch );
+          $resdata = json_decode($server_output, true);
+
            return redirect('applypanservice/'.$serviceid)->With("error",$message);
         }
 
@@ -308,13 +313,7 @@ class PanController extends Controller
 
     public function submitpancorrection( Request $request ) {
         $user_id = Auth::user()->id;
-        $wallet = Auth::user()->wallet;
-        $servicepayment = $request->servicepayment;
         $serviceid = $request->serviceid;
-        if($wallet < $servicepayment){
-          return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
-        }
-        
         $mobile = $request->mobile;
         $mode = $request->mode;
         $orderid = rand(000000000,999999999);
@@ -366,6 +365,7 @@ class PanController extends Controller
             'status' => 'Processing'
           ]);
           $amount = $request->amount;
+          $servicepayment = $request->servicepayment;
           $date = date( 'Y-m-d' );
         $time = date( 'H:i:s' );
         $service_status = 'Out Payment';
@@ -396,7 +396,7 @@ class PanController extends Controller
         DB::update( DB::raw( $sql ) );
 
         if(Auth::user()->user_type_id != 2){
-          $getservicename = DB::table( 'find_services' )->select('name')->where('id',$serviceid)->first();
+          $getservicename = DB::table( 'panservice' )->select('name')->where('id',$serviceid)->first();
           $servicename = "";
           if($getservicename){
             $servicename = $getservicename->name;
@@ -428,27 +428,28 @@ class PanController extends Controller
 
          // API CALL
          $API_KEY = env( 'API_KEY', '' );
-            $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
-            $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
-            $ch = curl_init();
-            $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&api_url=$url&api_txn=$orderid&api_status=$status&message=$message";
-            $url1 = $RAMJIPAY_URL.'/api/get_pandata';
+         $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+         $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+         $ch = curl_init();
+         $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&api_url=$url&api_txn=$orderid&api_status=$status&message=$message";
+         $url1 = $RAMJIPAY_URL.'/api/get_pandata';
 
-            curl_setopt( $ch, CURLOPT_URL, $url1 );
-            curl_setopt( $ch, CURLOPT_POST, 1 );
-            curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
-            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-            $server_output = curl_exec( $ch );
-            curl_close( $ch );
-            $resdata = json_decode($server_output, true);
+         curl_setopt( $ch, CURLOPT_URL, $url1 );
+         curl_setopt( $ch, CURLOPT_POST, 1 );
+         curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+         $server_output = curl_exec( $ch );
+         curl_close( $ch );
+         $resdata = json_decode($server_output, true);
+
 
            return redirect($url)->With("success",$message);
         }else{
            DB::table('pancard')->where('id', $insertid)->update([
             'message' => $message,
             'status' => 'Failure',
-            'api_txid' => $orderid,
             'amount' => 0,
+            'api_txid' => $orderid,
           ]);
            return redirect('applypanservice/'.$serviceid)->With("error",$message);
         }
@@ -483,5 +484,6 @@ class PanController extends Controller
      return redirect('applypanservice/'.$serviceid)->With("error",$message);
 }
 }
+
 
 }

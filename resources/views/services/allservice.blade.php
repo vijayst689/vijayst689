@@ -13,11 +13,9 @@
                             <div class="row">
                                 @foreach ($ourservice as $ser)
                                 <div class="d-flex align-items-center gap-3 col-md-5 mb-5">
-                                    <div class="text-center">
-                                        <a href="{{ url('/services', $ser->id) }}/{{ $customerid }}"><img
-                                                src="/upload/service/{{ $ser->service_image }}" alt=""
-                                                class="rounded-circle bg-grd-info p-1"  width="100" height="100"></a>
-                                    </div>
+                                    <a href="{{ url('/services', $ser->id) }}/{{ $customerid }}"><img
+                                        src="/upload/service/{{ $ser->service_image }}" alt=""
+                                        class="rounded-circle bg-grd-info p-1" width="100" height="100"></a>
                                 </div>
                                 @endforeach
                             </div>

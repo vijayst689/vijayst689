@@ -1,8 +1,9 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
+    <div class="page-wrapper">
+        <div class="page-content">
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                <div class="breadcrumb-title pe-3">pkrmsolutions.com</div>
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
@@ -11,19 +12,27 @@
                         </ol>
                     </nav>
                 </div>
+                <div class="ms-auto">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Settings</button>
+                    </div>
+                </div>
             </div>
-            @if (session()->has('success'))
-                <div class="alert alert-success alert-dismissible" role="alert">
-                    <strong> {{ session('success') }} </strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            @if (session()->has('error'))
-                <div class="alert alert-success alert-dismissible" role="alert">
-                    <strong> {{ session('error') }} </strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
+            <hr />
+            <div class="card">
+                <div class="card-body">
+                    @if (session()->has('success'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <strong> {{ session('success') }} </strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if (session()->has('error'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <strong> {{ session('error') }} </strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
             <div class="row">
                 <div class="col-12 col-xl-12">
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
@@ -108,7 +117,7 @@
                                         </div>
                                     </div>
 
-                                    @if (Auth::user()->id != $apply_user_id)
+                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
                                         <div class="mb-3 col-md-6">
                                             <label for="service_name" class="form-label">Service Status</label>
                                             <select class="form-control" name="status" id="service_status">
@@ -124,8 +133,8 @@
                                                         value="Rejected">
                                                         Rejected</option>
                                                 @endif
-                                                <option @if ($services->status == 'Approved') selected @endif value="Approved">
-                                                    Approved</option>
+                                                <option @if ($services->status == 'Approved') selected @endif
+                                                    value="Approved">Approved</option>
                                             </select>
                                         </div>
                                         <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
@@ -191,7 +200,7 @@
                                 </div>
 
                                 <div class="mt-2 text-center">
-                                    @if ($services->status == 'Resubmit' && $apply_user_id != Auth::user()->id)
+                                    @if ($services->status == 'Resubmit' && ($services->user_id != Auth::user()->id && $apply_user_id != Auth::user()->id))
                                         <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
                                     @elseif($services->status == 'Approved')
                                         <button type="button" disabled class="btn btn-primary me-2">Completed</button>
@@ -205,7 +214,6 @@
                 </div>
             </div>
         </div>
-    </main>
 @endsection
 @push('page_scripts')
     <script>
@@ -232,7 +240,6 @@
                 }
                 $('#selecthide').show("slow");
 
-
             } else if (status == "Approved") {
                 if (lects == "Text") {
                     $('#applicationhide').show("slow");
@@ -251,6 +258,7 @@
             } else if (documents == "Smart Card") {
                 $('#smart_cardhide').show("slow");
             }
+
         });
 
         $('#service_status').change(function() {
@@ -347,7 +355,7 @@
             }
         });
 
-         $('#documents').change(function() {
+        $('#documents').change(function() {
             if ($('#documents').val() == 'Aadhaar Card') {
                 $('#aadhaar_cardhide').show("slow");
                 $('#smart_cardhide').hide("slow");

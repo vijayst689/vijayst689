@@ -55,12 +55,12 @@ class ServerPaymentController extends Controller
      $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
      $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
      $ch = curl_init();
-    
+
      $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&payment_proof=$payment_proof&payment=$payment&rowid=$insertid&status=$status&activation_date=$activation_date";
-    
-    //dd($post_data);
+
+    // dd($post_data);
      $url1 = $RAMJIPAY_URL.'/api/serverpayment_approve';
-  //echo $url1;die;
+//   echo $url1;die;
      curl_setopt( $ch, CURLOPT_URL, $url1 );
      curl_setopt( $ch, CURLOPT_POST, 1 );
      curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
@@ -68,6 +68,7 @@ class ServerPaymentController extends Controller
      $server_output = curl_exec( $ch );
      curl_close( $ch );
      $resdata = json_decode($server_output, true);
+    //  dd($resdata);
        }
     return redirect('/serverpayment')->with('success', 'Please wait for appproval ... !');
 

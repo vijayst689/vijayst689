@@ -1,8 +1,9 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
+     <div class="page-wrapper">
+        <div class="page-content">
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                <div class="breadcrumb-title pe-3">pkrmsolutions.com</div>
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
@@ -11,25 +12,33 @@
                         </ol>
                     </nav>
                 </div>
+                <div class="ms-auto">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Settings</button>
+                    </div>
+                </div>
             </div>
-            @if (session()->has('success'))
-                <div class="alert alert-success alert-dismissible" role="alert">
-                    <strong> {{ session('success') }} </strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            @if (session()->has('error'))
-                <div class="alert alert-success alert-dismissible" role="alert">
-                    <strong> {{ session('error') }} </strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
+            <hr />
+            <div class="card">
+                <div class="card-body">
+                    @if (session()->has('success'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <strong> {{ session('success') }} </strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if (session()->has('error'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <strong> {{ session('error') }} </strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
             <div class="row">
                 <div class="col-12 col-xl-12">
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                         <div class="card-body p-4">
                             <h5 class="card-title">{{ $servicename }}</h5>
-                           <form action="{{ url('/software_update') }}" id="formAccountSettings" method="POST"
+                            <form action="{{ url('/software_update') }}" id="formAccountSettings" method="POST"
                                 enctype="multipart/form-data">
                                 {{ csrf_field() }}
 
@@ -40,177 +49,175 @@
                                     <input type="hidden" name="distributor_id" value="{{ $services->distributor_id }}">
                                     <input type="hidden" name="serviceid" value="{{ $services->service_id }}">
                                     @php
-                                        $apply_user_id = 0;
-                                        if ($services->distributor_id == 0 && $services->retailer_id == 0) {
-                                            $apply_user_id = $services->user_id;
-                                        }
-                                        elseif ($services->retailer_id == 0) {
-                                            $apply_user_id = $services->distributor_id;
-                                        } elseif ($services->distributor_id == 0) {
-                                            $apply_user_id = $services->retailer_id;
-                                        }
-                                    @endphp
+                                    $apply_user_id = 0;
+                                   if ($services->distributor_id == 0 && $services->retailer_id == 0) {
+                                       $apply_user_id = $services->user_id;
+                                   }
+                                   elseif ($services->retailer_id == 0) {
+                                       $apply_user_id = $services->distributor_id;
+                                   } elseif ($services->distributor_id == 0) {
+                                       $apply_user_id = $services->retailer_id;
+                                   }
+                               @endphp
 
-                            <div class="mb-3 col-md-6">
-                            <label for="device_name" class="form-label">Device Name</label>
-                            <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text" value="{{ $services->device_name }}"  class="form-control"
-                            name="device_name" maxlength="200" placeholder="Device Name"/>
-                             </div>  
-                              <div class="mb-3 col-md-6">                        
-                            <label for="mobile" class="form-label number">Mobile Number</label>
-                            <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text" maxlength="10" class="form-control" value="{{ $services->mobile }}"
-                            name="mobile" placeholder="Mobile Number"/>
+                       <div class="mb-3 col-md-6">
+                       <label for="device_name" class="form-label">Device Name</label>
+                       <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text" value="{{ $services->device_name }}"  class="form-control"
+                       name="device_name" maxlength="200" placeholder="Device Name"/>
+                        </div>  
+                         <div class="mb-3 col-md-6">                        
+                       <label for="mobile" class="form-label number">Mobile Number</label>
+                       <input @if (Auth::user()->id != $apply_user_id ) disabled @endif required type="text" maxlength="10" class="form-control" value="{{ $services->mobile }}"
+                       name="mobile" placeholder="Mobile Number"/>
 
-                        </div>   
-
-                                    @if (Auth::user()->id != $apply_user_id )
-                                    <div class="mb-3 col-md-6">
-                                        <label for="service_name" class="form-label">Service Status</label>
-                                        <select class="form-control" name="status" id="service_status">
-                                            <option value="">Select</option>
-                                            <option @if ($services->status == 'Pending') selected @endif
-                                                value="Pending">Pending</option>
-                                            <option @if ($services->status == 'Resubmit') selected @endif
-                                                value="Resubmit">Resubmit</option>
-                                            <option @if ($services->status == 'Processing') selected @endif
-                                                value="Processing">Processing</option>
-                                                @if ($services->status != 'Approved')
-                                            <option @if ($services->status == 'Rejected') selected @endif value="Rejected">
-                                            Rejected</option>
-                                            @endif
-                                                <option @if ($services->status == 'Approved') selected @endif
-                                                    value="Approved">Approved</option>
-                                            </select>
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
-                                        <label for="remarks" class="form-label">Remarks</label>
-                                        <input value="{{ $services->remarks }}" class="form-control" type="text"
-                                            name="remarks" maxlength="100" id="remarks" placeholder="Remarks" />
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="selecthide" style="display :none;">
-                                        <label for="select" class="form-label">Select</label>
-                                        <select class="form-control" name="selects" id="select">
-                                            <option>select</option>
-                                            <option @if ($services->selects == 'Text') selected @endif
-                                                value = "Text">Text</option>
-                                            <option @if ($services->selects == 'File') selected @endif
-                                                value = "File">File</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
-                                        <label for="acknowledgement" class="form-label">Acknowledgement</label>
-                                        <input class="form-control" type="file" name="acknowledgement"
-                                            id="acknowledgement" />
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
-                                        <label for="application_no" class="form-label">Application No</label>
-                                        <input value="{{ $services->application_no }}" class="form-control"
-                                            type="text" maxlength="20" name="application_no"
-                                            id="application_no" />
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="selectshide" style="display :none;">
-                                        <label for="selects" class="form-label">Select</label>
-                                        <select class="form-control" name="lects" id="selects">
-                                            <option>select</option>
-                                            <option @if ($services->lects == 'Text') selected @endif
-                                                value = "Text">Text</option>
-                                            <option @if ($services->lects == 'File') selected @endif
-                                                value = "File">File</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3 col-md-6" id="applicationhide" style="display :none;">
-                                        <label for="application" class="form-label">Application</label>
-                                        <input value="{{ $services->application }}" class="form-control"
-                                            type="text" maxlength="150" name="application"
-                                            id="application" />
-                                    </div>
-                                        <div class="mb-3 col-md-6" id="certhide" style="display :none;">
-                                            <label for="certificate" class="form-label">Certificate</label>
-                                            <input class="form-control" type="file" name="certificate"
-                                                id="certificate" />
-                                        </div>
-                                    @else
-                                        <div class="row">
-                                            <div class="mb-3 col-md-6">
-                                                <label for="service_name" class="form-label">Service Status</label>
-                                                <input disabled value="{{ $services->status }}" class="form-control"
-                                                    type="text" />
-                                            </div>
-                                            <div class="mb-3 col-md-6">
-                                                <label for="remarks" class="form-label">Remarks</label>
-                                                <textarea rows="2" class="form-control" type="text" disabled placeholder="Remarks">{{ $services->remarks }}</textarea>
-                                            </div>
-
-                                        </div>
-                                    @endif
-
-                                </div>
+                   </div>   
 
 
+                               @if (Auth::user()->id != $apply_user_id )
+                               <div class="mb-3 col-md-6">
+                                   <label for="service_name" class="form-label">Service Status</label>
+                                   <select class="form-control" name="status" id="service_status">
+                                       <option value="">Select</option>
+                                       <option @if ($services->status == 'Pending') selected @endif
+                                           value="Pending">
+                                           Pending</option>
+                                       <option @if ($services->status == 'Resubmit') selected @endif
+                                           value="Resubmit">
+                                           Resubmit</option>
+                                       <option @if ($services->status == 'Processing') selected @endif
+                                           value="Processing">Processing</option>
+                                       @if ($services->status != 'Approved')
+                                           <option @if ($services->status == 'Rejected') selected @endif
+                                               value="Rejected">Rejected</option>
+                                       @endif
+                                       <option @if ($services->status == 'Approved') selected @endif
+                                           value="Approved">
+                                           Approved</option>
+                                   </select>
+                               </div>
+                               <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
+                                   <label for="remarks" class="form-label">Remarks</label>
+                                   <input value="{{ $services->remarks }}" class="form-control" type="text"
+                                       name="remarks" maxlength="100" id="remarks" placeholder="Remarks" />
+                               </div>
+                               <div class="mb-3 col-md-6" id="selecthide" style="display :none;">
+                                   <label for="select" class="form-label">Select</label>
+                                   <select class="form-control" name="selects" id="select">
+                                       <option>select</option>
+                                       <option @if ($services->selects == 'Text') selected @endif value = "Text">
+                                           Text</option>
+                                       <option @if ($services->selects == 'File') selected @endif value = "File">
+                                           File</option>
+                                   </select>
+                               </div>
+                               <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
+                                   <label for="acknowledgement" class="form-label">Acknowledgement</label>
+                                   <input class="form-control" type="file" name="acknowledgement"
+                                       id="acknowledgement" />
+                               </div>
+                               <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
+                                   <label for="application_no" class="form-label">Application No</label>
+                                   <input value="{{ $services->application_no }}" class="form-control"
+                                       type="text" maxlength="20" name="application_no"
+                                       id="application_no" />
+                               </div>
+                               <div class="mb-3 col-md-6" id="selectshide" style="display :none;">
+                                   <label for="selects" class="form-label">Select</label>
+                                   <select class="form-control" name="lects" id="selects">
+                                       <option>select</option>
+                                       <option @if ($services->lects == 'Text') selected @endif value = "Text">
+                                           Text</option>
+                                       <option @if ($services->lects == 'File') selected @endif value = "File">
+                                           File</option>
+                                   </select>
+                               </div>
+                               <div class="mb-3 col-md-6" id="applicationhide" style="display :none;">
+                                   <label for="application" class="form-label">Application</label>
+                                   <input value="{{ $services->application }}" class="form-control"
+                                       type="text" maxlength="150" name="application" id="application" />
+                               </div>
+                               <div class="mb-3 col-md-6" id="certhide" style="display :none;">
+                                   <label for="certificate" class="form-label">Certificate</label>
+                                   <input class="form-control" type="file" name="certificate"
+                                       id="certificate" />
+                               </div>
+                           @else
+                               <div class="row">
+                                   <div class="mb-3 col-md-6">
+                                       <label for="service_name" class="form-label">Service Status</label>
+                                       <input disabled value="{{ $services->status }}" class="form-control"
+                                           type="text" />
+                                   </div>
+                                   <div class="mb-3 col-md-6">
+                                       <label for="remarks" class="form-label">Remarks</label>
+                                       <textarea rows="2" class="form-control" type="text" disabled placeholder="Remarks">{{ $services->remarks }}</textarea>
+                                   </div>
+
+                               </div>
+                           @endif
+                       </div>
+                       
+                           <div class="mt-2 text-center">
+                               @if ($services->status == 'Resubmit' && ( $apply_user_id != Auth::user()->id))
+                                   <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
+                               @elseif($services->status == 'Approved')
+                                   <button type="button" disabled class="btn btn-primary me-2">Completed</button>
+                               @else
+                                   <button type="submit" class="btn btn-primary me-2">Submit</button>
+                               @endif
+                           </div>
 
 
-                                <div class="mt-2 text-center">
-                                    @if ($services->status == 'Resubmit' && ( $apply_user_id != Auth::user()->id))
-                                        <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
-                                    @elseif($services->status == 'Approved')
-                                        <button type="button" disabled class="btn btn-primary me-2">Completed</button>
-                                    @else
-                                        <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                    @endif
-                                </div>
-
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="content-backdrop fade"></div>
-        </div>
-        <div class="layout-overlay layout-menu-toggle"></div>
-    </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="content-backdrop fade"></div>
+   </div>
+   <div class="layout-overlay layout-menu-toggle"></div>
+</div>
 @endsection
-
 @push('page_scripts')
-<script>
-    $(function() {
-        var status = "{{ $services->status }}";
-        var acknowledgement = "{{ $services->acknowledgement }}";
-        var certificate = "{{ $services->certificate }}";
-        var selects = "{{ $services->selects }}";
-        var lects = "{{ $services->lects }}";
+    <script>
+        $(function() {
+            var status = "{{ $services->status }}";
+            var acknowledgement = "{{ $services->acknowledgement }}";
+            var certificate = "{{ $services->certificate }}";
+            var selects = "{{ $services->selects }}";
+            var lects = "{{ $services->lects }}";
 
-        if (status == "Resubmit") {
-            $('#remarkshide').show("slow");
-            $('#remarks').prop("required", true);
-        } else if (status == "Processing") {
-        if(selects == "Text"){
-            $('#applicationnohide').show("slow");
-        }
-        if(selects == "File"){
-            $('#acknowledgementhide').show("slow");
-            if (acknowledgement == "") {
-                $('#acknowledgement').prop("required", true);
+            if (status == "Resubmit") {
+                $('#remarkshide').show("slow");
+                $('#remarks').prop("required", true);
+            } else if (status == "Processing") {
+                if (selects == "Text") {
+                    $('#applicationnohide').show("slow");
+                }
+                if (selects == "File") {
+                    $('#acknowledgementhide').show("slow");
+                    if (acknowledgement == "") {
+                        $('#acknowledgement').prop("required", true);
+                    }
+                }
+                $('#selecthide').show("slow");
+
+
+            } else if (status == "Approved") {
+                if (lects == "Text") {
+                    $('#applicationhide').show("slow");
+                }
+                if (lects == "File") {
+                    $('#certhide').show("slow");
+                    if (certificate == "") {
+                        $('#certificate').prop("required", true);
+                    }
+                }
+                $('#selectshide').show("slow")
             }
-        }
-            $('#selecthide').show("slow");
-
-
-        } else if (status == "Approved") {
-        if(lects == "Text"){
-            $('#applicationhide').show("slow");
-        }
-        if(lects == "File"){
-            $('#certhide').show("slow");
-            if (certificate == "") {
-                $('#certificate').prop("required", true);
-            }
-        }
-            $('#selectshide').show("slow")
-    }
-    });
-   
-    $('#service_status').change(function() {
+        });
+       
+        $('#service_status').change(function() {
             if ($('#service_status').val() == 'Resubmit') {
                 $('#acknowledgementhide').hide("slow");
                 $('#acknowledgement').prop("required", false);
@@ -251,7 +258,7 @@
                 $('#selects').prop("required", true);
                 $('#selectshide').show("slow");
             } else {
-                $('#remarkshide').hide("slow");
+                $('#remarkshide').show("slow");
                 $('#remarks').prop("required", false);
                 $('#acknowledgementhide').hide("slow");
                 $('#acknowledgement').prop("required", false);
@@ -266,43 +273,43 @@
             }
         });
 
-        $('#select').change(function(){
-            if($('#select').val() == 'Text') {
+        $('#select').change(function() {
+            if ($('#select').val() == 'Text') {
                 $('#applicationnohide').show("slow");
-                $('#application_no').prop("required", true); 
+                $('#application_no').prop("required", true);
                 $('#acknowledgementhide').hide("slow");
                 $('#acknowledgement').prop("required", false);
-            }else if($('#select').val() == 'File'){
+            } else if ($('#select').val() == 'File') {
                 $('#acknowledgementhide').show("slow");
                 $('#acknowledgement').prop("required", false);
-                $('#applicationnohide').hide("slow"); 
+                $('#applicationnohide').hide("slow");
                 $('#application_no').prop("required", false);
-            }else{
+            } else {
                 $('#applicationnohide').hide("slow");
                 $('#application_no').prop("required", false);
                 $('#acknowledgementhide').hide("slow");
                 $('#acknowledgement').prop("required", false);
-            }  
+            }
         });
 
-        $('#selects').change(function(){
-            if($('#selects').val() == 'Text') {
+        $('#selects').change(function() {
+            if ($('#selects').val() == 'Text') {
                 $('#applicationhide').show("slow");
-                $('#application').prop("required", true); 
+                $('#application').prop("required", true);
                 $('#certhide').hide("slow");
                 $('#certificate').prop("required", false);
-            }else if($('#selects').val() == 'File'){
+            } else if ($('#selects').val() == 'File') {
                 $('#certhide').show("slow");
                 $('#certificate').prop("required", false);
-                $('#applicationhide').hide("slow"); 
+                $('#applicationhide').hide("slow");
                 $('#application').prop("required", false);
-            }else{
+            } else {
                 $('#applicationhide').hide("slow");
                 $('#application').prop("required", false);
                 $('#certhide').hide("slow");
                 $('#certificate').prop("required", false);
-            }  
+            }
         });
 
-</script>
+    </script>
 @endpush

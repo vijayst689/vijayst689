@@ -1,18 +1,30 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
-            <div class="row g-3">
+    <div class="page-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
+            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                <div class="breadcrumb-title pe-3">pkrmsolutions.com</div>
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0">
+                            <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
                 @if (Auth::user()->user_type_id == 1)
-                    <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                        <button type="button" class="btn btn-grd-primary px-2" data-bs-toggle="modal"
-                            data-bs-target="#addservice">Add</button>
+                    <div class="ms-auto">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#addservice">Add</button>
+                        </div>
                     </div>
                 @endif
-            </div><!--end row-->
-             <h4 class="">Service
-                 </h4>
-            <div class="card mt-4">
+            </div>
+            <!--end breadcrumb-->
+            <hr />
+            <div class="card">
                 <div class="card-body">
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible" role="alert">
@@ -27,17 +39,18 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table id="example2" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th> S No</th>
-                                    <th> Service Name</th>
-                                    @if (Auth::user()->user_type_id == 1)
-                                        <th> Status</th>
-                                        <th> Edit</th>
-                                    @endif
-                                </tr>
-                            </thead>
+                        <table id="example2" class="table table-striped table-bordered">
+                            <thead class="table-dark">
+                                <thead>
+                                    <tr>
+                                        <th> S No</th>
+                                        <th> Service Name</th>
+                                        @if (Auth::user()->user_type_id == 1)
+                                            <th> Status</th>
+                                            <th> Edit</th>
+                                        @endif
+                                    </tr>
+                                </thead>
                             <tbody>
                                 @foreach ($nalavariyam_service as $key => $service)
                                     <tr>
@@ -166,34 +179,33 @@
                             </div>
                         </div>
                     </div>
-    </main>
-@endsection
-@push('page_scripts')
-    <script>
-        $(function() {
-            var wallet = "{{ Auth::user()->wallet }}";
-            var amount = "{{ $service->service_payment }}";
-            if (parseFloat(amount) > parseInt(wallet)) {
-                $('#save').prop("disabled", true);
-                $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
-                    'color': 'red',
-                    'font-size': '150%',
-                    'font-weight': 'bold'
-                });
-            }
-        });
+                @endsection
+                @push('page_scripts')
+                    <script>
+                        $(function() {
+                            var wallet = "{{ Auth::user()->wallet }}";
+                            var amount = "{{ $service->service_payment }}";
+                            if (parseFloat(amount) > parseInt(wallet)) {
+                                $('#save').prop("disabled", true);
+                                $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
+                                    'color': 'red',
+                                    'font-size': '150%',
+                                    'font-weight': 'bold'
+                                });
+                            }
+                        });
 
-        function edit_customer(id, name, phone, aadhaar_no, gender, email, date_of_birth, address, status) {
-            $("#editname").val(name);
-            $("#editphone").val(phone);
-            $("#editadhar").val(aadhaar_no);
-            $("#editgender").val(gender);
-            $("#editemail").val(email);
-            $("#editdob").val(date_of_birth);
-            $("#editaddress").val(address);
-            $("#editstatus").val(status);
-            $("#cusid").val(id);
-            $("#editcustomer").modal("show");
-        }
-    </script>
-@endpush
+                        function edit_customer(id, name, phone, aadhaar_no, gender, email, date_of_birth, address, status) {
+                            $("#editname").val(name);
+                            $("#editphone").val(phone);
+                            $("#editadhar").val(aadhaar_no);
+                            $("#editgender").val(gender);
+                            $("#editemail").val(email);
+                            $("#editdob").val(date_of_birth);
+                            $("#editaddress").val(address);
+                            $("#editstatus").val(status);
+                            $("#cusid").val(id);
+                            $("#editcustomer").modal("show");
+                        }
+                    </script>
+                @endpush

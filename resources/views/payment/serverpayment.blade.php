@@ -30,7 +30,7 @@
         $daysDiff = $currentDate->diffInDays($nextBillDate, false);
 
         // Within 5 days before due date (and not past due yet)
-        if ($daysDiff <= 5 && $daysDiff > 0) {
+        if ($daysDiff < 5 && $daysDiff > 0) {
             $needsPayment = true;
         }
 
@@ -64,7 +64,7 @@
             @endif
           @endisset
         </div>
-       
+
         <div class="col-md-6">
           <h5>Payment Status</h5>
           @if($status == "Pending")
@@ -156,12 +156,12 @@
         @csrf
         <div class="modal-body">
           <div class="d-flex justify-content-center mb-3">
-            <img src="{{ asset('upload/qr/qrimgramji.jpeg') }}" alt="Payment Image" class="img-fluid" style="height: 50%; width: 50%">
+            <img src="{{ asset('upload/qr/qrimgramji.jpeg') }}" alt="Payment Image" class="img-fluid" style="height: 100%; width: 80%">
           </div>
           <p class="text-center">Please proceed with payment of <strong>₹{{ Auth::user()->server_amount }}</strong>.</p>
           <div class="mb-3">
             <label for="paymentProof" class="form-label">Upload Payment Proof (screenshot, receipt)</label>
-            <input type="file" class="form-control" id="paymentProof" name="payment_proof" accept="image/*,application/pdf">
+            <input required type="file" class="form-control" id="paymentProof" name="payment_proof" accept="image/*,application/pdf">
           </div>
         </div>
         <div class="modal-footer">

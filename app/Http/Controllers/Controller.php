@@ -12,23 +12,21 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-     public function restrictIfNotActivated()
+    public function restrictIfNotActivated()
 {
     $user = Auth::user();
 
     if ($user && $user->user_type_id == 2) {
-        $today = now();
-        $paymentDate = $user->payment_date ? \Carbon\Carbon::parse($user->payment_date) : null;
+        $today = \Carbon\Carbon::today()->startOfDay();
+        $paymentDate = $user->payment_date ? \Carbon\Carbon::parse($user->payment_date)->startOfDay() : null;
 
         if ($paymentDate) {
             $daysDiff = $today->diffInDays($paymentDate, false); // negative if past
 
-            if ($daysDiff < 0 || $daysDiff === 0) {
-                // On or after due date → restrict
-                redirect('/serverpayment')->send();
-                exit;
+            // On or after due date → restrict
+            if ($daysDiff <= 0) {
+                return redirect('/serverpayment')->send();
             }
-            // else if $daysDiff <= 5 → allow dashboard but payment button will show in blade
         }
     }
 }

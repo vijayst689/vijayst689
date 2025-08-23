@@ -16,7 +16,7 @@ class WalletController extends Controller
         });
     $this->middleware('auth');
   }
-  
+
     public function index()
   {
     $userid = Auth::user()->id;
@@ -127,7 +127,7 @@ public function superadminaddwallet( Request $request )
     $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$login_id','$from_id','$login_id','$amount','$ad_info', '$service_status','$time','$date','$from_id','$newbalance1')";
     DB::insert( DB::raw( $sql ) );
 
-    return redirect()->back()->with( 'success', 'Ramji wallet Updated Successfully' );
+    return redirect()->back()->with( 'success', 'Ramji Wallet Updated Successfully' );
 }
 
 public function ramjisaverequest(Request $request){
@@ -159,7 +159,6 @@ return redirect( "/rapaymentrequest" );
 
 public function adminaddwallet( Request $request )
 {
-
     $amount = $request->wallet;
     $from_id = Auth::user()->id;
     $request_id = Auth::user()->id;
@@ -181,10 +180,10 @@ public function adminaddwallet( Request $request )
     DB::update( DB::raw( $sql ) );
     $service_status = 'IN Payment';
     $ad_info = 'ADD MONEY';
-    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('$login_id','$login_id','$from_id','$amount','$ad_info', '$service_status','$time','$date','$from_id')";
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$login_id','$login_id','$from_id','$amount','$ad_info', '$service_status','$time','$date','$from_id','$newbalance1')";
     DB::insert( DB::raw( $sql ) );
 
-    return redirect()->back()->with( 'success', 'wallet Updated Successfully' );
+    return redirect()->back()->with( 'success', 'Admin Wallet Updated Successfully' );
 }
 
 }

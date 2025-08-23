@@ -1,9 +1,10 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
+    <div class="page-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-                <div class="breadcrumb-title pe-3">Pan Services</div>
+                <div class="breadcrumb-title pe-3">pkrmsolutions.com</div>
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
@@ -12,15 +13,15 @@
                         </ol>
                     </nav>
                 </div>
-            </div>
-            <div class="col-auto">
-                <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                    <a href="{{ url('/addpan') }}" class="btn btn-primary px-4"><i
-                            class="bi bi-plus-lg me-2"></i>ADD PAN</a>
+                <div class="ms-auto">
+                    <div class="btn-group">
+                        <a href="{{ url('/addpan') }}" type="button" class="btn btn-info">Add Pan</a>
+                    </div>
                 </div>
             </div>
-
-            <div class="card mt-4">
+            <!--end breadcrumb-->
+            <hr />
+            <div class="card">
                 <div class="card-body">
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible" role="alert">
@@ -34,44 +35,41 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    <div class="customer-table">
-                        <div class="table-responsive white-space-nowrap">
-                            <table id="example2" class="table align-middle">
-                                <thead class="bg-danger">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-striped table-bordered">
+                            <thead class="table-dark">
+                                <th>Sl No</th>
+                                <th>Service Name</th>
+                                <th>Amount</th>
+                                <th>Image</th>
+                                <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-dark">
+                                @foreach ($viewpan as $key => $p)
                                     <tr class="text-white">
-                                        <th class="text-white">Sl No</th>
-                                        <th class="text-white">Service Name</th>
-                                        <th class="text-white">Amount</th>
-                                        <th class="text-white">Image</th>
-                                        <th class="text-white">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-dark">
-                                    @foreach ($viewpan as $key => $p)
-                                        <tr class="text-white">
-                                            <td>{{ $key + 1 }}</td>
-                                            <td>{{ $p->name }}</td>
-                                            <td>{{ $p->amount }}</td>
-                                            <td><img src="/upload/panservice/{{ $p->ser_image }}" class="rounded-circle"
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $p->name }}</td>
+                                        <td>{{ $p->amount }}</td>
+                                        <td><img src="/upload/panservice/{{ $p->ser_image }}" class="rounded-circle"
                                                 width="40" height="40" alt=""></td>
-                                            <td> <a class="btn btn-sm btn-danger text-white"><i
-                                                        class='bx bx-btn'></i>{{ $p->status }}</a>
-                                                <button
-                                                    onclick="edit_pan('{{ $p->id }}','{{ $p->name }}','{{ $p->amount }}')"
-                                                    type="button" style="font-size: small"
-                                                    class="btn btn-grd btn-grd-primary px-1">Edit</button>
-{{--
+                                        <td> <a class="btn btn-sm btn-danger text-white"><i
+                                                    class='bx bx-btn'></i>{{ $p->status }}</a>
+                                            <button
+                                                onclick="edit_pan('{{ $p->id }}','{{ $p->name }}','{{ $p->amount }}')"
+                                                type="button" style="font-size: small"
+                                                class="btn btn-primary">Edit</button>
+                                            {{--
                                                 <button
                                                     onclick="editstatus('{{ $p->id }}','{{ $p->status }}')"
                                                     type="button" style="font-size: small"
                                                     class="btn btn-grd btn-grd-success px-1">Status</button> --}}
-                                            </td>
+                                        </td>
 
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                     <div class="col-12">
                         <div class="card rounded-4">
@@ -82,10 +80,8 @@
                                             <div class="modal-content">
                                                 <div class="modal-header border-bottom-0 py-2 bg-grd-info">
                                                     <h5 class="modal-title">Update PanService</h5>
-                                                    <a href="javascript:;" class="primaery-menu-close"
-                                                        data-bs-dismiss="modal">
-                                                        <i class="material-icons-outlined">close</i>
-                                                    </a>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="form-body">
@@ -103,9 +99,10 @@
                                                                             placeholder="PanService Name" />
                                                                     </div>
                                                                     <div class="col mb-3">
-                                                                        <label for="amount" class="form-label">Amount</label>
-                                                                        <input type="text" id="editamount"
-                                                                            name="amount" class="form-control number"
+                                                                        <label for="amount"
+                                                                            class="form-label">Amount</label>
+                                                                        <input type="text" id="editamount" name="amount"
+                                                                            class="form-control number"
                                                                             placeholder="Amount" />
                                                                     </div>
                                                                     <div class="col mb-3">
@@ -136,21 +133,20 @@
                 </div>
             </div>
         </div>
-    </main>
-@endsection
-@push('page_scripts')
-    <script>
-        function edit_pan(id, name, amount ) {
-            $("#editservice").val(name);
-            $("#editamount").val(amount);
-            $("#panid").val(id);
-            $("#editpan").modal("show");
-        }
+    @endsection
+    @push('page_scripts')
+        <script>
+            function edit_pan(id, name, amount) {
+                $("#editservice").val(name);
+                $("#editamount").val(amount);
+                $("#panid").val(id);
+                $("#editpan").modal("show");
+            }
 
-        function editstatus(id, status ) {
-            $("#editsta").val(status);
-            $("#pan_id").val(id);
-            $("#editsta").modal("show");
-        }
-    </script>
-@endpush
+            function editstatus(id, status) {
+                $("#editsta").val(status);
+                $("#pan_id").val(id);
+                $("#editsta").modal("show");
+            }
+        </script>
+    @endpush

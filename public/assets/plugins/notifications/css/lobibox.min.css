@@ -400,16 +400,16 @@ body.lobibox-open {
 }
 
 .lobibox.lobibox-error {
-	border: 1px solid #fc185a
+	border: 1px solid #CA2121
 }
 
 .lobibox.lobibox-error .lobibox-header {
 	color: #eee;
-	background-color: #fc185a
+	background-color: #CA2121
 }
 
 .lobibox.lobibox-error .lobibox-body .lobibox-icon {
-	color: #fc185a
+	color: #CA2121
 }
 
 .lobibox.lobibox-error .lobibox-footer {
@@ -580,8 +580,8 @@ body.lobibox-open {
 
 .lobibox .lobibox-btn.lobibox-btn-cancel {
 	color: #FFF;
-	background-color: #fc185a;
-	border-color: #fc185a
+	background-color: #CA2121;
+	border-color: #CA2121
 }
 
 .lobibox .lobibox-btn.lobibox-btn-cancel.active, .lobibox .lobibox-btn.lobibox-btn-cancel.focus, .lobibox .lobibox-btn.lobibox-btn-cancel:active, .lobibox .lobibox-btn.lobibox-btn-cancel:focus, .lobibox .lobibox-btn.lobibox-btn-cancel:hover, .open>.dropdown-toggle.lobibox .lobibox-btn.lobibox-btn-cancel {
@@ -591,12 +591,12 @@ body.lobibox-open {
 }
 
 .lobibox .lobibox-btn.lobibox-btn-cancel.disabled, .lobibox .lobibox-btn.lobibox-btn-cancel.disabled.active, .lobibox .lobibox-btn.lobibox-btn-cancel.disabled.focus, .lobibox .lobibox-btn.lobibox-btn-cancel.disabled:active, .lobibox .lobibox-btn.lobibox-btn-cancel.disabled:focus, .lobibox .lobibox-btn.lobibox-btn-cancel.disabled:hover, .lobibox .lobibox-btn.lobibox-btn-cancel[disabled], .lobibox .lobibox-btn.lobibox-btn-cancel[disabled].active, .lobibox .lobibox-btn.lobibox-btn-cancel[disabled].focus, .lobibox .lobibox-btn.lobibox-btn-cancel[disabled]:active, .lobibox .lobibox-btn.lobibox-btn-cancel[disabled]:focus, .lobibox .lobibox-btn.lobibox-btn-cancel[disabled]:hover, fieldset[disabled] .lobibox .lobibox-btn.lobibox-btn-cancel, fieldset[disabled] .lobibox .lobibox-btn.lobibox-btn-cancel.active, fieldset[disabled] .lobibox .lobibox-btn.lobibox-btn-cancel.focus, fieldset[disabled] .lobibox .lobibox-btn.lobibox-btn-cancel:active, fieldset[disabled] .lobibox .lobibox-btn.lobibox-btn-cancel:focus, fieldset[disabled] .lobibox .lobibox-btn.lobibox-btn-cancel:hover {
-	background-color: #fc185a;
-	border-color: #fc185a
+	background-color: #CA2121;
+	border-color: #CA2121
 }
 
 .lobibox .lobibox-btn.lobibox-btn-cancel .badge {
-	color: #fc185a;
+	color: #CA2121;
 	background-color: #FFF
 }
 
@@ -794,7 +794,7 @@ body.lobibox-open {
 }
 
 .lobibox-notify-wrapper-large .lb-notify-tabs>li.lobibox-notify-error>a:hover {
-	background-color: #fc185a;
+	background-color: #CA2121;
 	border-color: #b41d1d
 }
 
@@ -960,13 +960,13 @@ body.lobibox-open {
 }
 
 .lobibox-notify.lobibox-notify-default {
-	border-color: #7928ca;
-	background-image: linear-gradient(310deg, #7928ca, #ff0080) !important;
+	border-color: #212529;
+	background-color: #212529;
 	color: #FFF
 }
 
 .lobibox-notify.lobibox-notify-default:hover {
-	background-image: linear-gradient(310deg, #7928ca, #ff0080) !important;
+	background-color: #212529;
 	border-color: #FFF
 }
 
@@ -975,46 +975,46 @@ body.lobibox-open {
 }
 
 .lobibox-notify.lobibox-notify-error {
-	border-color: #ee0979;
-	background: linear-gradient(310deg, #ee0979, #ff6a00) !important;
+	border-color: #f41127;
+	background-color: #f41127;
 	color: #FFF
 }
 
 .lobibox-notify.lobibox-notify-error:hover {
-	background: linear-gradient(310deg, #ee0979, #ff6a00) !important;
+	background-color: #f41127;
 	border-color: #FFF
 }
 
 .lobibox-notify.lobibox-notify-success {
-	border-color: #17ad37;
-	background-image: linear-gradient(310deg, #17ad37, #98ec2d) !important;
+	border-color: #17a00e;
+	background-color: #17a00e;
 	color: #FFF
 }
 
 .lobibox-notify.lobibox-notify-success:hover {
-	background-image: linear-gradient(310deg, #17ad37, #98ec2d) !important;
+	background-color: #17a00e;
 	border-color: #FFF
 }
 
 .lobibox-notify.lobibox-notify-warning {
-	border-color: #e35705;
-	background: linear-gradient(310deg, #e35705, #ffde00) !important;
+	border-color: #ffc107;
+	background-color: #ffc107;
 	color: #212529
 }
 
 .lobibox-notify.lobibox-notify-warning:hover {
-	background: linear-gradient(310deg, #e35705, #ffde00) !important;
+	background-color: #ffc107;
 	border-color: #212529
 }
 
 .lobibox-notify.lobibox-notify-info {
-	border-color: #00c6fb;
-	background-image: linear-gradient(310deg, #00c6fb 0%, #005bea 100%) !important;
+	border-color: #31d2f2;
+	background-color: #31d2f2;
 	color: #000
 }
 
 .lobibox-notify.lobibox-notify-info:hover {
-	background-image: linear-gradient(310deg, #00c6fb 0%, #005bea 100%) !important;
+	background-color: #31d2f2;
 	border-color: #000
 }
 

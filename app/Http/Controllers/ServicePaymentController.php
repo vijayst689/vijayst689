@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class ServicePaymentController extends Controller
 {
- public function __construct()
+  public function __construct()
   {
     $this->middleware(function ($request, $next) {
             $this->restrictIfNotActivated();
@@ -18,7 +18,7 @@ class ServicePaymentController extends Controller
   }
   
   public function servicepayment($serviceid){
-    $services = DB::table('services')->where('parent_id',$serviceid )->orderBy( 'id' , 'Asc' )->get();
+    $services = DB::table('services')->where('status', 'Active')->where('parent_id',$serviceid )->orderBy( 'id' , 'Asc' )->get();
     $services = json_decode( json_encode( $services ), true );
     foreach ( $services as $key => $service ) {
       $services[ $key ][ 'payment' ] = array();
@@ -27,7 +27,7 @@ class ServicePaymentController extends Controller
       if(count($payment) > 0){
         $services[ $key ][ 'payment' ] = $payment;
       }
-      $admin_amount = 0;
+       $admin_amount = 0;
        $payment1 = DB::table('service_payment')->where('service_id',$service_id)->get();
         $services[ $key ][ 'admin_amount' ] = 0;
        if(count($payment1) > 0){
@@ -39,36 +39,32 @@ class ServicePaymentController extends Controller
   }
 
   public function addservice_payment(Request $request){
-    $parent_id = $request->parent_id;
+     $parent_id = $request->parent_id;
     DB::table('service_payment')->where('parent_id',$parent_id )->delete();
-     if($request->has('parent_id')){
-      foreach ( $request->service_id as $key => $payment ) {
-         $name = 'check_'.$payment;
-                $pre = $request[ $name ];
-                $coordinator_permission = $pre == '1' ? 1 : 0;
+    if($request->has('parent_id')){
+            foreach ( $request->service_id as $key => $payment ) {
+        $name = 'check_'.$payment;
+        $pre = $request[ $name ];
+        $coordinator_permission = $pre == '1' ? 1 : 0;
         $parent_id = $request->parent_id[ $key ];
         $distributor_amount = $request->distributor_amount[ $key ];
         $retailer_amount = $request->retailer_amount[ $key ];
         $customer_amount = $request->customer_amount[ $key ];
         $admin_amount = $request->admin_amount[ $key ];
 
-
-
           DB::table( 'service_payment' )->insert( [
-            'parent_id'                 => $parent_id,
-            'service_id'                => $payment,
+            'parent_id'  => $parent_id,
+            'service_id'  => $payment,
             'admin_amount'        => $admin_amount,
             'distributor_amount'        => $distributor_amount,
-            'retailer_amount'           => $retailer_amount,
-            'customer_amount'           => $customer_amount,
-            'coordinator_permission'    => $coordinator_permission,
-
+            'retailer_amount'        => $retailer_amount,
+            'customer_amount'        => $customer_amount,
+            'coordinator_permission'        => $coordinator_permission,
           ] );
       }
     }
     return redirect('servicepayment/'.$parent_id);
   }
-
 
   public function smartcardpayment($serviceid){
     $services = DB::table('services')->where('parent_id', $serviceid )->orderBy( 'id' , 'Asc' )->get();
@@ -263,6 +259,86 @@ class ServicePaymentController extends Controller
     return redirect('coursepayment')->with('success' ,"Course Payment Updated Succesfully !");
   }
 
+  public function canpayment(){
+    $services = DB::table('canservice')->where('status' , 'Active')->orderBy( 'id' , 'Asc' )->get();
+    $services = json_decode( json_encode( $services ), true );
+    foreach ( $services as $key => $service ) {
+      $services[ $key ][ 'payment' ] = array();
+      $service_id = $service[ 'id' ];
+
+    //   print_r( $service_id );die();
+
+      $payment = DB::table('can_payment')->where('service_id',$service_id)->get();
+      if(count($payment) > 0){
+        $services[ $key ][ 'payment' ] = $payment;
+      }
+    }
+    $services = json_decode( json_encode( $services ));
+    return view('servicepayment.canpayment',compact('services'));
+  }
+
+  public function addcan_payment(Request $request){
+    $parent_id = $request->parent_id;
+    DB::table('can_payment')->where('parent_id',$parent_id )->delete();
+    if($request->has('parent_id')){
+      foreach ( $request->parent_id as $key => $payment ) {
+        $service_id = $request->service_id[ $key ];
+        $distributor_amount = $request->distributor_amount[ $key ];
+        $retailer_amount = $request->retailer_amount[ $key ];
+        $customer_amount = $request->customer_amount[ $key ];
+
+          DB::table( 'can_payment' )->insert( [
+            'parent_id'            => $payment,
+            'service_id'           => $service_id,
+            'distributor_amount'   => $distributor_amount,
+            'retailer_amount'      => $retailer_amount,
+            'customer_amount'      => $customer_amount,
+          ] );
+      }
+    }
+    return redirect('canpayment')->with('success' ,"Can Payment Updated Succesfully !");
+  }
+
+  public function utislpanpayment(){
+    $services = DB::table('utislpanservice')->where('status' , 'Active')->orderBy( 'id' , 'Asc' )->get();
+    $services = json_decode( json_encode( $services ), true );
+    foreach ( $services as $key => $service ) {
+      $services[ $key ][ 'payment' ] = array();
+      $service_id = $service[ 'id' ];
+
+    //   print_r( $service_id );die();
+
+      $payment = DB::table('utislpanpayment')->where('service_id',$service_id)->get();
+      if(count($payment) > 0){
+        $services[ $key ][ 'payment' ] = $payment;
+      }
+    }
+    $services = json_decode( json_encode( $services ));
+    return view('servicepayment.utislpanpayment',compact('services'));
+  }
+
+  public function addutisl_payment(Request $request){
+    $parent_id = $request->parent_id;
+    DB::table('utislpanpayment')->where('parent_id',$parent_id )->delete();
+    if($request->has('parent_id')){
+      foreach ( $request->parent_id as $key => $payment ) {
+        $service_id = $request->service_id[ $key ];
+        $distributor_amount = $request->distributor_amount[ $key ];
+        $retailer_amount = $request->retailer_amount[ $key ];
+        $customer_amount = $request->customer_amount[ $key ];
+
+          DB::table( 'utislpanpayment' )->insert( [
+            'parent_id'            => $payment,
+            'service_id'           => $service_id,
+            'distributor_amount'   => $distributor_amount,
+            'retailer_amount'      => $retailer_amount,
+            'customer_amount'      => $customer_amount,
+          ] );
+      }
+    }
+    return redirect('utislpanpayment')->with('success' ,"UTISL Payment Updated Succesfully !");
+  }
+
   public function useractivation($activation_id){
 
       //$payment = DB::table('useractivation')->get();
@@ -304,10 +380,9 @@ class ServicePaymentController extends Controller
 
          //dd($services);
        return view( 'servicepayment.useractivation',compact('activation_id','services'));
-
 }
 
-  public function adduser_activation(Request $request){
+ public function adduser_activation(Request $request){
     //dd($request->all());
     $parent_id = $request->parent_id;
     if (count(array_unique($parent_id)) === 1 && $parent_id[0] == 3) {
@@ -326,7 +401,7 @@ class ServicePaymentController extends Controller
           DB::table( 'useractivation' )->insert( [
             'parent_id'            => $payment,
             'user_id'              => $user_id,
-            'service_id'            => $service_id,
+            'service_id'              => $service_id,
             'distributor_amount'   => $distributor_amount,
             'retailer_amount'      => $retailer_amount,
             'admin_amount'         => $admin_amount,

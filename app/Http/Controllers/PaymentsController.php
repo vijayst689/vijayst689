@@ -8,7 +8,7 @@ use Auth;
 
 class PaymentsController extends Controller {
 
-   public function __construct()
+    public function __construct()
   {
     $this->middleware(function ($request, $next) {
             $this->restrictIfNotActivated();
@@ -16,7 +16,7 @@ class PaymentsController extends Controller {
         });
     $this->middleware('auth');
   }
-
+  
     public function declinerequest_payment($toid) {
 
         $sql = "update request_payment set status = 'Declined' where id = $toid";
@@ -51,10 +51,9 @@ class PaymentsController extends Controller {
 
         $sql = "update users set wallet = wallet + $amount where id = $from_id";
         DB::update( DB::raw( $sql ) );
-
         $service_status = 'IN Payment';
         $ad_info = 'Fund Transfer';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$login_id','$from_id','$login_id','$amount','$ad_info', '$service_status','$time','$date','$from_id','$newbalance1 ')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$login_id','$from_id','$login_id','$amount','$ad_info', '$service_status','$time','$date','$from_id','$newbalance1')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet - $amount where id = $login_id";
         DB::update( DB::raw( $sql ) );

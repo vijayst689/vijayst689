@@ -1,8 +1,9 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
+     <div class="page-wrapper">
+        <div class="page-content">
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                <div class="breadcrumb-title pe-3">pkrmsolutions.com</div>
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
@@ -11,19 +12,27 @@
                         </ol>
                     </nav>
                 </div>
+                <div class="ms-auto">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Settings</button>
+                    </div>
+                </div>
             </div>
-            @if (session()->has('success'))
-                <div class="alert alert-success alert-dismissible" role="alert">
-                    <strong> {{ session('success') }} </strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            @if (session()->has('error'))
-                <div class="alert alert-success alert-dismissible" role="alert">
-                    <strong> {{ session('error') }} </strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
+            <hr />
+            <div class="card">
+                <div class="card-body">
+                    @if (session()->has('success'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <strong> {{ session('success') }} </strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if (session()->has('error'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <strong> {{ session('error') }} </strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
             <div class="row">
                 <div class="col-12 col-xl-12">
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">

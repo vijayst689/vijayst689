@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
+    <div class="page-wrapper">
+        <div class="page-content">
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
                 <div class="breadcrumb-title pe-3">{{ $servicename }}</div>
                 <div class="ps-3">
@@ -9,13 +9,17 @@
                         <ol class="breadcrumb mb-0 p-0">
                             <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page"></li>
                         </ol>
                     </nav>
                 </div>
+                <div class="ms-auto">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Settings</button>
+                    </div>
+                </div>
             </div>
-
-            <div class="card mt-4">
+            <hr />
+            <div class="card">
                 <div class="card-body">
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible" role="alert">
@@ -33,24 +37,24 @@
                         id="formAccountSettings" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="amount" id="amount">
-                        <input type="hidden" name="serviceid"  value="{{ $serviceid }}">
+                        <input type="hidden" name="serviceid" value="{{ $serviceid }}">
                         <input type="hidden" name="servicepayment" value="{{ $payment }}">
                         <div class="row">
                             <div class="mb-3 col-md-4">
                                 <div class="form-check form-check-inline">
-                                    <input required class="form-check-input" type="radio" name="ser"
-                                        id="inlineRadio1" value="1" />
+                                    <input required class="form-check-input" type="radio" name="ser" id="inlineRadio1"
+                                        value="1" />
                                     <label class="form-check-label" for="inlineRadio1">Server 1</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                    <input required class="form-check-input" type="radio" name="ser"
-                                        id="inlineRadio2" value="2" />
+                                    <input required class="form-check-input" type="radio" name="ser" id="inlineRadio2"
+                                        value="2" />
                                     <label class="form-check-label" for="inlineRadio2">Server 2</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input required class="form-check-input" type="radio" name="ser"
-                                        id="inlineRadio3" value="3" />
+                                    <input required class="form-check-input" type="radio" name="ser" id="inlineRadio3"
+                                        value="3" />
                                     <label class="form-check-label text-danger" for="inlineRadio3">Server 3</label>
                                 </div>
                             </div>
@@ -99,30 +103,31 @@
 @endsection
 @push('page_scripts')
     <script>
-     var ramjibalance = "{{ $mainbalance->rawallet }}";
-     var amount = "{{ $amount }}";
-    ramjibalance=parseFloat(ramjibalance);
-    amount=parseInt(amount);
-    function checkpayment(e){
-        if(amount > ramjibalance){
-            alert("LOW BALANCE");
-            $('#save').prop("disabled", true);
-                    $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
-                        'color': 'red',
-                        'font-size': '130%',
-                        'font-weight': 'bold'
-                    });
-                    return false;
-        }else{
-            $("#nopayment").html("");
-            $("#save").attr("disabled",true);
-            $("#amount").val(amount);
-            return true;
+        var ramjibalance = "{{ $mainbalance->rawallet }}";
+        var amount = "{{ $amount }}";
+        ramjibalance = parseFloat(ramjibalance);
+        amount = parseInt(amount);
 
+        function checkpayment(e) {
+            if (amount > ramjibalance) {
+                alert("LOW BALANCE");
+                $('#save').prop("disabled", true);
+                $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
+                    'color': 'red',
+                    'font-size': '130%',
+                    'font-weight': 'bold'
+                });
+                return false;
+            } else {
+                $("#nopayment").html("");
+                $("#save").attr("disabled", true);
+                $("#amount").val(amount);
+                return true;
+
+            }
         }
-    }
 
-    $(function() {
+        $(function() {
             var wallet = "{{ Auth::user()->wallet }}";
             var amount = "{{ $payment }}";
             if (parseFloat(amount) > parseInt(wallet)) {

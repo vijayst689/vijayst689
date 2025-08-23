@@ -16,7 +16,7 @@ class PermissionController extends Controller
         });
     $this->middleware('auth');
   }
-
+  
     public function userpermission($userid){
   $userId = Auth::user()->id;
 
@@ -283,7 +283,7 @@ public function savepermission(Request $request){
       }
       return response()->json(['success' => true, 'message' => 'Service activated and payment logged.']);
     }
-    
+
     public function nalavariyam_permission($userid){
         $districts = DB::table( 'nalavariyam_district' )->orderBy('id','Asc')->get();
         return view( 'permission.nalavariyam_permission',compact('districts','userid'));

@@ -36,10 +36,14 @@ class AppServiceProvider extends ServiceProvider
     //     view()->composer('layouts.sidebar', function($view) {
     //        $view->with(['smartservice' => $this->smartservice]);
     //    });
-    //    $this->utilityservice = DB::table('utility_services')->where('status', '=', 'Active' )->orderBy( 'id' , 'Asc' )->get();
+    //     $this->utilityservice = DB::table('utility_services')->where('status', '=', 'Active' )->orderBy( 'id' , 'Asc' )->get();
     //     view()->composer('layouts.sidebar', function($view) {
     //        $view->with(['utilityservice' => $this->utilityservice]);
     //    });
+    //    $this->canservice = DB::table('canservice')->where('status', '=', 'Active' )->orderBy( 'id' , 'Asc' )->get();
+    //    view()->composer('layouts.sidebar', function($view) {
+    //       $view->with(['canservice' => $this->canservice]);
+    //   });
     // }
 
     public function boot()
@@ -60,29 +64,34 @@ class AppServiceProvider extends ServiceProvider
     });
 
     // Header composer for activation popup
-    view()->composer('layouts.header', function ($view) {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $this->activation = DB::table( 'users' )->where( 'id',$user->id)->get();
-            $view->with(['activation' => $this->activation]); // if you're using it elsewhere
+view()->composer('layouts.header', function ($view) {
+    if (Auth::check()) {
+        $user = Auth::user();
+        $this->activation = DB::table('users')->where('id', $user->id)->get();
+        $view->with(['activation' => $this->activation]);
 
-            $showPopup = false;
-            $daysLeft = null;
+       $showPopup = false;
+$daysLeft  = null;
 
-            if ($user->user_type_id == 2 && $user->payment_date) {
-                $activationDate = Carbon::parse($user->payment_date);
-                $today = Carbon::today();
-                $daysLeft = $today->diffInDays($activationDate, false);
+if ($user->user_type_id == 2 && $user->payment_date) {
+    $activationDate = \Carbon\Carbon::parse($user->payment_date)->startOfDay();
+    $today          = \Carbon\Carbon::today()->startOfDay();
 
-                if ($daysLeft >= 0 && $daysLeft <= 5) {
-                    $showPopup = true;
-                }
-            }
-            $view->with([
-                'showPopup' => $showPopup,
-                'daysLeft' => $daysLeft
-            ]);
-        }
-    });
+    // Difference in days (negative if payment_date is in past)
+    $daysLeft = $today->diffInDays($activationDate, false);
+
+    // Show popup only if payment date is in the future (1–5 days left)
+    if ($daysLeft > 0 && $daysLeft <= 5) {
+        $showPopup = true;
+    }
+}
+
+$view->with([
+    'showPopup' => $showPopup,
+    'daysLeft'  => $daysLeft
+]);
+    }
+});
+
 }
 }

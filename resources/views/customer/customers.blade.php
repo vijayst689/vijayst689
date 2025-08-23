@@ -1,9 +1,10 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
+    <div class="page-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-                <div class="breadcrumb-title pe-3">Add Customer</div>
+                <div class="breadcrumb-title pe-3">Customer</div>
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
@@ -13,17 +14,15 @@
                     </nav>
                 </div>
                 <div class="ms-auto">
-                    <div class="col-auto">
-                        <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                            <a href="{{ url('addcustomer') }}" class="btn btn-grd btn-grd-info px-3"><i
-                                    class="bi bi-chat me-2"></i>Add Customers</a>
-                        </div>
+                    <div class="btn-group">
+                        <a href="{{ url('addcustomer') }}" class="btn btn-grd btn-grd-info px-3"><i
+                                class="bi bi-chat me-2"></i>Add Customers</a>
                     </div>
                 </div>
             </div>
-            <!--end row-->
-
-            <div class="card mt-4">
+            <!--end breadcrumb-->
+            <hr />
+            <div class="card">
                 <div class="card-body">
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible" role="alert">
@@ -45,44 +44,40 @@
                                         <th>User Id</th>
                                         <th>Name</th>
                                         <th>Phone</th>
-                                        <!--<th>Email</th>
-                                        <th>Password</th>-->
+                                        {{-- <th>Email</th>
+                                        <th>Password</th> --}}
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                        <tr>
-                                    @foreach ($viewcustomers as $key => $cus)
+                                    <tr>
+                                        @foreach ($viewcustomers as $key => $cus)
                                             <td>C{{ $cus->id }}</td>
-                                            <td>
-                                                <a class="d-flex align-items-center gap-3" href="{{ url('profile') }}">
-                                                    <div class="customer-pic">
-                                                        <img src="/upload/profile_photo/{{ $cus->profile }}"
-                                                            class="rounded-circle" width="30" height="30"
-                                                            alt="">
-                                                    </div>
-                                                    <p class="mb-0 customer-name fw-bold">{{ $cus->name }}</p>
-                                                </a>
+                                        <td>
+                                            <a class="d-flex align-items-center gap-3" href="{{ url('profile') }}">
+                                                <div class="customer-pic">
+                                                    <img src="/upload/users/profile_photo/{{ $cus->profile }}"
+                                                        class="rounded-circle" width="30" height="30" alt="">
+                                                </div>
+                                                <p class="mb-0 customer-name fw-bold">{{ $cus->name }}</p>
+                                            </a>
+                                        </td>
+                                        <td>{{ $cus->phone }}</td>
+                                        {{-- <td>{{ $cus->email }}</td>
+                                        <td>{{ $cus->cpassword }}</td> --}}
+                                        <td style="white-space: nowrap">
+
+                                            <a href="{{ url('/editcustomer', $cus->id) }}" style="font-size: small"
+                                                class="btn-sm btn btn-primary">Edit</a>
+
+                                            <a href="{{ url('/services/1', $cus->id) }}" style="font-size: small"
+                                                class="btn-sm btn btn-warning">TNEGA</a>
+
+                                            <a href="{{ url('/documents', $cus->id) }}" style="font-size: small"
+                                                class="btn-sm btn btn-success">Document</a>
                                             </td>
-                                            <td>{{ $cus->phone }}</td>
-                                           <!--<td>{{ $cus->email }}</td>
-                                            <td>{{ $cus->cpassword }}</td>-->
-                                            <td style="white-space: nowrap">
-                                                <a href="{{ url('/editcustomer', $cus->id) }}" style="font-size: small"
-                                                    class="btn-sm btn btn-primary">Edit</a>
-
-                                                <a onclick="return confirm('Do you want to confirm delete customer?')"
-                                                    href="{{ url('/dropcustomer', $cus->id) }}" type="button"
-                                                    style="font-size: small" class="btn btn-inverse-danger px-1">Drop</a>
-
-                                                <a href="{{ url('/allservice', $cus->id) }}" style="font-size: small"
-                                                    class="btn btn-grd btn-grd-branding px-1">TNEGA</a>
-
-                                                <a href="{{ url('/documents', $cus->id) }}" style="font-size: small"
-                                                    class="btn btn-grd btn-grd-info px-1">Document</a>
-                                            </td>
-                                        </tr>
-                                @endforeach
+                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -182,21 +177,20 @@
                 </div>
             </div>
         </div>
-    </main>
-@endsection
-@push('page_scripts')
-    <script>
-        function edit_customer(id, name, phone, aadhaar_no, gender, email, date_of_birth, address, status) {
-            $("#editname").val(name);
-            $("#editphone").val(phone);
-            $("#editadhar").val(aadhaar_no);
-            $("#editgender").val(gender);
-            $("#editemail").val(email);
-            $("#editdob").val(date_of_birth);
-            $("#editaddress").val(address);
-            $("#editstatus").val(status);
-            $("#cusid").val(id);
-            $("#editcustomer").modal("show");
-        }
-    </script>
-@endpush
+    @endsection
+    @push('page_scripts')
+        <script>
+            function edit_customer(id, name, phone, aadhaar_no, gender, email, date_of_birth, address, status) {
+                $("#editname").val(name);
+                $("#editphone").val(phone);
+                $("#editadhar").val(aadhaar_no);
+                $("#editgender").val(gender);
+                $("#editemail").val(email);
+                $("#editdob").val(date_of_birth);
+                $("#editaddress").val(address);
+                $("#editstatus").val(status);
+                $("#cusid").val(id);
+                $("#editcustomer").modal("show");
+            }
+        </script>
+    @endpush

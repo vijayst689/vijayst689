@@ -1,8 +1,10 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
+    <div class="page-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                <div class="breadcrumb-title pe-3">pkrmsolutions.com</div>
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
@@ -11,66 +13,78 @@
                         </ol>
                     </nav>
                 </div>
-            </div>
-            @if (session()->has('success'))
-                <div class="alert alert-success alert-dismissible" role="alert">
-                    <strong> {{ session('success') }} </strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            @if (session()->has('error'))
-                <div class="alert alert-success alert-dismissible" role="alert">
-                    <strong> {{ session('error') }} </strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            <div class="row">
-                <div class="col-12 col-xl-12">
-                    <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
-                        <div class="card-body p-4">
-                            <div class="d-flex align-items-start justify-content-between mb-3">
-                                <div class="">
-                                    <h5 class="mb-0 fw-bold">Operator</h5>
-                                </div>
-                            </div>
-                            <form action="{{ url('/addoperator') }}" id="formAccountSettings" method="POST"
-                                enctype="multipart/form-data">
-                                {{ csrf_field() }}
-                                <div class="row">
-                                    <div class="mb-3 col-md-6">
-                                        <label for="code" class="form-label">Operator Code</label>
-                                        <input required class="form-control" type="text" name="code" maxlength="10" placeholder="Code" />
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="service_type" class="form-label">Service Type</label>
-                                        <select required class="form-control" maxlength="10" type="file"
-                                            name="service_type">
-                                            <option value="">Select Service Type</option>
-                                            <option value="1">Mobile Prepaid</option>
-                                            <option value="2">DTH</option>
-                                            <option value="3">Fastag</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="name" class="form-label">Operator Name</label>
-                                        <input required class="form-control" type="text" name="name" maxlength="50" placeholder="Operator Name" />
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="commission" class="form-label">Commision</label>
-                                        <input required class="form-control number" type="text" name="commission" maxlength="5" placeholder="Commision"/>
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="admin_commission" class="form-label">Admin Commision</label>
-                                        <input required class="form-control" type="text" name="admin_commission" maxlength="5" placeholder="Admin Commision"/>
-                                    </div>
-                                <div class="mt-2 text-center">
-                                    <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                </div>
-                            </form>
-                        </div>
+                <div class="ms-auto">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Settings</button>
                     </div>
                 </div>
-            </div><!--end row-->
-        </div>
-    </main>
-@endsection
+            </div>
+            <!--end breadcrumb-->
+            <hr />
+            <div class="card">
+                <div class="card-body">
+                    @if (session()->has('success'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <strong> {{ session('success') }} </strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if (session()->has('error'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <strong> {{ session('error') }} </strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    <div class="row">
+                        <div class="col-12 col-xl-12">
+                            <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-start justify-content-between mb-3">
+                                        <div class="">
+                                            <h5 class="mb-0 fw-bold">Operator</h5>
+                                        </div>
+                                    </div>
+                                    <form action="{{ url('/addoperator') }}" id="formAccountSettings" method="POST"
+                                        enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                        <div class="row">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="code" class="form-label">Operator Code</label>
+                                                <input required class="form-control" type="text" name="code"
+                                                    maxlength="10" placeholder="Code" />
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="service_type" class="form-label">Service Type</label>
+                                                <select required class="form-control" maxlength="10" type="file"
+                                                    name="service_type">
+                                                    <option value="">Select Service Type</option>
+                                                    <option value="1">Mobile Prepaid</option>
+                                                    <option value="2">DTH</option>
+                                                    <option value="3">Fastag</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="name" class="form-label">Operator Name</label>
+                                                <input required class="form-control" type="text" name="name"
+                                                    maxlength="50" placeholder="Operator Name" />
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="commission" class="form-label">Commision</label>
+                                                <input required class="form-control number" type="text" name="commission"
+                                                    maxlength="5" placeholder="Commision" />
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="admin_commission" class="form-label">Admin Commision</label>
+                                                <input required class="form-control" type="text" name="admin_commission"
+                                                    maxlength="5" placeholder="Admin Commision" />
+                                            </div>
+                                            <div class="mt-2 text-center">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--end row-->
+                </div>
+            @endsection

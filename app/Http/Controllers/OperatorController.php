@@ -16,7 +16,7 @@ class OperatorController extends Controller {
         });
     $this->middleware('auth');
   }
-  
+
     public function operator () {
         return view( 'operator/operator');
     }

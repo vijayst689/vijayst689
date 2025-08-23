@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 class DistributorController extends Controller
 {
 
-    public function __construct()
+  public function __construct()
   {
     $this->middleware(function ($request, $next) {
             $this->restrictIfNotActivated();
@@ -21,8 +21,8 @@ class DistributorController extends Controller
         });
     $this->middleware('auth');
   }
-
-  public function adddistributor()
+  
+    public function adddistributor()
     {
         return view('distributor.adddistributor');
     }
@@ -39,7 +39,7 @@ class DistributorController extends Controller
 
         if( Auth::user()->user_type_id == 2 ) {
 
-        $distributors = DB::table('users')->where( 'user_type_id', '=', 3 )->where( 'refferal_id', '=', $userid )->orderBy( 'id', 'Asc' )->get();
+        $distributors = DB::table('users')->where( 'user_type_id', '=', 3 )->orderBy( 'id', 'Asc' )->get();
 
         }
 
@@ -48,7 +48,6 @@ class DistributorController extends Controller
 
     public function savedistributor(Request $request)
     {
-        //dd($request->all());
       $userid = Auth::user()->id;
       $savedistributor = DB::table('users')->insert([
         'name'          => $request->name,
@@ -76,7 +75,7 @@ class DistributorController extends Controller
         'profile'    => $profile,
       ] );
 
-      return redirect('/distributors')->with('success', 'Distributor Add Successfully ... !');
+      return redirect('/distributors')->with('success', 'retailer Add Successfully ... !');
     }
 
     public function updatedistributor(Request $request)

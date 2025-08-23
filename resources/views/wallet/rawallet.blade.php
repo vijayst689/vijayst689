@@ -1,8 +1,30 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
-            <div class="card mt-4">
+    <div class="page-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
+            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                <div class="breadcrumb-title pe-3">pkrmsolutions.com</div>
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0">
+                            <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+                @if (Auth::user()->user_type_id == 2)
+                    <div class="ms-auto">
+                        <div class="btn-group">
+                            <button type="button" class="btn-sm btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#ramjirequest">Add Money</button>
+                        </div>
+                    </div>
+                @endif
+            </div>
+            <!--end breadcrumb-->
+            <hr />
+            <div class="card">
                 <div class="card-body">
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible" role="alert">
@@ -16,119 +38,105 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    <h5 class="card-title">Wallet Details</h5>
-                    <div class="col-auto mb-2">
-                        @if ( Auth::user()->user_type_id == 2 )
-                            <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                                <button type="button" class="btn-sm btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#ramjirequest">Add Money</button>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="customer-table">
-                        <div class="table-responsive white-space-nowrap">
-                            <table id="example2" class="table align-middle">
-                                <thead class="table-dark">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-striped table-bordered">
+                            <thead class="table-dark">
                                 <tr>
-                                        <th>Sl No</th>
-                                        <th>Date Time</th>
-                                        <th>From ID</th>
-                                        <th>To ID</th>
-                                        <th>Title</th>
-                                        <th>Status</th>
-                                        <th>Debit</th>
-                                        <th>Credit</th>
-                                        <th>Available Balance</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($raviewamount as $key => $am)
-                                        <tr>
-                                            <td>{{ $key + 1 }}</td>
-                                            <td>{{ $am->paydate }}&nbsp;{{ $am->time }}</td>
-                                            <td>{{ $am->from_id }}</td>
-                                            <td>{{ $am->to_id }}</td>
-                                            <td>{{ $am->service_status }}</td>
-                                            <td>{{ $am->ad_info }}</td>
-                                            @if ($am->service_status == 'Out Payment')
-                                                <td class="text-danger">- {{ $am->amount }}</td>
-                                                <td></td>
-                                            @else
-                                                <td></td>
-                                                <td class="text-success">+ {{ $am->amount }}</td>
-                                            @endif
-                                            <td>{{ $am->newbalance }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Total</td>
-                                    <td></td>
-                                    <td>{{ Auth::user()->rawallet }}</td>
-                                    <td></td>
+                                    <th>Sl No</th>
+                                    <th>Date Time</th>
+                                    <th>From ID</th>
+                                    <th>To ID</th>
+                                    <th>Title</th>
+                                    <th>Status</th>
+                                    <th>Debit</th>
+                                    <th>Credit</th>
+                                    <th>Available Balance</th>
                                 </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>>
+                            </thead>
+                            <tbody>
+                                @foreach ($raviewamount as $key => $am)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $am->paydate }}&nbsp;{{ $am->time }}</td>
+                                        <td>{{ $am->from_id }}</td>
+                                        <td>{{ $am->to_id }}</td>
+                                        <td>{{ $am->service_status }}</td>
+                                        <td>{{ $am->ad_info }}</td>
+                                        @if ($am->service_status == 'Out Payment')
+                                            <td class="text-danger">- {{ $am->amount }}</td>
+                                            <td></td>
+                                        @else
+                                            <td></td>
+                                            <td class="text-success">+ {{ $am->amount }}</td>
+                                        @endif
+                                        <td>{{ $am->newbalance }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Total</td>
+                                <td></td>
+                                <td>{{ Auth::user()->rawallet }}</td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </main>
-    <!-- Modal -->
-    <div class="modal fade" id="FormModal" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0 py-2 bg-grd-info">
-                    <h5 class="modal-title">Ramji Wallet Request</h5>
-                    <a href="javascript:;" class="primaery-menu-close" data-bs-dismiss="modal">
-                        <i class="material-icons-outlined">close</i>
-                    </a>
-                </div>
-                <div class="modal-body">
-                    <div class="form-body">
-                        <div class="card-body">
-                            <h5 class="card-title mb-4"></h5>
-                        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="FormModal" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom-0 py-2 bg-grd-info">
+                        <h5 class="modal-title">Ramji Wallet Request</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form method="post" class="row g-3" action="{{ url('/ramjisaverequest') }}"
-                    enctype="multipart/form-data">
-                    {{ csrf_field() }}
                     <div class="modal-body">
-                        <div class="text-center">
-                            <img src="/upload/qr/qrimgramji.jpeg" class="img-fluid" alt="...">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Amount</label>
-                                <input name="amount" type="text" maxlength="6" class="form-control number"
-                                    placeholder="Amount">
+                        <div class="form-body">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4"></h5>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Paid Image (Screen)</label>
-                                <input type="file" name="req_image" class="form-control" maxlength="10">
+                        <form method="post" class="row g-3" action="{{ url('/ramjisaverequest') }}"
+                            enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <div class="modal-body">
+                                <div class="text-center">
+                                    <img src="/upload/qr/qrimgramji.jpeg" class="img-fluid" alt="...">
+                                </div>
                             </div>
-                        </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Amount</label>
+                                        <input name="amount" type="text" maxlength="6" class="form-control number"
+                                            placeholder="Amount">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Paid Image (Screen)</label>
+                                        <input type="file" name="req_image" class="form-control" maxlength="10">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mb-3">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                <button type="Submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="text-center mb-3">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="Submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 @push('page_scripts')

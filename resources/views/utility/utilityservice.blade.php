@@ -32,7 +32,7 @@
                              background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);">
                         <h3 class="card-title">{{ $servicename }}</h3>
                         <div class="row">
-                            <form class="row g-4" onsubmit="return checkpayment(event)" action="{{ url('proceedrecharge') }}" enctype="multipart/form-data"
+                            <form onsubmit="return checkpayment(event)" class="row g-4" action="{{ url('proceedrecharge') }}" enctype="multipart/form-data"
                                 method="post">
                                 @csrf
                                 <input type="hidden" name="serviceid" value="{{ $serviceid }}">
@@ -96,7 +96,7 @@
 
                                             <label style="font-size:20px;color: red;" for="amount"
                                                 class="form-label">Recharge Amount</label>
-                                            <input required type="text" id="1" class="form-control number"
+                                            <input required type="text" id="amount1" class="form-control number"
                                                 name="amount" maxlength="5" placeholder="Amount" />
                                         </div>
                                     </div>
@@ -178,6 +178,20 @@
             return true;
 
         }
+        }
+
+
+        function edit_service(id, name, status, ) {
+            $("#editservice").val(name);
+            $("#editstatus").val(status);
+            $("#utilityid").val(id);
+            $("#editser").modal("show");
+        }
+
+        function editstatus(id, status) {
+            $("#editsta").val(status);
+            $("#utiid").val(id);
+            $("#edituti").modal("show");
         }
     </script>
 @endpush

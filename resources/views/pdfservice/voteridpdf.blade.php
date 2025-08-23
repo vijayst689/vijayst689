@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
+    <div class="page-wrapper">
+        <div class="page-content">
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
                 <div class="breadcrumb-title pe-3">{{ $servicename }}</div>
                 <div class="ps-3">
@@ -9,13 +9,17 @@
                         <ol class="breadcrumb mb-0 p-0">
                             <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page"></li>
                         </ol>
                     </nav>
                 </div>
+                <div class="ms-auto">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Settings</button>
+                    </div>
+                </div>
             </div>
-
-            <div class="card mt-4">
+            <hr />
+            <div class="card">
                 <div class="card-body">
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible" role="alert">
@@ -91,7 +95,7 @@
                                             <td><a href="<?php echo $ser->pdf; ?>" download class="btn btn-primary btn-sm">Download</a></td>
                                             @else
                                             <td><a href="{{ url('/') }}/upload/voterpdf/{{ $ser->pdf }}" download class="btn btn-primary btn-sm">Download</a></td>
-                                        @endif 
+                                        @endif
                                         <td>{{ $ser->amount }}</td>
                                         <td>{{ $ser->date }}</td>
 
@@ -106,31 +110,31 @@
         </div>
         </div>
         </div>
-    </main>
 @endsection
 @push('page_scripts')
-    <script>
-   var ramjibalance = "{{ $mainbalance->rawallet }}";
-   var amount = "{{ $amount }}";
-    ramjibalance=parseFloat(ramjibalance);
-    amount=parseInt(amount);
-    function checkpayment(e){
-        if(amount > ramjibalance){
-            alert("LOW BALANCE");
-            $('#save').prop("disabled", true);
-                    $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
-                        'color': 'red',
-                        'font-size': '130%',
-                        'font-weight': 'bold'
-                    });
-                    return false;
-        }else{
-            $("#nopayment").html("");
-            $("#save").attr("disabled",true);
-            $("#amount").val(amount);
-            return true;
+   <script>
+        var ramjibalance = "{{ $mainbalance->rawallet }}";
+        var amount = "{{ $amount }}";
+        ramjibalance = parseFloat(ramjibalance);
+        amount = parseInt(amount);
 
-        }
+        function checkpayment(e) {
+            if (amount > ramjibalance) {
+                alert("LOW BALANCE");
+                $('#save').prop("disabled", true);
+                $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
+                    'color': 'red',
+                    'font-size': '130%',
+                    'font-weight': 'bold'
+                });
+                return false;
+            } else {
+                $("#nopayment").html("");
+                $("#save").attr("disabled", true);
+                $("#amount").val(amount);
+                return true;
+
+            }
         }
 
         $(function() {
@@ -144,7 +148,9 @@
                     'font-weight': 'bold'
                 });
             }
+            $("#submithide").hide();
         });
+
 
         function getpdfotp(){
         var epic = $("#epic_no").val().trim();

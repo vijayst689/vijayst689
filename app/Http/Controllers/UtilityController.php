@@ -17,7 +17,6 @@ class UtilityController extends Controller
     $this->middleware('auth');
   }
 
-
   public function addutilityservice(){
     return view( 'utility.addutilityservice');
   }

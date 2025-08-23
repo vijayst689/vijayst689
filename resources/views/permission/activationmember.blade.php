@@ -1,15 +1,22 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
+    <div class="page-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            </div>
-            <div class="row g-3">
-                <div class="col-auto flex-grow-1 overflow-auto">
+                <div class="breadcrumb-title pe-3">pkrmsolutions.com</div>
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0">
+                            <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                            </li>
+                        </ol>
+                    </nav>
                 </div>
-            </div><!--end row-->
-            <h4>Activation Member Details</h4>
-            <div class="card mt-4">
+            </div>
+            <!--end breadcrumb-->
+            <hr />
+            <div class="card">
                 <div class="card-body">
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible" role="alert">
@@ -26,8 +33,8 @@
                     <form class="row g-4" action="{{ url('/savenalavariyam_payment') }}" enctype="multipart/form-data"
                         method="post">
                         {{ csrf_field() }}
-                        <div class="table-responsive">
-                            <table id="datatable" class="table table-bordered">
+                     <div class="table-responsive">
+                        <table id="example2" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Sl No</th>
@@ -96,7 +103,6 @@
                 </div>
             </div>
         </div>
-    </main>
 @endsection
 @push('page_scripts')
     <script>

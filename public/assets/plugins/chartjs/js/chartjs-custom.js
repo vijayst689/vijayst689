@@ -2,60 +2,34 @@ $(function() {
 
 
     // chart1
-
-
-    
     var ctx = document.getElementById('chart1').getContext('2d');
-
-    var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
-    gradientStroke1.addColorStop(0, '#005bea');
-    gradientStroke1.addColorStop(1, '#00c6fb');
-
-    var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
-        gradientStroke2.addColorStop(0, '#ff6a00');  
-        gradientStroke2.addColorStop(1, '#ee0979');
-
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Th', 'Fr', 'Sa', 'Su'],
+            labels: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
             datasets: [{
                 label: 'Google',
-                data: [10, 20, 35, 10, 27, 11, 20],
+                data: [6, 20, 14, 12, 17, 8, 10],
                 backgroundColor: [
-                    gradientStroke1
+                    '#008cff'
                 ],
                 lineTension: 0.4,
-                pointRadius :"0",
-                pointHoverRadius:"0",
                 borderColor: [
-                    gradientStroke1
+                    '#008cff'
                 ],
-                borderWidth: 4,
-                fill: {
-					target: 'origin',
-					above: 'rgb(13 110 253 / 15%)',   // Area will be red above the origin
-					//below: 'rgb(21 202 32 / 100%)'   // And blue below the origin
-				  }, 
-             },
+                borderWidth: 3
+            },
             {
                 label: 'Facebook',
-                data: [5, 30, 16, 23, 18, 14, 5],
+                data: [5, 30, 16, 23, 8, 14, 11],
                 backgroundColor: [
-                    gradientStroke2
+                    '#fd3550'
                 ],
                 tension: 0.4,
-                pointRadius :"0",
-                pointHoverRadius:"0",
                 borderColor: [
-                    gradientStroke2
+                    '#fd3550'
                 ],
-                borderWidth: 4,
-                fill: {
-					target: 'origin',
-					above: 'rgb(252 24 90 / 15%)',   // Area will be red above the origin
-					//below: 'rgb(21 202 32 / 100%)'   // And blue below the origin
-				  }, 
+                borderWidth: 3
             }]
         },
         options: {
@@ -76,69 +50,54 @@ $(function() {
 
 
     
-    
-// chart2
-var ctx = document.getElementById('chart2').getContext('2d');
-
-var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
-    gradientStroke1.addColorStop(0, '#005bea');
-    gradientStroke1.addColorStop(1, '#00c6fb');
-
-var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
-    gradientStroke2.addColorStop(0, '#ff6a00');  
-    gradientStroke2.addColorStop(1, '#ee0979'); 
-
-
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        datasets: [{
-            label: 'Sales',
-            data: [10, 25, 18, 35, 20, 38, 23, 26, 15, 32, 20, 13],
-            tension: 0.4,
-            backgroundColor: [
-                gradientStroke1
-            ],
-            borderColor: [
-                gradientStroke1
-            ],
-            borderWidth: 0,
-           
-        },{
-            label: 'Visits',
-            data: [15, 30, 22, 55, 14, 35, 20, 35, 20, 15, 18, 5],
-            tension: 0.4,
-            backgroundColor: [
-                gradientStroke2
-            ],
-            borderColor: [
-                gradientStroke2
-            ],
-            borderWidth: 0,
-
-            fill: {
-                target: 'origin',
-                above: 'rgb(238 9 121 / 5%)',   // Area will be red above the origin
-                below: 'rgb(238 9 121 / 5%)'    // And blue below the origin
-              },
-            
-        }],
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    },
-    options: {
-        borderRadius: 30,
-        categoryPercentage: 0.3,
-        maintainAspectRatio: false,
-        //cutout: 130,
-        plugins: {
-        legend: {
-            display: true,
-            position:'bottom',
+    // chart2
+    var ctx = document.getElementById('chart2').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+            datasets: [{
+                label: 'Google',
+                data: [18, 25, 14, 12, 17, 8, 10],
+                backgroundColor: [
+                    '#0d6efd'
+                ],
+                lineTension: 0,
+                borderColor: [
+                    '#0d6efd'
+                ],
+                borderWidth: 3
+            },
+            {
+                label: 'Facebook',
+                data: [12, 30, 16, 23, 8, 14, 11],
+                backgroundColor: [
+                    '#15ca20'
+                ],
+                tension: 0,
+                borderColor: [
+                    '#15ca20'
+                ],
+                borderWidth: 3
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            barPercentage: 0.6,
+            categoryPercentage: 0.5,
+            plugins: {
+				legend: {
+					position:'bottom',
+					display: true,
+				}
+			},
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
-    }
-        
-    }
-});
+    });
 
 
      // chart3

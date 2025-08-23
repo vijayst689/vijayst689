@@ -1,15 +1,22 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
+    <div class="page-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-                <h5 class="card-title">{{ $status }}</h5>
-            </div>
-            <div class="row g-3">
-                <div class="col-auto flex-grow-1 overflow-auto">
+                <div class="breadcrumb-title pe-3">pkrmsolutions.com</div>
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0">
+                            <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                            </li>
+                        </ol>
+                    </nav>
                 </div>
-            </div><!--end row-->
-            <div class="card mt-4">
+            </div>
+            <button type="button" class="btn btn-primary">{{ $status }}</button>
+            <hr />
+            <div class="card">
                 <div class="card-body">
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible" role="alert">
@@ -24,7 +31,7 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table id="example1" class="table table-bordered">
+                        <table id="example2" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>S No</th>
@@ -59,21 +66,22 @@
                                                     Download
                                                 @endif
                                             </button>
-                                             @if($c->bill == 0)
-                                   @if($c->application_no == "")
-                                    <a class="btn btn-sm btn-info" onclick="alert('Please Enter Aplication Number...!'); return false;"
-                                                    href="{{ url('/createbill',$c->form_id) }}"><i
-                                                        class="fas fa-arrow-circle-right"></i> Create Bill</a>
-                                   @else
-                                   <a class="btn btn-sm btn-info"
-                                                    href="{{ url('/createbill',$c->form_id) }}"><i
-                                                        class="fas fa-arrow-circle-right"></i> Create Bill</a>
-                                    @endif
-                                   @else
-                                   <a class="btn btn-sm btn-success"
-                                                    href="{{ url('/receipt',$c->form_id) }}/{{ $c->customersID }}"><i
+                                            @if ($c->bill == 0)
+                                                @if ($c->application_no == '')
+                                                    <a class="btn btn-sm btn-info"
+                                                        onclick="alert('Please Enter Aplication Number...!'); return false;"
+                                                        href="{{ url('/createbill', $c->form_id) }}"><i
+                                                            class="fas fa-arrow-circle-right"></i> Create Bill</a>
+                                                @else
+                                                    <a class="btn btn-sm btn-info"
+                                                        href="{{ url('/createbill', $c->form_id) }}"><i
+                                                            class="fas fa-arrow-circle-right"></i> Create Bill</a>
+                                                @endif
+                                            @else
+                                                <a class="btn btn-sm btn-success"
+                                                    href="{{ url('/receipt', $c->form_id) }}/{{ $c->customersID }}"><i
                                                         class="fas fa-arrow-circle-right"></i> View Bill</a>
-                                   @endif
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -99,7 +107,7 @@
                             <br>
                             <div class="form-group text-center">
                                 <a id="fromimages" href="" type="button" class="btn-sm btn btn-primary"
-                                download>Download</a>
+                                    download>Download</a>
                             </div>
                             <input type="hidden" name="payments_id" id="paymentid">
                             <div class="col-md-12">
@@ -121,7 +129,6 @@
                 </div>
             </div>
         </div>
-    </main>
 @endsection
 @push('page_scripts')
     <script>

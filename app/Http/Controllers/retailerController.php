@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 class RetailerController extends Controller
 {
 
-    public function __construct()
+  public function __construct()
   {
     $this->middleware(function ($request, $next) {
             $this->restrictIfNotActivated();
@@ -22,11 +22,11 @@ class RetailerController extends Controller
     $this->middleware('auth');
   }
   
-  public function addretailer()
+    public function addretailer()
     {
         return view('retailer.addretailer');
     }
-    
+
     public function Retailer()
     {
         $userid = Auth::user()->id;
@@ -39,7 +39,7 @@ class RetailerController extends Controller
 
         if( Auth::user()->user_type_id == 2 ) {
 
-            $viewretailers = DB::table('users')->where( 'user_type_id', '=', 4 )->where( 'refferal_id', '=', $userid )->orderBy( 'id', 'Asc' )->get();
+            $viewretailers = DB::table('users')->where( 'user_type_id', '=', 4 )->orderBy( 'id', 'Asc' )->get();
 
         }
 

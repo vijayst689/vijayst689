@@ -1,137 +1,123 @@
 <!doctype html>
-<html lang="en" data-bs-theme="blue-theme">
+<html lang="en" class="semi-dark">
 
 <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pkrm Solutions</title>
     <!--favicon-->
-    <link rel="icon" href="{{ asset('assets/images/pkrm.png') }}" type="image/png">
-    <!-- loader-->
-    <link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('assets/js/pace.min.js') }}"></script>
-
+    <link rel="icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/png" />
     <!--plugins-->
-    <link
-        href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-        rel="stylesheet">
-    <link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/metismenu/metisMenu.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/metismenu/mm-vertical.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/simplebar/css/simplebar.css') }}">
-    <!--bootstrap css-->
+    <link href="{{ asset('assets/plugins/notifications/css/lobibox.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
+    <!-- loader-->
+    <link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet" />
+    <script src="{{ asset('assets/js/pace.min.js') }}"></script>
+    <!-- Bootstrap CSS -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600&amp;display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
-    <link href="{{ asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
-    <!--main css-->
     <link href="{{ asset('assets/css/bootstrap-extended.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/sass/main.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/sass/dark-theme.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/sass/blue-theme.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/sass/semi-dark.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/sass/bordered-theme.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/sass/responsive.css') }}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toaster/4.0.1/css/bootstrap-toaster.min.css"
-        rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
+    <!-- Theme Style CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/dark-theme.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
+    <title>pkrmsolutions.com</title>
 </head>
 
-<body>
+<body onload="info_noti()">
 
-    <!--start header-->
-    @include('layouts.header')
-    <!--end top header-->
+    <div id="layout-wrapper">
+        @include('layouts.header')
 
+        @include('layouts.sidebar')
 
-    <!--start sidebar-->
-    @include('layouts.sidebar')
-    <!--end sidebar-->
+        <div class="main-content">
 
-    <!--start main wrapper-->
-    @yield('content')
-    <div id="fullscreen-spinner" style="display: none;">
-        <div class="spinner-overlay">
-            <div class="spinner-border text-light" style="width: 4rem; height: 4rem;" role="status">
-                <span class="visually-hidden">Loading...</span>
+            <div class="page-content">
+
+                @yield('content')
+                <div id="fullscreen-spinner" style="display: none;">
+                    <div class="spinner-overlay">
+                        <div class="spinner-border text-light" style="width: 4rem; height: 4rem;" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            @include('layouts.footer')
+
         </div>
-    </div> <!--end main wrapper-->
+    </div>
+    <div class="rightbar-overlay"></div>
 
-
-    <!--bootstrap js-->
+    <!-- Bootstrap JS -->
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-
     <!--plugins-->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-    <!--plugins-->
-    <script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
-    <script src="{{ asset('assets/plugins/metismenu/metisMenu.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/apexchart/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/peity/jquery.peity.min.js') }}"></script>
-    <script>
-        $(".data-attributes span").peity("donut")
-    </script>
-    <script src="{{ asset('assets/js/main.js') }}"></script>
-    <script src="{{ asset('assets/js/dashboard1.js') }}"></script>
-
-    <script>
-        new PerfectScrollbar(".user-list")
-    </script>
-
+    <script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toaster/4.0.1/js/bootstrap-toaster.min.js"></script>
+	<script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+    <script src="{{ asset('assets/plugins/chartjs/js/chart.js') }}"></script>
+    <script src="{{ asset('assets/plugins/sparkline-charts/jquery.sparkline.min.js') }}"></script>
+    <!--notification js -->
+    <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
+    <script src="{{ asset('assets/js/index3.js') }}"></script>
+    <!--app JS-->
+    <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#example').DataTable();
-        });
-    </script>
 
     @stack('page_scripts')
     <script>
+
         $(document).ready(function() {
-            var table = $('#example2').DataTable({
-                lengthChange: false,
-                buttons: ['copy', 'excel', 'pdf', 'print']
-            });
+			$('#example').DataTable();
+		  } );
 
-            table.buttons().container()
-                .appendTo('#example2_wrapper .col-md-6:eq(0)');
+        $(document).ready(function() {
+			var table = $('#example2').DataTable( {
+				lengthChange: false,
+				buttons: [ 'copy', 'excel', 'pdf', 'print']
+			} );
+		 
+			table.buttons().container()
+				.appendTo( '#example2_wrapper .col-md-6:eq(0)' );
+		} );
+
+        $(document).ready(function() {
+            var status = $("#statuscheck").val();
+            if (status == "Inactive") {
+                $('#myModal').modal("show")({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            } else if (status == "Active") {
+                $('#paidstatuscheck').modal("hide");
+            }
         });
-    </script>
-    <script>
-        function duplicateemail(id) {
-            var email = $("#email").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('checkemail') }}',
-                data: {
-                    id: id,
-                    email: email,
-                    _token: _token
-                },
 
-                success: function(res) {
-                    if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#dupemail").html("email alredy exit!");
-                    } else {
-                        $("#save").prop('disabled', false);
-                        $("#dupemail").html("");
-                    }
-                },
+        $('.copy_text').click(function(e) {
+            e.preventDefault();
+            var copyText = $(this).attr('href');
 
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
-            });
-        }
+            document.addEventListener('copy', function(e) {
+                e.clipboardData.setData('text/plain', copyText);
+                e.preventDefault();
+            }, true);
+
+            document.execCommand('copy');
+            toastr.success('Link Copied Successfully');
+        });
 
         function duplicateaadhar(id) {
             var aadhaar_no = $("#aadhaar_no").val().trim();
@@ -146,12 +132,17 @@
                 },
 
                 success: function(res) {
+                    console.log(res);
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupaadhar").html("aadhar no alredy exit!");
+                        $("#dupaadhar").html("aadhar no alredy exists!");
                     } else {
-                        $("#save").prop('disabled', false);
                         $("#dupaadhar").html("");
+                    }
+                    if ($("#dupphone").html() == "" && $("#dupaadhar").html() == "") {
+                        $("#save").prop('disabled', false);
+                    } else {
+                        $("#save").prop('disabled', true);
                     }
                 },
                 error: function(jqXHR, exception) {
@@ -191,8 +182,96 @@
                 }
             });
         }
-    </script>
 
+        function duplicateemail(id) {
+            var email = $("#email").val().trim();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                type: "post",
+                url: '{{ url('checkemail') }}',
+                data: {
+                    id: id,
+                    email: email,
+                    _token: _token
+                },
+
+                success: function(res) {
+                    if (res.exists) {
+                        $("#save").prop('disabled', true);
+                        $("#dupemail").html("email no alredy exists!");
+                    } else {
+                        $("#dupemail").html("");
+                    }
+                    if ($("#dupemail").html() == "" && $("#dupemail").html() == "") {
+                        $("#save").prop('disabled', false);
+                    } else {
+                        $("#save").prop('disabled', true);
+                    }
+                },
+
+                error: function(jqXHR, exception) {
+                    console.log(exception);
+                }
+            });
+        }
+
+        function duplicatepan(id) {
+            var pan_no = $("#pan_no").val().trim();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                type: "post",
+                url: '{{ url('checkpan') }}',
+                data: {
+                    id: id,
+                    pan_no: pan_no,
+                    _token: _token
+                },
+
+                success: function(res) {
+                    if (res.exists) {
+                        $("#save").prop('disabled', true);
+                        $("#duppan").html("pan no alredy exists!");
+                    } else {
+                        $("#duppan").html("");
+                    }
+                    if ($("#dupphone").html() == "" && $("#duppan").html() == "" && $("#duppan").html() ==
+                        "") {
+                        $("#save").prop('disabled', false);
+                    } else {
+                        $("#save").prop('disabled', true);
+                    }
+                },
+                error: function(jqXHR, exception) {
+                    console.log(exception);
+                }
+            });
+        }
+
+        $('.number').keypress(function(event) {
+            var keycode = event.which;
+            if (!(event.shiftKey == false && (keycode == 8 || keycode == 37 || keycode == 39 || (keycode >= 48 &&
+                    keycode <= 57)))) {
+                event.preventDefault();
+            }
+        });
+
+        <
+        script > 'undefined' === typeof _trfq || (window._trfq = []);
+        'undefined' === typeof _trfd && (window._trfd = []), _trfd.push({
+            'tccl.baseHost': 'secureserver.net'
+        }, {
+            'ap': 'cpsh-oh'
+        }, {
+            'server': 'p3plzcpnl509132'
+        }, {
+            'dcenter': 'p3'
+        }, {
+            'cp_id': '10399385'
+        }, {
+            'cp_cl': '8'
+        }) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.
+    </script>
+    <script src='../../../../img1.wsimg.com/signals/js/clients/scc-c2/scc-c2.min.js'></script>
     <script>
         function shouldShowPopup() {
             const lastClosed = localStorage.getItem('headerPopupLastClosed');
@@ -226,5 +305,8 @@
         });
     </script>
 </body>
+
+
+<!-- Mirrored from codervent.com/rocker/demo/vertical/index3.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Aug 2025 05:15:03 GMT -->
 
 </html>

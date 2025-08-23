@@ -1,141 +1,164 @@
 <!doctype html>
-<html lang="en" data-bs-theme="blue-theme">
+<html lang="en">
+
+
+<!-- Mirrored from codervent.com/rocker/demo/vertical/auth-basic-signin.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Aug 2025 10:06:30 GMT -->
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pkrm Solutions</title>
-  <!--favicon-->
-	<link rel="icon" href="{{ asset('assets/images/pkrm.png') }}" type="image/png">
-  <!-- loader-->
-	<link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet">
-	<script src="{{ asset('assets/js/pace.min.js') }}"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--favicon-->
+    <link rel="icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/png" />
+    <!--plugins-->
+    <link href="{{ asset('assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
+    <!-- loader-->
+    <link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet" />
+    <script src="{{ asset('assets/js/pace.min.js') }}"></script>
+    <!-- Bootstrap CSS -->
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/bootstrap-extended.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
+    <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
+    <title>pkrmsolutions.com</title>
+</head>
 
-  <!--plugins-->
-  <link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/metismenu/metisMenu.min.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/metismenu/mm-vertical.css') }}">
-  <!--bootstrap css-->
-  <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
-  <!--main css-->
-  <link href="{{ asset('assets/css/bootstrap-extended.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/sass/main.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/sass/dark-theme.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/sass/blue-theme.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/sass/responsive.css') }}" rel="stylesheet">
+<body class="">
+    <!--wrapper-->
+    <div class="wrapper">
+        <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+                    <div class="col mx-auto">
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <div class="p-4">
+                                    <div class="mb-3 text-center">
+                                        <img src="{{ asset('assets/images/logo-icon.png') }}" width="60"
+                                            alt="" />
+                                    </div>
+                                    <div class="text-center mb-4">
+                                        <h5 class="">Pkrmsolutions.com</h5>
+                                        <p class="mb-0">Please log in to your account</p>
+                                    </div>
+                                    <div class="form-body">
+                                        <form class="row g-3" method="post" action="{{ route('login.custom') }}">
+                                            {{ csrf_field() }}
+                                            <div class="col-12">
+                                                <label for="inputEmailAddress" class="form-label">Email</label>
+                                                <input type="email" name="email" class="form-control"
+                                                    id="inputEmailAddress" placeholder="Email">
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="inputChoosePassword" class="form-label">Password</label>
+                                                <div class="input-group" id="show_hide_password">
+                                                    <input type="password" class="form-control border-end-0"
+                                                        id="inputChoosePassword" name="password"
+                                                        placeholder="Enter Password"> <a href="javascript:;"
+                                                        class="input-group-text bg-transparent"><i
+                                                            class='bx bx-hide'></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="flexSwitchCheckChecked">
+                                                    <label class="form-check-label"
+                                                        for="flexSwitchCheckChecked">Remember Me</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-end"> <a href="">Forgot Password ?</a>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="d-grid">
+                                                    <button type="submit" class="btn btn-primary">Sign in</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="text-center ">
+                                                    <p class="mb-0">Don't have an account yet? <a
+                                                            href="{{ url('register') }}">Sign up here</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="login-separater text-center mb-5"> <span>OR SIGN IN WITH</span>
+                                        <hr />
+                                    </div>
+                                    <div class="list-inline contacts-social text-center">
+                                        <a href="javascript:;"
+                                            class="list-inline-item bg-facebook text-white border-0 rounded-3"><i
+                                                class="bx bxl-facebook"></i></a>
+                                        <a href="javascript:;"
+                                            class="list-inline-item bg-twitter text-white border-0 rounded-3"><i
+                                                class="bx bxl-twitter"></i></a>
+                                        <a href="javascript:;"
+                                            class="list-inline-item bg-google text-white border-0 rounded-3"><i
+                                                class="bx bxl-google"></i></a>
+                                        <a href="javascript:;"
+                                            class="list-inline-item bg-linkedin text-white border-0 rounded-3"><i
+                                                class="bx bxl-linkedin"></i></a>
+                                    </div>
 
-  </head>
-
-<body>
-
-
-  <!--authentication-->
-
-  <div class="section-authentication-cover">
-    <div class="">
-      <div class="row g-0">
-
-        <div class="col-12 col-xl-7 col-xxl-8 auth-cover-left align-items-center justify-content-center d-none d-xl-flex border-end bg-transparent">
-
-          <div class="card rounded-0 mb-0 border-0 shadow-none bg-transparent bg-none">
-            <div class="card-body">
-              <img src="{{ asset('assets/images/pkrm.png') }}" class="img-fluid auth-img-cover-login" width="650" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end row-->
             </div>
-          </div>
-
         </div>
-
-        <div class="col-12 col-xl-5 col-xxl-4 auth-cover-right align-items-center justify-content-center border-top border-4 border-primary border-gradient-1">
-          <div class="card rounded-0 m-3 mb-0 border-0 shadow-none bg-none">
-            <div class="card-body p-sm-5">
-             <img src="{{ asset('assets/images/pkrmlogo.png') }}" class="mb-4" width="400" alt="">
-              <h4 class="fw-bold">Get Started Now</h4>
-              <p class="mb-0">Enter your credentials to login your account</p>
-
-              <!-- <div class="row g-3 my-4">
-                <div class="col-12 col-lg-6">
-                  <button class="btn btn-light py-2 font-text1 fw-bold d-flex align-items-center justify-content-center w-100"><img src="{{ asset('assets/images/apps/05.png') }}" width="20" class="me-2" alt="">Google</button>
-                </div>
-                <div class="col col-lg-6">
-                  <button class="btn btn-light py-2 font-text1 fw-bold d-flex align-items-center justify-content-center w-100"><img src="{{ asset('assets/images/apps/17.png') }}" width="20" class="me-2" alt="">Facebook</button>
-                </div>
-              </div> -->
-
-              <div class="separator section-padding">
-                <div class="line"></div>
-                <p class="mb-0 fw-bold">OR</p>
-                <div class="line"></div>
-              </div>
-
-              <div class="form-body mt-4">
-                <form class="row g-3" method="POST" action="{{ route('login.custom') }}">
-                @csrf
-                  <div class="col-12">
-                    <label for="inputEmailAddress" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
-                  </div>
-                  <div class="col-12">
-                    <label for="inputChoosePassword" class="form-label">Password</label>
-                    <div class="input-group" id="show_hide_password">
-                      <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
-                      <a href="javascript:;" class="input-group-text bg-transparent"><i class="bi bi-eye-slash-fill"></i></a>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" name="remember" type="checkbox" id="remember">
-                      <label class="form-check-label" for="flexSwitchCheckChecked">Remember Me</label>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="d-grid">
-                      <button type="submit" class="btn btn-grd-primary">Login</button>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="text-start">
-                        <p class="mb-0">Don't have an account yet? <a href="{{ url('/register') }}">Register here</a></p>
-                    </div>
-                </div>
-                </form>
-              </div>
-
-          </div>
-          </div>
-        </div>
-
-      </div>
-      <!--end row-->
     </div>
-  </div>
-
-  <!--authentication-->
-
-
-
-
-  <!--plugins-->
-  <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-
-  <script>
-    $(document).ready(function () {
-      $("#show_hide_password a").on('click', function (event) {
-        event.preventDefault();
-        if ($('#show_hide_password input').attr("type") == "text") {
-          $('#show_hide_password input').attr('type', 'password');
-          $('#show_hide_password i').addClass("bi-eye-slash-fill");
-          $('#show_hide_password i').removeClass("bi-eye-fill");
-        } else if ($('#show_hide_password input').attr("type") == "password") {
-          $('#show_hide_password input').attr('type', 'text');
-          $('#show_hide_password i').removeClass("bi-eye-slash-fill");
-          $('#show_hide_password i').addClass("bi-eye-fill");
-        }
-      });
-    });
-  </script>
-
+    <!--end wrapper-->
+    <!-- Bootstrap JS -->
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <!--plugins-->
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
+    <!--Password show & hide js -->
+    <script>
+        $(document).ready(function() {
+            $("#show_hide_password a").on('click', function(event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("bx-hide");
+                    $('#show_hide_password i').removeClass("bx-show");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("bx-hide");
+                    $('#show_hide_password i').addClass("bx-show");
+                }
+            });
+        });
+    </script>
+    <!--app JS-->
+    <script src="{{ asset('assets/js/app.js') }}"></script>
 </body>
+
+<script>
+    'undefined' === typeof _trfq || (window._trfq = []);
+    'undefined' === typeof _trfd && (window._trfd = []), _trfd.push({
+        'tccl.baseHost': 'secureserver.net'
+    }, {
+        'ap': 'cpsh-oh'
+    }, {
+        'server': 'p3plzcpnl509132'
+    }, {
+        'dcenter': 'p3'
+    }, {
+        'cp_id': '10399385'
+    }, {
+        'cp_cl': '8'
+    }) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.
+</script>
+<script src='../../../../img1.wsimg.com/signals/js/clients/scc-c2/scc-c2.min.js'></script>
+<!-- Mirrored from codervent.com/rocker/demo/vertical/auth-basic-signin.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Aug 2025 10:06:30 GMT -->
 
 </html>

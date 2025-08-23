@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
+<div class="page-wrapper">
+        <div class="page-content">
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
                 <div class="breadcrumb-title pe-3">{{ $servicename }}</div>
                 <div class="ps-3">
@@ -9,15 +9,18 @@
                         <ol class="breadcrumb mb-0 p-0">
                             <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page"></li>
                         </ol>
                     </nav>
                 </div>
+                <div class="ms-auto">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Settings</button>
+                    </div>
+                </div>
             </div>
-
-            <div class="card mt-4">
+            <hr />
+            <div class="card">
                 <div class="card-body">
-              
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible" role="alert">
                             <strong> {{ session('success') }} </strong>
@@ -25,7 +28,7 @@
                         </div>
                     @endif
                     @if (session()->has('error'))
-                        <div class="alert alert-danger alert-dismissible" role="alert">
+                        <div class="alert alert-success alert-dismissible" role="alert">
                             <strong> {{ session('error') }} </strong>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
@@ -68,7 +71,7 @@
                     <div class="customer-table">
                         <div class="table-responsive white-space-nowrap">
                             <table id="example2" class="table align-middle">
-                                <thead class="table-dark">
+                                <thead>
                                     <tr>
                                         <th>Sl No</th>
                                         <th>Mobile</th>
@@ -83,28 +86,28 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($pandetails as $key => $ser)
-                                        <tr>
-                                            <td>{{ $key + 1 }}</td>
-                                            <td>{{ $ser->mobile }}</td>
-                                            <td>{{ $ser->message }}</td>
-                                            <td>{{ $ser->amount }}</td>
-                                            <td>{{ $ser->applied_date }}</td>
-                                            <td>{{ $ser->status }}</td>
-                                            @if($ser->status == "Failure")
-                                            <td>Refunded</td>
-                                            @else
-                                            <td>{{ $ser->status }}</td>
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $ser->mobile }}</td>
+                                        <td>{{ $ser->message }}</td>
+                                        <td>{{ $ser->amount }}</td>
+                                        <td>{{ $ser->applied_date }}</td>
+                                        <td>{{ $ser->status }}</td>
+                                        @if($ser->status == "Failure")
+                                        <td>Refunded</td>
+                                        @else
+                                        <td>{{ $ser->status }}</td>
+                                        @endif
+                                        <td>{{ $ser->opid }}</td>
+                                        <td style="white-space: nowrap;">
+                                            @if($ser->status == "Pending" || $ser->status == "Processing")
+                                            <a href="{{ url('/pancard_reapply', $ser->api_txid) }}/{{ $ser->service_id }}" type="button"
+                                                style="font-size: small" class="btn-sm btn btn-primary">Reapply</a>
                                             @endif
-                                            <td>{{ $ser->opid }}</td>
-                                            <td style="white-space: nowrap;">
-                                                @if($ser->status == "Pending" || $ser->status == "Processing")
-                                                <a href="{{ url('/pancard_reapply', $ser->api_txid) }}/{{ $ser->service_id }}" type="button"
-                                                    style="font-size: small" class="btn-sm btn btn-primary">Reapply</a>
-                                                @endif
-                                            </td>
+                                        </td>
 
-                                        </tr>
-                                    @endforeach
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

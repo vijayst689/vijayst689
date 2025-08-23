@@ -1,11 +1,29 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
+    <div class="page-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
+            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                <div class="breadcrumb-title pe-3">pkrmsolutions.com</div>
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0">
+                            <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="ms-auto">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Settings</button>
+                    </div>
+                </div>
+            </div>
+            <!--end breadcrumb-->
+            <hr />
             <div class="row">
                 <div class="col-12 col-xl-12">
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
-
                         <div class="card-body p-4">
                             <form class="row g-4 permissionform" action="{{ url('updatenalavariyam_activation') }}"
                                 enctype="multipart/form-data" method="post">
@@ -95,7 +113,6 @@
             </div>
         </div><!--end row-->
         </div>
-    </main>
 @endsection
 @push('page_scripts')
     <script>
@@ -230,10 +247,10 @@
              var d = "";
                 if(usertypeid == 3){
                      d = "ஐடி ஆக்டிவ் கட்டணம் ரூ.4,000/- விண்ணப்ப கட்டணம் ரூ. 90/-";
-                     com = 2500;
+                     com = 2000;
                 }else{
                      d = "ஐடி ஆக்டிவ் கட்டணம் ரூ.15,00/- விண்ணப்ப கட்டணம் ரூ. 120/-";
-                     com = 600;
+                     com = 500;
 
                 }
                  $('#details').html(d).css({

@@ -1,16 +1,26 @@
 @extends('layouts.app')
 @section('content')
-    <main class="main-wrapper">
-        <div class="main-content">
+    <div class="page-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            </div>
-            <div class="row g-3">
-                <div class="d-flex align-items-center gap-2 justify-content-lg-end">
+                <div class="breadcrumb-title pe-3">pkrmsolutions.com</div>
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0">
+                            <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="ms-auto">
                     <button type="button" class="btn-sm btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#addcustomer">Add</button>
                 </div>
-            </div><!--end row-->
-            <div class="card mt-4">
+            </div>
+            <!--end breadcrumb-->
+            <hr />
+            <div class="card">
                 <div class="card-body">
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible" role="alert">
@@ -26,7 +36,7 @@
                     @endif
                     <h5 class="card-title">Member</h5>
                     <div class="table-responsive">
-                        <table id="example2" class="table table-bordered table-striped">
+                        <table id="example2" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th> ID</th>
@@ -52,7 +62,7 @@
                                             onclick="edit_retailer('{{ $m->id }}','{{ $m->name }}','{{ $m->phone }}','{{ $m->aadhaar_no }}','{{ $m->status }}')"
                                             type="button" class="btn-sm btn btn-primary">Edit</button> --}}
 
-                                            <a class="btn btn-sm btn-primary" href="{{ url('/online_services', $m->id) }}"><i
+                                            <a class="btn btn-primary" href="{{ url('/online_services', $m->id) }}"><i
                                                     class="fas fa-arrow-circle-right"></i>Services</a>
                                         </td>
                                     </tr>
@@ -131,104 +141,103 @@
                 </div>
             </div>
         </div>
-    </main>
-@endsection
-@push('page_scripts')
-    <script>
-        function edit_customer(id, name, phone, aadhaar_no, gender, email, date_of_birth, address, status) {
-            $("#editname").val(name);
-            $("#editphone").val(phone);
-            $("#editadhar").val(aadhaar_no);
-            $("#editgender").val(gender);
-            $("#editemail").val(email);
-            $("#editdob").val(date_of_birth);
-            $("#editaddress").val(address);
-            $("#editstatus").val(status);
-            $("#cusid").val(id);
-            $("#editcustomer").modal("show");
-        }
+    @endsection
+    @push('page_scripts')
+        <script>
+            function edit_customer(id, name, phone, aadhaar_no, gender, email, date_of_birth, address, status) {
+                $("#editname").val(name);
+                $("#editphone").val(phone);
+                $("#editadhar").val(aadhaar_no);
+                $("#editgender").val(gender);
+                $("#editemail").val(email);
+                $("#editdob").val(date_of_birth);
+                $("#editaddress").val(address);
+                $("#editstatus").val(status);
+                $("#cusid").val(id);
+                $("#editcustomer").modal("show");
+            }
 
-        $('#dist_id').on('change', function() {
-            var dist_id = this.value;
-            $("#taluk").html('');
-            var url = "{{ url('nalavariyam/variyamget_taluk') }}/" + dist_id;
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function(result) {
-                    $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
-                    $.each(result, function(key, value) {
-                        $("#taluk").append('<option value="' + value
-                            .id + '">' + value.taluk_name + '</option>');
-                    });
-                    $('#panchayath').html('<option value="">-- Select Panchayath --</option>');
-                }
+            $('#dist_id').on('change', function() {
+                var dist_id = this.value;
+                $("#taluk").html('');
+                var url = "{{ url('nalavariyam/variyamget_taluk') }}/" + dist_id;
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    success: function(result) {
+                        $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
+                        $.each(result, function(key, value) {
+                            $("#taluk").append('<option value="' + value
+                                .id + '">' + value.taluk_name + '</option>');
+                        });
+                        $('#panchayath').html('<option value="">-- Select Panchayath --</option>');
+                    }
+                });
             });
-        });
 
 
-        function nalavariyam_duplicateaadhar(id) {
-            var aadhaar_no = $("#aadhaar_no").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('nalavariyam_checkaadhar') }}',
-                data: {
-                    id: id,
-                    aadhaar_no: aadhaar_no,
-                    _token: _token
-                },
+            function nalavariyam_duplicateaadhar(id) {
+                var aadhaar_no = $("#aadhaar_no").val().trim();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    type: "post",
+                    url: '{{ url('nalavariyam_checkaadhar') }}',
+                    data: {
+                        id: id,
+                        aadhaar_no: aadhaar_no,
+                        _token: _token
+                    },
 
-                success: function(res) {
-                    console.log(res);
-                    if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#dupaadhar").html("aadhar no alredy exists!");
-                    } else {
-                        $("#dupaadhar").html("");
+                    success: function(res) {
+                        console.log(res);
+                        if (res.exists) {
+                            $("#save").prop('disabled', true);
+                            $("#dupaadhar").html("aadhar no alredy exists!");
+                        } else {
+                            $("#dupaadhar").html("");
+                        }
+                        if ($("#dupphone").html() == "" && $("#dupaadhar").html() == "") {
+                            $("#save").prop('disabled', false);
+                        } else {
+                            $("#save").prop('disabled', true);
+                        }
+                    },
+                    error: function(jqXHR, exception) {
+                        console.log(exception);
                     }
-                    if ($("#dupphone").html() == "" && $("#dupaadhar").html() == "") {
-                        $("#save").prop('disabled', false);
-                    } else {
-                        $("#save").prop('disabled', true);
-                    }
-                },
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
-            });
-        }
+                });
+            }
 
-        function nalavariyam_duplicatephone(id) {
-            var phone = $("#phone").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('nalavariyam_checkphone') }}',
-                data: {
-                    id: id,
-                    phone: phone,
-                    _token: _token
-                },
+            function nalavariyam_duplicatephone(id) {
+                var phone = $("#phone").val().trim();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    type: "post",
+                    url: '{{ url('nalavariyam_checkphone') }}',
+                    data: {
+                        id: id,
+                        phone: phone,
+                        _token: _token
+                    },
 
-                success: function(res) {
-                    if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#dupphone").html("mobile no alredy exists!");
-                    } else {
-                        $("#dupphone").html("");
-                    }
-                    if ($("#dupphone").html() == "" && $("#dupaadhar").html() == "") {
-                        $("#save").prop('disabled', false);
-                    } else {
-                        $("#save").prop('disabled', true);
-                    }
-                },
+                    success: function(res) {
+                        if (res.exists) {
+                            $("#save").prop('disabled', true);
+                            $("#dupphone").html("mobile no alredy exists!");
+                        } else {
+                            $("#dupphone").html("");
+                        }
+                        if ($("#dupphone").html() == "" && $("#dupaadhar").html() == "") {
+                            $("#save").prop('disabled', false);
+                        } else {
+                            $("#save").prop('disabled', true);
+                        }
+                    },
 
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
-            });
-        }
-    </script>
-@endpush
+                    error: function(jqXHR, exception) {
+                        console.log(exception);
+                    }
+                });
+            }
+        </script>
+    @endpush

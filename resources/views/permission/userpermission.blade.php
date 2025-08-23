@@ -3,8 +3,7 @@
     <style type="text/css">
         .service-box {
             cursor: pointer;
-            background: #020024;
-            background: linear-gradient(360deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 62%, rgba(0, 212, 255, 1) 100%);
+            background-color: #d9b38c;
             /* default bg */
             position: relative;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -17,8 +16,7 @@
         }
 
         .service-box.disabled {
-            background: #131417;
-            background: linear-gradient(360deg, rgba(19, 20, 23, 1) 34%, rgba(87, 199, 133, 1) 59%, rgba(237, 221, 83, 1) 80%);
+            background-color: #e0e0e0;
             /* ✅ light grey */
             opacity: 1;
             pointer-events: none;
@@ -89,9 +87,11 @@
             transform: translate(-50%, -50%);
         }
     </style>
-    <main class="main-wrapper">
-        <div class="main-content">
+    <div class="page-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                <div class="breadcrumb-title pe-3">pkrmsolutions.com</div>
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
@@ -100,178 +100,184 @@
                         </ol>
                     </nav>
                 </div>
+                <div class="ms-auto">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Settings</button>
+                    </div>
+                </div>
             </div>
-            <!--end row-->
-            <div class="card mt-4">
-                @if (session()->has('success'))
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        <strong> {{ session('success') }} </strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-                @if (session()->has('error'))
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        <strong> {{ session('error') }} </strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-                @php
-                    $selectedIds = collect($checkpermission1)->pluck('service_id')->toArray();
-                    $selectedIds2 = collect($checkpermission2)->pluck('service_id')->toArray();
-                    $selectedIds3 = collect($checkpermission3)->pluck('service_id')->toArray();
-                    $selectedIds4 = collect($checkpermission4)->pluck('service_id')->toArray();
-                @endphp
+            <!--end breadcrumb-->
+            <hr />
+            <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Activation Permissions</h5>
-                    <div class="row">
-                        <form class="row permissionform" method="post" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <input type="hidden" id="activation_userid" name="user_id" value="{{ $userid }}">
+                    @if (session()->has('success'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <strong> {{ session('success') }} </strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if (session()->has('error'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <strong> {{ session('error') }} </strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @php
+                        $selectedIds = collect($checkpermission1)->pluck('service_id')->toArray();
+                        $selectedIds2 = collect($checkpermission2)->pluck('service_id')->toArray();
+                        $selectedIds3 = collect($checkpermission3)->pluck('service_id')->toArray();
+                        $selectedIds4 = collect($checkpermission4)->pluck('service_id')->toArray();
+                    @endphp
+                    <div class="card-body">
+                        <h5 class="card-title">Activation Permissions</h5>
+                        <div class="row">
+                            <form class="row permissionform" method="post" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <input type="hidden" id="activation_userid" name="user_id" value="{{ $userid }}">
 
-                            <h3 class="text-center text-danger">PDF Services</h3>
-                            @foreach ($findservices as $ser)
-                                @php
-                                    $isSelected = in_array($ser->id, $selectedIds);
-                                @endphp
+                                <h3 class="text-center text-danger">PDF Services</h3>
+                                @foreach ($findservices as $ser)
+                                    @php
+                                        $isSelected = in_array($ser->id, $selectedIds);
+                                    @endphp
 
-                                <div class="col-6 col-md-3 mb-4">
-                                    <div class="service-box border rounded text-center p-2 position-relative {{ $isSelected ? 'disabled' : '' }}"
-                                        data-id="{{ $ser->id }}" data-parent_id="1"
-                                        data-activation_amount="{{ $ser->amount }}" data-bs-toggle="tooltip"
-                                        title="{{ $ser->name }}">
+                                    <div class="col-6 col-md-3 mb-4">
+                                        <div class="service-box border rounded text-center p-2 position-relative {{ $isSelected ? 'disabled' : '' }}"
+                                            data-id="{{ $ser->id }}" data-parent_id="1"
+                                            data-activation_amount="{{ $ser->amount }}" data-bs-toggle="tooltip"
+                                            title="{{ $ser->name }}">
 
-                                        {{-- Status Badge --}}
-                                        @if ($isSelected)
-                                            <div class="selected-badge">✔ Active</div>
-                                        @else
-                                            <div class="notselected-badge">❌ Not Active</div>
-                                        @endif
+                                            {{-- Status Badge --}}
+                                            @if ($isSelected)
+                                                <div class="selected-badge">✔ Active</div>
+                                            @else
+                                                <div class="notselected-badge">❌ Not Active</div>
+                                            @endif
 
-                                        {{-- Image --}}
-                                        <div class="border rounded bg-light p-2">
-                                            <img src="{{ asset('upload/find_service/' . $ser->ser_image) }}"
-                                                alt="{{ $ser->name }}"
-                                                style="width: 100%; height: 80px; object-fit: contain;">
-                                        </div>
+                                            {{-- Image --}}
+                                            <div class="border rounded bg-light p-2">
+                                                <img src="{{ asset('upload/find_service/' . $ser->ser_image) }}"
+                                                    alt="{{ $ser->name }}"
+                                                    style="width: 100%; height: 80px; object-fit: contain;">
+                                            </div>
 
-                                        {{-- Service Name & Price --}}
-                                        <div class="mt-2">
-                                            <h6 class="mb-1">{{ $ser->name }}</h6>
-                                            <p class="fw-bold mb-0">₹ {{ $ser->amount }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                            <h3 class="text-center text-danger mt-4">Utility Services</h3>
-                            @foreach ($utilityservices as $ser1)
-                                @php
-                                    $isSelected = in_array($ser1->id, $selectedIds2);
-                                @endphp
-
-                                <div class="col-6 col-md-3 mb-4">
-                                    <div class="service-box border rounded text-center p-2 position-relative {{ $isSelected ? 'disabled' : '' }}"
-                                        data-id="{{ $ser1->id }}" data-parent_id="2"
-                                        data-activation_amount="{{ $ser1->amount }}" data-bs-toggle="tooltip"
-                                        title="{{ $ser1->name }}">
-
-                                        {{-- Status Badge --}}
-                                        @if ($isSelected)
-                                            <div class="selected-badge">✔ Active</div>
-                                        @else
-                                            <div class="notselected-badge">❌ Not Active</div>
-                                        @endif
-
-                                        {{-- Image --}}
-                                        <div class="border rounded bg-light p-2">
-                                            <img src="{{ asset('upload/uti_image/' . $ser1->ser_image) }}"
-                                                alt="{{ $ser1->name }}"
-                                                style="width: 100%; height: 80px; object-fit: contain;">
-                                        </div>
-
-                                        {{-- Service Name & Price --}}
-                                        <div class="mt-2">
-                                            <h6 class="mb-1">{{ $ser1->name }}</h6>
-                                            <p class="fw-bold mb-0">₹ {{ $ser1->amount }}</p>
+                                            {{-- Service Name & Price --}}
+                                            <div class="mt-2">
+                                                <h6 class="mb-1">{{ $ser->name }}</h6>
+                                                <p class="fw-bold mb-0">₹ {{ $ser->amount }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                            <h3 class="text-center text-danger mt-4">Pancard Services</h3>
-                            @foreach ($panservices as $ser2)
-                                @php
-                                    $isSelected = in_array($ser2->id, $selectedIds4);
-                                @endphp
+                                @endforeach
+                                <h3 class="text-center text-danger mt-4">Utility Services</h3>
+                                @foreach ($utilityservices as $ser1)
+                                    @php
+                                        $isSelected = in_array($ser1->id, $selectedIds2);
+                                    @endphp
 
-                                <div class="col-6 col-md-3 mb-4">
-                                    <div class="service-box border rounded text-center p-2 position-relative {{ $isSelected ? 'disabled' : '' }}"
-                                        data-id="{{ $ser2->id }}" data-parent_id="4"
-                                        data-activation_amount="{{ $ser2->amount }}" data-bs-toggle="tooltip"
-                                        title="{{ $ser2->name }}">
+                                    <div class="col-6 col-md-3 mb-4">
+                                        <div class="service-box border rounded text-center p-2 position-relative {{ $isSelected ? 'disabled' : '' }}"
+                                            data-id="{{ $ser1->id }}" data-parent_id="2"
+                                            data-activation_amount="{{ $ser1->amount }}" data-bs-toggle="tooltip"
+                                            title="{{ $ser1->name }}">
 
-                                        {{-- Status Badge --}}
-                                        @if ($isSelected)
-                                            <div class="selected-badge">✔ Active</div>
-                                        @else
-                                            <div class="notselected-badge">❌ Not Active</div>
-                                        @endif
+                                            {{-- Status Badge --}}
+                                            @if ($isSelected)
+                                                <div class="selected-badge">✔ Active</div>
+                                            @else
+                                                <div class="notselected-badge">❌ Not Active</div>
+                                            @endif
 
-                                        {{-- Image --}}
-                                        <div class="border rounded bg-light p-2">
-                                            <img src="{{ asset('upload/panservice/' . $ser2->ser_image) }}"
-                                                alt="{{ $ser2->name }}"
-                                                style="width: 100%; height: 80px; object-fit: contain;">
-                                        </div>
+                                            {{-- Image --}}
+                                            <div class="border rounded bg-light p-2">
+                                                <img src="{{ asset('upload/uti_image/' . $ser1->ser_image) }}"
+                                                    alt="{{ $ser1->name }}"
+                                                    style="width: 100%; height: 80px; object-fit: contain;">
+                                            </div>
 
-                                        {{-- Service Name & Price --}}
-                                        <div class="mt-2">
-                                            <h6 class="mb-1">{{ $ser2->name }}</h6>
-                                            <p class="fw-bold mb-0">₹ {{ $ser2->amount }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                            <h3 class="text-center text-danger mt-4">Other Services</h3>
-                            @foreach ($services as $ser2)
-                                @php
-                                    $isSelected = in_array($ser2->id, $selectedIds3);
-                                @endphp
-
-                                <div class="col-6 col-md-3 mb-4">
-                                    <div class="service-box border rounded text-center p-2 position-relative {{ $isSelected ? 'disabled' : '' }}"
-                                        data-id="{{ $ser2->id }}" data-parent_id="3"
-                                        data-activation_amount="{{ $ser2->amount }}" data-bs-toggle="tooltip"
-                                        title="{{ $ser2->service_name }}">
-
-                                        {{-- Status Badge --}}
-                                        @if ($isSelected)
-                                            <div class="selected-badge">✔ Active</div>
-                                        @else
-                                            <div class="notselected-badge">❌ Not Active</div>
-                                        @endif
-
-                                        {{-- Image --}}
-                                        <div class="border rounded bg-light p-2">
-                                            <img src="{{ asset('upload/service/' . $ser2->service_image) }}"
-                                                alt="{{ $ser2->service_name }}"
-                                                style="width: 100%; height: 80px; object-fit: contain;">
-                                        </div>
-
-                                        {{-- Service Name & Price --}}
-                                        <div class="mt-2">
-                                            <h6 class="mb-1">{{ $ser2->service_name }}</h6>
-                                            <p class="fw-bold mb-0">₹ {{ $ser2->amount }}</p>
+                                            {{-- Service Name & Price --}}
+                                            <div class="mt-2">
+                                                <h6 class="mb-1">{{ $ser1->name }}</h6>
+                                                <p class="fw-bold mb-0">₹ {{ $ser1->amount }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </form>
+                                @endforeach
+                                <h3 class="text-center text-danger mt-4">Pancard Services</h3>
+                                @foreach ($panservices as $ser2)
+                                    @php
+                                        $isSelected = in_array($ser2->id, $selectedIds4);
+                                    @endphp
+
+                                    <div class="col-6 col-md-3 mb-4">
+                                        <div class="service-box border rounded text-center p-2 position-relative {{ $isSelected ? 'disabled' : '' }}"
+                                            data-id="{{ $ser2->id }}" data-parent_id="4"
+                                            data-activation_amount="{{ $ser2->amount }}" data-bs-toggle="tooltip"
+                                            title="{{ $ser2->name }}">
+
+                                            {{-- Status Badge --}}
+                                            @if ($isSelected)
+                                                <div class="selected-badge">✔ Active</div>
+                                            @else
+                                                <div class="notselected-badge">❌ Not Active</div>
+                                            @endif
+
+                                            {{-- Image --}}
+                                            <div class="border rounded bg-light p-2">
+                                                <img src="{{ asset('upload/panservice/' . $ser2->ser_image) }}"
+                                                    alt="{{ $ser2->name }}"
+                                                    style="width: 100%; height: 80px; object-fit: contain;">
+                                            </div>
+
+                                            {{-- Service Name & Price --}}
+                                            <div class="mt-2">
+                                                <h6 class="mb-1">{{ $ser2->name }}</h6>
+                                                <p class="fw-bold mb-0">₹ {{ $ser2->amount }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                <h3 class="text-center text-danger mt-4">Other Services</h3>
+                                @foreach ($services as $ser2)
+                                    @php
+                                        $isSelected = in_array($ser2->id, $selectedIds3);
+                                    @endphp
+
+                                    <div class="col-6 col-md-3 mb-4">
+                                        <div class="service-box border rounded text-center p-2 position-relative {{ $isSelected ? 'disabled' : '' }}"
+                                            data-id="{{ $ser2->id }}" data-parent_id="3"
+                                            data-activation_amount="{{ $ser2->amount }}" data-bs-toggle="tooltip"
+                                            title="{{ $ser2->service_name }}">
+
+                                            {{-- Status Badge --}}
+                                            @if ($isSelected)
+                                                <div class="selected-badge">✔ Active</div>
+                                            @else
+                                                <div class="notselected-badge">❌ Not Active</div>
+                                            @endif
+
+                                            {{-- Image --}}
+                                            <div class="border rounded bg-light p-2">
+                                                <img src="{{ asset('upload/service/' . $ser2->service_image) }}"
+                                                    alt="{{ $ser2->service_name }}"
+                                                    style="width: 100%; height: 80px; object-fit: contain;">
+                                            </div>
+
+                                            {{-- Service Name & Price --}}
+                                            <div class="mt-2">
+                                                <h6 class="mb-1">{{ $ser2->service_name }}</h6>
+                                                <p class="fw-bold mb-0">₹ {{ $ser2->amount }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
-        </div>
-    </main>
+    </div>
 @endsection
 @push('page_scripts')
     <script>
@@ -356,7 +362,7 @@
                                 }).then((result) => {
                                     if (result.isConfirmed) {
                                         location
-                                            .reload(); // Reload after user clicks OK
+                                    .reload(); // Reload after user clicks OK
                                     }
                                 });
                             } else {
