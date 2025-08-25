@@ -83,7 +83,6 @@
                                 <td>Total</td>
                                 <td></td>
                                 <td>{{ Auth::user()->rawallet }}</td>
-                                <td></td>
                             </tr>
                             </tbody>
                         </table>
