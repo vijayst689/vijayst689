@@ -472,16 +472,22 @@ if(($request->ser == 1 && $resdata['StatusCode'] == "100") || ($request->ser == 
   public function submitrcfind(Request $request){
     $user_id = Auth::user()->id;
     $rc_no = $request->rc_no;
-    $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
     $amount = $request->amount;
+    $wallet = Auth::user()->wallet;
     $servicepayment = $request->servicepayment;
     $serviceid = $request->serviceid;
+    if($wallet < $servicepayment){
+      return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+    }
+    $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
+
     if($request->ser == 1){
       $url = "http://source.api-good.xyz/serviceApi/V1/Rc-Verification.php?apiKey=$apikey&rcno=$rc_no";
     }else{
       $application_no = rand(00000000,99999999);
-      $url = "https://server.webtechly.co.in/rcpdf.php?api_key=b8180f-dff10d-75e341-17953e-09e93b&application_no=$application_no&rc_number=$rc_no";
+      $url = "https://server.webtechly.co.in/rcpdf.php?api_key=3d77fb-c95462-6d17f3-a92b88-9b8b9c&application_no=$application_no&rc_number=$rc_no";
     }
+
     $crl = curl_init();
     curl_setopt( $crl, CURLOPT_URL, $url );
     curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
@@ -491,40 +497,43 @@ if(($request->ser == 1 && $resdata['StatusCode'] == "100") || ($request->ser == 
     curl_close($crl);
     if($result){
       $status = "";
-      if($request->ser == 1){
-        $status = $result['Status'];
-      }else{
-        $status = $result['status'];
-      }
-      if(($request->ser == 1 && $status == "Success") || ($request->ser == 2 && $status == "true")){
-        $name = "";
-        if($request->ser == 1){
-          $name = $result['name'];
-        }
-       $message = $result['message'];
-       $pdf = $result['pdf'];
+     if($request->ser == 1){
+       $status = $result['Status'];
+     }else{
+       $status = $result['status'];
+     }
+     if(($request->ser == 1 && $status == "Success") || ($request->ser == 2 && $status == "true")){
+       $name = "";
        if($request->ser == 1){
-        $pdf_parts = explode(";base64", $pdf);
-        $pdf_types = explode("pdf/", $pdf_parts[0]);
-        $pdf_type = base64_decode($pdf_parts[1]);
-       }else{
-        $pdf_type = base64_decode($pdf);
+         $name = $result['name'];
        }
-       $filename = uniqid().'.pdf';
-       file_put_contents('upload/rc/'.$filename,$pdf_type );
+      $message = $result['message'];
+      $pdf = $result['pdf'];
+      if($request->ser == 1){
+       $pdf_parts = explode(";base64", $pdf);
+       $pdf_types = explode("pdf/", $pdf_parts[0]);
+       $pdf_type = base64_decode($pdf_parts[1]);
+      }else{
+       $pdf_type = base64_decode($pdf);
+      }
 
-       DB::table('rc')->insert([
-        'user_id' => Auth::user()->id,
-        'rc_no' => $request->rc_no,
-        'name' => $name,
-        'pdf' => $filename,
-        'service_id' => $serviceid,
-        'amount' => $servicepayment,
-        'status'    => 'Approved',
-        'date'    => date("Y-m-d H:i:s"),
-      ]);
-       $date = date( 'Y-m-d' );
-       $time = date( 'H:i:s' );
+      $filename = uniqid().'.pdf';
+      file_put_contents('upload/rc/'.$filename,$pdf_type );
+
+
+      DB::table('rc')->insert([
+       'user_id' => Auth::user()->id,
+       'rc_no' => $request->rc_no,
+       'name' => $name,
+       'pdf' => $filename,
+       'service_id' => $serviceid,
+       'amount' => $servicepayment,
+       'status'    => 'Approved',
+       'date'    => date("Y-m-d H:i:s"),
+     ]);
+      $date = date( 'Y-m-d' );
+      $time = date( 'H:i:s' );
+
        $service_status = 'Out Payment';
        $ad_info = 'Ramji Wallet Debit(RC PDF)';
        $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
@@ -582,10 +591,13 @@ if(($request->ser == 1 && $resdata['StatusCode'] == "100") || ($request->ser == 
         $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
         DB::update( DB::raw( $sql ) );
       }
-
       return redirect('/applypdfservice/'.$serviceid)->with('success',$message);
     }else{
-        $error=$result['error'];
+      if($request->ser == 1){
+      $error=$result['error'];
+    }else{
+      $error=$result['message'];
+    }
       return redirect('/applypdfservice/'.$serviceid)->with('error',$error);
     }
   }else{
