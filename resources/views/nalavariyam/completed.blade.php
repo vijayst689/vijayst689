@@ -135,6 +135,9 @@
         function show_form(id, from_image, service_name, formid, application_no) {
             var url = "{{ url('/') }}";
             $("#formimage").attr("src", url + '/upload/output/' + from_image);
+             $('#fromimages').attr({
+                href: '/upload/output/' + from_image
+            });
             $("#title").html(service_name);
             $("#paymentid").val(formid);
             $("#application_no").val(application_no);
