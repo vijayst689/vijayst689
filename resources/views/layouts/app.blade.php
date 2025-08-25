@@ -89,7 +89,7 @@
 				lengthChange: false,
 				buttons: [ 'copy', 'excel', 'pdf', 'print']
 			} );
-		 
+
 			table.buttons().container()
 				.appendTo( '#example2_wrapper .col-md-6:eq(0)' );
 		} );
@@ -254,56 +254,40 @@
                 event.preventDefault();
             }
         });
+        </script>
 
-        <
-        script > 'undefined' === typeof _trfq || (window._trfq = []);
-        'undefined' === typeof _trfd && (window._trfd = []), _trfd.push({
-            'tccl.baseHost': 'secureserver.net'
-        }, {
-            'ap': 'cpsh-oh'
-        }, {
-            'server': 'p3plzcpnl509132'
-        }, {
-            'dcenter': 'p3'
-        }, {
-            'cp_id': '10399385'
-        }, {
-            'cp_cl': '8'
-        }) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.
-    </script>
-    <script src='../../../../img1.wsimg.com/signals/js/clients/scc-c2/scc-c2.min.js'></script>
-    <script>
-        function shouldShowPopup() {
-            const lastClosed = localStorage.getItem('headerPopupLastClosed');
-            const now = new Date().getTime();
+        <script>
+  function shouldShowPopup() {
+    const lastClosed = localStorage.getItem('headerPopupLastClosed');
+    const now = new Date().getTime();
 
-            // If never closed or 1 hour has passed since close
-            if (!lastClosed || (now - parseInt(lastClosed)) > 60 * 60 * 1000) {
-                return true;
-            }
+    // If never closed or 1 hour has passed since close
+    if (!lastClosed || (now - parseInt(lastClosed)) > 60 * 60 * 1000) {
+      return true;
+    }
 
-            return false;
-        }
+    return false;
+  }
 
-        function showHeaderPopup() {
-            const alertBox = document.getElementById('headerAlert');
-            alertBox.style.display = 'block';
-        }
+  function showHeaderPopup() {
+    const alertBox = document.getElementById('headerAlert');
+    alertBox.style.display = 'block';
+  }
 
-        function closeHeaderPopup() {
-            const alertBox = document.getElementById('headerAlert');
-            alertBox.style.display = 'none';
+  function closeHeaderPopup() {
+    const alertBox = document.getElementById('headerAlert');
+    alertBox.style.display = 'none';
 
-            // Store current time as "last closed"
-            localStorage.setItem('headerPopupLastClosed', new Date().getTime());
-        }
+    // Store current time as "last closed"
+    localStorage.setItem('headerPopupLastClosed', new Date().getTime());
+  }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            if (shouldShowPopup()) {
-                showHeaderPopup();
-            }
-        });
-    </script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (shouldShowPopup()) {
+      showHeaderPopup();
+    }
+  });
+</script>
 </body>
 
 
