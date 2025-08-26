@@ -2,11 +2,11 @@
 <div class="wrapper">
     <div class="sidebar-wrapper" data-simplebar="true">
         <div class="sidebar-header">
-            <div>
-                <img src="{{ asset('assets/images/logo-icon.png') }}" class="logo-icon" alt="logo icon">
+            <div class="col text-center">
+                <img src="{{ asset('assets/images/logo-icon.png') }}" width="120" alt="logo icon">
             </div>
             <div>
-                <h5 class="logo-text text-info">Pkrmsolutions</h5>
+                <h5 class="logo-text text-info"></h5>
             </div>
             <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>
             </div>
