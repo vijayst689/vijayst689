@@ -723,6 +723,9 @@ class ServicestatusController extends Controller
 
         }elseif($service_id == 113 || $service_id == 120 || $service_id == 164 || $service_id == 182){
             $services = DB::table('voterid')->where('id',$id)->where('status',$status)->first();
+            $selectedCorrections = $services->correction
+            ? explode(',', $services->correction)
+            : [];
 
         }
         elseif($service_id == 113 || $service_id == 122 || $service_id == 123 ){
@@ -922,7 +925,7 @@ class ServicestatusController extends Controller
             return view('servicestatus.findaadhaar_numberupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
 
         } elseif($service_id == 113 || $service_id == 120 || $service_id == 164 || $service_id == 182){
-            return view('servicestatus.voteridupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
+            return view('servicestatus.voteridupdate',compact('id','services','servicename','customers','serviceid','amount','districts','selectedCorrections') );
 
         }elseif($service_id == 181){
             return view('servicestatus.voteridcorrectionupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
