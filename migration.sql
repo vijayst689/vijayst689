@@ -2158,3 +2158,39 @@ alter table voterid add street_name_tamil text DEFAULT NULL after application_no
 alter table voterid add street_name_english text DEFAULT NULL after application_no;
 alter table voterid add voterid_no varchar(10) DEFAULT NULL after application_no;
 alter table voterid add pin_code varchar(12) DEFAULT NULL after application_no;
+
+26-08-2025
+
+alter table voterid add disability varchar(50) DEFAULT NULL;
+alter table voterid add locomotive_certificate varchar(20) DEFAULT NULL;
+alter table voterid add visual_certificate varchar(20) DEFAULT NULL;
+alter table voterid add dumb_certificate varchar(20) DEFAULT NULL;
+alter table voterid add other_certificate varchar(20) DEFAULT NULL;
+alter table voterid add description varchar(100) DEFAULT NULL;
+alter table voterid add locomotive_percentage decimal(10,2) DEFAULT 0;
+alter table voterid add visual_percentage decimal(10,2) DEFAULT 0;
+alter table voterid add dumb_percentage decimal(10,2) DEFAULT 0;
+alter table voterid add other_percentage decimal(10,2) DEFAULT 0;
+alter table voterid add father_name_tamil text DEFAULT NULL;
+alter table voterid add father_name_english text DEFAULT NULL;
+alter table voterid add husband_name_tamil text DEFAULT NULL;
+alter table voterid add husband_name_english text DEFAULT NULL;
+alter table voterid add correction varchar(30) DEFAULT NULL;
+alter table voterid add gender varchar(20) DEFAULT NULL;
+alter table voterid add dob varchar(10) DEFAULT NULL;
+alter table voterid add age_proof varchar(20) DEFAULT NULL;
+alter table voterid add relation varchar(20) DEFAULT NULL;
+alter table voterid add document varchar(20) DEFAULT NULL;
+alter table voterid add name_tamil varchar(100) DEFAULT NULL;
+alter table voterid add name_english varchar(100) DEFAULT NULL;
+alter table voterid add select_relationship varchar(30) DEFAULT NULL;
+alter table voterid add within_assembly varchar(50) DEFAULT NULL;
+alter table voterid add street_name text DEFAULT NULL;
+alter table voterid add post_office text DEFAULT NULL;
+alter table voterid add apartment_no varchar(20) DEFAULT NULL;
+alter table voterid add taluqa_mandal text DEFAULT NULL;
+alter table voterid add town_village text DEFAULT NULL;
+alter table voterid add name_assembly_constituency text DEFAULT NULL;
+alter table voterid add dist_id int(11) DEFAULT 0;
+alter table voterid add constituent_assembly varchar(200) DEFAULT NULL;
+alter table voterid add name_in_english varchar(100) DEFAULT NULL;

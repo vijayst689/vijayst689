@@ -16,7 +16,7 @@ class ServiceController extends Controller
         });
     $this->middleware('auth');
   }
-  
+
   public function service()
   {
     if(Auth::user()->user_type_id != 1){
@@ -1369,7 +1369,7 @@ if($coordinator_permission == 1){
                 $getdata[ $key ][ 'agri_details' ] = $result2;
                 $getdata[ $key ][ 'agri_documents' ] = $result3;
             }
-           
+
     if(count($getdata) > 0){
 
      $API_KEY = env( 'API_KEY', '' );
@@ -2503,7 +2503,7 @@ if($coordinator_permission == 1){
      $server_output = curl_exec( $ch );
      curl_close( $ch );
      $resdata = json_decode($server_output, true);
-    
+
          //dd($resdata);
      if($resdata){
         $status = $resdata['message'];
@@ -2781,7 +2781,7 @@ if($coordinator_permission == 1){
      $server_output = curl_exec( $ch );
      curl_close( $ch );
      $resdata = json_decode($server_output, true);
-    
+
         //dd($resdata);
      if($resdata){
         $status = $resdata['message'];
@@ -5827,52 +5827,151 @@ public function submitvoterid(Request $request){
     $serviceid = $request ->serviceid;
     if($serviceid == 113 || $serviceid == 120 || $serviceid == 164 || $serviceid == 182 || $serviceid == 181){
         DB::table( 'voterid' )->insert( [
-           'user_id'           => $user_id,
-           'retailer_id'       => $retailer_id,
-           'distributor_id'    => $distributor_id,
-           'service_id'        => $request ->serviceid,
-           'amount'            => $request->amount,
-           'name'              => $request->name,
-           'mobile'            => $request->mobile,
-           'epic_no'           => $request->epic_no,
-           'relationship'      => $request->relationship,
-           'status'            => 'Pending',
-           'applied_date'      => date("Y-m-d"),
-           'created_at'        => date("Y-m-d"),
-       ] );
+           'user_id'                     => $user_id,
+           'retailer_id'                 => $retailer_id,
+           'distributor_id'              => $distributor_id,
+           'service_id'                  => $request ->serviceid,
+           'amount'                      => $request->amount,
+           'name'                        => $request->name,
+           'mobile'                      => $request->mobile,
+           'epic_no'                     => $request->epic_no,
+           'relationship'                => $request->relationship,
+           'dist_id'                     => $request->dist_id,
+           'taluk_id'                    => $request->taluk_id,
+           'panchayath_id'               => $request->panchayath_id,
+           'constituent_assembly'        => $request->constituent_assembly,
+           'name_in_tamil'               => $request->name_in_tamil,
+           'name_in_english'             => $request->name_in_english,
+           'door_no'                     => $request->door_no,
+           'postal_area_tamil'           => $request->postal_area_tamil,
+           'postal_area_english'         => $request->postal_area_english,
+           'street_name_tamil'           => $request->street_name_tamil,
+           'street_name_english'         => $request->street_name_english,
+           'voterid_no'                  => $request->voterid_no,
+           'pin_code'                    => $request->pin_code,
+           'select_relationship'         => $request->select_relationship,
+           'father_name_tamil'           => $request->father_name_tamil,
+           'father_name_english'         => $request->father_name_english,
+           'husband_name_tamil'          => $request->husband_name_tamil,
+           'husband_name_english'        => $request->husband_name_english,
+           'within_assembly'             => $request->within_assembly,
+           'street_name'                 => $request->street_name,
+           'post_office'                 => $request->post_office,
+           'apartment_no'                => $request->apartment_no,
+           'taluqa_mandal'               => $request->taluqa_mandal,
+           'town_village'                => $request->town_village,
+           'name_assembly_constituency'  => $request->name_assembly_constituency,
+           'disability'                  => $request->disability,
+           'locomotive_percentage'       => $request->locomotive_percentage,
+           'visual_percentage'           => $request->visual_percentage,
+           'dumb_percentage'             => $request->dumb_percentage,
+           'other_percentage'            => $request->dumb_percentage,
+           'description'                 => $request->description,
+           'correction'                  => is_array($request->correction)
+                                      ? implode(',', $request->correction)
+                                      : $request->correction,
+           'gender'                      => $request->gender,
+           'dob'                         => $request->dob,
+           'relation'                    => $request->relation,
+           'name_tamil'                  => $request->name_tamil,
+           'name_english'                => $request->name_english,
+           'status'                      => 'Pending',
+           'applied_date'                => date("Y-m-d"),
+           'created_at'                  => date("Y-m-d"),
+        ] );
 
-        $insertid = DB::getPdo()->lastInsertId();
-        $aadhaarimg = "";
-        $photo = "";
-        $voter_id = "";
+    $insertid = DB::getPdo()->lastInsertId();
+    $aadhaarimg = "";
+    $photo = "";
+    $voter_id = "";
+    $locomotive_certificate = "";
+    $visual_certificate = "";
+    $dumb_certificate = "";
+    $other_certificate = "";
+    $age_proof = "";
+    $document = "";
 
-        if ($request->aadhaar_card != null) {
-          $aadhaarimg = uniqid().'.'.$request->file('aadhaar_card')->extension();
-          $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
-          move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaarimg);
+    if ($request->aadhaar_card != null) {
+      $aadhaarimg = uniqid().'.'.$request->file('aadhaar_card')->extension();
+      $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
+      move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaarimg);
 
-      }
-      DB::table('voterid')->where('id', $insertid)->update([
-        'aadhaar_card' => $aadhaarimg,
-    ]);
-      if ($request->photo != null) {
-        $photo = uniqid().'.'.$request->file('photo')->extension();
-        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
-        move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
+  }
+  DB::table('voterid')->where('id', $insertid)->update([
+    'aadhaar_card' => $aadhaarimg,
+]);
+  if ($request->photo != null) {
+    $photo = uniqid().'.'.$request->file('photo')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
 
-    }
-    DB::table('voterid')->where('id', $insertid)->update([
-      'photo' => $photo,
-  ]);
-    if ($request->voter_id != null) {
-        $voter_id = uniqid().'.'.$request->file('voter_id')->extension();
-        $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'voter_id' . DIRECTORY_SEPARATOR);
-        move_uploaded_file($_FILES['voter_id']['tmp_name'], $filepath . $voter_id);
+}
+DB::table('voterid')->where('id', $insertid)->update([
+  'photo' => $photo,
+]);
+if ($request->voter_id != null) {
+    $voter_id = uniqid().'.'.$request->file('voter_id')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'voter_id' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['voter_id']['tmp_name'], $filepath . $voter_id);
 
-    }
-    DB::table('voterid')->where('id', $insertid)->update([
-      'voter_id' => $voter_id,
-  ]);
+}
+DB::table('voterid')->where('id', $insertid)->update([
+  'voter_id' => $voter_id,
+]);
+if ($request->locomotive_certificate != null) {
+    $locomotive_certificate = uniqid().'.'.$request->file('locomotive_certificate')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'locomotive_certificate' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['locomotive_certificate']['tmp_name'], $filepath . $locomotive_certificate);
+
+}
+DB::table('voterid')->where('id', $insertid)->update([
+  'locomotive_certificate' => $locomotive_certificate,
+]);
+if ($request->visual_certificate != null) {
+    $visual_certificate = uniqid().'.'.$request->file('visual_certificate')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'visual_certificate' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['visual_certificate']['tmp_name'], $filepath . $visual_certificate);
+
+}
+DB::table('voterid')->where('id', $insertid)->update([
+  'visual_certificate' => $visual_certificate,
+]);
+if ($request->dumb_certificate != null) {
+    $dumb_certificate = uniqid().'.'.$request->file('dumb_certificate')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'dumb_certificate' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['dumb_certificate']['tmp_name'], $filepath . $dumb_certificate);
+
+}
+DB::table('voterid')->where('id', $insertid)->update([
+  'dumb_certificate' => $dumb_certificate,
+]);
+if ($request->other_certificate != null) {
+    $other_certificate = uniqid().'.'.$request->file('other_certificate')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'other_certificate' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['other_certificate']['tmp_name'], $filepath . $other_certificate);
+
+}
+DB::table('voterid')->where('id', $insertid)->update([
+  'other_certificate' => $other_certificate,
+]);
+if ($request->age_proof != null) {
+    $age_proof = uniqid().'.'.$request->file('age_proof')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'age_proof' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['age_proof']['tmp_name'], $filepath . $age_proof);
+
+}
+DB::table('voterid')->where('id', $insertid)->update([
+  'age_proof' => $age_proof,
+]);
+if ($request->document != null) {
+    $document = uniqid().'.'.$request->file('document')->extension();
+    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'document' . DIRECTORY_SEPARATOR);
+    move_uploaded_file($_FILES['document']['tmp_name'], $filepath . $document);
+
+}
+DB::table('voterid')->where('id', $insertid)->update([
+  'document' => $document,
+]);
 
     if($request->has('voterid_correction')){
         foreach ( $request->voterid_correction as $key => $voterid_correction ) {
@@ -8048,9 +8147,9 @@ if($coordinator_permission == 1){
      $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
      $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
      $ch = curl_init();
-    
+
      $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=218&rowid=$rowid&status=$status&smartcard_file=$smartcard_url&name=$name&documents=$documents";
-    
+
     //dd($post_data);
      $url1 = $RAMJIPAY_URL.'/api/get_smartcardotp_api';
   //echo $url1;die;
@@ -8247,7 +8346,7 @@ if($coordinator_permission == 1){
      curl_close( $ch );
      $resdata = json_decode($server_output, true);
      //dd($resdata);
-     
+
      if($resdata){
         $status = $resdata['message'];
         if($status == "Success"){

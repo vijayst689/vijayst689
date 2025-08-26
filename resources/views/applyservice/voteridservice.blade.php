@@ -1,5 +1,24 @@
 @extends('layouts.app')
 @section('content')
+<style>
+        /* Default radio border color */
+        /* Default border color */
+        .form-check-input {
+            border-color: #dd1181;
+            /* blue border */
+        }
+
+        /* Checked state */
+        .form-check-input:checked {
+            background-color: #dd1181;
+            border-color: #dd1181;
+        }
+
+        /* Focus shadow */
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.2rem rgba(238, 4, 82, 0.25);
+        }
+</style>
     <div class="page-wrapper">
         <div class="page-content">
             <!--breadcrumb-->
@@ -52,229 +71,854 @@
                                             <input type="hidden" name="user_id" value="{{ $customers->id }}">
 
                                             @if ($serviceid == 113)
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="name" class="form-label">Name</label>
-                                                    <input required type="text" class="form-control" maxlength="30"
-                                                        name="name" placeholder="Name" />
-                                                    <label for="mobile" class="form-label">Mobile Number</label>
-                                                    <input required type="text" class="form-control" maxlength="10"
-                                                        name="mobile" placeholder="Mobile Number" />
-                                                    <label for="relationship" class="form-label">Relationship</label>
-                                                    <select required type="text" class="form-control"
-                                                        name="relationship">
-                                                        <option value="">Select Relationship</option>
-                                                        <option value="Father">Father</option>
-                                                        <option value="Brother">Brother</option>
-                                                        <option value="Sister">Sister</option>
-                                                    </select>
-
+                                                <div class="col-md-12">
+                                                    <div class=row>
+                                                        <div class="mb-3 col-md-4">
+                                                            <label for="dist_id"
+                                                                class="form-label text-danger">District</label>
+                                                            <select name="dist_id" id="dist_id" class="form-control">
+                                                                <option value="">Select District</option>
+                                                                @foreach ($districts as $d)
+                                                                    <option value="{{ $d->id }}">
+                                                                        {{ $d->district_name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3 col-md-4">
+                                                            <label for="taluk_id"
+                                                                class="form-label text-danger">Taluk</label>
+                                                            <select name="taluk_id" id="taluk" class="form-control">
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3 col-md-4">
+                                                            <label for="constituent_assembly"
+                                                                class="form-label text-danger">Constituent Assembly</label>
+                                                            <input required type="text" class="form-control"
+                                                                maxlength="100" name="constituent_assembly"
+                                                                placeholder="Constituent Assembly" />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
+                                                    <label for="name_in_english" class="form-label text-danger">Name in
+                                                        English</label>
+                                                    <input required type="text" class="form-control" maxlength="100"
+                                                        name="name_in_english" placeholder="Name in English" />
+
+                                                    <label for="select_relationship" class="form-label text-danger">தந்தை
+                                                        அல்லது
+                                                        கணவர்</label>
+                                                    <select id="select_relationship" name="select_relationship"
+                                                        class="form-control">
+                                                        <option value="">Select தந்தை அல்லது கணவர்</option>
+                                                        <option value="தந்தை பெயர்">தந்தை பெயர்</option>
+                                                        <option value="கணவர் பெயர்">கணவர் பெயர்</option>
+                                                    </select>
                                                     <label for="photo" class="form-label text-danger">Photo</label>
                                                     <input required accept="image/jpeg, image/png" type="file"
                                                         class="form-control text-danger" name="photo" />
+
+                                                    <label for="door_no" class="form-label text-danger">Door No</label>
+                                                    <input required type="text" maxlength="20" class="form-control"
+                                                        name="door_no" placeholder="Door No" />
+
+                                                    <label for="street_name_english" class="form-label text-danger">Street
+                                                        Name</label>
+                                                    <input required type="text" maxlength="500" class="form-control"
+                                                        name="street_name_english" placeholder="Street Name" />
+
+                                                    <label for="postal_area_english" class="form-label text-danger">Postal
+                                                        Area</label>
+                                                    <input required type="text" maxlength="500" class="form-control"
+                                                        name="postal_area_english" placeholder="Postal Area" />
+
+                                                    <label for="voterid_no" class="form-label text-danger">குடும்ப
+                                                        உறுப்பினர்
+                                                        வாக்காளர் அடையாள அட்டை எண்</label>
+                                                    <input required type="text" class="form-control" maxlength="10"
+                                                        name="voterid_no" placeholder="அடையாள அட்டை எண்" />
+
+                                                    <label for="mobile" class="form-label text-danger">வாக்காளர் அட்டை
+                                                        பதிவு
+                                                        செய்ய வாடிக்கையாளர்களுக்கு
+                                                        OTP வரும் அதனை கேட்டால் தகவல் தரும்படி வாடிக்கையாளரிடம்
+                                                        தெரிவிக்கவும்</label>
+                                                    <input required type="text" class="form-control" maxlength="10"
+                                                        name="mobile" placeholder="Mobile Number" />
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="name_in_tamil" class="form-label text-danger">Name in
+                                                        Tamil</label>
+                                                    <input required type="text" class="form-control" maxlength="100"
+                                                        name="name_in_tamil" placeholder="Name in Tamil" />
+
+                                                    <div class="" id="father_name_tamilhide"
+                                                        style="display: none;">
+                                                        <label for="father_name_tamil"
+                                                            class="form-label text-danger">தந்தை பெயர்
+                                                            தமிழில்</label>
+                                                        <input type="text" maxlength="100" class="form-control"
+                                                            name="father_name_tamil" placeholder="தந்தை பெயர் தமிழில்" />
+                                                        <label for="father_name_englishhide"
+                                                            class="form-label text-danger">Father
+                                                            Name In English</label>
+                                                        <input type="text" maxlength="100" class="form-control"
+                                                            name="father_name_english"
+                                                            placeholder="Father Name In English" />
+                                                    </div>
+                                                    <div class="" id="husband_name_tamilhide"
+                                                        style="display: none;">
+                                                        <label for="husband_name_tamil"
+                                                            class="form-label text-danger">கணவர் பெயர்
+                                                            தமிழில்</label>
+                                                        <input type="text" maxlength="100" class="form-control"
+                                                            name="husband_name_tamil" placeholder="கணவர் பெயர் தமிழில்" />
+                                                        <label for="husband_name_englishhide"
+                                                            class="form-label text-danger">Husband Name In English</label>
+                                                        <input type="text" maxlength="100" class="form-control"
+                                                            name="husband_name_english"
+                                                            placeholder="Husband Name In English" />
+                                                    </div>
                                                     <label for="aadhaar_card" class="form-label text-danger">Aadhaar
                                                         Card</label>
                                                     <input required accept="image/jpeg, image/png" type="file"
                                                         class="form-control text-danger" name="aadhaar_card" />
-                                                    <label for="voter_id" class="form-label text-danger">Relative Voter
-                                                        Id</label>
-                                                    <input required accept="image/jpeg, image/png" type="file"
-                                                        class="form-control text-danger" name="voter_id" />
+
+                                                    <label for="pin_code" class="form-label text-danger">Pin Code</label>
+                                                    <input required type="text" maxlength="6"
+                                                        class="form-control number" name="pin_code"
+                                                        placeholder="Pin Code" />
+
+                                                    <label for="street_name_tamil" class="form-label text-danger">தெரு
+                                                        பெயர்</label>
+                                                    <input required type="text" maxlength="500" class="form-control"
+                                                        name="street_name_tamil" placeholder="தெரு பெயர்" />
+
+                                                    <label for="postal_area_tamil" class="form-label text-danger">அஞ்சல்
+                                                        பெயர்</label>
+                                                    <input required type="text" maxlength="500" class="form-control"
+                                                        name="postal_area_tamil" placeholder="அஞ்சல் பெயர்" />
+
+                                                    <label for="relationship"
+                                                        class="form-label text-danger">Relationship</label>
+                                                    <select required type="text" class="form-control"
+                                                        name="relationship">
+                                                        <option value="">Select Relationship</option>
+                                                        <option value="Father">Father</option>
+                                                        <option value="Mother">Mother</option>
+                                                        <option value="Husband">Husband</option>
+                                                        <option value="Wife">Wife</option>
+                                                    </select>
                                                 </div>
+                                                {{-- <div class="mb-3 col-md-6">
+                                            <label for="voter_id" class="form-label text-danger">Relative Voter Id</label>
+                                            <input required accept="image/jpeg, image/png" type="file"
+                                                class="form-control text-danger" name="voter_id" />
+                                        </div> --}}
                                             @elseif ($serviceid == 120)
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="epic_no" class="form-label">Epic No</label>
-                                                    <input required type="text" class="form-control" maxlength="15"
-                                                        name="epic_no" placeholder="Epic No" />
-                                                    <label for="mobile" class="form-label">Mobile Number</label>
-                                                    <input required type="text" class="form-control" maxlength="10"
-                                                        name="mobile" placeholder="Mobile Number" />
-                                                </div>
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="aadhaar_card" class="form-label text-danger">Old Voter
-                                                        ID/Aadhar Card</label>
-                                                    <input required accept="image/jpeg, image/png" type="file"
-                                                        class="form-control text-danger" name="aadhaar_card" />
-                                                </div>
-                                            @elseif ($serviceid == 164)
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="epic_no" class="form-label">Epic Number</label>
-                                                    <input required type="text" class="form-control" maxlength="15"
-                                                        name="epic_no" placeholder="Epic No" />
-                                                </div>
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="mobile" class="form-label">Mobile Number</label>
-                                                    <input required type="text" class="form-control" maxlength="10"
-                                                        name="mobile" placeholder="Mobile Number" />
-                                                </div>
-                                            @elseif ($serviceid == 182)
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="name" class="form-label">Name</label>
-                                                    <input required type="text" class="form-control" maxlength="50"
-                                                        name="name" placeholder="Name" />
-                                                </div>
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="epic_no" class="form-label">Epic Number</label>
-                                                    <input required type="text" class="form-control" maxlength="15"
-                                                        name="epic_no" placeholder="Epic No" />
-                                                </div>
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="voter_id" class="form-label text-danger">Voter ID</label>
-                                                    <input required accept="image/jpeg, image/png" type="file"
-                                                        class="form-control text-danger" name="voter_id" />
-                                                </div>
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="aadhaar_card" class="form-label text-danger">Aadhaar
-                                                        Card(Front & Back)</label>
-                                                    <input required accept="image/jpeg, image/png" type="file"
-                                                        class="form-control text-danger" name="aadhaar_card" />
-                                                </div>
-                                            @elseif ($serviceid == 181)
-                                                <div class="row">
-                                                    <div class="mb-3 col-md-6">
-                                                        <label for="name" class="form-label">Name</label>
-                                                        <input required type="text" class="form-control"
-                                                            maxlength="30" name="name" placeholder="Name" />
-                                                    </div>
-                                                    <div class="mb-3 col-md-6">
-                                                        <label for="mobile" class="form-label">Mobile Number</label>
-                                                        <input required type="text" class="form-control"
-                                                            maxlength="10" name="mobile" placeholder="Mobile Number" />
-                                                    </div>
-                                                    <div class="mb-3 col-md-6">
-                                                        <label for="voter_id" class="form-label text-danger">Voter
-                                                            Id</label>
-                                                        <input required accept="image/jpeg, image/png" type="file"
-                                                            class="form-control text-danger" name="voter_id" />
-                                                    </div>
-                                                    <div class="mb-3 col-md-6">
-                                                        <label for="aadhaar_card" class="form-label text-danger">Aadhar
-                                                            Card (Front & Back)</label>
-                                                        <input required accept="image/jpeg, image/png" type="file"
-                                                            class="form-control text-danger" name="aadhaar_card" />
+                                                <div class="col-md-12">
+                                                    <div class=row>
+                                                        <div class="mb-3 col-md-6">
+                                                            <div class="form-check form-check-inline">
+                                                                <input required class="form-check-input" type="radio"
+                                                                    name="within_assembly" id="within_assembly"
+                                                                    value="1" />
+                                                                <label class="form-check-label"
+                                                                    for="within_assembly">Within
+                                                                    Assembly Constituency</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3 col-md-6">
+                                                            <div class="form-check form-check-inline">
+                                                                <input required class="form-check-input" type="radio"
+                                                                    name="within_assembly" id="outside_assembly"
+                                                                    value="2" />
+                                                                <label class="form-check-label"
+                                                                    for="outside_assembly">Outside
+                                                                    Assembly Constituency</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <br>
-                                                </br>
-                                                <div class="row">
-                                                    <table id="pricetable" class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>VOTER ID CORRECTION</th>
-                                                                <th>CORRECTION DATA</th>
-                                                                <th>CORRECTION DOCUMENTS</th>
-                                                                <th>DOCUMENTS</th>
-                                                                <th><a class="btn btn-sm btn-success"
-                                                                        onclick="addnewrow()"><i
-                                                                            class='mdi mdi-plus-circle-outline'></i></a>
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td> <select required name="voterid_correction[]"
-                                                                        class="form-control">
-                                                                        <option value="">Select</option>
-                                                                        <option value="NAME">NAME</option>
-                                                                        <option value="GENDER">GENDER</option>
-                                                                        <option value="DOB/AGE">DOB/AGE</option>
-                                                                        <option value="RELATION TYPE">RELATION TYPE
-                                                                        </option>
-                                                                        <option value="RELATIVE NAME">RELATIVE NAME
-                                                                        </option>
-                                                                        <option value="ADDRESS">ADDRESS</option>
-                                                                        <option value="MOBILE NO">MOBILE NO</option>
-                                                                        <option value="PHOTO">PHOTO</option>
-                                                                    </select></td>
-                                                                <td><input required class="form-control" type="text"
-                                                                        name="new_data[]" maxlength="70"></td>
-                                                                <td><select required name="correction_documents[]"
-                                                                        class="form-control correction_docs">
-                                                                        <option value="">Select</option>
-                                                                        <option value="Name Correction">Name Correction
-                                                                        </option>
-                                                                        <option value="Gender Correction">Gender Correction
-                                                                        </option>
-                                                                        <option value="DOB/AGE Correction">DOB/AGE
-                                                                            Correction</option>
-                                                                        <option value="Relation Type Correction">Relation
-                                                                            Type Correction</option>
-                                                                        <option value="Relative Name Correction">Relative
-                                                                            Name Correction</option>
-                                                                        <option value="Address Correction">Address
-                                                                            Correction</option>
-                                                                        <option value="Mobile No Correction">Mobile No
-                                                                            Correction</option>
-                                                                        <option value="Photo Correction">Photo Correction
-                                                                        </option>
-                                                                    </select></td>
-                                                                <td>
-                                                                    <P class='changename'></P>
-                                                                    <input required class="form-control" type="file"
-                                                                        name="doc[]" accept="image/jpeg, image/png">
-                                                                </td>
-                                                                <td><a onClick='removerow()'
-                                                                        class='btn btn-sm btn-danger btnDelete'><i
-                                                                            class='mdi mdi-trash-can-outline'></i></a></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                <div class="col-md-12">
+                                                    <div class="row" id="assembly" style="display:none;">
+                                                        <div class="mb-3 col-md-6">
+                                                            <label for="epic_no" class="form-label">Epic Number</label>
+                                                            <input type="text" class="form-control req" maxlength="15"
+                                                                id="epic_no" name="epic_no" placeholder="Epic No" />
+
+                                                            <label for="apartment_no"
+                                                                class="form-label">House/Building/Apartment
+                                                                No</label>
+                                                            <input type="text" class="form-control" maxlength="15"
+                                                                name="apartment_no" id="apartment_no"
+                                                                placeholder="House/Building/Apartment No" />
+
+                                                            <label for="post_office" class="form-label">Post
+                                                                Office</label>
+                                                            <input type="text" maxlength="200" class="form-control"
+                                                                name="post_office" id="post_office"
+                                                                placeholder="Post Office" />
+
+                                                            <label for="taluqa_mandal"
+                                                                class="form-label">Tehsil/Taluqa/Mandal</label>
+                                                            <input type="text" maxlength="200" class="form-control"
+                                                                name="taluqa_mandal" id="taluqa_mandal"
+                                                                placeholder="Tehsil/Taluqa/Mandal" />
+
+                                                            <label for="pin_code" class="form-label">Pin Code</label>
+                                                            <input type="text" maxlength="6"
+                                                                class="form-control number" name="pin_code"
+                                                                id="pin_code" placeholder="Pin Code" />
+                                                        </div>
+                                                        <div class="mb-3 col-md-6">
+                                                            <label for="aadhaar_card" class="form-label">Adhaar
+                                                                Card</label>
+                                                            <input type="file" class="form-control"
+                                                                name="aadhaar_card" placeholder="Adhaar card" />
+
+                                                            <label for="street_name"
+                                                                class="form-label">Street/Area/Locality/Road</label>
+                                                            <input type="text" maxlength="500" class="form-control"
+                                                                name="street_name" id="street_name"
+                                                                placeholder="Street/Area/Locality/Road" />
+
+                                                            <label for="town_village"
+                                                                class="form-label">Town/Village</label>
+                                                            <input type="text" maxlength="200" class="form-control"
+                                                                name="town_village" id="town_village"
+                                                                placeholder="Town/Village" />
+
+                                                            <label for="dist_id" class="form-label">District</label>
+                                                            <select name="dist_id" id="dist_id" class="form-control">
+                                                                <option value="">Select District</option>
+                                                                @foreach ($districts as $d)
+                                                                    <option value="{{ $d->id }}">
+                                                                        {{ $d->district_name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                         </div>
-                                        @endif
-                                        <div class="text-center">
-                                            <p id="nopayment"></p>
-                                        </div>
-                                        <div class="text-center">
-                                            <div class="col-12">
-                                                <div class="mb-0">
-                                                    <button id="save" type="submit"
-                                                        class="btn btn-primary">Apply</button>
+                                        <div class="col-md-12">
+                                            <div class="row" id="assembly1" style="display:none;">
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="epic_no" class="form-label">Epic Number</label>
+                                                    <input type="text" class="form-control req1" maxlength="15"
+                                                        name="epic_no" placeholder="Epic No" />
+
+                                                    <label for="apartment_no" class="form-label">House/Building/Apartment
+                                                        No</label>
+                                                    <input type="text" class="form-control" maxlength="15"
+                                                        name="apartment_no" id="apartment_no"
+                                                        placeholder="House/Building/Apartment No" />
+
+                                                    <label for="post_office" class="form-label">Post Office</label>
+                                                    <input type="text" maxlength="200" class="form-control"
+                                                        name="post_office" id="post_office" placeholder="Post Office" />
+
+                                                    <label for="taluqa_mandal"
+                                                        class="form-label">Tehsil/Taluqa/Mandal</label>
+                                                    <input type="text" maxlength="200" class="form-control"
+                                                        name="taluqa_mandal" id="taluqa_mandal"
+                                                        placeholder="Tehsil/Taluqa/Mandal" />
+
+                                                    <label for="pin_code" class="form-label">Pin Code</label>
+                                                    <input type="text" maxlength="6" class="form-control number"
+                                                        name="pin_code" id="pin_code" placeholder="Pin Code" />
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="name_assembly_constituency" class="form-label">Name Of
+                                                        Assembly
+                                                        Constituency</label>
+                                                    <input type="text" maxlength="200" class="form-control"
+                                                        name="name_assembly_constituency"
+                                                        placeholder="Name Of Assembly Constituency" />
+
+                                                    <label for="street_name"
+                                                        class="form-label">Street/Area/Locality/Road</label>
+                                                    <input type="text" maxlength="500" class="form-control"
+                                                        name="street_name" id="street_name"
+                                                        placeholder="Street/Area/Locality/Road" />
+
+                                                    <label for="town_village" class="form-label">Town/Village</label>
+                                                    <input type="text" maxlength="200" class="form-control"
+                                                        name="town_village" id="town_village"
+                                                        placeholder="Town/Village" />
+
+                                                    <label for="dist_id" class="form-label">District</label>
+                                                    <select name="dist_id" id="dist_id" class="form-control">
+                                                        <option value="">Select District</option>
+                                                        @foreach ($districts as $d)
+                                                            <option value="{{ $d->id }}">
+                                                                {{ $d->district_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <label for="aadhaar_card" class="form-label">Adhaar Card</label>
+                                                    <input type="file" class="form-control" name="aadhaar_card"
+                                                        placeholder="Adhaar card" />
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    @elseif ($serviceid == 164)
+                                        <div class=row>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="epic_no" class="form-label">Epic Number</label>
+                                                <input type="text" class="form-control" maxlength="15" name="epic_no"
+                                                    placeholder="Epic No" />
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="document" class="form-label text-danger">Document</label>
+                                                <input type="file" class="form-control" name="document"
+                                                    placeholder="Document" />
+                                            </div>
+                                        </div>
+                                        <div class=row>
+                                            <div class="mb-3 col-md-4">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="correction[]"
+                                                        id="name_correction" value="1" />
+                                                    <label class="form-check-label" for="name_correction">Name
+                                                        Correction</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 col-md-4">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="correction[]"
+                                                        id="gender_correction" value="2" />
+                                                    <label class="form-check-label" for="gender_correction">Gender</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 col-md-4">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="correction[]"
+                                                        id="dob_correction" value="3" />
+                                                    <label class="form-check-label" for="dob_correction">DOB/Age</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 col-md-4">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="correction[]"
+                                                        id="relation_type_correction" value="4" />
+                                                    <label class="form-check-label"
+                                                        for="relation_type_correction">Relation
+                                                        Type</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 col-md-4">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="correction[]"
+                                                        id="relative_name_correction" value="5" />
+                                                    <label class="form-check-label"
+                                                        for="relative_name_correction">Relative's
+                                                        Name</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 col-md-4">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="correction[]"
+                                                        id="mobile_correction" value="6" />
+                                                    <label class="form-check-label" for="mobile_correction">Mobile
+                                                        Number</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 col-md-4">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="correction[]"
+                                                        id="photo_correction" value="7" />
+                                                    <label class="form-check-label" for="photo_correction">Photo</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="row" id="voterid_correction" style="display:none;">
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="name_tamil" class="form-label">Name In Tamil</label>
+                                                    <input type="text" class="form-control crt" maxlength="100"
+                                                        id="name_tamil" name="name_tamil" placeholder="Name In Tamil" />
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="name_english" class="form-label">Name In English</label>
+                                                    <input type="text" class="form-control crt" maxlength="100"
+                                                        id="name_english" name="name_english"
+                                                        placeholder="Name In English" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="row" id="voterid_correction1" style="display:none;">
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="gender" class="form-label">Gender</label>
+                                                    <select id="gender" name="gender" class="form-control crt1">
+                                                        <option value="">Select Gender</option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                        <option value="Third Gender">Third Gender</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="row" id="voterid_correction2" style="display:none;">
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="dob" class="form-label">DOB</label>
+                                                    <input type="date" maxlength="10" class="form-control crt2"
+                                                        name="dob" placeholder="DOB" />
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="age_proof" class="form-label">Age Proof</label>
+                                                    <input type="file" class="form-control crt2" name="age_proof"
+                                                        placeholder="File Upload" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="row" id="voterid_correction3" style="display:none;">
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="relation" class="form-label">Relation</label>
+                                                    <select id="relation" name="relation" class="form-control crt3">
+                                                        <option value="">Select Relation</option>
+                                                        <option value="Father">Father</option>
+                                                        <option value="Mother">Mother</option>
+                                                        <option value="Husband">Husband</option>
+                                                        <option value="Wife">Wife</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="row" id="voterid_correction4" style="display:none;">
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="name_in_tamil" class="form-label">Name In Tamil</label>
+                                                    <input type="text" class="form-control crt4" maxlength="100"
+                                                        id="name_in_tamil" name="name_in_tamil"
+                                                        placeholder="Name In Tamil" />
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="name_in_english" class="form-label">Name In
+                                                        English</label>
+                                                    <input type="text" class="form-control crt4" maxlength="100"
+                                                        id="name_in_english" name="name_in_english"
+                                                        placeholder="Name In English" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="row" id="voterid_correction5" style="display:none;">
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="mobile" class="form-label">Mobile Number</label>
+                                                    <input type="text" class="form-control number crt5" maxlength="10"
+                                                        id="mobile" name="mobile" placeholder="Mobile Number" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="row" id="voterid_correction6" style="display:none;">
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="photo" class="form-label">Photo</label>
+                                                    <input type="file" class="form-control number crt6" id="photo"
+                                                        name="photo" placeholder="Photo" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    @elseif ($serviceid == 182)
+                                        <div class="col-md-12">
+                                            <h4 class="text-center">Application for Marking Person with Disability</h4>
+                                            <div class=row>
+                                                <div class="mb-8 col-md-3">
+                                                    <div class="form-check form-check-inline">
+                                                        <input required class="form-check-input" type="radio"
+                                                            name="disability" id="locomotive" value="1" />
+                                                        <label class="form-check-label"
+                                                            for="locomotive">Locomotive</label>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-8 col-md-3">
+                                                    <div class="form-check form-check-inline">
+                                                        <input required class="form-check-input" type="radio"
+                                                            name="disability" id="visual" value="2" />
+                                                        <label class="form-check-label" for="visual">Visual</label>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-8 col-md-3">
+                                                    <div class="form-check form-check-inline">
+                                                        <input required class="form-check-input" type="radio"
+                                                            name="disability" id="deaf_dumb" value="3" />
+                                                        <label class="form-check-label" for="deaf_dumb">Deaf &
+                                                            Dumb</label>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-8 col-md-3">
+                                                    <div class="form-check form-check-inline">
+                                                        <input required class="form-check-input" type="radio"
+                                                            name="disability" id="description" value="4" />
+                                                        <label class="form-check-label" for="description">If Any
+                                                            Other(Give
+                                                            Description)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="row" id="person_with_disability" style="display:none;">
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="locomotive_percentage" class="form-label">Percentage of
+                                                        Disability</label>
+                                                    <input type="text" class="form-control re" maxlength="6"
+                                                        id="locomotive_percentage" name="locomotive_percentage"
+                                                        placeholder="Percentage of Disability" />
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="locomotive_certificate" class="form-label">Certificate
+                                                        Upload</label>
+                                                    <input type="file" class="form-control re"
+                                                        name="certificate_disability" placeholder="File Upload" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="row" id="person_with_disability1" style="display:none;">
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="visual_percentage" class="form-label">Percentage of
+                                                        Disability</label>
+                                                    <input type="text" class="form-control re1" maxlength="6"
+                                                        name="visual_percentage" placeholder="Percentage of Disability" />
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="visual_certificate" class="form-label">Certificate
+                                                        Upload</label>
+                                                    <input type="file" class="form-control re1"
+                                                        name="visual_certificate" placeholder="File Upload" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="row" id="person_with_disability2" style="display:none;">
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="dumb_percentage" class="form-label">Percentage of
+                                                        Disability</label>
+                                                    <input type="text" class="form-control re2" maxlength="6"
+                                                        name="epic_no" placeholder="Percentage of Disability" />
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="dumb_certificate" class="form-label">Certificate
+                                                        Upload</label>
+                                                    <input type="file" class="form-control re2"
+                                                        name="dumb_certificate" placeholder="File Upload" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="row" id="person_with_disability3" style="display:none;">
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="other_percentage" class="form-label">Percentage of
+                                                        Disability</label>
+                                                    <input type="text" class="form-control re3" maxlength="6"
+                                                        name="other_percentage" placeholder="Percentage of Disability" />
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="other_certificate" class="form-label">Certificate
+                                                        Upload</label>
+                                                    <input type="file" class="form-control re3"
+                                                        name="other_certificate" placeholder="Certificate Upload" />
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="description" class="form-label">Description</label>
+                                                    <input type="text" class="form-control re3" maxlength="100"
+                                                        name="description" placeholder="Enter The Description" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @elseif ($serviceid == 181)
+                                        <div class="row">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="name" class="form-label">Name</label>
+                                                <input required type="text" class="form-control" maxlength="30"
+                                                    name="name" placeholder="Name" />
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="mobile" class="form-label">Mobile Number</label>
+                                                <input required type="text" class="form-control" maxlength="10"
+                                                    name="mobile" placeholder="Mobile Number" />
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="voter_id" class="form-label text-danger">Voter
+                                                    Id</label>
+                                                <input required accept="image/jpeg, image/png" type="file"
+                                                    class="form-control text-danger" name="voter_id" />
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="aadhaar_card" class="form-label text-danger">Aadhar
+                                                    Card (Front & Back)</label>
+                                                <input required accept="image/jpeg, image/png" type="file"
+                                                    class="form-control text-danger" name="aadhaar_card" />
+                                            </div>
+                                        </div>
+                                        <br>
+                                        </br>
+                                        <div class="row">
+                                            <table id="pricetable" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>VOTER ID CORRECTION</th>
+                                                        <th>CORRECTION DATA</th>
+                                                        <th>CORRECTION DOCUMENTS</th>
+                                                        <th>DOCUMENTS</th>
+                                                        <th><a class="btn btn-sm btn-success" onclick="addnewrow()"><i
+                                                                    class='mdi mdi-plus-circle-outline'></i></a>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td> <select required name="voterid_correction[]"
+                                                                class="form-control">
+                                                                <option value="">Select</option>
+                                                                <option value="NAME">NAME</option>
+                                                                <option value="GENDER">GENDER</option>
+                                                                <option value="DOB/AGE">DOB/AGE</option>
+                                                                <option value="RELATION TYPE">RELATION TYPE
+                                                                </option>
+                                                                <option value="RELATIVE NAME">RELATIVE NAME
+                                                                </option>
+                                                                <option value="ADDRESS">ADDRESS</option>
+                                                                <option value="MOBILE NO">MOBILE NO</option>
+                                                                <option value="PHOTO">PHOTO</option>
+                                                            </select></td>
+                                                        <td><input required class="form-control" type="text"
+                                                                name="new_data[]" maxlength="70"></td>
+                                                        <td><select required name="correction_documents[]"
+                                                                class="form-control correction_docs">
+                                                                <option value="">Select</option>
+                                                                <option value="Name Correction">Name Correction
+                                                                </option>
+                                                                <option value="Gender Correction">Gender Correction
+                                                                </option>
+                                                                <option value="DOB/AGE Correction">DOB/AGE
+                                                                    Correction</option>
+                                                                <option value="Relation Type Correction">Relation
+                                                                    Type Correction</option>
+                                                                <option value="Relative Name Correction">Relative
+                                                                    Name Correction</option>
+                                                                <option value="Address Correction">Address
+                                                                    Correction</option>
+                                                                <option value="Mobile No Correction">Mobile No
+                                                                    Correction</option>
+                                                                <option value="Photo Correction">Photo Correction
+                                                                </option>
+                                                            </select></td>
+                                                        <td>
+                                                            <P class='changename'></P>
+                                                            <input required class="form-control" type="file"
+                                                                name="doc[]" accept="image/jpeg, image/png">
+                                                        </td>
+                                                        <td><a onClick='removerow()'
+                                                                class='btn btn-sm btn-danger btnDelete'><i
+                                                                    class='mdi mdi-trash-can-outline'></i></a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                 </div>
+                                @endif
+                                <div class="text-center">
+                                    <p id="nopayment"></p>
+                                </div>
+                                <div class="text-center">
+                                    <div class="col-12">
+                                        <div class="mb-0">
+                                            <button id="save" type="submit" class="btn btn-primary">Apply</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            @endsection
-            @push('page_scripts')
-                <script>
-                    $(function() {
-                        var wallet = "{{ Auth::user()->wallet }}";
-                        var amount = "{{ $payment }}";
-                        if (parseFloat(amount) > parseInt(wallet)) {
-                            $('#save').prop("disabled", true);
-                            $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
-                                'color': 'red',
-                                'font-size': '150%',
-                                'font-weight': 'bold'
+            </div>
+        @endsection
+        @push('page_scripts')
+            <script>
+                $(function() {
+                    var wallet = "{{ Auth::user()->wallet }}";
+                    var amount = "{{ $payment }}";
+                    if (parseFloat(amount) > parseInt(wallet)) {
+                        $('#save').prop("disabled", true);
+                        $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
+                            'color': 'red',
+                            'font-size': '150%',
+                            'font-weight': 'bold'
+                        });
+                    }
+
+                });
+
+                $('#dist_id').on('change', function() {
+                    var dist_id = this.value;
+                    $("#taluk").html('');
+                    var url = "{{ url('service/get_taluk') }}/" + dist_id;
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        success: function(result) {
+                            $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
+                            $.each(result, function(key, value) {
+                                $("#taluk").append('<option value="' + value
+                                    .id + '">' + value.taluk_name + '</option>');
+                            });
+                            $('#panchayath').html('<option value="">-- Select Panchayath --</option>');
+                        }
+                    });
+                });
+
+                $('#taluk').on('change', function() {
+                    var taluk_id = this.value;
+                    $("#panchayath").html('');
+                    var url = "{{ url('service/get_panchayath') }}/" + taluk_id;
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        success: function(result) {
+                            $('#panchayath').html('<option value="">-- Select Panchayath Name --</option>');
+                            $.each(result, function(key, value) {
+                                $("#panchayath").append('<option value="' + value
+                                    .id + '">' + value.panchayath_name + '</option>');
                             });
                         }
-
                     });
+                });
 
-                    $("#pricetable").on('change', '.correction_docs', function() {
-                        if ($(this).val() == "DOB/AGE Correction") {
-                            $(this).closest('tr').find('.changename').text("Birth Certificate or Driving License");
-                        } else if ($(this).val() == "Photo Correction") {
-                            $(this).closest('tr').find('.changename').text("Applicant Photo");
-                        } else {
-                            $(this).closest('tr').find('.changename').text("Aadhaar Card");
+                $("#pricetable").on('change', '.correction_docs', function() {
+                    if ($(this).val() == "DOB/AGE Correction") {
+                        $(this).closest('tr').find('.changename').text("Birth Certificate or Driving License");
+                    } else if ($(this).val() == "Photo Correction") {
+                        $(this).closest('tr').find('.changename').text("Applicant Photo");
+                    } else {
+                        $(this).closest('tr').find('.changename').text("Aadhaar Card");
+                    }
+                });
+
+                $("#pricetable").on('click', '.btnDelete', function() {
+                    $(this).closest('tr').remove();
+                });
+
+                function addnewrow() {
+                    $("#pricetable tbody").append(
+                        "<tr><td><select required name='voterid_correction[]' class='form-control'><option value=''>Select</option><option value='NAME'>NAME</option><option value='GENDER'>GENDER</option><option value='DOB/AGE'>DOB/AGE</option><option value='RELATION TYPE'>RELATION TYPE</option><option value='RELATIVE NAME'>RELATIVE NAME</option><option value='ADDRESS'>ADDRESS</option><option value='MOBILE NO'>MOBILE NO</option><option value='PHOTO'>PHOTO</option></select></td></td><td><input required class='form-control' type='text' name='new_data[]' maxlength='70'></td><td><select required name='correction_documents[]' class='form-control correction_docs'><option value=''>Select</option> <option value='Name Correction'>Name Correction</option><option value='Gender Correction'>Gender Correction</option><option value='DOB/AGE Correction'>DOB/AGE Correction</option><option value='Relation Type Correction'>Relation Type Correction</option> <option value='Relative Name Correction'>Relative Name Correction</option><option value='Address Correction'>Address Correction</option><option value='Mobile No Correction'>Mobile No Correction</option><option value='Photo Correction'>Photo Correction</option></select></td><td><P class='changename'></P><input required class='form-control' type='file' name='doc[]' accept='image/jpeg, image/png'></td><td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i class='mdi mdi-trash-can-outline'></i></a></td></tr>"
+                    );
+                }
+
+                $('input[name="within_assembly"]').change(function() {
+                    if ($(this).val() === "1") {
+                        $("#assembly").show().find('.req').attr('required', true);;
+                        $("#assembly1").hide().find('.req1').removeAttr('required');
+                    } else if ($(this).val() === "2") {
+                        $("#assembly").hide().find('.req').removeAttr('required');
+                        $("#assembly1").show().find('.req1').attr('required', true);;
+                    }
+                });
+
+                $('input[name="disability"]').change(function() {
+                    if ($(this).val() === "1") {
+                        $("#person_with_disability").show().find('.re').attr('required', true);;
+                        $("#person_with_disability1").hide().find('.re1').removeAttr('required');
+                        $("#person_with_disability2").hide().find('.re2').removeAttr('required');
+                        $("#person_with_disability3").hide().find('.re3').removeAttr('required');
+                    } else if ($(this).val() === "2") {
+                        $("#person_with_disability1").show().find('.re1').attr('required', true);;
+                        $("#person_with_disability").hide().find('.re').removeAttr('required');
+                        $("#person_with_disability2").hide().find('.re2').removeAttr('required');
+                        $("#person_with_disability3").hide().find('.re3').removeAttr('required');
+                    } else if ($(this).val() === "3") {
+                        $("#person_with_disability2").show().find('.re2').attr('required', true);;
+                        $("#person_with_disability").hide().find('.re').removeAttr('required');
+                        $("#person_with_disability1").hide().find('.re1').removeAttr('required');
+                        $("#person_with_disability3").hide().find('.re3').removeAttr('required');
+                    } else if ($(this).val() === "4") {
+                        $("#person_with_disability3").show().find('.re3').attr('required', true);;
+                        $("#person_with_disability").hide().find('.re1').removeAttr('required');
+                        $("#person_with_disability1").hide().find('.re2').removeAttr('required');
+                        $("#person_with_disability2").hide().find('.re').removeAttr('required');
+                    }
+                });
+
+                $('#select_relationship').change(function() {
+                    if ($('#select_relationship').val() == 'தந்தை பெயர்') {
+                        $('#father_name_tamilhide').show("slow");
+                        $('#father_name_englishhide').show("slow");
+                        $('#husband_name_tamilhide').hide("slow");
+                        $('#husband_name_englishhide').hide("slow");
+                        $('#husband_name_tamil').prop("required", false);
+                        $('#husband_name_english').prop("required", false);
+                        $('#father_name_tamil').prop("required", true);
+                        $('#father_name_english').prop("required", true);
+
+                    } else if ($('#select_relationship').val() == 'கணவர் பெயர்') {
+                        $('#husband_name_tamilhide').show("slow");
+                        $('#husband_name_englishhide').show("slow");
+                        $('#father_name_tamilhide').hide("slow");
+                        $('#father_name_englishhide').hide("slow");
+                        $('#father_name_tamil').prop("required", false);
+                        $('#father_name_english').prop("required", false);
+                        $('#husband_name_tamil').prop("required", true);
+                        $('#husband_name_english').prop("required", true);
+
+                    } else {
+                        $('#father_name_tamilhide').hide("slow");
+                        $('#father_name_englishhide').hide("slow");
+                        $('#husband_name_tamilhide').hide("slow");
+                        $('#husband_name_englishhide').hide("slow");
+                        $('#father_name_tamil').prop("required", false);
+                        $('#father_name_english').prop("required", false);
+                        $('#husband_name_tamil').prop("required", false);
+                        $('#husband_name_english').prop("required", false);
+
+                    }
+                });
+
+                $('input[name="correction[]"]').change(function() {
+                    // Count checked checkboxes
+                    var checkedCount = $('input[name="correction[]"]:checked').length;
+
+                    if (checkedCount > 4) {
+                        // prevent selecting more than 4
+                        this.checked = false;
+                        alert("You can select only 4 options.");
+                        return;
+                    }
+
+                    // Hide all boxes and remove required
+                    $("#voterid_correction, #voterid_correction1, #voterid_correction2, #voterid_correction3, #voterid_correction4, #voterid_correction5, #voterid_correction6")
+                        .hide()
+                        .find("input")
+                        .removeAttr("required");
+
+                    // Show only selected ones
+                    $('input[name="correction[]"]:checked').each(function() {
+                        let val = $(this).val();
+
+                        if (val === "1") {
+                            $("#voterid_correction").show().find(".crt").attr("required", true);
+                        } else if (val === "2") {
+                            $("#voterid_correction1").show().find(".crt1").attr("required", true);
+                        } else if (val === "3") {
+                            $("#voterid_correction2").show().find(".crt2").attr("required", true);
+                        } else if (val === "4") {
+                            $("#voterid_correction3").show().find(".crt3").attr("required", true);
+                        } else if (val === "5") {
+                            $("#voterid_correction4").show().find(".crt4").attr("required", true);
+                        } else if (val === "6") {
+                            $("#voterid_correction5").show().find(".crt5").attr("required", true);
+                        } else if (val === "7") {
+                            $("#voterid_correction6").show().find(".crt6").attr("required", true);
                         }
                     });
-
-                    $("#pricetable").on('click', '.btnDelete', function() {
-                        $(this).closest('tr').remove();
-                    });
-
-                    function addnewrow() {
-                        $("#pricetable tbody").append(
-                            "<tr><td><select required name='voterid_correction[]' class='form-control'><option value=''>Select</option><option value='NAME'>NAME</option><option value='GENDER'>GENDER</option><option value='DOB/AGE'>DOB/AGE</option><option value='RELATION TYPE'>RELATION TYPE</option><option value='RELATIVE NAME'>RELATIVE NAME</option><option value='ADDRESS'>ADDRESS</option><option value='MOBILE NO'>MOBILE NO</option><option value='PHOTO'>PHOTO</option></select></td></td><td><input required class='form-control' type='text' name='new_data[]' maxlength='70'></td><td><select required name='correction_documents[]' class='form-control correction_docs'><option value=''>Select</option> <option value='Name Correction'>Name Correction</option><option value='Gender Correction'>Gender Correction</option><option value='DOB/AGE Correction'>DOB/AGE Correction</option><option value='Relation Type Correction'>Relation Type Correction</option> <option value='Relative Name Correction'>Relative Name Correction</option><option value='Address Correction'>Address Correction</option><option value='Mobile No Correction'>Mobile No Correction</option><option value='Photo Correction'>Photo Correction</option></select></td><td><P class='changename'></P><input required class='form-control' type='file' name='doc[]' accept='image/jpeg, image/png'></td><td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i class='mdi mdi-trash-can-outline'></i></a></td></tr>"
-                        );
-                    }
-                </script>
-            @endpush
+                });
+            </script>
+        @endpush
