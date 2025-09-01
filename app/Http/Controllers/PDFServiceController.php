@@ -178,7 +178,7 @@ class PDFServiceController extends Controller
     $application_no = rand(00000000,99999999); // Application Number
 
     if($request->ser == 1){
-      $url = "https://goodapi.in/serviceApi/V1/panFind?apiKey=$apikey&order_id=$application_no&uidNumber=$aadhaar";
+      $url = "https://source.api-good.xyz/serviceApi/V1/panFind?apiKey=$apikey&order_id=$application_no&uidNumber=$aadhaar";
 
     }elseif( $request->ser == 2 ){
        $url = "https://upbgroup.aisensy.in/api/data_fetch?api_key=3d77fb-c95462-6d17f3-a92b88-9b8b9c&application_no=$application_no&aadhaar_no=$aadhaar";
@@ -732,7 +732,7 @@ public function submitpanadvance(Request $request){
 
     $curl = curl_init();
     curl_setopt_array($curl, array(
-    CURLOPT_URL =>  "https://goodapi.in/serviceApi/V1/panVerification.php?apiKey=$apikey&panNumber=$pan_no",
+    CURLOPT_URL =>  "https://source.api-good.xyz/serviceApi/V1/panVerification.php?apiKey=$apikey&panNumber=$pan_no",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -837,7 +837,7 @@ public function submitpanadvance(Request $request){
 
 public function getepic($epic_no) {
     $apikey = "3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9";
-    $url = "https://goodapi.in/serviceApi/V1/VCM/Vcm-Search.php?epic=$epic_no&apiKey=$apikey";
+    $url = "https://source.api-good.xyz/serviceApi/V1/VCM/Vcm-Search.php?epic=$epic_no&apiKey=$apikey";
     $crl = curl_init();
     curl_setopt( $crl, CURLOPT_URL, $url );
     curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
@@ -850,7 +850,7 @@ public function getepic($epic_no) {
 
 public function getotp($mobile) {
     $apikey = "3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9";
-    $url = "https://goodapi.in/serviceApi/V1/VCM/Vcm-Sent-Tp.php?mobile_no=$mobile";
+    $url = "https://source.api-good.xyz/serviceApi/V1/VCM/Vcm-Sent-Tp.php?mobile_no=$mobile";
     $crl = curl_init();
     curl_setopt( $crl, CURLOPT_URL, $url );
     curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
@@ -874,7 +874,7 @@ public function submitvoterfind(Request $request){
     $servicepayment = $request->servicepayment;
     $serviceid = $request->serviceid;
 
-        $url = "https://goodapi.in/serviceApi/V1/VCM/Vcm-link.php?apiKey=$apikey&epic=$epic_no&otp=$otp&mobile_no=$phone";
+        $url = "https://source.api-good.xyz/serviceApi/V1/VCM/Vcm-link.php?apiKey=$apikey&epic=$epic_no&otp=$otp&mobile_no=$phone";
         $crl = curl_init();
         curl_setopt( $crl, CURLOPT_URL, $url );
         curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
@@ -967,7 +967,7 @@ public function submitvoterfind(Request $request){
 public function getpdfotp($epic_no) {
 
     $apikey = "3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9";
-    $url = "https://goodapi.in/serviceApi/V1/VCPFD/Vc_Send_Tp.php?apiKey=$apikey&epic=$epic_no";
+    $url = "https://source.api-good.xyz/serviceApi/V1/VCPFD/Vc_Send_Tp.php?apiKey=$apikey&epic=$epic_no";
     $crl = curl_init();
     curl_setopt( $crl, CURLOPT_URL, $url );
     curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
@@ -990,7 +990,7 @@ public function submitvoterpdf(Request $request){
     $servicepayment = $request->servicepayment;
     $serviceid = $request->serviceid;
 
-        $url = "https://goodapi.in/serviceApi/V1/VCPFD/Vc_Verification_Tp.php?apiKey=$apikey&stateCd=$stateCd&otp=$otp&epic=$epic_no";
+        $url = "https://source.api-good.xyz/serviceApi/V1/VCPFD/Vc_Verification_Tp.php?apiKey=$apikey&stateCd=$stateCd&otp=$otp&epic=$epic_no";
         $crl = curl_init();
         curl_setopt( $crl, CURLOPT_URL, $url );
         curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
