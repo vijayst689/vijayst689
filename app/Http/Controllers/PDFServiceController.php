@@ -727,12 +727,15 @@ public function submitpanadvance(Request $request){
     $pan_no = $request->pan_no;
     $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
     $amount = $request->amount;
-    $servicepayment = $request->servicepayment;
-    $serviceid = $request->serviceid;
-
+    $wallet = Auth::user()->wallet;
+        $servicepayment = $request->servicepayment;
+        $serviceid = $request->serviceid;
+        if($wallet < $servicepayment){
+          return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+        }
     $curl = curl_init();
     curl_setopt_array($curl, array(
-    CURLOPT_URL =>  "https://source.api-good.xyz/serviceApi/V1/panVerification.php?apiKey=$apikey&panNumber=$pan_no",
+    CURLOPT_URL =>  "http://source.api-good.xyz/serviceApi/V1/panVerification.php?apiKey=$apikey&panNumber=$pan_no",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -751,12 +754,13 @@ public function submitpanadvance(Request $request){
     curl_close($curl);
     $resdata = json_decode($response, true);
 
-    $message=$resdata['message'];
+
 
     if($resdata['StatusCode'] == "100"){
         $dob = $resdata['dob'];
         $name = $resdata['name'];
         $gender = $resdata['gender'];
+        $message=$resdata['message'];
         DB::table('pancard_find')->insert([
             'user_id' => Auth::user()->id,
             'pan_no' => $request->pan_no,
