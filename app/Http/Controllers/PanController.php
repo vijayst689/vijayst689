@@ -23,7 +23,7 @@ class PanController extends Controller
   }
 
   public function viewpan(){
-    $viewpan = DB::table( 'panservice' )->where('status', 'Active')->orderBy( 'id', 'Asc' )->get();
+    $viewpan = DB::table( 'panservice' )->orderBy( 'id', 'Asc' )->get();
     return view( 'pancard.viewpan' ,compact('viewpan'));
   }
 
@@ -76,8 +76,24 @@ class PanController extends Controller
   }
 
   public function panservices(){
-    $usertype = Auth::user()->user_type_id;
-    $service = DB::table( 'panservice' )->where('status' , 'Active')->orderBy( 'id', 'ASC' )->get();
+  $usertype = Auth::user()->user_type_id;
+ $userPermission = DB::table('user_permission')
+    ->where('user_id', Auth::user()->id)
+    ->where('parent_id', 4)
+    ->pluck('service_id');
+
+$adminPermission = DB::table('user_permission')
+    ->where('user_id', 2) 
+    ->where('parent_id', 4)
+    ->pluck('service_id');
+
+$finalServiceIds = $userPermission->intersect($adminPermission);
+   if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 5){
+      $service = DB::table( 'panservice' )->where('status' , 'Active')->orderBy( 'id', 'ASC' )->get();
+    }else{
+      $service = DB::table( 'panservice' )->where('status' , 'Active')->whereIn('id',$finalServiceIds)->orderBy( 'id', 'ASC' )->get();
+    }
+    
     $service = json_decode( json_encode( $service ), true );
     foreach ( $service as $key => $s ) {
 

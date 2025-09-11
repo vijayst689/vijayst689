@@ -48,8 +48,11 @@ Route::post('checkaadhar', [CustomAuthController::class, 'checkaadhar'])->name('
 Route::post('checkphone', [CustomAuthController::class, 'checkphone'])->name('checkphone');
 Route::post('checkpan', [CustomAuthController::class, 'checkpan'])->name('checkpan');
 
-
 Route::get('home', [App\Http\Controllers\Frontend\HomeController::class, 'Index']);
+
+Route::get('/changepassword', [App\Http\Controllers\UserController::class, 'changepassword']);
+
+Route::post('/updatepassword', [App\Http\Controllers\UserController::class, 'updatepassword'])->name('updatepassword');
 
 Route::get('addcustomer', [App\Http\Controllers\UserController::class, 'addcustomer']);
 
@@ -389,6 +392,8 @@ Route::get('/viewpan', [App\Http\Controllers\PanController::class, 'viewpan'])->
 Route::post('/savepan', [App\Http\Controllers\PanController::class, 'savepan'])->name('savepan');
 
 Route::post('/updatepan', [App\Http\Controllers\PanController::class, 'updatepan'])->name('updatepan');
+
+Route::post('/updatestatuspan', [App\Http\Controllers\PanController::class, 'updatestatuspan'])->name('updatestatuspan');
 
 Route::get('/panservices', [App\Http\Controllers\PanController::class, 'panservices'])->name('panservices');
 

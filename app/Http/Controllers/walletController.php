@@ -87,18 +87,69 @@ public function rawallet()
   return view('wallet.rawallet',compact('raviewamount'));
 }
 
-  public function rapaymentrequest()
-{
-  $userid = Auth::user()->id;
+ public function rapaymentrequest()
+  {
+    $userid = Auth::user()->id;
 
-  if(Auth::user()->user_type_id == 1){
-      $rarequestamount = DB::table( 'request_payment' )->where( 'to_id', $userid )->orderBy( 'id', 'desc' )->get();
-  }else{
-      $rarequestamount = DB::table( 'request_payment' )->where( 'from_id', $userid )->orderBy( 'id', 'desc' )->get();
+    if(Auth::user()->user_type_id == 1){
+         $requestamount = DB::table('request_payment')
+    ->select(
+        'id',
+        'from_id',
+        'to_id',
+        'amount',
+        DB::raw("CONCAT(req_date, ' ', req_time) as datetime"),
+        'status',
+        'req_image as proof',
+        DB::raw("'request' as source") // to know from which table
+    )->where( 'to_id', $userid )->orderBy('datetime', 'desc');
+
+$wallettopup = DB::table('wallet_topup')
+    ->select(
+        'id',
+        'user_id as from_id',
+        DB::raw("NULL as to_id"),
+        'payment as amount',
+        'date as datetime',
+        'status',
+        'payment_proof as proof',
+        DB::raw("'topup' as source")
+    );
+    }else{
+        //$rarequestamount = DB::table( 'request_payment' )->where( 'from_id', $userid )->orderBy( 'id', 'desc' )->get();
+        $requestamount = DB::table('request_payment')
+    ->select(
+        'id',
+        'from_id',
+        'to_id',
+        'amount',
+        DB::raw("CONCAT(req_date, ' ', req_time) as datetime"),
+        'status',
+        'req_image as proof',
+        DB::raw("'request' as source") // to know from which table
+    )->where( 'from_id', $userid )->orderBy('datetime', 'desc');
+
+$wallettopup = DB::table('wallet_topup')
+    ->select(
+        'id',
+        'user_id as from_id',
+        DB::raw("NULL as to_id"),
+        'payment as amount',
+        'date as datetime',
+        'status',
+        'payment_proof as proof',
+        DB::raw("'topup' as source")
+    );
+
+
+    }
+    $rarequestamount = $requestamount
+    ->unionAll($wallettopup)
+    ->orderBy('datetime','desc')
+    ->get();
+//dd($rarequestamount);
+    return view('wallet.rapaymentrequest',compact('rarequestamount'));
   }
-
-  return view('wallet.rapaymentrequest',compact('rarequestamount'));
-}
 
 public function superadminaddwallet( Request $request )
 {
@@ -130,32 +181,54 @@ public function superadminaddwallet( Request $request )
     return redirect()->back()->with( 'success', 'Ramji Wallet Updated Successfully' );
 }
 
-public function ramjisaverequest(Request $request){
+ public function ramjisaverequest(Request $request)
+    {
+        DB::table( 'wallet_topup' )->insert( [
+          'user_id'        => Auth::user()->id,
+          'website_index'  => env( 'WEBSITE_INDEX', '' ),
+          'payment'        => $request->amount,
+          'date'            => date("Y-m-d H:i:s"),
+          'status'          => 'Pending',
+    ] );
 
-    $from_id = Auth::user()->id;
+    $insertid = DB::getPdo()->lastInsertId();
 
-      $confirm = DB::table('request_payment')->insert([
-          'from_id'   => $from_id,
-          'to_id'     => 1,
-          'amount'    => $request->amount,
-          'status'    => 'Pending',
-          'req_date'  => date("Y-m-d"),
-          'req_time'  => date("H:i:s"),
-      ]);
-      $insertid = DB::getPdo()->lastInsertId();
+    $payment_proof = '';
+    if ( $request->req_image != null ) {
+      $payment_proof = uniqid().'.'.$request->file( 'req_image' )->extension();
+      $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'paidimage' . DIRECTORY_SEPARATOR );
+      move_uploaded_file( $_FILES[ 'req_image' ][ 'tmp_name' ], $filepath . $payment_proof );
+    }
+    $image = DB::table( 'wallet_topup' )->where( 'id', $insertid )->update( [
+      'payment_proof' => $payment_proof,
+    ] );
 
-      $req_image = "";
-      if ($request->req_image != null) {
-          $req_image = $insertid.'.'.$request->file('req_image')->extension();
-          $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'paidimage' . DIRECTORY_SEPARATOR);
-          move_uploaded_file($_FILES['req_image']['tmp_name'], $filepath . $req_image);
-      }
-      $image = DB::table('request_payment')->where('id', $insertid)->update([
-          'req_image' => $req_image,
-      ]);
+    $getdata = DB::table( 'wallet_topup' )->where('id',$insertid)->first();
+    if($getdata){
+     $payment = $getdata->payment;
+     $status = $getdata->status;
+     $url = url('/');
+     $payment_proof = $url.'/upload/paidimage/'.$payment_proof;
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+     $ch = curl_init();
 
-return redirect( "/rapaymentrequest" );
-}
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&payment_proof=$payment_proof&payment=$payment&rowid=$insertid&status=$status";
+
+    //dd($post_data);
+     $url1 = $RAMJIPAY_URL.'/api/approve_payment';
+  //echo $url1;die;
+     curl_setopt( $ch, CURLOPT_URL, $url1 );
+     curl_setopt( $ch, CURLOPT_POST, 1 );
+     curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+     $server_output = curl_exec( $ch );
+     curl_close( $ch );
+     $resdata = json_decode($server_output, true);
+       }
+      return redirect()->back()->with('success', 'Payment Date Updated Successfully ... !');
+  }
 
 public function adminaddwallet( Request $request )
 {

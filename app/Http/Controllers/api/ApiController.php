@@ -1229,4 +1229,53 @@ public function get_tnegaservicesstatus(Request $request){
     $response["index"] = $index;
     return response()->json($response);
 }
+
+public function update_payment_status(Request $request){
+    $API_KEY = env('API_KEY','');
+    $WEBSITE_INDEX = env('WEBSITE_INDEX','');
+    $key = $request->key;
+    $index = $request->index;
+    $response = array();
+    $message = "";
+
+    if($key == $API_KEY && $index == $WEBSITE_INDEX){
+        $rowid = $request->row_id;
+        DB::table('wallet_topup')->where('id',$rowid )->update([
+            'status' => $request->status,
+
+        ]);
+
+        if($request->status == "Approved"){
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $get = DB::table( 'wallet_topup' )->select('payment')->where('id',$rowid)->first();
+        $amount = 0;
+        if($get){
+            $amount = $get->payment;
+        }
+        $getwallet = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->rawallet;
+        }
+
+        $newbalance1 = $balance + $amount;
+        $sql = "update users set rawallet = rawallet + $amount where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $ad_info = 'Fund Transfer';
+        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','1','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+
+        }
+        $message = "Success";
+    }else{
+
+        $message = "Access Denied";
+    }
+    $response["message"] = $message;
+    $response["index"] = $index;
+    return response()->json($response);
+}
+
 }

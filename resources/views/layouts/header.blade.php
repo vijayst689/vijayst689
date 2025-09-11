@@ -474,6 +474,9 @@
                      <li><a class="dropdown-item d-flex align-items-center" href="{{ 'profile' }}"><i
                                  class="bx bx-user fs-5"></i><span>Profile</span></a>
                      </li>
+                     <li><a class="dropdown-item d-flex align-items-center" href="{{ 'changepassword' }}"><i
+                                 class="bx bx-user fs-5"></i><span>ChangePassword</span></a>
+                     </li>
                      <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                  class="bx bx-cog fs-5"></i><span>Settings</span></a>
                      </li>
@@ -490,15 +493,16 @@
  </header>
  <!--end header -->
 @if ($showPopup)
-        <div id="headerAlert" class="alert alert-danger alert-dismissible fade show mb-0 text-center" role="alert"
-            style="display: none; border-radius: 0;">
-            <strong>Reminder:</strong> Your Server activation is due in {{ $daysLeft }}
-            day{{ $daysLeft > 1 ? 's' : '' }}. Please make your payment.
-            <div class="mt-3">
-                <a href="{{ url('/serverpayment') }}" class="btn btn-lg btn-primary px-4">
-                    💳 Make Payment
-                </a>
-            </div>
-            <button type="button" class="btn-close" onclick="closeHeaderPopup()" aria-label="Close"></button>
+         <div id="headerAlert" class="alert alert-danger alert-dismissible fade show text-center w-100 m-0" role="alert"
+        style="border-radius: 0; position: fixed; top: 0; left: 0; z-index: 1055;">
+        <strong>Reminder:</strong> Your Server activation is due in {{ $daysLeft }}
+        day{{ $daysLeft > 1 ? 's' : '' }}.
+        Please make your payment.
+        <div class="mt-3">
+            <a href="{{ url('/serverpayment') }}" class="btn btn-sm btn-primary px-4">
+                💳 Make Payment
+            </a>
         </div>
+        <button type="button" class="btn-close" onclick="closeHeaderPopup()" aria-label="Close"></button>
+    </div>
 @endif

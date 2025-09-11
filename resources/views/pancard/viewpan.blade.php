@@ -59,11 +59,11 @@
                                                 onclick="edit_pan('{{ $p->id }}','{{ $p->name }}','{{ $p->amount }}')"
                                                 type="button" style="font-size: small"
                                                 class="btn btn-primary">Edit</button>
-                                            {{--
+                                        
                                                 <button
                                                     onclick="editstatus('{{ $p->id }}','{{ $p->status }}')"
                                                     type="button" style="font-size: small"
-                                                    class="btn btn-grd btn-grd-success px-1">Status</button> --}}
+                                                    class="btn btn-grd btn-grd-success px-1">Status</button>
                                         </td>
 
                                     </tr>
@@ -133,20 +133,70 @@
                 </div>
             </div>
         </div>
+         <div class="col-12">
+            <div class="card rounded-4">
+                <div class="card-body">
+                    <div class="">
+                        <div class="modal fade" id="editup">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header border-bottom-0 py-2 bg-grd-info">
+                                        <h5 class="modal-title">Status Update</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-body">
+                                            <form class="modal-content" action="{{ url('/updatestatuspan') }}"
+                                                method="post" enctype="multipart/form-data">
+                                                {{ csrf_field() }}
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <input type="hidden" name="pan_id" id="pan_id">
+                                                        <div class="col mb-3">
+                                                            <label for="name" class="form-label">Status</label>
+                                                            <select type="text" id="editsta" name="status"
+                                                                class="form-control">
+                                                                <option value="">Select</option>
+                                                                <option value="Active">Active</option>
+                                                                <option value="Inactive">Inactive</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary"
+                                                data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     @endsection
     @push('page_scripts')
         <script>
-            function edit_pan(id, name, amount) {
-                $("#editservice").val(name);
-                $("#editamount").val(amount);
-                $("#panid").val(id);
-                $("#editpan").modal("show");
-            }
+        function edit_pan(id, name, amount ) {
+            $("#editservice").val(name);
+            $("#editamount").val(amount);
+            $("#panid").val(id);
+            $("#editpan").modal("show");
+        }
 
-            function editstatus(id, status) {
-                $("#editsta").val(status);
-                $("#pan_id").val(id);
-                $("#editsta").modal("show");
-            }
-        </script>
+        function editstatus(id, status ) {
+            $("#editsta").val(status);
+            $("#pan_id").val(id);
+            $("#editup").modal("show");
+        }
+    </script>
     @endpush

@@ -2194,3 +2194,58 @@ alter table voterid add name_assembly_constituency text DEFAULT NULL;
 alter table voterid add dist_id int(11) DEFAULT 0;
 alter table voterid add constituent_assembly varchar(200) DEFAULT NULL;
 alter table voterid add name_in_english varchar(100) DEFAULT NULL;
+
+11-09-2025
+
+CREATE TABLE `patta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `dist_id` int(11) DEFAULT 0,
+  `taluk_id` int(11) DEFAULT 0,
+  `can_no` varchar(15) DEFAULT NULL,
+  `reg_office` varchar(50) DEFAULT NULL,
+  `subdivision_no` varchar(30) DEFAULT NULL,
+  `rev_village` varchar(50) DEFAULT NULL,
+  `survey_no` varchar(30) DEFAULT NULL,
+  `transacted_area` varchar(50) DEFAULT NULL,
+  `bond_doc` varchar(50) DEFAULT NULL,
+  `ec` varchar(50) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(50) DEFAULT NULL,
+  `application` varchar(50) DEFAULT NULL,
+  `lects` varchar(50) DEFAULT NULL,
+  `selects` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `notification` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `notify` varchar(2000) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `wallet_topup` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `website_index` varchar(50) DEFAULT NULL,
+  `payment` decimal(10,2) DEFAULT 0,
+  `date` varchar(30) DEFAULT NULL,
+  `status` varchar(30) DEFAULT NULL,
+  `payment_proof` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+ALTER TABLE request_payment CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE wallet_topup CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

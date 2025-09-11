@@ -47,3 +47,7 @@ Route::post('/get_aadhaarcardstatus', [App\Http\Controllers\api\ApiController::c
 
 // TNEGA SERVICE
 Route::post('/get_tnegaservicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_tnegaservicesstatus'])->name('get_tnegaservicesstatus');
+
+//Ramji Wallet Request
+
+Route::post('/update_payment_status', [App\Http\Controllers\api\ApiController::class, 'update_payment_status'])->name('update_payment_status');

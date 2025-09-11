@@ -53,15 +53,15 @@
                             <tbody>
                                 @foreach ($rarequestamount as $key => $a)
                                     <tr>
-                                        <td>{{ $key + 1 }}</td>
+                                       <td>{{ $key + 1 }}</td>
                                         <td>{{ $a->from_id }}</td>
-                                        <td>{{ $a->to_id }}</td>
-                                        <td>{{ $a->amount }}</td>
-                                        <td>{{ $a->req_date }}&nbsp;{{ $a->req_time }}</td>
-                                        <td>{{ $a->status }}</td>
+                                         <td>{{ $a->to_id ?? '-' }}</td>
+                                         <td>{{ $a->amount }}</td>
+                                         <td>{{ $a->datetime }}</td>
+                                         <td>{{ $a->status }}</td>
                                         @if (Auth::user()->user_type_id == 1)
                                             <td style="white-space: nowrap">
-                                                <a onclick="showrequest('{{ $a->id }}','{{ $a->from_id }}','{{ $a->amount }}','{{ $a->req_image }}','{{ $a->status }}')"
+                                                <a onclick="showrequest('{{ $a->id }}','{{ $a->from_id }}','{{ $a->amount }}','{{ $a->proof }}','{{ $a->status }}')"
                                                     class="btn btn-info"><i class="fab fa-dribbble">Approve</i>
                                                 </a>
 

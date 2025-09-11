@@ -76,11 +76,21 @@ class PDFServiceController extends Controller
 
   public function pdfservices(){
     $usertype = Auth::user()->user_type_id;
-    $checkpermission = DB::table( 'user_permission' )->where('user_id' , Auth::user()->id)->where('parent_id' , 1)->get();
+$userPermission = DB::table('user_permission')
+    ->where('user_id', Auth::user()->id)
+    ->where('parent_id', 1)
+    ->pluck('service_id');
+
+$adminPermission = DB::table('user_permission')
+    ->where('user_id', 2) 
+    ->where('parent_id', 1)
+    ->pluck('service_id');
+
+$finalServiceIds = $userPermission->intersect($adminPermission);
     if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 5){
       $service = DB::table( 'find_services' )->where('status' , 'Active')->orderBy( 'id', 'ASC' )->get();
     }else{
-      $service = DB::table( 'find_services' )->where('status' , 'Active')->whereIn('id',$checkpermission->pluck('service_id'))->orderBy( 'id', 'ASC' )->get();
+      $service = DB::table( 'find_services' )->where('status' , 'Active')->whereIn('id',$finalServiceIds)->orderBy( 'id', 'ASC' )->get();
     }
     $service = json_decode( json_encode( $service ), true );
     foreach ( $service as $key => $s ) {

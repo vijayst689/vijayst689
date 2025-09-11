@@ -321,4 +321,29 @@ class UserController extends Controller
         return redirect( '/dashboard' )->with( 'success', 'User Updated Successfully ... !' );
     }
 
+    public function changepassword()
+    {
+        return view('customer.changepassword');
+    }
+
+    public function updatepassword( Request $request ) {
+        $userid = Auth::user()->id;
+        $old_password = trim( $request->get( 'oldpassword' ) );
+        $currentPassword = auth()->user()->password;
+        if ( Hash::check( $old_password, $currentPassword ) ) {
+            $new_password = trim( $request->get( 'new_password' ) );
+            $confirm_password = trim( $request->get( 'confirm_password' ) );
+            if ( $new_password != $confirm_password ) {
+                return redirect( 'changepassword' )->with( 'error', 'Passwords does not match' );
+            } else {
+                $updatepass = DB::table( 'users' )->where( 'id', '=', $userid )->update( [
+                    'password' => Hash::make( $new_password ),
+                    'cpassword'      => $request->new_password,
+                ] );
+                return redirect( 'dashboard' )->with( 'success', 'Passwords Change Succesfully' );
+            }
+        } else {
+            return redirect( 'changepassword' )->with( 'error', 'Sorry, your current password was not recognised' );
+        }
+    }
 }
