@@ -791,10 +791,8 @@ return redirect('nalauseractivationpayment/');
 }
 
 public function getaadhaar_otpf($aadhaar) {
-    $orderid = rand(000000,999999);
-    $username = "7598984380";
-    $token = "4d02b95e1731557716c68948638c1199";
-    $url = "https://connect.ekychub.in/v3/verification/get_aadhaar_otp?username=$username&token=$token&aadhaar_number=$aadhaar&orderid=$orderid";
+
+    $url = "https://server.webtechly.co.in/send-otp?no=$aadhaar";
     $crl = curl_init();
     curl_setopt( $crl, CURLOPT_URL, $url );
     curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
@@ -806,32 +804,29 @@ public function getaadhaar_otpf($aadhaar) {
 }
 
 public function getaadhaar_dataf($otp,$refid,$aadhaar,$userid) {
-    $orderid = rand(000000,999999);
-    $username = "7598984380";
-    $token = "4d02b95e1731557716c68948638c1199";
-    $url = "https://connect.ekychub.in/v3/verification/aadhaar_verify?username=$username&token=$token&aadhaar_number=$aadhaar&ref_id=$refid&otp=$otp&orderid=$orderid";
+    $url = "https://server.webtechly.co.in/fetch-info?api_key=3d77fb-c95462-6d17f3-a92b88-9b8b9c&otp=$otp&client_id=$refid";
     $crl = curl_init();
     curl_setopt( $crl, CURLOPT_URL, $url );
     curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
     curl_setopt( $crl, CURLOPT_RETURNTRANSFER, true );
     $data = curl_exec($crl);
         // $result["data"] = $data;
+    
 
     curl_close($crl);
-    $data = json_decode($data);
+    $data = json_decode($data,true);
+    
     if($data){
-        if($data->status == "Success"){
+        if($data['status'] == "true"){
             DB::table( 'users' )->where('id', $userid)->update([
-                'name'                 => $data->name,
+                'name'                 => $data['data']['name'],
                 'aadhaar_no'           => $aadhaar,
-                'address'              => $data->address,
             ] );
         }
     }
-
-    $result = $data;
+    return response()->json($data['data']);
+    
         //echo "<pre>"; print_r($result); echo "</pre>";die;
-    return response()->json($result);
 }
 
 public function updatenalavariyam_activation(Request $request)

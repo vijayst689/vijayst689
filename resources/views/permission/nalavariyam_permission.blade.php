@@ -94,7 +94,7 @@
                                             name="full_name" id="fullname" maxlength="150" placeholder="Full Name">
 
                                         <label for="address" class="form-label">Address</label>
-                                        <textarea readonly required name="address" id="address" class="form-control" placeholder="Address" rows="3"
+                                        <textarea required name="address" id="address" class="form-control" placeholder="Address" rows="3"
                                             maxlength="500"></textarea>
                                     </div>
                                 </div>
@@ -156,7 +156,7 @@
                 type: "GET",
                 dataType: 'json',
                 success: function(result) {
-                    if (result.status == "Failure") {
+                    if (result.status == "false") {
                         alert(result.message);
                         $("#checkotp").attr("disabled", false);
                     } else {
@@ -195,7 +195,7 @@
                     var data = result;
                     console.log(data);
                     //var obj = JSON.parse(data);
-                    if (data.status == "Failure") {
+                    if (data.status == "false") {
                         alert(data.message);
                         $("#subotp").attr("disabled", false);
                     } else {
