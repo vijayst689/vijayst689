@@ -816,15 +816,23 @@ public function getaadhaar_dataf($otp,$refid,$aadhaar,$userid) {
     curl_close($crl);
     $data = json_decode($data,true);
     
-    if($data){
-        if($data['status'] == "true"){
-            DB::table( 'users' )->where('id', $userid)->update([
-                'name'                 => $data['data']['name'],
-                'aadhaar_no'           => $aadhaar,
-            ] );
-        }
-    }
+   if ($data && isset($data['status']) && $data['status'] === true) {
+    DB::table('users')
+        ->where('id', $userid)
+        ->update([
+            'name'       => $data['data']['name'],
+            'aadhaar_no' => $aadhaar,
+        ]);
+}   
+    if (!empty($data['data']['name'])) {
     return response()->json($data['data']);
+    }else{
+        $status = false;
+        $message = "Invalid OTP or something went wrong";
+        $response = array('status' => $status, 'message' => $message);
+        return response()->json( $response );
+    }
+   
     
         //echo "<pre>"; print_r($result); echo "</pre>";die;
 }

@@ -160,7 +160,9 @@
                         alert(result.message);
                         $("#checkotp").attr("disabled", false);
                     } else {
-                        $("#refid").val(result.ref_id);
+                        var data = result;
+                        alert(data.message);
+                        $("#refid").val(data.client_id);    
                         $("#verifybtnhide").hide();
                         $("#verifyotphide").show();
                         $("#aadhaar_no").attr("readonly", true);
@@ -193,13 +195,11 @@
                 dataType: 'json',
                 success: function(result) {
                     var data = result;
-                    console.log(data);
                     //var obj = JSON.parse(data);
-                    if (data.status == "false") {
-                        alert(data.message);
+                    if (result.status == "false") {
+                        alert(result.message);
                         $("#subotp").attr("disabled", false);
                     } else {
-                        alert(data.name);
                         $("#verifybtnhide").hide();
                         $("#verifyotphide").hide();
                         $("#aadhaar_no").attr("readonly", true);
@@ -210,6 +210,8 @@
                     }
                 }
             });
+
+
         }
 
          var ramjibalance = "{{ Auth::user()->rawallet }}";
