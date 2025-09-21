@@ -2252,3 +2252,41 @@ ALTER TABLE wallet_topup CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicod
 
 //21-09-2025
 alter table family_member add relation_income varchar(100) DEFAULT NULL;
+
+21-09-2025
+
+CREATE TABLE `aadhaar_verify` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `aadhaar_no` varchar(20) DEFAULT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `gender` varchar(20) DEFAULT NULL,
+  `age` varchar(50) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `amount` varchar(20) DEFAULT NULL,
+  `message` varchar(1000) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `gst_find` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `pan_no` varchar(10) DEFAULT NULL,
+  `central_jurisdiction` varchar(20) DEFAULT NULL,
+  `constitution` varchar(10) DEFAULT NULL,
+  `gstin` varchar(10) DEFAULT NULL,
+  `legal_name` varchar(30) DEFAULT NULL,
+  `primary_address` varchar(200) DEFAULT NULL,
+  `state_jurisdiction` varchar(100) DEFAULT NULL,
+  `tax_payer_type` varchar(100) DEFAULT NULL,
+  `trade_name` varchar(100) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `gst_status` varchar(20) DEFAULT NULL,
+  `registration_date` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;

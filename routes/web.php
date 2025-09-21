@@ -350,6 +350,11 @@ Route::get('/getpdfotp/{epic_no}', [App\Http\Controllers\PDFServiceController::c
 
 Route::post('/submitvoterpdf', [App\Http\Controllers\PDFServiceController::class, 'submitvoterpdf'])->name('submitvoterpdf');
 
+Route::post('/submitaadhaar_verify', [App\Http\Controllers\PDFServiceController::class, 'submitaadhaar_verify'])->name('submitaadhaar_verify');
+
+Route::post('/submitgstfind', [App\Http\Controllers\PDFServiceController::class, 'submitgstfind'])->name('submitgstfind');
+
+Route::get('/getcaptcha', [App\Http\Controllers\PDFServiceController::class, 'getcaptcha'])->name('getcaptcha');
 
 //PermissionController
 
