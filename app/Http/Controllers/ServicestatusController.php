@@ -1471,9 +1471,10 @@ if($request->has('family_relationship')){
       $relation_name = $request->relation_name[ $key ];
       $relation_name_tamil = $request->relation_name_tamil[ $key ];
       $relation_age = $request->relation_age[ $key ];
+      $relation_income = $request->relation_income[ $key ];
       $occupation = $request->occupation[ $key ];
 
-      $sql = "insert into family_member (service_id,relation,relation_name,relation_name_tamil,relation_age,occupation) values ($request->applied_serviceid,'$relation','$relation_name','$relation_name_tamil','$relation_age','$occupation')";
+      $sql = "insert into family_member (service_id,relation,relation_name,relation_name_tamil,relation_age,relation_income,occupation) values ($request->applied_serviceid,'$relation','$relation_name','$relation_name_tamil','$relation_age','$relation_income','$occupation')";
       DB::insert( $sql );
 
 

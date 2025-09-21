@@ -75,6 +75,11 @@
                                                         <option value="மனைவி">மனைவி</option>
                                                         <option value="மாமியார்">மாமியார்</option>
                                                         <option value="மாமனார்">மாமனார்</option>
+                                                        <option value="மருமகன்">மருமகன்</option>
+                                                        <option value="மருமகள்">மருமகள்</option>
+                                                        <option value="பேரன்">பேரன்</option>
+                                                        <option value="பேத்தி">பேத்தி</option>
+                                                        <option value="மற்ற உறவுகள்">மற்ற உறவுகள்</option>
                                                     </select>
                                                     <label for="aadhaar_card" class="form-label">Aadhaar Card</label>
                                                     <input required accept="image/jpeg, image/png" type="file"
@@ -109,6 +114,11 @@
                                                         <option value="மனைவி">மனைவி</option>
                                                         <option value="மாமியார்">மாமியார்</option>
                                                         <option value="மாமனார்">மாமனார்</option>
+                                                        <option value="மருமகன்">மருமகன்</option>
+                                                        <option value="மருமகள்">மருமகள்</option>
+                                                        <option value="பேரன்">பேரன்</option>
+                                                        <option value="பேத்தி">பேத்தி</option>
+                                                        <option value="மற்ற உறவுகள்">மற்ற உறவுகள்</option>
                                                     </select>
 
                                                     <label for="aadhaar_card" class="form-label">Aadhaar Card</label>
@@ -167,6 +177,11 @@
                                                         <option value="மனைவி">மனைவி</option>
                                                         <option value="மாமியார்">மாமியார்</option>
                                                         <option value="மாமனார்">மாமனார்</option>
+                                                        <option value="மருமகன்">மருமகன்</option>
+                                                        <option value="மருமகள்">மருமகள்</option>
+                                                        <option value="பேரன்">பேரன்</option>
+                                                        <option value="பேத்தி">பேத்தி</option>
+                                                        <option value="மற்ற உறவுகள்">மற்ற உறவுகள்</option>
                                                     </select>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
@@ -224,6 +239,11 @@
                                                         <option value="மனைவி">மனைவி</option>
                                                         <option value="மாமியார்">மாமியார்</option>
                                                         <option value="மாமனார்">மாமனார்</option>
+                                                        <option value="மருமகன்">மருமகன்</option>
+                                                        <option value="மருமகள்">மருமகள்</option>
+                                                        <option value="பேரன்">பேரன்</option>
+                                                        <option value="பேத்தி">பேத்தி</option>
+                                                        <option value="மற்ற உறவுகள்">மற்ற உறவுகள்</option>
                                                     </select>
                                                     <label for="smart_card" class="form-label">Smart Card</label>
                                                     <input required accept="image/jpeg, image/png" type="file"
@@ -260,6 +280,11 @@
                                                         <option value="மனைவி">மனைவி</option>
                                                         <option value="மாமியார்">மாமியார்</option>
                                                         <option value="மாமனார்">மாமனார்</option>
+                                                        <option value="மருமகன்">மருமகன்</option>
+                                                        <option value="மருமகள்">மருமகள்</option>
+                                                        <option value="பேரன்">பேரன்</option>
+                                                        <option value="பேத்தி">பேத்தி</option>
+                                                        <option value="மற்ற உறவுகள்">மற்ற உறவுகள்</option>
                                                     </select>
                                                     <label for="aadhaar_card" class="form-label">Aadhaar Card</label>
                                                     <input required accept="image/jpeg, image/png" type="file"
@@ -292,6 +317,11 @@
                                                         <option value="மனைவி">மனைவி</option>
                                                         <option value="மாமியார்">மாமியார்</option>
                                                         <option value="மாமனார்">மாமனார்</option>
+                                                        <option value="மருமகன்">மருமகன்</option>
+                                                        <option value="மருமகள்">மருமகள்</option>
+                                                        <option value="பேரன்">பேரன்</option>
+                                                        <option value="பேத்தி">பேத்தி</option>
+                                                        <option value="மற்ற உறவுகள்">மற்ற உறவுகள்</option>
                                                     </select>
                                                 </div>
                                                 <div class="mb-3 col-md-6">

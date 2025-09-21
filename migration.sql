@@ -2249,3 +2249,6 @@ CREATE TABLE `wallet_topup` (
 
 ALTER TABLE request_payment CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE wallet_topup CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+//21-09-2025
+alter table family_member add relation_income varchar(100) DEFAULT NULL;
