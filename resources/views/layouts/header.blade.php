@@ -506,3 +506,20 @@
         <button type="button" class="btn-close" onclick="closeHeaderPopup()" aria-label="Close"></button>
     </div>
 @endif
+@if($siteshowPopup && $unpaidPayment)
+
+     <div id="headerAlert1" class="alert alert-warning alert-dismissible fade show text-center w-100 m-0" role="alert"
+        style="border-radius: 0; position: fixed; top: 0; left: 0; z-index: 1055;">
+        ⚠️ Reminder: Payment of 
+            <strong>{{ $unpaidPayment->amount }}</strong> 
+            for <strong>{{ $unpaidPayment->payment_reason }}</strong> 
+            is due tomorrow ({{ \Carbon\Carbon::parse($unpaidPayment->payment_date)->format('d M Y') }}).
+        <div class="mt-3">
+            <a href="{{ url('/websitepayment') }}" class="btn btn-sm btn-primary px-4">
+                💳 Make Payment
+            </a>
+        </div>
+        <button type="button" class="btn-close" onclick="closeHeaderPopup1()" aria-label="Close"></button>
+    </div>
+       
+@endif

@@ -2249,3 +2249,21 @@ CREATE TABLE `wallet_topup` (
 
 ALTER TABLE request_payment CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE wallet_topup CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+//24-09-2025
+
+CREATE TABLE `sitepayment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `website_id` int DEFAULT 0,
+  `site_paymentid` varchar(50) DEFAULT NULL,
+  `type` text DEFAULT NULL,
+  `payment_reason` text DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT 0,
+  `payment_status` varchar(20) DEFAULT NULL,
+  `paid_status` varchar(20) DEFAULT NULL,
+  `payment_date` varchar(20) DEFAULT NULL,
+  `updated_at` varchar(20) DEFAULT NULL,
+  `created_at` varchar(20) DEFAULT NULL,
+  `paid_image` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;

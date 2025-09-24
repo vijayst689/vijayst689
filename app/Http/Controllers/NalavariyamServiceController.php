@@ -9,8 +9,16 @@ use Illuminate\Support\Facades\DB;
 class NalavariyamServiceController extends Controller
 {
 
-  public function __construct()
+   public function __construct()
   {
+    $this->middleware(function ($request, $next) {
+            $this->restrictIfNotActivated();
+            return $next($request);
+        });
+   $this->middleware(function ($request, $next) {
+        $this->restrictIfSitePaymentDueFromSession();
+        return $next($request);
+    });
     $this->middleware('auth');
   }
 

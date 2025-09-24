@@ -16,6 +16,10 @@ class RechargeController extends Controller
             $this->restrictIfNotActivated();
             return $next($request);
         });
+   $this->middleware(function ($request, $next) {
+        $this->restrictIfSitePaymentDueFromSession();
+        return $next($request);
+    });
     $this->middleware('auth');
   }
 

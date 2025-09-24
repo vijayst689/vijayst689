@@ -14,6 +14,10 @@ class ServicePaymentController extends Controller
             $this->restrictIfNotActivated();
             return $next($request);
         });
+   $this->middleware(function ($request, $next) {
+        $this->restrictIfSitePaymentDueFromSession();
+        return $next($request);
+    });
     $this->middleware('auth');
   }
   
@@ -67,7 +71,7 @@ class ServicePaymentController extends Controller
   }
 
   public function smartcardpayment($serviceid){
-    $services = DB::table('services')->where('parent_id', $serviceid )->orderBy( 'id' , 'Asc' )->get();
+    $services = DB::table('services')->where('status', 'Active')->where('parent_id', $serviceid )->orderBy( 'id' , 'Asc' )->get();
     $taluk = DB::table('taluk')->orderBy( 'id' , 'Asc' )->get();
     return view('servicepayment.smartcardpayment',compact('services','serviceid','taluk'));
   }
@@ -98,7 +102,7 @@ class ServicePaymentController extends Controller
   }
 
   public function findpayment(){
-    $services = DB::table('find_services')->orderBy( 'id' , 'Asc' )->get();
+    $services = DB::table('find_services')->where('status', 'Active')->orderBy( 'id' , 'Asc' )->get();
     $services = json_decode( json_encode( $services ), true );
     foreach ( $services as $key => $service ) {
       $services[ $key ][ 'payment' ] = array();
@@ -138,7 +142,7 @@ class ServicePaymentController extends Controller
   }
 
   public function rechargepayment($serviceid){
-    $services = DB::table('operator')->where('service_type',$serviceid)->orderBy( 'id' , 'Asc' )->get();
+    $services = DB::table('operator')->where('status', 'Active')->where('service_type',$serviceid)->orderBy( 'id' , 'Asc' )->get();
     $services = json_decode( json_encode( $services ), true );
     foreach ( $services as $key => $service ) {
       $services[ $key ][ 'payment' ] = array();
@@ -178,7 +182,7 @@ class ServicePaymentController extends Controller
   }
 
   public function panservicepayment(){
-    $services = DB::table('panservice')->orderBy( 'id' , 'Asc' )->get();
+    $services = DB::table('panservice')->where('status', 'Active')->orderBy( 'id' , 'Asc' )->get();
     $services = json_decode( json_encode( $services ), true );
     foreach ( $services as $key => $service ) {
       $services[ $key ][ 'payment' ] = array();
@@ -218,7 +222,7 @@ class ServicePaymentController extends Controller
   }
 
   public function coursepayment(){
-    $services = DB::table('courses')->orderBy( 'id' , 'Asc' )->get();
+    $services = DB::table('courses')->where('status', 'Active')->orderBy( 'id' , 'Asc' )->get();
     $services = json_decode( json_encode( $services ), true );
     foreach ( $services as $key => $service ) {
       $services[ $key ][ 'payment' ] = array();
@@ -412,4 +416,54 @@ class ServicePaymentController extends Controller
     return redirect('useractivation/'.$payment)->with('success' ,"Payment Updated Succesfully !");
   }
 
+   public function sitepayment(){
+    $data = DB::table('sitepayment')->orderBy( 'payment_status' , 'Asc' )->get();
+   
+    return view('servicepayment.sitepayment',compact('data'));
+  }
+
+   public function save_sitepayment( Request $request ) {
+    $status = 'Waiting';
+    DB::table( 'sitepayment' )->where( 'id', $request->row_id )->update( [
+      'paid_status'      =>  $status,
+    ] );
+
+    $insertid = $request->row_id;
+    $payment_proof = '';
+    if ( $request->payment_proof != null ) {
+      $payment_proof = $insertid.'.'.$request->file( 'payment_proof' )->extension();
+      $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'sitepayment_image' . DIRECTORY_SEPARATOR );
+      move_uploaded_file( $_FILES[ 'payment_proof' ][ 'tmp_name' ], $filepath . $payment_proof );
+    }
+     DB::table( 'sitepayment' )->where( 'id', $insertid )->update( [
+      'paid_image' => $payment_proof,
+    ] );
+
+    $getdata = DB::table( 'sitepayment' )->where('id',$insertid)->first();
+    if($getdata){
+     $site_paymentid = $getdata->site_paymentid;
+     $website_id = $getdata->website_id;
+     $url = url('/');
+     $payment_proof = $url.'/upload/sitepayment_image/'.$payment_proof;
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+     $ch = curl_init();
+    
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&payment_proof=$payment_proof&site_paymentid=$site_paymentid&website_id=$website_id&status=$status";
+    
+    //dd($post_data);
+     $url1 = $RAMJIPAY_URL.'/api/sitepayment_approve';
+  //echo $url1;die;
+     curl_setopt( $ch, CURLOPT_URL, $url1 );
+     curl_setopt( $ch, CURLOPT_POST, 1 );
+     curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+     $server_output = curl_exec( $ch );
+     curl_close( $ch );
+     $resdata = json_decode($server_output, true);
+       }
+    return redirect()->back()->with('success', 'Payments saved successfully!');
+
+}
 }

@@ -74,5 +74,20 @@ class ServerPaymentController extends Controller
 
 }
 
+public function websitepayment(){
+   $user = Auth::user();
 
+        $paymentId = session('activePaymentId');
+
+       $unpaidPayment = DB::table('sitepayment')
+    ->where('payment_status', 'UNPAID')
+    ->orderBy('payment_date', 'asc') // oldest first
+    ->first();
+
+        if (!$unpaidPayment) {
+            return redirect('/dashboard'); // already paid or no payment
+        }
+
+    return view( 'payment.sitepayment',compact('unpaidPayment'));
+  }
 }

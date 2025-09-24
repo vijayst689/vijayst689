@@ -308,6 +308,28 @@
                             </div>
                         </div>
                     @endif
+                     @php 
+                        $sitecount = DB::table('sitepayment')
+                        ->where('payment_status', 'UNPAID')
+                        ->count();
+                        @endphp
+                        @if($sitecount > 0)
+                    <div class="col-md-3 col-sm-4">
+                        <div class="card radius-10 bg-gradient-kyoto">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-auto">
+                                        <a href="{{ url('/sitepayment') }}">
+                                            <p class="mb-0 text-dark">SitePayment</p>
+                                        </a>
+                                        <h4 class="my-1 text-dark">{{ $sitecount }}</h4>
+                                    </div>
+                                    <div id="chart4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                     <div class="col-md-3 col-sm-4">
                         <div class="card radius-10 bg-gradient-cosmic">
                             <div class="card-body">

@@ -519,3 +519,12 @@ Route::post('updatenotification', [App\Http\Controllers\NotificationController::
 Route::post('notificationstatusupdate', [App\Http\Controllers\NotificationController::class, 'notificationstatusupdate']);
 
 Route::get('/dropnotification/{id}', [App\Http\Controllers\OperatorController::class, 'dropnotification'])->name('dropnotification');
+
+//site serverpayment
+
+Route::get('serverpayment', [App\Http\Controllers\ServerPaymentController::class, 'serverpayment']);
+Route::get('websitepayment', [App\Http\Controllers\ServerPaymentController::class, 'websitepayment']);
+Route::post('saveserver_payment', [App\Http\Controllers\ServerPaymentController::class, 'saveserver_payment']);
+
+Route::get('sitepayment', [App\Http\Controllers\ServicePaymentController::class, 'sitepayment'])->name('sitepayment');
+Route::post('save_sitepayment', [App\Http\Controllers\ServicePaymentController::class, 'save_sitepayment'])->name('save_sitepayment');

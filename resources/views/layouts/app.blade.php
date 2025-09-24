@@ -256,38 +256,81 @@
         });
         </script>
 
-        <script>
-  function shouldShowPopup() {
-    const lastClosed = localStorage.getItem('headerPopupLastClosed');
-    const now = new Date().getTime();
+ <script>
+        function shouldShowPopup() {
+            const lastClosed = localStorage.getItem('headerPopupLastClosed');
+            const now = new Date().getTime();
 
-    // If never closed or 1 hour has passed since close
-    if (!lastClosed || (now - parseInt(lastClosed)) > 60 * 60 * 1000) {
-      return true;
+            // If never closed or 1 hour has passed since close
+            if (!lastClosed || (now - parseInt(lastClosed)) > 60 * 60 * 1000) {
+                return true;
+            }
+
+            return false;
+        }
+
+        function showHeaderPopup() {
+            const alertBox = document.getElementById('headerAlert');
+            alertBox.style.display = 'block';
+        }
+
+        function closeHeaderPopup() {
+            const alertBox = document.getElementById('headerAlert');
+            alertBox.style.display = 'none';
+
+            // Store current time as "last closed"
+            localStorage.setItem('headerPopupLastClosed', new Date().getTime());
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (shouldShowPopup()) {
+                showHeaderPopup();
+            }
+        });
+
+        function shouldShowPopup1() {
+        const lastClosed = localStorage.getItem('headerPopupLastClosed1');
+        const now = new Date().getTime();
+
+        // If never closed OR 10 minutes have passed since last close
+        if (!lastClosed || (now - parseInt(lastClosed)) > 10 * 60 * 1000) {
+            return true;
+        }
+
+        return false;
     }
 
-    return false;
-  }
-
-  function showHeaderPopup() {
-    const alertBox = document.getElementById('headerAlert');
-    alertBox.style.display = 'block';
-  }
-
-  function closeHeaderPopup() {
-    const alertBox = document.getElementById('headerAlert');
-    alertBox.style.display = 'none';
-
-    // Store current time as "last closed"
-    localStorage.setItem('headerPopupLastClosed', new Date().getTime());
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    if (shouldShowPopup()) {
-      showHeaderPopup();
+    function showHeaderPopup1() {
+        const alertBox = document.getElementById('headerAlert1');
+        if (alertBox) {
+            alertBox.style.display = 'block';
+        }
     }
-  });
-</script>
+
+    function closeHeaderPopup1() {
+        const alertBox = document.getElementById('headerAlert1');
+        if (alertBox) {
+            alertBox.style.display = 'none';
+        }
+
+        // Save close time
+        localStorage.setItem('headerPopupLastClosed1', new Date().getTime());
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Show immediately if needed
+        if (shouldShowPopup1()) {
+            showHeaderPopup1();
+        }
+
+        // Check every 1 minute if popup should reappear
+        setInterval(function() {
+            if (shouldShowPopup1()) {
+                showHeaderPopup1();
+            }
+        }, 60 * 1000); // 60 sec
+    });
+    </script>
 </body>
 
 

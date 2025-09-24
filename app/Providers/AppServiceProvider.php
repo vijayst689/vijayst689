@@ -64,34 +64,62 @@ class AppServiceProvider extends ServiceProvider
     });
 
     // Header composer for activation popup
-view()->composer('layouts.header', function ($view) {
-    if (Auth::check()) {
-        $user = Auth::user();
-        $this->activation = DB::table('users')->where('id', $user->id)->get();
-        $view->with(['activation' => $this->activation]);
+ view()->composer('layouts.header', function ($view) {
+            if (Auth::check()) {
+                $user = Auth::user();
+                $this->activation = DB::table('users')->where('id', $user->id)->get();
+                $view->with(['activation' => $this->activation]);
 
-       $showPopup = false;
-$daysLeft  = null;
+                $showPopup = false;
+                $daysLeft  = null;
+                $siteshowPopup = false;
+                $sitedaysLeft  = null;
 
-if ($user->user_type_id == 2 && $user->payment_date) {
-    $activationDate = \Carbon\Carbon::parse($user->payment_date)->startOfDay();
-    $today          = \Carbon\Carbon::today()->startOfDay();
+                if ($user->user_type_id == 2 && $user->payment_date) {
+                    $activationDate = \Carbon\Carbon::parse($user->payment_date)->startOfDay();
+                    $today          = \Carbon\Carbon::today()->startOfDay();
 
-    // Difference in days (negative if payment_date is in past)
-    $daysLeft = $today->diffInDays($activationDate, false);
+                    // Difference in days (negative if payment_date is in past)
+                    $daysLeft = $today->diffInDays($activationDate, false);
 
-    // Show popup only if payment date is in the future (1–5 days left)
-    if ($daysLeft > 0 && $daysLeft <= 5) {
-        $showPopup = true;
+                    // Show popup only if payment date is in the future (1–5 days left)
+                    if ($daysLeft > 0 && $daysLeft <= 5) {
+                        $showPopup = true;
+                    }
+                }
+
+                $view->with([
+                    'showPopup' => $showPopup,
+                    'daysLeft'  => $daysLeft
+                ]);
+
+                // if we have a selected unpaid payment in session → use it
+
+           $unpaidPayment = DB::table('sitepayment')
+    ->where('payment_status', 'UNPAID')
+    ->orderBy('payment_date', 'asc') // oldest first
+    ->first();
+
+        // if not found or already paid → pick new one
+    
+                if ($user->user_type_id == 2 && $unpaidPayment && $unpaidPayment->payment_date) {
+                    $paymentDate = Carbon::parse($unpaidPayment->payment_date)->startOfDay();
+                    $today       = Carbon::today()->startOfDay();
+
+                    // Days difference (negative if overdue, positive if future)
+                    $sitedaysLeft = $today->diffInDays($paymentDate, false);
+                    // Show popup if exactly 1 day before
+                    if ($sitedaysLeft === 1) {
+                        $siteshowPopup = true;
+                    }
+                }
+
+                $view->with([
+                    'siteshowPopup' => $siteshowPopup,
+                    'sitedaysLeft'  => $sitedaysLeft,
+                    'unpaidPayment' => $unpaidPayment,
+                ]);
+            }
+        });
     }
-}
-
-$view->with([
-    'showPopup' => $showPopup,
-    'daysLeft'  => $daysLeft
-]);
-    }
-});
-
-}
 }
