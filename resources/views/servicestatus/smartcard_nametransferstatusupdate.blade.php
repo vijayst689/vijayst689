@@ -33,613 +33,754 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-            <div class="row">
-                <div class="col-12 col-xl-12">
-                    <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
-                        <div class="card-body p-4">
-                            <h5 class="card-title">{{ $servicename }}</h5>
-                             <form action="{{ url('/smartcard_nametransfer_update') }}" id="formAccountSettings" method="POST"
-                                enctype="multipart/form-data">
-                                {{ csrf_field() }}
+                    <div class="row">
+                        <div class="col-12 col-xl-12">
+                            <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
+                                <div class="card-body p-4">
+                                    <h5 class="card-title">{{ $servicename }}</h5>
+                                    <form action="{{ url('/smartcard_nametransfer_update') }}" id="formAccountSettings"
+                                        method="POST" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
 
-                                <div class="row">
-                                    <input type="hidden" name="applied_serviceid" value="{{ $services->id }}">
-                                    <input type="hidden" name="user_id" value="{{ $services->user_id }}">
-                                    <input type="hidden" name="retailer_id" value="{{ $services->retailer_id }}">
-                                    <input type="hidden" name="distributor_id" value="{{ $services->distributor_id }}">
-                                    <input type="hidden" name="serviceid" value="{{ $services->service_id }}">
-                                    @php
-                                        $apply_user_id = 0;
-                                        if ($services->distributor_id == 0 && $services->retailer_id == 0) {
-                                            $apply_user_id = $services->user_id;
-                                        } elseif ($services->retailer_id == 0) {
-                                            $apply_user_id = $services->distributor_id;
-                                        } elseif ($services->distributor_id == 0) {
-                                            $apply_user_id = $services->retailer_id;
-                                        }
-                                    @endphp
-                                     @if ($serviceid == 221)
-                                        <div class="mb-3 col-md-6">
-                                            <label for="dist_id" class="form-label">District</label>
-                                            <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="dist_id"
-                                                id="dist_id" class="form-control">
-                                                <option value="">Select District</option>
-                                                @foreach ($districts as $d)
-                                                    <option @if ($d->id == $services->dist_id) selected @endif
-                                                        value="{{ $d->id }}">{{ $d->district_name }}</option>
-                                                @endforeach
-                                            </select>
-                                            <label for="name_tamil" class="form-label">பெயர் தமிழில்</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
-                                                value="{{ $services->name_tamil }}" class="form-control" name="name_tamil"
-                                                maxlength="100" placeholder="பெயர் தமிழில்" />
-                                            <label for="relationship" class="form-label">உறவுமுறை</label>
-                                            <select @if (Auth::user()->id != $apply_user_id) disabled @endif class="form-control"
-                                                name="relationship">
-                                                <option value="">Select</option>
-                                                <option @if ($services->relationship == 'தந்தை') selected @endif value="தந்தை">
-                                                    தந்தை</option>
-                                                <option @if ($services->relationship == 'தாய்') selected @endif value="தாய்">
-                                                    தாய்</option>
-                                                <option @if ($services->relationship == 'மகன்') selected @endif value="மகன்">
-                                                    மகன்</option>
-                                                <option @if ($services->relationship == 'மகள்') selected @endif value="மகள்">
-                                                    மகள்</option>
-                                                <option @if ($services->relationship == 'கணவர்') selected @endif value="கணவர்">
-                                                    கணவர்</option>
-                                                <option @if ($services->relationship == 'மனைவி') selected @endif value="மனைவி">
-                                                    மனைவி</option>
-                                                <option @if ($services->relationship == 'மாமியார்') selected @endif
-                                                    value="மாமியார்">மாமியார்</option>
-                                                <option @if ($services->relationship == 'மாமனார்') selected @endif value="மாமனார்">
-                                                    மாமனார்</option>
-                                            </select>
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->aadhaar_card != '')
-                                                    <label>Aadhaar Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Aadhaar Card</label>
-                                                <input @if ($services->aadhaar_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="aadhaar_card">
-                                                @if ($services->aadhaar_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
+                                        <div class="row">
+                                            <input type="hidden" name="applied_serviceid" value="{{ $services->id }}">
+                                            <input type="hidden" name="user_id" value="{{ $services->user_id }}">
+                                            <input type="hidden" name="retailer_id" value="{{ $services->retailer_id }}">
+                                            <input type="hidden" name="distributor_id"
+                                                value="{{ $services->distributor_id }}">
+                                            <input type="hidden" name="serviceid" value="{{ $services->service_id }}">
+                                            @php
+                                                $apply_user_id = 0;
+                                                if ($services->distributor_id == 0 && $services->retailer_id == 0) {
+                                                    $apply_user_id = $services->user_id;
+                                                } elseif ($services->retailer_id == 0) {
+                                                    $apply_user_id = $services->distributor_id;
+                                                } elseif ($services->distributor_id == 0) {
+                                                    $apply_user_id = $services->retailer_id;
+                                                }
+                                            @endphp
+                                            @if ($serviceid == 221)
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="dist_id" class="form-label">District</label>
+                                                    <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="dist_id"
+                                                        id="dist_id" class="form-control">
+                                                        <option value="">Select District</option>
+                                                        @foreach ($districts as $d)
+                                                            <option @if ($d->id == $services->dist_id) selected @endif
+                                                                value="{{ $d->id }}">{{ $d->district_name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <label for="name_tamil" class="form-label">பெயர் தமிழில்</label>
+                                                    <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        type="text" value="{{ $services->name_tamil }}"
+                                                        class="form-control" name="name_tamil" maxlength="100"
+                                                        placeholder="பெயர் தமிழில்" />
+                                                    <label for="relationship" class="form-label">உறவுமுறை</label>
+                                                    <select @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                        class="form-control" name="relationship">
+                                                        <option value="">Select</option>
+                                                        <option @if ($services->relationship == 'தந்தை') selected @endif
+                                                            value="தந்தை">
+                                                            தந்தை</option>
+                                                        <option @if ($services->relationship == 'தாய்') selected @endif
+                                                            value="தாய்">
+                                                            தாய்</option>
+                                                        <option @if ($services->relationship == 'மகன்') selected @endif
+                                                            value="மகன்">
+                                                            மகன்</option>
+                                                        <option @if ($services->relationship == 'மகள்') selected @endif
+                                                            value="மகள்">
+                                                            மகள்</option>
+                                                        <option @if ($services->relationship == 'கணவர்') selected @endif
+                                                            value="கணவர்">
+                                                            கணவர்</option>
+                                                        <option @if ($services->relationship == 'மனைவி') selected @endif
+                                                            value="மனைவி">
+                                                            மனைவி</option>
+                                                        <option @if ($services->relationship == 'மாமியார்') selected @endif
+                                                            value="மாமியார்">மாமியார்</option>
+                                                        <option @if ($services->relationship == 'மாமனார்') selected @endif
+                                                            value="மாமனார்">
+                                                            மாமனார்</option>
+                                                        <option @if ($services->relationship == 'மருமகன்') selected @endif
+                                                            value="மருமகன்">
+                                                            மருமகன்</option>
+                                                        <option @if ($services->relationship == 'மருமகள்') selected @endif
+                                                            value="மருமகள்">
+                                                            மருமகள்</option>
+                                                        <option @if ($services->relationship == 'பேரன்') selected @endif
+                                                            value="பேரன்">
+                                                            பேரன்</option>
+                                                        <option @if ($services->relationship == 'பேத்தி') selected @endif
+                                                            value="பேத்தி">
+                                                            பேத்தி</option>
+                                                        <option @if ($services->relationship == 'மற்ற உறவுகள்') selected @endif
+                                                            value="மற்ற உறவுகள்">
+                                                            மற்ற உறவுகள்</option>
+                                                    </select>
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->aadhaar_card != '')
+                                                            <label>Aadhaar Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Aadhaar Card</label>
+                                                        <input @if ($services->aadhaar_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="aadhaar_card">
+                                                        @if ($services->aadhaar_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
 
-                                        <div class="mb-3 col-md-6">
-                                            <label for="taluk_id" class="form-label">Taluk</label>
-                                            <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="taluk_id"
-                                                id="taluk" class="form-control">
-                                            </select>
-                                            <label for="name_english" class="form-label">English Name</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                type="text" value="{{ $services->name_english }}" class="form-control"
-                                                name="name_english" maxlength="100" placeholder="English Name" />
-                                            <label for="dob" class="form-label">DOB</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                type="date" value="{{ $services->dob }}" class="form-control"
-                                                name="dob" maxlength="10" placeholder="DOB" />
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="taluk_id" class="form-label">Taluk</label>
+                                                    <select @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                        name="taluk_id" id="taluk" class="form-control">
+                                                    </select>
+                                                    <label for="name_english" class="form-label">English Name</label>
+                                                    <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        type="text" value="{{ $services->name_english }}"
+                                                        class="form-control" name="name_english" maxlength="100"
+                                                        placeholder="English Name" />
+                                                    <label for="dob" class="form-label">DOB</label>
+                                                    <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        type="date" value="{{ $services->dob }}" class="form-control"
+                                                        name="dob" maxlength="10" placeholder="DOB" />
 
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->smart_card != '')
-                                                    <label>Smart Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Smart Card</label>
-                                                <input @if ($services->smart_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="smart_card">
-                                                @if ($services->smart_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
-                                                @endif
-                                            @endif
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->smart_card != '')
+                                                            <label>Smart Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Smart Card</label>
+                                                        <input @if ($services->smart_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="smart_card">
+                                                        @if ($services->smart_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
 
-                                        </div>
-                                    @elseif ($serviceid == 222)
-                                        <div class="mb-3 col-md-6">
-                                            <label for="relationship" class="form-label">உறவுமுறை</label>
-                                            <select @if (Auth::user()->id != $apply_user_id) disabled @endif class="form-control"
-                                                name="relationship">
-                                                <option value="">Select</option>
-                                                <option @if ($services->relationship == 'தந்தை') selected @endif value="தந்தை">
-                                                    தந்தை</option>
-                                                <option @if ($services->relationship == 'தாய்') selected @endif value="தாய்">
-                                                    தாய்</option>
-                                                <option @if ($services->relationship == 'மகன்') selected @endif value="மகன்">
-                                                    மகன்</option>
-                                                <option @if ($services->relationship == 'மகள்') selected @endif value="மகள்">
-                                                    மகள்</option>
-                                                <option @if ($services->relationship == 'கணவர்') selected @endif value="கணவர்">
-                                                    கணவர்</option>
-                                                <option @if ($services->relationship == 'மனைவி') selected @endif value="மனைவி">
-                                                    மனைவி</option>
-                                                <option @if ($services->relationship == 'மாமியார்') selected @endif
-                                                    value="மாமியார்">மாமியார்</option>
-                                                <option @if ($services->relationship == 'மாமனார்') selected @endif value="மாமனார்">
-                                                    மாமனார்</option>
-                                            </select>
-                                            
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->aadhaar_card != '')
-                                                    <label>Aadhaar Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Aadhaar Card</label>
-                                                <input @if ($services->aadhaar_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="aadhaar_card">
-                                                @if ($services->aadhaar_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->smart_card != '')
-                                                    <label>Smart Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Smart Card</label>
-                                                <input @if ($services->smart_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="smart_card">
-                                                @if ($services->smart_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
-                                    @elseif ($serviceid == 227)
-                                        <div class="mb-3 col-md-6">
-                                            <label for="name_tamil" class="form-label">பெயர் தமிழில்</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                type="text" value="{{ $services->name_tamil }}" class="form-control"
-                                                name="name_tamil" maxlength="100" placeholder="பெயர் தமிழில்" />
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->aadhaar_card != '')
-                                                    <label>Aadhaar Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Aadhaar Card</label>
-                                                <input @if ($services->aadhaar_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="aadhaar_card">
-                                                @if ($services->aadhaar_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            <label for="name_english" class="form-label">English Name</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                type="text" value="{{ $services->name_english }}"
-                                                class="form-control" name="name_english" maxlength="100"
-                                                placeholder="English Name" />
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->smart_card != '')
-                                                    <label>Smart Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Smart Card</label>
-                                                <input @if ($services->smart_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="smart_card">
-                                                @if ($services->smart_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
-                                    @elseif ($serviceid == 228)
-                                        <div class="mb-3 col-md-6">
-                                            <label for="dob" class="form-label">DOB</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                type="date" value="{{ $services->dob }}" class="form-control"
-                                                name="dob" maxlength="10" placeholder="DOB" />
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->aadhaar_card != '')
-                                                    <label>Aadhaar Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Aadhaar Card</label>
-                                                <input @if ($services->aadhaar_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="aadhaar_card">
-                                                @if ($services->aadhaar_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->smart_card != '')
-                                                    <label>Smart Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Smart Card</label>
-                                                <input @if ($services->smart_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="smart_card">
-                                                @if ($services->smart_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
-                                    @elseif ($serviceid == 229)
-                                        <div class="mb-3 col-md-6">
-                                            <label for="relationship" class="form-label">உறவுமுறை</label>
-                                            <select @if (Auth::user()->id != $apply_user_id) disabled @endif
-                                                class="form-control" name="relationship">
-                                                <option value="">Select</option>
-                                                <option @if ($services->relationship == 'தந்தை') selected @endif value="தந்தை">
-                                                    தந்தை</option>
-                                                <option @if ($services->relationship == 'தாய்') selected @endif value="தாய்">
-                                                    தாய்</option>
-                                                <option @if ($services->relationship == 'மகன்') selected @endif value="மகன்">
-                                                    மகன்</option>
-                                                <option @if ($services->relationship == 'மகள்') selected @endif value="மகள்">
-                                                    மகள்</option>
-                                                <option @if ($services->relationship == 'கணவர்') selected @endif value="கணவர்">
-                                                    கணவர்</option>
-                                                <option @if ($services->relationship == 'மனைவி') selected @endif value="மனைவி">
-                                                    மனைவி</option>
-                                                <option @if ($services->relationship == 'மாமியார்') selected @endif
-                                                    value="மாமியார்">மாமியார்</option>
-                                                <option @if ($services->relationship == 'மாமனார்') selected @endif
-                                                    value="மாமனார்">மாமனார்</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->aadhaar_card != '')
-                                                    <label>Aadhaar Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Aadhaar Card</label>
-                                                <input @if ($services->aadhaar_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="aadhaar_card">
-                                                @if ($services->aadhaar_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->smart_card != '')
-                                                    <label>Smart Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Smart Card</label>
-                                                <input @if ($services->smart_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="smart_card">
-                                                @if ($services->smart_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
-                                    @elseif ($serviceid == 230)
-                                        <div class="mb-3 col-md-6">
-                                            <label for="name_tamil" class="form-label">பெயர் தமிழில்</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                type="text" value="{{ $services->name_tamil }}" class="form-control"
-                                                name="name_tamil" maxlength="100" placeholder="பெயர் தமிழில்" />
-                                            <label for="dob" class="form-label">DOB</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                type="date" value="{{ $services->dob }}" class="form-control"
-                                                name="dob" maxlength="10" placeholder="DOB" />
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->aadhaar_card != '')
-                                                    <label>Aadhaar Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Aadhaar Card</label>
-                                                <input @if ($services->aadhaar_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="aadhaar_card">
-                                                @if ($services->aadhaar_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            <label for="name_english" class="form-label">English Name</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                type="text" value="{{ $services->name_english }}"
-                                                class="form-control" name="name_english" maxlength="100"
-                                                placeholder="English Name" />
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->smart_card != '')
-                                                    <label>Smart Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Smart Card</label>
-                                                <input @if ($services->smart_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="smart_card">
-                                                @if ($services->smart_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
-                                    @elseif ($serviceid == 231)
-                                        <div class="mb-3 col-md-6">
-                                            <label for="dist_id" class="form-label">District</label>
-                                            <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="dist_id"
-                                                id="dist_id" class="form-control">
-                                                <option value="">Select District</option>
-                                                @foreach ($districts as $d)
-                                                    <option @if ($d->id == $services->dist_id) selected @endif
-                                                        value="{{ $d->id }}">{{ $d->district_name }}</option>
-                                                @endforeach
-                                            </select>
-                                            <label for="name_english" class="form-label">English Name</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                type="text" value="{{ $services->name_english }}"
-                                                class="form-control" name="name_english" maxlength="100"
-                                                placeholder="English Name" />
-                                            <label for="dob" class="form-label">DOB</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                type="date" value="{{ $services->dob }}" class="form-control"
-                                                name="dob" maxlength="10" placeholder="DOB" />
+                                                </div>
+                                            @elseif ($serviceid == 222)
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="relationship" class="form-label">உறவுமுறை</label>
+                                                    <select @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                        class="form-control" name="relationship">
+                                                        <option value="">Select</option>
+                                                        <option @if ($services->relationship == 'தந்தை') selected @endif
+                                                            value="தந்தை">
+                                                            தந்தை</option>
+                                                        <option @if ($services->relationship == 'தாய்') selected @endif
+                                                            value="தாய்">
+                                                            தாய்</option>
+                                                        <option @if ($services->relationship == 'மகன்') selected @endif
+                                                            value="மகன்">
+                                                            மகன்</option>
+                                                        <option @if ($services->relationship == 'மகள்') selected @endif
+                                                            value="மகள்">
+                                                            மகள்</option>
+                                                        <option @if ($services->relationship == 'கணவர்') selected @endif
+                                                            value="கணவர்">
+                                                            கணவர்</option>
+                                                        <option @if ($services->relationship == 'மனைவி') selected @endif
+                                                            value="மனைவி">
+                                                            மனைவி</option>
+                                                        <option @if ($services->relationship == 'மாமியார்') selected @endif
+                                                            value="மாமியார்">மாமியார்</option>
+                                                        <option @if ($services->relationship == 'மாமனார்') selected @endif
+                                                            value="மாமனார்">
+                                                            மாமனார்</option>
+                                                        <option @if ($services->relationship == 'மருமகன்') selected @endif
+                                                            value="மருமகன்">
+                                                            மருமகன்</option>
+                                                        <option @if ($services->relationship == 'மருமகள்') selected @endif
+                                                            value="மருமகள்">
+                                                            மருமகள்</option>
+                                                        <option @if ($services->relationship == 'பேரன்') selected @endif
+                                                            value="பேரன்">
+                                                            பேரன்</option>
+                                                        <option @if ($services->relationship == 'பேத்தி') selected @endif
+                                                            value="பேத்தி">
+                                                            பேத்தி</option>
+                                                        <option @if ($services->relationship == 'மற்ற உறவுகள்') selected @endif
+                                                            value="மற்ற உறவுகள்">
+                                                            மற்ற உறவுகள்</option>
+                                                    </select>
 
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->smart_card != '')
-                                                    <label>Smart Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Smart Card</label>
-                                                <input @if ($services->smart_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="smart_card">
-                                                @if ($services->smart_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->aadhaar_card != '')
+                                                            <label>Aadhaar Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Aadhaar Card</label>
+                                                        <input @if ($services->aadhaar_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="aadhaar_card">
+                                                        @if ($services->aadhaar_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->smart_card != '')
+                                                            <label>Smart Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Smart Card</label>
+                                                        <input @if ($services->smart_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="smart_card">
+                                                        @if ($services->smart_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                            @elseif ($serviceid == 227)
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="name_tamil" class="form-label">பெயர் தமிழில்</label>
+                                                    <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        type="text" value="{{ $services->name_tamil }}"
+                                                        class="form-control" name="name_tamil" maxlength="100"
+                                                        placeholder="பெயர் தமிழில்" />
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->aadhaar_card != '')
+                                                            <label>Aadhaar Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Aadhaar Card</label>
+                                                        <input @if ($services->aadhaar_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="aadhaar_card">
+                                                        @if ($services->aadhaar_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="name_english" class="form-label">English Name</label>
+                                                    <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        type="text" value="{{ $services->name_english }}"
+                                                        class="form-control" name="name_english" maxlength="100"
+                                                        placeholder="English Name" />
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->smart_card != '')
+                                                            <label>Smart Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Smart Card</label>
+                                                        <input @if ($services->smart_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="smart_card">
+                                                        @if ($services->smart_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                            @elseif ($serviceid == 228)
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="dob" class="form-label">DOB</label>
+                                                    <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        type="date" value="{{ $services->dob }}" class="form-control"
+                                                        name="dob" maxlength="10" placeholder="DOB" />
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->aadhaar_card != '')
+                                                            <label>Aadhaar Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Aadhaar Card</label>
+                                                        <input @if ($services->aadhaar_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="aadhaar_card">
+                                                        @if ($services->aadhaar_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->smart_card != '')
+                                                            <label>Smart Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Smart Card</label>
+                                                        <input @if ($services->smart_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="smart_card">
+                                                        @if ($services->smart_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                            @elseif ($serviceid == 229)
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="relationship" class="form-label">உறவுமுறை</label>
+                                                    <select @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                        class="form-control" name="relationship">
+                                                        <option value="">Select</option>
+                                                        <option @if ($services->relationship == 'தந்தை') selected @endif
+                                                            value="தந்தை">
+                                                            தந்தை</option>
+                                                        <option @if ($services->relationship == 'தாய்') selected @endif
+                                                            value="தாய்">
+                                                            தாய்</option>
+                                                        <option @if ($services->relationship == 'மகன்') selected @endif
+                                                            value="மகன்">
+                                                            மகன்</option>
+                                                        <option @if ($services->relationship == 'மகள்') selected @endif
+                                                            value="மகள்">
+                                                            மகள்</option>
+                                                        <option @if ($services->relationship == 'கணவர்') selected @endif
+                                                            value="கணவர்">
+                                                            கணவர்</option>
+                                                        <option @if ($services->relationship == 'மனைவி') selected @endif
+                                                            value="மனைவி">
+                                                            மனைவி</option>
+                                                        <option @if ($services->relationship == 'மாமியார்') selected @endif
+                                                            value="மாமியார்">மாமியார்</option>
+                                                        <option @if ($services->relationship == 'மாமனார்') selected @endif
+                                                            value="மாமனார்">
+                                                            மாமனார்</option>
+                                                        <option @if ($services->relationship == 'மருமகன்') selected @endif
+                                                            value="மருமகன்">
+                                                            மருமகன்</option>
+                                                        <option @if ($services->relationship == 'மருமகள்') selected @endif
+                                                            value="மருமகள்">
+                                                            மருமகள்</option>
+                                                        <option @if ($services->relationship == 'பேரன்') selected @endif
+                                                            value="பேரன்">
+                                                            பேரன்</option>
+                                                        <option @if ($services->relationship == 'பேத்தி') selected @endif
+                                                            value="பேத்தி">
+                                                            பேத்தி</option>
+                                                        <option @if ($services->relationship == 'மற்ற உறவுகள்') selected @endif
+                                                            value="மற்ற உறவுகள்">
+                                                            மற்ற உறவுகள்</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->aadhaar_card != '')
+                                                            <label>Aadhaar Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Aadhaar Card</label>
+                                                        <input @if ($services->aadhaar_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="aadhaar_card">
+                                                        @if ($services->aadhaar_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->smart_card != '')
+                                                            <label>Smart Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Smart Card</label>
+                                                        <input @if ($services->smart_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="smart_card">
+                                                        @if ($services->smart_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                            @elseif ($serviceid == 230)
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="name_tamil" class="form-label">பெயர் தமிழில்</label>
+                                                    <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        type="text" value="{{ $services->name_tamil }}"
+                                                        class="form-control" name="name_tamil" maxlength="100"
+                                                        placeholder="பெயர் தமிழில்" />
+                                                    <label for="dob" class="form-label">DOB</label>
+                                                    <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        type="date" value="{{ $services->dob }}" class="form-control"
+                                                        name="dob" maxlength="10" placeholder="DOB" />
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->aadhaar_card != '')
+                                                            <label>Aadhaar Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Aadhaar Card</label>
+                                                        <input @if ($services->aadhaar_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="aadhaar_card">
+                                                        @if ($services->aadhaar_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="name_english" class="form-label">English Name</label>
+                                                    <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        type="text" value="{{ $services->name_english }}"
+                                                        class="form-control" name="name_english" maxlength="100"
+                                                        placeholder="English Name" />
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->smart_card != '')
+                                                            <label>Smart Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Smart Card</label>
+                                                        <input @if ($services->smart_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="smart_card">
+                                                        @if ($services->smart_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                            @elseif ($serviceid == 231)
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="dist_id" class="form-label">District</label>
+                                                    <select @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                        name="dist_id" id="dist_id" class="form-control">
+                                                        <option value="">Select District</option>
+                                                        @foreach ($districts as $d)
+                                                            <option @if ($d->id == $services->dist_id) selected @endif
+                                                                value="{{ $d->id }}">{{ $d->district_name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <label for="name_english" class="form-label">English Name</label>
+                                                    <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        type="text" value="{{ $services->name_english }}"
+                                                        class="form-control" name="name_english" maxlength="100"
+                                                        placeholder="English Name" />
+                                                    <label for="dob" class="form-label">DOB</label>
+                                                    <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        type="date" value="{{ $services->dob }}" class="form-control"
+                                                        name="dob" maxlength="10" placeholder="DOB" />
 
-                                        <div class="mb-3 col-md-6">
-                                            <label for="taluk_id" class="form-label">Taluk</label>
-                                            <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="taluk_id"
-                                                id="taluk" class="form-control">
-                                            </select>
-                                            <label for="name_tamil" class="form-label">பெயர் தமிழில்</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                type="text" value="{{ $services->name_tamil }}" class="form-control"
-                                                name="name_tamil" maxlength="100" placeholder="பெயர் தமிழில்" />
-                                            <label for="relationship" class="form-label">உறவுமுறை</label>
-                                            <select @if (Auth::user()->id != $apply_user_id) disabled @endif
-                                                class="form-control" name="relationship">
-                                                <option value="">Select</option>
-                                                <option @if ($services->relationship == 'தந்தை') selected @endif value="தந்தை">
-                                                    தந்தை</option>
-                                                <option @if ($services->relationship == 'தாய்') selected @endif value="தாய்">
-                                                    தாய்</option>
-                                                <option @if ($services->relationship == 'மகன்') selected @endif
-                                                    value="மகன்">மகன்</option>
-                                                <option @if ($services->relationship == 'மகள்') selected @endif
-                                                    value="மகள்">மகள்</option>
-                                                <option @if ($services->relationship == 'கணவர்') selected @endif
-                                                    value="கணவர்">கணவர்</option>
-                                                <option @if ($services->relationship == 'மனைவி') selected @endif
-                                                    value="மனைவி">மனைவி</option>
-                                                <option @if ($services->relationship == 'மாமியார்') selected @endif
-                                                    value="மாமியார்">மாமியார்</option>
-                                                <option @if ($services->relationship == 'மாமனார்') selected @endif
-                                                    value="மாமனார்">மாமனார்</option>
-                                            </select>
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->aadhaar_card != '')
-                                                    <label>Aadhaar Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Aadhaar Card</label>
-                                                <input @if ($services->aadhaar_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="aadhaar_card">
-                                                @if ($services->aadhaar_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
-                                    @elseif ($serviceid == 232)
-                                        <div class="mb-3 col-md-6">
-                                            <label for="name_tamil" class="form-label">பெயர் தமிழில்</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                type="text" value="{{ $services->name_tamil }}" class="form-control"
-                                                name="name_tamil" maxlength="100" placeholder="பெயர் தமிழில்" />
-                                            <label for="relationship" class="form-label">உறவுமுறை</label>
-                                            <select @if (Auth::user()->id != $apply_user_id) disabled @endif
-                                                class="form-control" name="relationship">
-                                                <option value="">Select</option>
-                                                <option @if ($services->relationship == 'தந்தை') selected @endif
-                                                    value="தந்தை">தந்தை</option>
-                                                <option @if ($services->relationship == 'தாய்') selected @endif
-                                                    value="தாய்">தாய்</option>
-                                                <option @if ($services->relationship == 'மகன்') selected @endif
-                                                    value="மகன்">மகன்</option>
-                                                <option @if ($services->relationship == 'மகள்') selected @endif
-                                                    value="மகள்">மகள்</option>
-                                                <option @if ($services->relationship == 'கணவர்') selected @endif
-                                                    value="கணவர்">கணவர்</option>
-                                                <option @if ($services->relationship == 'மனைவி') selected @endif
-                                                    value="மனைவி">மனைவி</option>
-                                                <option @if ($services->relationship == 'மாமியார்') selected @endif
-                                                    value="மாமியார்">மாமியார்</option>
-                                                <option @if ($services->relationship == 'மாமனார்') selected @endif
-                                                    value="மாமனார்">மாமனார்</option>
-                                            </select>
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->aadhaar_card != '')
-                                                    <label>Aadhaar Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Aadhaar Card</label>
-                                                <input @if ($services->aadhaar_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="aadhaar_card">
-                                                @if ($services->aadhaar_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            <label for="name_english" class="form-label">English Name</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                type="text" value="{{ $services->name_english }}"
-                                                class="form-control" name="name_english" maxlength="100"
-                                                placeholder="English Name" />
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->smart_card != '')
-                                                    <label>Smart Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Smart Card</label>
-                                                <input @if ($services->smart_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="smart_card">
-                                                @if ($services->smart_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
-                                    @elseif ($serviceid == 235)
-                                        <div class="mb-3 col-md-6">
-                                            <label for="dob" class="form-label">DOB</label>
-                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
-                                                type="date" value="{{ $services->dob }}" class="form-control"
-                                                name="dob" maxlength="10" placeholder="DOB" />
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            <label for="relationship" class="form-label">உறவுமுறை</label>
-                                            <select @if (Auth::user()->id != $apply_user_id) disabled @endif
-                                                class="form-control" name="relationship">
-                                                <option value="">Select</option>
-                                                <option @if ($services->relationship == 'தந்தை') selected @endif
-                                                    value="தந்தை">தந்தை</option>
-                                                <option @if ($services->relationship == 'தாய்') selected @endif
-                                                    value="தாய்">தாய்</option>
-                                                <option @if ($services->relationship == 'மகன்') selected @endif
-                                                    value="மகன்">மகன்</option>
-                                                <option @if ($services->relationship == 'மகள்') selected @endif
-                                                    value="மகள்">மகள்</option>
-                                                <option @if ($services->relationship == 'கணவர்') selected @endif
-                                                    value="கணவர்">கணவர்</option>
-                                                <option @if ($services->relationship == 'மனைவி') selected @endif
-                                                    value="மனைவி">மனைவி</option>
-                                                <option @if ($services->relationship == 'மாமியார்') selected @endif
-                                                    value="மாமியார்">மாமியார்</option>
-                                                <option @if ($services->relationship == 'மாமனார்') selected @endif
-                                                    value="மாமனார்">மாமனார்</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->aadhaar_card != '')
-                                                    <label>Aadhaar Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Aadhaar Card</label>
-                                                <input @if ($services->aadhaar_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="aadhaar_card">
-                                                @if ($services->aadhaar_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            @if (Auth::user()->id != $apply_user_id)
-                                                @if ($services->smart_card != '')
-                                                    <label>Smart Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Smart Card</label>
-                                                <input @if ($services->smart_card == '') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="smart_card">
-                                                @if ($services->smart_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
-                                                @endif
-                                            @endif
-                                        </div>
-                                    {{-- @elseif ($serviceid == 246)
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->smart_card != '')
+                                                            <label>Smart Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Smart Card</label>
+                                                        <input @if ($services->smart_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="smart_card">
+                                                        @if ($services->smart_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="taluk_id" class="form-label">Taluk</label>
+                                                    <select @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                        name="taluk_id" id="taluk" class="form-control">
+                                                    </select>
+                                                    <label for="name_tamil" class="form-label">பெயர் தமிழில்</label>
+                                                    <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        type="text" value="{{ $services->name_tamil }}"
+                                                        class="form-control" name="name_tamil" maxlength="100"
+                                                        placeholder="பெயர் தமிழில்" />
+                                                    <label for="relationship" class="form-label">உறவுமுறை</label>
+                                                    <select @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                        class="form-control" name="relationship">
+                                                        <option value="">Select</option>
+                                                        <option @if ($services->relationship == 'தந்தை') selected @endif
+                                                            value="தந்தை">
+                                                            தந்தை</option>
+                                                        <option @if ($services->relationship == 'தாய்') selected @endif
+                                                            value="தாய்">
+                                                            தாய்</option>
+                                                        <option @if ($services->relationship == 'மகன்') selected @endif
+                                                            value="மகன்">
+                                                            மகன்</option>
+                                                        <option @if ($services->relationship == 'மகள்') selected @endif
+                                                            value="மகள்">
+                                                            மகள்</option>
+                                                        <option @if ($services->relationship == 'கணவர்') selected @endif
+                                                            value="கணவர்">
+                                                            கணவர்</option>
+                                                        <option @if ($services->relationship == 'மனைவி') selected @endif
+                                                            value="மனைவி">
+                                                            மனைவி</option>
+                                                        <option @if ($services->relationship == 'மாமியார்') selected @endif
+                                                            value="மாமியார்">மாமியார்</option>
+                                                        <option @if ($services->relationship == 'மாமனார்') selected @endif
+                                                            value="மாமனார்">
+                                                            மாமனார்</option>
+                                                        <option @if ($services->relationship == 'மருமகன்') selected @endif
+                                                            value="மருமகன்">
+                                                            மருமகன்</option>
+                                                        <option @if ($services->relationship == 'மருமகள்') selected @endif
+                                                            value="மருமகள்">
+                                                            மருமகள்</option>
+                                                        <option @if ($services->relationship == 'பேரன்') selected @endif
+                                                            value="பேரன்">
+                                                            பேரன்</option>
+                                                        <option @if ($services->relationship == 'பேத்தி') selected @endif
+                                                            value="பேத்தி">
+                                                            பேத்தி</option>
+                                                        <option @if ($services->relationship == 'மற்ற உறவுகள்') selected @endif
+                                                            value="மற்ற உறவுகள்">
+                                                            மற்ற உறவுகள்</option>
+                                                    </select>
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->aadhaar_card != '')
+                                                            <label>Aadhaar Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Aadhaar Card</label>
+                                                        <input @if ($services->aadhaar_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="aadhaar_card">
+                                                        @if ($services->aadhaar_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                            @elseif ($serviceid == 232)
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="name_tamil" class="form-label">பெயர் தமிழில்</label>
+                                                    <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        type="text" value="{{ $services->name_tamil }}"
+                                                        class="form-control" name="name_tamil" maxlength="100"
+                                                        placeholder="பெயர் தமிழில்" />
+                                                    <label for="relationship" class="form-label">உறவுமுறை</label>
+                                                    <select @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                        class="form-control" name="relationship">
+                                                        <option value="">Select</option>
+                                                        <option @if ($services->relationship == 'தந்தை') selected @endif
+                                                            value="தந்தை">
+                                                            தந்தை</option>
+                                                        <option @if ($services->relationship == 'தாய்') selected @endif
+                                                            value="தாய்">
+                                                            தாய்</option>
+                                                        <option @if ($services->relationship == 'மகன்') selected @endif
+                                                            value="மகன்">
+                                                            மகன்</option>
+                                                        <option @if ($services->relationship == 'மகள்') selected @endif
+                                                            value="மகள்">
+                                                            மகள்</option>
+                                                        <option @if ($services->relationship == 'கணவர்') selected @endif
+                                                            value="கணவர்">
+                                                            கணவர்</option>
+                                                        <option @if ($services->relationship == 'மனைவி') selected @endif
+                                                            value="மனைவி">
+                                                            மனைவி</option>
+                                                        <option @if ($services->relationship == 'மாமியார்') selected @endif
+                                                            value="மாமியார்">மாமியார்</option>
+                                                        <option @if ($services->relationship == 'மாமனார்') selected @endif
+                                                            value="மாமனார்">
+                                                            மாமனார்</option>
+                                                        <option @if ($services->relationship == 'மருமகன்') selected @endif
+                                                            value="மருமகன்">
+                                                            மருமகன்</option>
+                                                        <option @if ($services->relationship == 'மருமகள்') selected @endif
+                                                            value="மருமகள்">
+                                                            மருமகள்</option>
+                                                        <option @if ($services->relationship == 'பேரன்') selected @endif
+                                                            value="பேரன்">
+                                                            பேரன்</option>
+                                                        <option @if ($services->relationship == 'பேத்தி') selected @endif
+                                                            value="பேத்தி">
+                                                            பேத்தி</option>
+                                                        <option @if ($services->relationship == 'மற்ற உறவுகள்') selected @endif
+                                                            value="மற்ற உறவுகள்">
+                                                            மற்ற உறவுகள்</option>
+                                                    </select>
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->aadhaar_card != '')
+                                                            <label>Aadhaar Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Aadhaar Card</label>
+                                                        <input @if ($services->aadhaar_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="aadhaar_card">
+                                                        @if ($services->aadhaar_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="name_english" class="form-label">English Name</label>
+                                                    <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        type="text" value="{{ $services->name_english }}"
+                                                        class="form-control" name="name_english" maxlength="100"
+                                                        placeholder="English Name" />
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->smart_card != '')
+                                                            <label>Smart Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Smart Card</label>
+                                                        <input @if ($services->smart_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="smart_card">
+                                                        @if ($services->smart_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                            @elseif ($serviceid == 235)
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="dob" class="form-label">DOB</label>
+                                                    <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                        type="date" value="{{ $services->dob }}" class="form-control"
+                                                        name="dob" maxlength="10" placeholder="DOB" />
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="relationship" class="form-label">உறவுமுறை</label>
+                                                    <select @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                        class="form-control" name="relationship">
+                                                        <option value="">Select</option>
+                                                        <option @if ($services->relationship == 'தந்தை') selected @endif
+                                                            value="தந்தை">
+                                                            தந்தை</option>
+                                                        <option @if ($services->relationship == 'தாய்') selected @endif
+                                                            value="தாய்">
+                                                            தாய்</option>
+                                                        <option @if ($services->relationship == 'மகன்') selected @endif
+                                                            value="மகன்">
+                                                            மகன்</option>
+                                                        <option @if ($services->relationship == 'மகள்') selected @endif
+                                                            value="மகள்">
+                                                            மகள்</option>
+                                                        <option @if ($services->relationship == 'கணவர்') selected @endif
+                                                            value="கணவர்">
+                                                            கணவர்</option>
+                                                        <option @if ($services->relationship == 'மனைவி') selected @endif
+                                                            value="மனைவி">
+                                                            மனைவி</option>
+                                                        <option @if ($services->relationship == 'மாமியார்') selected @endif
+                                                            value="மாமியார்">மாமியார்</option>
+                                                        <option @if ($services->relationship == 'மாமனார்') selected @endif
+                                                            value="மாமனார்">
+                                                            மாமனார்</option>
+                                                        <option @if ($services->relationship == 'மருமகன்') selected @endif
+                                                            value="மருமகன்">
+                                                            மருமகன்</option>
+                                                        <option @if ($services->relationship == 'மருமகள்') selected @endif
+                                                            value="மருமகள்">
+                                                            மருமகள்</option>
+                                                        <option @if ($services->relationship == 'பேரன்') selected @endif
+                                                            value="பேரன்">
+                                                            பேரன்</option>
+                                                        <option @if ($services->relationship == 'பேத்தி') selected @endif
+                                                            value="பேத்தி">
+                                                            பேத்தி</option>
+                                                        <option @if ($services->relationship == 'மற்ற உறவுகள்') selected @endif
+                                                            value="மற்ற உறவுகள்">
+                                                            மற்ற உறவுகள்</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->aadhaar_card != '')
+                                                            <label>Aadhaar Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Aadhaar Card</label>
+                                                        <input @if ($services->aadhaar_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="aadhaar_card">
+                                                        @if ($services->aadhaar_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    @if (Auth::user()->id != $apply_user_id)
+                                                        @if ($services->smart_card != '')
+                                                            <label>Smart Card</label>
+                                                            <br><a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
+                                                                class="btn btn-primary me-2">View</a><br>
+                                                        @endif
+                                                    @else
+                                                        <label>Smart Card</label>
+                                                        <input @if ($services->smart_card == '') required @endif
+                                                            class="form-control" type="file"
+                                                            accept="image/jpeg, image/png" name="smart_card">
+                                                        @if ($services->smart_card != '')
+                                                            <a target="_blank"
+                                                                href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                                {{-- @elseif ($serviceid == 246)
                                         <div class="mb-3 col-md-6">
                                             <label for="dist_id" class="form-label">District</label>
                                             <select @if (Auth::user()->id != $apply_user_id) disabled @endif name="dist_id"
@@ -891,420 +1032,434 @@
                                                 @endif
                                             </div>
                                         </div> --}}
-                                    @endif
+                                            @endif
 
-                                    @if (Auth::user()->id != $apply_user_id)
-                                        <div class="mb-3 col-md-6">
-                                            <label for="service_name" class="form-label">Service Status</label>
-                                            <select class="form-control" name="status" id="service_status">
-                                                <option value="">Select</option>
-                                                <option @if ($services->status == 'Pending') selected @endif value="Pending">
-                                                    Pending</option>
-                                                <option @if ($services->status == 'Resubmit') selected @endif value="Resubmit">
-                                                    Resubmit</option>
-                                                <option @if ($services->status == 'Processing') selected @endif
-                                                    value="Processing">Processing</option>
-                                                @if ($services->status != 'Approved')
-                                                    <option @if ($services->status == 'Rejected') selected @endif
-                                                        value="Rejected">
-                                                        Rejected</option>
-                                                @endif
-                                                <option @if ($services->status == 'Approved') selected @endif value="Approved">
-                                                    Approved</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
-                                            <label for="remarks" class="form-label">Remarks</label>
-                                            <input value="{{ $services->remarks }}" class="form-control" type="text"
-                                                name="remarks" maxlength="100" id="remarks" placeholder="Remarks" />
-                                        </div>
-                                        <div class="mb-3 col-md-6" id="selecthide" style="display :none;">
-                                            <label for="select" class="form-label">Select</label>
-                                            <select class="form-control" name="selects" id="select">
-                                                <option>select</option>
-                                                <option @if ($services->selects == 'Text') selected @endif value = "Text">
-                                                    Text</option>
-                                                <option @if ($services->selects == 'File') selected @endif value = "File">
-                                                    File</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
-                                            <label for="acknowledgement" class="form-label">Acknowledgement</label>
-                                            <input class="form-control" type="file" name="acknowledgement"
-                                                id="acknowledgement" />
-                                        </div>
-                                        <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
-                                            <label for="application_no" class="form-label">Application No</label>
-                                            <input value="{{ $services->application_no }}" class="form-control"
-                                                type="text" maxlength="20" name="application_no"
-                                                id="application_no" />
-                                        </div>
-                                        <div class="mb-3 col-md-6" id="selectshide" style="display :none;">
-                                            <label for="selects" class="form-label">Select</label>
-                                            <select class="form-control" name="lects" id="selects">
-                                                <option>select</option>
-                                                <option @if ($services->lects == 'Text') selected @endif value = "Text">
-                                                    Text</option>
-                                                <option @if ($services->lects == 'File') selected @endif value = "File">
-                                                    File</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3 col-md-6" id="applicationhide" style="display :none;">
-                                            <label for="application" class="form-label">Application</label>
-                                            <input value="{{ $services->application }}" class="form-control"
-                                                type="text" maxlength="150" name="application" id="application" />
-                                        </div>
-                                        <div class="mb-3 col-md-6" id="certhide" style="display :none;">
-                                            <label for="certificate" class="form-label">Certificate</label>
-                                            <input class="form-control" type="file" name="certificate"
-                                                id="certificate" />
-                                        </div>
-                                    @else
-                                        <div class="row">
-                                            <div class="mb-3 col-md-6">
-                                                <label for="service_name" class="form-label">Service Status</label>
-                                                <input disabled value="{{ $services->status }}" class="form-control"
-                                                    type="text" />
-                                            </div>
-                                            <div class="mb-3 col-md-6">
-                                                <label for="remarks" class="form-label">Remarks</label>
-                                                <textarea rows="2" class="form-control" type="text" disabled placeholder="Remarks">{{ $services->remarks }}</textarea>
-                                            </div>
+                                            @if (Auth::user()->id != $apply_user_id)
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="service_name" class="form-label">Service Status</label>
+                                                    <select class="form-control" name="status" id="service_status">
+                                                        <option value="">Select</option>
+                                                        <option @if ($services->status == 'Pending') selected @endif
+                                                            value="Pending">
+                                                            Pending</option>
+                                                        <option @if ($services->status == 'Resubmit') selected @endif
+                                                            value="Resubmit">
+                                                            Resubmit</option>
+                                                        <option @if ($services->status == 'Processing') selected @endif
+                                                            value="Processing">Processing</option>
+                                                        @if ($services->status != 'Approved')
+                                                            <option @if ($services->status == 'Rejected') selected @endif
+                                                                value="Rejected">
+                                                                Rejected</option>
+                                                        @endif
+                                                        <option @if ($services->status == 'Approved') selected @endif
+                                                            value="Approved">
+                                                            Approved</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
+                                                    <label for="remarks" class="form-label">Remarks</label>
+                                                    <input value="{{ $services->remarks }}" class="form-control"
+                                                        type="text" name="remarks" maxlength="100" id="remarks"
+                                                        placeholder="Remarks" />
+                                                </div>
+                                                <div class="mb-3 col-md-6" id="selecthide" style="display :none;">
+                                                    <label for="select" class="form-label">Select</label>
+                                                    <select class="form-control" name="selects" id="select">
+                                                        <option>select</option>
+                                                        <option @if ($services->selects == 'Text') selected @endif
+                                                            value = "Text">
+                                                            Text</option>
+                                                        <option @if ($services->selects == 'File') selected @endif
+                                                            value = "File">
+                                                            File</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 col-md-6" id="acknowledgementhide"
+                                                    style="display :none;">
+                                                    <label for="acknowledgement"
+                                                        class="form-label">Acknowledgement</label>
+                                                    <input class="form-control" type="file" name="acknowledgement"
+                                                        id="acknowledgement" />
+                                                </div>
+                                                <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
+                                                    <label for="application_no" class="form-label">Application No</label>
+                                                    <input value="{{ $services->application_no }}" class="form-control"
+                                                        type="text" maxlength="20" name="application_no"
+                                                        id="application_no" />
+                                                </div>
+                                                <div class="mb-3 col-md-6" id="selectshide" style="display :none;">
+                                                    <label for="selects" class="form-label">Select</label>
+                                                    <select class="form-control" name="lects" id="selects">
+                                                        <option>select</option>
+                                                        <option @if ($services->lects == 'Text') selected @endif
+                                                            value = "Text">
+                                                            Text</option>
+                                                        <option @if ($services->lects == 'File') selected @endif
+                                                            value = "File">
+                                                            File</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 col-md-6" id="applicationhide" style="display :none;">
+                                                    <label for="application" class="form-label">Application</label>
+                                                    <input value="{{ $services->application }}" class="form-control"
+                                                        type="text" maxlength="150" name="application"
+                                                        id="application" />
+                                                </div>
+                                                <div class="mb-3 col-md-6" id="certhide" style="display :none;">
+                                                    <label for="certificate" class="form-label">Certificate</label>
+                                                    <input class="form-control" type="file" name="certificate"
+                                                        id="certificate" />
+                                                </div>
+                                            @else
+                                                <div class="row">
+                                                    <div class="mb-3 col-md-6">
+                                                        <label for="service_name" class="form-label">Service
+                                                            Status</label>
+                                                        <input disabled value="{{ $services->status }}"
+                                                            class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label for="remarks" class="form-label">Remarks</label>
+                                                        <textarea rows="2" class="form-control" type="text" disabled placeholder="Remarks">{{ $services->remarks }}</textarea>
+                                                    </div>
+
+                                                </div>
+                                            @endif
 
                                         </div>
-                                    @endif
 
+                                        <div class="mt-2 text-center">
+                                            @if ($services->status == 'Resubmit' && $apply_user_id != Auth::user()->id)
+                                                <button type="submit" disabled
+                                                    class="btn btn-primary me-2">Resubmit</button>
+                                            @elseif($services->status == 'Approved')
+                                                <button type="button" disabled
+                                                    class="btn btn-primary me-2">Completed</button>
+                                            @else
+                                                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                            @endif
+                                        </div>
+                                    </form>
                                 </div>
-
-                                <div class="mt-2 text-center">
-                                    @if ($services->status == 'Resubmit' && $apply_user_id != Auth::user()->id)
-                                        <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
-                                    @elseif($services->status == 'Approved')
-                                        <button type="button" disabled class="btn btn-primary me-2">Completed</button>
-                                    @else
-                                        <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                    @endif
-                                </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-@endsection
-@push('page_scripts')
-<script>
-        $(function() {
-            var status = "{{ $services->status }}";
-            var acknowledgement = "{{ $services->acknowledgement }}";
-            var certificate = "{{ $services->certificate }}";
-            var selects = "{{ $services->selects }}";
-            var lects = "{{ $services->lects }}";
-            var dist_id = "{{ $services->dist_id }}";
-            var taluk_id = "{{ $services->taluk_id }}";
-            var add_member = "{{ $services->add_member }}";
-            var documents = "{{ $services->documents }}";
-            
-            gettaluk(dist_id);
-            if (status == "Resubmit") {
-                $('#remarkshide').show("slow");
-                $('#remarks').prop("required", true);
-            } else if (status == "Processing") {
-                if (selects == "Text") {
-                    $('#applicationnohide').show("slow");
-                }
-                if (selects == "File") {
-                    $('#acknowledgementhide').show("slow");
-                    if (acknowledgement == "") {
-                        $('#acknowledgement').prop("required", true);
-                    }
-                }
-                $('#selecthide').show("slow");
+            @endsection
+            @push('page_scripts')
+                <script>
+                    $(function() {
+                        var status = "{{ $services->status }}";
+                        var acknowledgement = "{{ $services->acknowledgement }}";
+                        var certificate = "{{ $services->certificate }}";
+                        var selects = "{{ $services->selects }}";
+                        var lects = "{{ $services->lects }}";
+                        var dist_id = "{{ $services->dist_id }}";
+                        var taluk_id = "{{ $services->taluk_id }}";
+                        var add_member = "{{ $services->add_member }}";
+                        var documents = "{{ $services->documents }}";
+
+                        gettaluk(dist_id);
+                        if (status == "Resubmit") {
+                            $('#remarkshide').show("slow");
+                            $('#remarks').prop("required", true);
+                        } else if (status == "Processing") {
+                            if (selects == "Text") {
+                                $('#applicationnohide').show("slow");
+                            }
+                            if (selects == "File") {
+                                $('#acknowledgementhide').show("slow");
+                                if (acknowledgement == "") {
+                                    $('#acknowledgement').prop("required", true);
+                                }
+                            }
+                            $('#selecthide').show("slow");
 
 
-            } else if (status == "Approved") {
-                if (lects == "Text") {
-                    $('#applicationhide').show("slow");
-                }
-                if (lects == "File") {
-                    $('#certhide').show("slow");
-                    if (certificate == "") {
-                        $('#certificate').prop("required", true);
-                    }
-                }
-                $('#selectshide').show("slow")
-            }
+                        } else if (status == "Approved") {
+                            if (lects == "Text") {
+                                $('#applicationhide').show("slow");
+                            }
+                            if (lects == "File") {
+                                $('#certhide').show("slow");
+                                if (certificate == "") {
+                                    $('#certificate').prop("required", true);
+                                }
+                            }
+                            $('#selectshide').show("slow")
+                        }
 
-             if (add_member == "Add 1 Member") {
-                $('#aadhaar_cardhide').show("slow");
-            } else if (add_member == "Add 2 Member") {
-                $('#aadhaar_cardhide').show("slow");
-                $('#aadhaar_card2hide').show("slow");
-            } else if (add_member == "Add 3 Member") {
-                $('#aadhaar_cardhide').show("slow");
-                $('#aadhaar_card2hide').show("slow");
-                $('#aadhaar_card3hide').show("slow");
-            } else if (add_member == "Add 4 Member") {
-                $('#aadhaar_cardhide').show("slow");
-                $('#aadhaar_card2hide').show("slow");
-                $('#aadhaar_card3hide').show("slow");
-                $('#aadhaar_card4').show("slow");
-            } else if (add_member == "Add 5 Member") {
-                $('#aadhaar_cardhide').show("slow");
-                $('#aadhaar_card2hide').show("slow");
-                $('#aadhaar_card3hide').show("slow");
-                $('#aadhaar_card4').show("slow");
-                $('#aadhaar_card5').show("slow");
-            }
+                        if (add_member == "Add 1 Member") {
+                            $('#aadhaar_cardhide').show("slow");
+                        } else if (add_member == "Add 2 Member") {
+                            $('#aadhaar_cardhide').show("slow");
+                            $('#aadhaar_card2hide').show("slow");
+                        } else if (add_member == "Add 3 Member") {
+                            $('#aadhaar_cardhide').show("slow");
+                            $('#aadhaar_card2hide').show("slow");
+                            $('#aadhaar_card3hide').show("slow");
+                        } else if (add_member == "Add 4 Member") {
+                            $('#aadhaar_cardhide').show("slow");
+                            $('#aadhaar_card2hide').show("slow");
+                            $('#aadhaar_card3hide').show("slow");
+                            $('#aadhaar_card4').show("slow");
+                        } else if (add_member == "Add 5 Member") {
+                            $('#aadhaar_cardhide').show("slow");
+                            $('#aadhaar_card2hide').show("slow");
+                            $('#aadhaar_card3hide').show("slow");
+                            $('#aadhaar_card4').show("slow");
+                            $('#aadhaar_card5').show("slow");
+                        }
 
-            if (documents == "EB Bill") {
-                $('#electricity_bill_receipthide').show("slow");
-            } else if (documents == "Patta") {
-                $('#pattahide').show("slow");
-            } else if (documents == "Rental Agreement") {
-                $('#rental_agreementhide').show("slow");
-            } else if (documents == "Gas Bill") {
-                $('#gas_cylinder_receipthide').show("slow");
-            }
-        });
-
-        function gettaluk(dist_id) {
-            var url = "{{ url('service/get_taluk') }}/" + dist_id;
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function(result) {
-                    $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
-                    $.each(result, function(key, value) {
-                        $("#taluk").append('<option value="' + value
-                            .id + '">' + value.taluk_name + '</option>');
+                        if (documents == "EB Bill") {
+                            $('#electricity_bill_receipthide').show("slow");
+                        } else if (documents == "Patta") {
+                            $('#pattahide').show("slow");
+                        } else if (documents == "Rental Agreement") {
+                            $('#rental_agreementhide').show("slow");
+                        } else if (documents == "Gas Bill") {
+                            $('#gas_cylinder_receipthide').show("slow");
+                        }
                     });
-                    $("#taluk").val("{{ $services->taluk_id }}");
 
-                }
-            });
-        }
+                    function gettaluk(dist_id) {
+                        var url = "{{ url('service/get_taluk') }}/" + dist_id;
+                        $.ajax({
+                            url: url,
+                            type: "GET",
+                            success: function(result) {
+                                $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
+                                $.each(result, function(key, value) {
+                                    $("#taluk").append('<option value="' + value
+                                        .id + '">' + value.taluk_name + '</option>');
+                                });
+                                $("#taluk").val("{{ $services->taluk_id }}");
 
-        $('#service_status').change(function() {
-            if ($('#service_status').val() == 'Resubmit') {
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#remarkshide').show("slow");
-                $('#remarks').prop("required", true);
-                $('#select').prop("required", false);
-                $('#selecthide').hide("slow");
-                $('#selects').prop("required", false);
-                $('#selectshide').hide("slow");
-            } else if ($('#service_status').val() == 'Processing') {
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-                $('#select').prop("required", true);
-                $('#selecthide').show("slow");
-                $('#selects').prop("required", false);
-                $('#selectshide').hide("slow");
-            } else if ($('#service_status').val() == 'Approved') {
-                $('#remarkshide').hide("slow");
-                $('#remarks').prop("required", false);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-                $('#select').prop("required", false);
-                $('#selecthide').hide("slow");
-                $('#selects').prop("required", true);
-                $('#selectshide').show("slow");
-            } else {
-                $('#remarkshide').show("slow");
-                $('#remarks').prop("required", false);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-                $('#select').prop("required", false);
-                $('#selecthide').hide("slow");
-                $('#selects').prop("required", false);
-                $('#selectshide').hide("slow");
-            }
-        });
+                            }
+                        });
+                    }
 
-        $('#select').change(function() {
-            if ($('#select').val() == 'Text') {
-                $('#applicationnohide').show("slow");
-                $('#application_no').prop("required", true);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-            } else if ($('#select').val() == 'File') {
-                $('#acknowledgementhide').show("slow");
-                $('#acknowledgement').prop("required", false);
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-            } else {
-                $('#applicationnohide').hide("slow");
-                $('#application_no').prop("required", false);
-                $('#acknowledgementhide').hide("slow");
-                $('#acknowledgement').prop("required", false);
-            }
-        });
+                    $('#service_status').change(function() {
+                        if ($('#service_status').val() == 'Resubmit') {
+                            $('#acknowledgementhide').hide("slow");
+                            $('#acknowledgement').prop("required", false);
+                            $('#applicationnohide').hide("slow");
+                            $('#application_no').prop("required", false);
+                            $('#certhide').hide("slow");
+                            $('#certificate').prop("required", false);
+                            $('#remarkshide').show("slow");
+                            $('#remarks').prop("required", true);
+                            $('#select').prop("required", false);
+                            $('#selecthide').hide("slow");
+                            $('#selects').prop("required", false);
+                            $('#selectshide').hide("slow");
+                        } else if ($('#service_status').val() == 'Processing') {
+                            $('#acknowledgementhide').hide("slow");
+                            $('#acknowledgement').prop("required", false);
+                            $('#remarkshide').hide("slow");
+                            $('#remarks').prop("required", false);
+                            $('#certhide').hide("slow");
+                            $('#certificate').prop("required", false);
+                            $('#applicationnohide').hide("slow");
+                            $('#application_no').prop("required", false);
+                            $('#select').prop("required", true);
+                            $('#selecthide').show("slow");
+                            $('#selects').prop("required", false);
+                            $('#selectshide').hide("slow");
+                        } else if ($('#service_status').val() == 'Approved') {
+                            $('#remarkshide').hide("slow");
+                            $('#remarks').prop("required", false);
+                            $('#acknowledgementhide').hide("slow");
+                            $('#acknowledgement').prop("required", false);
+                            $('#certhide').hide("slow");
+                            $('#certificate').prop("required", false);
+                            $('#applicationnohide').hide("slow");
+                            $('#application_no').prop("required", false);
+                            $('#select').prop("required", false);
+                            $('#selecthide').hide("slow");
+                            $('#selects').prop("required", true);
+                            $('#selectshide').show("slow");
+                        } else {
+                            $('#remarkshide').show("slow");
+                            $('#remarks').prop("required", false);
+                            $('#acknowledgementhide').hide("slow");
+                            $('#acknowledgement').prop("required", false);
+                            $('#certhide').hide("slow");
+                            $('#certificate').prop("required", false);
+                            $('#applicationnohide').hide("slow");
+                            $('#application_no').prop("required", false);
+                            $('#select').prop("required", false);
+                            $('#selecthide').hide("slow");
+                            $('#selects').prop("required", false);
+                            $('#selectshide').hide("slow");
+                        }
+                    });
 
-        $('#selects').change(function() {
-            if ($('#selects').val() == 'Text') {
-                $('#applicationhide').show("slow");
-                $('#application').prop("required", true);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-            } else if ($('#selects').val() == 'File') {
-                $('#certhide').show("slow");
-                $('#certificate').prop("required", false);
-                $('#applicationhide').hide("slow");
-                $('#application').prop("required", false);
-            } else {
-                $('#applicationhide').hide("slow");
-                $('#application').prop("required", false);
-                $('#certhide').hide("slow");
-                $('#certificate').prop("required", false);
-            }
-        });
+                    $('#select').change(function() {
+                        if ($('#select').val() == 'Text') {
+                            $('#applicationnohide').show("slow");
+                            $('#application_no').prop("required", true);
+                            $('#acknowledgementhide').hide("slow");
+                            $('#acknowledgement').prop("required", false);
+                        } else if ($('#select').val() == 'File') {
+                            $('#acknowledgementhide').show("slow");
+                            $('#acknowledgement').prop("required", false);
+                            $('#applicationnohide').hide("slow");
+                            $('#application_no').prop("required", false);
+                        } else {
+                            $('#applicationnohide').hide("slow");
+                            $('#application_no').prop("required", false);
+                            $('#acknowledgementhide').hide("slow");
+                            $('#acknowledgement').prop("required", false);
+                        }
+                    });
 
-         $('#add_member').change(function() {
-            if ($('#add_member').val() == 'Add 1 Member') {
-                $('#aadhaar_cardhide1').show("slow");
-                $('#aadhaar_card2hide').hide("slow");
-                $('#aadhaar_card3hide').hide("slow");
-                $('#aadhaar_card4hide').hide("slow");
-                $('#aadhaar_card5hide').hide("slow");
-                $('#aadhaar_card2').prop("required", false);
-                $('#aadhaar_card3').prop("required", false);
-                $('#aadhaar_card4').prop("required", false);
-                $('#aadhaar_card5').prop("required", false);
-                $('#aadhaar_card').prop("required", true);
+                    $('#selects').change(function() {
+                        if ($('#selects').val() == 'Text') {
+                            $('#applicationhide').show("slow");
+                            $('#application').prop("required", true);
+                            $('#certhide').hide("slow");
+                            $('#certificate').prop("required", false);
+                        } else if ($('#selects').val() == 'File') {
+                            $('#certhide').show("slow");
+                            $('#certificate').prop("required", false);
+                            $('#applicationhide').hide("slow");
+                            $('#application').prop("required", false);
+                        } else {
+                            $('#applicationhide').hide("slow");
+                            $('#application').prop("required", false);
+                            $('#certhide').hide("slow");
+                            $('#certificate').prop("required", false);
+                        }
+                    });
 
-            } else if ($('#add_member').val() == 'Add 2 Member') {
-                $('#aadhaar_cardhide').show("slow");
-                $('#aadhaar_card2hide').show("slow");
-                $('#aadhaar_card3hide').hide("slow");
-                $('#aadhaar_card4hide').hide("slow");
-                $('#aadhaar_card5hide').hide("slow");
-                $('#aadhaar_card3').prop("required", false);
-                $('#aadhaar_card4').prop("required", false);
-                $('#aadhaar_card5').prop("required", false);
-                $('#aadhaar_card').prop("required", true);
-                $('#aadhaar_card2').prop("required", true);
+                    $('#add_member').change(function() {
+                        if ($('#add_member').val() == 'Add 1 Member') {
+                            $('#aadhaar_cardhide1').show("slow");
+                            $('#aadhaar_card2hide').hide("slow");
+                            $('#aadhaar_card3hide').hide("slow");
+                            $('#aadhaar_card4hide').hide("slow");
+                            $('#aadhaar_card5hide').hide("slow");
+                            $('#aadhaar_card2').prop("required", false);
+                            $('#aadhaar_card3').prop("required", false);
+                            $('#aadhaar_card4').prop("required", false);
+                            $('#aadhaar_card5').prop("required", false);
+                            $('#aadhaar_card').prop("required", true);
 
-            } else if ($('#add_member').val() == 'Add 3 Member') {
-                $('#aadhaar_cardhide').show("slow");
-                $('#aadhaar_card2hide').show("slow");
-                $('#aadhaar_card3hide').show("slow");
-                $('#aadhaar_card4hide').hide("slow");
-                $('#aadhaar_card5hide').hide("slow");
-                $('#aadhaar_card4').prop("required", false);
-                $('#aadhaar_card5').prop("required", false);
-                $('#aadhaar_card').prop("required", true);
-                $('#aadhaar_card2').prop("required", true);
-                $('#aadhaar_card3').prop("required", true);
+                        } else if ($('#add_member').val() == 'Add 2 Member') {
+                            $('#aadhaar_cardhide').show("slow");
+                            $('#aadhaar_card2hide').show("slow");
+                            $('#aadhaar_card3hide').hide("slow");
+                            $('#aadhaar_card4hide').hide("slow");
+                            $('#aadhaar_card5hide').hide("slow");
+                            $('#aadhaar_card3').prop("required", false);
+                            $('#aadhaar_card4').prop("required", false);
+                            $('#aadhaar_card5').prop("required", false);
+                            $('#aadhaar_card').prop("required", true);
+                            $('#aadhaar_card2').prop("required", true);
 
-            } else if ($('#add_member').val() == 'Add 4 Member') {
-                $('#aadhaar_cardhide').show("slow");
-                $('#aadhaar_card2hide').show("slow");
-                $('#aadhaar_card3hide').show("slow");
-                $('#aadhaar_card4hide').show("slow");
-                $('#aadhaar_card5hide').hide("slow");
-                $('#aadhaar_card5').prop("required", false);
-                $('#aadhaar_card').prop("required", true);
-                $('#aadhaar_card2').prop("required", true);
-                $('#aadhaar_card3').prop("required", true);
-                $('#aadhaar_card4').prop("required", true);
+                        } else if ($('#add_member').val() == 'Add 3 Member') {
+                            $('#aadhaar_cardhide').show("slow");
+                            $('#aadhaar_card2hide').show("slow");
+                            $('#aadhaar_card3hide').show("slow");
+                            $('#aadhaar_card4hide').hide("slow");
+                            $('#aadhaar_card5hide').hide("slow");
+                            $('#aadhaar_card4').prop("required", false);
+                            $('#aadhaar_card5').prop("required", false);
+                            $('#aadhaar_card').prop("required", true);
+                            $('#aadhaar_card2').prop("required", true);
+                            $('#aadhaar_card3').prop("required", true);
 
-            } else if ($('#add_member').val() == 'Add 5 Member') {
-                $('#aadhaar_cardhide').show("slow");
-                $('#aadhaar_card2hide').show("slow");
-                $('#aadhaar_card3hide').show("slow");
-                $('#aadhaar_card4hide').show("slow");
-                $('#aadhaar_card5hide').show("slow");
-                $('#aadhaar_card').prop("required", true);
-                $('#aadhaar_card2').prop("required", true);
-                $('#aadhaar_card3').prop("required", true);
-                $('#aadhaar_card4').prop("required", true);
-                $('#aadhaar_card5').prop("required", true);
+                        } else if ($('#add_member').val() == 'Add 4 Member') {
+                            $('#aadhaar_cardhide').show("slow");
+                            $('#aadhaar_card2hide').show("slow");
+                            $('#aadhaar_card3hide').show("slow");
+                            $('#aadhaar_card4hide').show("slow");
+                            $('#aadhaar_card5hide').hide("slow");
+                            $('#aadhaar_card5').prop("required", false);
+                            $('#aadhaar_card').prop("required", true);
+                            $('#aadhaar_card2').prop("required", true);
+                            $('#aadhaar_card3').prop("required", true);
+                            $('#aadhaar_card4').prop("required", true);
 
-            } else {
-                $('#aadhaar_cardhide').hide("slow");
-                $('#aadhaar_card2hide').hide("slow");
-                $('#aadhaar_card3hide').hide("slow");
-                $('#aadhaar_card4hide').hide("slow");
-                $('#aadhaar_card5hide').hide("slow");
-                $('#aadhaar_card').prop("required", false);
-                $('#aadhaar_card2').prop("required", false);
-                $('#aadhaar_card3').prop("required", false);
-                $('#aadhaar_card4').prop("required", false);
-                $('#aadhaar_card5').prop("required", false);
+                        } else if ($('#add_member').val() == 'Add 5 Member') {
+                            $('#aadhaar_cardhide').show("slow");
+                            $('#aadhaar_card2hide').show("slow");
+                            $('#aadhaar_card3hide').show("slow");
+                            $('#aadhaar_card4hide').show("slow");
+                            $('#aadhaar_card5hide').show("slow");
+                            $('#aadhaar_card').prop("required", true);
+                            $('#aadhaar_card2').prop("required", true);
+                            $('#aadhaar_card3').prop("required", true);
+                            $('#aadhaar_card4').prop("required", true);
+                            $('#aadhaar_card5').prop("required", true);
 
-            }
-        });
+                        } else {
+                            $('#aadhaar_cardhide').hide("slow");
+                            $('#aadhaar_card2hide').hide("slow");
+                            $('#aadhaar_card3hide').hide("slow");
+                            $('#aadhaar_card4hide').hide("slow");
+                            $('#aadhaar_card5hide').hide("slow");
+                            $('#aadhaar_card').prop("required", false);
+                            $('#aadhaar_card2').prop("required", false);
+                            $('#aadhaar_card3').prop("required", false);
+                            $('#aadhaar_card4').prop("required", false);
+                            $('#aadhaar_card5').prop("required", false);
 
-        $('#documents').change(function() {
-            if ($('#documents').val() == 'EB Bill') {
-                $('#electricity_bill_receipthide').show("slow");
-                $('#pattahide').hide("slow");
-                $('#gas_cylinder_receipthide').hide("slow");
-                $('#gas_cylinder_receipt').prop("required", false);
-                $('#patta').prop("required", false);
-                $('#rental_agreementhide').hide("slow");
-                $('#rental_agreement').prop("required", false);
-                $('#electricity_bill_receipt').prop("required", true);
+                        }
+                    });
 
-            } else if ($('#documents').val() == 'Patta') {
-                $('#pattahide').show("slow");
-                $('#electricity_bill_receipthide').hide("slow");
-                $('#gas_cylinder_receipthide').hide("slow");
-                $('#gas_cylinder_receipt').prop("required", false);
-                $('#electricity_bill_receipt').prop("required", false);
-                $('#rental_agreementhide').hide("slow");
-                $('#rental_agreement').prop("required", false);
-                $('#patta').prop("required", true);
+                    $('#documents').change(function() {
+                        if ($('#documents').val() == 'EB Bill') {
+                            $('#electricity_bill_receipthide').show("slow");
+                            $('#pattahide').hide("slow");
+                            $('#gas_cylinder_receipthide').hide("slow");
+                            $('#gas_cylinder_receipt').prop("required", false);
+                            $('#patta').prop("required", false);
+                            $('#rental_agreementhide').hide("slow");
+                            $('#rental_agreement').prop("required", false);
+                            $('#electricity_bill_receipt').prop("required", true);
 
-            } else if ($('#documents').val() == 'Rental Agreement') {
-                $('#rental_agreementhide').show("slow");
-                $('#electricity_bill_receipthide').hide("slow");
-                $('#pattahide').hide("slow");
-                $('#gas_cylinder_receipthide').hide("slow");
-                $('#gas_cylinder_receipt').prop("required", false);
-                $('#patta').prop("required", false);
-                $('#rental_agreement').prop("required", true);
+                        } else if ($('#documents').val() == 'Patta') {
+                            $('#pattahide').show("slow");
+                            $('#electricity_bill_receipthide').hide("slow");
+                            $('#gas_cylinder_receipthide').hide("slow");
+                            $('#gas_cylinder_receipt').prop("required", false);
+                            $('#electricity_bill_receipt').prop("required", false);
+                            $('#rental_agreementhide').hide("slow");
+                            $('#rental_agreement').prop("required", false);
+                            $('#patta').prop("required", true);
 
-            } else if ($('#documents').val() == 'Gas Bill') {
-                $('#gas_cylinder_receipthide').show("slow");
-                $('#pattahide').hide("slow");
-                $('#electricity_bill_receipthide').hide("slow");
-                $('#electricity_bill_receipt').prop("required", false);
-                $('#patta').prop("required", false);
-                $('#rental_agreementhide').hide("slow");
-                $('#rental_agreement').prop("required", false);
-                $('#gas_cylinder_receipt').prop("required", true);
+                        } else if ($('#documents').val() == 'Rental Agreement') {
+                            $('#rental_agreementhide').show("slow");
+                            $('#electricity_bill_receipthide').hide("slow");
+                            $('#pattahide').hide("slow");
+                            $('#gas_cylinder_receipthide').hide("slow");
+                            $('#gas_cylinder_receipt').prop("required", false);
+                            $('#patta').prop("required", false);
+                            $('#rental_agreement').prop("required", true);
 
-            } else {
-                $('#gas_cylinder_receipthide').hide("slow");
-                $('#pattahide').hide("slow");
-                $('#electricity_bill_receipthide').hide("slow");
-                $('#electricity_bill_receipt').prop("required", false);
-                $('#patta').prop("required", false);
-                $('#gas_cylinder_receipt').prop("required", false);
-                $('#rental_agreementhide').hide("slow");
-                $('#rental_agreement').prop("required", false);
-            }
-        });
-    </script>
-@endpush
+                        } else if ($('#documents').val() == 'Gas Bill') {
+                            $('#gas_cylinder_receipthide').show("slow");
+                            $('#pattahide').hide("slow");
+                            $('#electricity_bill_receipthide').hide("slow");
+                            $('#electricity_bill_receipt').prop("required", false);
+                            $('#patta').prop("required", false);
+                            $('#rental_agreementhide').hide("slow");
+                            $('#rental_agreement').prop("required", false);
+                            $('#gas_cylinder_receipt').prop("required", true);
+
+                        } else {
+                            $('#gas_cylinder_receipthide').hide("slow");
+                            $('#pattahide').hide("slow");
+                            $('#electricity_bill_receipthide').hide("slow");
+                            $('#electricity_bill_receipt').prop("required", false);
+                            $('#patta').prop("required", false);
+                            $('#gas_cylinder_receipt').prop("required", false);
+                            $('#rental_agreementhide').hide("slow");
+                            $('#rental_agreement').prop("required", false);
+                        }
+                    });
+                </script>
+            @endpush
