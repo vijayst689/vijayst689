@@ -2250,7 +2250,6 @@ CREATE TABLE `wallet_topup` (
 ALTER TABLE request_payment CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE wallet_topup CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-<<<<<<< HEAD
 //24-09-2025
 
 CREATE TABLE `sitepayment` (
@@ -2268,7 +2267,6 @@ CREATE TABLE `sitepayment` (
   `paid_image` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
-=======
 //21-09-2025
 alter table family_member add relation_income varchar(100) DEFAULT NULL;
 
@@ -2309,4 +2307,3 @@ CREATE TABLE `gst_find` (
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
->>>>>>> 33819780da29bf99fe80fdffb894fb74d8ff7eb7
