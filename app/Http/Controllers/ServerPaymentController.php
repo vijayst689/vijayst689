@@ -5,6 +5,7 @@ use Auth;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ServerPaymentController extends Controller
 {
@@ -74,20 +75,28 @@ class ServerPaymentController extends Controller
 
 }
 
-public function websitepayment(){
-   $user = Auth::user();
+public function websitepayment()
+  {
+    $user = Auth::user();
 
-        $paymentId = session('activePaymentId');
+    $paymentId = session('activePaymentId');
 
-       $unpaidPayment = DB::table('sitepayment')
-    ->where('payment_status', 'UNPAID')
-    ->orderBy('payment_date', 'asc') // oldest first
-    ->first();
+    $unpaidPayment = DB::table('sitepayment')
+      ->where('payment_status', 'UNPAID')
+      ->orderBy('payment_date', 'asc') // oldest first
+      ->first();
+if (!$unpaidPayment) {
+    return redirect('/dashboard'); // no unpaid payment
+}
+$paymentDate = Carbon::parse($unpaidPayment->payment_date)->startOfDay();
+$today       = Carbon::today();
+$tomorrow    = Carbon::tomorrow();
 
-        if (!$unpaidPayment) {
-            return redirect('/dashboard'); // already paid or no payment
-        }
-
-    return view( 'payment.sitepayment',compact('unpaidPayment'));
+if ($paymentDate->lte($today) || $paymentDate->equalTo($tomorrow)) {
+    // ✅ Allow: payment date is today, before today, or tomorrow (prepayment)
+} else {
+    return redirect('/dashboard'); // ❌ not yet allowed
+}
+    return view('payment.sitepayment', compact('unpaidPayment'));
   }
 }
