@@ -221,11 +221,12 @@
 @endsection
 @push('page_scripts')
     <script>
-        function edit_service(id, service_name, status, amount) {
+        function edit_service(id, service_name, status, amount, ramjiservice_id) {
             $("#editname").val(service_name);
             $("#editstatus").val(status);
             $("#editam").val(amount);
             $("#serviceid").val(id);
+            $("#ramjiservice_id").val(ramjiservice_id);
             $("#editser").modal("show");
         }
     </script>

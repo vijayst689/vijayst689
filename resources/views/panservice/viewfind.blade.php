@@ -183,11 +183,12 @@
     @endsection
     @push('page_scripts')
         <script>
-            function edit_service(id, name, amount, status, ) {
+            function edit_service(id, name, amount, status, ramjiservice_id) {
                 $("#editservice").val(name);
                 $("#editamount").val(amount);
                 $("#editstatus").val(status);
                 $("#findid").val(id);
+                $("#ramjiservice_id").val(ramjiservice_id);
                 $("#editser").modal("show");
             }
 

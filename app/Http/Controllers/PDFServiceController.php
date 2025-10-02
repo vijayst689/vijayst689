@@ -34,6 +34,7 @@ class PDFServiceController extends Controller
     DB::table( 'find_services' )->insert( [
       'name'        => $request->name,
       'amount'      => $request->amount,
+      'ramjiservice_id'      => $request->ramjiservice_id,
       'date'        => date("Y-m-d H:i:s"),
       'status'      => 'Active',
     ] );
@@ -56,6 +57,7 @@ class PDFServiceController extends Controller
     DB::table( 'find_services' )->where('id', $request->findid)->update( [
       'name'     => $request->name,
       'amount'   => $request->amount,
+      'ramjiservice_id'   => $request->ramjiservice_id,
     ] );
 
     if ( $request->ser_image != null ) {

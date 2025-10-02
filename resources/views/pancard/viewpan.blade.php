@@ -186,10 +186,11 @@
     @endsection
     @push('page_scripts')
         <script>
-        function edit_pan(id, name, amount ) {
+        function edit_pan(id, name, amount, ramjiservice_id) {
             $("#editservice").val(name);
             $("#editamount").val(amount);
             $("#panid").val(id);
+            $("#ramjiservice_id").val(ramjiservice_id);
             $("#editpan").modal("show");
         }
 

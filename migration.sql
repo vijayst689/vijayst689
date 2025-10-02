@@ -2307,3 +2307,14 @@ CREATE TABLE `gst_find` (
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
+
+//2-10-2025
+
+alter table services add ramjiservice_id int(11) DEFAULT 0 after parent_id;
+alter table find_services add ramjiservice_id int(11) DEFAULT 0 after id;
+alter table operator add ramjiservice_id int(11) DEFAULT 0;
+alter table panservice add ramjiservice_id int(11) DEFAULT 0 after id;
+alter table service_payment add ramjiservice_id int(11) DEFAULT 0 after parent_id;
+alter table find_payment add ramjiservice_id int(11) DEFAULT 0 after service_id;
+alter table recharge_payment add ramjiservice_id int(11) DEFAULT 0 after service_id;
+alter table panpayment add ramjiservice_id int(11) DEFAULT 0 after service_id;

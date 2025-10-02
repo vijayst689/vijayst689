@@ -35,6 +35,7 @@ class PanController extends Controller
     DB::table( 'panservice' )->insert( [
       'name'       => $request->name,
       'amount'     => $request->amount,
+      'ramjiservice_id'     => $request->ramjiservice_id,
       'date'       => date("Y-m-d H:i:s"),
       'status'     => 'Active',
     ] );
@@ -57,6 +58,7 @@ class PanController extends Controller
     DB::table( 'panservice' )->where('id', $request->panid)->update( [
       'name'     => $request->name,
       'amount'   => $request->amount,
+      'ramjiservice_id'   => $request->ramjiservice_id,
     ] );
 
     if ( $request->ser_image != null ) {

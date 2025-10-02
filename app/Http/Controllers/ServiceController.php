@@ -167,6 +167,7 @@ public function addsubservice( Request $request ) {
         'parent_id'  => $request->service_id,
         'service_name'  => $request->service_name,
         'amount'        => $request->amount,
+        'ramjiservice_id'        => $request->ramjiservice_id,
         'status' => 'Active',
     ] );
 
@@ -178,6 +179,7 @@ public function updatesubservice( Request $request ) {
         'service_name'  => $request->service_name,
         'status'        => $request->status,
         'amount'        => $request->amount,
+        'ramjiservice_id'        => $request->ramjiservice_id,
     ] );
     if ($request->sub_service_image != null) {
         $sub_service_image = uniqid().'.'.$request->file('sub_service_image')->extension();
