@@ -54,3 +54,5 @@ Route::post('/update_payment_status', [App\Http\Controllers\api\ApiController::c
 
 Route::post('/update_site_payments', [App\Http\Controllers\api\SitePaymentController::class, 'update_site_payments'])->name('update_site_payments');
 Route::post('/update_sitepayment_status', [App\Http\Controllers\api\SitePaymentController::class, 'update_sitepayment_status'])->name('update_sitepayment_status');
+
+Route::post('/updateadminpayment', [App\Http\Controllers\api\AdminPaymentController::class, 'updateadminpayment'])->name('updateadminpayment');
