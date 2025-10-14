@@ -513,7 +513,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="container-xxl flex-grow-1 container-p-y bg-light">
+                    <div class="container-xxl flex-grow-1 container-p-y">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card bg-dark">
