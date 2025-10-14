@@ -308,7 +308,7 @@
                             </div>
                         </div>
                     @endif
-                     @php 
+                     @php
                         $sitecount = DB::table('sitepayment')
                         ->where('payment_status', 'UNPAID')
                         ->count();
@@ -491,6 +491,24 @@
                                         <h4 class="my-1 text-white">{{ $customercount }}</h4>
                                     </div>
                                     <div id="chart3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <div class="card radius-10 bg-gradient-cosmic">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-auto">
+                                        <a href="{{ url('/viewenquiry') }}">
+                                            <p class="mb-0 text-white">Enquiry</p>
+                                        </a>
+                                        <h4 class="my-1 text-white">{{ $enquirycount }}</h4>
+                                    </div>
+                                    <div id="chart1"></div>
+                                    <div class="spinner-grow text-warning" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -746,6 +764,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-3 col-sm-4">
+                        <div class="card radius-10 bg-gradient-cosmic">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-auto">
+                                        <a href="{{ url('/addenquiry') }}">
+                                            <p class="mb-0 text-white">Enquiry</p>
+                                        </a>
+                                        <h4 class="my-1 text-white">&</h4>
+                                    </div>
+                                    <div id="chart1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endif
                 @if (Auth::user()->user_type_id == 4)
                     <div class="sliding-text-container">
@@ -951,6 +984,21 @@
                             </div>
                         </div>
                     </div>
+                     <div class="col-md-3 col-sm-4">
+                        <div class="card radius-10 bg-gradient-cosmic">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-auto">
+                                        <a href="{{ url('/addenquiry') }}">
+                                            <p class="mb-0 text-white">Enquiry</p>
+                                        </a>
+                                        <h4 class="my-1 text-white">&</h4>
+                                    </div>
+                                    <div id="chart1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endif
                 @if (Auth::user()->user_type_id == 5)
                     <div class="sliding-text-container">
@@ -1057,6 +1105,21 @@
                                             <p class="mb-0 text-white">Wallet Request</p>
                                         </a>
                                         <h4 class="my-1 text-white">{{ $RequestAmount }}</h4>
+                                    </div>
+                                    <div id="chart1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="col-md-3 col-sm-4">
+                        <div class="card radius-10 bg-gradient-cosmic">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-auto">
+                                        <a href="{{ url('/addenquiry') }}">
+                                            <p class="mb-0 text-white">Enquiry</p>
+                                        </a>
+                                        <h4 class="my-1 text-white">&</h4>
                                     </div>
                                     <div id="chart1"></div>
                                 </div>

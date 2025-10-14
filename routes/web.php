@@ -525,6 +525,14 @@ Route::post('notificationstatusupdate', [App\Http\Controllers\NotificationContro
 
 Route::get('/dropnotification/{id}', [App\Http\Controllers\OperatorController::class, 'dropnotification'])->name('dropnotification');
 
+//Enquiry
+
+Route::get('addenquiry', [App\Http\Controllers\NotificationController::class, 'addenquiry']);
+
+Route::post('saveenquiry', [App\Http\Controllers\NotificationController::class, 'saveenquiry']);
+
+Route::get('viewenquiry', [App\Http\Controllers\NotificationController::class, 'viewenquiry']);
+
 //site serverpayment
 
 Route::get('serverpayment', [App\Http\Controllers\ServerPaymentController::class, 'serverpayment']);

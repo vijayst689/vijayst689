@@ -60,6 +60,11 @@ class DashboardController extends Controller
             if (count($users) > 0) {
                 $retailer = $users[0]->retailer;
             }
+            $sql = "select count(*) as enquirycount from enquiry";
+            $users = DB::select(DB::raw($sql));
+            if (count($users) > 0) {
+                $enquirycount = $users[0]->enquirycount;
+            }
 
             $sql = "select count(*) as retailer_count from users where user_type_id = 4 and refferal_id = $logid";
             $users = DB::select(DB::raw($sql));
@@ -2306,7 +2311,7 @@ class DashboardController extends Controller
                 $memcount = $users[0]->memcount;
             }
 
-            return view('dashboard',compact('servicecount','customercount','retailer','distributor','retailer_count','distributor_count','customer','pending','inpro','resub','rerej','approve','service','RequestAmount','activation','allservice','ramjirequestAmount','ourservice','notify','pendingcount','resubmitcount','approvedcount','memcount'));
+            return view('dashboard',compact('servicecount','customercount','retailer','distributor','retailer_count','distributor_count','customer','pending','inpro','resub','rerej','approve','service','RequestAmount','activation','allservice','ramjirequestAmount','ourservice','notify','pendingcount','resubmitcount','approvedcount','memcount','enquirycount'));
         }
 
         return redirect("login")->withSuccess('You are not allowed to access');

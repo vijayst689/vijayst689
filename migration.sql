@@ -2318,3 +2318,16 @@ alter table service_payment add ramjiservice_id int(11) DEFAULT 0 after parent_i
 alter table find_payment add ramjiservice_id int(11) DEFAULT 0 after service_id;
 alter table recharge_payment add ramjiservice_id int(11) DEFAULT 0 after service_id;
 alter table panpayment add ramjiservice_id int(11) DEFAULT 0 after service_id;
+
+CREATE TABLE `enquiry` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `user_id` varchar(10) DEFAULT 0,
+  `mobile` varchar(10) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `user_name` varchar(50) DEFAULT NULL,
+  `requirement` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+alter table enquiry add user_id varchar(10) DEFAULT 0 after name;

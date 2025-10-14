@@ -74,4 +74,37 @@ class NotificationController extends Controller
       return redirect('/viewnotification')->with('success', 'Notification Status Updated Successfully ... !');
     }
 
+
+     public function addenquiry()
+    {
+        return view('enquiry.addenquiry');
+    }
+
+    public function viewenquiry()
+    {
+        $userid = Auth::user()->id;
+       if(Auth::user()->user_type_id == 2)
+          $enquiry = DB::table('enquiry')->orderBy( 'id', 'Asc' )->get();
+       else{
+          $enquiry = DB::table('enquiry')->where('user_id',Auth::user()->id)->orderBy( 'id', 'Asc' )->get();
+           }
+
+        return view('enquiry.viewenquiry',compact('enquiry'));
+    }
+
+    public function saveenquiry(Request $request)
+    {
+      $userid = Auth::user()->id;
+      $saveenquiry = DB::table('enquiry')->insert([
+        'name'         => $request->name,
+        'user_id'      => Auth::user()->id,
+        'mobile'       => $request->mobile,
+        'email'        => $request->email,
+        'requirement'  => $request->requirement,
+        'user_name'    => $request->username,
+      ]);
+
+      return redirect('/viewenquiry')->with('success', 'Enquiry send Successfully ... !');
+    }
+
 }
