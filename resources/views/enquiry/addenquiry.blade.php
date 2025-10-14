@@ -67,7 +67,7 @@
                                         <label for="example-text-input" class="col-sm-2 form-label"> Requirement</label>
                                         <div class="col-sm-6">
                                             <textarea required class="form-control" name="enquiry" maxlength="300" type="text" id="example-text-input"
-                                                rows="3" placeholder="Enquiry"></textarea>
+                                                rows="3" placeholder="Requirement"></textarea>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
