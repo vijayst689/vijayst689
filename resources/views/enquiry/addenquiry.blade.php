@@ -45,8 +45,8 @@
                                     <div class="mb-3 row">
                                         <label for="example-text-input" class="col-sm-2 form-label"> Name</label>
                                         <div class="col-sm-6">
-                                            <textarea required class="form-control" name="name" maxlength="50" type="text" id="example-text-input"
-                                                placeholder="Name"></textarea>
+                                            <input required class="form-control" name="name" maxlength="50" type="text" id="example-text-input"
+                                                placeholder="Name">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -71,7 +71,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="example-text-input" class="col-sm-2 form-label"> User</label>
+                                        <label for="example-text-input" class="col-sm-2 form-label">UserName</label>
                                         <div class="col-sm-6">
                                             <select required name="username"class="form-control" id="example-text-input">
                                                 <option value="">User</option>
