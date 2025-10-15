@@ -77,7 +77,8 @@ class NotificationController extends Controller
 
      public function addenquiry()
     {
-        return view('enquiry.addenquiry');
+        $getenquiry = DB::table('requirement')->orderBy( 'id', 'Asc' )->get();
+        return view('enquiry.addenquiry',compact('getenquiry'));
     }
 
     public function viewenquiry()
@@ -107,4 +108,34 @@ class NotificationController extends Controller
       return redirect('/viewenquiry')->with('success', 'Enquiry send Successfully ... !');
     }
 
+         public function requirement()
+    {
+        return view('enquiry.requirement');
+    }
+
+        public function saverequirement(Request $request)
+    {
+      $saverequirement = DB::table('requirement')->insert([
+        'requirement_name'   => $request->requirement_name,
+        'status'             => 'Active',
+      ]);
+
+      return redirect('/viewrequirement')->with('success', 'requirement save Successfully ... !');
+    }
+
+       public function updaterequirement(Request $request)
+    {
+      $updateretailer = DB::table('requirement')->where( 'id', $request->require_id )->update([
+        'requirement_name'     => $request->requirement_name,
+      ]);
+
+      return redirect('/viewrequirement')->with('success', 'requirement Updated Successfully ... !');
+    }
+
+        public function viewrequirement()
+    {
+          $requirement = DB::table('requirement')->orderBy( 'id', 'Asc' )->get();
+
+        return view('enquiry.viewrequirement',compact('requirement'));
+    }
 }

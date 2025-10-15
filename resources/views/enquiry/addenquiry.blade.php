@@ -63,11 +63,15 @@
                                                 type="text" id="example-text-input" placeholder="Email">
                                         </div>
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label for="example-text-input" class="col-sm-2 form-label"> Requirement</label>
+                                     <div class="mb-3 row">
+                                        <label for="example-text-input" class="col-sm-2 form-label">Requirement</label>
                                         <div class="col-sm-6">
-                                            <textarea required class="form-control" name="enquiry" maxlength="300" type="text" id="example-text-input"
-                                                rows="3" placeholder="Requirement"></textarea>
+                                            <select required name="enquiry"class="form-control" id="example-text-input">
+                                                <option value="">Select</option>
+                                                @foreach ($getenquiry as $e)
+                                                <option value="{{ $e->requirement_name }}">{{ $e->requirement_name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">

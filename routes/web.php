@@ -533,6 +533,14 @@ Route::post('saveenquiry', [App\Http\Controllers\NotificationController::class, 
 
 Route::get('viewenquiry', [App\Http\Controllers\NotificationController::class, 'viewenquiry']);
 
+Route::get('requirement', [App\Http\Controllers\NotificationController::class, 'requirement']);
+
+Route::post('saverequirement', [App\Http\Controllers\NotificationController::class, 'saverequirement']);
+
+Route::post('updaterequirement', [App\Http\Controllers\NotificationController::class, 'updaterequirement']);
+
+Route::get('viewrequirement', [App\Http\Controllers\NotificationController::class, 'viewrequirement']);
+
 //site serverpayment
 
 Route::get('serverpayment', [App\Http\Controllers\ServerPaymentController::class, 'serverpayment']);

@@ -435,6 +435,21 @@
                     </li>
                 </ul>
             </li>
+               <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class="bx bx-menu"></i>
+                    </div>
+                    <div class="menu-title">Requirement</div>
+                </a>
+                <ul>
+                    <li> <a href="{{ url('/requirement') }}"><i class='bx bx-radio-circle'></i>Add
+                            Requirement</a>
+                    </li>
+                    <li> <a href="{{ url('/viewrequirement') }}"><i class='bx bx-radio-circle'></i>View
+                            Requirement</a>
+                    </li>
+                </ul>
+            </li>
             <li>
                 <a class="has-arrow" href="javascript:;">
                     <div class="parent-icon"><i class="bx bx-menu"></i>

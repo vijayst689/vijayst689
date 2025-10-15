@@ -2331,3 +2331,10 @@ CREATE TABLE `enquiry` (
 )  ENGINE=InnoDB;
 
 alter table enquiry add user_id varchar(10) DEFAULT 0 after name;
+
+CREATE TABLE `requirement` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `requirement_name` varchar(200) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
