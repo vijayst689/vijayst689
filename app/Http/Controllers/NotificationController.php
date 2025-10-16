@@ -75,11 +75,11 @@ class NotificationController extends Controller
     }
 
 
-     public function addenquiry()
-    {
-        $getenquiry = DB::table('requirement')->orderBy( 'id', 'Asc' )->get();
-        return view('enquiry.addenquiry',compact('getenquiry'));
-    }
+    //  public function addenquiry()
+    // {
+    //     $getenquiry = DB::table('requirement')->orderBy( 'id', 'Asc' )->get();
+    //     return view('enquiry.addenquiry',compact('getenquiry'));
+    // }
 
     public function viewenquiry()
     {
@@ -93,20 +93,20 @@ class NotificationController extends Controller
         return view('enquiry.viewenquiry',compact('enquiry'));
     }
 
-    public function saveenquiry(Request $request)
-    {
-      $userid = Auth::user()->id;
-      $saveenquiry = DB::table('enquiry')->insert([
-        'name'         => $request->name,
-        'user_id'      => Auth::user()->id,
-        'mobile'       => $request->mobile,
-        'email'        => $request->email,
-        'requirement'  => $request->requirement,
-        'user_name'    => $request->username,
-      ]);
+    // public function saveenquiry(Request $request)
+    // {
+    //   $userid = Auth::user()->id;
+    //   $saveenquiry = DB::table('enquiry')->insert([
+    //     'name'         => $request->name,
+    //     'user_id'      => Auth::user()->id,
+    //     'mobile'       => $request->mobile,
+    //     'email'        => $request->email,
+    //     'requirement'  => $request->requirement,
+    //     'user_name'    => $request->username,
+    //   ]);
 
-      return redirect('/viewenquiry')->with('success', 'Enquiry send Successfully ... !');
-    }
+    //   return redirect('/viewenquiry')->with('success', 'Enquiry send Successfully ... !');
+    // }
 
          public function requirement()
     {

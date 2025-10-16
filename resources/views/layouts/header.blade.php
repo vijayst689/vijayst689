@@ -1,186 +1,193 @@
  <!--start header -->
  <div class="col-md-6">
-    <div class="card-body">
-        <div class="modal fade" id="requestamount" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title align-self-center" id="exampleModalLongTitle-1">Wallet Request</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="form-body">
-                        <form method="post" class="row g-3" action="{{ url('/saverequest') }}"
-                            enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <div class="modal-body">
-                                <div class="text-center">
-                                    <img src="/upload/qr/qrimg.jpeg" class="img-fluid" alt="...">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Amount</label>
-                                        <input required name="amount" type="text" maxlength="5"
-                                            class="form-control number" placeholder="Amount">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Paid Image (Screen)</label>
-                                        <input required type="file" name="req_image" class="form-control"
-                                            maxlength="10">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-center mb-3">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                <button type="Submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-md-6">
-    <div class="card-body">
-        <div class="modal fade" id="addmoney" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title align-self-center" id="exampleModalLongTitle-1">Add Payment</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" class="row g-3" action="{{ url('/adminaddwallet') }}"
-                            enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <input required name="wallet" maxlength="5" type="text" class="form-control"
-                                placeholder="Amount">
-                    </div>
+     <div class="card-body">
+         <div class="modal fade" id="requestamount" tabindex="-1" role="dialog">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <h5 class="modal-title align-self-center" id="exampleModalLongTitle-1">Wallet Request</h5>
+                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <div class="form-body">
+                         <form method="post" class="row g-3" action="{{ url('/saverequest') }}"
+                             enctype="multipart/form-data">
+                             {{ csrf_field() }}
+                             <div class="modal-body">
+                                 <div class="text-center">
+                                     <img src="/upload/qr/qrimg.jpeg" class="img-fluid" alt="...">
+                                 </div>
+                             </div>
+                             <div class="row">
+                                 <div class="col-md-6">
+                                     <div class="mb-3">
+                                         <label for="" class="form-label">Amount</label>
+                                         <input required name="amount" type="text" maxlength="5"
+                                             class="form-control number" placeholder="Amount">
+                                     </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                     <div class="mb-3">
+                                         <label for="" class="form-label">Paid Image (Screen)</label>
+                                         <input required type="file" name="req_image" class="form-control"
+                                             maxlength="10">
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="text-center mb-3">
+                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                 <button type="Submit" class="btn btn-primary">Submit</button>
+                             </div>
+                         </form>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+ <div class="col-md-6">
+     <div class="card-body">
+         <div class="modal fade" id="addmoney" tabindex="-1" role="dialog">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <h5 class="modal-title align-self-center" id="exampleModalLongTitle-1">Add Payment</h5>
+                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <div class="modal-body">
+                         <form method="post" class="row g-3" action="{{ url('/adminaddwallet') }}"
+                             enctype="multipart/form-data">
+                             {{ csrf_field() }}
+                             <input required name="wallet" maxlength="5" type="text" class="form-control"
+                                 placeholder="Amount">
+                     </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-md-6">
-    <div class="card-body">
-        <div class="modal fade" id="ramjirequest" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title align-self-center" id="exampleModalLongTitle-1">Ramji Wallet Request</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="form-body">
-                        <form method="post" class="row g-3" action="{{ url('/ramjisaverequest') }}"
-                            enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <div class="modal-body">
-                                <div class="text-center">
-                                    <img src="/upload/qr/qrimgramji.jpeg" class="img-fluid" alt="...">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Amount</label>
-                                        <input required name="amount" type="text" maxlength="5"
-                                            class="form-control number" placeholder="Amount">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Paid Image (Screen)</label>
-                                        <input required type="file" name="req_image" class="form-control"
-                                            maxlength="10">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-center mb-3">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                <button type="Submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-md-6">
-    <div class="card-body">
-        <div class="modal fade" id="addramji" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title align-self-center" id="exampleModalLongTitle-1">Add Super Admin Payment
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" class="row g-3" action="{{ url('/superadminaddwallet') }}"
-                            enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <input required name="wallet" maxlength="5" type="text" class="form-control"
-                                placeholder="Amount">
-                    </div>
+                     <div class="modal-footer">
+                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                         <button type="submit" class="btn btn-primary">Submit</button>
+                     </div>
+                     </form>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+ <div class="col-md-6">
+     <div class="card-body">
+         <div class="modal fade" id="ramjirequest" tabindex="-1" role="dialog">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <h5 class="modal-title align-self-center" id="exampleModalLongTitle-1">Ramji Wallet Request
+                         </h5>
+                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <div class="form-body">
+                         <form method="post" class="row g-3" action="{{ url('/ramjisaverequest') }}"
+                             enctype="multipart/form-data">
+                             {{ csrf_field() }}
+                             <div class="modal-body">
+                                 <div class="text-center">
+                                     <img src="/upload/qr/qrimgramji.jpeg" class="img-fluid" alt="...">
+                                 </div>
+                             </div>
+                             <div class="row">
+                                 <div class="col-md-6">
+                                     <div class="mb-3">
+                                         <label for="" class="form-label">Amount</label>
+                                         <input required name="amount" type="text" maxlength="5"
+                                             class="form-control number" placeholder="Amount">
+                                     </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                     <div class="mb-3">
+                                         <label for="" class="form-label">Paid Image (Screen)</label>
+                                         <input required type="file" name="req_image" class="form-control"
+                                             maxlength="10">
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="text-center mb-3">
+                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                 <button type="Submit" class="btn btn-primary">Submit</button>
+                             </div>
+                         </form>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+ <div class="col-md-6">
+     <div class="card-body">
+         <div class="modal fade" id="addramji" tabindex="-1" role="dialog">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <h5 class="modal-title align-self-center" id="exampleModalLongTitle-1">Add Super Admin
+                             Payment
+                         </h5>
+                         <button type="button" class="btn-close" data-bs-dismiss="modal"
+                             aria-label="Close"></button>
+                     </div>
+                     <div class="modal-body">
+                         <form method="post" class="row g-3" action="{{ url('/superadminaddwallet') }}"
+                             enctype="multipart/form-data">
+                             {{ csrf_field() }}
+                             <input required name="wallet" maxlength="5" type="text" class="form-control"
+                                 placeholder="Amount">
+                     </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                     <div class="modal-footer">
+                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                         <button type="submit" class="btn btn-primary">Submit</button>
+                     </div>
+                     </form>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
  <header>
      <div class="topbar d-flex align-items-center">
          <nav class="navbar navbar-expand gap-3">
              <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
              </div>
+             @if(Auth::check())
+             @if (Auth::check() && Auth::user()->user_type_id == 2)
+                 <a class="copy_text btn-sm btn btn-primary" data-toggle="tooltip" title="Copy to Clipboard"
+                     href="https://pkrmsolution.com/addenquiry/{{ Auth::user()->id }}">Share Link</a>
+             @endif
+             @endif
 
-             <div class="search-bar d-lg-block d-none" data-bs-toggle="modal" data-bs-target="#SearchModal">
-                 <a href="avascript:;" class="btn d-flex align-items-center"><i class='bx bx-search'></i>Search</a>
-             </div>
-@if (Auth::user()->user_type_id == 4 || Auth::user()->user_type_id == 5 || Auth::user()->user_type_id == 3)
-                         <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                             <span class="text-danger"><b>Wallet Amount : {{ Auth::user()->wallet }}</b></span>&nbsp;
-                             <button type="button" class="btn-sm btn btn-success" data-bs-toggle="modal"
-                                 data-bs-target="#requestamount">Add Money</button>
-                         </div>
-                     @elseif (Auth::user()->user_type_id == 2)
-                         <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                             <span class="text-danger"><b>Ramji Wallet : {{ Auth::user()->rawallet }}</b></span>&nbsp;
-                             <button type="button" class="btn-sm btn btn-danger" data-bs-toggle="modal"
-                                 data-bs-target="#ramjirequest">Add Money</button>
-                         </div>
-                         &nbsp;&nbsp;&nbsp;&nbsp;
-                         <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                             <span class="text-danger"><b>Wallet Amount : {{ Auth::user()->wallet }}</b></span>&nbsp;
-                             <button type="button" class="btn-sm btn btn-success" data-bs-toggle="modal"
-                                 data-bs-target="#addmoney">Add Payment</button>
-                         </div>
-                     @endif
-                     @if (Auth::user()->user_type_id == 1)
-                         <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                             <span class="text-danger"><b>Ramji Wallet Amount :
-                                     {{ Auth::user()->rawallet }}</b></span>&nbsp;
-                             <button type="button" class="btn-sm btn btn-success" data-bs-toggle="modal"
-                                 data-bs-target="#addramji">Add Payment</button>
-                         </div>
-                     @endif
+             @if(Auth::check())
+             @if (Auth::user()->user_type_id == 4 || Auth::user()->user_type_id == 5 || Auth::user()->user_type_id == 3)
+                 <div class="d-flex align-items-center gap-2 justify-content-lg-end">
+                     <span class="text-danger"><b>Wallet Amount : {{ Auth::user()->wallet }}</b></span>&nbsp;
+                     <button type="button" class="btn-sm btn btn-success" data-bs-toggle="modal"
+                         data-bs-target="#requestamount">Add Money</button>
+                 </div>
+             @elseif (Auth::user()->user_type_id == 2)
+                 <div class="d-flex align-items-center gap-2 justify-content-lg-end">
+                     <span class="text-danger"><b>Ramji Wallet : {{ Auth::user()->rawallet }}</b></span>&nbsp;
+                     <button type="button" class="btn-sm btn btn-danger" data-bs-toggle="modal"
+                         data-bs-target="#ramjirequest">Add Money</button>
+                 </div>
+                 &nbsp;&nbsp;&nbsp;&nbsp;
+                 <div class="d-flex align-items-center gap-2 justify-content-lg-end">
+                     <span class="text-danger"><b>Wallet Amount : {{ Auth::user()->wallet }}</b></span>&nbsp;
+                     <button type="button" class="btn-sm btn btn-success" data-bs-toggle="modal"
+                         data-bs-target="#addmoney">Add Payment</button>
+                 </div>
+             @endif
+             @if (Auth::user()->user_type_id == 1)
+                 <div class="d-flex align-items-center gap-2 justify-content-lg-end">
+                     <span class="text-danger"><b>Ramji Wallet Amount :
+                             {{ Auth::user()->rawallet }}</b></span>&nbsp;
+                     <button type="button" class="btn-sm btn btn-success" data-bs-toggle="modal"
+                         data-bs-target="#addramji">Add Payment</button>
+                 </div>
+             @endif
+             @endif
 
              <div class="top-menu ms-auto">
                  <ul class="navbar-nav align-items-center gap-1">
@@ -253,10 +260,12 @@
                                  <a class="dropdown-item" href="javascript:;">
                                      <div class="d-flex align-items-center">
                                          <div class="notify bg-light-success text-success">
-                                             <img src="assets/images/app/outlook.png" width="25" alt="user avatar">
+                                             <img src="assets/images/app/outlook.png" width="25"
+                                                 alt="user avatar">
                                          </div>
                                          <div class="flex-grow-1">
-                                             <h6 class="msg-name">Account Created<span class="msg-time float-end">28 min
+                                             <h6 class="msg-name">Account Created<span class="msg-time float-end">28
+                                                     min
                                                      ago</span></h6>
                                              <p class="msg-info">Successfully created new email</p>
                                          </div>
@@ -462,6 +471,7 @@
                  </ul>
              </div>
              <div class="user-box dropdown px-3">
+                @if(Auth::check())
                  <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret"
                      href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                      <img src="{!! asset('upload/profile_photo') !!}/{{ Auth::user()->profile }}" class="user-img"
@@ -470,6 +480,7 @@
                          <p class="user-name mb-0">{{ Auth::user()->name }}</p>
                      </div>
                  </a>
+                 @endif
                  <ul class="dropdown-menu dropdown-menu-end">
                      <li><a class="dropdown-item d-flex align-items-center" href="{{ 'profile' }}"><i
                                  class="bx bx-user fs-5"></i><span>Profile</span></a>
@@ -492,34 +503,34 @@
      </div>
  </header>
  <!--end header -->
-@if ($showPopup)
-         <div id="headerAlert" class="alert alert-danger alert-dismissible fade show text-center w-100 m-0" role="alert"
-        style="border-radius: 0; position: fixed; top: 0; left: 0; z-index: 1055;">
-        <strong>Reminder:</strong> Your Server activation is due in {{ $daysLeft }}
-        day{{ $daysLeft > 1 ? 's' : '' }}.
-        Please make your payment.
-        <div class="mt-3">
-            <a href="{{ url('/serverpayment') }}" class="btn btn-sm btn-primary px-4">
-                💳 Make Payment
-            </a>
-        </div>
-        <button type="button" class="btn-close" onclick="closeHeaderPopup()" aria-label="Close"></button>
-    </div>
-@endif
-@if($siteshowPopup && $unpaidPayment)
-
-     <div id="headerAlert1" class="alert alert-warning alert-dismissible fade show text-center w-100 m-0" role="alert"
-        style="border-radius: 0; position: fixed; top: 0; left: 0; z-index: 1055;">
-        ⚠️ Reminder: Payment of 
-            <strong>{{ $unpaidPayment->amount }}</strong> 
-            for <strong>{{ $unpaidPayment->payment_reason }}</strong> 
-            is due tomorrow ({{ \Carbon\Carbon::parse($unpaidPayment->payment_date)->format('d M Y') }}).
-        <div class="mt-3">
-            <a href="{{ url('/websitepayment') }}" class="btn btn-sm btn-primary px-4">
-                💳 Make Payment
-            </a>
-        </div>
-        <button type="button" class="btn-close" onclick="closeHeaderPopup1()" aria-label="Close"></button>
-    </div>
-       
-@endif
+@if(Auth::check())
+ @if ($showPopup)
+     <div id="headerAlert" class="alert alert-danger alert-dismissible fade show text-center w-100 m-0"
+         role="alert" style="border-radius: 0; position: fixed; top: 0; left: 0; z-index: 1055;">
+         <strong>Reminder:</strong> Your Server activation is due in {{ $daysLeft }}
+         day{{ $daysLeft > 1 ? 's' : '' }}.
+         Please make your payment.
+         <div class="mt-3">
+             <a href="{{ url('/serverpayment') }}" class="btn btn-sm btn-primary px-4">
+                 💳 Make Payment
+             </a>
+         </div>
+         <button type="button" class="btn-close" onclick="closeHeaderPopup()" aria-label="Close"></button>
+     </div>
+ @endif
+ @if ($siteshowPopup && $unpaidPayment)
+     <div id="headerAlert1" class="alert alert-warning alert-dismissible fade show text-center w-100 m-0"
+         role="alert" style="border-radius: 0; position: fixed; top: 0; left: 0; z-index: 1055;">
+         ⚠️ Reminder: Payment of
+         <strong>{{ $unpaidPayment->amount }}</strong>
+         for <strong>{{ $unpaidPayment->payment_reason }}</strong>
+         is due tomorrow ({{ \Carbon\Carbon::parse($unpaidPayment->payment_date)->format('d M Y') }}).
+         <div class="mt-3">
+             <a href="{{ url('/websitepayment') }}" class="btn btn-sm btn-primary px-4">
+                 💳 Make Payment
+             </a>
+         </div>
+         <button type="button" class="btn-close" onclick="closeHeaderPopup1()" aria-label="Close"></button>
+     </div>
+ @endif
+ @endif

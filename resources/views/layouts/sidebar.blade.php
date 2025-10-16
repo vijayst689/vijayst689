@@ -437,7 +437,7 @@
             </li>
                <li>
                 <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon"><i class="bx bx-menu"></i>
+                    <div class="parent-icon"><i class="bx bx-cookie"></i>
                     </div>
                     <div class="menu-title">Requirement</div>
                 </a>

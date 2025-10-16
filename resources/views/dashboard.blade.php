@@ -764,7 +764,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-4">
+                    {{-- <div class="col-md-3 col-sm-4">
                         <div class="card radius-10 bg-gradient-cosmic">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
@@ -778,7 +778,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 @endif
                 @if (Auth::user()->user_type_id == 4)
                     <div class="sliding-text-container">
@@ -984,7 +984,7 @@
                             </div>
                         </div>
                     </div>
-                     <div class="col-md-3 col-sm-4">
+                     {{-- <div class="col-md-3 col-sm-4">
                         <div class="card radius-10 bg-gradient-cosmic">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
@@ -998,7 +998,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 @endif
                 @if (Auth::user()->user_type_id == 5)
                     <div class="sliding-text-container">
@@ -1111,7 +1111,7 @@
                             </div>
                         </div>
                     </div>
-                     <div class="col-md-3 col-sm-4">
+                     {{-- <div class="col-md-3 col-sm-4">
                         <div class="card radius-10 bg-gradient-cosmic">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
@@ -1125,7 +1125,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 @endif
             </div><!--end row-->
         </div>

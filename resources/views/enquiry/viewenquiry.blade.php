@@ -39,7 +39,7 @@
                                     <th>Mobile</th>
                                     <th>Email</th>
                                     <th>Requirement</th>
-                                    <th>Username</th>
+                                    <th>User</th>
                                     {{-- @if(Auth::user()->user_type_id == 2)
                                     <th>Action</th>
                                     @endif --}}

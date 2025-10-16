@@ -101,7 +101,7 @@ class AppServiceProvider extends ServiceProvider
     ->first();
 
         // if not found or already paid → pick new one
-    
+
                 if ($user->user_type_id == 2 && $unpaidPayment && $unpaidPayment->payment_date) {
                     $paymentDate = Carbon::parse($unpaidPayment->payment_date)->startOfDay();
                     $today       = Carbon::today()->startOfDay();

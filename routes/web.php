@@ -47,6 +47,9 @@ Route::post('checkemail', [CustomAuthController::class, 'checkemail'])->name('ch
 Route::post('checkaadhar', [CustomAuthController::class, 'checkaadhar'])->name('checkaadhar');
 Route::post('checkphone', [CustomAuthController::class, 'checkphone'])->name('checkphone');
 Route::post('checkpan', [CustomAuthController::class, 'checkpan'])->name('checkpan');
+Route::get('addenquiry/{id}', [CustomAuthController::class, 'addenquiry'])->name('addenquiry');
+Route::post('saveenquiry', [CustomAuthController::class, 'saveenquiry'])->name('saveenquiry');
+// Route::get('addenquiry', [App\Http\Controllers\NotificationController::class, 'addenquiry']);
 
 Route::get('home', [App\Http\Controllers\Frontend\HomeController::class, 'Index']);
 
@@ -527,9 +530,9 @@ Route::get('/dropnotification/{id}', [App\Http\Controllers\OperatorController::c
 
 //Enquiry
 
-Route::get('addenquiry', [App\Http\Controllers\NotificationController::class, 'addenquiry']);
+// Route::get('addenquiry', [App\Http\Controllers\NotificationController::class, 'addenquiry']);
 
-Route::post('saveenquiry', [App\Http\Controllers\NotificationController::class, 'saveenquiry']);
+// Route::post('saveenquiry', [App\Http\Controllers\NotificationController::class, 'saveenquiry']);
 
 Route::get('viewenquiry', [App\Http\Controllers\NotificationController::class, 'viewenquiry']);
 

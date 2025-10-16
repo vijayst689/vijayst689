@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/dark-theme.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
     <title>pkrmsolution.com</title>
 </head>
 
@@ -64,7 +65,7 @@
     <script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
-	<script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
     <script src="{{ asset('assets/plugins/chartjs/js/chart.js') }}"></script>
@@ -76,23 +77,20 @@
     <!--app JS-->
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
     @stack('page_scripts')
     <script>
 
         $(document).ready(function() {
-			$('#example').DataTable();
-		  } );
+            var table = $('#example2').DataTable({
+                lengthChange: false,
+                buttons: ['copy', 'excel', 'pdf', 'print']
+            });
 
-        $(document).ready(function() {
-			var table = $('#example2').DataTable( {
-				lengthChange: false,
-				buttons: [ 'copy', 'excel', 'pdf', 'print']
-			} );
-
-			table.buttons().container()
-				.appendTo( '#example2_wrapper .col-md-6:eq(0)' );
-		} );
+            table.buttons().container()
+                .appendTo('#example2_wrapper .col-md-6:eq(0)');
+        });
 
         $(document).ready(function() {
             var status = $("#statuscheck").val();
@@ -254,9 +252,9 @@
                 event.preventDefault();
             }
         });
-        </script>
+    </script>
 
- <script>
+    <script>
         function shouldShowPopup() {
             const lastClosed = localStorage.getItem('headerPopupLastClosed');
             const now = new Date().getTime();
@@ -289,47 +287,47 @@
         });
 
         function shouldShowPopup1() {
-        const lastClosed = localStorage.getItem('headerPopupLastClosed1');
-        const now = new Date().getTime();
+            const lastClosed = localStorage.getItem('headerPopupLastClosed1');
+            const now = new Date().getTime();
 
-        // If never closed OR 10 minutes have passed since last close
-        if (!lastClosed || (now - parseInt(lastClosed)) > 10 * 60 * 1000) {
-            return true;
+            // If never closed OR 10 minutes have passed since last close
+            if (!lastClosed || (now - parseInt(lastClosed)) > 10 * 60 * 1000) {
+                return true;
+            }
+
+            return false;
         }
 
-        return false;
-    }
-
-    function showHeaderPopup1() {
-        const alertBox = document.getElementById('headerAlert1');
-        if (alertBox) {
-            alertBox.style.display = 'block';
-        }
-    }
-
-    function closeHeaderPopup1() {
-        const alertBox = document.getElementById('headerAlert1');
-        if (alertBox) {
-            alertBox.style.display = 'none';
+        function showHeaderPopup1() {
+            const alertBox = document.getElementById('headerAlert1');
+            if (alertBox) {
+                alertBox.style.display = 'block';
+            }
         }
 
-        // Save close time
-        localStorage.setItem('headerPopupLastClosed1', new Date().getTime());
-    }
+        function closeHeaderPopup1() {
+            const alertBox = document.getElementById('headerAlert1');
+            if (alertBox) {
+                alertBox.style.display = 'none';
+            }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        // Show immediately if needed
-        if (shouldShowPopup1()) {
-            showHeaderPopup1();
+            // Save close time
+            localStorage.setItem('headerPopupLastClosed1', new Date().getTime());
         }
 
-        // Check every 1 minute if popup should reappear
-        setInterval(function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show immediately if needed
             if (shouldShowPopup1()) {
                 showHeaderPopup1();
             }
-        }, 60 * 1000); // 60 sec
-    });
+
+            // Check every 1 minute if popup should reappear
+            setInterval(function() {
+                if (shouldShowPopup1()) {
+                    showHeaderPopup1();
+                }
+            }, 60 * 1000); // 60 sec
+        });
     </script>
 </body>
 

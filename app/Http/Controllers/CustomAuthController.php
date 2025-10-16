@@ -35,7 +35,25 @@ class CustomAuthController extends Controller
         return redirect("login")->withErrors($validator);
     }
 
+   public function addenquiry($id)
+    {
+       $requirement = DB::table('requirement')->orderBy( 'id', 'Asc' )->get();
+       return view('enquiry.addenquiry',compact('requirement'));
+    }
 
+    public function saveenquiry(Request $request)
+    {
+      $saveenquiry = DB::table('enquiry')->insert([
+        'name'         => $request->name,
+        'user_id'      => '2',
+        'mobile'       => $request->mobile,
+        'email'        => $request->email,
+        'requirement'  => $request->requirement,
+        'user_name'    => $request->username,
+      ]);
+
+      return redirect('/viewenquiry')->with('success', 'Enquiry send Successfully ... !');
+    }
 
     public function register()
     {
