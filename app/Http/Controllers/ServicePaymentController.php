@@ -43,7 +43,7 @@ class ServicePaymentController extends Controller
   }
 
   public function addservice_payment(Request $request){
-     if ($request->has('service_id')) {
+    if ($request->has('service_id')) {
     foreach ($request->service_id as $key => $payment) {
         $name = 'check_' . $payment;
         $pre = $request[$name] ?? 0;
@@ -74,6 +74,7 @@ class ServicePaymentController extends Controller
     }
     return redirect('servicepayment/'.$parent_id);
   }
+
 
   public function smartcardpayment($serviceid){
     $services = DB::table('services')->where('status', 'Active')->where('parent_id', $serviceid )->orderBy( 'id' , 'Asc' )->get();

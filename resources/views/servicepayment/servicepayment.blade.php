@@ -57,48 +57,41 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($services as $key => $ser)
+                                               @foreach ($services as $key => $ser)
                                                 <tr>
                                                     <td>{{ $key + 1 }}</td>
                                                     <td>{{ $ser->service_name }}</td>
-                                                    <input name="parent_id[]" type="hidden"
-                                                        value="{{ $serviceid }}" />
-                                                    <input name="service_id[]" type="hidden"
-                                                        value="{{ $ser->id }}" />
-                                                    <input name="ramjiservice_id[]" type="hidden"
-                                                        value="{{ $ser->ramjiservice_id }}" />
+                                                    <input name="parent_id[]" type="hidden" value="{{ $serviceid }}" />
+                                                    <input name="service_id[]" type="hidden" value="{{ $ser->id }}" />
+                                                    <input name="ramjiservice_id[]" type="hidden" value="{{ $ser->ramjiservice_id }}" />
                                                     @if (count($ser->payment) > 0)
-                                                    @foreach ($ser->payment as $key1 => $payment)
-                                                    <td><input class="form-control decimal"
-                                                            name="admin_amount[]" type="text"
-                                                            maxlength="6"
-                                                            value="{{ $payment->admin_amount }}"
-                                                            @if (Auth::user()->user_type_id == 2) readonly @endif />
-                                                    </td>
-                                                    <td><input class="form-control decimal"
-                                                            name="distributor_amount[]" type="text"
-                                                            maxlength="6"
-                                                            value="{{ $payment->distributor_amount }}" />
-                                                    </td>
-                                                    <td><input class="form-control decimal"
-                                                            name="retailer_amount[]" type="text"
-                                                            maxlength="6"
-                                                            value="{{ $payment->retailer_amount }}" /></td>
-                                                    <td><input class="form-control decimal"
-                                                            name="customer_amount[]" type="text"
-                                                            maxlength="6"
-                                                            value="{{ $payment->customer_amount }}" /></td>
-                                                    <td>
-                                                        <div class="row row-padded">
+                                                        @foreach ($ser->payment as $key1 => $payment)
+                                                            <td><input class="form-control decimal" name="admin_amount[]"
+                                                                    type="text" maxlength="6"
+                                                                    value="{{ $payment->admin_amount }}"
+                                                                    @if (Auth::user()->user_type_id == 2) readonly @endif />
+                                                            </td>
+                                                            <td><input class="form-control decimal"
+                                                                    name="distributor_amount[]" type="text"
+                                                                    maxlength="6"
+                                                                    value="{{ $payment->distributor_amount }}" /></td>
+                                                            <td><input class="form-control decimal" name="retailer_amount[]"
+                                                                    type="text" maxlength="6"
+                                                                    value="{{ $payment->retailer_amount }}" /></td>
+                                                            <td><input class="form-control decimal" name="customer_amount[]"
+                                                                    type="text" maxlength="6"
+                                                                    value="{{ $payment->customer_amount }}" /></td>
+                                                            <td>
+                                                                <div class="row row-padded">
 
-                                                            <div class="icheck-success d-inline col-sm-2">
-                                                                <input name="check_{{ $ser->id }}"
-                                                                    @if ($payment->coordinator_permission == 1) checked @endif
-                                                                type="checkbox" value="1">
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    @endforeach
+                                                                    <div class="icheck-success d-inline col-sm-2">
+                                                                        <input name="check_{{ $ser->id }}"
+                                                                            @if ($payment->coordinator_permission == 1) checked @endif
+                                                                            type="checkbox" value="1">
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        @endforeach
                                                     @else
                                                     <td><input class="form-control decimal"
                                                             name="admin_amount[]" type="text" maxlength="6"
