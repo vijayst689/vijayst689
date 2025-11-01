@@ -1278,4 +1278,26 @@ public function update_payment_status(Request $request){
     return response()->json($response);
 }
 
+public function get_bulkorderstatus(Request $request){
+    $API_KEY = env('API_KEY','');
+    $WEBSITE_INDEX = env('WEBSITE_INDEX','');
+    $key = $request->key;
+    $index = $request->index;
+    $response = array();
+    $message = "Failed";
+
+    if($key == $API_KEY && $index == $WEBSITE_INDEX){
+        $row_id = $request->row_id;
+        $status = $request->status;
+        DB::table('bulk_service_orders')->where('id', $row_id)->update([
+            'status' => $status,
+        ]);
+        $message = "Success";
+    }else{
+        $message = "Access Denied";
+    }
+    $response["status"] = $message;
+    $response["index"] = $index;
+    return response()->json($response);
+}
 }

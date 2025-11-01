@@ -56,3 +56,5 @@ Route::post('/update_site_payments', [App\Http\Controllers\api\SitePaymentContro
 Route::post('/update_sitepayment_status', [App\Http\Controllers\api\SitePaymentController::class, 'update_sitepayment_status'])->name('update_sitepayment_status');
 
 Route::post('/updateadminpayment', [App\Http\Controllers\api\AdminPaymentController::class, 'updateadminpayment'])->name('updateadminpayment');
+
+Route::post('/get_bulkorderstatus', [App\Http\Controllers\api\ApiController::class, 'get_bulkorderstatus'])->name('get_bulkorderstatus');

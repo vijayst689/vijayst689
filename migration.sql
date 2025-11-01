@@ -2338,3 +2338,37 @@ CREATE TABLE `requirement` (
   `status` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
+
+//1-11-2025
+
+CREATE TABLE `bulk_service_orders` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `service_id` INT(11) NOT NULL,
+  `quantity` INT(11) NOT NULL,
+  `amount` DECIMAL(10,2) NOT NULL,
+  `added_datetime` DATE NOT NULL,
+  `login_id` INT(11) NOT NULL,
+  `user_type_id` INT(11) DEFAULT NULL,
+  `district_id` INT(11) DEFAULT NULL,
+  `status` VARCHAR(20) DEFAULT NULL,
+  `superadmin_amount` DECIMAL(10,2) DEFAULT 0.00,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `service_id` (`service_id`),
+  KEY `login_id` (`login_id`),
+  KEY `district_id` (`district_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `bulk_service_usage` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) DEFAULT 0,
+  `service_id` INT(11) DEFAULT 0,
+  `total` INT(11) DEFAULT 0,
+  `used` INT(11) DEFAULT 0,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `service_id` (`service_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

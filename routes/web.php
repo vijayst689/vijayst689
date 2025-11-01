@@ -469,6 +469,14 @@ Route::get('nalavariyam/get_activationamount/{usertype}', [App\Http\Controllers\
 Route::get('getnalavariyam_data/{distid}', [App\Http\Controllers\NalavariyamServiceController::class, 'getnalavariyam_data'])->name('getnalavariyam_data');
 Route::get('nalauseractivationpayment', [App\Http\Controllers\NalavariyamServiceController::class, 'nalauseractivationpayment'])->name('nalauseractivationpayment');
 Route::post('savenalavariyamactivation', [App\Http\Controllers\NalavariyamServiceController::class, 'savenalavariyamactivation'])->name('savenalavariyamactivation');
+Route::post('savebulkbuy', [App\Http\Controllers\NalavariyamServiceController::class, 'savebulkbuy'])->name('savebulkbuy');
+Route::get('bulkorder', [App\Http\Controllers\NalavariyamServiceController::class, 'bulkorder'])->name('bulkorder');
+Route::get('viewbulkorder/{id}', [App\Http\Controllers\NalavariyamServiceController::class, 'viewbulkorder'])->name('viewbulkorder');
+Route::get('bulkorders', [App\Http\Controllers\NalavariyamServiceController::class, 'bulkorders'])->name('bulkorders');
+Route::post('updatebulkstatus', [App\Http\Controllers\NalavariyamServiceController::class, 'updatebulkstatus'])->name('updatebulkstatus');
+Route::get('bulkorderstatus', [App\Http\Controllers\NalavariyamServiceController::class, 'bulkorderstatus'])->name('bulkorderstatus');
+Route::post('upload_offline_form', [App\Http\Controllers\NalavariyamServiceController::class, 'upload_offline_form'])->name('upload_offline_form');
+Route::post('updateaddress', [App\Http\Controllers\NalavariyamServiceController::class, 'updateaddress'])->name('updateaddress');
 
 //CourseController
 

@@ -205,8 +205,18 @@
                                                             <option value="Inactive">Inactive</option>
                                                         </select>
                                                     </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="edittype" class="form-label">UserType</label>
+                                                    <select name="user_type_id" type="text" maxlength="8"
+                                                        class="form-control" id="edittype">
+                                                        <option value="">Select</option>                                                       
+                                                        <option value="3">Distributor</option>
+                                                        <option value="4">Retailer</option>
+                                                    </select>
                                                 </div>
                                             </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
