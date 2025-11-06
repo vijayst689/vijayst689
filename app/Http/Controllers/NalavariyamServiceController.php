@@ -263,9 +263,61 @@ public function online_services($id)
     }
     $services = json_decode( json_encode( $services ) );
        //dd($services);
-    $rabalance = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
-    return view( 'nalavariyam/online_services', compact( 'services','balance','customers','rabalance') );
-}
+     $sql = "select a.*,c.district_name from nalavariyam_service a,service_details b,nalavariyam_district c where b.service_id=a.id and b.district_id=c.id and c.id= '$dist_id' and b.service_type = '2'";
+        $bulkservice = DB::select(DB::raw($sql));
+
+        $bulkservice = json_decode(json_encode($bulkservice), true);
+        foreach ($bulkservice as $key => $service) {
+            $used = 1;
+            $service_id = $service["id"];
+            $sql = "select * from bulk_service_usage where total > used and service_id=$service_id and user_id=$login_id";
+            $unused = DB::select($sql);
+            if (count($unused) > 0) {
+                $used = 0;
+            }
+
+            $service_id = $service["id"];
+            $getusertype = DB::table('users')->where('id', Auth::user()->id)->first();
+            $nal_usertype = 0;
+            if ($getusertype) {
+                $nal_usertype = $getusertype->nalavariyam_usertype;
+            }
+            $form_payment = DB::table('nalavariyam_payment')->where('service_id', $service_id)->first();
+            if ($form_payment) {
+                //$adminamount = $form_payment->admin_amount;
+                if ($nal_usertype == 3) {
+                    $pay_amount =  $form_payment->distributor_amount;
+                } elseif ($nal_usertype == 4) {
+                    $pay_amount =  $form_payment->retailer_amount;
+                } elseif ($user_type == 2) {
+                    $pay_amount =  $form_payment->admin_amount;
+                }
+            }
+            $percentage = 50;
+            $adminamount = ($pay_amount * $percentage) / 100;
+            if (Auth::user()->user_type_id == 2) {
+                $bulkservice[$key]['admin_amount'] = $pay_amount;
+            } else {
+                $bulkservice[$key]['admin_amount'] = $adminamount;
+            }
+
+
+            if ($cus_usertype_id == 2) {
+                $bulkservice[$key]['pay_amount'] = 0;
+            } else {
+                $bulkservice[$key]['pay_amount'] = $pay_amount;
+            }
+
+
+            $bulkservice[$key]["pay_amount"] = $pay_amount;
+            $bulkservice[$key]["used"] = $used;
+        }
+        $bulkservice = json_decode(json_encode($bulkservice));
+        // dd($bulkservice);
+        $rabalance = DB::table('users')->select('nalavariyamwallet')->where('id', 2)->first();
+        $nalavariyamcustomer = DB::table('nalavariyam_customer')->where('refferal', Auth::user()->id)->get();
+        return view('nalavariyam/online_services', compact('services', 'balance', 'customers', 'rabalance', 'bulkservice', 'nalavariyamcustomer'));
+    }
 
 public function nalavariyam_servicepayment( Request $request ) {
     $service_id = $request->service_id;
@@ -355,6 +407,420 @@ $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
   return redirect( "online_services/$customer_id" );
 }
 
+ public function savebulkbuy(Request $request)
+    {
+        $customer_id = $request->bulk_customer_id;
+        $added_date = date("Y-m-d H:i:s");
+        $login_id = Auth::user()->id;
+        $dist_id  = Auth::user()->nalavariyam_dist_id;
+        $taluk_id = Auth::user()->nalavariyam_taluk_id;
+        $user_type_id = Auth::user()->nalavariyam_usertype ?? 0;
+
+
+        $insertedIds = [];
+
+        // Insert orders
+        foreach ($request->all() as $key => $quantity) {
+            if (str_contains($key, 'services_')) {
+                $temp = explode("_", $key);
+                $service_id = $temp[1];
+                $amount = $temp[2];
+
+                if ($quantity != "") {
+                    $id = DB::table('bulk_service_orders')->insertGetId([
+                        'service_id'     => $service_id,
+                        'quantity'       => $quantity,
+                        'amount'         => $amount,
+                        'added_datetime' => now(),
+                        'login_id'       => $login_id,
+                        'district_id'       => $dist_id,
+                        'user_type_id'       => $user_type_id,
+                        'status'         => 'Pending',
+                    ]);
+                    $insertedIds[] = $id;
+                    $usage = DB::table('bulk_service_usage')
+                        ->where('service_id', $service_id)
+                        ->where('user_id', $login_id)
+                        ->first();
+
+                    if ($usage) {
+                        DB::table('bulk_service_usage')
+                            ->where('service_id', $service_id)
+                            ->where('user_id', $login_id)
+                            ->increment('total', $quantity);
+                    } else {
+                        DB::table('bulk_service_usage')->insert([
+                            'user_id'    => $login_id,
+                            'service_id' => $service_id,
+                            'total'      => $quantity,
+                        ]);
+                    }
+                }
+            }
+        }
+
+        // Mark only these as Paid
+        DB::table('bulk_service_orders')
+            ->whereIn('id', $insertedIds)
+            ->update(['status' => 'Paid']);
+
+        // Sum only the last inserted orders
+        $amount = DB::table('bulk_service_orders')
+            ->whereIn('id', $insertedIds)
+            ->sum(DB::raw('amount * quantity'));
+
+
+        $getservicename = DB::table('nalavariyam_service')->select('service_name')->where('id', $service_id)->first();
+        $servicename = "";
+        if ($getservicename) {
+            $servicename = $getservicename->service_name;
+        }
+        if (Auth::user()->user_type_id != 2) {
+            $date = date('Y-m-d');
+            $time = date('H:i:s');
+            $service_status = 'Out Payment';
+            $ad_info = 'Bulk Service Payment';
+
+
+            $getwallet = DB::table('users')->select('wallet')->where('id', 2)->first();
+            $balance = 0;
+            if ($getwallet) {
+                $balance = $getwallet->wallet;
+            }
+            $newbalance = $balance + $amount;
+            $newbalance1 = Auth::user()->wallet - $amount;
+
+            $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$login_id','$login_id','2','$amount','$ad_info', '$service_status','$time','$date','$login_id','$newbalance1')";
+            DB::insert(DB::raw($sql));
+            $sql = "update users set wallet = wallet + $amount where id = 2";
+            DB::update(DB::raw($sql));
+            $service_status = 'IN Payment';
+            $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$login_id','2','$login_id','$amount','$ad_info', '$service_status','$time','$date','$login_id','$newbalance')";
+            DB::insert(DB::raw($sql));
+            $sql = "update users set wallet = wallet - $amount where id = $login_id";
+            DB::update(DB::raw($sql));
+        }
+        if ($user_type_id == 3) {
+            $percentage = 50;
+        } else {
+            $percentage = 50;
+        }
+        if (Auth::user()->user_type_id == 2) {
+            $admin_amount = $amount;
+        } else {
+            $admin_amount = ($amount * $percentage) / 100;
+        }
+
+        $date = date('Y-m-d');
+        $time = date('H:i:s');
+        $service_status = 'Out Payment';
+        $ad_info = 'Bulk Service Payment';
+        $getrawallet = DB::table('users')->select('nalavariyamwallet')->where('id', 1)->first();
+        $rawallet = 0;
+        if ($getrawallet) {
+            $balance1 = $getrawallet->nalavariyamwallet;
+        }
+
+        $getrawallet1 = DB::table('users')->select('nalavariyamwallet')->where('id', 2)->first();
+        $rawallet1 = 0;
+        if ($getrawallet1) {
+            $balance2 = $getrawallet1->nalavariyamwallet;
+        }
+        $newbalance2 = $balance1 + $admin_amount;
+        $newbalance3 = $balance2 - $admin_amount;
+        $sql = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+        DB::insert(DB::raw($sql));
+        $sql = "update users set nalavariyamwallet = nalavariyamwallet + $admin_amount where id = 1";
+        DB::update(DB::raw($sql));
+        $service_status = 'IN Payment';
+        $ad_info = 'Bulk Service Payment';
+
+
+        $sql = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+        DB::insert(DB::raw($sql));
+        $sql = "update users set nalavariyamwallet = nalavariyamwallet - $admin_amount where id = 2";
+        DB::update(DB::raw($sql));
+
+        $user_type = Auth::user()->user_type_id;
+        $amount = (float) $request->delivery_amount;
+        if ($user_type != 2 && !empty($amount) && $amount > 0) {
+            $date = date('Y-m-d');
+            $time = date('H:i:s');
+            $service_status = 'Out Payment';
+            $ad_info = 'Offline FOrm Delivery Charge';
+
+            $getwallet = DB::table('users')->select('wallet')->where('id', 2)->first();
+            $balance = 0;
+            if ($getwallet) {
+                $balance = $getwallet->wallet;
+            }
+
+            $getwallet1 = DB::table('users')->select('wallet')->where('id', $login_id)->first();
+            $balance1 = 0;
+            if ($getwallet1) {
+                $balance1 = $getwallet1->wallet;
+            }
+            $newbalance = $balance + $amount;
+            $newbalance1 = $balance1 - $amount;
+            $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$login_id','$login_id','2','$amount','$ad_info', '$service_status','$time','$date','$login_id','$newbalance1')";
+            DB::insert(DB::raw($sql));
+            $sql = "update users set wallet = wallet + $amount where id = 2";
+            DB::update(DB::raw($sql));
+            $service_status = 'IN Payment';
+            $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$login_id','2','$login_id','$amount','$ad_info', '$service_status','$time','$date','$login_id','$newbalance')";
+            DB::insert(DB::raw($sql));
+            $sql = "update users set wallet = wallet - $amount where id = $login_id";
+            DB::update(DB::raw($sql));
+        }
+        // API FOR NON DISTRICT USERS
+        $getadmindistid = DB::table('users')->select('nalavariyam_dist_id')->where('id', 2)->first();
+        $admin_nal_distid = 0;
+        if ($getadmindistid) {
+            $admin_nal_distid = $getadmindistid->nalavariyam_dist_id;
+        }
+        if (Auth::user()->nalavariyam_dist_id != $admin_nal_distid) {
+            $getdata = DB::table('bulk_service_orders as b')
+                ->join('users as u', 'u.id', '=', 'b.login_id')
+                ->whereIn('b.id', $insertedIds)
+                ->select(
+                    'b.*',
+                    'u.name as user_name',
+                    'u.phone as user_phone',
+                    'u.address as user_address'
+                )
+                ->get();
+
+            $getdata = $getdata->map(function ($item) {
+                $item->ref_id = time();  // or Str::uuid() if you prefer unique for each
+                return $item;
+            });
+            if ($getdata) {
+
+
+                $API_KEY = env('API_KEY', '');
+                $RAMJIPAY_URL = env('RAMJIPAY_URL', '');
+                $WEBSITE_INDEX = env('WEBSITE_INDEX', '');
+                $post_data['data'] = $getdata;
+                $post_data['key'] = $API_KEY;
+                $post_data['index'] = $WEBSITE_INDEX;
+                $ch = curl_init();
+                //echo "<pre>";print_r($post_data);echo"</pre>";die;
+                //dd(json_encode($post_data));
+                //dd($post_data);
+                $url1 = $RAMJIPAY_URL . '/api/bulk_order_api';
+                //echo $url1;die;
+                curl_setopt($ch, CURLOPT_URL, $url1);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post_data));
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $server_output = curl_exec($ch);
+                curl_close($ch);
+                $resdata = json_decode($server_output, true);
+                //dd($resdata);
+                if (isset($resdata['status']) && $resdata['status'] == 'Success') {
+                    $delivery_amount = (float) $request->delivery_amount;
+                    $date = date('Y-m-d');
+                    $time = date('H:i:s');
+                    $service_status = 'Out Payment';
+                    $ad_info = 'Other District Bulk Service Delivery Charge';
+                    $getrawallet = DB::table('users')->select('nalavariyamwallet')->where('id', 1)->first();
+                    $rawallet = 0;
+                    if ($getrawallet) {
+                        $balance1 = $getrawallet->nalavariyamwallet;
+                    }
+
+                    $getrawallet1 = DB::table('users')->select('nalavariyamwallet')->where('id', 2)->first();
+                    $rawallet1 = 0;
+                    if ($getrawallet1) {
+                        $balance2 = $getrawallet1->nalavariyamwallet;
+                    }
+                    $newbalance2 = $balance1 + $delivery_amount;
+                    $newbalance3 = $balance2 - $delivery_amount;
+                    $sql = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$delivery_amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+                    DB::insert(DB::raw($sql));
+                    $sql = "update users set nalavariyamwallet = nalavariyamwallet + $delivery_amount where id = 1";
+                    DB::update(DB::raw($sql));
+                    $service_status = 'IN Payment';
+                    $ad_info = 'Other District Bulk Service Delivery Charge';
+
+
+                    $sql = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$delivery_amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+                    DB::insert(DB::raw($sql));
+                    $sql = "update users set nalavariyamwallet = nalavariyamwallet - $delivery_amount where id = 2";
+                    DB::update(DB::raw($sql));
+                }
+            }
+        }
+        if (Auth::user()->user_type_id == 2) {
+            return redirect('/bulkorderstatus')->with('success', 'Bulk Service Purchased Successfully');
+        } else {
+            return redirect('/bulkorders')->with('success', 'Bulk Service Purchased Successfully');
+        }
+    }
+
+    public function bulkorder()
+    {
+        $login_id = Auth::user()->id;
+        $user_type_id = Auth::user()->user_type_id;
+        $dist_id = Auth::user()->nalavariyam_dist_id;
+
+        $sql = "select a.*,c.district_name from nalavariyam_service a,service_details b,nalavariyam_district c where b.service_id=a.id and b.district_id=c.id and c.id= '$dist_id' and b.service_type = '2'";
+        $bulkservice = DB::select(DB::raw($sql));
+
+        $bulkservice = json_decode(json_encode($bulkservice), true);
+        foreach ($bulkservice as $key => $service) {
+            $used = 1;
+            $service_id = $service["id"];
+            $sql = "select * from bulk_service_usage where total > used and service_id=$service_id and user_id=$login_id";
+            $unused = DB::select($sql);
+            if (count($unused) > 0) {
+                $used = 0;
+            }
+
+            $service_id = $service["id"];
+            $getusertype = DB::table('users')->where('id', Auth::user()->id)->first();
+            $nal_usertype = 0;
+            if ($getusertype) {
+                $nal_usertype = $getusertype->nalavariyam_usertype;
+            }
+            $form_payment = DB::table('nalavariyam_payment')->where('service_id', $service_id)->first();
+            if ($form_payment) {
+                //$adminamount = $form_payment->admin_amount;
+                if ($nal_usertype == 3) {
+                    $pay_amount =  $form_payment->distributor_amount;
+                } elseif ($nal_usertype == 4) {
+                    $pay_amount =  $form_payment->retailer_amount;
+                } elseif ($user_type_id == 2) {
+                    $pay_amount =  $form_payment->admin_amount;
+                }
+            }
+            $percentage = 50;
+            $adminamount = ($pay_amount * $percentage) / 100;
+            if (Auth::user()->user_type_id == 2) {
+                $bulkservice[$key]['admin_amount'] = $pay_amount;
+            } else {
+                $bulkservice[$key]['admin_amount'] = $adminamount;
+            }
+
+
+
+
+
+            $bulkservice[$key]["pay_amount"] = $pay_amount;
+            $bulkservice[$key]["used"] = $used;
+        }
+        $bulkservice = json_decode(json_encode($bulkservice));
+        $rabalance = DB::table('users')->select('nalavariyamwallet')->where('id', 2)->first();
+        $district = DB::table('nalavariyam_district')->where('id', '=', $dist_id)->get();
+        $nalavariyamcustomer = DB::table('nalavariyam_customer')->where('refferal', Auth::user()->id)->get();
+
+
+
+
+
+        return view('nalavariyam/bulkorder', compact('bulkservice', 'rabalance', 'nalavariyamcustomer', 'district'));
+    }
+
+    public function updateaddress(Request $request)
+    {
+       
+       $request->validate([
+        'address' => 'nullable|string|max:255',
+    ]);
+
+    $user = Auth::user();
+    $user->address = $request->address;
+    $user->save();
+
+    return response()->json(['success' => true]);
+    }
+
+    public function upload_offline_form(Request $request)
+    {
+        $service_id = $request->form_service_id;
+        $customer_id = $request->customer_id;
+        $application_no = $request->application_no;
+        $log_id = Auth::user()->id;
+        $dist_id  = Auth::user()->nalavariyam_dist_id;
+        $taluk_id = Auth::user()->nalavariyam_taluk_id ?? 0;
+
+        $user_type_id = Auth::user()->nalavariyam_usertype ?? 0;
+        $paydate = date('Y-m-d');
+        $service_status = 'Completed';
+        $time = date('H:i:s');
+        $fileName = "";
+        $targetDir = 'upload/output/';
+        if (!empty($_FILES['photo']['name'])) {
+            $fileType = pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION);
+            $fileName = 'outputimage_' . floor(microtime(true) * 1000) . '.' . $fileType;
+            $targetFilePath1 = $targetDir . $fileName;
+            move_uploaded_file($_FILES['photo']['tmp_name'], $targetFilePath1);
+        }
+        $sql = "insert into nalavariyam_form (customer_id,service_id,service_status,log_id,dist_id,taluk_id,user_type_id,date,time,from_image,application_no) values ('$customer_id','$service_id','$service_status','$log_id','$dist_id','$taluk_id','$user_type_id','$paydate','$time','$fileName','$application_no')";
+        DB::insert(DB::raw($sql));
+        $sql = "update bulk_service_usage set used=used+1 where user_id=$log_id and service_id=$service_id";
+        DB::update($sql);
+        return back()->with('success', 'Offline Form Uploaded Successfully');
+    }
+
+    public function bulkorderstatus()
+    {
+        $sql = "
+  SELECT 
+    a.id AS user_id,
+    a.name,
+    a.phone,
+    a.email,
+    b.district_name,
+    o.id AS order_id,
+    o.service_id,
+    o.quantity,
+    o.amount,
+    o.status,
+    o.added_datetime
+FROM users a
+JOIN nalavariyam_district b 
+    ON a.nalavariyam_dist_id = b.id
+JOIN bulk_service_orders o
+    ON o.login_id = a.id
+ORDER BY 
+    o.status DESC"; 
+
+        $bulkorders = DB::select(DB::raw($sql));
+        //dd($bulkorders);
+        return view('nalavariyam/bulkorderstatus', compact('bulkorders'));
+    }
+
+    public function viewbulkorder($user_id)
+    {
+        $sql = "select a.*,b.service_name from bulk_service_orders a,nalavariyam_service b where a.service_id=b.id and a.status='Paid' and a.login_id = $user_id";
+        $bulkorders = DB::select(DB::raw($sql));
+        $sql = "select a.*,b.district_name from users a,nalavariyam_district b where a.nalavariyam_dist_id=b.id and a.id=$user_id";
+        $user = DB::select(DB::raw($sql))[0];
+        return view('nalavariyam/viewbulkorder', compact('bulkorders', 'user'));
+    }
+
+    public function bulkorders()
+    {
+        $dist_id = Auth::user()->nalavariyam_dist_id;
+        $user_id = Auth::user()->id;
+
+        $sql = "select a.*,b.service_name,c.district_name from bulk_service_orders a,nalavariyam_service b,nalavariyam_district c where a.service_id=b.id and a.district_id=c.id and a.district_id=$dist_id and a.login_id=$user_id";
+
+        $pending = DB::select(DB::raw($sql));
+        return view('nalavariyam/bulkorders', compact('pending'));
+    }
+
+    public function updatebulkstatus(Request $request)
+    {
+        $user_id = $request->user_id;
+        $status = $request->status;
+        $sql = "update bulk_service_orders set status='$status' where login_id=$user_id and status in ('Paid')";
+        DB::update(DB::raw($sql));
+        return redirect('/bulkorder')->with('success', 'Bulk Service Order Status Updated Successfully');
+    }
+    
 public function nalavariyam_createapplication( Request $request ) {
     //dd($request->all());
     define ( 'SITE_ROOT', realpath( dirname( dirname( dirname( dirname( __FILE__ ) ) ) ) ) );

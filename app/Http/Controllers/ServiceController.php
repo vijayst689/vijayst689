@@ -501,7 +501,7 @@ public function applyservices($serviceid) {
    return view( 'applyservice.driving_licenceservice',compact('serviceid','districts','servicename','amount','payment','customers'));
 
 }  elseif ($serviceid == 152 || $serviceid == 153 || $serviceid == 154){
-    $mainbalance = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+    $mainbalance = DB::table( 'users' )->select('nalavariyamwallet')->where('id',2)->first();
    return view( 'applyservice.tailor_shop_service',compact('serviceid','districts','servicename','amount','payment','customers','mainbalance','coordinator_permission','admin_payment'));
 
 }  elseif ($serviceid == 155 || $serviceid == 156){
@@ -7028,14 +7028,14 @@ if($coordinator_permission == 1){
          $newbalance3 = $balance2 - $admin_payment;
          $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
          DB::insert( DB::raw( $sql ) );
-         $sql = "update users set rawallet = rawallet + $admin_payment where id = 1";
+         $sql = "update users set nalavariyamwallet = nalavariyamwallet + $admin_payment where id = 1";
          DB::update( DB::raw( $sql ) );
          $service_status = 'IN Payment';
          $ad_info = 'Ramji Wallet Credit'.' '.$servicename;
 
          $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
          DB::insert( DB::raw( $sql ) );
-         $sql = "update users set rawallet = rawallet - $admin_payment where id = 2";
+         $sql = "update users set nalavariyamwallet = nalavariyamwallet - $admin_payment where id = 2";
          DB::update( DB::raw( $sql ) );
    }
  }

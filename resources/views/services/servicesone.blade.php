@@ -84,12 +84,27 @@
                                             <div class="card-body">
                                                 <div class="d-flex align-items-center">
                                                     <div class="me-auto">
-                                                        <a href="">
+                                                        <a href="{{ url('/bulkorder') }}"></a>
                                                             <p class="mb-0 text-white">Bulk Order</p>
                                                         </a>
                                                         <h4 class="my-1 text-white">0</h4>
                                                     </div>
                                                     <div id="chart2"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-4">
+                                        <div class="card radius-10 bg-gradient-cosmic">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="me-auto">
+                                                        <a href="{{ url('/bulkorderstatus') }}">
+                                                            <p class="mb-0 text-dark">Bulk Order Status</p>
+                                                        </a>
+                                                        <h4 class="my-1 text-dark">0</h4>
+                                                    </div>
+                                                    <div id="chart4"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -256,12 +271,27 @@
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-center">
                                                         <div class="me-auto">
-                                                            <a href="">
+                                                            <a href="{{ url('/bulkorder') }}">
                                                                 <p class="mb-0 text-white">Bulk Order</p>
                                                             </a>
                                                             <h4 class="my-1 text-white">0</h4>
                                                         </div>
                                                         <div id="chart2"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-4">
+                                            <div class="card radius-10 bg-gradient-kyoto">
+                                                <div class="card-body">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-auto">
+                                                            <a href="{{ url('/bulkorderstatus') }}">
+                                                                <p class="mb-0 text-dark">Bulk Order Status</p>
+                                                            </a>
+                                                            <h4 class="my-1 text-dark">0</h4>
+                                                        </div>
+                                                        <div id="chart4"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -352,12 +382,27 @@
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-center">
                                                         <div class="me-auto">
-                                                            <a href="">
+                                                            <a href="{{ url('/bulkorder') }}">
                                                                 <p class="mb-0 text-white">Bulk Order</p>
                                                             </a>
                                                             <h4 class="my-1 text-white">0</h4>
                                                         </div>
                                                         <div id="chart2"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-4">
+                                            <div class="card radius-10 bg-gradient-kyoto">
+                                                <div class="card-body">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-auto">
+                                                            <a href="{{ url('bulkorders') }}">
+                                                                <p class="mb-0 text-dark">Bulk Order Status</p>
+                                                            </a>
+                                                            <h4 class="my-1 text-dark">0</h4>
+                                                        </div>
+                                                        <div id="chart4"></div>
                                                     </div>
                                                 </div>
                                             </div>

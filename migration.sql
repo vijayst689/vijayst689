@@ -2197,6 +2197,55 @@ alter table voterid add name_in_english varchar(100) DEFAULT NULL;
 
 11-09-2025
 
+CREATE TABLE `utislpan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `name` varchar(200) DEFAULT NULL,
+  `mobile` varchar(10) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `pan_no` varchar(10) DEFAULT NULL,
+  `date_of_birth` varchar(100) DEFAULT NULL,
+  `father_name` varchar(20) DEFAULT NULL,
+  `mode` varchar(20) DEFAULT NULL,
+  `aadhaar_pdf` varchar(20) DEFAULT NULL,
+  `pan_file` varchar(20) DEFAULT NULL,
+  `signature` varchar(20) DEFAULT NULL,
+  `photo` varchar(20) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE utislpanservice (
+  id int NOT NULL AUTO_INCREMENT,
+  service_name varchar(200) DEFAULT NULL,
+  ser_image varchar(20) DEFAULT NULL,
+  status varchar(20) DEFAULT NULL,
+  date varchar(20) DEFAULT NULL,
+  PRIMARY KEY (id)
+)  ENGINE=InnoDB;
+
+CREATE TABLE utislpanpayment (
+  id int NOT NULL AUTO_INCREMENT,
+  parent_id int DEFAULT 0,
+  service_id int DEFAULT 0,
+  distributor_amount decimal(10,2) DEFAULT 0,
+  retailer_amount decimal(10,2) DEFAULT 0,
+  customer_amount decimal(10,2) DEFAULT 0,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
 CREATE TABLE `patta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `service_id` int(11) DEFAULT 0,
@@ -2372,3 +2421,5 @@ CREATE TABLE `bulk_service_usage` (
   KEY `user_id` (`user_id`),
   KEY `service_id` (`service_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+alter table users add nalavariyamwallet decimal(10,2) DEFAULT 0 after wallet;
