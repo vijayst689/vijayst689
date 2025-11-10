@@ -2301,6 +2301,41 @@ ALTER TABLE wallet_topup CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicod
 
 //24-09-2025
 
+CREATE TABLE `nalavariyampayment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `from_id` int(11) DEFAULT 0,
+  `to_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `newbalance` decimal(10,2) DEFAULT 0.00,
+  `iscommission` tinyint(4) DEFAULT 0,
+  `customer_id` int(11) DEFAULT NULL,
+  `service_id` int(11) DEFAULT NULL,
+  `pay_id` int(11) DEFAULT NULL,
+  `service_status` varchar(20) DEFAULT NULL,
+  `message` varchar(100) DEFAULT NULL,
+  `ad_info` varchar(100) DEFAULT NULL,
+  `ad_info2` varchar(100) DEFAULT NULL,
+  `paid_image` varchar(100) DEFAULT NULL,
+  `time` varchar(100) DEFAULT NULL,
+  `paydate` varchar(50) DEFAULT NULL,
+  `log_id` int(11) DEFAULT NULL,
+  `k_status` int(11) DEFAULT 1,
+  `service_entity` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `nalavariyam_request` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `from_id` int(11) NOT NULL,
+  `to_id` int(11) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `req_date` date NOT NULL,
+  `req_time` time NOT NULL,
+  `file` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE `sitepayment` (
   `id` int NOT NULL AUTO_INCREMENT,
   `website_id` int DEFAULT 0,

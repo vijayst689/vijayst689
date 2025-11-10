@@ -33,49 +33,49 @@ public function nalavariyam_services()
 public function addnalavariyam_service( Request $request ) {
 
     $from_date = "";
-    $to_date = "";
-    if($request->has('from_date')){
-        $from_date = $request->from_date;
-    }
-    if($request->has('to_date')){
-        $to_date = $request->to_date;
-    }
-    $adduser = DB::table( 'nalavariyam_service' )->insert( [
-        'service_name' => $request->service_name,
-        'service_payment' => $request->service_payment,
-        'status' => 'Active',
-        'from_date' => $from_date,
-        'to_date' => $to_date,
-        'servicetype' => $request->servicetype,
-
-    ] );
-
-    $last_insert_id = DB::getPdo()->lastInsertId();
-    $fromimage = '';
-    if ( $request->from_image != null ) {
-        $fromimage = $last_insert_id . '.' . $request->file( 'from_image' )->extension();
-        $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'fromimg' . DIRECTORY_SEPARATOR );
-        move_uploaded_file( $_FILES[ 'from_image' ][ 'tmp_name' ], $filepath . $fromimage );
-    }
-    $addimg = DB::table( 'nalavariyam_service' )->where( 'id', $last_insert_id )->update( [
-        'from_image' => $fromimage,
-
-    ] );
-
-    if ( $request->has( 'dist_id' ) ) {
-        foreach ( $request->input( 'dist_id' ) as $key => $type ) {
-            $name = 'check_'.$type;
-            $pre = $request[ $name ];
-            $pre = $pre == '2' ? 2 : 1;
-            DB::table( 'service_details' )->insert( [
-                'service_id'       =>   $last_insert_id,
-                'district_id'       =>   $type,
-                'service_type'      =>   $pre
-            ] );
+        $to_date = "";
+        if ($request->has('from_date')) {
+            $from_date = $request->from_date;
         }
+        if ($request->has('to_date')) {
+            $to_date = $request->to_date;
+        }
+        $adduser = DB::table('nalavariyam_service')->insert([
+            'service_name' => $request->service_name,
+            'service_payment' => $request->service_payment,
+            'status' => 'Active',
+            'from_date' => $from_date,
+            'to_date' => $to_date,
+            'servicetype' => $request->servicetype,
+
+        ]);
+
+        $last_insert_id = DB::getPdo()->lastInsertId();
+        $fromimage = '';
+        if ($request->from_image != null) {
+            $fromimage = $last_insert_id . '.' . $request->file('from_image')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'fromimg' . DIRECTORY_SEPARATOR);
+            move_uploaded_file($_FILES['from_image']['tmp_name'], $filepath . $fromimage);
+        }
+        $addimg = DB::table('nalavariyam_service')->where('id', $last_insert_id)->update([
+            'from_image' => $fromimage,
+
+        ]);
+
+        if ($request->has('dist_id')) {
+            foreach ($request->input('dist_id') as $key => $type) {
+                $name = 'check_' . $type;
+                $pre = $request[$name];
+                $pre = $pre == '2' ? 2 : 1;
+                DB::table('service_details')->insert([
+                    'service_id'       =>   $last_insert_id,
+                    'district_id'       =>   $type,
+                    'service_type'      =>   $pre
+                ]);
+            }
+        }
+        return redirect()->back()->with('success', 'Service Added Successfully ... !');
     }
-    return redirect()->back()->with( 'success', 'Service Added Successfully ... !' );
-}
 
 public function editnalavariyam_service($id) {
 
@@ -314,7 +314,7 @@ public function online_services($id)
         }
         $bulkservice = json_decode(json_encode($bulkservice));
         // dd($bulkservice);
-        $rabalance = DB::table('users')->select('nalavariyamwallet')->where('id', 2)->first();
+        $rabalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
         $nalavariyamcustomer = DB::table('nalavariyam_customer')->where('refferal', Auth::user()->id)->get();
         return view('nalavariyam/online_services', compact('services', 'balance', 'customers', 'rabalance', 'bulkservice', 'nalavariyamcustomer'));
     }
@@ -515,22 +515,22 @@ $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
         $time = date('H:i:s');
         $service_status = 'Out Payment';
         $ad_info = 'Bulk Service Payment';
-        $getrawallet = DB::table('users')->select('nalavariyamwallet')->where('id', 1)->first();
+        $getrawallet = DB::table('users')->select('rawallet')->where('id', 1)->first();
         $rawallet = 0;
         if ($getrawallet) {
-            $balance1 = $getrawallet->nalavariyamwallet;
+            $balance1 = $getrawallet->rawallet;
         }
 
-        $getrawallet1 = DB::table('users')->select('nalavariyamwallet')->where('id', 2)->first();
+        $getrawallet1 = DB::table('users')->select('rawallet')->where('id', 2)->first();
         $rawallet1 = 0;
         if ($getrawallet1) {
-            $balance2 = $getrawallet1->nalavariyamwallet;
+            $balance2 = $getrawallet1->rawallet;
         }
         $newbalance2 = $balance1 + $admin_amount;
         $newbalance3 = $balance2 - $admin_amount;
         $sql = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
         DB::insert(DB::raw($sql));
-        $sql = "update users set nalavariyamwallet = nalavariyamwallet + $admin_amount where id = 1";
+        $sql = "update users set rawallet = rawallet + $admin_amount where id = 1";
         DB::update(DB::raw($sql));
         $service_status = 'IN Payment';
         $ad_info = 'Bulk Service Payment';
@@ -538,7 +538,7 @@ $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
 
         $sql = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
         DB::insert(DB::raw($sql));
-        $sql = "update users set nalavariyamwallet = nalavariyamwallet - $admin_amount where id = 2";
+        $sql = "update users set rawallet = rawallet - $admin_amount where id = 2";
         DB::update(DB::raw($sql));
 
         $user_type = Auth::user()->user_type_id;
@@ -624,22 +624,22 @@ $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
                     $time = date('H:i:s');
                     $service_status = 'Out Payment';
                     $ad_info = 'Other District Bulk Service Delivery Charge';
-                    $getrawallet = DB::table('users')->select('nalavariyamwallet')->where('id', 1)->first();
+                    $getrawallet = DB::table('users')->select('rawallet')->where('id', 1)->first();
                     $rawallet = 0;
                     if ($getrawallet) {
-                        $balance1 = $getrawallet->nalavariyamwallet;
+                        $balance1 = $getrawallet->rawallet;
                     }
 
-                    $getrawallet1 = DB::table('users')->select('nalavariyamwallet')->where('id', 2)->first();
+                    $getrawallet1 = DB::table('users')->select('rawallet')->where('id', 2)->first();
                     $rawallet1 = 0;
                     if ($getrawallet1) {
-                        $balance2 = $getrawallet1->nalavariyamwallet;
+                        $balance2 = $getrawallet1->rawallet;
                     }
                     $newbalance2 = $balance1 + $delivery_amount;
                     $newbalance3 = $balance2 - $delivery_amount;
                     $sql = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$delivery_amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
                     DB::insert(DB::raw($sql));
-                    $sql = "update users set nalavariyamwallet = nalavariyamwallet + $delivery_amount where id = 1";
+                    $sql = "update users set rawallet = rawallet + $delivery_amount where id = 1";
                     DB::update(DB::raw($sql));
                     $service_status = 'IN Payment';
                     $ad_info = 'Other District Bulk Service Delivery Charge';
@@ -647,7 +647,7 @@ $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
 
                     $sql = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$delivery_amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
                     DB::insert(DB::raw($sql));
-                    $sql = "update users set nalavariyamwallet = nalavariyamwallet - $delivery_amount where id = 2";
+                    $sql = "update users set rawallet = rawallet - $delivery_amount where id = 2";
                     DB::update(DB::raw($sql));
                 }
             }
@@ -711,7 +711,7 @@ $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
             $bulkservice[$key]["used"] = $used;
         }
         $bulkservice = json_decode(json_encode($bulkservice));
-        $rabalance = DB::table('users')->select('nalavariyamwallet')->where('id', 2)->first();
+        $rabalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
         $district = DB::table('nalavariyam_district')->where('id', '=', $dist_id)->get();
         $nalavariyamcustomer = DB::table('nalavariyam_customer')->where('refferal', Auth::user()->id)->get();
 
@@ -914,11 +914,19 @@ public function nalavariyam_createapplication( Request $request ) {
                 if ( file_exists( $targetFilePath1 ) ) {
                     $sql = "select * from nalavariyam_form where customer_id = $customer_id  and service_status in ('Paid','Resubmit') order by id limit 1 ";
     //echo $sql; die;
-                    $result = DB::select( DB::raw( $sql ) );
-                    $payments_id = $result[ 0 ]->id;
-                    $time = date( 'H:i:s' );
-                    $sql = "update nalavariyam_form set from_image='$fileName',service_id='$service_id',customer_id='$customer_id',customer_user_type_id='$customer_user_type_id',log_id='$user_id',service_status='Pending',dist_id='$dist_id',time='$time' where id=$payments_id";
-                    DB::update( DB::raw( $sql ) );
+                    $result = DB::select(DB::raw($sql));
+                        $payments_id = $result[0]->id;
+                        $time = date('H:i:s');
+                        $servicestatus = 'Pending';
+                        $application_no = NULL;
+                        if (Auth::user()->user_type_id == 2) {
+                            $servicestatus = 'Completed';
+                            if (isset($request->application_no) && !empty($request->application_no)) {
+                                $application_no = $request->application_no;
+                            }
+                        }
+                        $sql = "update nalavariyam_form set from_image='$fileName',service_id='$service_id',customer_id='$customer_id',customer_user_type_id='$customer_user_type_id',log_id='$user_id',service_status='$servicestatus',dist_id='$dist_id',time='$time',application_no='$application_no' where id=$payments_id";
+                        DB::update(DB::raw($sql));
 
                 }
 
