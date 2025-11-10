@@ -327,7 +327,7 @@ public function nalavariyam_servicepayment( Request $request ) {
     $admin_amount = $request->admin_amount;
     $log_id = Auth::user()->id;
     $dist_id  = Auth::user()->nalavariyam_dist_id ;
-    $taluk_id = Auth::user()->nalavariyam_taluk_id;
+    $taluk_id = Auth::user()->nalavariyam_taluk_id ?? 0;
     $user_type_id = Auth::user()->nalavariyam_usertype ?? 0;
     $paydate = date( 'Y-m-d' );
     $service_status = 'Paid';
