@@ -292,7 +292,7 @@
 
         // Assume user_type_id is passed from Blade
         let userType = parseInt("{{ Auth::user()->user_type_id }}") || 1;
-        let rawallet = parseFloat("{{ $rabalance->nalavariyamwallet ?? 0 }}") || 0;
+        let rawallet = parseFloat("{{ $rabalance->rawallet ?? 0 }}") || 0;
         let address = $("#deliveryAddressText").text() || "";
 
         if (address.trim() === "") {
