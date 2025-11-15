@@ -764,33 +764,39 @@ $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
         return back()->with('success', 'Offline Form Uploaded Successfully');
     }
 
-    public function bulkorderstatus()
+   public function bulkorderstatus()
     {
-        $sql = "
-  SELECT 
+               $sql = "
+SELECT 
     a.id AS user_id,
     a.name,
     a.phone,
     a.email,
     b.district_name,
-    o.id AS order_id,
-    o.service_id,
-    o.quantity,
-    o.amount,
+    o.login_id,
+    o.added_datetime,
     o.status,
-    o.added_datetime
+    SUM(o.quantity) AS total_quantity,
+    SUM(o.amount) AS total_amount,
+    COUNT(o.service_id) AS total_services
 FROM users a
 JOIN nalavariyam_district b 
     ON a.nalavariyam_dist_id = b.id
-JOIN bulk_service_orders o
+JOIN bulk_service_orders o 
     ON o.login_id = a.id
+WHERE o.status IN ('Paid', 'Delivered')
+ 
+GROUP BY 
+    o.login_id, o.added_datetime, o.status, a.id, a.name, a.phone, b.district_name,a.email
 ORDER BY 
-    o.status DESC"; 
+    o.id DESC";
+
 
         $bulkorders = DB::select(DB::raw($sql));
         //dd($bulkorders);
         return view('nalavariyam/bulkorderstatus', compact('bulkorders'));
     }
+
 
     public function viewbulkorder($user_id)
     {
@@ -809,7 +815,7 @@ ORDER BY
         $sql = "select a.*,b.service_name,c.district_name from bulk_service_orders a,nalavariyam_service b,nalavariyam_district c where a.service_id=b.id and a.district_id=c.id and a.district_id=$dist_id and a.login_id=$user_id";
 
         $pending = DB::select(DB::raw($sql));
-        return view('nalavariyam/bulkorders', compact('pending'));
+        return view('nalavariyam/bulkorderstatus', compact('pending'));
     }
 
     public function updatebulkstatus(Request $request)

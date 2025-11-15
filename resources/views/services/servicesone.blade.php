@@ -286,7 +286,7 @@
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-center">
                                                         <div class="me-auto">
-                                                            <a href="{{ url('/bulkorderstatus') }}">
+                                                            <a href="{{ url('/bulkorders') }}">
                                                                 <p class="mb-0 text-dark">Bulk Order Status</p>
                                                             </a>
                                                             <h4 class="my-1 text-dark">0</h4>
