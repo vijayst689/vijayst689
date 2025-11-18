@@ -1,0 +1,79 @@
+-- MySQL dump 10.13  Distrib 8.0.42, for Linux (x86_64)
+--
+-- Host: localhost    Database: ramjipay
+-- ------------------------------------------------------
+-- Server version	8.0.42-0ubuntu0.20.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `district`
+--
+
+DROP TABLE IF EXISTS `district`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `district` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `district_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `short_name` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `district`
+--
+
+LOCK TABLES `district` WRITE;
+/*!40000 ALTER TABLE `district` DISABLE KEYS */;
+INSERT INTO `district` VALUES (1,'Chennai',NULL,'Active'),(2,'Coimbatore',NULL,'Active'),(3,'Cuddalore',NULL,'Active'),(4,'Dharmapuri',NULL,'Active'),(5,'Dindigul',NULL,'Active'),(6,'Erode',NULL,'Active'),(7,'Kancheepuram',NULL,'Active'),(8,'Kanniyakumari',NULL,'Active'),(9,'Karur',NULL,'Active'),(10,'Madurai',NULL,'Active'),(11,'Nagapattinam',NULL,'Active'),(12,'Namakkal',NULL,'Active'),(13,'The Nilgiris',NULL,'Active'),(14,'Perambalur',NULL,'Active'),(15,'Pudukottai',NULL,'Active'),(16,'Ramanathapuram',NULL,'Active'),(17,'Salem',NULL,'Active'),(18,'Sivagangai',NULL,'Active'),(19,'Thanjavur',NULL,'Active'),(20,'Theni',NULL,'Active'),(21,'Thiruvallur',NULL,'Active'),(22,'Thiruvannamalai',NULL,'Active'),(23,'Thiruvarur',NULL,'Active'),(24,'Thoothukudi',NULL,'Active'),(25,'Tiruchirappalli',NULL,'Active'),(26,'Tirunelveli',NULL,'Active'),(27,'Vellore',NULL,'Active'),(28,'Villupuram',NULL,'Active'),(29,'Virudhunagar',NULL,'Active'),(30,'Ariyalur',NULL,'Active'),(31,'Krishnagiri',NULL,'Active'),(32,'Tiruppur',NULL,'Active'),(33,'Chengalpattu',NULL,'Active'),(34,'Kallakurichi',NULL,'Active'),(35,'Ranipet',NULL,'Active'),(36,'Tenkasi',NULL,'Active'),(37,'Tirupathur',NULL,'Active'),(38,'Mayiladuthurai',NULL,'Active');
+/*!40000 ALTER TABLE `district` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `taluk`
+--
+
+DROP TABLE IF EXISTS `taluk`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `taluk` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `dist_id` int DEFAULT NULL,
+  `taluk_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=314 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `taluk`
+--
+
+LOCK TABLES `taluk` WRITE;
+/*!40000 ALTER TABLE `taluk` DISABLE KEYS */;
+INSERT INTO `taluk` VALUES (1,1,'Alandur','Active'),(2,1,'Ambattur','Active'),(3,1,'Aminjikarai','Active'),(4,1,'Ayanavaram','Active'),(5,1,'Egmore','Active'),(6,1,'Guindy','Active'),(7,1,'Madhavaram','Active'),(8,1,'Madhuravoyal','Active'),(9,1,'Mambalam','Active'),(10,1,'Mylapore','Active'),(11,1,'Perambur','Active'),(12,1,'Purasavakkam','Active'),(13,1,'Sholinganallur','Active'),(14,1,'Thiruvottriyur','Active'),(15,1,'Tondiarpet','Active'),(16,1,'Velacherry','Active'),(17,2,'Aanaimalai','Active'),(18,2,'Annur','Active'),(19,2,'Coimbatore(North)','Active'),(20,2,'Coimbatore(South)','Active'),(21,2,'Kinathukadavu','Active'),(22,2,'Madukarai','Active'),(23,2,'Mettupalayam','Active'),(24,2,'Perur','Active'),(25,2,'Pollachi','Active'),(26,2,'Sulur','Active'),(27,2,'Valparai','Active'),(28,3,'Cuddalore','Active'),(29,3,'Bhuvanagiri','Active'),(30,3,'Chidambaram','Active'),(31,3,'Kattumannarkoil','Active'),(32,3,'Kurinjipadi','Active'),(33,3,'Panruti','Active'),(34,3,'Srimushnam','Active'),(35,3,'Thittakudi','Active'),(36,3,'Veppur','Active'),(37,3,'Virudhachalam','Active'),(38,4,'Dharmapuri','Active'),(39,4,'Harur','Active'),(40,4,'Karimangalam','Active'),(41,4,'Nallampalli','Active'),(42,4,'Palacode','Active'),(43,4,'Pappireddipatti','Active'),(44,4,'Pennagaram','Active'),(45,5,'Atthur','Active'),(46,5,'Dindigul (East)','Active'),(47,5,'Dindigul (West)','Active'),(48,5,'Guziliyamparai','Active'),(49,5,'Kodaikanal','Active'),(50,5,'Natham','Active'),(51,5,'Nilakottai','Active'),(52,5,'Oddanchatram','Active'),(53,5,'Palani','Active'),(54,5,'Vedasandur','Active'),(55,6,'Erode','Active'),(56,6,'Anthiyur','Active'),(57,6,'Bhavani','Active'),(58,6,'Gobichettipalayam','Active'),(59,6,'Kodumudi','Active'),(60,6,'Modakurichi','Active'),(61,6,'Nambiyur','Active'),(62,6,'Perundurai','Active'),(63,6,'Sathiyamangalam','Active'),(64,6,'Thalavadi','Active'),(65,7,'Kancheepuram','Active'),(66,7,'Kundrathur','Active'),(67,7,'Sriperumbudur','Active'),(68,7,'Uthiramerur','Active'),(69,7,'Walajabad','Active'),(70,8,'Agasteeswaram','Active'),(71,8,'Kalkulam','Active'),(72,8,'Killiyur','Active'),(73,8,'Thiruvatar','Active'),(74,8,'Thovalai','Active'),(75,8,'Vilavankodu','Active'),(76,9,'Karur','Active'),(77,9,'Aravakurichi','Active'),(78,9,'Kadavur','Active'),(79,9,'Krishnarayapuram','Active'),(80,9,'Kulithalai','Active'),(81,9,'Manmangalam','Active'),(82,9,'Pugalur','Active'),(83,10,'Kallikudi','Active'),(84,10,'Madurai (East)','Active'),(85,10,'Madurai (North)','Active'),(86,10,'Madurai (South)','Active'),(87,10,'Madurai (West)','Active'),(88,10,'Melur','Active'),(89,10,'Peraiyur','Active'),(90,10,'Thirumangalam','Active'),(91,10,'Thiruparankundram','Active'),(92,10,'Usilampatti','Active'),(93,10,'Vadipatti','Active'),(94,11,'Nagapattinam','Active'),(95,11,'Kilvelur','Active'),(96,11,'Thirukkuvalai','Active'),(97,11,'Vedaranyam','Active'),(98,12,'Namakkal','Active'),(99,12,'Kholli Hills','Active'),(100,12,'Kumarapalayam','Active'),(101,12,'Mohanoor','Active'),(102,12,'Paramathi Velur','Active'),(103,12,'Rasipuram','Active'),(104,12,'Senthamangalam','Active'),(105,12,'Tiruchengode','Active'),(106,13,'Udagamandalam','Active'),(107,13,'Coonoor','Active'),(108,13,'Gudalur','Active'),(109,13,'Kothagiri','Active'),(110,13,'Kundah','Active'),(111,13,'Pandalur','Active'),(112,14,'Perambalur','Active'),(113,14,'Alathur','Active'),(114,14,'Kunnam','Active'),(115,14,'Veppanthattai','Active'),(116,15,'Pudukottai','Active'),(117,15,'Alangudi','Active'),(118,15,'Aranthangi','Active'),(119,15,'Avudiyarkoil','Active'),(120,15,'Gandarvakottai','Active'),(121,15,'Iluppur','Active'),(122,15,'Karambakudi','Active'),(123,15,'Kulathur','Active'),(124,15,'Manamelkudi','Active'),(125,15,'Ponnamaravathi','Active'),(126,15,'Thirumayam','Active'),(127,15,'Viralimalai','Active'),(128,16,'Ramanathapuram','Active'),(129,16,'Kadaladi','Active'),(130,16,'Kamuthi','Active'),(131,16,'Kezhakarai','Active'),(132,16,'Mudukulathur','Active'),(133,16,'Paramakudi','Active'),(134,16,'Rajasingamangalam','Active'),(135,16,'Rameswaram','Active'),(136,16,'Tiruvadanai','Active'),(137,17,'Salem','Active'),(138,17,'Attur','Active'),(139,17,'Edapadi','Active'),(140,17,'Gangavalli','Active'),(141,17,'Kadaiyampatti','Active'),(142,17,'Mettur','Active'),(143,17,'Omalur','Active'),(144,17,'Pethanayakanpalayam','Active'),(145,17,'Salem South','Active'),(146,17,'Salem West','Active'),(147,17,'Sankari','Active'),(148,17,'Vazhapadi','Active'),(149,17,'Yercaud','Active'),(150,18,'Sivagangai','Active'),(151,18,'Devakottai','Active'),(152,18,'Ilayankudi','Active'),(153,18,'Kalaiyarkovil','Active'),(154,18,'Karaikudi','Active'),(155,18,'Manamadurai','Active'),(156,18,'Singampunari','Active'),(157,18,'Thirupuvanam','Active'),(158,18,'Tirupathur','Active'),(159,19,'Thanjavur','Active'),(160,19,'Boothalur','Active'),(161,19,'Kumbakonam','Active'),(162,19,'Orathanadu','Active'),(163,19,'Papanasam','Active'),(164,19,'Pattukottai','Active'),(165,19,'Peravurani','Active'),(166,19,'Thiruvaiyaru','Active'),(167,19,'Thiruvidaimaruthur','Active'),(168,20,'Theni','Active'),(169,20,'Aandipatti','Active'),(170,20,'Bodinayakanur','Active'),(171,20,'Periyakulam','Active'),(172,20,'Uthamapalayam','Active'),(173,21,'Thiruvallur','Active'),(174,21,'Avadi','Active'),(175,21,'Gummidipoondi','Active'),(176,21,'Pallipattu','Active'),(177,21,'Ponneri','Active'),(178,21,'Poonamallee','Active'),(179,21,'R.K. Pet','Active'),(180,21,'Tiruthani','Active'),(181,21,'Uthukottai','Active'),(182,22,'Thiruvannamalai','Active'),(183,22,'Arni','Active'),(184,22,'Chengam','Active'),(185,22,'Chetpet','Active'),(186,22,'Cheyyar','Active'),(187,22,'Jamunamarathur','Active'),(188,22,'Kalasapakkam','Active'),(189,22,'Kilpennathur','Active'),(190,22,'Polur','Active'),(191,22,'Thandramet','Active'),(192,22,'Vandavasi','Active'),(193,22,'Vembakkam','Active'),(194,23,'Thiruvarur','Active'),(195,23,'Kodavasal','Active'),(196,23,'Koothanallur','Active'),(197,23,'Mannargudi','Active'),(198,23,'Nannilam','Active'),(199,23,'Needamangalam','Active'),(200,23,'Thiruthuraipoondi','Active'),(201,23,'Valangaiman','Active'),(202,24,'Thoothukudi','Active'),(203,24,'Eral','Active'),(204,24,'Ettayapuram','Active'),(205,24,'Kayathar','Active'),(206,24,'Kovilpatti','Active'),(207,24,'Ottapidaram','Active'),(208,24,'Sattankulam','Active'),(209,24,'Srivaikundam','Active'),(210,24,'Tiruchendur','Active'),(211,24,'Vilathikulam','Active'),(212,25,'Lalgudi','Active'),(213,25,'Manachanallur','Active'),(214,25,'Manapparai','Active'),(215,25,'Marungapuri','Active'),(216,25,'Musiri','Active'),(217,25,'Srirangam','Active'),(218,25,'Thottiam','Active'),(219,25,'Thuraiyur','Active'),(220,25,'Tiruchirapalli (West)','Active'),(221,25,'Tiruchirappalli (East)','Active'),(222,25,'Tiruverumbur','Active'),(223,26,'Tirunelveli','Active'),(224,26,'Ambasamudram','Active'),(225,26,'Cheranmahadevi','Active'),(226,26,'Manur','Active'),(227,26,'Nanguneri','Active'),(228,26,'Palayamkottai','Active'),(229,26,'Radhapuram','Active'),(230,26,'Thisayanvilai','Active'),(231,27,'Vellore','Active'),(232,27,'Aanikattu','Active'),(233,27,'Gudiyatham','Active'),(234,27,'K V Kuppam','Active'),(235,27,'Katpadi','Active'),(236,27,'Pernambut','Active'),(237,28,'Villupuram','Active'),(238,28,'Gingee','Active'),(239,28,'Kandachipuram','Active'),(240,28,'Marakanam','Active'),(241,28,'Melmalaiyanur','Active'),(242,28,'Thiruvennainallur','Active'),(243,28,'Tindivanam','Active'),(244,28,'Vanur','Active'),(245,28,'Vikravandi','Active'),(246,29,'Virudhunagar','Active'),(247,29,'Aruppukottai','Active'),(248,29,'Kariyapatti','Active'),(249,29,'Rajapalayam','Active'),(250,29,'Sathur','Active'),(251,29,'Sivakasi','Active'),(252,29,'Srivilliputhur','Active'),(253,29,'Tiruchuli','Active'),(254,29,'Vembakottai','Active'),(255,29,'Watrap','Active'),(256,30,'Ariyalur','Active'),(257,30,'Andimadam','Active'),(258,30,'Sendurai','Active'),(259,30,'Udaiyarpalayam','Active'),(260,31,'Krishnagiri','Active'),(261,31,'Anjetty','Active'),(262,31,'Bargur','Active'),(263,31,'Hosur','Active'),(264,31,'Pochampalli','Active'),(265,31,'Sulagiri','Active'),(266,31,'Thenkanikottai','Active'),(267,31,'Uthangarai','Active'),(268,32,'Avinashi','Active'),(269,32,'Dharapuram','Active'),(270,32,'Kangeyam','Active'),(271,32,'Madathukkulam','Active'),(272,32,'Oothukuli','Active'),(273,32,'Palladam','Active'),(274,32,'Tiruppur (North)','Active'),(275,32,'Tiruppur (South)','Active'),(276,32,'Udumalaipettai','Active'),(277,33,'Chengalpattu','Active'),(278,33,'Cheyyur','Active'),(279,33,'Maduranthakam','Active'),(280,33,'Pallavaram','Active'),(281,33,'Tambaram','Active'),(282,33,'Thirukalukundram','Active'),(283,33,'Tiruporur','Active'),(284,33,'Vandalur','Active'),(285,34,'Kallakurichi','Active'),(286,34,'Chinnaselam','Active'),(287,34,'Kalvarayan Hills','Active'),(288,34,'Sankarapuram','Active'),(289,34,'Tirukoilur','Active'),(290,34,'Ulundurpet','Active'),(291,35,'Arakkonam','Active'),(292,35,'Arcot','Active'),(293,35,'Kalavai','Active'),(294,35,'Nemili','Active'),(295,35,'Sholingur','Active'),(296,35,'Walajah','Active'),(297,36,'Tenkasi','Active'),(298,36,'Alangulam','Active'),(299,36,'Kadayanallur','Active'),(300,36,'Sankarankovil','Active'),(301,36,'Shenkottai','Active'),(302,36,'Sivagiri','Active'),(303,36,'Thiruvengadam','Active'),(304,36,'Veerakeralampudur','Active'),(305,37,'Tirupathur','Active'),(306,37,'Ambur','Active'),(307,37,'Natrampalli','Active'),(308,37,'Vaniyambadi','Active'),(309,38,'Mayiladuthurai','Active'),(310,38,'Kuthalam','Active'),(311,38,'Sirkali','Active'),(312,38,'Tharangambadi','Active'),(313,30,'Jayankondam','Active');
+/*!40000 ALTER TABLE `taluk` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-10-09 14:54:00
