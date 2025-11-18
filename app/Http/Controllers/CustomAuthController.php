@@ -124,7 +124,9 @@ class CustomAuthController extends Controller
           'pan_file'        => $pan_file,
         ] );
 
-        return redirect("/")->with( 'success', 'You Have Registerd !' );
+    if ( Auth::loginUsingId( $insertid ) ) {
+         }
+        return redirect("/dashboard")->with( 'success', 'You Have Registerd !' );
     }
 
     public function saveretailerregister(Request $request)
@@ -163,7 +165,9 @@ class CustomAuthController extends Controller
           'pan_file'        => $pan_file,
         ] );
 
-        return redirect("/")->with( 'success', 'You Have Registerd !' );
+    if ( Auth::loginUsingId( $insertid ) ) {
+         }
+        return redirect("/dashboard")->with( 'success', 'You Have Registerd !' );
     }
 
 
