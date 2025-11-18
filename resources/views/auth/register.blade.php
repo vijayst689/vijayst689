@@ -155,7 +155,7 @@
                                             <div class="col-12">
                                                 <div class="text-center ">
                                                     <p class="mb-0">Already have an account? <a
-                                                            href="{{ url('login') }}">Sign</a></p>
+                                                            href="{{ url('login') }}">Sign in</a></p>
                                                 </div>
                                             </div>
                                         </form>
