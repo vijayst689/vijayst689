@@ -61,6 +61,18 @@ class CustomAuthController extends Controller
         return view('auth.register',compact('districts'));
     }
 
+    public function get_taluk_register($distid)
+  {
+      $response = DB::table('taluk')->where('dist_id',$distid)->orderBy( 'id', 'Asc' )->get();
+      return response()->json( $response );
+  }
+
+  public function get_panchayath_register($taluk_id)
+  {
+      $response = DB::table('panchayath')->where('taluk_id',$taluk_id)->orderBy( 'id', 'Asc' )->get();
+      return response()->json( $response );
+  }
+
     public function saveregister(Request $request)
     {
         DB::table( 'users' )->insert( [
@@ -96,7 +108,8 @@ class CustomAuthController extends Controller
             'phone'         => $request->phone,
             'email'         => $request->email,
             'aadhaar_no'    => $request->aadhaar_no,
-            'pan_no'        => $request->pan_no,
+            'dist_id'       => $request->dist_id,
+            'taluk_id'      => $request->taluk_id,
             'password'      => Hash::make($request->password),
             'cpassword'     => $request->password,
             'status'        => 'Active',
@@ -105,25 +118,6 @@ class CustomAuthController extends Controller
         ] );
 
         $insertid = DB::getPdo()->lastInsertId();
-
-        $aadhaar_file = "";
-        if ($request->aadhaar_file != null) {
-          $aadhaar_file = $insertid.'.'.$request->file('aadhaar_file')->extension();
-          $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'aadhaarimage' . DIRECTORY_SEPARATOR);
-          move_uploaded_file($_FILES['aadhaar_file']['tmp_name'], $filepath . $aadhaar_file);
-        }
-
-        $pan_file = "";
-        if ($request->pan_file != null) {
-          $pan_file = $insertid.'.'.$request->file('pan_file')->extension();
-          $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'panimage' . DIRECTORY_SEPARATOR);
-          move_uploaded_file($_FILES['pan_file']['tmp_name'], $filepath . $pan_file);
-        }
-
-        $image = DB::table( 'users' )->where( 'id', $insertid )->update( [
-          'aadhaar_file'    => $aadhaar_file,
-          'pan_file'        => $pan_file,
-        ] );
 
     if ( Auth::loginUsingId( $insertid ) ) {
          }
@@ -137,7 +131,8 @@ class CustomAuthController extends Controller
             'phone'         => $request->phone,
             'email'         => $request->email,
             'aadhaar_no'    => $request->aadhaar_no,
-            'pan_no'        => $request->pan_no,
+            'dist_id'      => $request->dist_id,
+            'taluk_id'      => $request->taluk_id,
             'password'      => Hash::make($request->password),
             'cpassword'     => $request->password,
             'status'        => 'Active',
@@ -146,25 +141,6 @@ class CustomAuthController extends Controller
         ] );
 
         $insertid = DB::getPdo()->lastInsertId();
-
-        $aadhaar_file = "";
-        if ($request->aadhaar_file != null) {
-          $aadhaar_file = $insertid.'.'.$request->file('aadhaar_file')->extension();
-          $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'aadhaarimage' . DIRECTORY_SEPARATOR);
-          move_uploaded_file($_FILES['aadhaar_file']['tmp_name'], $filepath . $aadhaar_file);
-        }
-
-        $pan_file = "";
-        if ($request->pan_file != null) {
-          $pan_file = $insertid.'.'.$request->file('pan_file')->extension();
-          $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'panimage' . DIRECTORY_SEPARATOR);
-          move_uploaded_file($_FILES['pan_file']['tmp_name'], $filepath . $pan_file);
-        }
-
-        $image = DB::table( 'users' )->where( 'id', $insertid )->update( [
-          'aadhaar_file'    => $aadhaar_file,
-          'pan_file'        => $pan_file,
-        ] );
 
     if ( Auth::loginUsingId( $insertid ) ) {
          }

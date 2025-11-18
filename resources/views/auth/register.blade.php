@@ -24,6 +24,18 @@
 </head>
 
 <body class="">
+    @if (session()->has('success'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <strong> {{ session('success') }} </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session()->has('error'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <strong> {{ session('error') }} </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <!--wrapper-->
     <div class="wrapper">
         <div class="section-authentication-cover">
@@ -80,33 +92,27 @@
 
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
-                                                             <label for="field-1" class="form-label">District</label>
-                                            <select required name="dist_id" id="dist_ids" class="form-control">
-                                                <option value="">Select District</option>
-                                                @foreach ($districts as $d)
-                                                    <option value="{{ $d->id }}">{{ $d->district_name }}</option>
-                                                @endforeach
-                                            </select>
+                                                            <label for="field-1" class="form-label">District</label>
+                                                            <select required name="dist_id" id="dist_ids"
+                                                                class="form-control">
+                                                                <option value="">Select District</option>
+                                                                @foreach ($districts as $d)
+                                                                    <option value="{{ $d->id }}">
+                                                                        {{ $d->district_name }}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="row">
-                                                    {{-- <div class="col-md-6">
+                                                
+                                                    <div class="col-md-12">
                                                         <div class="mb-3">
-                                                            <label for="field-1" class="form-label">Pan No</label>
-                                                            <input required onkeyup="duplicatepan(0)" id="pan_no"
-                                                                type="text" name="pan_no" class="form-control"
-                                                                maxlength="10" placeholder="Pan No">
-                                                            <span id="duppan" style="color:red"></span>
-                                                        </div>
-                                                    </div> --}}
-
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                                <label for="taluk" class="form-label">Taluk</label>
-                                            <select required name="taluk_id" id="taluks" class="form-control">
-                                            </select>
+                                                            <label for="taluk" class="form-label">Taluk</label>
+                                                            <select required name="taluk_id" id="taluks"
+                                                                class="form-control">
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -142,13 +148,14 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="d-grid">
-                                                    <button type="submit" id="save" class="btn btn-primary">Sign up</button>
+                                                    <button type="submit" id="save"
+                                                        class="btn btn-primary">Sign up</button>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="text-center ">
                                                     <p class="mb-0">Already have an account? <a
-                                                            href="{{ url('login') }}">Sign in here</a></p>
+                                                            href="{{ url('login') }}">Sign</a></p>
                                                 </div>
                                             </div>
                                         </form>
@@ -174,7 +181,7 @@
                     {{-- image end --}}
 
                     <div class="col-12 col-xl-5 col-xxl-4 auth-cover-right align-items-center justify-content-center">
-                        <div class="card rounded-0 m-3 shadow-none bg-transparent mb-0">
+                        <div class="card rounded-0 m-3 shadow-none bg-transparent mb-0 bg-dark">
                             <div class="card-body p-sm-5">
                                 <div class="">
                                     <div class="mb-3 text-center">
@@ -226,30 +233,27 @@
 
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
-                                                            <label for="field-2" class="form-label">Aadhaar
-                                                                Image</label>
-                                                            <input required type="file" name="aadhaar_file"
+                                                           <label for="field-1" class="form-label">District</label>
+                                                            <select required name="dist_id" id="dist_id"
                                                                 class="form-control">
+                                                                <option value="">Select District</option>
+                                                                @foreach ($districts as $d)
+                                                                    <option value="{{ $d->id }}">
+                                                                        {{ $d->district_name }}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label for="field-1" class="form-label">Pan No</label>
-                                                            <input required onkeyup="duplicatepan1(0)" id="pan_no1"
-                                                                type="text" name="pan_no" class="form-control"
-                                                                maxlength="10" placeholder="Pan No">
-                                                            <span id="duppan1" style="color:red"></span>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-12">
                                                         <div class="mb-3">
-                                                            <label for="field-2" class="form-label">Pan Image</label>
-                                                            <input required type="file" name="pan_file"
+                                                            <label for="taluk" class="form-label">Taluk</label>
+                                                            <select required name="taluk_id" id="taluk"
                                                                 class="form-control">
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -286,13 +290,14 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="d-grid">
-                                                    <button type="submit" id="save1" class="btn btn-primary">Sign up</button>
+                                                    <button type="submit" id="save1"
+                                                        class="btn btn-primary">Sign up</button>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="text-center ">
                                                     <p class="mb-0">Already have an account? <a
-                                                            href="{{ url('login') }}">Sign in here</a></p>
+                                                            href="{{ url('login') }}">Sign in</a></p>
                                                 </div>
                                             </div>
                                         </form>
@@ -335,127 +340,127 @@
             });
         });
 
-//Distributor Script
+        //Distributor Script
 
         function duplicateemail(id) {
-                var email = $("#email").val().trim();
-                var _token = $('input[name="_token"]').val();
-                $.ajax({
-                    type: "post",
-                    url: '{{ url('checkemailregister') }}',
-                    data: {
-                        id: id,
-                        email: email,
-                        _token: _token
-                    },
+            var email = $("#email").val().trim();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                type: "post",
+                url: '{{ url('checkemailregister') }}',
+                data: {
+                    id: id,
+                    email: email,
+                    _token: _token
+                },
 
-                    success: function(res) {
-                        if (res.exists) {
-                            $("#save").prop('disabled', true);
-                            $("#dupemail").html("email id already exists!");
-                        } else {
-                            $("#save").prop('disabled', false);
-                            $("#dupemail").html("");
-                        }
-                    },
-
-                    error: function(jqXHR, exception) {
-                        console.log(exception);
+                success: function(res) {
+                    if (res.exists) {
+                        $("#save").prop('disabled', true);
+                        $("#dupemail").html("email id already exists!");
+                    } else {
+                        $("#save").prop('disabled', false);
+                        $("#dupemail").html("");
                     }
-                });
-            }
+                },
 
-            function duplicateaadhar(id) {
-                var aadhaar_no = $("#aadhaar_no").val().trim();
-                var _token = $('input[name="_token"]').val();
-                $.ajax({
-                    type: "post",
-                    url: '{{ url('checkaadharregister') }}',
-                    data: {
-                        id: id,
-                        aadhaar_no: aadhaar_no,
-                        _token: _token
-                    },
+                error: function(jqXHR, exception) {
+                    console.log(exception);
+                }
+            });
+        }
 
-                    success: function(res) {
-                        if (res.exists) {
-                            $("#save").prop('disabled', true);
-                            $("#dupaadhar").html("aadhar no already exists!");
-                        } else {
-                            $("#save").prop('disabled', false);
-                            $("#dupaadhar").html("");
-                        }
-                    },
-                    error: function(jqXHR, exception) {
-                        console.log(exception);
+        function duplicateaadhar(id) {
+            var aadhaar_no = $("#aadhaar_no").val().trim();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                type: "post",
+                url: '{{ url('checkaadharregister') }}',
+                data: {
+                    id: id,
+                    aadhaar_no: aadhaar_no,
+                    _token: _token
+                },
+
+                success: function(res) {
+                    if (res.exists) {
+                        $("#save").prop('disabled', true);
+                        $("#dupaadhar").html("aadhar no already exists!");
+                    } else {
+                        $("#save").prop('disabled', false);
+                        $("#dupaadhar").html("");
                     }
-                });
-            }
+                },
+                error: function(jqXHR, exception) {
+                    console.log(exception);
+                }
+            });
+        }
 
-            function duplicatephone(id) {
-                var phone = $("#phone").val().trim();
-                var _token = $('input[name="_token"]').val();
-                $.ajax({
-                    type: "post",
-                    url: '{{ url('checkphoneregister') }}',
-                    data: {
-                        id: id,
-                        phone: phone,
-                        _token: _token
-                    },
+        function duplicatephone(id) {
+            var phone = $("#phone").val().trim();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                type: "post",
+                url: '{{ url('checkphoneregister') }}',
+                data: {
+                    id: id,
+                    phone: phone,
+                    _token: _token
+                },
 
-                    success: function(res) {
-                        if (res.exists) {
-                            $("#save").prop('disabled', true);
-                            $("#dupphone").html("mobile no already exists!");
-                        } else {
-                            $("#save").prop('disabled', false);
-                            $("#dupphone").html("");
-                        }
-                    },
-
-                    error: function(jqXHR, exception) {
-                        console.log(exception);
+                success: function(res) {
+                    if (res.exists) {
+                        $("#save").prop('disabled', true);
+                        $("#dupphone").html("mobile no already exists!");
+                    } else {
+                        $("#save").prop('disabled', false);
+                        $("#dupphone").html("");
                     }
-                });
-            }
+                },
 
-            function duplicatepan(id) {
-                var pan_no = $("#pan_no").val().trim();
-                var _token = $('input[name="_token"]').val();
-                $.ajax({
-                    type: "post",
-                    url: '{{ url('checkpanregister') }}',
-                    data: {
-                        id: id,
-                        pan_no: pan_no,
-                        _token: _token
-                    },
+                error: function(jqXHR, exception) {
+                    console.log(exception);
+                }
+            });
+        }
 
-                    success: function(res) {
-                        if (res.exists) {
-                            $("#save").prop('disabled', true);
-                            $("#duppan").html("pan no already exists!");
-                        } else {
-                            $("#duppan").html("");
-                        }
-                        if ($("#dupphone").html() == "" && $("#duppan").html() == "" && $("#duppan").html() ==
-                            "") {
-                            $("#save").prop('disabled', false);
-                        } else {
-                            $("#save").prop('disabled', true);
-                        }
-                    },
-                    error: function(jqXHR, exception) {
-                        console.log(exception);
+        function duplicatepan(id) {
+            var pan_no = $("#pan_no").val().trim();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                type: "post",
+                url: '{{ url('checkpanregister') }}',
+                data: {
+                    id: id,
+                    pan_no: pan_no,
+                    _token: _token
+                },
+
+                success: function(res) {
+                    if (res.exists) {
+                        $("#save").prop('disabled', true);
+                        $("#duppan").html("pan no already exists!");
+                    } else {
+                        $("#duppan").html("");
                     }
+                    if ($("#dupphone").html() == "" && $("#duppan").html() == "" && $("#duppan").html() ==
+                        "") {
+                        $("#save").prop('disabled', false);
+                    } else {
+                        $("#save").prop('disabled', true);
+                    }
+                },
+                error: function(jqXHR, exception) {
+                    console.log(exception);
+                }
 
-                });
-            }
+            });
+        }
 
-//Retailer Script
+        //Retailer Script
 
-function duplicateaadhar1(id) {
+        function duplicateaadhar1(id) {
             var aadhaar_no = $("#aadhaar_no").val().trim();
             var _token = $('input[name="_token"]').val();
             $.ajax({
@@ -474,7 +479,8 @@ function duplicateaadhar1(id) {
                     } else {
                         $("#dupaadhar1").html("");
                     }
-                    if ($("#dupaadhar1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1").html() ==
+                    if ($("#dupaadhar1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1")
+                    .html() ==
                         "") {
                         $("#save1").prop('disabled', false);
                     } else {
@@ -506,7 +512,8 @@ function duplicateaadhar1(id) {
                     } else {
                         $("#dupphone1").html("");
                     }
-                    if ($("#dupphone1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1").html() ==
+                    if ($("#dupphone1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1")
+                    .html() ==
                         "") {
                         $("#save1").prop('disabled', false);
                     } else {
@@ -539,7 +546,8 @@ function duplicateaadhar1(id) {
                     } else {
                         $("#dupemail1").html("");
                     }
-                    if ($("#dupemail1").html() == "" && $("#dupemail1").html() == "" && $("#dupemail1").html() ==
+                    if ($("#dupemail1").html() == "" && $("#dupemail1").html() == "" && $("#dupemail1")
+                    .html() ==
                         "") {
                         $("#save1").prop('disabled', false);
                     } else {
@@ -587,7 +595,7 @@ function duplicateaadhar1(id) {
 
 
 
-//Register Script
+        //Register Script
 
         $('#dist_id').on('change', function() {
             var dist_id = this.value;

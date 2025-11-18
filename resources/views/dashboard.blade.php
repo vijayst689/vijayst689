@@ -185,7 +185,7 @@
                                         <a href="{{ url('/customers') }}">
                                             <p class="mb-0 text-white">Customers</p>
                                         </a>
-                                        <h4 class="my-1 text-white">{{ $customercount }}</h4>
+                                        <h4 class="my-1 text-white">{{ $customer }}</h4>
                                     </div>
                                     <div id="chart3"></div>
                                 </div>
@@ -488,7 +488,7 @@
                                         <a href="{{ url('/customers') }}">
                                             <p class="mb-0 text-white">Customers</p>
                                         </a>
-                                        <h4 class="my-1 text-white">{{ $customercount }}</h4>
+                                        <h4 class="my-1 text-white">{{ $customer }}</h4>
                                     </div>
                                     <div id="chart3"></div>
                                 </div>
@@ -757,28 +757,13 @@
                                         <a href="{{ url('/customers') }}">
                                             <p class="mb-0 text-white">Customers</p>
                                         </a>
-                                        <h4 class="my-1 text-white">{{ $customercount }}</h4>
+                                        <h4 class="my-1 text-white">{{ $customer }}</h4>
                                     </div>
                                     <div id="chart3"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="col-md-3 col-sm-4">
-                        <div class="card radius-10 bg-gradient-cosmic">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="me-auto">
-                                        <a href="{{ url('/addenquiry') }}">
-                                            <p class="mb-0 text-white">Enquiry</p>
-                                        </a>
-                                        <h4 class="my-1 text-white">&</h4>
-                                    </div>
-                                    <div id="chart1"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
                 @endif
                 @if (Auth::user()->user_type_id == 4)
                     <div class="sliding-text-container">
@@ -977,7 +962,7 @@
                                         <a href="{{ url('/customers') }}">
                                             <p class="mb-0 text-white">Customers</p>
                                         </a>
-                                        <h4 class="my-1 text-white">{{ $customercount }}</h4>
+                                        <h4 class="my-1 text-white">{{ $customer }}</h4>
                                     </div>
                                     <div id="chart3"></div>
                                 </div>
