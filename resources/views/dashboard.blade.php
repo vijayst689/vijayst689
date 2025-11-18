@@ -170,7 +170,7 @@
                                         <a href="{{ url('/retailers') }}">
                                             <p class="mb-0 text-white">Retailler</p>
                                         </a>
-                                        <h4 class="my-1 text-white">{{ $retailer }}</h4>
+                                        <h4 class="my-1 text-white">{{ $retailer_count }}</h4>
                                     </div>
                                     <div id="chart2"></div>
                                 </div>
@@ -473,7 +473,7 @@
                                         <a href="{{ url('/retailers') }}">
                                             <p class="mb-0 text-white">Retailler</p>
                                         </a>
-                                        <h4 class="my-1 text-white">{{ $retailer }}</h4>
+                                        <h4 class="my-1 text-white">{{ $retailer_count }}</h4>
                                     </div>
                                     <div id="chart2"></div>
                                 </div>
@@ -742,7 +742,7 @@
                                         <a href="{{ url('/retailers') }}">
                                             <p class="mb-0 text-white">Retailler</p>
                                         </a>
-                                        <h4 class="my-1 text-white">{{ $retailer }}</h4>
+                                        <h4 class="my-1 text-white">{{ $retailer_count }}</h4>
                                     </div>
                                     <div id="chart2"></div>
                                 </div>
