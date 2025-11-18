@@ -81,7 +81,8 @@ Route::get('/editcustomer/{id}', [App\Http\Controllers\UserController::class, 'e
 
 Route::get('/admins', [App\Http\Controllers\UserController::class, 'admins'])->name('admins');
 
-
+Route::get('register/get_taluk_register/{distid}', [App\Http\Controllers\CustomerController::class, 'get_taluk_register'])->name('gettalukregister');
+Route::get('register/get_panchayath_register/{taluk_id}', [App\Http\Controllers\CustomerController::class, 'get_panchayath_register'])->name('getpanchayathregister');
 
 Route::get('addretailer', [App\Http\Controllers\RetailerController::class, 'Addretailer']);
 

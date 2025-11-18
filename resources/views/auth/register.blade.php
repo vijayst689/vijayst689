@@ -80,16 +80,19 @@
 
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
-                                                            <label for="field-2" class="form-label">Aadhaar
-                                                                Image</label>
-                                                            <input required type="file" name="aadhaar_file"
-                                                                class="form-control">
+                                                             <label for="field-1" class="form-label">District</label>
+                                            <select required name="dist_id" id="dist_ids" class="form-control">
+                                                <option value="">Select District</option>
+                                                @foreach ($districts as $d)
+                                                    <option value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                                @endforeach
+                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    {{-- <div class="col-md-6">
                                                         <div class="mb-3">
                                                             <label for="field-1" class="form-label">Pan No</label>
                                                             <input required onkeyup="duplicatepan(0)" id="pan_no"
@@ -97,13 +100,13 @@
                                                                 maxlength="10" placeholder="Pan No">
                                                             <span id="duppan" style="color:red"></span>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
 
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
-                                                            <label for="field-2" class="form-label">Pan Image</label>
-                                                            <input required type="file" name="pan_file"
-                                                                class="form-control">
+                                                                <label for="taluk" class="form-label">Taluk</label>
+                                            <select required name="taluk_id" id="taluks" class="form-control">
+                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -581,6 +584,8 @@ function duplicateaadhar1(id) {
                 }
             });
         }
+
+
 
 //Register Script
 

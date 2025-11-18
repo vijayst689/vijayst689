@@ -57,7 +57,8 @@ class CustomAuthController extends Controller
 
     public function register()
     {
-        return view('auth.register');
+        $districts = DB::table( 'district' )->get();
+        return view('auth.register',compact('districts'));
     }
 
     public function saveregister(Request $request)
