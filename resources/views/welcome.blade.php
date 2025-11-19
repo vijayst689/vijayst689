@@ -48,9 +48,10 @@
                                         <form class="row g-3" method="post" action="{{ route('login.custom') }}">
                                             {{ csrf_field() }}
                                             <div class="col-12">
-                                                <label for="inputEmailAddress" class="form-label">Email</label>
-                                                <input type="email" name="email" class="form-control"
-                                                    id="inputEmailAddress" placeholder="Email">
+                                                <label for="inputEmailAddress" class="form-label">Phone</label>
+                                                <input type="text" maxlength="10" name="phone" id="phone"
+                                                    class="form-control number" placeholder="Phone">
+                                                <small id="phone-status"></small>
                                             </div>
                                             <div class="col-12">
                                                 <label for="inputChoosePassword" class="form-label">Password</label>
@@ -74,7 +75,7 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="d-grid">
-                                                    <button type="submit" class="btn btn-primary">Sign in</button>
+                                                    <button id="signin-btn" type="submit" class="btn btn-primary" disabled>Sign in</button>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -158,7 +159,46 @@
         'cp_cl': '8'
     }) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.
 </script>
+<script>
+document.getElementById('phone').addEventListener('keyup', function() {
+    let phone = this.value.trim();
+    let status = document.getElementById('phone-status');
+    let btn = document.getElementById('signin-btn');
+
+    // If input is empty → disable button & clear status
+    if (phone === "") {
+        status.innerHTML = "";
+        btn.disabled = true;
+        return;
+    }
+
+    // Call DB check
+    fetch("{{ route('check.phonelogin') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        body: JSON.stringify({ phone: phone })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if (data.exists) {
+            // Phone found in DB → correct
+            status.innerHTML = "<span style='color:green;'>Phone number correct</span>";
+            btn.disabled = false; // Enable button
+        } else {
+            // Phone not found → incorrect
+            status.innerHTML = "<span style='color:red;'>Phone number incorrect</span>";
+            btn.disabled = true; // Disable button
+        }
+    });
+});
+
+
+</script>
+
 <script src='../../../../img1.wsimg.com/signals/js/clients/scc-c2/scc-c2.min.js'></script>
-<!-- Mirrored from codervent.com/rocker/demo/vertical/auth-basic-signin.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Aug 2025 10:06:30 GMT -->
 
 </html>

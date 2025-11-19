@@ -51,7 +51,9 @@ Route::get('addenquiry/{id}', [CustomAuthController::class, 'addenquiry'])->name
 Route::post('saveenquiry', [CustomAuthController::class, 'saveenquiry'])->name('saveenquiry');
 Route::get('register/get_taluk_register/{distid}', [App\Http\Controllers\CustomAuthController::class, 'get_taluk_register'])->name('gettalukregister');
 Route::get('register/get_panchayath_register/{taluk_id}', [App\Http\Controllers\CustomAuthController::class, 'get_panchayath_register'])->name('getpanchayathregister');
-// Route::get('addenquiry', [App\Http\Controllers\NotificationController::class, 'addenquiry']);
+Route::post('/check-phonelogin', [CustomAuthController::class, 'checkPhonelogin'])->name('check.phonelogin');
+Route::post('/send-otp', [CustomAuthController::class, 'sendOtp'])->name('send.otp');
+
 
 Route::get('home', [App\Http\Controllers\Frontend\HomeController::class, 'Index']);
 

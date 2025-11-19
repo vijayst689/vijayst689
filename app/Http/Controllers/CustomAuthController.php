@@ -21,17 +21,17 @@ class CustomAuthController extends Controller
     public function customLogin(Request $request)
     {
        $validator =  $request->validate([
-            'email' => 'required',
+            'phone'    => 'required',
             'password' => 'required',
         ]);
 
 
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('phone', 'password');
         if (Auth::attempt($credentials)) {
             return redirect()->intended('dashboard')
                         ->withSuccess('Signed in');
         }
-        $validator['emailPassword'] = 'Email address or password is incorrect.';
+        $validator['phonePassword'] = 'Phone address or password is incorrect.';
         return redirect("login")->withErrors($validator);
     }
 
@@ -482,4 +482,82 @@ class CustomAuthController extends Controller
             return response()->json( array( 'exists' => false ) );
         }
     }
+
+    public function checkPhonelogin(Request $request)
+{
+    $exists = User::where('phone', $request->phone)->exists();
+    return response()->json(['exists' => $exists]);
+}
+
+//    public function sendOtp(Request $request)
+//     {
+//         $v = Validator::make($request->all(), [
+//             'phone' => 'required|string'
+//         ]);
+//         if ($v->fails()) {
+//             return response()->json(['success' => false, 'message' => 'Invalid phone.'], 422);
+//         }
+
+//         $phone = $request->phone;
+
+//         // Check user exists
+//         $userExists = User::where('phone', $phone)->exists();
+//         if (! $userExists) {
+//             return response()->json(['success' => false, 'message' => 'Phone not registered.'], 404);
+//         }
+
+//         // Rate limiting: one OTP per 60 seconds, and max 5 per hour
+//         $rateKey = "otp_rate:" . $phone;
+//         $sentCount = Cache::get($rateKey . ':count', 0);
+//         $firstSentAt = Cache::get($rateKey . ':first_at');
+
+//         // initialize rate window
+//         if (! $firstSentAt) {
+//             Cache::put($rateKey . ':first_at', now(), now()->addHour());
+//             Cache::put($rateKey . ':count', 0, now()->addHour());
+//             $sentCount = 0;
+//         }
+
+//         // last sent check (1 minute)
+//         if (Cache::has("otp_last_sent:$phone") && now()->diffInSeconds(Carbon::parse(Cache::get("otp_last_sent:$phone"))) < 60) {
+//             return response()->json(['success' => false, 'message' => 'Please wait before requesting another OTP.'], 429);
+//         }
+
+//         if ($sentCount >= 5) {
+//             return response()->json(['success' => false, 'message' => 'OTP request limit reached. Try again later.'], 429);
+//         }
+
+//         // Generate secure 6-digit OTP
+//         $otp = random_int(100000, 999999);
+
+//         // Save OTP to cache (or DB). Keep short TTL, e.g., 5 minutes.
+//         $otpKey = "otp:$phone";
+//         Cache::put($otpKey, $otp, now()->addMinutes(5));
+
+//         // Update rate counters
+//         Cache::increment($rateKey . ':count');
+//         Cache::put("otp_last_sent:$phone", now(), now()->addMinutes(60));
+
+//         // Send SMS using your provider (example: Twilio)
+//         try {
+//             // Example Twilio usage (uncomment and configure your credentials):
+//             // $sid = config('services.twilio.sid');
+//             // $token = config('services.twilio.token');
+//             // $from = config('services.twilio.from');
+//             // $twilio = new \Twilio\Rest\Client($sid, $token);
+//             // $twilio->messages->create($phone, ['from' => $from, 'body' => "Your OTP is: $otp"]);
+
+//             // If you don't use Twilio, integrate your provider here.
+//             // For demonstration we will log it (DO NOT log in production).
+//             Log::info("OTP for {$phone}: {$otp} (for debug only — remove in prod)");
+
+//             return response()->json(['success' => true]);
+//         } catch (\Exception $e) {
+//             // Clean up OTP on failure
+//             Cache::forget($otpKey);
+//             Log::error("OTP send failed for $phone: {$e->getMessage()}");
+//             return response()->json(['success' => false, 'message' => 'Failed to send OTP. Try again later.'], 500);
+//         }
+//     }
+
 }
