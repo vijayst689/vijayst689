@@ -766,30 +766,36 @@ $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
 
    public function bulkorderstatus()
     {
-               $sql = "
+$sql = "
 SELECT 
-    a.id AS user_id,
-    a.name,
-    a.phone,
+    a.id AS user_id, 
+    a.name, 
+    a.phone, 
     a.email,
-    b.district_name,
-    o.login_id,
-    o.added_datetime,
+    b.district_name, 
+    o.login_id, 
+    o.added_datetime, 
     o.status,
-    SUM(o.quantity) AS total_quantity,
+
+    SUM(o.quantity) AS total_quantity, 
     SUM(o.amount) AS total_amount,
-    COUNT(o.service_id) AS total_services
+    COUNT(o.service_id) AS total_services,
+
+    MAX(o.id) AS last_order_id
 FROM users a
-JOIN nalavariyam_district b 
-    ON a.nalavariyam_dist_id = b.id
-JOIN bulk_service_orders o 
-    ON o.login_id = a.id
+JOIN nalavariyam_district b ON a.nalavariyam_dist_id = b.id
+JOIN bulk_service_orders o ON o.login_id = a.id
 WHERE o.status IN ('Paid', 'Delivered')
- 
 GROUP BY 
-    o.login_id, o.added_datetime, o.status, a.id, a.name, a.phone, b.district_name,a.email
-ORDER BY 
-    o.id DESC";
+    o.login_id, 
+    o.added_datetime, 
+    o.status, 
+    a.id, 
+    a.name,
+    a.phone, 
+    b.district_name,
+    a.email
+ORDER BY last_order_id DESC";
 
 
         $bulkorders = DB::select(DB::raw($sql));
