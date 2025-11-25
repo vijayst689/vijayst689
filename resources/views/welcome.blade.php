@@ -471,7 +471,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/cert.jpg') }}" width="100%" />
                                     <p class="text-primary">Certificate Courses</p>
                                 </div>
                             </a>
@@ -481,7 +481,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/empl.jpg') }}" width="100%" />
                                     <p class="text-primary">EMPLOYMENT SERVICES</p>
                                 </div>
                             </a>
@@ -491,7 +491,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/covid.jpg') }}" width="100%" />
                                     <p class="text-primary">COVID - 19</p>
                                 </div>
                             </a>
@@ -501,7 +501,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/tne.jpg') }}" width="100%" />
                                     <p class="text-primary">TNEB</p>
                                 </div>
                             </a>
@@ -511,7 +511,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/gaz.jpg') }}" width="100%" />
                                     <p class="text-primary">GAZETTE</p>
                                 </div>
                             </a>
@@ -521,7 +521,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/rto.jpg') }}" width="100%" />
                                     <p class="text-primary">RTO Services</p>
                                 </div>
                             </a>
@@ -531,7 +531,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/cm.jpg') }}" width="100%" />
                                     <p class="text-primary">முதலமைச்சரின் விரிவான காப்பீடு</p>
                                 </div>
                             </a>
@@ -541,7 +541,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/cibil.webp') }}" width="100%" />
                                     <p class="text-primary">CIBIL SCORE</p>
                                 </div>
                             </a>
@@ -551,7 +551,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/aeps.jpg') }}" width="100%" />
                                     <p class="text-primary">AEPS</p>
                                 </div>
                             </a>
@@ -561,7 +561,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/lic.jpg') }}" width="100%" />
                                     <p class="text-primary">LIC</p>
                                 </div>
                             </a>
@@ -571,7 +571,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/nsdl.jpg') }}" width="100%" />
                                     <p class="text-primary">Nsdl Pan Card</p>
                                 </div>
                             </a>
@@ -581,7 +581,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/insu.jpg') }}" width="100%" />
                                     <p class="text-primary">Vechile Insurance</p>
                                 </div>
                             </a>
@@ -591,7 +591,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/health.jpg') }}" width="100%" />
                                     <p class="text-primary">HEALTH INSURANCE</p>
                                 </div>
                             </a>
@@ -601,7 +601,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/gold.jpg') }}" width="100%" />
                                     <p class="text-primary">DIGITAL GOLD</p>
                                 </div>
                             </a>
@@ -611,7 +611,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/tours.jpg') }}" width="100%" />
                                     <p class="text-primary">TOURS & TRAVELS</p>
                                 </div>
                             </a>
@@ -621,7 +621,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/sch.jpg') }}" width="100%" />
                                     <p class="text-primary">SCHOLARSHIP</p>
                                 </div>
                             </a>
@@ -631,7 +631,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/sho.jpg') }}" width="100%" />
                                     <p class="text-primary">SHOPPPING</p>
                                 </div>
                             </a>
@@ -641,7 +641,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/admis.jpg') }}" width="100%" />
                                     <p class="text-primary">ADMISSION</p>
                                 </div>
                             </a>
@@ -651,7 +651,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/food.jpg') }}" width="100%" />
                                     <p class="text-primary">FOOD</p>
                                 </div>
                             </a>
@@ -661,7 +661,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/matri.jpg') }}" width="100%" />
                                     <p class="text-primary">MATRIMONY</p>
                                 </div>
                             </a>
@@ -671,7 +671,7 @@ Our goal is to deliver maximum benefits to customers and service center owners w
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
+                                    <img src="{{ asset('assets/images/mylogo/event.jpg') }}" width="100%" />
                                     <p class="text-primary">EVENT MANAGEMENT</p>
                                 </div>
                             </a>
