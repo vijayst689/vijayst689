@@ -2458,3 +2458,12 @@ CREATE TABLE `bulk_service_usage` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 alter table users add nalavariyamwallet decimal(10,2) DEFAULT 0 after wallet;
+
+CREATE TABLE `newenquiry` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `subject` varchar(500) DEFAULT NULL,
+  `message` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;

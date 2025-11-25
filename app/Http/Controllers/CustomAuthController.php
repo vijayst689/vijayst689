@@ -55,6 +55,25 @@ class CustomAuthController extends Controller
       return redirect('/viewenquiry')->with('success', 'Enquiry send Successfully ... !');
     }
 
+    public function savequery(Request $request)
+    {
+      $saveenquiry = DB::table('newenquiry')->insert([
+        'name'         => $request->name,
+        'subject'      => $request->subject,
+        'email'        => $request->email,
+        'message'      => $request->message,
+      ]);
+
+      return redirect('/')->with('success', 'Query send Successfully ... !');
+    }
+
+        public function welcomenquirys()
+    {
+            $query = DB::table('newenquiry')->orderBy( 'id', 'Asc' )->get();
+
+        return view('enquiry.welcomenquirys',compact('query'));
+    }
+
     public function register()
     {
         $districts = DB::table( 'district' )->get();

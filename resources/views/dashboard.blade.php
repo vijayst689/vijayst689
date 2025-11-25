@@ -513,6 +513,24 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-3 col-sm-4">
+                        <div class="card radius-10 bg-gradient-cosmic">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-auto">
+                                        <a href="{{ url('/welcomenquirys') }}">
+                                            <p class="mb-0 text-white">Welcome quiry</p>
+                                        </a>
+                                        <h4 class="my-1 text-white">{{ $newenquirycount }}</h4>
+                                    </div>
+                                    <div id="chart1"></div>
+                                    <div class="spinner-grow text-warning" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <div class="row">
                             <div class="col-md-12">

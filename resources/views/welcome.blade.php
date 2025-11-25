@@ -60,6 +60,7 @@
                     <li><a href="#hero" class="active">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#services">Services</a></li>
+                    <li><a href="{{ url('register') }}">Register</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -162,7 +163,7 @@
                                 <li>✔ Provide fast, reliable services</li>
                                 <li>✔ Grow into a complete digital service hub</li>
                             </ul>
-                            <h2 class="lead text-danger">🌟 Our Mission
+                            <h2 class="lead">🌟 Our Mission
 
                                 To empower every rural and small-town service center to earn ₹30,000 – ₹50,000+ per
                                 month with a powerful combination of:
@@ -176,7 +177,7 @@
                                 Business guidance
 
                                 Marketing support</h2>
-                            <h2 class="lead text-danger">🌟 Our Vision
+                            <h2 class="lead">🌟 Our Vision
 
                                 To become India’s No.1 Rural Digital Business Support Platform,
                                 giving every small service center the tools and systems needed to grow into a stable,
@@ -302,38 +303,8 @@
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/smart.jpg') }}" width="100%" />
-                                    <p class="text-primary">Smart Card</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-4 col-md-3 mb-3 category_data">
-                        <div class="card p-2 h-100">
-                            <a>
-                                <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/micro.png') }}" width="100%" />
-                                    <p class="text-primary">Micro Finance</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-4 col-md-3 mb-3 category_data">
-                        <div class="card p-2 h-100">
-                            <a>
-                                <div class="mb-1">
                                     <img src="{{ asset('assets/images/mylogo/gst.jpg') }}" width="100%" />
                                     <p class="text-primary">GST</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-4 col-md-3 mb-3 category_data">
-                        <div class="card p-2 h-100">
-                            <a>
-                                <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/tec.png') }}" width="100%" />
-                                    <p class="text-primary">TEC Exam</p>
                                 </div>
                             </a>
                         </div>
@@ -364,16 +335,6 @@
                                 <div class="mb-1">
                                     <img src="{{ asset('assets/images/mylogo/fastag.png') }}" width="100%" />
                                     <p class="text-primary">Fast Tag</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-4 col-md-3 mb-3 category_data">
-                        <div class="card p-2 h-100">
-                            <a>
-                                <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/register.jpg') }}" width="100%" />
-                                    <p class="text-primary">பதிவு துறை</p>
                                 </div>
                             </a>
                         </div>
@@ -482,16 +443,6 @@
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/covid.jpg') }}" width="100%" />
-                                    <p class="text-primary">COVID - 19</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-4 col-md-3 mb-3 category_data">
-                        <div class="card p-2 h-100">
-                            <a>
-                                <div class="mb-1">
                                     <img src="{{ asset('assets/images/mylogo/tne.jpg') }}" width="100%" />
                                     <p class="text-primary">TNEB</p>
                                 </div>
@@ -592,16 +543,6 @@
                         <div class="card p-2 h-100">
                             <a>
                                 <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/gold.jpg') }}" width="100%" />
-                                    <p class="text-primary">DIGITAL GOLD</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-4 col-md-3 mb-3 category_data">
-                        <div class="card p-2 h-100">
-                            <a>
-                                <div class="mb-1">
                                     <img src="{{ asset('assets/images/mylogo/tours.jpg') }}" width="100%" />
                                     <p class="text-primary">TOURS & TRAVELS</p>
                                 </div>
@@ -664,26 +605,6 @@
                                 <div class="mb-1">
                                     <img src="{{ asset('assets/images/mylogo/event.jpg') }}" width="100%" />
                                     <p class="text-primary">EVENT MANAGEMENT</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-4 col-md-3 mb-3 category_data">
-                        <div class="card p-2 h-100">
-                            <a>
-                                <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/ser.jpg') }}" width="100%" />
-                                    <p class="text-primary">SERVICES</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-4 col-md-3 mb-3 category_data">
-                        <div class="card p-2 h-100">
-                            <a>
-                                <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/for.png') }}" width="100%" />
-                                    <p class="text-primary">FOR SALE</p>
                                 </div>
                             </a>
                         </div>
@@ -846,7 +767,7 @@
                                 <div class="channel-info">
                                     <h5>Email</h5>
                                     <p><a href="" class="__cf_email__"
-                                            data-cfemail="066e636a6a6946637e676b766a632865696b">pkrmsolution@gmail.com</a>
+                                           >pkrmsolution@gmail.com</a>
                                     </p>
                                 </div>
                             </div>
@@ -883,40 +804,31 @@
                                 <p>Tell us about your Details.</p>
                             </div>
 
-                            <form action="https://bootstrapmade.com/content/demo/Forma/forms/contact.php"
-                                method="post" class="php-email-form">
+                             <form action="{{ url('/savequery') }}" method="post"
+                                            enctype="multipart/form-data" class="bg-dark">
+                                            {{ csrf_field() }}
                                 <div class="form-group">
                                     <label>Full Name</label>
-                                    <input type="text" name="name" class="form-control" required="">
+                                    <input type="text" name="name" class="form-control" placeholder="Name">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Email Address</label>
-                                    <input type="email" name="email" class="form-control" required="">
+                                    <input type="email" name="email" class="form-control" placeholder="Email">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="company">Subject</label>
-                                    <input type="text" name="ubject" class="form-control" required="">
+                                    <input type="text" name="subject" class="form-control" placeholder="Subject">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Message</label>
-                                    <textarea name="message" class="form-control" rows="5" required=""></textarea>
+                                    <textarea name="message" class="form-control" rows="3"placeholder="Message"></textarea>
                                 </div>
-                                <div class="loading">Loading</div>
                                 <div class="error-message"></div>
-                                <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                                <button type="submit" class="submit-btn">
-                                    <span>Send Message</span>
-                                    <i class="bi bi-arrow-right"></i>
+                                     <button type="submit" class="btn btn-primary">Send Message</button>
                                 </button>
-
-                                <div class="form-footer">
-                                    <i class="bi bi-shield-check"></i>
-                                    <span>Your information is secure and will never be shared</span>
-                                </div>
                             </form>
                         </div>
                     </div>
@@ -969,8 +881,7 @@
                     <p>Narasingapuram(Po),Attur(Tk), Salem(Dt),</p>
                     <p>Tamilnadu-636108</p>
                     <p class="mt-4"><strong>Phone:</strong> <span>9843161942</span></p>
-                    <p><strong>Email:</strong> <span><a href="" class="__cf_email__"
-                                data-cfemail="80e9eee6efc0e5f8e1edf0ece5aee3efed">pkrmsolution@gmail.com</a></span></p>
+                    <p><strong>Email:</strong> <span><a href="">pkrmsolution@gmail.com</a></span></p>
                 </div>
 
             </div>
@@ -985,7 +896,7 @@
                 <!-- You can delete the links only if you've purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                Designed by <a href=""></a>
             </div>
         </div>
 

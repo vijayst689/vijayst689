@@ -49,6 +49,8 @@ Route::post('checkphone', [CustomAuthController::class, 'checkphone'])->name('ch
 Route::post('checkpan', [CustomAuthController::class, 'checkpan'])->name('checkpan');
 Route::get('addenquiry/{id}', [CustomAuthController::class, 'addenquiry'])->name('addenquiry');
 Route::post('saveenquiry', [CustomAuthController::class, 'saveenquiry'])->name('saveenquiry');
+Route::post('savequery', [CustomAuthController::class, 'savequery'])->name('savequery');
+Route::get('welcomenquirys', [CustomAuthController::class, 'welcomenquirys'])->name('welcomenquirys');
 Route::get('register/get_taluk_register/{distid}', [App\Http\Controllers\CustomAuthController::class, 'get_taluk_register'])->name('gettalukregister');
 Route::get('register/get_panchayath_register/{taluk_id}', [App\Http\Controllers\CustomAuthController::class, 'get_panchayath_register'])->name('getpanchayathregister');
 Route::post('/check-phonelogin', [CustomAuthController::class, 'checkPhonelogin'])->name('check.phonelogin');
