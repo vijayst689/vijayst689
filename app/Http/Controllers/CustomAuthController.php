@@ -21,17 +21,17 @@ class CustomAuthController extends Controller
     public function customLogin(Request $request)
     {
        $validator =  $request->validate([
-            'phone'    => 'required',
+            'email'    => 'required',
             'password' => 'required',
         ]);
 
 
-        $credentials = $request->only('phone', 'password');
+        $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             return redirect()->intended('dashboard')
                         ->withSuccess('Signed in');
         }
-        $validator['phonePassword'] = 'Phone address or password is incorrect.';
+        $validator['emailPassword'] = 'email address or password is incorrect.';
         return redirect("login")->withErrors($validator);
     }
 

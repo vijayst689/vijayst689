@@ -23,7 +23,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
     <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
-    <title>pkrmsolution.com</title>
+    <title>Pkrmsolution.com</title>
 </head>
 
 <body class="">
@@ -47,12 +47,18 @@
                                     <div class="form-body">
                                         <form class="row g-3" method="post" action="{{ route('login.custom') }}">
                                             {{ csrf_field() }}
-                                            <div class="col-12">
+                                            {{-- <div class="col-12">
                                                 <label for="inputEmailAddress" class="form-label">Phone</label>
                                                 <input type="text" maxlength="10" name="phone" id="phone"
                                                     class="form-control number" placeholder="Phone">
                                                 <small id="phone-status"></small>
+                                            </div> --}}
+                                             <div class="col-12">
+                                                <label for="inputEmailAddress" class="form-label">Email</label>
+                                                <input type="email" name="email" class="form-control"
+                                                    id="inputEmailAddress" placeholder="Email">
                                             </div>
+
                                             <div class="col-12">
                                                 <label for="inputChoosePassword" class="form-label">Password</label>
                                                 <div class="input-group" id="show_hide_password">
@@ -75,7 +81,8 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="d-grid">
-                                                    <button id="signin-btn" type="submit" class="btn btn-primary" disabled>Sign in</button>
+                                                    {{-- <button id="signin-btn" type="submit" class="btn btn-primary" disabled>Sign in</button> --}}
+                                                    <button type="submit" class="btn btn-primary">Sign in</button>
                                                 </div>
                                             </div>
                                             <div class="col-12">
