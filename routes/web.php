@@ -227,6 +227,7 @@ Route::post('/submitapply_smartcardotp', [App\Http\Controllers\ServiceController
 Route::post('/submitapply_smart_member', [App\Http\Controllers\ServiceController::class, 'submitapply_smart_member'])->name('submitapply_smart_member');
 Route::post('/submitapply_smart_nametransfer', [App\Http\Controllers\ServiceController::class, 'submitapply_smart_nametransfer'])->name('submitapply_smart_nametransfer');
 Route::post('/submitapply_tailorshop', [App\Http\Controllers\ServiceController::class, 'submitapply_tailorshop'])->name('submitapply_tailorshop');
+Route::post('/submitapply_voteridpdfdownload', [App\Http\Controllers\ServiceController::class, 'submitapply_voteridpdfdownload'])->name('submitapply_voteridpdfdownload');
 
 Route::post('/submitutislnew', [App\Http\Controllers\ServiceController::class, 'submitutislnew'])->name('submitutislnew');
 
@@ -289,7 +290,7 @@ Route::post('/tailorshop_update', [App\Http\Controllers\ServicestatusController:
 Route::post('/cancertificate_find_update', [App\Http\Controllers\ServicestatusController::class, 'cancertificate_find_update'])->name('cancertificate_find_update');
 Route::post('/utislupdate', [App\Http\Controllers\ServicestatusController::class, 'utislupdate'])->name('utislupdate');
 Route::post('/utislcorection_update', [App\Http\Controllers\ServicestatusController::class, 'utislcorection_update'])->name('utislcorection_update');
-
+Route::post('/voteridpdf_statusupdate', [App\Http\Controllers\ServicestatusController::class, 'voteridpdf_statusupdate'])->name('voteridpdf_statusupdate');
 
 
 Route::get('/servicepayment/{serviceid}', [App\Http\Controllers\ServicePaymentController::class, 'servicepayment'])->name('servicepayment');

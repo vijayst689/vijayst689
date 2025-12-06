@@ -537,7 +537,7 @@
 
                                     <div class="card-body">
                                         <h5 class="card-title">Apply Service</h5>
-                                        @if ($serviceid == 68)
+                                        @if ($serviceid == 568)
                                             <div class="d-flex align-items-center gap-2 justify-content-lg-end ">
                                                 <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                                     data-bs-target="#agentreg">Agent Register</button>

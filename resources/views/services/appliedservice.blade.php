@@ -55,6 +55,7 @@
                                         <th>Application No</th>
                                         <th>Acknowledgement</th>
                                     @elseif($status == 'Approved')
+                                        <th>Application</th>
                                         <th>Certificate</th>
                                     @endif
                                     <th>Action</th>
@@ -76,6 +77,8 @@
                                             // Allowed file extensions
                                             $allowedExts = ['pdf', 'jpg', 'jpeg', 'png', 'doc', 'docx'];
                                             // Extract extensions
+                                             $certExt = !empty($ser->certificate)
+                                                ? pathinfo($ser->certificate, PATHINFO_EXTENSION): '';
                                             $apiApprovedExt = !empty($ser->api_approved)
                                                 ? pathinfo($ser->api_approved, PATHINFO_EXTENSION): '';
                                             $ackExt = !empty($ser->acknowledgement)
@@ -83,47 +86,42 @@
                                             $apiProcExt = !empty($ser->api_processing)
                                                 ? pathinfo($ser->api_processing, PATHINFO_EXTENSION): '';
                                         @endphp
-                                        @if ($status == 'Processing')
-                                            <td>{{ $ser->application_no ?? '' }}</td>
-                                            <td>
-                                                @if (!empty($ser->application_no))
-                                                    {{-- Acknowledgement --}}
-                                                    @if (!empty($ser->acknowledgement) && in_array(strtolower($ackExt), $allowedExts))
-                                                        <a download
-                                                            href="{{ url('upload/services/acknowledgement/' . $ser->acknowledgement) }}"
-                                                            class="btn btn-primary btn-sm me-2">Download
-                                                        </a>
-                                                    @endif
-                                                @else
-                                                    {{-- API Processing --}}
-                                                    @if (!empty($ser->api_processing) && in_array(strtolower($apiProcExt), $allowedExts))
-                                                        <a download href="{{ $ser->api_processing }}"
-                                                            class="btn btn-success btn-sm me-2">Download
-                                                        </a>
-                                                    @endif
-                                                @endif
-                                            </td>
-                                        @elseif ($status == 'Approved')
-                                            <td>{{ $ser->application ?? '' }}</td>
-                                            <td>
-                                                {{-- API Approved --}}
-                                                @if (
-                                                    (empty($ser->application) || empty($ser->certificate)) &&
-                                                        !empty($ser->api_approved) &&
-                                                        !empty($apiApprovedExt) &&
-                                                        in_array(strtolower($apiApprovedExt), $allowedExts))
-                                                    <a download href="{{ $ser->api_approved }}"
-                                                        class="btn btn-success me-2 btn-sm">Download
-                                                    </a>
-                                                @endif
-                                                {{-- Certificate --}}
-                                                @if (!empty($ser->certificate) && $ser->lects == 'File')
-                                                    <a download
-                                                        href="{{ url('upload/services/certificate/' . $ser->certificate) }}"
-                                                        class="btn btn-primary me-2 btn-sm">Download
-                                                    </a>
-                                                @endif
-                                            </td>
+                                  @if ($status == 'Processing')
+                                    <td>{{ $ser->application_no ?? '' }}</td>
+                                    <td>
+                                        @if (!empty($ser->acknowledgement) && in_array(strtolower($ackExt), $allowedExts))
+                                        <a download
+                                            href="{{ url('upload/services/acknowledgement/' . $ser->acknowledgement) }}"
+                                            class="btn btn-primary btn-sm me-2">
+                                            Download
+                                        </a>
+
+                                        {{-- ✅ Second priority: API Processing --}}
+                                        @elseif (!empty($ser->api_processing) && in_array(strtolower($apiProcExt), $allowedExts))
+                                        <a download
+                                            href="{{ $ser->api_processing }}"
+                                            class="btn btn-success btn-sm me-2">
+                                            Download
+                                        </a>@endif
+                                    </td>
+                                    @elseif ($status == 'Approved')
+                                    <td>{{ $ser->application ?? '' }}</td>
+                                    <td>
+                                        @if (!empty($ser->certificate) && in_array(strtolower($certExt), $allowedExts))
+                                        <a download
+                                            href="{{ url('upload/services/certificate/' . $ser->certificate) }}"
+                                            class="btn btn-primary btn-sm me-2">
+                                            Download
+                                        </a>
+
+                                        {{-- ✅ Second priority: API Processing --}}
+                                        @elseif (!empty($ser->api_approved) && in_array(strtolower($apiApprovedExt), $allowedExts))
+                                        <a download
+                                            href="{{ $ser->api_approved }}"
+                                            class="btn btn-success btn-sm me-2">
+                                            Download
+                                        </a>@endif
+                                    </td>
                                         @endif
                                         @php
                                             $apply_user_id = 0;
@@ -140,15 +138,15 @@
                                                 @if ($ser->status == 'Resubmit')
                                                     <a href="{{ url('/servicestatus') }}/{{ $ser->status }}/{{ $ser->id }}/{{ $ser->service_id }}"
                                                         class="btn btn-sm btn-warning">{{ $ser->status }}</a>
-                                                @else
-                                                    <button type="button" class="btn btn-sm btn-warning"
-                                                        disabled>{{ $ser->status }}</button>
-                                                    @if ($ser->service_id == '69' || $ser->service_id == '70')
-                                                        <a href="{{ url('/pancard_reapply') }}/{{ $ser->api_txid }}"
-                                                            class="btn btn-sm btn-warning">Apply</a>
-                                                    @endif
-                                                @endif
+                                                 @elseif($ser->status == 'Approved')
+                                                            <a href="{{ url('/servicestatus') }}/{{ $ser->status }}/{{ $ser->id }}/{{ $ser->service_id }}"
+                                                                class="btn btn-sm btn-warning">{{ $ser->status }}</a>
+                                                        @else
+                                                            <button type="button" class="btn btn-sm btn-warning"
+                                                                disabled>{{ $ser->status }}</button>
+                                                 @endif
                                             @else
+                                               
                                                 @if (Auth::user()->user_type_id == 2 && $ser->status == 'Resubmit')
                                                     <button type="button" class="btn btn-sm btn-warning"
                                                         disabled>{{ $ser->status }}</button>
