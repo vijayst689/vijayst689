@@ -69,7 +69,7 @@
                                             <div class="card-body">
                                                 <div class="d-flex align-items-center">
                                                     <div class="me-auto">
-                                                        <a href="">
+                                                        <a href="{{ url('/special_member') }}">
                                                             <p class="mb-0 text-white">Special Member</p>
                                                         </a>
                                                         <h4 class="my-1 text-white">0</h4>
@@ -256,7 +256,7 @@
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-center">
                                                         <div class="me-auto">
-                                                            <a href="">
+                                                            <a href="{{ url('/special_member') }}">
                                                                 <p class="mb-0 text-white">Special Member</p>
                                                             </a>
                                                             <h4 class="my-1 text-white">0</h4>
@@ -367,7 +367,7 @@
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-center">
                                                         <div class="me-auto">
-                                                            <a href="">
+                                                            <a href="{{ url('/special_member') }}">
                                                                 <p class="mb-0 text-white">Special Member</p>
                                                             </a>
                                                             <h4 class="my-1 text-white">0</h4>
@@ -410,6 +410,113 @@
                                     </div>
                                 </div>
                             @endif
+                                            @php
+                    $data = DB::table('appointment_reg')
+                        ->where('email', Auth::user()->email)
+                        ->first();
+                @endphp
+                <div class="card">
+                    <div class="card-body">
+                        @if (Auth::user()->is_completed == 0 || ($data && $data->status == 'Resubmit'))
+                            <h1 class="card-title">பதவி நியமனச் சான்றிதழ்</h1>
+                            <div class="row">
+                                <form class="row g-4" action="{{ url('add_appointment') }}"
+                                    enctype="multipart/form-data" method="post" id="myForm">
+                                    @csrf
+                                    @if ($data && $data->status == 'Resubmit')
+                                        <input type="hidden" name="id" value="{{ $data->id }}">
+                                    @endif
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6">
+                                            <label for="name" class="form-label text-dark">பெயர் தமிழில்</label>
+                                            <input required type="text" class="form-control" name="name"
+                                                placeholder="பெயர்" maxlength="100"
+                                                value="{{ old('name', $data->name ?? '') }}" />
+
+                                            <label for="district" class="form-label text-dark">மாவட்டம் தமிழில்</label>
+                                            <input required type="text" class="form-control" name="district"
+                                                placeholder="மாவட்டம்" maxlength="100"
+                                                value="{{ old('district', $data->district ?? '') }}" />
+
+                                            <label for="village" class="form-label text-dark">கிராமம் தமிழில்</label>
+                                            <input required type="text" class="form-control" name="village"
+                                                placeholder="கிராமம்" maxlength="100"
+                                                value="{{ old('village', $data->village ?? '') }}" />
+
+                                            <label for="station_name" class="form-label text-dark">சேவை நிலையத்தின்
+                                                பெயர்</label>
+                                            <input required type="text" class="form-control" name="station_name"
+                                                placeholder="சேவை நிலையத்தின் பெயர்" maxlength="100"
+                                                value="{{ old('station_name', $data->station_name ?? '') }}" />
+                                            @if (!empty($data) && !empty($data->status == 'Resubmit'))
+                                                <label for="remarks" class="form-label text-danger">Remarks</label>
+                                                <input required type="text" class="form-control" name="remarks"
+                                                    placeholder="remarks" maxlength="100"
+                                                    value="{{ old('remarks', $data->remarks ?? '') }}" readonly />
+                                            @endif
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="mobile" class="form-label text-dark">செல் நம்பர்</label>
+                                            <input required type="text" maxlength="10" class="form-control number"
+                                                name="mobile" placeholder="Mobile Number"
+                                                value="{{ old('mobile', $data->mobile ?? '') }}" />
+
+                                            <label for="taluk" class="form-label text-dark">தாலுகா தமிழில்</label>
+                                            <input required type="text" maxlength="100" class="form-control"
+                                                name="taluk" placeholder="தாலுகா"
+                                                value="{{ old('taluk', $data->taluk ?? '') }}" />
+
+                                            <label for="photo" class="form-label text-dark">புகைப்படம்</label>
+
+                                            @if (!empty($data) && !empty($data->photo))
+                                                {{-- Show existing photo --}}
+                                                <div class="mb-2">
+                                                    <img src="{{ asset('upload/nalavariyam_document/photo/' . $data->photo) }}"
+                                                        alt="Photo" class="img-thumbnail" width="100" />
+                                                </div>
+
+                                                {{-- Optional new upload --}}
+                                                <input type="file" name="photo" class="form-control"
+                                                    accept="image/jpeg, image/png" />
+                                                <small class="text-muted">புதிய புகைப்படத்தைப் பதிவேற்ற விரும்பினால்
+                                                    தேர்ந்தெடுக்கவும்.</small>
+                                            @else
+                                                {{-- Required upload for new record --}}
+                                                <input type="file" name="photo" class="form-control" required
+                                                    accept="image/jpeg, image/png" />
+                                            @endif
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="col-12">
+                                                <div class="mb-0">
+                                                    <button id="save1" type="submit"
+                                                        class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </form>
+                            </div>
+                    </div>
+                @elseif(Auth::user()->is_completed == 1 && ($data && ($data->status == 'Pending' || $data->status == 'Resubmit')))
+                    <h1 class="text-center">Please Wait...</h1>
+                @elseif($data && $data->status == 'Approved')
+                    <div class="alert alert-light border d-flex align-items-center justify-content-between">
+                        <div>
+                            <strong>பதவி நியமனச் சான்றிதழ்:</strong>
+                            @if (!empty($data) && !empty($data->certificate))
+                                <span class="text-success ms-1">Available</span>
+                            @else
+                                <span class="text-danger ms-1">Not Uploaded</span>
+                            @endif
+                        </div>
+                        @if (!empty($data) && !empty($data->certificate))
+                            <a href="{{ url('upload/nalavariyam_document/certificate/' . $data->certificate) }}" download
+                                class="btn btn-warning btn-sm">
+                                <i class="bi bi-download"></i> Download
+                            </a>
+                        @endif
+                    </div>
+            @endif
                         @else
                             <h3 class="text-center">Please Verify Your ID...</h3>
                             <div class="card">

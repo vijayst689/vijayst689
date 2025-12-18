@@ -2496,3 +2496,69 @@ CREATE TABLE `voteridpdf_download` (
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+
+//18-12-2025
+
+CREATE TABLE `spl_member` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `is_completed` int(11) Default 0,
+  `username` varchar(100) DEFAULT NULL,
+  `usertype` varchar(100) DEFAULT NULL,
+  `district` varchar(100) DEFAULT NULL,
+  `taluk` varchar(100) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `mobile` varchar(100) DEFAULT NULL,
+  `photo` varchar(20) DEFAULT NULL,
+  `dob` varchar(10) DEFAULT NULL,
+  `aadhaar_no` varchar(12) DEFAULT NULL,
+  `door_no` varchar(20) DEFAULT NULL,
+  `post_office_name` varchar(100) DEFAULT NULL,
+  `father_hus_name` varchar(100) DEFAULT NULL,
+  `profession` varchar(100) DEFAULT NULL,
+  `registration_no` varchar(20) DEFAULT NULL,
+  `street_name` varchar(100) DEFAULT NULL,
+  `pincode` varchar(10) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `splmemberactivationpayment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `distributor_amount` decimal(10,2) DEFAULT 0,
+  `retailer_amount` decimal(10,2) DEFAULT 0,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+alter table spl_member add refferal_id varchar(10) DEFAULT NULL after user_id;
+
+
+alter table spl_member add relation varchar(20) DEFAULT NULL after post_office_name;
+alter table spl_member add customer_user_type_id int(11) DEFAULT 0 after id;
+alter table spl_member add cardstatus varchar(20) DEFAULT NULL after remarks;
+
+CREATE TABLE `appointment_reg` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `is_completed` int(11) Default 0,
+  `username` varchar(100) DEFAULT NULL,
+  `usertype` varchar(100) DEFAULT NULL,
+  `district` varchar(100) DEFAULT NULL,
+  `taluk` varchar(100) DEFAULT NULL,
+  `village` varchar(100) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `mobile` varchar(100) DEFAULT NULL,
+  `photo` varchar(20) DEFAULT NULL,
+  `station_name` varchar(100) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+alter table users add is_completed int(11) Default NULL;
+alter table appointment_reg add email varchar(50) default null;

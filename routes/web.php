@@ -485,6 +485,18 @@ Route::get('bulkorderstatus', [App\Http\Controllers\NalavariyamServiceController
 Route::post('upload_offline_form', [App\Http\Controllers\NalavariyamServiceController::class, 'upload_offline_form'])->name('upload_offline_form');
 Route::post('updateaddress', [App\Http\Controllers\NalavariyamServiceController::class, 'updateaddress'])->name('updateaddress');
 
+Route::get('/special_member', [App\Http\Controllers\NalavariyamServiceController::class, 'special_member'])->name('special_member');
+Route::post('/savespecial_member', [App\Http\Controllers\NalavariyamServiceController::class, 'savespecial_member'])->name('savespecial_member');
+Route::post('/update_spl_member', [App\Http\Controllers\NalavariyamServiceController::class, 'update_spl_member'])->name('update_spl_member');
+Route::get('splmemberactivationpayment', [App\Http\Controllers\NalavariyamServiceController::class, 'splmemberactivationpayment'])->name('splmemberactivationpayment');
+Route::post('savesplmemberactivation', [App\Http\Controllers\NalavariyamServiceController::class, 'savesplmemberactivation'])->name('savesplmemberactivation');
+Route::post('updatesplmember_status', [App\Http\Controllers\NalavariyamServiceController::class, 'updatesplmember_status'])->name('updatesplmember_status');
+
+Route::get('/appointment', [App\Http\Controllers\NalavariyamServiceController::class, 'appointment'])->name('appointment');
+Route::post('/update_appointment', [App\Http\Controllers\NalavariyamServiceController::class, 'update_appointment'])->name('update_appointment');
+Route::post('/add_appointment', [App\Http\Controllers\NalavariyamServiceController::class, 'add_appointment'])->name('add_appointment');
+Route::get('/view_appointment', [App\Http\Controllers\NalavariyamServiceController::class, 'view_appointment'])->name('view_appointment');
+
 //CourseController
 
 Route::get('/addcourse', [App\Http\Controllers\CourseController::class, 'addcourse'])->name('addcourse');

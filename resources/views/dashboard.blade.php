@@ -192,6 +192,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-3 col-sm-4">
+                        <div class="card radius-10 bg-gradient-kyoto">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-auto">
+                                        <a href="{{ url('/view_appointment') }}">
+                                            <p class="mb-0 text-dark">Certificate</p>
+                                        </a>
+                                        <h4 class="my-1 text-dark">.</h4>
+                                    </div>
+                                    <div id="chart4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="container-xxl flex-grow-1 container-p-y bg-light">
                         <div class="row">
                             <div class="col-md-12">

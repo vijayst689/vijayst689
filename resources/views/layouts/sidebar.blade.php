@@ -88,6 +88,8 @@
                         <li> <a href="{{ url('/nalauseractivationpayment') }}"><i class='bx bx-radio-circle'></i>User
                                 Activation</a>
                         </li>
+                        <li> <a href="{{ url('/splmemberactivationpayment') }}"><i class='bx bx-radio-circle'></i>Special Member</a>
+                        </li>
                     </ul>
                 </li>
                 <li>

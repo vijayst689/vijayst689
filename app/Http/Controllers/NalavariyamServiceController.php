@@ -1146,6 +1146,196 @@ public function addnalavariyam_customer( Request $request ) {
     return redirect()->back()->with( 'success', 'Customer Added Successfully ... !' );
 }
 
+public function special_member()
+    {if (Auth::user()->user_type_id == 1) {
+        $special_member = DB::table('spl_member')->orderBy('id', 'DESC')->get();
+
+    } else {
+        $special_member = DB::table('spl_member')->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
+
+    }
+        $payment          = DB::table('splmemberactivationpayment')->first();
+        $activationamount = 0;
+        if ($payment) {
+            if (Auth::user()->nalavariyam_usertype == 3) {
+                $activationamount = $payment->distributor_amount;
+            } elseif (Auth::user()->nalavariyam_usertype == 4) {
+                $activationamount = $payment->retailer_amount;
+            }
+        }
+        $districts = DB::table('nalavariyam_district')->get();
+
+        return view('nalavariyam/special_member', compact('special_member', 'activationamount', 'districts'));}
+
+         public function savespecial_member(Request $request)
+    {
+
+        $savespecial_member = DB::table('spl_member')->insert([
+            'name'                  => $request->name,
+            'district'              => $request->district,
+            'taluk'                 => $request->taluk_id,
+            'dob'                   => $request->dob,
+            'mobile'                => $request->mobile,
+            'aadhaar_no'            => $request->aadhaar_no,
+            'door_no'               => $request->door_no,
+            'post_office_name'      => $request->post_office_name,
+            'father_hus_name'       => $request->father_hus_name,
+            'relation'              => $request->relation,
+            'profession'            => $request->profession,
+            'registration_no'       => $request->registration_no,
+            'street_name'           => $request->street_name,
+            'pincode'               => $request->pincode,
+            'user_id'               => Auth::user()->id,
+            'status'                => 'Inactive',
+            'customer_user_type_id' => 2,
+            'cardstatus'            => 'Pending',
+        ]);
+
+        $insertid = DB::getPdo()->lastInsertId();
+        $photo    = "";
+
+        if ($request->hasFile('photo')) {
+            $photo    = uniqid() . '.' . $request->file('photo')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'nalavariyam_document' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
+            $request->file('photo')->move($filepath, $photo);
+        }
+
+        DB::table('spl_member')->where('id', $insertid)->update([
+            'photo' => $photo,
+        ]);
+        // $photo = null;
+        // if ($request->hasFile('photo')) {
+        //     $photo = uniqid() . '.' . $request->file('photo')->extension();
+        //     $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'nalavariyam_document' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
+        //     $request->file('photo')->move($filepath, $photo);
+        // }
+        // ] );
+
+        return redirect()->back()->with('success', 'Special Member Added Successfully ... !');
+    }
+
+    //  public function view_spl_member()
+    //         {
+    //             $special_member = DB::table('spl_member')->orderBy( 'id' , 'DESC' )->get();
+    //             return view('nalavariyam/view_splmember',compact('special_member'));
+    //         }
+
+    public function update_spl_member(Request $request)
+    {
+        DB::table('spl_member')->where('id', $request->id)->update([
+            'name'             => $request->editname,
+            'district'         => $request->editdistrict,
+            'taluk'            => $request->edittaluk,
+            'dob'              => $request->editdob,
+            'mobile'           => $request->editmobile,
+            'aadhaar_no'       => $request->editaadhaar_no,
+            'door_no'          => $request->editdoor_no,
+            'post_office_name' => $request->editpost_office_name,
+            'father_hus_name'  => $request->editfather_hus_name,
+            'profession'       => $request->editprofession,
+            'relation'         => $request->editrelation,
+            'registration_no'  => $request->editregistration_no,
+            'street_name'      => $request->editstreet_name,
+            'pincode'          => $request->editpincode,
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $photo    = uniqid() . '.' . $request->file('photo')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'nalavariyam_document' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
+            $request->file('photo')->move($filepath, $photo);
+            DB::table('spl_member')->where('id', $request->id)->update([
+                'photo' => $photo,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Special Member Updated Successfully ... !');
+    }
+
+     public function splmemberactivationpayment()
+    {
+        $payment = DB::table('splmemberactivationpayment')->orderBy('id', 'Asc')->get();
+
+        return view('servicepayment.splmemberactivationpayment', compact('payment'));
+    }
+
+    public function savesplmemberactivation(Request $request)
+    {
+
+        DB::table('splmemberactivationpayment')->updateOrInsert(
+            ['id' => 1],
+            [
+                'distributor_amount' => $request->distributor_amount,
+                'retailer_amount'    => $request->retailer_amount,
+            ]
+        );
+
+        return redirect('splmemberactivationpayment');
+    }
+
+    public function updatesplmember_status(Request $request)
+    {
+
+        $activationamount = $request->activation_amount;
+        $userid           = Auth::user()->id;
+
+        $date           = date('Y-m-d');
+        $time           = date('H:i:s');
+        $service_status = 'Out Payment';
+        $ad_info        = 'Special Member Activation Payment';
+        $getwallet      = DB::table('users')->select('wallet')->where('id', 1)->first();
+        $balance        = 0;
+        if ($getwallet) {
+            $balance = $getwallet->wallet;
+        }
+        $newbalance  = $balance + $activationamount;
+        $newbalance1 = Auth::user()->wallet - $activationamount;
+        if ($activationamount != 0) {
+            $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('1','$userid','1','$activationamount','$ad_info', '$service_status','$time','$date','$userid','$newbalance1')";
+            DB::insert(DB::raw($sql));
+            $sql = "update users set wallet = wallet + $activationamount where id = 1";
+            DB::update(DB::raw($sql));
+            $service_status = 'IN Payment';
+            $ad_info        = 'Activation Payment';
+            $sql            = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$userid','1','$userid','$activationamount','$ad_info', '$service_status','$time','$date','$userid','$newbalance')";
+            DB::insert(DB::raw($sql));
+            $sql = "update users set wallet = wallet - $activationamount where id = $userid";
+            DB::update(DB::raw($sql));
+
+            DB::table('spl_member')->where('id', $request->memberid)->update([
+                'status'       => 'Active',
+                'is_completed' => '1',
+            ]);
+            return redirect()->back()->with('success', 'Special Member Activated Successfully ... !');
+        } else {
+            return redirect()->back()->with('error', 'Activation Amount is Zero ... !');
+        }
+    }
+
+    public function update_splmember_idcard(Request $request)
+    {
+        $status  = $request->view_status_update;
+        $remarks = $request->view_remarks;
+        DB::table('spl_member')->where('id', $request->id)->update(
+            [
+                'cardstatus' => $status,
+                'remarks'    => $remarks,
+            ]
+        );
+        $photo = "";
+        if ($request->hasFile('view_upload_file')) {
+            $photo    = uniqid() . '.' . $request->file('view_upload_file')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'nalavariyam_document' . DIRECTORY_SEPARATOR . 'specialmember_idcard' . DIRECTORY_SEPARATOR);
+            $request->file('view_upload_file')->move($filepath, $photo);
+
+        }
+
+        DB::table('spl_member')->where('id', $request->id)->update([
+            'certificate' => $photo,
+        ]);
+
+        return redirect()->back()->with('success', 'Special Member Updated Successfully ... !');
+    }
+
 public function activationmember()
 {
 
@@ -1471,5 +1661,111 @@ public function getnalavariyam_data($distid)
     $resdata = json_decode($server_output, true);
     return response()->json($resdata);
 }
+
+public function appointment()
+    {
+        $appointment = DB::table('appointment_reg')->orderBy('id', 'Asc')->get();
+        return view('nalavariyam/appointment', compact('appointment'));
+    }
+
+    public function add_appointment(Request $request)
+    {
+        // Determine user type
+        if (Auth::user()->nalavariyam_usertype == '3') {
+            $type = 'Distributor';
+        } elseif (Auth::user()->nalavariyam_usertype == '4') {
+            $type = 'Retailer';
+        } else {
+            $type = 'Unknown';
+        }
+
+        // Handle file upload (optional)
+        $photo = null;
+        if ($request->hasFile('photo')) {
+            $photo    = uniqid() . '.' . $request->file('photo')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'nalavariyam_document' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
+            $request->file('photo')->move($filepath, $photo);
+        }
+
+        // Check if this is an update (Resubmit)
+        if (! empty($request->id)) {
+            // ✅ UPDATE existing record
+            $updateData = [
+                'name'         => $request->name,
+                'district'     => $request->district,
+                'taluk'        => $request->taluk,
+                'village'      => $request->village,
+                'mobile'       => $request->mobile,
+                'station_name' => $request->station_name,
+                'date'         => date("Y-m-d"),
+                'status'       => 'Pending',
+            ];
+
+            // Update photo only if a new one is uploaded
+            if ($photo) {
+                $updateData['photo'] = $photo;
+            }
+
+            DB::table('appointment_reg')->where('id', $request->id)->update($updateData);
+
+            $message = 'Updated Successfully (Resubmitted) ... !';
+        } else {
+            $insertid = DB::table('appointment_reg')->insertGetId([
+                'name'         => $request->name,
+                'email'     => Auth::user()->email,
+                'user_id'      => Auth::user()->id,
+                'usertype'     => $type,
+                'district'     => $request->district,
+                'taluk'        => $request->taluk,
+                'village'      => $request->village,
+                'mobile'       => $request->mobile,
+                'station_name' => $request->station_name,
+                'is_completed' => '1',
+                'date'         => date("Y-m-d"),
+                'status'       => 'Pending',
+                'photo'        => $photo,
+            ]);
+
+            $message = 'Register Successfully ... !';
+        }
+
+        // ✅ Update user completion flag
+        DB::table('users')->where('id', Auth::user()->id)->update([
+            'is_completed' => 1,
+        ]);
+
+        return redirect()->back()->with('success', $message);
+    }
+
+    public function update_appointment(Request $request)
+    {
+
+        $photo = null;
+        if ($request->hasFile('certificate')) {
+            $photo    = uniqid() . '.' . $request->file('certificate')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'nalavariyam_document' . DIRECTORY_SEPARATOR . 'certificate' . DIRECTORY_SEPARATOR);
+            $request->file('certificate')->move($filepath, $photo);
+        }
+        DB::table('appointment_reg')->where('id', $request->id)->update([
+            'status'  => $request->status,
+            'remarks' => $request->remarks,
+        ]);
+
+        if ($photo) {
+            DB::table('appointment_reg')->where('id', $request->id)->update(['certificate' => $photo]);
+        }
+
+        return redirect()->back()->with('success', 'Appointment Status Updated Successfully ... !');
+    }
+    
+     public function view_appointment()
+        {
+            
+            if(Auth::user()->user_type_id != 1){
+                return redirect("/dashboard");
+            }
+            $appointment = DB::table('appointment_reg')->orderBy( 'id' , 'DESC' )->get();
+            return view('view_appointment',compact('appointment'));
+        }
 
 }
