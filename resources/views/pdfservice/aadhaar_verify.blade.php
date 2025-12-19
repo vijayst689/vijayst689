@@ -42,7 +42,7 @@
 
                         <div class="row">
                             <div class="mb-3 col-md-4">
-                                <label for="epic_no" class="form-label">Aadhaar Number</label>
+                                <label for="rc_no" class="form-label">Aadhaar Number</label>
                                 <input class="form-control number" type="text" name="aadhaar_no"
                                     value="{{ old('aadhaar_no') }}" maxlength="12" required autofocus
                                     placeholder="Enter Aadhaar Number" />
@@ -50,12 +50,12 @@
                         </div>
                         <div class="row">
                             <div class="mb-3 col-md-4">
-                                <label for="epic_no" class="form-label">Enter Captcha</label>
+                                <label for="rc_no" class="form-label">Enter Captcha</label>
                                 <input class="form-control" type="text" name="captcha_data" maxlength="12" required
                                     autofocus placeholder="Enter Captcha" />
                             </div>
                             <div class="mb-3 col-md-4">
-                                <label for="epic_no" class="form-label">Captcha</label>
+                                <label for="rc_no" class="form-label">Captcha</label>
                                 <img src="" id="captcha_img">
                             </div>
                             <input type="hidden" name="captcha_txid" id="captcha_txid" />

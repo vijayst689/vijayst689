@@ -25,6 +25,12 @@ class PDFServiceController extends Controller
     return view( 'panservice.addfindservice');
   }
 
+  public function getpdf()
+  {
+    $getpdf = DB::table('rc')->where('status', 'RcApproved')->orderBy('id', 'Asc')->get();
+    return view('pdfservice.getpdf', compact('getpdf'));
+  }
+
   public function viewfind(){
     $find = DB::table( 'find_services' )->orderBy( 'id', 'Asc' )->get();
     return view( 'panservice.viewfind' ,compact('find'));
@@ -194,19 +200,24 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
     $user_id = Auth::user()->id;
     $aadhaar = $request->aadhaar_no;
     $amount = $request->amount;
-    $servicepayment = $request->servicepayment;
-    $serviceid = $request->serviceid;
-    $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9'; // Base 64 api Key Here
-    $application_no = rand(00000000,99999999); // Application Number
+    $wallet = Auth::user()->wallet;
+        $servicepayment = $request->servicepayment;
+        $serviceid = $request->serviceid;
+        if($wallet < $servicepayment){
+          return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+        }
+     $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
+     $application_no = rand(00000000,99999999);
+     $key = '61285b3a51c8ad7304175bd5a9816e16f6d3279b3fe4f3b5f1b701b162b6';
 
-    if($request->ser == 1){
-      $url = "https://source.api-good.xyz/serviceApi/V1/panFind?apiKey=$apikey&order_id=$application_no&uidNumber=$aadhaar";
+     if($request->ser == 1){
+      $url = "https://www.apizone.info/api/find_pan/aadhaar_to_pan.php?api_key=$key&aadhaar_no=$aadhaar";
 
     }elseif( $request->ser == 2 ){
-       $url = "https://upbgroup.aisensy.in/api/data_fetch?api_key=3d77fb-c95462-6d17f3-a92b88-9b8b9c&application_no=$application_no&aadhaar_no=$aadhaar";
+       $url = "http://source.api-good.xyz/serviceApi/V1/panFind?apiKey=$apikey&order_id=$application_no&uidNumber=$aadhaar";
 
     }else{
-      $url = "https://authorized.p4point.co.in/api/v1/getPanNumber?apiKey=cdf94c6d43b5367276d87107b1538aa50b50eb8f8c665fbcd9f1998abe73957e619d4e&uidNumber=$aadhaar";
+      $url = "https://upbgroup.aisensy.in/api/data_fetch?api_key=3d77fb-c95462-6d17f3-a92b88-9b8b9c&application_no=$application_no&aadhaar_no=$aadhaar";
     }
 
     $curl = curl_init();
@@ -222,31 +233,26 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
     ));
     $response = curl_exec($curl);
     curl_close($curl);
-    $resdata = json_decode($response,true);
+    $resdata = json_decode($response, true);
     // dd($resdata);
-    if($resdata){
+   if($resdata){
       $status = "";
-      if($request->ser == 1){
+      if($request->ser == 2){
         $status = $resdata['Status'];
       }else{
         $status = $resdata['status'];
       }
-      if(($request->ser == 1 && $status == "Success") || ($request->ser == 2 && $status == "true") || ($request->ser == 3 && $status == "100")){
+      if(($request->ser == 1 && $status == "200") || ($request->ser == 2 && $status == "Success") || ($request->ser == 3 && $status == "true")){
 
         $name ="";
         $dob ="";
         $pan ="";
 
-        if($request->ser == 2 || $request->ser == 1){
+        if($request->ser == 2 || $request->ser == 1 || $request->ser == 3){
           $message=$resdata['message'];
           $pan=$resdata['pan_no'];
         }
-        if($request->ser == 3){
-        $message=$resdata['statusMessage'];
-        $pan=$resdata['panNumber'];
-        //$name=$resdata['name'];
-        //$dob=$resdata['dob'];
-        }
+
         DB::table('pancard_find')->insert([
           'user_id' => Auth::user()->id,
           'aadhaar_no' => $request->aadhaar_no,
@@ -317,21 +323,14 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
           $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
           DB::update( DB::raw( $sql ) );
         }
-        return redirect('/applypdfservice/'.$serviceid)->with('success','Pan No Find Successfully');
-      }else{
-        if($request->ser == 1){
-          $error = $resdata['error'];
-        }else if($request->ser == 2){
-          $message = $resdata['message'];
-          return redirect('/applypdfservice/'.$serviceid)->with('error',$message);
-        }else{
-        $error=$resdata['statusMessage'];
-      }
-      return redirect('/applypdfservice/'.$serviceid)->with('error',$error);
-      }
+       return redirect('/applypdfservice/' . $serviceid)->with('success', 'Pan No Find Successfully');
+      } else {
 
-    }else{
-      return redirect('/applypdfservice/'.$serviceid)->with('error','Something Went Wrong..Please Check Aadhaar Number...');
+        $message = $resdata['message'];
+        return redirect('/applypdfservice/' . $serviceid)->with('error', $message);
+      }
+    } else {
+      return redirect('/applypdfservice/' . $serviceid)->with('error', 'Something Went Wrong..Please Check Aadhaar Number...');
     }
 
   }
@@ -340,7 +339,11 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
     $user_id = Auth::user()->id;
     $dl_no = $request->dl_no;
     $dob = $request->dob;
-    $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
+    if($request->ser == 2){
+      $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
+    }else{
+      $apikey = '2f8c633222b317bca08c80f46dbdbc38e5a1659b45338a82bc80330d4f53f071';
+    }
     $Apikey = 'cdf94c6d43b5367276d87107b1538aa50b50eb8f8c665fbcd9f1998abe73957e619d4e';
     $amount = $request->amount;
     $wallet = Auth::user()->wallet;
@@ -350,21 +353,30 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
           return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
         }
 
-    if($request->ser == 1){
+$apidomain = "https://www.apizone.in";
+$api_key = "61285b3a51c8ad7304175bd5a9816e16f6d3279b3fe4f3b5f1b701b162b6"; // Replace with your actual API key
+$cardtype = "2"; // Enter 1 for white background and 2 for Light Blue background
 
+if($request->ser == 1){
+$dob = date("d-m-Y", strtotime($dob));
+
+    $url = "$apidomain/api/dl_pdf/dlprint.php?api_key=$api_key&dlno=$dl_no&dob=$dob&cardtype=$cardtype";
+   }elseif($request->ser == 2){
       $url = "http://source.api-good.xyz/serviceApi/V1/driving_licence_hd.php";
 
-   }else{
+   }elseif($request->ser == 3){
+    $url = "https://usedaily.co.in/serviceApi/V1/driving_licence_hd.php";
 
+   }else{
       $url = "https://authorized.p4point.co.in/api/v1/dlVerificationPDF?apiKey=$Apikey&dlNo=$dl_no&dob=$dob";
+
    }
     $data = array(
       'apiKey' => $apikey,
       'dlNo' => $dl_no,
       'dob' => $dob
     );
-
-    if($request->ser == 1){
+    if($request->ser == 2 || $request->ser == 3){
     $curl = curl_init();
     curl_setopt_array($curl, array(
       CURLOPT_URL => $url,
@@ -377,7 +389,7 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
       CURLOPT_CUSTOMREQUEST => 'POST',
       CURLOPT_POSTFIELDS => $data,
     ));
-  }elseif($request->ser == 2){
+  }elseif($request->ser == 1 || $request->ser == 4){
     $curl = curl_init();
     curl_setopt_array($curl, array(
     CURLOPT_URL =>  $url,
@@ -391,30 +403,32 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
     ));
   }
 
-    $response = curl_exec($curl);
-    curl_close($curl);
-
+$response = curl_exec($curl);
     $resdata = json_decode($response, true);
 // dd($resdata);
 if($resdata){
-  $status = "";
- if($request->ser == 1){
-   $status = $resdata['Status'];
- }else{
-   $status = $resdata['status'];
- }
-if(($request->ser == 1 && $resdata['StatusCode'] == "100") || ($request->ser == 2 && $resdata['status'] == "100")){
-  $pdf = $resdata['pdf'];
-  $pdf_parts = explode(";base64", $pdf);
-   $pdf_types = explode("pdf/", $pdf_parts[0]);
-   $pdf_type = base64_decode($pdf_parts[1]);
-   $filename = uniqid().'.pdf';
-   file_put_contents('upload/dl/'.$filename,$pdf_type );
-  if($request->ser == 1){
-  $message = $resdata['message'];
-  }else{
-  $message = $resdata['statusMessage'];
-  }
+      if (($request->ser == 1 && $resdata['status'] == "200") || ($request->ser == 2 && $resdata['StatusCode'] == "100") || ($request->ser == 3 && $resdata['StatusCode'] == "100") || ($request->ser == 4 && $resdata['status'] == "100")) {
+        $pdf = $resdata['pdf'];
+           if($request->ser == 1){
+             $filename = uniqid() . '.pdf';
+        $filePath = 'upload/dl/' . $filename;
+
+        file_put_contents($filePath, base64_decode($pdf));
+           }else{
+      $pdf_parts = explode(";base64", $pdf);
+       $pdf_types = explode("pdf/", $pdf_parts[0]);
+       $pdf_type = base64_decode($pdf_parts[1]);
+        $filename = uniqid() . '.pdf';
+        $filePath = 'upload/dl/' . $filename;
+
+        file_put_contents($filePath, $pdf_type);
+           }
+      
+      if($request->ser == 1 || $request->ser == 2 || $request->ser == 3){
+      $message = $resdata['message'];
+      }else{
+      $message = $resdata['statusMessage'];
+      }
   DB::table('dl')->insert([
     'user_id' => Auth::user()->id,
     'dlnumber' => $request->dl_no,
@@ -483,76 +497,101 @@ if(($request->ser == 1 && $resdata['StatusCode'] == "100") || ($request->ser == 
         DB::update( DB::raw( $sql ) );
       }
 
-      return redirect('/applypdfservice/'.$serviceid)->with('success',$message);
-    }else{
-      $error=$resdata['error'];
+       return redirect('/applypdfservice/' . $serviceid)->with('success', $message);
+      } else {
+         if($request->ser == 1){
+      $error=$resdata['message'];
+      }else{
+        $error=$resdata['error'];
+      }
       return redirect('/applypdfservice/'.$serviceid)->with('error',$error);
     }
+   } else {
+      return redirect('/applypdfservice/' . $serviceid)->with('error', 'Something Went Wrong.....');
   }
   }
 
   public function submitrcfind(Request $request){
-    $user_id = Auth::user()->id;
+   $user_id = Auth::user()->id;
     $rc_no = $request->rc_no;
     $amount = $request->amount;
     $wallet = Auth::user()->wallet;
-    $servicepayment = $request->servicepayment;
-    $serviceid = $request->serviceid;
-    if($wallet < $servicepayment){
-      return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
-    }
+        $servicepayment = $request->servicepayment;
+        $serviceid = $request->serviceid;
+        if($wallet < $servicepayment){
+          return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+        }
+    $apidomain = "https://www.apizone.in";
+    $api_key = "61285b3a51c8ad7304175bd5a9816e16f6d3279b3fe4f3b5f1b701b162b6";
     $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
 
+    $cardtype = "1";
+    $chiptype = "1";
     if($request->ser == 1){
+      $url = $apidomain . "/api/rc_pdf/rc.php?api_key=" . $api_key .
+       "&rcno=" . $rc_no .
+       "&cardtype=" . $cardtype .
+       "&chiptype=" . $chiptype;
+    }elseif($request->ser == 2){
       $url = "http://source.api-good.xyz/serviceApi/V1/Rc-Verification.php?apiKey=$apikey&rcno=$rc_no";
+      
     }else{
       $application_no = rand(00000000,99999999);
       $url = "https://server.webtechly.co.in/rcpdf.php?api_key=3d77fb-c95462-6d17f3-a92b88-9b8b9c&application_no=$application_no&rc_number=$rc_no";
     }
-
-    $crl = curl_init();
-    curl_setopt( $crl, CURLOPT_URL, $url );
-    curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
-    curl_setopt( $crl, CURLOPT_RETURNTRANSFER, true );
-    $result = curl_exec($crl);
-    $result = json_decode($result,true);
-    curl_close($crl);
+    $curl = curl_init();
+    curl_setopt_array($curl, [
+      CURLOPT_URL => $url,
+      CURLOPT_RETURNTRANSFER => true, // Return response as a string
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "GET", // Set the request method to GET
+    ]);
+    // Execute the cURL request and get the response
+    $response = curl_exec($curl);
+    curl_close($curl);
+    $result = json_decode($response, true);
     if($result){
-      $status = "";
-     if($request->ser == 1){
+      if($request->ser == 2){
        $status = $result['Status'];
      }else{
        $status = $result['status'];
      }
-     if(($request->ser == 1 && $status == "Success") || ($request->ser == 2 && $status == "true")){
-       $name = "";
-       if($request->ser == 1){
+      //$status = $result['status'];
+      if (($request->ser == 1 && $status == "200") || ($request->ser == 2 && $status == "Success") || ($request->ser == 3 && $status == "true")){
+         $name = "";
+       if($request->ser == 1 || $request->ser == 2){
          $name = $result['name'];
        }
-      $message = $result['message'];
-      $pdf = $result['pdf'];
-      if($request->ser == 1){
-       $pdf_parts = explode(";base64", $pdf);
+        $message = $result['message'];
+        $pdf_base64 = $result['pdf'];
+
+        $filename = uniqid() . '.pdf';
+        $filePath = 'upload/rc/' . $filename;
+
+         if($request->ser == 2){
+       $pdf_parts = explode(";base64", $pdf_base64);
        $pdf_types = explode("pdf/", $pdf_parts[0]);
        $pdf_type = base64_decode($pdf_parts[1]);
       }else{
-       $pdf_type = base64_decode($pdf);
+       $pdf_type = base64_decode($pdf_base64);
       }
 
-      $filename = uniqid().'.pdf';
-      file_put_contents('upload/rc/'.$filename,$pdf_type );
-
-
-      DB::table('rc')->insert([
-       'user_id' => Auth::user()->id,
-       'rc_no' => $request->rc_no,
-       'name' => $name,
-       'pdf' => $filename,
-       'service_id' => $serviceid,
-       'amount' => $servicepayment,
-       'status'    => 'Approved',
-       'date'    => date("Y-m-d H:i:s"),
-     ]);
+        // Decode and save
+        file_put_contents($filePath, $pdf_type);
+       DB::table('rc')->insert([
+        'user_id' => Auth::user()->id,
+        'rc_no' => $request->rc_no,
+        'name' => $name,
+        'pdf' => $filename,
+        'service_id' => $serviceid,
+        'amount' => $servicepayment,
+        'status'    => 'Approved',
+        'date'    => date("Y-m-d H:i:s"),
+      ]);
       $date = date( 'Y-m-d' );
       $time = date( 'H:i:s' );
 
@@ -613,18 +652,16 @@ if(($request->ser == 1 && $resdata['StatusCode'] == "100") || ($request->ser == 
         $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
         DB::update( DB::raw( $sql ) );
       }
-      return redirect('/applypdfservice/'.$serviceid)->with('success',$message);
-    }else{
-      if($request->ser == 1){
-      $error=$result['error'];
-    }else{
-      $error=$result['message'];
+       return redirect('/applypdfservice/' . $serviceid)->with('success', $message);
+      } else {
+
+        $error = $result['message'];
+
+        return redirect('/applypdfservice/' . $serviceid)->with('error', $error);
+      }
+    } else {
+      return redirect('/applypdfservice/' . $serviceid)->with('error', 'Something Went Wrong.....');
     }
-      return redirect('/applypdfservice/'.$serviceid)->with('error',$error);
-    }
-  }else{
-    return redirect('/applypdfservice/'.$serviceid)->with('error','Something Went Wrong.....');
-  }
 
 }
 
@@ -634,8 +671,12 @@ public function submitrationfind(Request $request){
   $aadhaar_no = $request->aadhaar_no;
   $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
   $amount = $request->amount;
-  $servicepayment = $request->servicepayment;
-  $serviceid = $request->serviceid;
+  $wallet = Auth::user()->wallet;
+        $servicepayment = $request->servicepayment;
+        $serviceid = $request->serviceid;
+        if($wallet < $servicepayment){
+          return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+        }
 
   $curl = curl_init();
   curl_setopt_array($curl, array(
@@ -657,17 +698,23 @@ public function submitrationfind(Request $request){
   $err = curl_error($curl);
   curl_close($curl);
   $resdata = json_decode($response, true);
-  $message=$resdata['message'];
 
-
+  if($resdata){
   if($resdata['StatusCode'] == "100"){
     $pdf=$resdata['pdf'];
+    $message=$resdata['message'];
+    $pdf_parts = explode(";base64", $pdf);
+    $pdf_types = explode("pdf/", $pdf_parts[0]);
+    $pdf_type = base64_decode($pdf_parts[1]);
+    $filename = uniqid().'.pdf';
+    file_put_contents('upload/smartpdf/'.$filename,$pdf_type );
     $name = $resdata['name'];
+
     DB::table('ration')->insert([
       'user_id'    => Auth::user()->id,
       'aadhaar_no' => $request->aadhaar_no,
       'name'       => $name,
-      'pdf'        => $pdf,
+      'pdf'        => $filename,
       'service_id' => $serviceid,
       'amount'     => $servicepayment,
       'status'     => 'Approved',
@@ -733,21 +780,21 @@ public function submitrationfind(Request $request){
         DB::update( DB::raw( $sql ) );
       }
 
-    return redirect('/applypdfservice/'.$serviceid)->with('success',$message);
-
-
-  }else{
-    $message=$resdata['message'];
-
-    return redirect('/applypdfservice/'.$serviceid)->with('error',$message);
-  }
+     return redirect('/applypdfservice/' . $serviceid)->with('success', $message);
+      } else {
+        $error = $resdata['message'];
+        return redirect('/applypdfservice/' . $serviceid)->with('error', $error);
+      }
+    } else {
+      return redirect('/applypdfservice/' . $serviceid)->with('error', 'Something Went Wrong.....');
+    }
 
 }
 
 public function submitpanadvance(Request $request){
-    $user_id = Auth::user()->id;
+   $user_id = Auth::user()->id;
     $pan_no = $request->pan_no;
-    $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
+    $apikey = '61285b3a51c8ad7304175bd5a9816e16f6d3279b3fe4f3b5f1b701b162b6';
     $amount = $request->amount;
     $wallet = Auth::user()->wallet;
         $servicepayment = $request->servicepayment;
@@ -755,20 +802,21 @@ public function submitpanadvance(Request $request){
         if($wallet < $servicepayment){
           return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
         }
+    $url = "https://www.apizone.info/api/pan_details/pan.php?api_key=$apikey&panno=$pan_no";
     $curl = curl_init();
     curl_setopt_array($curl, array(
-    CURLOPT_URL =>  "http://source.api-good.xyz/serviceApi/V1/panVerification.php?apiKey=$apikey&panNumber=$pan_no",
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => "",
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 30,
-    CURLOPT_SSL_VERIFYPEER => false,
-    CURLOPT_SSL_VERIFYHOST => false,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => "GET",
-    CURLOPT_HTTPHEADER => array(
-    "cache-control: no-cache",
-    ),
+      CURLOPT_URL =>  $url,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 30,
+      CURLOPT_SSL_VERIFYPEER => false,
+      CURLOPT_SSL_VERIFYHOST => false,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "GET",
+      CURLOPT_HTTPHEADER => array(
+        "cache-control: no-cache",
+      ),
     ));
 
     $response = curl_exec($curl);
@@ -777,12 +825,13 @@ public function submitpanadvance(Request $request){
     $resdata = json_decode($response, true);
 
 
+if ($resdata) {
+    if ($resdata['status'] == "200") {
 
-    if($resdata['StatusCode'] == "100"){
+        $message = "Successfully Pan Details Found";
         $dob = $resdata['dob'];
         $name = $resdata['name'];
         $gender = $resdata['gender'];
-        $message=$resdata['message'];
         DB::table('pancard_find')->insert([
             'user_id' => Auth::user()->id,
             'pan_no' => $request->pan_no,
@@ -853,11 +902,17 @@ public function submitpanadvance(Request $request){
         $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
         DB::update( DB::raw( $sql ) );
       }
+ return redirect('/applypdfservice/' . $serviceid)->with('success', $message);
+    } else {
+      
 
-        return redirect('/applypdfservice/'.$serviceid)->with('success',$message);
-    }else{
-        $error=$resdata['error'];
-        return redirect('/applypdfservice/'.$serviceid)->with('error',$error);
+        $error = $resdata['message'];
+      }
+
+      return redirect('/applypdfservice/' . $serviceid)->with('error', $error);
+    }
+    else {
+      return redirect('/applypdfservice/' . $serviceid)->with('error', 'Something Went Wrong.....');
     }
 }
 
@@ -897,10 +952,14 @@ public function submitvoterfind(Request $request){
     $otp = $request->otp;
     $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
     $amount = $request->amount;
-    $servicepayment = $request->servicepayment;
-    $serviceid = $request->serviceid;
+    $wallet = Auth::user()->wallet;
+        $servicepayment = $request->servicepayment;
+        $serviceid = $request->serviceid;
+        if($wallet < $servicepayment){
+          return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+        }
 
-        $url = "https://source.api-good.xyz/serviceApi/V1/VCM/Vcm-link.php?apiKey=$apikey&epic=$epic_no&otp=$otp&mobile_no=$phone";
+        $url = "http://source.api-good.xyz/serviceApi/V1/VCM/Vcm-link.php?apiKey=$apikey&epic=$epic_no&otp=$otp&mobile_no=$phone";
         $crl = curl_init();
         curl_setopt( $crl, CURLOPT_URL, $url );
         curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
@@ -982,10 +1041,10 @@ public function submitvoterfind(Request $request){
         DB::update( DB::raw( $sql ) );
       }
 
-        return redirect('/applypdfservice/'.$serviceid)->with('success',$message);
-    }else{
-        $error=$resdata->error;
-        return redirect('/applypdfservice/'.$serviceid)->with('error',$error);
+      return redirect('/applypdfservice/' . $serviceid)->with('success', $message);
+    } else {
+      $error = $resdata->error;
+      return redirect('/applypdfservice/' . $serviceid)->with('error', $error);
     }
 }
 
@@ -1013,10 +1072,15 @@ public function submitvoterpdf(Request $request){
     $stateCd = $request->stateCd;
     $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
     $amount = $request->amount;
-    $servicepayment = $request->servicepayment;
-    $serviceid = $request->serviceid;
+    $wallet = Auth::user()->wallet;
+        $servicepayment = $request->servicepayment;
+        $serviceid = $request->serviceid;
+        if($wallet < $servicepayment){
+          return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
+        }
 
-        $url = "https://source.api-good.xyz/serviceApi/V1/VCPFD/Vc_Verification_Tp.php?apiKey=$apikey&stateCd=$stateCd&otp=$otp&epic=$epic_no";
+        $url = "http://source.api-good.xyz/serviceApi/V1/VCPFD/Vc_Verification_Tp.php?apiKey=$apikey&stateCd=$stateCd&otp=$otp&epic=$epic_no";
+
         $crl = curl_init();
         curl_setopt( $crl, CURLOPT_URL, $url );
         curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
@@ -1028,13 +1092,19 @@ public function submitvoterpdf(Request $request){
     if($resdata->StatusCode == "100"){
         $message=$resdata->message;
         $pdf=$resdata->pdf;
+        $pdf_parts = explode(";base64", $pdf);
+        $pdf_types = explode("pdf/", $pdf_parts[0]);
+        $pdf_type = base64_decode($pdf_parts[1]);
+        $filename = uniqid().'.pdf';
+        file_put_contents('upload/voterpdf/'.$filename,$pdf_type );
+
             DB::table('voter_find')->insert([
             'user_id'    => Auth::user()->id,
             'service_id' => $serviceid,
             'epic_no'    => $request->epic_no,
             'scode'      => $request->stateCd,
             'name'       => $name,
-            'pdf'        => $pdf,
+            'pdf'        => $filename,
             'message'    => $message,
             'amount'     => $servicepayment,
             'status'     => 'Approved',
@@ -1099,14 +1169,26 @@ public function submitvoterpdf(Request $request){
         DB::update( DB::raw( $sql ) );
       }
 
-        return redirect('/applypdfservice/'.$serviceid)->with('success',$message);
-    }else{
-        $error=$resdata->error;
-        return redirect('/applypdfservice/'.$serviceid)->with('error',$error);
+        return redirect('/applypdfservice/' . $serviceid)->with('success', $message);
+    } else {
+      $error = $resdata->error;
+      return redirect('/applypdfservice/' . $serviceid)->with('error', $error);
     }
 }
 
-    public function submitaadhaar_verify(Request $request){
+public function getcaptcha() {
+  $url = "https://authorized.p4point.co.in/api/v1/eid/captcha";
+  $crl = curl_init();
+  curl_setopt( $crl, CURLOPT_URL, $url );
+  curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
+  curl_setopt( $crl, CURLOPT_RETURNTRANSFER, true );
+  $result = curl_exec($crl);
+  $result = json_decode($result);
+  curl_close($crl);
+  return response()->json( $result );
+}
+
+public function submitaadhaar_verify(Request $request){
   $user_id = Auth::user()->id;
   $aadhaar_no = $request->aadhaar_no;
   $captcha_txid = $request->captcha_txid;
@@ -1220,15 +1302,15 @@ public function submitvoterpdf(Request $request){
       DB::update( DB::raw( $sql ) );
     }
       $smessage=$resdata['statusMessage'];
-      return redirect('/applypdfservice/'.$serviceid)->with('success',$smessage);
-  }else{
-      $error=$resdata['error'];
-      return redirect('/applypdfservice/'.$serviceid)->with('error',$error)->withInput($request->only('aadhaar_no'));
-  }
+      return redirect('/applypdfservice/' . $serviceid)->with('success', $message);
+    } else {
+      //$error=$resdata['error'];
+      return redirect('/applypdfservice/' . $serviceid)->with('error', "Something Went Wrong....");
+    }
 }
 
   public function submitgstfind(Request $request){
-    $user_id = Auth::user()->id;
+   $user_id = Auth::user()->id;
     $pan_no = $request->pan_no;
     $apikey = '3d77fb-c95462-6d17f3-a92b88-9b8b9c';
     $servicepayment = $request->servicepayment;
@@ -1337,10 +1419,10 @@ public function submitvoterpdf(Request $request){
       DB::update( DB::raw( $sql ) );
       }
         $smessage=$resdata['message'];
-        return redirect('/applypdfservice/'.$serviceid)->with('success',$smessage);
-    }else{
-        $error=$resdata['message'];
-        return redirect('/applypdfservice/'.$serviceid)->with('error',$error);
+        return redirect('/applypdfservice/' . $serviceid)->with('success', $smessage);
+    } else {
+      $error = $resdata['message'];
+      return redirect('/applypdfservice/' . $serviceid)->with('error', $error);
     }
 }
 

@@ -74,8 +74,9 @@
                                         <th>Sl No</th>
                                         <th>RC Number</th>
                                         <th>Name</th>
+                                        <th>Engine No</th>
                                         <th>PDF</th>
-                                        <th>Amount</th>
+                                        <!-- <th>Amount</th> -->
                                         <th>Datetime</th>
                                     </tr>
                                 </thead>
@@ -85,16 +86,21 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $ser->rc_no }}</td>
                                             <td>{{ $ser->name }}</td>
-                                            @if (pathinfo($ser->pdf, PATHINFO_EXTENSION) != 'pdf')
-                                                <td><a href="<?php echo $ser->pdf; ?>" download
-                                                        class="btn btn-primary btn-sm">Download</a></td>
-                                            @else
-                                                <td><a href="{{ url('/') }}/upload/rc/{{ $ser->pdf }}" download
-                                                        class="btn btn-primary btn-sm">Download</a></td>
+                                            <td>{{ $ser->engine }}</td>
+                                            @if ($ser->status == 'Approved')
+                                                @if (pathinfo($ser->pdf, PATHINFO_EXTENSION) != 'pdf')
+                                                    <td><a href="<?php echo $ser->pdf; ?>" download
+                                                            class="btn btn-primary btn-sm">Download</a></td>
+                                                @else
+                                                    <td><a href="{{ url('/') }}/upload/rc/{{ $ser->pdf }}"
+                                                            download class="btn btn-primary btn-sm">Download</a></td>
+                                                @endif
                                             @endif
-                                            <td>{{ $ser->amount }}</td>
+                                            @if ($ser->status == 'RcApproved')
+                                                <td><a target="_blank" href="{{ url('getpdf') }}"
+                                                        class="btn btn-danger btn-sm">Pdf</a></td>
+                                            @endif
                                             <td>{{ $ser->date }}</td>
-
                                         </tr>
                                     @endforeach
                                 </tbody>

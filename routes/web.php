@@ -366,6 +366,8 @@ Route::post('/submitgstfind', [App\Http\Controllers\PDFServiceController::class,
 
 Route::get('/getcaptcha', [App\Http\Controllers\PDFServiceController::class, 'getcaptcha'])->name('getcaptcha');
 
+Route::get('/getpdf', [App\Http\Controllers\PDFServiceController::class, 'getpdf'])->name('getpdf');
+
 //PermissionController
 
 Route::get('/userpermission/{userid}', [App\Http\Controllers\PermissionController::class, 'userpermission'])->name('userpermission');
