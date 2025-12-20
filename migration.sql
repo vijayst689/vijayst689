@@ -2562,3 +2562,7 @@ CREATE TABLE `appointment_reg` (
 
 alter table users add is_completed int(11) Default NULL;
 alter table appointment_reg add email varchar(50) default null;
+
+//19-12-2025
+
+alter table rc add engine varchar(15) Default NULL;

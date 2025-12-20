@@ -58,8 +58,7 @@
                                     <tr>
                                         <th>Sl No</th>
                                         <th>Aadhaar Number</th>
-                                        <th>PDF</th>
-                                        <th>Amount</th>
+                                        <th>PDF</th>                                       
                                         <th>Datetime</th>
                                     </tr>
                                 </thead>
@@ -72,8 +71,7 @@
                                             <td><a href="<?php echo $ser->pdf; ?>" download class="btn btn-primary btn-sm">Download</a></td>
                                             @else
                                             <td><a href="{{ url('/') }}/upload/smartpdf/{{ $ser->pdf }}" download class="btn btn-primary btn-sm">Download</a></td>
-                                            @endif
-                                            <td>{{ $amount }}</td>
+                                            @endif                                            
                                             <td>{{ $ser->date }}</td>
                                         </tr>
                                     @endforeach
