@@ -38,7 +38,7 @@
                             <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                                 <div class="card-body p-4">
                                     <h5 class="card-title">{{ $servicename }}</h5>
-                                    <form action="{{ url('/smartcard_nametransfer_update') }}" id="formAccountSettings"
+                                    <form action="{{ url('/smartcard_nametransfer_update') }}" id="myForm"
                                         method="POST" enctype="multipart/form-data">
                                         {{ csrf_field() }}
 
@@ -1461,5 +1461,11 @@
                             $('#rental_agreement').prop("required", false);
                         }
                     });
-                </script>
+                
+        document.getElementById("myForm").addEventListener("submit", function() {
+        const btn = document.getElementById("save");
+        btn.disabled = true;               
+        btn.innerText = "Submitting...";  
+        });
+    </script>
             @endpush

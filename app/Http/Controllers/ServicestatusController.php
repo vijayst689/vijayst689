@@ -1101,7 +1101,7 @@ public function submit_statusupdate_tnegaservices1(Request $request){
         $service_status = 'Out Payment';
         $ad_info = "Service Refund For". ' ' .$servicename;
 
-        $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
         $balance = 0;
         if($getwallet){
             $balance = $getwallet->wallet;
@@ -1114,18 +1114,19 @@ public function submit_statusupdate_tnegaservices1(Request $request){
         $newbalance = $balance - $payment;
         $newbalance1 = $balance1 + $payment;
 
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','1','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
         DB::insert( DB::raw( $sql ) );
-        $sql = "update users set wallet = wallet - $payment where id = 1";
+        $sql = "update users set wallet = wallet - $payment where id = 2";
         DB::update( DB::raw( $sql ) );
         $service_status = 'IN Payment';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','1','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
         DB::update( DB::raw( $sql ) );
 
         DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
+            'remarks'  => $request->remarks,
         ] );
 
     }
@@ -1412,7 +1413,7 @@ if($apply_user_id != Auth::user()->id){
     $service_status = 'Out Payment';
     $ad_info = "Service Refund For". ' ' .$servicename;
 
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -1425,18 +1426,19 @@ if($apply_user_id != Auth::user()->id){
     $newbalance = $balance - $payment;
     $newbalance1 = $balance1 + $payment;
 
-    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','1','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
     DB::insert( DB::raw( $sql ) );
-    $sql = "update users set wallet = wallet - $payment where id = 1";
+    $sql = "update users set wallet = wallet - $payment where id = 2";
     DB::update( DB::raw( $sql ) );
     $service_status = 'IN Payment';
-    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','1','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
     DB::insert( DB::raw( $sql ) );
     $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
     DB::update( DB::raw( $sql ) );
 
     DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
         'status' => $status,
+        'remarks'  => $request->remarks,
     ] );
 
 }
@@ -1651,7 +1653,7 @@ if($apply_user_id != Auth::user()->id){
     $service_status = 'Out Payment';
     $ad_info = "Service Refund For". ' ' .$servicename;
 
-    $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+    $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $balance = 0;
     if($getwallet){
         $balance = $getwallet->wallet;
@@ -1664,18 +1666,19 @@ if($apply_user_id != Auth::user()->id){
     $newbalance = $balance - $payment;
     $newbalance1 = $balance1 + $payment;
 
-    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','1','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
     DB::insert( DB::raw( $sql ) );
-    $sql = "update users set wallet = wallet - $payment where id = 1";
+    $sql = "update users set wallet = wallet - $payment where id = 2";
     DB::update( DB::raw( $sql ) );
     $service_status = 'IN Payment';
-    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','1','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
     DB::insert( DB::raw( $sql ) );
     $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
     DB::update( DB::raw( $sql ) );
 
     DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
         'status' => $status,
+        'remarks'  => $request->remarks,
     ] );
 
 }
@@ -1705,7 +1708,7 @@ if($serviceid == 23){
         $strap = uniqid().'.'.$request->file('strap')->extension();
         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'strap' . DIRECTORY_SEPARATOR);
         move_uploaded_file($_FILES['strap']['tmp_name'], $filepath . $strap);
-        DB::table('tnega_services')->where('id', $insertid)->update([
+        DB::table('tnega_services')->where('id', $strap)->update([
         'strap'         => $strap,
     ]);
     }
@@ -1923,7 +1926,7 @@ public function submit_statusupdate_tnegaservices2(Request $request){
         $service_status = 'Out Payment';
         $ad_info = "Service Refund For". ' ' .$servicename;
 
-        $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
         $balance = 0;
         if($getwallet){
             $balance = $getwallet->wallet;
@@ -1936,18 +1939,19 @@ public function submit_statusupdate_tnegaservices2(Request $request){
         $newbalance = $balance - $payment;
         $newbalance1 = $balance1 + $payment;
 
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','1','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
         DB::insert( DB::raw( $sql ) );
-        $sql = "update users set wallet = wallet - $payment where id = 1";
+        $sql = "update users set wallet = wallet - $payment where id = 2";
         DB::update( DB::raw( $sql ) );
         $service_status = 'IN Payment';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','1','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
         DB::update( DB::raw( $sql ) );
 
         DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
+            'remarks'  => $request->remarks,
         ] );
 
     }
@@ -2353,7 +2357,7 @@ public function submit_statusupdate_tnegaservices3(Request $request){
         $service_status = 'Out Payment';
         $ad_info = "Service Refund For". ' ' .$servicename;
 
-        $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
         $balance = 0;
         if($getwallet){
             $balance = $getwallet->wallet;
@@ -2366,18 +2370,19 @@ public function submit_statusupdate_tnegaservices3(Request $request){
         $newbalance = $balance - $payment;
         $newbalance1 = $balance1 + $payment;
 
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','1','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
         DB::insert( DB::raw( $sql ) );
-        $sql = "update users set wallet = wallet - $payment where id = 1";
+        $sql = "update users set wallet = wallet - $payment where id = 2";
         DB::update( DB::raw( $sql ) );
         $service_status = 'IN Payment';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','1','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
         DB::update( DB::raw( $sql ) );
 
         DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
+            'remarks'  => $request->remarks,
         ] );
 
     }
@@ -2633,7 +2638,7 @@ public function submit_statusupdate_tnegaservices4(Request $request){
         $service_status = 'Out Payment';
         $ad_info = "Service Refund For". ' ' .$servicename;
 
-        $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
         $balance = 0;
         if($getwallet){
             $balance = $getwallet->wallet;
@@ -2646,18 +2651,19 @@ public function submit_statusupdate_tnegaservices4(Request $request){
         $newbalance = $balance - $payment;
         $newbalance1 = $balance1 + $payment;
 
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','1','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
         DB::insert( DB::raw( $sql ) );
-        $sql = "update users set wallet = wallet - $payment where id = 1";
+        $sql = "update users set wallet = wallet - $payment where id = 2";
         DB::update( DB::raw( $sql ) );
         $service_status = 'IN Payment';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','1','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
         DB::update( DB::raw( $sql ) );
 
         DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
+            'remarks'  => $request->remarks,
         ] );
 
     }
@@ -2886,7 +2892,7 @@ public function submit_statusupdate_tnegaservices5(Request $request){
         $service_status = 'Out Payment';
         $ad_info = "Service Refund For". ' ' .$servicename;
 
-        $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
         $balance = 0;
         if($getwallet){
             $balance = $getwallet->wallet;
@@ -2899,18 +2905,19 @@ public function submit_statusupdate_tnegaservices5(Request $request){
         $newbalance = $balance - $payment;
         $newbalance1 = $balance1 + $payment;
 
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','1','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
         DB::insert( DB::raw( $sql ) );
-        $sql = "update users set wallet = wallet - $payment where id = 1";
+        $sql = "update users set wallet = wallet - $payment where id = 2";
         DB::update( DB::raw( $sql ) );
         $service_status = 'IN Payment';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','1','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
         DB::update( DB::raw( $sql ) );
 
         DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
+            'remarks'  => $request->remarks,
         ] );
 
     }
@@ -3078,8 +3085,8 @@ public function submit_statusupdate_tnegaservices5(Request $request){
           'solvency_certificate'         => $solvency_certificate,
       ]);
     }
-    if ($request->shop_address_proof != null) {
-        $shop_address_proof = uniqid().'.'.$request->file('building_blue_print')->extension();
+    if ($request->building_blue_print != null) {
+        $building_blue_print = uniqid().'.'.$request->file('building_blue_print')->extension();
         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'building_blue_print' . DIRECTORY_SEPARATOR);
         move_uploaded_file($_FILES['building_blue_print']['tmp_name'], $filepath . $building_blue_print);
         DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
@@ -3419,6 +3426,7 @@ public function submit_statusupdate_tnegaservices6(Request $request){
 
         DB::table( 'tnega_services' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
+            'remarks'  => $request->remarks,
         ] );
         }
  }else{
@@ -3473,7 +3481,7 @@ public function submit_statusupdate_tnegaservices6(Request $request){
         $signature1 = uniqid().'.'.$request->file('signature1')->extension();
         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'signature1' . DIRECTORY_SEPARATOR);
         move_uploaded_file($_FILES['signature1']['tmp_name'], $filepath . $signature1);
-         DB::table('tnega_services')->where('id', $insertid)->update([
+         DB::table('tnega_services')->where('id', $signature1)->update([
         'signature1'         => $signature1,
     ]);
     }
@@ -3482,7 +3490,7 @@ public function submit_statusupdate_tnegaservices6(Request $request){
         $signature2 = uniqid().'.'.$request->file('signature2')->extension();
         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'signature2' . DIRECTORY_SEPARATOR);
         move_uploaded_file($_FILES['signature2']['tmp_name'], $filepath . $signature2);
-         DB::table('tnega_services')->where('id', $insertid)->update([
+         DB::table('tnega_services')->where('id', $signature2)->update([
         'signature2'         => $signature2,
     ]);
     }
@@ -3615,13 +3623,16 @@ if($request->has('doc_id')){
 }
 
 public function submit_statusupdate_msme(Request $request){
-    $apply_user_id = 0;
-    if($request->retailer_id == 0){
+   $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'msme' )->where('id', $request->applied_serviceid)->update( [
@@ -3650,6 +3661,62 @@ public function submit_statusupdate_msme(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+        }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'msme' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks'  => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -3720,13 +3787,16 @@ public function submit_statusupdate_msme(Request $request){
 }
 
 public function submit_statusupdate_itr(Request $request){
-    $apply_user_id = 0;
-    if($request->retailer_id == 0){
+   $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'itr' )->where('id', $request->applied_serviceid)->update( [
@@ -3755,6 +3825,62 @@ public function submit_statusupdate_itr(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+        }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'itr' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks'  => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -3803,13 +3929,16 @@ public function submit_statusupdate_itr(Request $request){
 }
 
 public function submit_statusupdate_gst(Request $request){
-    $apply_user_id = 0;
-    if($request->retailer_id == 0){
+   $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'gst' )->where('id', $request->applied_serviceid)->update( [
@@ -3838,6 +3967,62 @@ public function submit_statusupdate_gst(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+        }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'gst' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks'  => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -3921,13 +4106,16 @@ public function submit_statusupdate_gst(Request $request){
 }
 
 public function submit_statusupdate_tecexam(Request $request){
-    $apply_user_id = 0;
-    if($request->retailer_id == 0){
+   $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
@@ -3956,6 +4144,62 @@ public function submit_statusupdate_tecexam(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+        }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -3995,13 +4239,16 @@ public function submit_statusupdate_tecexam(Request $request){
 }
 
 public function submit_statusupdate_tecexamregister(Request $request){
-    $apply_user_id = 0;
-    if($request->retailer_id == 0){
+   $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
@@ -4030,6 +4277,62 @@ public function submit_statusupdate_tecexamregister(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -4075,13 +4378,16 @@ public function submit_statusupdate_tecexamregister(Request $request){
 }
 
 public function submit_statusupdate_teccorrection(Request $request){
-    $apply_user_id = 0;
-    if($request->retailer_id == 0){
+   $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
@@ -4110,6 +4416,62 @@ public function submit_statusupdate_teccorrection(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -4150,13 +4512,16 @@ public function submit_statusupdate_teccorrection(Request $request){
     return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
 public function insexam_update(Request $request){
-    $apply_user_id = 0;
-    if($request->retailer_id == 0){
+   $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
@@ -4185,6 +4550,62 @@ public function insexam_update(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -4219,12 +4640,15 @@ public function insexam_update(Request $request){
 public function iibfexam_update(Request $request){
         //dd($request->all());
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){-
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
@@ -4253,6 +4677,62 @@ public function iibfexam_update(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -4308,12 +4788,15 @@ public function iibfexam_update(Request $request){
 
 public function rapexam_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
@@ -4342,6 +4825,62 @@ public function rapexam_update(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -4383,13 +4922,16 @@ public function rapexam_update(Request $request){
 }
 
 public function vleinsurance_update(Request $request){
-    $apply_user_id = 0;
-    if($request->retailer_id == 0){
+   $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
@@ -4418,6 +4960,62 @@ public function vleinsurance_update(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -4450,13 +5048,16 @@ public function vleinsurance_update(Request $request){
 }
 
 public function submitsmartcard_register_update(Request $request){
-    $apply_user_id = 0;
-    if($request->retailer_id == 0){
+   $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'smartcard' )->where('id', $request->applied_serviceid)->update( [
@@ -4485,6 +5086,62 @@ public function submitsmartcard_register_update(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -4632,7 +5289,7 @@ public function submitsmartcard_register_update(Request $request){
                 ]);
             }
             if ($request->first_page_of_bank_account_book != null) {
-                $bond_leave_proof = uniqid().'.'.$request->file('first_page_of_bank_account_book')->extension();
+                $first_page_of_bank_account_book = uniqid().'.'.$request->file('first_page_of_bank_account_book')->extension();
                 $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'first_page_of_bank' . DIRECTORY_SEPARATOR);
                 move_uploaded_file($_FILES['first_page_of_bank_account_book']['tmp_name'], $filepath . $lease_deed);
                 DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
@@ -4922,7 +5579,7 @@ public function submitsmartcard_register_update(Request $request){
                 ]);
             }
             if ($request->first_page_of_bank_account_book != null) {
-                $bond_leave_proof = uniqid().'.'.$request->file('first_page_of_bank_account_book')->extension();
+                $first_page_of_bank_account_book = uniqid().'.'.$request->file('first_page_of_bank_account_book')->extension();
                 $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'first_page_of_bank' . DIRECTORY_SEPARATOR);
                 move_uploaded_file($_FILES['first_page_of_bank_account_book']['tmp_name'], $filepath . $lease_deed);
                 DB::table('smartcard')->where( 'id', $request->applied_serviceid )->update( [
@@ -4971,13 +5628,16 @@ public function submitsmartcard_register_update(Request $request){
     return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
 public function aadhaarcardupdate(Request $request){
-    $apply_user_id = 0;
-    if($request->retailer_id == 0){
+   $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'aadhaarcard' )->where('id', $request->applied_serviceid)->update( [
@@ -5006,6 +5666,62 @@ public function aadhaarcardupdate(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -5265,12 +5981,15 @@ public function aadhaarcardupdate(Request $request){
 public function findaadhaar_numberupdate(Request $request){
 //dd($request->all());
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'aadhaarcard' )->where('id', $request->applied_serviceid)->update( [
@@ -5299,6 +6018,62 @@ public function findaadhaar_numberupdate(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -6052,12 +6827,15 @@ public function cancertificate_find_update(Request $request){
 
 public function smartcard_update1(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'smartcard' )->where('id', $request->applied_serviceid)->update( [
@@ -6086,6 +6864,62 @@ public function smartcard_update1(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'smartcard' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -6252,13 +7086,16 @@ public function smartcard_update1(Request $request){
     return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
 public function voterid_update(Request $request){
-    $apply_user_id = 0;
-    if($request->retailer_id == 0){
+   $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'voterid' )->where('id', $request->applied_serviceid)->update( [
@@ -6287,11 +7124,67 @@ public function voterid_update(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'voterid' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
         $serviceid = $request->serviceid;
-        if($serviceid == 113 || $serviceid == 120 || $serviceid == 164 || $serviceid == 181 || $service_id == 182){
+        if($serviceid == 113 || $serviceid == 120 || $serviceid == 164 || $serviceid == 181 || $serviceid == 182){
             DB::table('voterid')->where('id', $request->applied_serviceid)->update([
                 'service_id'        => $request ->serviceid,
                'amount'                      => $request->amount,
@@ -6442,7 +7335,7 @@ public function voterid_update(Request $request){
                 //dd($request->doc[$key]);
               $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'doc' . DIRECTORY_SEPARATOR);
               move_uploaded_file($_FILES['doc']['tmp_name'][$key], $filepath . $doc);
-              DB::table( 'voterid_details' )->where( 'id', $relation_id )->update( [
+              DB::table( 'voterid_details' )->where( 'id', $doc )->update( [
                 'doc'       => $doc,
             ] );
           }
@@ -6457,13 +7350,16 @@ public function voterid_update(Request $request){
     return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
 public function bond_update(Request $request){
-    $apply_user_id = 0;
-    if($request->retailer_id == 0){
+   $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'bond' )->where('id', $request->applied_serviceid)->update( [
@@ -6492,6 +7388,62 @@ public function bond_update(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'bond' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -6521,12 +7473,15 @@ public function bond_update(Request $request){
 
 public function fssaiservice_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'fssai' )->where('id', $request->applied_serviceid)->update( [
@@ -6555,6 +7510,62 @@ public function fssaiservice_update(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'fssai' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -6721,12 +7732,15 @@ public function fssaiservice_update(Request $request){
 
 public function covid_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'covid' )->where('id', $request->applied_serviceid)->update( [
@@ -6755,6 +7769,62 @@ public function covid_update(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'covid' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -6782,13 +7852,16 @@ public function covid_update(Request $request){
 }
 
 public function nalavariyam_update(Request $request){
-    $apply_user_id = 0;
-    if($request->retailer_id == 0){
+   $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'nalavariyam' )->where('id', $request->applied_serviceid)->update( [
@@ -6817,6 +7890,62 @@ public function nalavariyam_update(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'nalavariyam' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -6858,13 +7987,16 @@ public function nalavariyam_update(Request $request){
 }
 
 public function driving_license_update(Request $request){
-    $apply_user_id = 0;
-    if($request->retailer_id == 0){
+   $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $request->retailer_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'license' )->where('id', $request->applied_serviceid)->update( [
@@ -6893,6 +8025,62 @@ public function driving_license_update(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'license' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -7040,12 +8228,15 @@ public function driving_license_update(Request $request){
 
 public function update_pmkissan(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'pmkissan' )->where('id', $request->applied_serviceid)->update( [
@@ -7074,6 +8265,62 @@ public function update_pmkissan(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'pmkissan' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -7106,12 +8353,15 @@ public function update_pmkissan(Request $request){
 }
 public function tec_csc_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'tec_exam' )->where('id', $request->applied_serviceid)->update( [
@@ -7140,6 +8390,62 @@ public function tec_csc_update(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'tec_exam' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -7217,12 +8523,15 @@ public function tec_csc_update(Request $request){
 }
 public function medicalscheme_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'medicalscheme' )->where('id', $request->applied_serviceid)->update( [
@@ -7251,6 +8560,62 @@ public function medicalscheme_update(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'medicalscheme' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -7319,12 +8684,15 @@ public function medicalscheme_update(Request $request){
 }
 public function birthcertificate_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'birth_certificate' )->where('id', $request->applied_serviceid)->update( [
@@ -7353,6 +8721,62 @@ public function birthcertificate_update(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'birth_certificate' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -7387,12 +8811,15 @@ public function birthcertificate_update(Request $request){
 }
 public function dharsan_update(Request $request){
     $apply_user_id = 0;
-    if($request->retailer_id == 0){
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
         $apply_user_id = $request->distributor_id;
     }elseif($request->distributor_id == 0){
         $apply_user_id = $request->retailer_id;
     }
-    if($request->distributor_id != Auth::user()->id && $apply_user_id != Auth::user()->id){
+    if($apply_user_id != Auth::user()->id){
         $status = $request->status;
         if($status == "Resubmit"){
             DB::table( 'dharsan' )->where('id', $request->applied_serviceid)->update( [
@@ -7421,6 +8848,62 @@ public function dharsan_update(Request $request){
                     'completed_date' => date("Y-m-d"),
                 ] );
             }
+                }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'dharsan' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks' => $request->remarks,
+        ] );
         }
     }else{
         $status = "Pending";
@@ -7539,7 +9022,7 @@ public function patta_update(Request $request){
         $service_status = 'Out Payment';
         $ad_info = "Service Refund For". ' ' .$servicename;
 
-        $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
         $balance = 0;
         if($getwallet){
             $balance = $getwallet->wallet;
@@ -7552,18 +9035,19 @@ public function patta_update(Request $request){
         $newbalance = $balance - $payment;
         $newbalance1 = $balance1 + $payment;
 
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','1','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
         DB::insert( DB::raw( $sql ) );
-        $sql = "update users set wallet = wallet - $payment where id = 1";
+        $sql = "update users set wallet = wallet - $payment where id = 2";
         DB::update( DB::raw( $sql ) );
         $service_status = 'IN Payment';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','1','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
         DB::update( DB::raw( $sql ) );
 
         DB::table( 'patta' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
+            'remarks' => $request->remarks,
         ] );
 
     }
@@ -7688,7 +9172,7 @@ public function utislupdate(Request $request){
         $service_status = 'Out Payment';
         $ad_info = "Service Refund For". ' ' .$servicename;
 
-        $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
         $balance = 0;
         if($getwallet){
             $balance = $getwallet->wallet;
@@ -7701,18 +9185,19 @@ public function utislupdate(Request $request){
         $newbalance = $balance - $payment;
         $newbalance1 = $balance1 + $payment;
 
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','1','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet - $payment where id = 2";
         DB::update( DB::raw( $sql ) );
         $service_status = 'IN Payment';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','1','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
         DB::update( DB::raw( $sql ) );
 
         DB::table( 'patta' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
+            'remarks' => $request->remarks,
         ] );
 
     }
@@ -7740,17 +9225,17 @@ public function utislupdate(Request $request){
             ]);
         }
         if ($request->signature != null) {
-            $ec = uniqid().'.'.$request->file('signature')->extension();
+            $signature = uniqid().'.'.$request->file('signature')->extension();
             $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'signature' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['signature']['tmp_name'], $filepath . $ec);
+            move_uploaded_file($_FILES['signature']['tmp_name'], $filepath . $signature);
             DB::table('utislpan')->where('id', $request->applied_serviceid)->update([
                 'signature'         => $signature,
             ]);
         }
         if ($request->photo != null) {
-            $ec = uniqid().'.'.$request->file('photo')->extension();
+            $photo = uniqid().'.'.$request->file('photo')->extension();
             $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $ec);
+            move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
             DB::table('utislpan')->where('id', $request->applied_serviceid)->update([
                 'photo'         => $photo,
             ]);
@@ -7840,7 +9325,7 @@ public function utislcorection_update(Request $request){
         $service_status = 'Out Payment';
         $ad_info = "Service Refund For". ' ' .$servicename;
 
-        $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
         $balance = 0;
         if($getwallet){
             $balance = $getwallet->wallet;
@@ -7853,18 +9338,19 @@ public function utislcorection_update(Request $request){
         $newbalance = $balance - $payment;
         $newbalance1 = $balance1 + $payment;
 
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','1','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet - $payment where id = 2";
         DB::update( DB::raw( $sql ) );
         $service_status = 'IN Payment';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','1','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
         DB::update( DB::raw( $sql ) );
 
         DB::table( 'utislpan' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
+            'remarks' => $request->remarks,
         ] );
 
     }
@@ -7902,17 +9388,17 @@ public function utislcorection_update(Request $request){
             ]);
         }
         if ($request->signature != null) {
-            $ec = uniqid().'.'.$request->file('signature')->extension();
+            $signature = uniqid().'.'.$request->file('signature')->extension();
             $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'signature' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['signature']['tmp_name'], $filepath . $ec);
+            move_uploaded_file($_FILES['signature']['tmp_name'], $filepath . $signature);
             DB::table('utislpan')->where('id', $request->applied_serviceid)->update([
                 'signature'         => $signature,
             ]);
         }
         if ($request->photo != null) {
-            $ec = uniqid().'.'.$request->file('photo')->extension();
+            $photo = uniqid().'.'.$request->file('photo')->extension();
             $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
-            move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $ec);
+            move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
             DB::table('utislpan')->where('id', $request->applied_serviceid)->update([
                 'photo'         => $photo,
             ]);
@@ -8881,7 +10367,7 @@ public function voteridpdf_statusupdate(Request $request){
         $service_status = 'Out Payment';
         $ad_info = "Service Refund For". ' ' .$servicename;
 
-        $getwallet = DB::table( 'users' )->select('wallet')->where('id',1)->first();
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
         $balance = 0;
         if($getwallet){
             $balance = $getwallet->wallet;
@@ -8894,12 +10380,12 @@ public function voteridpdf_statusupdate(Request $request){
         $newbalance = $balance - $payment;
         $newbalance1 = $balance1 + $payment;
 
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','1','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet - $payment where id = 2";
         DB::update( DB::raw( $sql ) );
         $service_status = 'IN Payment';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','1','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
         DB::insert( DB::raw( $sql ) );
         $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
         DB::update( DB::raw( $sql ) );

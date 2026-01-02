@@ -43,7 +43,7 @@
                                     <h6 class="card-title">Service Payment : <span
                                             class="text-danger">{{ $payment }}</span></h6>
                                     <form class="row g-4" action="{{ url('submitapply_iibf_exam_register') }}"
-                                        enctype="multipart/form-data" method="post">
+                                        enctype="multipart/form-data" method="post" id="myForm">
                                         @csrf
                                         <div class="row">
                                             <input type="hidden" name="serviceid" value="{{ $serviceid }}">
@@ -116,6 +116,11 @@
             @endsection
             @push('page_scripts')
                 <script>
+         document.getElementById("myForm").addEventListener("submit", function() {
+            const btn = document.getElementById("save");
+            btn.disabled = true;
+            btn.innerText = "Submitting...";
+        });
                     var dist_id = "{{ $customers->dist_id }}";
                     var taluk_id = "{{ $customers->taluk_id }}";
                     var wallet = "{{ Auth::user()->wallet }}";

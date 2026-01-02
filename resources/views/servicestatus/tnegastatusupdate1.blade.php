@@ -38,7 +38,7 @@
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                         <div class="card-body p-4">
                             <form class="row g-4" action="{{ url('submit_statusupdate_tnegaservices1') }}"
-                                enctype="multipart/form-data" method="post">
+                                enctype="multipart/form-data" method="post" id="myForm">
                                 {{ csrf_field() }}
                                 <div class="row">
                                     <input type="hidden" name="applied_serviceid" value="{{ $services->id }}">
@@ -860,7 +860,7 @@
                                     @elseif($services->status == 'Approved')
                                         <button type="button" disabled class="btn btn-primary me-2">Completed</button>
                                     @else
-                                        <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                        <button id="save" type="submit" class="btn btn-primary me-2">Submit</button>
                                     @endif
                                 </div>
                             </form>
@@ -1053,7 +1053,7 @@
                 $('#selects').prop("required", true);
                 $('#selectshide').show("slow");
             } else {
-                $('#remarkshide').hide("slow");
+                $('#remarkshide').show("slow");
                 $('#remarks').prop("required", false);
                 $('#acknowledgementhide').hide("slow");
                 $('#acknowledgement').prop("required", false);
@@ -1211,6 +1211,12 @@
              "<tr><td> <select required name='family_relationship[]' class='form-control'><option value=''>Select</option><option value='Father'>தகப்பன்</option><option value='Mother'>தாய்</option><option value='Husband'>கணவர்</option><option value='Wife'>மனைவி</option><option value='Son'>மகன்</option><option value='Daughter'>மகள்</option><option value='Younger Brother'>அண்ணன்</option><option value='Elder Brother'>தம்பி</option><option value='Younger Sister'>அக்கா</option><option value='Elder Sister'>தங்கை</option></select></td><td><input class='form-control' required type='text' name='relation_name[]'maxlength='80'></td><td><input class='form-control' required type='text' name='relation_name_tamil[]'maxlength='80'></td><td width='10%'><input class='form-control number' required type='text' name='relation_age[]'maxlength='2'></td><td><select required name='occupation[]' class='form-control'><option value=''>Select</option><option value='Student'>Student</option><option value='Home Maker'>Home maker</option><option value='Govt Employee'>Govt employee</option><option value='Private Employee'>Private Employee</option><option value='Daily Wages'>Daily Wages</option><option value='Agriculture'>Agriculture</option><option value='Others'>Others</option></select></td><td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i class='mdi mdi-delete mdi-18px'></i></a></td></tr>"
         );
     }
-</script>
+
+        document.getElementById("myForm").addEventListener("submit", function() {
+        const btn = document.getElementById("save");
+        btn.disabled = true;               
+        btn.innerText = "Submitting...";  
+        });
+    </script>
 @endpush
 

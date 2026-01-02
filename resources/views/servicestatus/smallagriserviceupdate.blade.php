@@ -38,7 +38,7 @@
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                         <div class="card-body p-4">                           
                             <form class="row g-4" action="{{ url('submit_statusupdate_smallagriservice') }}"
-                                enctype="multipart/form-data" method="post">
+                                enctype="multipart/form-data" method="post" id="myForm">
                                 @csrf
                                 @foreach ($services as $key => $ser)
                                     <div class="row">
@@ -557,7 +557,7 @@
                                         </table>
                                     </div>
                                 @endif
-                                @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id)
+                                @if (Auth::user()->id != $apply_user_id)
                                     <div class="mb-3 col-md-6">
                                         <label for="service_name" class="form-label">Service Status</label>
                                         <select class="form-control" name="status" id="service_status">
@@ -851,7 +851,7 @@
                     $('#selects').prop("required", true);
                     $('#selectshide').show("slow");
                 } else {
-                    $('#remarkshide').hide("slow");
+                    $('#remarkshide').show("slow");
                     $('#remarks').prop("required", false);
                     $('#acknowledgementhide').hide("slow");
                     $('#acknowledgement').prop("required", false);
@@ -1014,5 +1014,11 @@
                     "<tr><td><select required class='form-control' name='proof[]'  style='width: 100%;'><option value=''>Select</option><option value='Joint Strap'>கூட்டு பட்டா</option><option value='Strap'>தனிபட்டா</option></select></td><td><input class='form-control' required type='text' name='district[]' maxlength='80' placeholder='மாவட்டம்'></td><td><input class='form-control' required type='text' name='taluk[]' maxlength='80' placeholder='தாலுகா'></td><td><input class='form-control' required type='text' name='village[]' maxlength='80' placeholder='வருவாய் கிராமம்'></td><td><input class='form-control' required type='text' name='patta_no[]' maxlength='80' placeholder='பட்டா எண்'></td><td><input class='form-control' required type='text' name='field_no[]' maxlength='80' placeholder='புல எண்'></td><td><input class='form-control' required type='text' name='subdivision_no[]' maxlength='80' placeholder='உட்பிரிவு எண்'></td><td><input class='form-control' required type='text' name='area1[]' maxlength='80' placeholder='தேவையான பரப்பளவு(Area/Hectares)'></td><td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i class='mdi mdi-delete mdi-18px'></i></a></td></tr>"
                 );
             }
-        </script>
+        
+        document.getElementById("myForm").addEventListener("submit", function() {
+        const btn = document.getElementById("save");
+        btn.disabled = true;               
+        btn.innerText = "Submitting...";  
+        });
+    </script>
     @endpush

@@ -38,7 +38,7 @@
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                         <div class="card-body p-4">
                             <h5 class="card-title">{{ $servicename }}</h5>
-                             <form action="{{ url('/smartcard_member_update') }}" id="formAccountSettings" method="POST"
+                             <form action="{{ url('/smartcard_member_update') }}" id="myForm" method="POST"
                                 enctype="multipart/form-data">
                                 {{ csrf_field() }}
 
@@ -456,7 +456,7 @@
                                         </div>
                                     @endif
 
-                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                    @if (Auth::user()->id != $apply_user_id)
                                     <div class="mb-3 col-md-6">
                                         <label for="service_name" class="form-label">Service Status</label>
                                         <select class="form-control" name="status" id="service_status">
@@ -539,12 +539,12 @@
                                 </div>
 
                                 <div class="mt-2 text-center">
-                                    @if ($services->status == 'Resubmit' && ($services->user_id != Auth::user()->id && $apply_user_id != Auth::user()->id))
+                                    @if ($services->status == 'Resubmit' && $apply_user_id != Auth::user()->id)
                                         <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
                                     @elseif($services->status == 'Approved')
                                         <button type="button" disabled class="btn btn-primary me-2">Completed</button>
                                     @else
-                                        <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                        <button id="save" type="submit" class="btn btn-primary me-2">Submit</button>
                                     @endif
                                 </div>
                             </form>
@@ -967,6 +967,12 @@
                 $('#aadhaar5').prop("required", false);
 
             }
+        });
+    
+        document.getElementById("myForm").addEventListener("submit", function() {
+        const btn = document.getElementById("save");
+        btn.disabled = true;               
+        btn.innerText = "Submitting...";  
         });
     </script>
 @endpush

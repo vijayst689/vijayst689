@@ -43,7 +43,7 @@
                                     <h6 class="card-title">Service Payment : <span
                                             class="text-danger">{{ $payment }}</span></h6>
                                     <form class="row g-4" action="{{ url('submitapply_driving_license') }}"
-                                        enctype="multipart/form-data" method="post">
+                                        enctype="multipart/form-data" method="post" id="myForm">
                                         @csrf
                                         <div class="row">
                                             <input type="hidden" name="serviceid" value="{{ $serviceid }}">
@@ -115,6 +115,11 @@
             @endsection
             @push('page_scripts')
                 <script>
+         document.getElementById("myForm").addEventListener("submit", function() {
+            const btn = document.getElementById("save");
+            btn.disabled = true;
+            btn.innerText = "Submitting...";
+        });
                     $(function() {
                         var wallet = "{{ Auth::user()->wallet }}";
                         var amount = "{{ $payment }}";

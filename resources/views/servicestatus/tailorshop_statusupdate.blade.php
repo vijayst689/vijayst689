@@ -38,7 +38,7 @@
                     <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                         <div class="card-body p-4">
                             <h5 class="card-title">{{ $servicename }}</h5>
-                            <form action="{{ url('/tailorshop_update') }}" id="formAccountSettings" method="POST"
+                            <form action="{{ url('/tailorshop_update') }}" id="myForm" method="POST"
                                 enctype="multipart/form-data">
                                 {{ csrf_field() }}
 
@@ -50,7 +50,9 @@
                                     <input type="hidden" name="serviceid" value="{{ $services->service_id }}">
                                     @php
                                         $apply_user_id = 0;
-                                        if ($services->retailer_id == 0) {
+                                        if ($services->distributor_id == 0 && $services->retailer_id == 0) {
+                                            $apply_user_id = $services->user_id;
+                                        } elseif ($services->retailer_id == 0) {
                                             $apply_user_id = $services->distributor_id;
                                         } elseif ($services->distributor_id == 0) {
                                             $apply_user_id = $services->retailer_id;
@@ -429,12 +431,12 @@
                                     @endif
                                 </div>
                                 <div class="mt-2 text-center">
-                                    @if ($services->status == 'Resubmit' && ( $apply_user_id != Auth::user()->id))
+                                    @if ($services->status == 'Resubmit' && $apply_user_id != Auth::user()->id)
                                         <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
                                     @elseif($services->status == 'Approved')
                                         <button type="button" disabled class="btn btn-primary me-2">Completed</button>
                                     @else
-                                        <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                        <button id="save" type="submit" class="btn btn-primary me-2">Submit</button>
                                     @endif
                                 </div>
                             </form>
@@ -536,7 +538,7 @@
                     $('#selects').prop("required", true);
                     $('#selectshide').show("slow");
                 } else {
-                    $('#remarkshide').hide("slow");
+                    $('#remarkshide').show("slow");
                     $('#remarks').prop("required", false);
                     $('#acknowledgementhide').hide("slow");
                     $('#acknowledgement').prop("required", false);
@@ -624,6 +626,12 @@
     }
 
 
+    
+        document.getElementById("myForm").addEventListener("submit", function() {
+        const btn = document.getElementById("save");
+        btn.disabled = true;               
+        btn.innerText = "Submitting...";  
+        });
     </script>
 @endpush
 

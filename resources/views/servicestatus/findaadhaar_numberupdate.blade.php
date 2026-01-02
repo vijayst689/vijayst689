@@ -40,7 +40,7 @@
                             <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                                 <div class="card-body p-4">
                                     <h5 class="card-title">{{ $servicename }}</h5>
-                                    <form action="{{ url('/findaadhaar_numberupdate') }}" id="formAccountSettings"
+                                    <form action="{{ url('/findaadhaar_numberupdate') }}" id="myForm"
                                         method="POST" enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         <div class="row">
@@ -50,14 +50,16 @@
                                             <input type="hidden" name="distributor_id"
                                                 value="{{ $services->distributor_id }}">
                                             <input type="hidden" name="serviceid" value="{{ $services->service_id }}">
-                                            @php
-                                                $apply_user_id = 0;
-                                                if ($services->retailer_id == 0) {
-                                                    $apply_user_id = $services->distributor_id;
-                                                } elseif ($services->distributor_id == 0) {
-                                                    $apply_user_id = $services->retailer_id;
-                                                }
-                                            @endphp
+                                           @php
+                                        $apply_user_id = 0;
+                                        if ($services->distributor_id == 0 && $services->retailer_id == 0) {
+                                            $apply_user_id = $services->user_id;
+                                        } elseif ($services->retailer_id == 0) {
+                                            $apply_user_id = $services->distributor_id;
+                                        } elseif ($services->distributor_id == 0) {
+                                            $apply_user_id = $services->retailer_id;
+                                        }
+                                    @endphp
 
                                             <div class="mb-3 col-md-6">
                                                 <label for="name" class="form-label">Name</label>
@@ -110,74 +112,101 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="service_name" class="form-label">Service Status</label>
-                                                    <select class="form-control" name="status" id="service_status">
-                                                        <option value="">Select</option>
-                                                        <option @if ($services->status == 'Pending') selected @endif
-                                                            value="Pending">Pending</option>
-                                                        <option @if ($services->status == 'Resubmit') selected @endif
-                                                            value="Resubmit">Resubmit</option>
-                                                        <option @if ($services->status == 'Processing') selected @endif
-                                                            value="Processing">Processing</option>
-                                                        @if ($services->status == 'Processing' || $services->status == 'Approved')
-                                                            <option @if ($services->status == 'Approved') selected @endif
-                                                                value="Approved">Approved</option>
-                                                        @endif
-                                                    </select>
-                                                </div>
-                                                <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
-                                                    <label for="remarks" class="form-label">Remarks</label>
-                                                    <input value="{{ $services->remarks }}" class="form-control"
-                                                        type="text" name="remarks" maxlength="100" id="remarks"
-                                                        placeholder="Remarks" />
-                                                </div>
-                                                <div class="mb-3 col-md-6" id="acknowledgementhide"
-                                                    style="display :none;">
-                                                    <label for="acknowledgement"
-                                                        class="form-label">Acknowledgement</label>
-                                                    <input class="form-control" type="file" name="acknowledgement"
-                                                        id="acknowledgement" />
-                                                </div>
-                                                <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
-                                                    <label for="application_no" class="form-label">Application No</label>
-                                                    <input value="{{ $services->application_no }}" class="form-control"
-                                                        type="text" maxlength="20" name="application_no"
-                                                        id="application_no" />
-                                                </div>
-                                                <div class="mb-3 col-md-6" id="certhide" style="display :none;">
-                                                    <label for="certificate" class="form-label">Certificate</label>
-                                                    <input class="form-control" type="file" name="certificate"
-                                                        id="certificate" />
-                                                </div>
-                                            @else
-                                                <div class="row">
-                                                    <div class="mb-3 col-md-6">
-                                                        <label for="service_name" class="form-label">Service
-                                                            Status</label>
-                                                        <input disabled value="{{ $services->status }}"
-                                                            class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="mb-3 col-md-6">
-                                                        <label for="remarks" class="form-label">Remarks</label>
-                                                        <textarea rows="2" class="form-control" type="text" disabled placeholder="Remarks">{{ $services->remarks }}</textarea>
-                                                    </div>
-
-                                                </div>
-                                            @endif
+                                                                                @if (Auth::user()->id != $apply_user_id)
+                                        <div class="mb-3 col-md-6">
+                                            <label for="service_name" class="form-label">Service Status</label>
+                                            <select class="form-control" name="status" id="service_status">
+                                                <option value="">Select</option>
+                                                <option @if ($services->status == 'Pending') selected @endif
+                                                    value="Pending">
+                                                    Pending</option>
+                                                <option @if ($services->status == 'Resubmit') selected @endif
+                                                    value="Resubmit">
+                                                    Resubmit</option>
+                                                <option @if ($services->status == 'Processing') selected @endif
+                                                    value="Processing">Processing</option>
+                                                @if ($services->status != 'Approved')
+                                                    <option @if ($services->status == 'Rejected') selected @endif
+                                                        value="Rejected">
+                                                        Rejected</option>
+                                                @endif
+                                                <option @if ($services->status == 'Approved') selected @endif
+                                                    value="Approved">
+                                                    Approved</option>
+                                            </select>
                                         </div>
+                                        <div class="mb-3 col-md-6" id="remarkshide" style="display :none;">
+                                            <label for="remarks" class="form-label">Remarks</label>
+                                            <input value="{{ $services->remarks }}" class="form-control" type="text"
+                                                name="remarks" maxlength="100" id="remarks" placeholder="Remarks" />
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="selecthide" style="display :none;">
+                                            <label for="select" class="form-label">Select</label>
+                                            <select class="form-control" name="selects" id="select">
+                                                <option>select</option>
+                                                <option @if ($services->selects == 'Text') selected @endif value = "Text">
+                                                    Text</option>
+                                                <option @if ($services->selects == 'File') selected @endif value = "File">
+                                                    File</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="acknowledgementhide" style="display :none;">
+                                            <label for="acknowledgement" class="form-label">Acknowledgement</label>
+                                            <input class="form-control" type="file" name="acknowledgement"
+                                                id="acknowledgement" />
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="applicationnohide" style="display :none;">
+                                            <label for="application_no" class="form-label">Application No</label>
+                                            <input value="{{ $services->application_no }}" class="form-control"
+                                                type="text" maxlength="20" name="application_no"
+                                                id="application_no" />
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="selectshide" style="display :none;">
+                                            <label for="selects" class="form-label">Select</label>
+                                            <select class="form-control" name="lects" id="selects">
+                                                <option>select</option>
+                                                <option @if ($services->lects == 'Text') selected @endif
+                                                    value = "Text">
+                                                    Text</option>
+                                                <option @if ($services->lects == 'File') selected @endif
+                                                    value = "File">File</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="applicationhide" style="display :none;">
+                                            <label for="application" class="form-label">Application</label>
+                                            <input value="{{ $services->application }}" class="form-control"
+                                                type="text" maxlength="150" name="application" id="application" />
+                                        </div>
+                                        <div class="mb-3 col-md-6" id="certhide" style="display :none;">
+                                            <label for="certificate" class="form-label">Certificate</label>
+                                            <input class="form-control" type="file" name="certificate"
+                                                id="certificate" />
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="service_name" class="form-label">Service Status</label>
+                                                <input disabled value="{{ $services->status }}" class="form-control"
+                                                    type="text" />
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="remarks" class="form-label">Remarks</label>
+                                                <textarea rows="2" class="form-control" type="text" disabled placeholder="Remarks">{{ $services->remarks }}</textarea>
+                                            </div>
 
-                                        <div class="mt-2 text-center">
-                                            @if ($services->status == 'Resubmit' && ($services->user_id != Auth::user()->id && $apply_user_id != Auth::user()->id))
-                                                <button type="submit" disabled
-                                                    class="btn btn-primary me-2">Resubmit</button>
-                                            @elseif($services->status == 'Approved')
-                                                <button type="button" disabled
-                                                    class="btn btn-primary me-2">Completed</button>
-                                            @else
-                                                <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                            @endif
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="mt-2 text-center">
+                                    @if ($services->status == 'Resubmit' && $apply_user_id != Auth::user()->id)
+                                        <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
+                                    @elseif($services->status == 'Approved')
+                                        <button type="button" disabled class="btn btn-primary me-2">Completed</button>
+                                    @else
+                                        <button id="save" type="submit"
+                                            class="btn btn-primary me-2">Submit</button>
+                                    @endif
                                         </div>
                                     </form>
                                 </div>
@@ -191,24 +220,39 @@
                     $(function() {
                         var status = "{{ $services->status }}";
                         var acknowledgement = "{{ $services->acknowledgement }}";
+            var certificate = "{{ $services->certificate }}";
+            var selects = "{{ $services->selects }}";
+            var lects = "{{ $services->lects }}";
 
                         if (status == "Resubmit") {
-                            $('#remarkshide').show("slow");
-                            $('#remarks').prop("required", true);
-                        } else if (status == "Processing") {
+                        $('#remarkshide').show("slow");
+                        $('#remarks').prop("required", true);
+                    } else if (status == "Processing") {
+                        if (selects == "Text") {
                             $('#applicationnohide').show("slow");
-                            $('#application_no').prop("required", true);
+                        }
+                        if (selects == "File") {
                             $('#acknowledgementhide').show("slow");
                             if (acknowledgement == "") {
                                 $('#acknowledgement').prop("required", true);
                             }
-                        } else if (status == "Approved") {
+                        }
+                        $('#selecthide').show("slow");
+
+
+                    } else if (status == "Approved") {
+                        if (lects == "Text") {
+                            $('#applicationhide').show("slow");
+                        }
+                        if (lects == "File") {
                             $('#certhide').show("slow");
-                            if (acknowledgement == "") {
+                            if (certificate == "") {
                                 $('#certificate').prop("required", true);
                             }
                         }
-                    });
+                        $('#selectshide').show("slow")
+                    }
+                });
 
                     var documents = "{{ $services->documents }}";
                     if (documents == "Pan Card Number") {
@@ -219,44 +263,98 @@
 
 
                     $('#service_status').change(function() {
-                        if ($('#service_status').val() == 'Resubmit') {
-                            $('#acknowledgementhide').hide("slow");
-                            $('#acknowledgement').prop("required", false);
-                            $('#applicationnohide').hide("slow");
-                            $('#application_no').prop("required", false);
-                            $('#certhide').hide("slow");
-                            $('#certificate').prop("required", false);
-                            $('#remarkshide').show("slow");
-                            $('#remarks').prop("required", true);
-                        } else if ($('#service_status').val() == 'Processing') {
-                            $('#acknowledgementhide').show("slow");
-                            $('#acknowledgement').prop("required", true);
-                            $('#remarkshide').hide("slow");
-                            $('#remarks').prop("required", false);
-                            $('#certhide').hide("slow");
-                            $('#certificate').prop("required", false);
-                            $('#applicationnohide').show("slow");
-                            $('#application_no').prop("required", true);
-                        } else if ($('#service_status').val() == 'Approved') {
-                            $('#remarkshide').hide("slow");
-                            $('#remarks').prop("required", false);
-                            $('#acknowledgementhide').hide("slow");
-                            $('#acknowledgement').prop("required", false);
-                            $('#certhide').show("slow");
-                            $('#certificate').prop("required", true);
-                            $('#applicationnohide').hide("slow");
-                            $('#application_no').prop("required", false);
-                        } else {
-                            $('#remarkshide').hide("slow");
-                            $('#remarks').prop("required", false);
-                            $('#acknowledgementhide').hide("slow");
-                            $('#acknowledgement').prop("required", false);
-                            $('#certhide').hide("slow");
-                            $('#certificate').prop("required", false);
-                            $('#applicationnohide').hide("slow");
-                            $('#application_no').prop("required", false);
-                        }
-                    });
+                    if ($('#service_status').val() == 'Resubmit') {
+                        $('#acknowledgementhide').hide("slow");
+                        $('#acknowledgement').prop("required", false);
+                        $('#applicationnohide').hide("slow");
+                        $('#application_no').prop("required", false);
+                        $('#certhide').hide("slow");
+                        $('#certificate').prop("required", false);
+                        $('#remarkshide').show("slow");
+                        $('#remarks').prop("required", true);
+                        $('#select').prop("required", false);
+                        $('#selecthide').hide("slow");
+                        $('#selects').prop("required", false);
+                        $('#selectshide').hide("slow");
+                    } else if ($('#service_status').val() == 'Processing') {
+                        $('#acknowledgementhide').hide("slow");
+                        $('#acknowledgement').prop("required", false);
+                        $('#remarkshide').hide("slow");
+                        $('#remarks').prop("required", false);
+                        $('#certhide').hide("slow");
+                        $('#certificate').prop("required", false);
+                        $('#applicationnohide').hide("slow");
+                        $('#application_no').prop("required", false);
+                        $('#select').prop("required", true);
+                        $('#selecthide').show("slow");
+                        $('#selects').prop("required", false);
+                        $('#selectshide').hide("slow");
+                    } else if ($('#service_status').val() == 'Approved') {
+                        $('#remarkshide').hide("slow");
+                        $('#remarks').prop("required", false);
+                        $('#acknowledgementhide').hide("slow");
+                        $('#acknowledgement').prop("required", false);
+                        $('#certhide').hide("slow");
+                        $('#certificate').prop("required", false);
+                        $('#applicationnohide').hide("slow");
+                        $('#application_no').prop("required", false);
+                        $('#select').prop("required", false);
+                        $('#selecthide').hide("slow");
+                        $('#selects').prop("required", true);
+                        $('#selectshide').show("slow");
+                    } else {
+                        $('#remarkshide').show("slow");
+                        $('#remarks').prop("required", false);
+                        $('#acknowledgementhide').hide("slow");
+                        $('#acknowledgement').prop("required", false);
+                        $('#certhide').hide("slow");
+                        $('#certificate').prop("required", false);
+                        $('#applicationnohide').hide("slow");
+                        $('#application_no').prop("required", false);
+                        $('#select').prop("required", false);
+                        $('#selecthide').hide("slow");
+                        $('#selects').prop("required", false);
+                        $('#selectshide').hide("slow");
+                    }
+                });
+
+                $('#select').change(function() {
+                    if ($('#select').val() == 'Text') {
+                        $('#applicationnohide').show("slow");
+                        $('#application_no').prop("required", true);
+                        $('#acknowledgementhide').hide("slow");
+                        $('#acknowledgement').prop("required", false);
+                    } else if ($('#select').val() == 'File') {
+                        $('#acknowledgementhide').show("slow");
+                        $('#acknowledgement').prop("required", false);
+                        $('#applicationnohide').hide("slow");
+                        $('#application_no').prop("required", false);
+                    } else {
+                        $('#applicationnohide').hide("slow");
+                        $('#application_no').prop("required", false);
+                        $('#acknowledgementhide').hide("slow");
+                        $('#acknowledgement').prop("required", false);
+                    }
+                });
+
+                $('#selects').change(function() {
+                    if ($('#selects').val() == 'Text') {
+                        $('#applicationhide').show("slow");
+                        $('#application').prop("required", true);
+                        $('#certhide').hide("slow");
+                        $('#certificate').prop("required", false);
+                    } else if ($('#selects').val() == 'File') {
+                        $('#certhide').show("slow");
+                        $('#certificate').prop("required", false);
+                        $('#applicationhide').hide("slow");
+                        $('#application').prop("required", false);
+                    } else {
+                        $('#applicationhide').hide("slow");
+                        $('#application').prop("required", false);
+                        $('#certhide').hide("slow");
+                        $('#certificate').prop("required", false);
+                    }
+                });
                     $('#documents').change(function() {
                         if ($('#documents').val() == 'Pan Card Number') {
                             $('#pan_card_nohide').show("slow");
@@ -275,5 +373,11 @@
                             $('#aadhaar_entrolment_sliphide').hide("slow");
                         }
                     });
-                </script>
+                
+        document.getElementById("myForm").addEventListener("submit", function() {
+        const btn = document.getElementById("save");
+        btn.disabled = true;               
+        btn.innerText = "Submitting...";  
+        });
+    </script>
             @endpush

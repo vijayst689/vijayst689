@@ -37,7 +37,7 @@
                     @endif
 
                     <form onsubmit="return checkpayment(event)" action="{{ url('submitutisl_corection') }}"
-                        id="formAccountSettings" method="POST" enctype="multipart/form-data">
+                        id="myForm" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="amount" id="amount">
                         <input type="hidden" name="serviceid" value="{{ $serviceid }}">
@@ -149,6 +149,11 @@
 @endsection
 @push('page_scripts')
     <script>
+         document.getElementById("myForm").addEventListener("submit", function() {
+            const btn = document.getElementById("save");
+            btn.disabled = true;
+            btn.innerText = "Submitting...";
+        });
         var ramjibalance = "{{ $mainbalance->wallet }}";
         ramjibalance = parseFloat(ramjibalance);
         amount = parseInt(amount);

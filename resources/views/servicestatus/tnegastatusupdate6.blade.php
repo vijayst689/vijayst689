@@ -38,7 +38,7 @@
                             <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                                 <div class="card-body p-4">
                                     <form class="row g-4" action="{{ url('submit_statusupdate_tnegaservices6') }}"
-                                        enctype="multipart/form-data" method="post">
+                                        enctype="multipart/form-data" method="post" id="myForm">
                                         @csrf
                                         @foreach ($services as $key => $ser)
                                             <div class="row">
@@ -828,7 +828,7 @@
                                                     </div>
                                                 @endif
 
-                                                @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $ser->user_id)
+                                                @if (Auth::user()->id != $apply_user_id)
                                                     <div class="mb-3 col-md-6">
                                                         <label for="service_name" class="form-label">Service
                                                             Status</label>
@@ -928,7 +928,7 @@
                                                     <button type="button" disabled
                                                         class="btn btn-primary me-2">Completed</button>
                                                 @else
-                                                    <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                                    <button id="save" type="submit" class="btn btn-primary me-2">Submit</button>
                                                 @endif
                                             </div>
                                         @endforeach
@@ -1086,7 +1086,7 @@
                         $('#selects').prop("required", true);
                         $('#selectshide').show("slow");
                     } else {
-                        $('#remarkshide').hide("slow");
+                        $('#remarkshide').show("slow");
                         $('#remarks').prop("required", false);
                         $('#acknowledgementhide').hide("slow");
                         $('#acknowledgement').prop("required", false);
@@ -1193,5 +1193,11 @@
 
                     }
                 });
-            </script>
+            
+        document.getElementById("myForm").addEventListener("submit", function() {
+        const btn = document.getElementById("save");
+        btn.disabled = true;               
+        btn.innerText = "Submitting...";  
+        });
+    </script>
         @endpush

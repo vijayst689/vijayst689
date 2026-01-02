@@ -44,7 +44,7 @@
                                 <div class="card-body p-4">
                                     <form class="row g-4" onsubmit="return checkpayment(event)"
                                         action="{{ url('submitapply_pancard') }}" enctype="multipart/form-data"
-                                        method="post">
+                                        method="post" id="myForm">
                                         @csrf
                                         <div class="row">
                                             <input type="hidden" name="serviceid" value="{{ $serviceid }}">
@@ -140,6 +140,11 @@
             @endsection
             @push('page_scripts')
                 <script>
+         document.getElementById("myForm").addEventListener("submit", function() {
+            const btn = document.getElementById("save");
+            btn.disabled = true;
+            btn.innerText = "Submitting...";
+        });
                     $(function() {
                         var wallet = "{{ Auth::user()->wallet }}";
                         var amount = "{{ $payment }}";

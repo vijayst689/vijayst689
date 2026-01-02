@@ -44,7 +44,7 @@
                                 <h5><span class="text-danger" id="cantext"></span></h5>
                                 <div class="card-body p-4">
                                     <form class="row g-4" action="{{ url('submitapply_tnegaservices3') }}"
-                                        enctype="multipart/form-data" method="post">
+                                        enctype="multipart/form-data" method="post" id="myForm">
                                         @csrf
                                         <div class="row">
                                             <input type="hidden" name="serviceid" value="{{ $serviceid }}">
@@ -413,6 +413,11 @@
             @endsection
             @push('page_scripts')
                 <script>
+         document.getElementById("myForm").addEventListener("submit", function() {
+            const btn = document.getElementById("save");
+            btn.disabled = true;
+            btn.innerText = "Submitting...";
+        });
                     var dist_id = "{{ $customers->dist_id }}";
                     var taluk_id = "{{ $customers->taluk_id }}";
                     var wallet = "{{ Auth::user()->wallet }}";
