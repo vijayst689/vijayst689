@@ -581,3 +581,11 @@ Route::post('saveserver_payment', [App\Http\Controllers\ServerPaymentController:
 
 Route::get('sitepayment', [App\Http\Controllers\ServicePaymentController::class, 'sitepayment'])->name('sitepayment');
 Route::post('save_sitepayment', [App\Http\Controllers\ServicePaymentController::class, 'save_sitepayment'])->name('save_sitepayment');
+
+//Nalavariyam
+
+Route::get('nalavariyam/wallet', [App\Http\Controllers\NalavariyamWalletController::class, 'index'])->name('nalavariyamwallet');
+Route::get('nalavariyam/request', [App\Http\Controllers\NalavariyamWalletController::class, 'nalavariyam_request'])->name('nalavariyam_request');
+Route::post('nalavariyam/wallet/add', [App\Http\Controllers\NalavariyamWalletController::class, 'addMoney'])->name('addMoney');
+Route::post('nalavariyam/payment/approve', [App\Http\Controllers\NalavariyamWalletController::class, 'approve'])->name('addMoney');
+Route::get('nalavariyam/payment/decline/{id}', [App\Http\Controllers\NalavariyamWalletController::class, 'decline'])->name('addMoney');

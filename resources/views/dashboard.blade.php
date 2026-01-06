@@ -323,27 +323,25 @@
                             </div>
                         </div>
                     @endif
-                     @php
-                        $sitecount = DB::table('sitepayment')
-                        ->where('payment_status', 'UNPAID')
-                        ->count();
-                        @endphp
-                        @if($sitecount > 0)
-                    <div class="col-md-3 col-sm-4">
-                        <div class="card radius-10 bg-gradient-kyoto">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="me-auto">
-                                        <a href="{{ url('/sitepayment') }}">
-                                            <p class="mb-0 text-dark">SitePayment</p>
-                                        </a>
-                                        <h4 class="my-1 text-dark">{{ $sitecount }}</h4>
+                    @php
+                        $sitecount = DB::table('sitepayment')->where('payment_status', 'UNPAID')->count();
+                    @endphp
+                    @if ($sitecount > 0)
+                        <div class="col-md-3 col-sm-4">
+                            <div class="card radius-10 bg-gradient-kyoto">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-auto">
+                                            <a href="{{ url('/sitepayment') }}">
+                                                <p class="mb-0 text-dark">SitePayment</p>
+                                            </a>
+                                            <h4 class="my-1 text-dark">{{ $sitecount }}</h4>
+                                        </div>
+                                        <div id="chart4"></div>
                                     </div>
-                                    <div id="chart4"></div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     @endif
                     <div class="col-md-3 col-sm-4">
                         <div class="card radius-10 bg-gradient-cosmic">
@@ -480,21 +478,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-4">
+                    {{-- <div class="col-md-3 col-sm-4">
                         <div class="card radius-10 bg-gradient-ibiza">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div class="me-auto">
-                                        <a href="{{ url('/retailers') }}">
-                                            <p class="mb-0 text-white">Retailler</p>
+                                        <a href="{{ url('/nalavariyam/wallet') }}">
+                                            <p class="mb-0 text-white">Na Wallet</p>
                                         </a>
-                                        <h4 class="my-1 text-white">{{ $retailer_count }}</h4>
+                                        <h4 class="my-1 text-white">{{ $nalavariyamwallet }}</h4>
                                     </div>
                                     <div id="chart2"></div>
                                 </div>
                             </div>
+                            <button type="button" class="btn-sm btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#addMoneyModal">Add Money</button>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-md-3 col-sm-4">
                         <div class="card radius-10 bg-gradient-ohhappiness">
                             <div class="card-body">
@@ -522,8 +522,8 @@
                                     </div>
                                     <div id="chart1"></div>
                                     <div class="spinner-grow text-warning" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                                </div>
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -540,8 +540,23 @@
                                     </div>
                                     <div id="chart1"></div>
                                     <div class="spinner-grow text-warning" role="status">
-                                <span class="visually-hidden">Loading...</span>
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <div class="card radius-10 bg-gradient-ibiza">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-auto">
+                                        <a href="{{ url('/retailers') }}">
+                                            <p class="mb-0 text-white">Retailler</p>
+                                        </a>
+                                        <h4 class="my-1 text-white">{{ $retailer_count }}</h4>
+                                    </div>
+                                    <div id="chart2"></div>
                                 </div>
                             </div>
                         </div>
@@ -584,7 +599,7 @@
                             <h5 class="sliding-text text-danger">{{ $n->notify }}&nbsp;&nbsp;|&nbsp;&nbsp;</h5>
                         @endforeach
                     </div>
-                     @if (Auth::user()->verified == 1)
+                    @if (Auth::user()->verified == 1)
                         <div class="container-xxl flex-grow-1 container-p-y">
                             <div class="row">
                                 <div class="col-md-12">
@@ -600,7 +615,7 @@
                             </div>
                         </div>
                     @endif
-                     @if (Auth::user()->verified == 1)
+                    @if (Auth::user()->verified == 1)
                         <div class="col-md-3 col-sm-4">
                             <div class="card radius-10 bg-gradient-ohhappiness">
                                 <div class="card-body">
@@ -804,7 +819,7 @@
                             <h5 class="sliding-text text-danger">{{ $n->notify }}&nbsp;&nbsp;|&nbsp;&nbsp;</h5>
                         @endforeach
                     </div>
-                     @if (Auth::user()->verified == 1)
+                    @if (Auth::user()->verified == 1)
                         <div class="container-xxl flex-grow-1 container-p-y">
                             <div class="row">
                                 <div class="col-md-12">
@@ -820,7 +835,7 @@
                             </div>
                         </div>
                     @endif
-                     @if (Auth::user()->verified == 1)
+                    @if (Auth::user()->verified == 1)
                         <div class="col-md-3 col-sm-4">
                             <div class="card radius-10 bg-gradient-ohhappiness">
                                 <div class="card-body">
@@ -1002,7 +1017,7 @@
                             </div>
                         </div>
                     </div>
-                     {{-- <div class="col-md-3 col-sm-4">
+                    {{-- <div class="col-md-3 col-sm-4">
                         <div class="card radius-10 bg-gradient-cosmic">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
@@ -1129,7 +1144,7 @@
                             </div>
                         </div>
                     </div>
-                     {{-- <div class="col-md-3 col-sm-4">
+                    {{-- <div class="col-md-3 col-sm-4">
                         <div class="card radius-10 bg-gradient-cosmic">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
@@ -1175,6 +1190,38 @@
             </div>
         </div>
     </div>
+    {{-- <div class="modal fade" id="addMoneyModal" tabindex="-1" aria-labelledby="addMoneyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMoneyModalLabel">Add Nalavariyam Wallet</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <form action="{{ url('/nalavariyam/wallet/add') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Enter Amount</label>
+                            <input type="number" name="amount" id="amount" class="form-control"
+                                placeholder="Enter amount" required min="1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="proof" class="form-label">Upload Payment Proof</label>
+                            <input type="file" name="proof" id="proof" class="form-control"
+                                accept="image/*,application/pdf" required>
+                            <small class="text-muted">Accepted: JPG, PNG, PDF</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Money</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> --}}
 @endsection
 @push('page_scripts')
     <script type="text/javascript">
