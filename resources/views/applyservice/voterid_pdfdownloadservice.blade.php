@@ -90,6 +90,11 @@
                                             <input required type="text" maxlength="100" class="form-control"
                                                 name="name" placeholder="Name" />
                                         </div>
+                                         <div class="mb-3 col-md-6">
+                                            <label for="mobile" class="form-label">Mobile Number</label>
+                                            <input required type="text" class="form-control number" maxlength="10"
+                                                name="mobile" placeholder="Mobile Number" />
+                                        </div>
                                         @endif
                                         <div class="text-center">
                                             <p id="nopayment"></p>

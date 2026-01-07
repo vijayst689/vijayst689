@@ -228,6 +228,8 @@ Route::post('/submitapply_smart_member', [App\Http\Controllers\ServiceController
 Route::post('/submitapply_smart_nametransfer', [App\Http\Controllers\ServiceController::class, 'submitapply_smart_nametransfer'])->name('submitapply_smart_nametransfer');
 Route::post('/submitapply_tailorshop', [App\Http\Controllers\ServiceController::class, 'submitapply_tailorshop'])->name('submitapply_tailorshop');
 Route::post('/submitapply_voteridpdfdownload', [App\Http\Controllers\ServiceController::class, 'submitapply_voteridpdfdownload'])->name('submitapply_voteridpdfdownload');
+Route::post('/submitapply_medicalscheme', [App\Http\Controllers\ServiceController::class, 'submitapply_medicalscheme'])->name('submitapply_medicalscheme');
+Route::post('/submitapply_agri_stack', [App\Http\Controllers\ServiceController::class, 'submitapply_agri_stack'])->name('submitapply_agri_stack');
 
 Route::post('/submitutislnew', [App\Http\Controllers\ServiceController::class, 'submitutislnew'])->name('submitutislnew');
 
@@ -291,6 +293,8 @@ Route::post('/cancertificate_find_update', [App\Http\Controllers\ServicestatusCo
 Route::post('/utislupdate', [App\Http\Controllers\ServicestatusController::class, 'utislupdate'])->name('utislupdate');
 Route::post('/utislcorection_update', [App\Http\Controllers\ServicestatusController::class, 'utislcorection_update'])->name('utislcorection_update');
 Route::post('/voteridpdf_statusupdate', [App\Http\Controllers\ServicestatusController::class, 'voteridpdf_statusupdate'])->name('voteridpdf_statusupdate');
+Route::post('/medicalscheme_update', [App\Http\Controllers\ServicestatusController::class, 'medicalscheme_update'])->name('medicalscheme_update');
+Route::post('/agristack_update', [App\Http\Controllers\ServicestatusController::class, 'agristack_update'])->name('agristack_update');
 
 
 Route::get('/servicepayment/{serviceid}', [App\Http\Controllers\ServicePaymentController::class, 'servicepayment'])->name('servicepayment');
