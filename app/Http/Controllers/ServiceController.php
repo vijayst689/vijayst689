@@ -561,7 +561,16 @@ public function applyservices($serviceid) {
 }elseif ($serviceid == 221 || $serviceid == 222 || $serviceid == 227|| $serviceid == 228 || $serviceid == 229 || $serviceid == 230 || $serviceid == 231 || $serviceid == 232 || $serviceid == 235 ){
     $mainbalance = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
     return view( 'applyservice.smartcard_nametransfer',compact('serviceid','districts','servicename','amount','customers','payment','mainbalance','coordinator_permission','admin_payment'));
- }
+ }  elseif ( $serviceid == 217 ){
+    $mainbalance = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+    $pandetails = DB::table( 'utislpan' )->where('user_id',Auth::user()->id)->where('service_id',$serviceid)->orderBy( 'id', 'Desc' )->get();
+    return view( 'applyservice.newpan',compact('serviceid','districts','servicename','amount','customers','payment','pandetails','mainbalance'));
+
+ }elseif ( $serviceid == 218 ){
+    $mainbalance = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+    $pandetails = DB::table( 'utislpan' )->where('user_id',Auth::user()->id)->where('service_id',$serviceid)->orderBy( 'id', 'Desc' )->get();
+    return view( 'applyservice.utislpancorrection',compact('serviceid','districts','servicename','amount','customers','payment','pandetails','mainbalance'));
+}
 }
 
 

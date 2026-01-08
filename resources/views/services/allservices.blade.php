@@ -61,16 +61,17 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-4 col-md-2 mb-3 category_data">
-                            <div class="card p-2 h-100">
-                                <a href="{{ url('/panservices') }}">
-                                    <div class="mb-1">
-                                        <img src="/upload/mylogo/nsdl.jpg" width="100%" />
-                                        <p class="text-primary">NSDL PAN</p>
-                                    </div>
-                                </a>
-                            </div>
+                        
+                <div class="col-4 col-md-2 mb-3 category_data">
+                        <div class="card service-card">
+                            <a href="{{ url('/panservices') }}" class="service-link">
+                                <div class="service-content">
+                                    <img src="/upload/mylogo/nsdl.jpg" class="service-img" />
+                                    <p class="service-title">NSDL PAN</p>
+                                </div>
+                            </a>
                         </div>
+                    </div> 
                         <div class="col-4 col-md-2 mb-3 category_data">
                             <div class="card p-2 h-100">
                                 <a href="{{ url('/utility') }}">

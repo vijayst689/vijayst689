@@ -790,7 +790,8 @@ class ServicestatusController extends Controller
             $services = DB::table('patta')->where('id',$id)->where('status',$status)->first();
         }elseif($service_id == 196 || $service_id == 197 ){
             $services = DB::table('utislpan')->where('id',$id)->where('status',$status)->first();
-
+        }elseif($service_id == 217 || $service_id == 218 ){
+            $services = DB::table('utislpan')->where('id',$id)->where('status',$status)->first();
         } elseif($service_id == 220 ){
             $services = DB::table('smartcard_otp')->where('id',$id)->where('status',$status)->first();
 
