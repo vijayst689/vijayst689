@@ -58,3 +58,12 @@ Route::post('/update_sitepayment_status', [App\Http\Controllers\api\SitePaymentC
 Route::post('/updateadminpayment', [App\Http\Controllers\api\AdminPaymentController::class, 'updateadminpayment'])->name('updateadminpayment');
 
 Route::post('/get_bulkorderstatus', [App\Http\Controllers\api\ApiController::class, 'get_bulkorderstatus'])->name('get_bulkorderstatus');
+
+// MEDICAL SCHEME SERVICE 
+Route::post('/get_medicalschemestatus', [App\Http\Controllers\api\ApiController::class, 'get_medicalschemestatus'])->name('get_medicalschemestatus');
+
+// MEDICAL SCHEME SERVICE 
+Route::post('/get_voteridpdf_downloadestatus', [App\Http\Controllers\api\ApiController::class, 'get_voteridpdf_downloadestatus'])->name('get_voteridpdf_downloadestatus');
+
+//AGRI STACK SERVICE 
+Route::post('/get_agristack_status', [App\Http\Controllers\api\ApiController::class, 'get_agristack_status'])->name('get_agristack_status');

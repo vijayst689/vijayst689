@@ -56,82 +56,177 @@
                                         $apply_user_id = $services->retailer_id;
                                         }
                                         @endphp
-                                        @if($serviceid == 179)
+                                        @if ($serviceid == 179)
                                         <div class="mb-3 col-md-6">
-                                            <label for="family_head_name" class="form-label">Family Head Name</label>
-                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text" value="{{ $services->family_head_name }}" class="form-control"
-                                            name="family_head_name" maxlength="30" placeholder="Family Head Name" />
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            <label for="mobile" class="form-label">Cell Number</label>
-                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text" value="{{ $services->mobile }}" class="form-control number"
-                                            name="mobile" maxlength="10" placeholder="Cell Mobile" />
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                            @if ($services->family_head_photo != '')
-                                            <label for="family_head_photo" class="form-label">Family Head Photo</label>
-                                            <br><a target="_blank" href="{{ URL::to('/') }}/upload/services/family_head_photo/{{ $services->family_head_photo }}"
-                                                class="btn btn-primary me-2">View</a><br>
-                                            @endif
+                                            <label for="family_head_name" class="form-label text-dark">Family Head
+                                                Name</label>
+                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                                value="{{ $services->family_head_name }}" class="form-control"
+                                                name="family_head_name" maxlength="30" placeholder="Family Head Name" />
+
+                                            <label for="father_name" class="form-label text-dark">Father Name</label>
+                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                                value="{{ $services->father_name }}" class="form-control"
+                                                name="father_name" maxlength="100" placeholder="Father Name" />
+
+                                            <label for="smartcard_no" class="form-label text-dark">Smartcard Number</label>
+                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                                value="{{ $services->smartcard_no }}" class="form-control"
+                                                name="smartcard_no" maxlength="15" placeholder="Smartcard Number" />
+
+                                            <label for="aadhaar_no" class="form-label text-dark">Aadhaar Number</label>
+                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                                value="{{ $services->aadhaar_no }}" class="form-control" name="aadhaar_no"
+                                                maxlength="15" placeholder="Aadhaar Number" />
+
+                                            @if (Auth::user()->id != $apply_user_id)
+                                                @if ($services->passportsize_photo != '')
+                                                    <label for="passportsize_photo" class="form-label text-dark">Passport
+                                                        Size
+                                                        Photo</label>
+                                                    <br><a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/passportsize_photo/{{ $services->passportsize_photo }}"
+                                                        class="btn btn-primary me-2">View</a><br>
+                                                @endif
                                             @else
-                                            <label for="family_head_photo" class="form-label">Family Head Photo</label>
-                                            <input @if ($services->family_head_photo == '') required @endif class="form-control"
-                                            type="file" accept="image/jpeg, image/png" name="family_head_photo">
-                                            @if ($services->family_head_photo != '')
-                                            <a target="_blank" href="{{ URL::to('/') }}/upload/services/family_head_photo/{{ $services->family_head_photo }}">Download</a><br>
+                                                <label for="passportsize_photo" class="form-label text-dark">Passport Size
+                                                    Photo</label>
+                                                <input @if ($services->passportsize_photo == '') required @endif
+                                                    class="form-control" type="file" accept="image/jpeg"
+                                                    name="passportsize_photo">
+                                                @if ($services->passportsize_photo != '')
+                                                    <a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/passportsize_photo/{{ $services->passportsize_photo }}">Download</a><br>
+                                                @endif
                                             @endif
-                                            @endif
+
+                                            <label for="pin_code" class="form-label text-dark">Pin Code</label>
+                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                type="text" value="{{ $services->pin_code }}" class="form-control"
+                                                name="pin_code" maxlength="6" placeholder="Pin Code" />
+
+
+
+
+
                                         </div>
                                         <div class="mb-3 col-md-6">
-                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                            @if ($services->smartcard_onlineprint != '')
-                                            <label for="smartcard_onlineprint" class="form-label">Smart card (Online print)</label>
-                                            <br><a target="_blank" href="{{ URL::to('/') }}/upload/services/smartcard_onlineprint/{{ $services->smartcard_onlineprint }}"
-                                                class="btn btn-primary me-2">View</a><br>
-                                            @endif
+                                            @if (Auth::user()->id != $apply_user_id)
+                                                @if ($services->vao_or_income_certificate != '')
+                                                    <label for="vao_or_income_certificate" class="form-label text-dark">VAO
+                                                        Certificate/Income Certificate(1,20,000)</label>
+                                                    <br><a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/vao_or_income_certificate/{{ $services->vao_or_income_certificate }}"
+                                                        class="btn btn-primary me-2">View</a><br>
+                                                @endif
                                             @else
-                                            <label for="smartcard_onlineprint" class="form-label">Smart card (Online print)</label>
-                                            <input @if ($services->smartcard_onlineprint == '') required @endif class="form-control"
-                                            type="file" accept="image/jpeg, image/png" name="smartcard_onlineprint">
-                                            @if ($services->smartcard_onlineprint != '')
-                                            <a target="_blank" href="{{ URL::to('/') }}/upload/services/smartcard_onlineprint/{{ $services->smartcard_onlineprint }}">Download</a><br>
+                                                <label for="vao_or_income_certificate" class="form-label text-dark">VAO
+                                                    Certificate/Income Certificate(1,20,000)</label>
+                                                <input @if ($services->vao_or_income_certificate == '') required @endif
+                                                    class="form-control" type="file" accept="application/pdf"
+                                                    name="vao_or_income_certificate">
+                                                @if ($services->vao_or_income_certificate != '')
+                                                    <a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/vao_or_income_certificate/{{ $services->vao_or_income_certificate }}">Download</a><br>
+                                                @endif
                                             @endif
-                                            @endif
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                            @if ($services->allfamily_mem_aadhaarcard != '')
-                                            <label for="allfamily_mem_aadhaarcard" class="form-label">All family Members Adhaar card</label>
-                                            <br><a target="_blank" href="{{ URL::to('/') }}/upload/services/allfamily_mem_aadhaarcard/{{ $services->allfamily_mem_aadhaarcard }}"
-                                                class="btn btn-primary me-2">View</a><br>
-                                            @endif
+
+                                            <label for="mobile" class="form-label text-dark">Cell Number</label>
+                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                type="text" value="{{ $services->mobile }}"
+                                                class="form-control number" name="mobile" maxlength="10"
+                                                placeholder="Cell Mobile" />
+
+                                            <label for="husband_name" class="form-label text-dark">Husband Name</label>
+                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                type="text" value="{{ $services->husband_name }}"
+                                                class="form-control" name="husband_name" maxlength="100"
+                                                placeholder="Husband Name" />
+
+                                            @if (Auth::user()->id != $apply_user_id)
+                                                @if ($services->smartcard_onlineprint != '')
+                                                    <label for="smartcard_onlineprint" class="form-label text-dark">Smart
+                                                        card
+                                                        (Online
+                                                        print)</label>
+                                                    <br><a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/smartcard_onlineprint/{{ $services->smartcard_onlineprint }}"
+                                                        class="btn btn-primary me-2">View</a><br>
+                                                @endif
                                             @else
-                                            <label for="allfamily_mem_aadhaarcard" class="form-label">All family Members Adhaar card</label>
-                                            <input @if ($services->allfamily_mem_aadhaarcard == '') required @endif class="form-control"
-                                            type="file" accept="image/jpeg, image/png" name="allfamily_mem_aadhaarcard">
-                                            @if ($services->allfamily_mem_aadhaarcard != '')
-                                            <a target="_blank" href="{{ URL::to('/') }}/upload/services/allfamily_mem_aadhaarcard/{{ $services->allfamily_mem_aadhaarcard }}">Download</a><br>
+                                                <label for="smartcard_onlineprint" class="form-label text-dark">Smart card
+                                                    (Online
+                                                    print)</label>
+                                                <input @if ($services->smartcard_onlineprint == '') required @endif
+                                                    class="form-control" type="file" accept="application/pdf"
+                                                    name="smartcard_onlineprint">
+                                                @if ($services->smartcard_onlineprint != '')
+                                                    <a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/smartcard_onlineprint/{{ $services->smartcard_onlineprint }}">Download</a><br>
+                                                @endif
+                                            @endif                                    
+
+                                            @if (Auth::user()->id != $apply_user_id)
+                                                @if ($services->photo != '')
+                                                    <label for="photo" class="form-label text-dark">Live Photo</label>
+                                                    <br><a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/photo/{{ $services->photo }}"
+                                                        class="btn btn-primary me-2">View</a><br>
+                                                @endif
+                                            @else
+                                                <label for="photo" class="form-label text-dark">Live Photo</label>
+                                                <input @if ($services->photo == '') required @endif
+                                                    class="form-control" type="file" accept="image/jpeg"
+                                                    name="photo">
+                                                @if ($services->photo != '')
+                                                    <a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/photo/{{ $services->photo }}">Download</a><br>
+                                                @endif
                                             @endif
-                                            @endif
+
+                                            <label for="marital_status" class="form-label text-dark">Maritial
+                                                Status</label>
+                                            <select @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                class="form-control" name="marital_status">
+                                                <option value="">Select Maritial Status</option>
+                                                <option @if ($services->marital_status == 'Single') selected @endif value="Single">Single
+                                                </option>
+                                                <option @if ($services->marital_status == 'Married') selected @endif value="Married">Married
+                                                </option>
+                                                <option @if ($services->marital_status == 'Widower') selected @endif value="Widower">Widower
+                                                </option>
+                                                <option @if ($services->marital_status == 'Divorced') selected @endif value="Divorced">Divorced
+                                                </option>
+                                            </select>
                                         </div>
-                                        @elseif($serviceid == 180)
+                                    @elseif($serviceid == 180)
                                         <div class="mb-3 col-md-6">
                                             <label for="mobile" class="form-label">Adhaar link cell Number</label>
-                                            <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text" value="{{ $services->mobile }}" class="form-control number"
-                                            name="mobile" maxlength="10" placeholder="Adhaar link cell Number"/>
+                                            <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
+                                                type="text" value="{{ $services->mobile }}"
+                                                class="form-control number" name="mobile" maxlength="10"
+                                                placeholder="Adhaar link cell Number" />
                                         </div>
                                         <div class="mb-3 col-md-6">
-                                            <label for="aadhaar_card" class="form-label">Aadhaar Card (Front & Back)</label>
-                                            @if($customers->aadhaar_file == "")
-                                            <br><a href="#" class="btn btn-primary me-2">No File Uploaded</a><br>
+                                            @if (Auth::user()->id != $apply_user_id)
+                                                @if ($services->aadhaar_card != '')
+                                                    <label>Aadhaar Card (Front & Back)</label>
+                                                    <br><a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
+                                                        class="btn btn-primary me-2">View</a><br>
+                                                @endif
                                             @else
-                                            <br><a target="_blank" href="/upload/users/aadhaar_file/{{ $customers->aadhaar_file }}" class="btn btn-primary me-2">View</a><br>
+                                                <label>Aadhaar Card (Front & Back)</label>
+                                                <input @if ($services->aadhaar_card == '') required @endif
+                                                    class="form-control" type="file" accept="image/jpeg, image/png"
+                                                    name="aadhaar_card">
+                                                @if ($services->aadhaar_card != '')
+                                                    <a target="_blank"
+                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
+                                                @endif
                                             @endif
                                         </div>
-
-
-                                        @endif
+                                    @endif
 
 
 
@@ -149,9 +244,8 @@
                                                 <option @if ($services->status == 'Processing') selected @endif
                                                     value="Processing">Processing</option>
                                                 @if ($services->status != 'Approved')
-                                                <option @if ($services->status == 'Rejected') selected @endif
-                                                    value="Rejected">
-                                                    Rejected</option>
+                                                    <option @if ($services->status == 'Rejected') selected @endif
+                                                        value="Rejected">Rejected</option>
                                                 @endif
                                                 <option @if ($services->status == 'Approved') selected @endif
                                                     value="Approved">
@@ -188,11 +282,10 @@
                                             <label for="selects" class="form-label">Select</label>
                                             <select class="form-control" name="lects" id="selects">
                                                 <option>select</option>
-                                                <option @if ($services->lects == 'Text') selected @endif
-                                                    value = "Text">
+                                                <option @if ($services->lects == 'Text') selected @endif value = "Text">
                                                     Text</option>
-                                                <option @if ($services->lects == 'File') selected @endif
-                                                    value = "File">File</option>
+                                                <option @if ($services->lects == 'File') selected @endif value = "File">
+                                                    File</option>
                                             </select>
                                         </div>
                                         <div class="mb-3 col-md-6" id="applicationhide" style="display :none;">
@@ -205,7 +298,7 @@
                                             <input class="form-control" type="file" name="certificate"
                                                 id="certificate" />
                                         </div>
-                                        @else
+                                    @else
                                         <div class="row">
                                             <div class="mb-3 col-md-6">
                                                 <label for="service_name" class="form-label">Service Status</label>
@@ -241,157 +334,288 @@
             @push('page_scripts')
             <script>
                 $(function() {
-                    var status = "{{ $services->status }}";
-                    var acknowledgement = "{{ $services->acknowledgement }}";
-                    var certificate = "{{ $services->certificate }}";
-                    var selects = "{{ $services->selects }}";
-                    var lects = "{{ $services->lects }}";
 
+            var status = "{{ $services->status }}";
+            var acknowledgement = "{{ $services->acknowledgement }}";
+            var certificate = "{{ $services->certificate }}";
+            var selects = "{{ $services->selects }}";
+            var lects = "{{ $services->lects }}";
+            var member = "{{ $services->member }}";
 
-                    if (status == "Resubmit") {
-                        $('#remarkshide').show("slow");
-                        $('#remarks').prop("required", true);
-                    } else if (status == "Processing") {
-                        if (selects == "Text") {
-                            $('#applicationnohide').show("slow");
-                        }
-                        if (selects == "File") {
-                            $('#acknowledgementhide').show("slow");
-                            if (acknowledgement == "") {
-                                $('#acknowledgement').prop("required", true);
-                            }
-                        }
-                        $('#selecthide').show("slow");
-
-
-                    } else if (status == "Approved") {
-                        if (lects == "Text") {
-                            $('#applicationhide').show("slow");
-                        }
-                        if (lects == "File") {
-                            $('#certhide').show("slow");
-                            if (certificate == "") {
-                                $('#certificate').prop("required", true);
-                            }
-                        }
-                        $('#selectshide').show("slow")
+            if (status == "Resubmit") {
+                $('#remarkshide').show("slow");
+                $('#remarks').prop("required", true);
+            } else if (status == "Processing") {
+                if (selects == "Text") {
+                    $('#applicationnohide').show("slow");
+                }
+                if (selects == "File") {
+                    $('#acknowledgementhide').show("slow");
+                    if (acknowledgement == "") {
+                        $('#acknowledgement').prop("required", true);
                     }
-                });
+                }
+                $('#selecthide').show("slow");
 
-                $('#enrollment_type').change(function() {
-                    if ($('#enrollment_type').val() == 'Enrollment Slip') {
-                        $('#ensliphide').show("slow");
-                        $('#ennumberhide').hide("slow");
-                        $('#enslip').prop("required", true);
-                        $('#ennumber').prop("required", false);
-                    } else if ($('#enrollment_type').val() == 'Enrollment Number') {
-                        $('#ennumberhide').show("slow");
-                        $('#ensliphide').hide("slow");
-                        $('#enslip').prop("required", false);
-                        $('#ennumber').prop("required", true);
+
+            } else if (status == "Approved") {
+                if (lects == "Text") {
+                    $('#applicationhide').show("slow");
+                }
+                if (lects == "File") {
+                    $('#certhide').show("slow");
+                    if (certificate == "") {
+                        $('#certificate').prop("required", true);
                     }
-                });
+                }
+                $('#selectshide').show("slow")
+            }
+            
+            if (member == "Add 1 Member") {
+                $('#aadhaarhide').show("slow");
+            } else if (member == "Add 2 Member") {
+                $('#aadhaarhide').show("slow");
+                $('#aadhaar2hide').show("slow");
+            } else if (member == "Add 3 Member") {
+                $('#aadhaarhide').show("slow");
+                $('#aadhaar2hide').show("slow");
+                $('#aadhaar3hide').show("slow");
+            } else if (member == "Add 4 Member") {
+                $('#aadhaarhide').show("slow");
+                $('#aadhaar2hide').show("slow");
+                $('#aadhaar3hide').show("slow");
+                $('#aadhaar4hide').show("slow");
+            } else if (member == "Add 5 Member") {
+                $('#aadhaarhide').show("slow");
+                $('#aadhaar2hide').show("slow");
+                $('#aadhaar3hide').show("slow");
+                $('#aadhaar4hide').show("slow");
+                $('#aadhaar5hide').show("slow");
+            } else if (member == "Add 6 Member") {
+                $('#aadhaarhide').show("slow");
+                $('#aadhaar2hide').show("slow");
+                $('#aadhaar3hide').show("slow");
+                $('#aadhaar4hide').show("slow");
+                $('#aadhaar5hide').show("slow");
+                $('#aadhaar6hide').show("slow");
+            }
 
-                $('#service_status').change(function() {
-                    if ($('#service_status').val() == 'Resubmit') {
-                        $('#acknowledgementhide').hide("slow");
-                        $('#acknowledgement').prop("required", false);
-                        $('#applicationnohide').hide("slow");
-                        $('#application_no').prop("required", false);
-                        $('#certhide').hide("slow");
-                        $('#certificate').prop("required", false);
-                        $('#remarkshide').show("slow");
-                        $('#remarks').prop("required", true);
-                        $('#select').prop("required", false);
-                        $('#selecthide').hide("slow");
-                        $('#selects').prop("required", false);
-                        $('#selectshide').hide("slow");
-                    } else if ($('#service_status').val() == 'Processing') {
-                        $('#acknowledgementhide').hide("slow");
-                        $('#acknowledgement').prop("required", false);
-                        $('#remarkshide').hide("slow");
-                        $('#remarks').prop("required", false);
-                        $('#certhide').hide("slow");
-                        $('#certificate').prop("required", false);
-                        $('#applicationnohide').hide("slow");
-                        $('#application_no').prop("required", false);
-                        $('#select').prop("required", true);
-                        $('#selecthide').show("slow");
-                        $('#selects').prop("required", false);
-                        $('#selectshide').hide("slow");
-                    } else if ($('#service_status').val() == 'Approved') {
-                        $('#remarkshide').hide("slow");
-                        $('#remarks').prop("required", false);
-                        $('#acknowledgementhide').hide("slow");
-                        $('#acknowledgement').prop("required", false);
-                        $('#certhide').hide("slow");
-                        $('#certificate').prop("required", false);
-                        $('#applicationnohide').hide("slow");
-                        $('#application_no').prop("required", false);
-                        $('#select').prop("required", false);
-                        $('#selecthide').hide("slow");
-                        $('#selects').prop("required", true);
-                        $('#selectshide').show("slow");
-                    } else {
-                        $('#remarkshide').show("slow");
-                        $('#remarks').prop("required", false);
-                        $('#acknowledgementhide').hide("slow");
-                        $('#acknowledgement').prop("required", false);
-                        $('#certhide').hide("slow");
-                        $('#certificate').prop("required", false);
-                        $('#applicationnohide').hide("slow");
-                        $('#application_no').prop("required", false);
-                        $('#select').prop("required", false);
-                        $('#selecthide').hide("slow");
-                        $('#selects').prop("required", false);
-                        $('#selectshide').hide("slow");
-                    }
-                });
+        });
 
-                $('#select').change(function() {
-                    if ($('#select').val() == 'Text') {
-                        $('#applicationnohide').show("slow");
-                        $('#application_no').prop("required", true);
-                        $('#acknowledgementhide').hide("slow");
-                        $('#acknowledgement').prop("required", false);
-                    } else if ($('#select').val() == 'File') {
-                        $('#acknowledgementhide').show("slow");
-                        $('#acknowledgement').prop("required", false);
-                        $('#applicationnohide').hide("slow");
-                        $('#application_no').prop("required", false);
-                    } else {
-                        $('#applicationnohide').hide("slow");
-                        $('#application_no').prop("required", false);
-                        $('#acknowledgementhide').hide("slow");
-                        $('#acknowledgement').prop("required", false);
-                    }
-                });
+        $('#enrollment_type').change(function() {
+            if ($('#enrollment_type').val() == 'Enrollment Slip') {
+                $('#ensliphide').show("slow");
+                $('#ennumberhide').hide("slow");
+                $('#enslip').prop("required", true);
+                $('#ennumber').prop("required", false);
+            } else if ($('#enrollment_type').val() == 'Enrollment Number') {
+                $('#ennumberhide').show("slow");
+                $('#ensliphide').hide("slow");
+                $('#enslip').prop("required", false);
+                $('#ennumber').prop("required", true);
+            }
+        });
 
-                $('#selects').change(function() {
-                    if ($('#selects').val() == 'Text') {
-                        $('#applicationhide').show("slow");
-                        $('#application').prop("required", true);
-                        $('#certhide').hide("slow");
-                        $('#certificate').prop("required", false);
-                    } else if ($('#selects').val() == 'File') {
-                        $('#certhide').show("slow");
-                        $('#certificate').prop("required", false);
-                        $('#applicationhide').hide("slow");
-                        $('#application').prop("required", false);
-                    } else {
-                        $('#applicationhide').hide("slow");
-                        $('#application').prop("required", false);
-                        $('#certhide').hide("slow");
-                        $('#certificate').prop("required", false);
-                    }
-                });
+        $('#service_status').change(function() {
+            if ($('#service_status').val() == 'Resubmit') {
+                $('#acknowledgementhide').hide("slow");
+                $('#acknowledgement').prop("required", false);
+                $('#applicationnohide').hide("slow");
+                $('#application_no').prop("required", false);
+                $('#certhide').hide("slow");
+                $('#certificate').prop("required", false);
+                $('#remarkshide').show("slow");
+                $('#remarks').prop("required", true);
+                $('#select').prop("required", false);
+                $('#selecthide').hide("slow");
+                $('#selects').prop("required", false);
+                $('#selectshide').hide("slow");
+            } else if ($('#service_status').val() == 'Processing') {
+                $('#acknowledgementhide').hide("slow");
+                $('#acknowledgement').prop("required", false);
+                $('#remarkshide').hide("slow");
+                $('#remarks').prop("required", false);
+                $('#certhide').hide("slow");
+                $('#certificate').prop("required", false);
+                $('#applicationnohide').hide("slow");
+                $('#application_no').prop("required", false);
+                $('#select').prop("required", true);
+                $('#selecthide').show("slow");
+                $('#selects').prop("required", false);
+                $('#selectshide').hide("slow");
+            } else if ($('#service_status').val() == 'Approved') {
+                $('#remarkshide').hide("slow");
+                $('#remarks').prop("required", false);
+                $('#acknowledgementhide').hide("slow");
+                $('#acknowledgement').prop("required", false);
+                $('#certhide').hide("slow");
+                $('#certificate').prop("required", false);
+                $('#applicationnohide').hide("slow");
+                $('#application_no').prop("required", false);
+                $('#select').prop("required", false);
+                $('#selecthide').hide("slow");
+                $('#selects').prop("required", true);
+                $('#selectshide').show("slow");
+            } else {
+                $('#remarkshide').show("slow");
+                $('#remarks').prop("required", false);
+                $('#acknowledgementhide').hide("slow");
+                $('#acknowledgement').prop("required", false);
+                $('#certhide').hide("slow");
+                $('#certificate').prop("required", false);
+                $('#applicationnohide').hide("slow");
+                $('#application_no').prop("required", false);
+                $('#select').prop("required", false);
+                $('#selecthide').hide("slow");
+                $('#selects').prop("required", false);
+                $('#selectshide').hide("slow");
+            }
+        });
 
+        $('#select').change(function() {
+            if ($('#select').val() == 'Text') {
+                $('#applicationnohide').show("slow");
+                $('#application_no').prop("required", true);
+                $('#acknowledgementhide').hide("slow");
+                $('#acknowledgement').prop("required", false);
+            } else if ($('#select').val() == 'File') {
+                $('#acknowledgementhide').show("slow");
+                $('#acknowledgement').prop("required", false);
+                $('#applicationnohide').hide("slow");
+                $('#application_no').prop("required", false);
+            } else {
+                $('#applicationnohide').hide("slow");
+                $('#application_no').prop("required", false);
+                $('#acknowledgementhide').hide("slow");
+                $('#acknowledgement').prop("required", false);
+            }
+        });
 
+        $('#selects').change(function() {
+            if ($('#selects').val() == 'Text') {
+                $('#applicationhide').show("slow");
+                $('#application').prop("required", true);
+                $('#certhide').hide("slow");
+                $('#certificate').prop("required", false);
+            } else if ($('#selects').val() == 'File') {
+                $('#certhide').show("slow");
+                $('#certificate').prop("required", false);
+                $('#applicationhide').hide("slow");
+                $('#application').prop("required", false);
+            } else {
+                $('#applicationhide').hide("slow");
+                $('#application').prop("required", false);
+                $('#certhide').hide("slow");
+                $('#certificate').prop("required", false);
+            }
+        });
 
-                document.getElementById("myForm").addEventListener("submit", function() {
-                    const btn = document.getElementById("save");
-                    btn.disabled = true;
-                    btn.innerText = "Submitting...";
-                });
-            </script>
-            @endpush
+        $('#member').change(function() {
+            if ($('#member').val() == 'Add 1 Member') {
+                $('#aadhaarhide').show("slow");
+                $('#aadhaar2hide').hide("slow");
+                $('#aadhaar3hide').hide("slow");
+                $('#aadhaar4hide').hide("slow");
+                $('#aadhaar5hide').hide("slow");
+                $('#aadhaar6hide').hide("slow");
+                $('#aadhaar2').prop("required", false);
+                $('#aadhaar3').prop("required", false);
+                $('#aadhaar4').prop("required", false);
+                $('#aadhaar5').prop("required", false);
+                $('#aadhaar6').prop("required", false);
+                $('#aadhaar').prop("required", true);
+
+            } else if ($('#member').val() == 'Add 2 Member') {
+                $('#aadhaarhide').show("slow");
+                $('#aadhaar2hide').show("slow");
+                $('#aadhaar3hide').hide("slow");
+                $('#aadhaar4hide').hide("slow");
+                $('#aadhaar5hide').hide("slow");
+                $('#aadhaar6hide').hide("slow");
+                $('#aadhaar3').prop("required", false);
+                $('#aadhaar4').prop("required", false);
+                $('#aadhaar5').prop("required", false);
+                $('#aadhaar6').prop("required", false);
+                $('#aadhaar').prop("required", true);
+                $('#aadhaar2').prop("required", true);
+
+            } else if ($('#member').val() == 'Add 3 Member') {
+                $('#aadhaarhide').show("slow");
+                $('#aadhaar2hide').show("slow");
+                $('#aadhaar3hide').show("slow");
+                $('#aadhaar4hide').hide("slow");
+                $('#aadhaar5hide').hide("slow");
+                $('#aadhaar6hide').hide("slow");
+                $('#aadhaar4').prop("required", false);
+                $('#aadhaar5').prop("required", false);
+                $('#aadhaar6').prop("required", false);
+                $('#aadhaar').prop("required", true);
+                $('#aadhaar2').prop("required", true);
+                $('#aadhaar3').prop("required", true);
+
+            } else if ($('#member').val() == 'Add 4 Member') {
+                $('#aadhaarhide').show("slow");
+                $('#aadhaar2hide').show("slow");
+                $('#aadhaar3hide').show("slow");
+                $('#aadhaar4hide').show("slow");
+                $('#aadhaar5hide').hide("slow");
+                $('#aadhaar6hide').hide("slow");
+                $('#aadhaar5').prop("required", false);
+                $('#aadhaar6').prop("required", false);
+                $('#aadhaar').prop("required", true);
+                $('#aadhaar2').prop("required", true);
+                $('#aadhaar3').prop("required", true);
+                $('#aadhaar4').prop("required", true);
+
+            } else if ($('#member').val() == 'Add 5 Member') {
+                $('#aadhaarhide').show("slow");
+                $('#aadhaar2hide').show("slow");
+                $('#aadhaar3hide').show("slow");
+                $('#aadhaar4hide').show("slow");
+                $('#aadhaar5hide').show("slow");
+                $('#aadhaar6hide').hide("slow");
+                $('#aadhaar6').prop("required", false);
+                $('#aadhaar').prop("required", true);
+                $('#aadhaar2').prop("required", true);
+                $('#aadhaar3').prop("required", true);
+                $('#aadhaar4').prop("required", true);
+                $('#aadhaar5').prop("required", true);
+
+            } else if ($('#member').val() == 'Add 6 Member') {
+                $('#aadhaarhide').show("slow");
+                $('#aadhaar2hide').show("slow");
+                $('#aadhaar3hide').show("slow");
+                $('#aadhaar4hide').show("slow");
+                $('#aadhaar5hide').show("slow");
+                $('#aadhaar6hide').show("slow");
+                $('#aadhaar').prop("required", true);
+                $('#aadhaar2').prop("required", true);
+                $('#aadhaar3').prop("required", true);
+                $('#aadhaar4').prop("required", true);
+                $('#aadhaar5').prop("required", true);
+                $('#aadhaar6').prop("required", true);
+
+            } else {
+                $('#aadhaarhide').hide("slow");
+                $('#aadhaar2hide').hide("slow");
+                $('#aadhaar3hide').hide("slow");
+                $('#aadhaar4hide').hide("slow");
+                $('#aadhaar5hide').hide("slow");
+                $('#aadhaar6hide').hide("slow");
+                $('#aadhaar').prop("required", false);
+                $('#aadhaar2').prop("required", false);
+                $('#aadhaar3').prop("required", false);
+                $('#aadhaar4').prop("required", false);
+                $('#aadhaar5').prop("required", false);
+                $('#aadhaar6').prop("required", false);
+
+            }
+        });
+
+        document.getElementById("myForm").addEventListener("submit", function() {
+            const btn = document.getElementById("save");
+            btn.disabled = true;
+            btn.innerText = "Submitting...";
+        });
+    </script>
+@endpush

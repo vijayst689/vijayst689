@@ -53,34 +53,84 @@
                                             <div class="row">
                                                 @if ($serviceid == 179)
                                                     <div class="mb-3 col-md-6">
-                                                        <label for="family_head_name" class="form-label">Family Head
+                                                        <label for="" class="form-label text-dark">VAO
+                                                            Certificate</label><br>
+                                                        <a download class="btn btn-sm btn-info"
+                                                            href="{{ URL::to('/') }}/upload/vao_certificate/EnrolmentForm2024.pdf">Download</a><br>
+
+                                                        <label for="family_head_name" class="form-label text-dark">Family
+                                                            Head
                                                             Name</label>
                                                         <input required type="text" class="form-control"
                                                             name="family_head_name" maxlength="30"
                                                             placeholder="Family Head Name" />
+
+                                                        <label for="father_name" class="form-label text-dark">Father
+                                                            Name</label>
+                                                        <input required type="text" class="form-control"
+                                                            name="father_name" maxlength="100" placeholder="Father Name" />
+
+                                                        <label for="smartcard_no" class="form-label text-dark">Smartcard
+                                                            Number</label>
+                                                        <input required type="text" class="form-control"
+                                                            name="smartcard_no" maxlength="15"
+                                                            placeholder="Smartcard Number" />
+
+                                                        <label for="aadhaar_no" class="form-label text-dark">Aadhaar
+                                                            Number</label>
+                                                        <input required type="text" class="form-control"
+                                                            name="aadhaar_no" maxlength="12" placeholder="Aadhaar Number" />
+
+                                                        <label for="passportsize_photo"
+                                                            class="form-label text-dark">Passport Size
+                                                            Photo</label>
+                                                        <input required accept="image/jpeg" type="file"
+                                                            class="form-control" name="passportsize_photo" />
+
+                                                        <label for="pin_code" class="form-label text-dark">Pin Code</label>
+                                                        <input required type="text" maxlength="6"
+                                                            class="form-control number" name="pin_code"
+                                                            placeholder="Pin Code" />
                                                     </div>
                                                     <div class="mb-3 col-md-6">
-                                                        <label for="mobile" class="form-label">Cell Number </label>
+                                                        <label for="vao_or_income_certificate"
+                                                            class="form-label text-dark">VAO
+                                                            Certificate/Income Certificate(1,20,000)</label>
+                                                        <input required accept="application/pdf" type="file"
+                                                            class="form-control" name="vao_or_income_certificate" />
+
+                                                        <label for="mobile" class="form-label text-dark">Cell Number
+                                                        </label>
                                                         <input required type="text" class="form-control number"
                                                             name="mobile" maxlength="10" placeholder="Cell Number " />
-                                                    </div>
-                                                    <div class="mb-3 col-md-6">
-                                                        <label for="family_head_photo" class="form-label">Family Head
-                                                            Photo</label>
-                                                        <input required accept="image/jpeg, image/png" type="file"
-                                                            class="form-control" name="family_head_photo" />
-                                                    </div>
-                                                    <div class="mb-3 col-md-6">
-                                                        <label for="smartcard_onlineprint" class="form-label">Smart card
-                                                            (Online print)</label>
-                                                        <input required accept="image/jpeg, image/png" type="file"
+
+                                                        <label for="husband_name" class="form-label text-dark">Husband
+                                                            Name</label>
+                                                        <input required type="text" class="form-control"
+                                                            name="husband_name" maxlength="100"
+                                                            placeholder="Husband Name" />
+
+                                                        <label for="smartcard_onlineprint"
+                                                            class="form-label text-dark">Smart card
+                                                            (Online
+                                                            print)</label>
+                                                        <input required accept="application/pdf" type="file"
                                                             class="form-control" name="smartcard_onlineprint" />
-                                                    </div>
-                                                    <div class="mb-3 col-md-6">
-                                                        <label for="allfamily_mem_aadhaarcard" class="form-label">All family
-                                                            Members Adhaar card</label>
-                                                        <input required accept="image/jpeg, image/png" type="file"
-                                                            class="form-control" name="allfamily_mem_aadhaarcard" />
+
+                                                        <label for="live_photo" class="form-label text-dark">Live
+                                                            Photo</label>
+                                                        <input required accept="image/jpeg" type="file"
+                                                            class="form-control" name="photo" />
+
+                                                        <label for="marital_status" class="form-label text-dark">Marital
+                                                            Status</label>
+                                                        <select name="marital_status" class="form-control" required>
+                                                            <option value="">Select Status</option>
+                                                            <option value="Single">Single</option>
+                                                            <option value="Married">Married</option>
+                                                            <option value="Divorced">Divorced</option>
+                                                            <option value="Widowed">Widowed</option>
+                                                        </select>
                                                     </div>
                                                 @elseif ($serviceid == 180)
                                                     <div class="mb-3 col-md-6">
@@ -91,16 +141,11 @@
                                                             placeholder="Adhaar link cell Number" />
                                                     </div>
                                                     <div class="mb-3 col-md-6">
-                                                        <label for="aadhaar_card" class="form-label">Adhaar card (Front &
+                                                        <label for="aadhaar_card" class="form-label">Adhaar Card (Front &
                                                             Back)</label>
-                                                        @if ($customers->aadhaar_file == '')
-                                                            <br><a href="#" class="btn btn-primary me-2">No File
-                                                                Uploaded</a><br>
-                                                        @else
-                                                            <br><a target="_blank"
-                                                                href="/upload/users/aadhaar_file/{{ $customers->aadhaar_file }}"
-                                                                class="btn btn-primary me-2">View</a><br>
-                                                        @endif
+                                                        <input required type="file" class="form-control"
+                                                            name="aadhaar_card"
+                                                            placeholder="Adhaar card (Front & Back)" />
                                                     </div>
                                                 @endif
                                             </div>
@@ -124,11 +169,12 @@
             @endsection
             @push('page_scripts')
                 <script>
-         document.getElementById("myForm").addEventListener("submit", function() {
-            const btn = document.getElementById("save");
-            btn.disabled = true;
-            btn.innerText = "Submitting...";
-        });
+                    document.getElementById("myForm").addEventListener("submit", function() {
+                        const btn = document.getElementById("save");
+                        btn.disabled = true;
+                        btn.innerText = "Submitting...";
+                    });
+
                     var dist_id = "{{ $customers->dist_id }}";
                     var taluk_id = "{{ $customers->taluk_id }}";
                     var wallet = "{{ Auth::user()->wallet }}";
@@ -180,48 +226,105 @@
                         });
                     }
 
+                    $('#member').change(function() {
+                        if ($('#member').val() == 'Add 1 Member') {
+                            $('#aadhaarhide').show("slow");
+                            $('#aadhaar2hide').hide("slow");
+                            $('#aadhaar3hide').hide("slow");
+                            $('#aadhaar4hide').hide("slow");
+                            $('#aadhaar5hide').hide("slow");
+                            $('#aadhaar6hide').hide("slow");
+                            $('#aadhaar2').prop("required", false);
+                            $('#aadhaar3').prop("required", false);
+                            $('#aadhaar4').prop("required", false);
+                            $('#aadhaar5').prop("required", false);
+                            $('#aadhaar6').prop("required", false);
+                            $('#aadhaar').prop("required", true);
 
-                    var customerid = "{{ $customers->id }}";
-                    $('#can_details').change(function() {
-                        if ($('#can_details').val() == 'Yes') {
-                            $('#cannumberhide').show("slow");
-                            $('#cannumber').prop("required", true);
-                        } else if ($('#can_details').val() == 'No') {
-                            window.location.href = "{{ url('applyservice') }}/" + 60 + "/" + customerid;
-                        } else if ($('#can_details').val() == 'Find') {
-                            window.location.href = "{{ url('applyservice') }}/" + 121 + "/" + customerid;
-                        } else {
-                            $('#cannumberhide').hide("slow");
-                            $('#cannumber').prop("required", false);
-                        }
-                    });
+                        } else if ($('#member').val() == 'Add 2 Member') {
+                            $('#aadhaarhide').show("slow");
+                            $('#aadhaar2hide').show("slow");
+                            $('#aadhaar3hide').hide("slow");
+                            $('#aadhaar4hide').hide("slow");
+                            $('#aadhaar5hide').hide("slow");
+                            $('#aadhaar6hide').hide("slow");
+                            $('#aadhaar3').prop("required", false);
+                            $('#aadhaar4').prop("required", false);
+                            $('#aadhaar5').prop("required", false);
+                            $('#aadhaar6').prop("required", false);
+                            $('#aadhaar').prop("required", true);
+                            $('#aadhaar2').prop("required", true);
 
-                    $('#property_details').change(function() {
-                        if ($('#property_details').val() == 'Personal Strap') {
-                            $('#personal_straphide').show("slow");
-                            $('#personal_strap').prop("required", true);
-                            $('#joint_straphide').hide("slow");
-                            $('#joint_strap').prop("required", false);
-                        } else if ($('#property_details').val() == 'Joint Strap') {
-                            $('#joint_straphide').show("slow");
-                            $('#joint_strap').prop("required", true);
-                            $('#personal_strap').prop("required", false);
-                            $('#personal_straphide').hide("slow");
-                        } else {
-                            $('#personal_straphide').hide("slow");
-                            $('#personal_strap').prop("required", false);
-                            $('#joint_strap').prop("required", false);
-                            $('#joint_straphide').hide("slow");
-                        }
-                    });
+                        } else if ($('#member').val() == 'Add 3 Member') {
+                            $('#aadhaarhide').show("slow");
+                            $('#aadhaar2hide').show("slow");
+                            $('#aadhaar3hide').show("slow");
+                            $('#aadhaar4hide').hide("slow");
+                            $('#aadhaar5hide').hide("slow");
+                            $('#aadhaar6hide').hide("slow");
+                            $('#aadhaar4').prop("required", false);
+                            $('#aadhaar5').prop("required", false);
+                            $('#aadhaar6').prop("required", false);
+                            $('#aadhaar').prop("required", true);
+                            $('#aadhaar2').prop("required", true);
+                            $('#aadhaar3').prop("required", true);
 
-                    $('#deed_details').change(function() {
-                        if ($('#deed_details').val() == 'Yes') {
-                            $('#deedhide').show("slow");
-                            $('#deed').prop("required", true);
+                        } else if ($('#member').val() == 'Add 4 Member') {
+                            $('#aadhaarhide').show("slow");
+                            $('#aadhaar2hide').show("slow");
+                            $('#aadhaar3hide').show("slow");
+                            $('#aadhaar4hide').show("slow");
+                            $('#aadhaar5hide').hide("slow");
+                            $('#aadhaar6hide').hide("slow");
+                            $('#aadhaar5').prop("required", false);
+                            $('#aadhaar6').prop("required", false);
+                            $('#aadhaar').prop("required", true);
+                            $('#aadhaar2').prop("required", true);
+                            $('#aadhaar3').prop("required", true);
+                            $('#aadhaar4').prop("required", true);
+
+                        } else if ($('#member').val() == 'Add 5 Member') {
+                            $('#aadhaarhide').show("slow");
+                            $('#aadhaar2hide').show("slow");
+                            $('#aadhaar3hide').show("slow");
+                            $('#aadhaar4hide').show("slow");
+                            $('#aadhaar5hide').show("slow");
+                            $('#aadhaar6hide').hide("slow");
+                            $('#aadhaar6').prop("required", false);
+                            $('#aadhaar').prop("required", true);
+                            $('#aadhaar2').prop("required", true);
+                            $('#aadhaar3').prop("required", true);
+                            $('#aadhaar4').prop("required", true);
+                            $('#aadhaar5').prop("required", true);
+
+                        } else if ($('#member').val() == 'Add 6 Member') {
+                            $('#aadhaarhide').show("slow");
+                            $('#aadhaar2hide').show("slow");
+                            $('#aadhaar3hide').show("slow");
+                            $('#aadhaar4hide').show("slow");
+                            $('#aadhaar5hide').show("slow");
+                            $('#aadhaar6hide').show("slow");
+                            $('#aadhaar').prop("required", true);
+                            $('#aadhaar2').prop("required", true);
+                            $('#aadhaar3').prop("required", true);
+                            $('#aadhaar4').prop("required", true);
+                            $('#aadhaar5').prop("required", true);
+                            $('#aadhaar6').prop("required", true);
+
                         } else {
-                            $('#deedhide').hide("slow");
-                            $('#deed').prop("required", false);
+                            $('#aadhaarhide').hide("slow");
+                            $('#aadhaar2hide').hide("slow");
+                            $('#aadhaar3hide').hide("slow");
+                            $('#aadhaar4hide').hide("slow");
+                            $('#aadhaar5hide').hide("slow");
+                            $('#aadhaar6hide').hide("slow");
+                            $('#aadhaar').prop("required", false);
+                            $('#aadhaar2').prop("required", false);
+                            $('#aadhaar3').prop("required", false);
+                            $('#aadhaar4').prop("required", false);
+                            $('#aadhaar5').prop("required", false);
+                            $('#aadhaar6').prop("required", false);
+
                         }
                     });
                 </script>

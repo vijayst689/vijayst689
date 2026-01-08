@@ -1,5 +1,92 @@
 @extends('layouts.app')
 @section('content')
+    <style>
+        .service-card {
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            background-color: #fff9e6;
+            /* Light Yellow */
+            transform: translateY(-5px);
+            box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Centers Image */
+            justify-content: center;
+            /* Centers vertically */
+            text-align: center;
+            /* Centers Text */
+            height: 100%;
+        }
+
+        .service-img {
+            width: 100px !important;
+            height: 100px !important;
+            object-fit: contain;
+            /* Prevents distortion */
+            margin-bottom: 10px;
+        }
+
+        .service-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-top: 8px;
+        }
+
+        /* No service card styling */
+        .no-service-card {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .no-service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .no-service-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .no-service-subtitle {
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* Modern button */
+        .manage-btn {
+            background: linear-gradient(135deg, #4f93ff, #006aff);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s ease-in-out;
+            border: none;
+        }
+
+        .manage-btn:hover {
+            background: linear-gradient(135deg, #006aff, #004fc1);
+            box-shadow: 0 4px 12px rgba(0, 106, 255, 0.4);
+            color: #fff;
+        }
+    </style>
     <div class="page-wrapper">
         <div class="page-content">
             <!--breadcrumb-->
@@ -30,6 +117,129 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
+                     <h5 class="card-title">Apply Service</h5>
+
+                     <div class="card-body">
+                                        <div class="row">
+                                            <form class="row g-4" action="#" enctype="multipart/form-data"
+                                                method="post">
+                                                <div class="col-lg-12">
+                                                    <div class="mb-3 row">
+                                                        {{-- <input type="hidden" id="customerid" name="customerid" value="{{ $talukid }}"> --}}
+                                                        @if ($serviceid == 119)
+                                                            @foreach ($services as $service)
+                                                                <div class="col-sm-4 col-md-6 col-xl-2 mb-2">
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <span class="bg-label">
+                                                                            <a
+                                                                                href="{{ url('/applyservices', $service->id) }}"><img
+                                                                                    src="/upload/service/{{ $service->service_image }}"
+                                                                                    alt="user-avatar"
+                                                                                    style="width: 160px; height: 180px;"
+                                                                                    id="uploadedAvatar">
+                                                                        </span></a>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        @elseif($serviceid == 10)
+                                                            @foreach ($services as $service)
+                                                                <div class="col-md-3 col-lg-2 col-sm-4 mb-2">
+                                                                    <div class="text-center">
+                                                                        <a
+                                                                            href="{{ url('/softwareservices', $service->id) }}">
+                                                                            <img src="/upload/sub_service/{{ $service->sub_service_image }}"
+                                                                                alt=""
+                                                                                class="rounded-circle img-thumbnail avatar-xl"></a>
+                                                                        <h5 class="text-danger">
+                                                                            {{ $service->service_name }}</h5>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                    </div>
+                                                </div>
+                                            @elseif($serviceid == 103)
+                                                @foreach ($services as $service)
+                                                    <div class="col-xl-3 col-md-3 col-sm-6">
+                                                        <div class="card mb-0">
+                                                            <div class="card-body bg-dark">
+                                                                <div class="position-relative">
+                                                                    <img src="/upload/sub_service/{{ $service->sub_service_image }}"
+                                                                        class="img-fluid rounded"
+                                                                        style="width: 200px; height: 150px;"
+                                                                        alt="">
+                                                                </div>
+                                                                <div class="text-center mt-1 pt-1">
+                                                                    <p class="mb-0 text-success">
+                                                                        <b>{{ $service->service_name }}</b>
+                                                                    </p>
+                                                                    <hr class="text-black">
+                                                                    {{-- <h6 class="mb-2 text-danger">Amount: {{ $service->payment }}</h6> --}}
+                                                                </div>
+                                                                <div
+                                                                    class="d-flex align-items-center justify-content-between">
+                                                                    <a href="{{ url('/applyservices', $service->id) }}"
+                                                                        class="btn btn-light">Apply</a>
+                                                                    <a href="{{ url('/applyservices', $service->id) }}"
+                                                                        class="btn btn-primary">List</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                        </div>
+                                    </div>
+                                @else
+                    <div class="container-fluid mt-1">
+
+                        <div class="row">
+                            <div class="container-xxl flex-grow-1">
+                                <div id="category_div" class="row text-center">
+                                    @if ($services->isEmpty())
+                                        <div class="d-flex justify-content-center align-items-center py-5">
+                                            <div class="no-service-card text-center p-4">
+                                                <h4 class="no-service-title mb-3">No Services Activated</h4>
+                                                <p class="no-service-subtitle mb-4">Please activate services to continue</p>
+
+                                                <a href="{{ url('/userpermission') }}/{{ Auth::user()->id }}"
+                                                    class="btn manage-btn">
+                                                    Manage User Permissions
+                                                </a>
+                                            </div>
+                                        </div>
+                                    @else
+                                        @foreach ($services as $ser)
+                                            <div class="col-6 col-md-3 col-lg-2 mb-4 category_data">
+                                                <div class="card service-card h-100">
+
+
+                                                    <a href="{{ url('/applyservices', $ser->id) }}" class="service-link">
+
+
+                                                        <div class="service-content">
+                                                            <img src="{{ !empty($ser->sub_service_image)
+                                                                ? asset('upload/sub_service/' . $ser->sub_service_image)
+                                                                : asset('upload/service/default.png') }}"
+                                                                class="service-img" style="width: 100px; height: 100px;" />
+
+                                                            <p class="service-title">
+                                                                {{ $ser->service_name }}
+                                                            </p>
+                                                        </div>
+
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                </div>
+            </div>
+            </form>
                     @if ($serviceid == 6)
                         @if (Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2)
                             <div class="main-content">
@@ -410,337 +620,346 @@
                                     </div>
                                 </div>
                             @endif
-                                            @php
-                    $data = DB::table('appointment_reg')
-                        ->where('email', Auth::user()->email)
-                        ->first();
-                @endphp
-                <div class="card">
-                    <div class="card-body">
-                        @if (Auth::user()->is_completed == 0 || ($data && $data->status == 'Resubmit'))
-                            <h1 class="card-title">பதவி நியமனச் சான்றிதழ்</h1>
-                            <div class="row">
-                                <form class="row g-4" action="{{ url('add_appointment') }}"
-                                    enctype="multipart/form-data" method="post" id="myForm">
-                                    @csrf
-                                    @if ($data && $data->status == 'Resubmit')
-                                        <input type="hidden" name="id" value="{{ $data->id }}">
-                                    @endif
-                                    <div class="row">
-                                        <div class="mb-3 col-md-6">
-                                            <label for="name" class="form-label text-dark">பெயர் தமிழில்</label>
-                                            <input required type="text" class="form-control" name="name"
-                                                placeholder="பெயர்" maxlength="100"
-                                                value="{{ old('name', $data->name ?? '') }}" />
-
-                                            <label for="district" class="form-label text-dark">மாவட்டம் தமிழில்</label>
-                                            <input required type="text" class="form-control" name="district"
-                                                placeholder="மாவட்டம்" maxlength="100"
-                                                value="{{ old('district', $data->district ?? '') }}" />
-
-                                            <label for="village" class="form-label text-dark">கிராமம் தமிழில்</label>
-                                            <input required type="text" class="form-control" name="village"
-                                                placeholder="கிராமம்" maxlength="100"
-                                                value="{{ old('village', $data->village ?? '') }}" />
-
-                                            <label for="station_name" class="form-label text-dark">சேவை நிலையத்தின்
-                                                பெயர்</label>
-                                            <input required type="text" class="form-control" name="station_name"
-                                                placeholder="சேவை நிலையத்தின் பெயர்" maxlength="100"
-                                                value="{{ old('station_name', $data->station_name ?? '') }}" />
-                                            @if (!empty($data) && !empty($data->status == 'Resubmit'))
-                                                <label for="remarks" class="form-label text-danger">Remarks</label>
-                                                <input required type="text" class="form-control" name="remarks"
-                                                    placeholder="remarks" maxlength="100"
-                                                    value="{{ old('remarks', $data->remarks ?? '') }}" readonly />
-                                            @endif
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            <label for="mobile" class="form-label text-dark">செல் நம்பர்</label>
-                                            <input required type="text" maxlength="10" class="form-control number"
-                                                name="mobile" placeholder="Mobile Number"
-                                                value="{{ old('mobile', $data->mobile ?? '') }}" />
-
-                                            <label for="taluk" class="form-label text-dark">தாலுகா தமிழில்</label>
-                                            <input required type="text" maxlength="100" class="form-control"
-                                                name="taluk" placeholder="தாலுகா"
-                                                value="{{ old('taluk', $data->taluk ?? '') }}" />
-
-                                            <label for="photo" class="form-label text-dark">புகைப்படம்</label>
-
-                                            @if (!empty($data) && !empty($data->photo))
-                                                {{-- Show existing photo --}}
-                                                <div class="mb-2">
-                                                    <img src="{{ asset('upload/nalavariyam_document/photo/' . $data->photo) }}"
-                                                        alt="Photo" class="img-thumbnail" width="100" />
-                                                </div>
-
-                                                {{-- Optional new upload --}}
-                                                <input type="file" name="photo" class="form-control"
-                                                    accept="image/jpeg, image/png" />
-                                                <small class="text-muted">புதிய புகைப்படத்தைப் பதிவேற்ற விரும்பினால்
-                                                    தேர்ந்தெடுக்கவும்.</small>
-                                            @else
-                                                {{-- Required upload for new record --}}
-                                                <input type="file" name="photo" class="form-control" required
-                                                    accept="image/jpeg, image/png" />
-                                            @endif
-                                        </div>
-                                        <div class="text-center">
-                                            <div class="col-12">
-                                                <div class="mb-0">
-                                                    <button id="save1" type="submit"
-                                                        class="btn btn-primary">Submit</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                </form>
-                            </div>
-                    </div>
-                @elseif(Auth::user()->is_completed == 1 && ($data && ($data->status == 'Pending' || $data->status == 'Resubmit')))
-                    <h1 class="text-center">Please Wait...</h1>
-                @elseif($data && $data->status == 'Approved')
-                    <div class="alert alert-light border d-flex align-items-center justify-content-between">
-                        <div>
-                            <strong>பதவி நியமனச் சான்றிதழ்:</strong>
-                            @if (!empty($data) && !empty($data->certificate))
-                                <span class="text-success ms-1">Available</span>
-                            @else
-                                <span class="text-danger ms-1">Not Uploaded</span>
-                            @endif
-                        </div>
-                        @if (!empty($data) && !empty($data->certificate))
-                            <a href="{{ url('upload/nalavariyam_document/certificate/' . $data->certificate) }}" download
-                                class="btn btn-warning btn-sm">
-                                <i class="bi bi-download"></i> Download
-                            </a>
-                        @endif
-                    </div>
-            @endif
-                        @else
-                            <h3 class="text-center">Please Verify Your ID...</h3>
+                            @php
+                                $data = DB::table('appointment_reg')
+                                    ->where('email', Auth::user()->email)
+                                    ->first();
+                            @endphp
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="row">
-                                        <form class="row g-4 permissionform"
-                                            action="{{ url('updatenalavariyam_activation') }}"
-                                            enctype="multipart/form-data" method="post">
-                                            @csrf
-                                            <div class="row">
-                                                <input type="hidden" name="userid" value="{{ Auth::user()->id }}" />
-                                                <input type="hidden" name="activation_amount_hidden"
-                                                    id="act_amount_hidden" />
-                                                <div class="mb-3 col-md-6">
-                                                    @if (Auth::user()->user_type_id != 2)
-                                                        <label for="nalavariyam_usertype" class="form-label">User
-                                                            Type</label>
-                                                        <select required type="text" class="form-control"
-                                                            id="nalavariyam_usertype" name="nalavariyam_usertype">
-                                                            <option value="">Select</option>
-                                                            <option value="3">பஞ்சாயத்து ஐடி</option>
-                                                            <option value="4">கிளை நிர்வாக ஐடி</option>
-                                                        </select>
-                                                    @endif
-                                                    <label for="nalavariyam_dist_id" class="form-label">District</label>
-                                                    <select required name="nalavariyam_dist_id" id="dist_id"
-                                                        class="form-control">
-                                                        <option value="">Select District</option>
-                                                        @foreach ($districts as $d)
-                                                            <option value="{{ $d->id }}">{{ $d->district_name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                                    @if (Auth::user()->is_completed == 0 || ($data && $data->status == 'Resubmit'))
+                                        <h1 class="card-title">பதவி நியமனச் சான்றிதழ்</h1>
+                                        <div class="row">
+                                            <form class="row g-4" action="{{ url('add_appointment') }}"
+                                                enctype="multipart/form-data" method="post" id="myForm">
+                                                @csrf
+                                                @if ($data && $data->status == 'Resubmit')
+                                                    <input type="hidden" name="id" value="{{ $data->id }}">
+                                                @endif
+                                                <div class="row">
+                                                    <div class="mb-3 col-md-6">
+                                                        <label for="name" class="form-label text-dark">பெயர்
+                                                            தமிழில்</label>
+                                                        <input required type="text" class="form-control"
+                                                            name="name" placeholder="பெயர்" maxlength="100"
+                                                            value="{{ old('name', $data->name ?? '') }}" />
 
-                                                    <div class="row mt-1">
-                                                        <label for="aadhaar_no" class=""><span
-                                                                style="color:red"></span>Aadhaar
-                                                            No</label>
-                                                        <div class="col-md-8">
-                                                            <input required="required" type="text"
-                                                                class="form-control number" id="aadhaar_no"
-                                                                maxlength="12" name="aadhaar_no" placeholder="Aadhar No">
-                                                        </div>
-                                                        <div id="verifybtnhide" class="input-group-append col-sm-2">
-                                                            <button onclick="getaadhaar_otpf();" id="checkotp"
-                                                                type="submit" class="btn btn-primary">Verify</button>
-                                                        </div>
-                                                        <div class="col-md-12 mt-1" id="verifyotphide"
-                                                            style="display:none;">
-                                                            <div class="row">
-                                                                <label for="aadhaar_no" class=""><span
-                                                                        style="color:red"></span>OTP</label>
-                                                                <div class="col-md-8">
-                                                                    <div class="form-group">
-                                                                        <input type="text" name="otp"
-                                                                            id="otp" placeholder="Enter OTP"
-                                                                            maxlength="6" class="form-control"
-                                                                            required="required">
-                                                                        <input type="hidden" id="refid">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4" id="verifydatabtnhide">
-                                                                    <button onclick="getaadhaar_dataf();" id="subotp"
-                                                                        type="button" class="btn btn-primary">Submit
-                                                                        OTP</button>
-                                                                </div>
+                                                        <label for="district" class="form-label text-dark">மாவட்டம்
+                                                            தமிழில்</label>
+                                                        <input required type="text" class="form-control"
+                                                            name="district" placeholder="மாவட்டம்" maxlength="100"
+                                                            value="{{ old('district', $data->district ?? '') }}" />
+
+                                                        <label for="village" class="form-label text-dark">கிராமம்
+                                                            தமிழில்</label>
+                                                        <input required type="text" class="form-control"
+                                                            name="village" placeholder="கிராமம்" maxlength="100"
+                                                            value="{{ old('village', $data->village ?? '') }}" />
+
+                                                        <label for="station_name" class="form-label text-dark">சேவை
+                                                            நிலையத்தின்
+                                                            பெயர்</label>
+                                                        <input required type="text" class="form-control"
+                                                            name="station_name" placeholder="சேவை நிலையத்தின் பெயர்"
+                                                            maxlength="100"
+                                                            value="{{ old('station_name', $data->station_name ?? '') }}" />
+                                                        @if (!empty($data) && !empty($data->status == 'Resubmit'))
+                                                            <label for="remarks"
+                                                                class="form-label text-danger">Remarks</label>
+                                                            <input required type="text" class="form-control"
+                                                                name="remarks" placeholder="remarks" maxlength="100"
+                                                                value="{{ old('remarks', $data->remarks ?? '') }}"
+                                                                readonly />
+                                                        @endif
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label for="mobile" class="form-label text-dark">செல்
+                                                            நம்பர்</label>
+                                                        <input required type="text" maxlength="10"
+                                                            class="form-control number" name="mobile"
+                                                            placeholder="Mobile Number"
+                                                            value="{{ old('mobile', $data->mobile ?? '') }}" />
+
+                                                        <label for="taluk" class="form-label text-dark">தாலுகா
+                                                            தமிழில்</label>
+                                                        <input required type="text" maxlength="100"
+                                                            class="form-control" name="taluk" placeholder="தாலுகா"
+                                                            value="{{ old('taluk', $data->taluk ?? '') }}" />
+
+                                                        <label for="photo"
+                                                            class="form-label text-dark">புகைப்படம்</label>
+
+                                                        @if (!empty($data) && !empty($data->photo))
+                                                            {{-- Show existing photo --}}
+                                                            <div class="mb-2">
+                                                                <img src="{{ asset('upload/nalavariyam_document/photo/' . $data->photo) }}"
+                                                                    alt="Photo" class="img-thumbnail"
+                                                                    width="100" />
+                                                            </div>
+
+                                                            {{-- Optional new upload --}}
+                                                            <input type="file" name="photo" class="form-control"
+                                                                accept="image/jpeg, image/png" />
+                                                            <small class="text-muted">புதிய புகைப்படத்தைப் பதிவேற்ற
+                                                                விரும்பினால்
+                                                                தேர்ந்தெடுக்கவும்.</small>
+                                                        @else
+                                                            {{-- Required upload for new record --}}
+                                                            <input type="file" name="photo" class="form-control"
+                                                                required accept="image/jpeg, image/png" />
+                                                        @endif
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <div class="col-12">
+                                                            <div class="mb-0">
+                                                                <button id="save1" type="submit"
+                                                                    class="btn btn-primary">Submit</button>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="mb-3 col-md-6">
-                                                    @if (Auth::user()->user_type_id != 2)
-                                                        <label for="name" class="form-label">Activation
-                                                            Payment</label>
-                                                        <input readonly required="required" type="text"
-                                                            class="form-control" name="activation_amount"
-                                                            id="act_amount">
-                                                    @endif
-                                                    <label for="nalavariyam_taluk_id" class="form-label">Taluk</label>
-                                                    <select name="nalavariyam_taluk_id" id="taluk"
-                                                        class="form-control">
-                                                    </select>
-
-                                                    <label for="name" class="form-label">Name</label>
-                                                    <input readonly required="required" type="text"
-                                                        class="form-control" name="full_name" id="fullname"
-                                                        maxlength="150" placeholder="Full Name">
-
-                                                    <label for="address" class="form-label">Address</label>
-                                                    <textarea required name="address" id="address" class="form-control" placeholder="Address" rows="3"
-                                                        maxlength="500"></textarea>
-                                                </div>
-                                            </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="mt-2 text-center" id="details"></div>
-                                        <div class="mt-2 text-center" id="nopayment"></div>
-                                        <div class="col-md-12 text-center">
-                                            <button id="save" class="btn btn-info" type="submit">Save</button>
-                                            <a href="{{ url('/') }}" class="btn btn-info">Back</a>
+                                            </form>
                                         </div>
-                                    </div>
-                                    </form>
                                 </div>
-                            </div>
+                            @elseif(Auth::user()->is_completed == 1 && ($data && ($data->status == 'Pending' || $data->status == 'Resubmit')))
+                                <h1 class="text-center">Please Wait...</h1>
+                            @elseif($data && $data->status == 'Approved')
+                                <div class="alert alert-light border d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <strong>பதவி நியமனச் சான்றிதழ்:</strong>
+                                        @if (!empty($data) && !empty($data->certificate))
+                                            <span class="text-success ms-1">Available</span>
+                                        @else
+                                            <span class="text-danger ms-1">Not Uploaded</span>
+                                        @endif
+                                    </div>
+                                    @if (!empty($data) && !empty($data->certificate))
+                                        <a href="{{ url('upload/nalavariyam_document/certificate/' . $data->certificate) }}"
+                                            download class="btn btn-warning btn-sm">
+                                            <i class="bi bi-download"></i> Download
+                                        </a>
+                                    @endif
+                                </div>
                         @endif
                     @else
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    @if (session()->has('success'))
-                                        <div class="alert alert-success alert-dismissible" role="alert">
-                                            <strong> {{ session('success') }} </strong>
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                aria-label="Close"></button>
-                                        </div>
-                                    @endif
-                                    @if (session()->has('error'))
-                                        <div class="alert alert-success alert-dismissible" role="alert">
-                                            <strong> {{ session('error') }} </strong>
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                aria-label="Close"></button>
-                                        </div>
-                                    @endif
+                        <h3 class="text-center">Please Verify Your ID...</h3>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <form class="row g-4 permissionform"
+                                        action="{{ url('updatenalavariyam_activation') }}" enctype="multipart/form-data"
+                                        method="post">
+                                        @csrf
+                                        <div class="row">
+                                            <input type="hidden" name="userid" value="{{ Auth::user()->id }}" />
+                                            <input type="hidden" name="activation_amount_hidden"
+                                                id="act_amount_hidden" />
+                                            <div class="mb-3 col-md-6">
+                                                @if (Auth::user()->user_type_id != 2)
+                                                    <label for="nalavariyam_usertype" class="form-label">User
+                                                        Type</label>
+                                                    <select required type="text" class="form-control"
+                                                        id="nalavariyam_usertype" name="nalavariyam_usertype">
+                                                        <option value="">Select</option>
+                                                        <option value="3">பஞ்சாயத்து ஐடி</option>
+                                                        <option value="4">கிளை நிர்வாக ஐடி</option>
+                                                    </select>
+                                                @endif
+                                                <label for="nalavariyam_dist_id" class="form-label">District</label>
+                                                <select required name="nalavariyam_dist_id" id="dist_id"
+                                                    class="form-control">
+                                                    <option value="">Select District</option>
+                                                    @foreach ($districts as $d)
+                                                        <option value="{{ $d->id }}">{{ $d->district_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
 
-                                    <div class="card-body">
-                                        <h5 class="card-title">Apply Service</h5>
-                                        @if ($serviceid == 568)
-                                            <div class="d-flex align-items-center gap-2 justify-content-lg-end ">
-                                                <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                    data-bs-target="#agentreg">Agent Register</button>
-                                            </div>
-                                        @endif
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <form class="row g-4" action="#" enctype="multipart/form-data"
-                                                    method="post">
-                                                    <div class="col-lg-12">
-                                                        <div class="mb-3 row">
-                                                            {{-- <input type="hidden" id="customerid" name="customerid" value="{{ $talukid }}"> --}}
-                                                            @if ($serviceid == 119)
-                                                                @foreach ($services as $service)
-                                                                    <div class="col-sm-4 col-md-6 col-xl-2 mb-2">
-                                                                        <div
-                                                                            class="d-flex align-items-center justify-content-between">
-                                                                            <span class="bg-label">
-                                                                                <a
-                                                                                    href="{{ url('/applyservices', $service->id) }}"><img
-                                                                                        src="/upload/service/{{ $service->service_image }}"
-                                                                                        alt="user-avatar"
-                                                                                        style="width: 160px; height: 180px;"
-                                                                                        id="uploadedAvatar">
-                                                                            </span></a>
-                                                                        </div>
-                                                                    </div>
-                                                                @endforeach
-                                                            @elseif($serviceid == 10)
-                                                                @foreach ($services as $service)
-                                                                    <div class="col-md-3 col-lg-2 col-sm-4 mb-2">
-                                                                        <div class="text-center">
-                                                                            <a
-                                                                                href="{{ url('/softwareservices', $service->id) }}">
-                                                                                <img src="/upload/sub_service/{{ $service->sub_service_image }}"
-                                                                                    alt=""
-                                                                                    class="rounded-circle img-thumbnail avatar-xl"></a>
-                                                                            <h5 class="text-danger">
-                                                                                {{ $service->service_name }}</h5>
-                                                                        </div>
-                                                                    </div>
-                                                                @endforeach
+                                                <div class="row mt-1">
+                                                    <label for="aadhaar_no" class=""><span
+                                                            style="color:red"></span>Aadhaar
+                                                        No</label>
+                                                    <div class="col-md-8">
+                                                        <input required="required" type="text"
+                                                            class="form-control number" id="aadhaar_no" maxlength="12"
+                                                            name="aadhaar_no" placeholder="Aadhar No">
+                                                    </div>
+                                                    <div id="verifybtnhide" class="input-group-append col-sm-2">
+                                                        <button onclick="getaadhaar_otpf();" id="checkotp"
+                                                            type="submit" class="btn btn-primary">Verify</button>
+                                                    </div>
+                                                    <div class="col-md-12 mt-1" id="verifyotphide" style="display:none;">
+                                                        <div class="row">
+                                                            <label for="aadhaar_no" class=""><span
+                                                                    style="color:red"></span>OTP</label>
+                                                            <div class="col-md-8">
+                                                                <div class="form-group">
+                                                                    <input type="text" name="otp" id="otp"
+                                                                        placeholder="Enter OTP" maxlength="6"
+                                                                        class="form-control" required="required">
+                                                                    <input type="hidden" id="refid">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4" id="verifydatabtnhide">
+                                                                <button onclick="getaadhaar_dataf();" id="subotp"
+                                                                    type="button" class="btn btn-primary">Submit
+                                                                    OTP</button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                @elseif($serviceid == 103)
-                                                    @foreach ($services as $service)
-                                                        <div class="col-xl-3 col-md-3 col-sm-6">
-                                                            <div class="card mb-0">
-                                                                <div class="card-body bg-dark">
-                                                                    <div class="position-relative">
-                                                                        <img src="/upload/sub_service/{{ $service->sub_service_image }}"
-                                                                            class="img-fluid rounded"
-                                                                            style="width: 200px; height: 150px;"
-                                                                            alt="">
-                                                                    </div>
-                                                                    <div class="text-center mt-1 pt-1">
-                                                                        <p class="mb-0 text-success">
-                                                                            <b>{{ $service->service_name }}</b>
-                                                                        </p>
-                                                                        <hr class="text-black">
-                                                                        {{-- <h6 class="mb-2 text-danger">Amount: {{ $service->payment }}</h6> --}}
-                                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                @if (Auth::user()->user_type_id != 2)
+                                                    <label for="name" class="form-label">Activation
+                                                        Payment</label>
+                                                    <input readonly required="required" type="text"
+                                                        class="form-control" name="activation_amount" id="act_amount">
+                                                @endif
+                                                <label for="nalavariyam_taluk_id" class="form-label">Taluk</label>
+                                                <select name="nalavariyam_taluk_id" id="taluk" class="form-control">
+                                                </select>
+
+                                                <label for="name" class="form-label">Name</label>
+                                                <input readonly required="required" type="text" class="form-control"
+                                                    name="full_name" id="fullname" maxlength="150"
+                                                    placeholder="Full Name">
+
+                                                <label for="address" class="form-label">Address</label>
+                                                <textarea required name="address" id="address" class="form-control" placeholder="Address" rows="3"
+                                                    maxlength="500"></textarea>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="mt-2 text-center" id="details"></div>
+                                    <div class="mt-2 text-center" id="nopayment"></div>
+                                    <div class="col-md-12 text-center">
+                                        <button id="save" class="btn btn-info" type="submit">Save</button>
+                                        <a href="{{ url('/') }}" class="btn btn-info">Back</a>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
+                @else
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                @if (session()->has('success'))
+                                    <div class="alert alert-success alert-dismissible" role="alert">
+                                        <strong> {{ session('success') }} </strong>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                    </div>
+                                @endif
+                                @if (session()->has('error'))
+                                    <div class="alert alert-success alert-dismissible" role="alert">
+                                        <strong> {{ session('error') }} </strong>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                    </div>
+                                @endif
+{{-- 
+                                <div class="card-body">
+                                    <h5 class="card-title">Apply Service</h5>
+                                    @if ($serviceid == 568)
+                                        <div class="d-flex align-items-center gap-2 justify-content-lg-end ">
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                data-bs-target="#agentreg">Agent Register</button>
+                                        </div>
+                                    @endif
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <form class="row g-4" action="#" enctype="multipart/form-data"
+                                                method="post">
+                                                <div class="col-lg-12">
+                                                    <div class="mb-3 row">
+                                                        <input type="hidden" id="customerid" name="customerid" value="{{ $talukid }}">
+                                                        @if ($serviceid == 119)
+                                                            @foreach ($services as $service)
+                                                                <div class="col-sm-4 col-md-6 col-xl-2 mb-2">
                                                                     <div
                                                                         class="d-flex align-items-center justify-content-between">
-                                                                        <a href="{{ url('/applyservices', $service->id) }}"
-                                                                            class="btn btn-light">Apply</a>
-                                                                        <a href="{{ url('/applyservices', $service->id) }}"
-                                                                            class="btn btn-primary">List</a>
+                                                                        <span class="bg-label">
+                                                                            <a
+                                                                                href="{{ url('/applyservices', $service->id) }}"><img
+                                                                                    src="/upload/service/{{ $service->service_image }}"
+                                                                                    alt="user-avatar"
+                                                                                    style="width: 160px; height: 180px;"
+                                                                                    id="uploadedAvatar">
+                                                                        </span></a>
                                                                     </div>
+                                                                </div>
+                                                            @endforeach
+                                                        @elseif($serviceid == 10)
+                                                            @foreach ($services as $service)
+                                                                <div class="col-md-3 col-lg-2 col-sm-4 mb-2">
+                                                                    <div class="text-center">
+                                                                        <a
+                                                                            href="{{ url('/softwareservices', $service->id) }}">
+                                                                            <img src="/upload/sub_service/{{ $service->sub_service_image }}"
+                                                                                alt=""
+                                                                                class="rounded-circle img-thumbnail avatar-xl"></a>
+                                                                        <h5 class="text-danger">
+                                                                            {{ $service->service_name }}</h5>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                    </div>
+                                                </div>
+                                            @elseif($serviceid == 103)
+                                                @foreach ($services as $service)
+                                                    <div class="col-xl-3 col-md-3 col-sm-6">
+                                                        <div class="card mb-0">
+                                                            <div class="card-body bg-dark">
+                                                                <div class="position-relative">
+                                                                    <img src="/upload/sub_service/{{ $service->sub_service_image }}"
+                                                                        class="img-fluid rounded"
+                                                                        style="width: 200px; height: 150px;"
+                                                                        alt="">
+                                                                </div>
+                                                                <div class="text-center mt-1 pt-1">
+                                                                    <p class="mb-0 text-success">
+                                                                        <b>{{ $service->service_name }}</b>
+                                                                    </p>
+                                                                    <hr class="text-black">
+                                                                    <h6 class="mb-2 text-danger">Amount: {{ $service->payment }}</h6>
+                                                                </div>
+                                                                <div
+                                                                    class="d-flex align-items-center justify-content-between">
+                                                                    <a href="{{ url('/applyservices', $service->id) }}"
+                                                                        class="btn btn-light">Apply</a>
+                                                                    <a href="{{ url('/applyservices', $service->id) }}"
+                                                                        class="btn btn-primary">List</a>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    @endforeach
-                                            </div>
-                                        </div>
-                                    @else
-                                        <label for="input1" class="form-label">Service</label>
-                                        <div class="col-sm-10">
-                                            <select id="serviceid" class="form-select">
-                                                <option value="">Select</option>
-                                                @foreach ($services as $service)
-                                                    <option value="{{ $service->id }}">{{ $service->service_name }}
-                                                    </option>
+                                                    </div>
                                                 @endforeach
-                                            </select>
                                         </div>
-                    @endif
+                                    </div>
+                                @else
+                                    <label for="input1" class="form-label">Service</label>
+                                    <div class="col-sm-10">
+                                        <select id="serviceid" class="form-select">
+                                            <option value="">Select</option>
+                                            @foreach ($services as $service)
+                                                <option value="{{ $service->id }}">{{ $service->service_name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @endif
+                                </div> --}}
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            </form>
         </div>
-    </div>
-
-    </div>
-    </div>
-    </div>
     </div>
     @endif
     </div>
@@ -870,7 +1089,7 @@
             });
         });
 
-         function getaadhaar_otpf() {
+        function getaadhaar_otpf() {
             var aadhaar = $("#aadhaar_no").val().trim();
             if (aadhaar == "") {
                 alert("Please Enter Aadhaar Number");
@@ -894,9 +1113,9 @@
                         alert(result.message);
                         $("#checkotp").attr("disabled", false);
                     } else {
-                         var data = result;
+                        var data = result;
                         alert(data.message);
-                        $("#refid").val(data.client_id);    
+                        $("#refid").val(data.client_id);
                         $("#verifybtnhide").hide();
                         $("#verifyotphide").show();
                         $("#aadhaar_no").attr("readonly", true);

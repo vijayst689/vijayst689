@@ -43,6 +43,79 @@
                                     <form class="row g-4" action="{{ url('/adduser_activation') }}"
                                         enctype="multipart/form-data" method="post">
                                         {{ csrf_field() }}
+                                        @if ($activation_id == 3)
+                                            <div class="accordion mt-4" id="serviceAccordion">
+
+                                                @foreach ($services as $index => $ser)
+                                                    @if (!empty($ser->children) && count($ser->children) > 0)
+                                                        <div class="accordion-item mb-2">
+                                                            <h2 class="accordion-header">
+                                                                <button class="accordion-button collapsed fw-bold"
+                                                                    type="button" data-bs-toggle="collapse"
+                                                                    data-bs-target="#service{{ $index }}">
+                                                                    {{ $ser->name }}
+                                                                </button>
+                                                            </h2>
+
+                                                            <div id="service{{ $index }}"
+                                                                class="accordion-collapse collapse">
+                                                                <div class="accordion-body">
+
+                                                                    {{-- HEADER --}}
+                                                                    <div class="row mb-2 fw-bold border-bottom pb-1">
+                                                                        <div class="col-md-3">Sub Service</div>
+                                                                        <div class="col-md-3">Admin</div>
+                                                                        <div class="col-md-3">Distributor</div>
+                                                                        <div class="col-md-3">Retailer</div>
+                                                                    </div>
+
+                                                                    {{-- SUB SERVICES --}}
+                                                                    @foreach ($ser->children as $child)
+                                                                        <div
+                                                                            class="row ps-3 py-2 bg-light rounded mb-1 align-items-center">
+                                                                            <div class="col-md-3">{{ $child->service_name }}
+                                                                            </div>
+
+                                                                            <input name="parent_id[]" type="hidden"
+                                                                                value="{{ $ser->activation_id }}" />
+                                                                            <input name="user_id[]" type="hidden"
+                                                                                value="{{ Auth::user()->id }}" />
+                                                                            <input name="service_id[]" type="hidden"
+                                                                                value="{{ $child->id }}" />
+
+                                                                            <div class="col-md-3">
+                                                                                <input class="form-control number"
+                                                                                    name="admin_amount[]" type="text"
+                                                                                    value="{{ $child->payment->admin_amount ?? '' }}"
+                                                                                    maxlength="6"
+                                                                                    @if (Auth::user()->user_type_id == 2) readonly @endif>
+                                                                            </div>
+
+                                                                            <div class="col-md-3">
+                                                                                <input class="form-control number"
+                                                                                    name="distributor_amount[]"
+                                                                                    type="text"
+                                                                                    value="{{ $child->payment->distributor_amount ?? '' }}"
+                                                                                    maxlength="6">
+                                                                            </div>
+
+                                                                            <div class="col-md-3">
+                                                                                <input class="form-control number"
+                                                                                    name="retailer_amount[]" type="text"
+                                                                                    value="{{ $child->payment->retailer_amount ?? '' }}"
+                                                                                    maxlength="6">
+                                                                            </div>
+                                                                        </div>
+                                                                    @endforeach
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+
+                                            </div>
+                                        @else
                                         <div class="table-responsive">
                                             <table id="example2" class="table table-striped table-bordered">
                                                 <thead>
@@ -59,33 +132,7 @@
                                                         <tr>
                                                             <td>{{ $key + 1 }}</td>
                                                             <td>{{ $ser->name }}</td>
-
-                                                            @if (count($ser->payment) > 0)
-                                                                @foreach ($ser->payment as $key1 => $payment)
-                                                                    <input name="parent_id[]" type="hidden"
-                                                                        value="{{ $ser->activation_id }}" />
-                                                                    <input name="user_id[]" type="hidden"
-                                                                        value="{{ Auth::user()->id }}" />
-                                                                    <input name="service_id[]" type="hidden"
-                                                                        value="{{ $ser->id }}" />
-                                                                    <td><input
-                                                                            @if (Auth::user()->user_type_id == 2) readonly @endif
-                                                                            class="form-control decimal"
-                                                                            name="admin_amount[]" type="text"
-                                                                            maxlength="6"
-                                                                            value="{{ $payment->admin_amount }}" /></td>
-
-                                                                    <td><input class="form-control decimal"
-                                                                            name="distributor_amount[]" type="text"
-                                                                            maxlength="6"
-                                                                            value="{{ $payment->distributor_amount }}" />
-                                                                    </td>
-                                                                    <td><input class="form-control decimal"
-                                                                            name="retailer_amount[]" type="text"
-                                                                            maxlength="6"
-                                                                            value="{{ $payment->retailer_amount }}" /></td>
-                                                                @endforeach
-                                                            @else
+                                                          
                                                                 <input name="parent_id[]" type="hidden"
                                                                     value="{{ $ser->activation_id }}" />
                                                                 <input name="user_id[]" type="hidden"
@@ -101,12 +148,13 @@
                                                                 <td><input class="form-control decimal"
                                                                         name="retailer_amount[]" type="text"
                                                                         maxlength="6" value="" /></td>
-                                                            @endif
+                                                           
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
+                                        @endif
                                 </div>
                             </div>
                             <div class="text-center">

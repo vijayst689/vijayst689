@@ -2566,3 +2566,52 @@ alter table appointment_reg add email varchar(50) default null;
 //19-12-2025
 
 alter table rc add engine varchar(15) Default NULL;
+
+//07-01-2026
+CREATE TABLE `agri_stack` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `dist_id` int(11) DEFAULT 0,
+  `aadhaar_no` varchar(15) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(100) DEFAULT NULL,
+  `application` varchar(100) DEFAULT NULL,
+  `api_processing` text DEFAULT NULL,
+  `api_approved` text DEFAULT NULL,
+  `lects` varchar(50) DEFAULT NULL,
+  `selects` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+alter table medicalscheme add passportsize_photo varchar(20) Default NULL;
+alter table medicalscheme add pin_code varchar(10) Default NULL;
+alter table medicalscheme add husband_name text Default NULL;
+alter table medicalscheme add father_name text Default NULL;
+alter table medicalscheme add marital_status varchar(50) Default NULL;
+alter table medicalscheme add aadhaar_no varchar(20) Default NULL;
+alter table medicalscheme add smartcard_no varchar(20) Default NULL;
+alter table medicalscheme add relationship varchar(50) Default NULL;
+alter table medicalscheme add relation varchar(50) DEFAULT NULL;
+alter table medicalscheme add member varchar(20) DEFAULT NULL after application_no;
+alter table medicalscheme add aadhaar varchar(20) DEFAULT NULL after member;
+alter table medicalscheme add aadhaar2 varchar(20) DEFAULT NULL after aadhaar;
+alter table medicalscheme add aadhaar3 varchar(20) DEFAULT NULL after aadhaar2;
+alter table medicalscheme add aadhaar4 varchar(20) DEFAULT NULL after aadhaar3;
+alter table medicalscheme add aadhaar5 varchar(20) DEFAULT NULL after aadhaar4;
+alter table medicalscheme add aadhaar6 varchar(20) DEFAULT NULL after aadhaar5;
+alter table medicalscheme add photo varchar(20) Default NULL;
+alter table medicalscheme add vao_or_income_certificate varchar(20) Default NULL;
+
+alter table voteridpdf_download add api_processing text DEFAULT NULL after certificate;
+alter table voteridpdf_download add api_approved text DEFAULT NULL after api_processing;
