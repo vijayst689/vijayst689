@@ -60,10 +60,33 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
     return view('services.allservice',compact('ourservice','customerid'));
 }
 
+// public function allservices()
+// {
+//     $ourservice = DB::table('services')->where('status', '=', 'Active')->where('parent_id', 0)->where('ser_id', 0)->orderBy('id', 'Asc')->get();
+
+//     return view('services.allservices',compact('ourservice'));
+// }
+
 public function allservices()
 {
-    $ourservice = DB::table('services')->where('status', '=', 'Active')->where('parent_id', 0)->where('ser_id', 0)->orderBy('id', 'Asc')->get();
+$userPermission = DB::table('user_permission')
+    ->where('service_id', '!=', 6)
+    ->where('user_id', Auth::user()->id)
+    ->where('parent_id', 3)
+    ->pluck('service_id');
 
+$adminPermission = DB::table('user_permission')
+    ->where('service_id', '!=', 6)
+    ->where('user_id', 2) // admin id
+    ->where('parent_id', 3)
+    ->pluck('service_id');
+ $finalServiceIds = $userPermission->intersect($adminPermission)->push(6);
+
+ if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 5){
+        $ourservice = DB::table('services')->where('status','=' , 'Active')->where('parent_id',0 )->where('ser_id',0 )->orderBy( 'id' , 'Asc' )->get();
+    }else{
+        $ourservice = DB::table('services')->where('status','=' , 'Active')->where('parent_id',0 )->where('ser_id',0 )->whereIn('id',$finalServiceIds)->orderBy( 'id' , 'Asc' )->get();
+    }
     return view('services.allservices',compact('ourservice'));
 }
 

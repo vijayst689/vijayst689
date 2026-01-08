@@ -122,7 +122,7 @@
                                 </a>
                             </div>
                         </div>
-                        {{-- <div class="col-4 col-md-2 mb-3 category_data">
+                        <div class="col-4 col-md-2 mb-3 category_data">
                             <div class="card p-2 h-100">
                                 <a href="{{ url('/panservices') }}">
                                     <div class="mb-1">
@@ -133,7 +133,7 @@
                             </div>
                         </div>
                     </div> 
-                        <div class="col-4 col-md-2 mb-3 category_data">
+                        {{-- <div class="col-4 col-md-2 mb-3 category_data">
                             <div class="card p-2 h-100">
                                 <a href="{{ url('/utility') }}">
                                     <div class="mb-1">
