@@ -1,5 +1,66 @@
 @extends('layouts.app')
 @section('content')
+ <style>
+        /* Smooth animation for cards */
+        .service-card {
+            border-radius: 12px;
+            padding: 8px 6px;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        /* Hover effect */
+        .service-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+            border-color: #2563eb;
+        }
+
+        /* Image zoom on hover */
+        .service-card:hover .service-img {
+            transform: scale(1.08);
+        }
+
+        /* Active (selected) service look */
+        .service-card.active {
+            border: 2px solid #2563eb;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.2);
+        }
+
+        /* Title on hover */
+        .service-card:hover .service-title {
+            color: #1d4ed8;
+        }
+
+        /* Image smooth effect */
+        .service-img {
+            width: 95px;
+            height: 95px;
+            object-fit: contain;
+            margin-bottom: 6px;
+            transition: transform 0.25s ease;
+        }
+
+        .service-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a3b6e;
+            margin-bottom: 0;
+            line-height: 1.2;
+        }
+
+        /* Mobile size fix */
+        @media (max-width: 576px) {
+            .service-img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+    </style>
     <div class="page-wrapper">
         <div class="page-content">
             <!--breadcrumb-->
@@ -42,7 +103,7 @@
                                 Auth::user()->user_type_id == 4)
                             <div class="col-4 col-md-2 mb-3 category_data">
                                 <div class="card p-2 h-100">
-                                    <a href="{{ url('/addcustomer') }}">
+                                    <a href="{{ url('/customers') }}">
                                         <div class="mb-1">
                                             <img src="/upload/mylogo/tnega.jpg" width="100%" />
                                             <p class="text-primary">TNEGA</p>
@@ -61,7 +122,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-4 col-md-2 mb-3 category_data">
+                        {{-- <div class="col-4 col-md-2 mb-3 category_data">
                             <div class="card p-2 h-100">
                                 <a href="{{ url('/panservices') }}">
                                     <div class="mb-1">
@@ -80,7 +141,7 @@
                                     </div>
                                 </a>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="container-fluid mt-1">

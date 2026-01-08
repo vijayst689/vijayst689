@@ -378,7 +378,7 @@ Route::get('/userpermission/{userid}', [App\Http\Controllers\PermissionControlle
 Route::post('/savepermission', [App\Http\Controllers\PermissionController::class, 'savepermission'])->name('savepermission');
 Route::get('/nalavariyam_permission/{userid}', [App\Http\Controllers\PermissionController::class, 'nalavariyam_permission'])->name('nalavariyam_permission');
 Route::get('activation/get_activationamount/{userid}/{activation_userid}/{service_id}', [App\Http\Controllers\PermissionController::class, 'get_activationamount'])->name('get_activationamount');
-
+Route::get('syncSubServicePermissions', [App\Http\Controllers\PermissionController::class, 'syncSubServicePermissions'])->name('syncSubServicePermissions');
 
 Route::get('/utility', [App\Http\Controllers\RechargeController::class, 'utility'])->name('utility');
 Route::get('/utilityservice/{serviceid}', [App\Http\Controllers\RechargeController::class, 'utilityservice'])->name('utilityservice');

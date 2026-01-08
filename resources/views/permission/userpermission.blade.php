@@ -128,7 +128,7 @@
                         $selectedIds3 = collect($checkpermission3)->pluck('service_id')->toArray();
                         $selectedIds4 = collect($checkpermission4)->pluck('service_id')->toArray();
                     @endphp
-                    <div class="card-body">
+                   <div class="card-body">
                         <h5 class="card-title">Activation Permissions</h5>
                         <div class="row">
                             <form class="row permissionform" method="post" enctype="multipart/form-data">
@@ -164,12 +164,20 @@
                                             {{-- Service Name & Price --}}
                                             <div class="mt-2">
                                                 <h6 class="mb-1">{{ $ser->name }}</h6>
-                                                <p class="fw-bold mb-0">₹ {{ $ser->amount }}</p>
+                                                <small class="fw-bold d-block">ID Cost ₹ {{ $ser->amount }}</small>
+                                                @if (Auth::user()->user_type_id == 3)
+                                                    <small class="fw-bold d-block">Service Payment ₹
+                                                        {{ $ser->distributor_amount }}</small>
+                                                @endif
+                                                @if (Auth::user()->user_type_id == 4)
+                                                    <small class="fw-bold d-block">Service Payment ₹ {{ $ser->retailer_amount }}
+                                                    </small>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
-                                <h3 class="text-center text-danger mt-4">Utility Services</h3>
+                                {{-- <h3 class="text-center text-danger mt-4">Utility Services</h3>
                                 @foreach ($utilityservices as $ser1)
                                     @php
                                         $isSelected = in_array($ser1->id, $selectedIds2);
@@ -181,28 +189,33 @@
                                             data-activation_amount="{{ $ser1->amount }}" data-bs-toggle="tooltip"
                                             title="{{ $ser1->name }}">
 
-                                            {{-- Status Badge --}}
                                             @if ($isSelected)
                                                 <div class="selected-badge">✔ Active</div>
                                             @else
                                                 <div class="notselected-badge">❌ Not Active</div>
                                             @endif
 
-                                            {{-- Image --}}
                                             <div class="border rounded bg-light p-2">
                                                 <img src="{{ asset('upload/uti_image/' . $ser1->ser_image) }}"
                                                     alt="{{ $ser1->name }}"
                                                     style="width: 100%; height: 80px; object-fit: contain;">
                                             </div>
 
-                                            {{-- Service Name & Price --}}
                                             <div class="mt-2">
                                                 <h6 class="mb-1">{{ $ser1->name }}</h6>
-                                                <p class="fw-bold mb-0">₹ {{ $ser1->amount }}</p>
+                                                <small class="fw-bold mb-0">ID Cost ₹ {{ $ser1->amount }}</small>
+                                                @if (Auth::user()->user_type_id == 3)
+                                                    <h6 class="mb-1 fw-bold">Service Payment ₹
+                                                        {{ $ser1->distributor_amount }}</h6>
+                                                @endif
+                                                @if (Auth::user()->user_type_id == 4)
+                                                    <h6 class="mb-1 fw-bold">Service Payment ₹ {{ $ser1->retailer_amount }}
+                                                    </h6>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                @endforeach --}}
                                 <h3 class="text-center text-danger mt-4">Pancard Services</h3>
                                 @foreach ($panservices as $ser2)
                                     @php
@@ -232,42 +245,76 @@
                                             {{-- Service Name & Price --}}
                                             <div class="mt-2">
                                                 <h6 class="mb-1">{{ $ser2->name }}</h6>
-                                                <p class="fw-bold mb-0">₹ {{ $ser2->amount }}</p>
+                                                <small class="fw-bold d-block">ID Cost ₹ {{ $ser2->amount }}</small>
+                                                @if (Auth::user()->user_type_id == 3)
+                                                    <small class="fw-bold d-block">Service Payment ₹
+                                                        {{ $ser2->distributor_amount }}</small>
+                                                @endif
+                                                @if (Auth::user()->user_type_id == 4)
+                                                    <small class="fw-bold d-block">Service Payment ₹ {{ $ser2->retailer_amount }}
+                                                    </small>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
                                 <h3 class="text-center text-danger mt-4">Other Services</h3>
-                                @foreach ($services as $ser2)
-                                    @php
-                                        $isSelected = in_array($ser2->id, $selectedIds3);
-                                    @endphp
+                               @foreach ($mainServices as $main)
+                                    <div class="mb-4">
 
-                                    <div class="col-6 col-md-3 mb-4">
-                                        <div class="service-box border rounded text-center p-2 position-relative {{ $isSelected ? 'disabled' : '' }}"
-                                            data-id="{{ $ser2->id }}" data-parent_id="3"
-                                            data-activation_amount="{{ $ser2->amount }}" data-bs-toggle="tooltip"
-                                            title="{{ $ser2->service_name }}">
+                                        {{-- MAIN SERVICE NAME HEADING --}}
+                                        <h3 class="text-danger border-bottom pb-2">
+                                            {{ $main->service_name ?? $main->name }}
+                                        </h3>
 
-                                            {{-- Status Badge --}}
-                                            @if ($isSelected)
-                                                <div class="selected-badge">✔ Active</div>
+                                        <div class="row mt-3">
+
+                                            {{-- Check subservices --}}
+                                            @if (isset($subServices[$main->id]))
+                                                @foreach ($subServices[$main->id] as $ser)
+                                                    @php
+                                                        $isSelected = in_array($ser->id, $selectedIds3 ?? []);
+                                                    @endphp
+
+                                                    <div class="col-6 col-md-3 mb-4">
+                                                        <div class="service-box border rounded text-center p-2 position-relative 
+                                {{ $isSelected ? 'disabled' : '' }}"
+                                                            data-id="{{ $ser->id }}" data-parent_id="3"
+                                                            data-activation_amount="{{ $ser->amount }}"
+                                                            data-bs-toggle="tooltip" title="{{ $ser->service_name }}">
+
+                                                            {{-- Active / Inactive Badge --}}
+                                                            @if ($isSelected)
+                                                                <div class="selected-badge">✔ Active</div>
+                                                            @else
+                                                                <div class="notselected-badge">❌ Not Active</div>
+                                                            @endif
+
+                                                            {{-- Image --}}
+                                                            <div class="border rounded bg-light p-2">
+                                                                <img src="{{ !empty($ser->sub_service_image)
+                                                                    ? asset('upload/sub_service/' . $ser->sub_service_image)
+                                                                    : asset('upload/service/default.png') }}"
+                                                                    alt="{{ $ser->service_name }}"
+                                                                    style="width: 100%; height: 80px; object-fit: contain;">
+                                                            </div>
+
+                                                            {{-- Name & Price --}}
+                                                            <div class="mt-2">
+                                                                <h6 class="mb-1">{{ $ser->service_name }}</h6>
+                                                                  <small class="fw-bold d-block">ID Cost ₹ {{ $ser->amount }}</small>
+                                                                @if (Auth::user()->user_type_id == 3 || Auth::user()->user_type_id == 4)
+                                                                    <small class="fw-bold d-block">Service Payment ₹
+                                                                        {{ $ser->serviceamount }}</small>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
                                             @else
-                                                <div class="notselected-badge">❌ Not Active</div>
+                                                <p class="text-muted">No Sub-Services Available</p>
                                             @endif
 
-                                            {{-- Image --}}
-                                            <div class="border rounded bg-light p-2">
-                                                <img src="{{ asset('upload/service/' . $ser2->service_image) }}"
-                                                    alt="{{ $ser2->service_name }}"
-                                                    style="width: 100%; height: 80px; object-fit: contain;">
-                                            </div>
-
-                                            {{-- Service Name & Price --}}
-                                            <div class="mt-2">
-                                                <h6 class="mb-1">{{ $ser2->service_name }}</h6>
-                                                <p class="fw-bold mb-0">₹ {{ $ser2->amount }}</p>
-                                            </div>
                                         </div>
                                     </div>
                                 @endforeach
