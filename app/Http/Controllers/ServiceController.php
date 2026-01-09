@@ -60,35 +60,13 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
     return view('services.allservice',compact('ourservice','customerid'));
 }
 
-// public function allservices()
-// {
-//     $ourservice = DB::table('services')->where('status', '=', 'Active')->where('parent_id', 0)->where('ser_id', 0)->orderBy('id', 'Asc')->get();
+    public function allservices()
+    {
 
-//     return view('services.allservices',compact('ourservice'));
-// }
-
-public function allservices()
-{
-$userPermission = DB::table('user_permission')
-    ->where('service_id', '!=', 6)
-    ->where('user_id', Auth::user()->id)
-    ->where('parent_id', 3)
-    ->pluck('service_id');
-
-$adminPermission = DB::table('user_permission')
-    ->where('service_id', '!=', 6)
-    ->where('user_id', 2) // admin id
-    ->where('parent_id', 3)
-    ->pluck('service_id');
- $finalServiceIds = $userPermission->intersect($adminPermission)->push(6);
-
- if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 5){
-        $ourservice = DB::table('services')->where('status','=' , 'Active')->where('parent_id',0 )->where('ser_id',0 )->orderBy( 'id' , 'Asc' )->get();
-    }else{
-        $ourservice = DB::table('services')->where('status','=' , 'Active')->where('parent_id',0 )->where('ser_id',0 )->whereIn('id',$finalServiceIds)->orderBy( 'id' , 'Asc' )->get();
+        $ourservice = DB::table('services')->where('status', '=', 'Active')->where('parent_id', 0)->where('ser_id', 0)->orderBy('id', 'Asc')->get();
+        return view('services.allservices', compact('ourservice'));
     }
-    return view('services.allservices',compact('ourservice'));
-}
+
 
 public function subservice( $id )
 {
@@ -219,22 +197,91 @@ public function updatesubstatus( Request $request ) {
     return redirect()->back()->with( 'success', 'SubService Updated Successfully' );
 }
 
-public function services($serviceid,$customerid) {
- $services = DB::table('services')->where('status', '=' , 'Active')->where('parent_id',$serviceid)->orderBy( 'id' , 'Asc' )->get();
- $customers = DB::table('users')->where('id',$customerid)->get();
- $customers = json_decode( json_encode( $customers ), true );
- foreach ( $customers as $key => $customer ) {
-    $customers[ $key ][ 'document' ] = array();
-    $customerid = $customer[ 'id' ];
-    $customer_document = DB::table('cus_document')->where('customer_id',$customerid)->get();
-    if(count($customer_document) > 0){
-        $customers[ $key ][ 'document' ] = $customer_document;
-    }
-}
-$customers = json_decode( json_encode( $customers ));
+// public function services($serviceid,$customerid) {
+//  $services = DB::table('services')->where('status', '=' , 'Active')->where('parent_id',$serviceid)->orderBy( 'id' , 'Asc' )->get();
+//  $customers = DB::table('users')->where('id',$customerid)->get();
+//  $customers = json_decode( json_encode( $customers ), true );
+//  foreach ( $customers as $key => $customer ) {
+//     $customers[ $key ][ 'document' ] = array();
+//     $customerid = $customer[ 'id' ];
+//     $customer_document = DB::table('cus_document')->where('customer_id',$customerid)->get();
+//     if(count($customer_document) > 0){
+//         $customers[ $key ][ 'document' ] = $customer_document;
+//     }
+// }
+// $customers = json_decode( json_encode( $customers ));
 
-return view('services.services',compact( 'services','customers','customerid','serviceid'));
-}
+// return view('services.services',compact( 'services','customers','customerid','serviceid'));
+// }
+
+public function services($serviceid, $customerid)
+    {
+        $userid = Auth::user()->id;
+
+        // User permissions
+        $userPermission = DB::table('user_permission')
+            ->where('service_id', '!=', 6)
+            ->where('user_id', $userid)
+            ->where('parent_id', 3)
+            ->pluck('service_id');
+
+        // Admin permissions
+        $adminPermission = DB::table('user_permission')
+            ->where('service_id', '!=', 6)
+            ->where('user_id', 2) // admin id
+            ->where('parent_id', 3)
+            ->pluck('service_id');
+
+        // Final allowed services
+        $finalServiceIds = $userPermission
+            ->intersect($adminPermission)
+            ->push(6);
+
+        if (Auth::user()->user_type_id == 1) {
+
+            // Services
+            $services = DB::table('services')
+                ->where('status', 'Active')
+                ->where('parent_id', $serviceid)
+                ->orderBy('id', 'Asc')
+                ->get();
+
+            // Customer
+            $customers = DB::table('users')
+                ->where('id', $customerid)
+                ->get()
+                ->map(function ($customer) {
+                    $customer->document = DB::table('cus_document')
+                        ->where('customer_id', $customer->id)
+                        ->get();
+                    return $customer;
+                });
+        } else {
+            $services = DB::table('services')
+                ->where('status', 'Active')
+                ->where('parent_id', $serviceid)
+                ->whereIn('id', $finalServiceIds)
+                ->orderBy('id', 'Asc')
+                ->get();
+
+            // Customer
+            $customers = DB::table('users')
+                ->where('id', $customerid)
+                ->get()
+                ->map(function ($customer) {
+                    $customer->document = DB::table('cus_document')
+                        ->where('customer_id', $customer->id)
+                        ->get();
+                    return $customer;
+                });
+
+        }
+
+        return view(
+            'services.services',
+            compact('services', 'customers', 'customerid', 'serviceid')
+        );
+    }
 
 public function servicesone($serviceid)
     {
@@ -259,7 +306,7 @@ public function servicesone($serviceid)
      $rawallet = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
         return view('services.servicesone', compact('services', 'serviceid','rawallet'));
     }
-    
+
 public function applyservice($serviceid,$customerid) {
     $districts = DB::table( 'district' )->get();
     $getservicename = DB::table( 'services' )->where('id',$serviceid)->first();
