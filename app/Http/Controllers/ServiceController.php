@@ -236,82 +236,30 @@ $customers = json_decode( json_encode( $customers ));
 return view('services.services',compact( 'services','customers','customerid','serviceid'));
 }
 
-public function servicesone($serviceid) {
-    $userid = Auth::user()->id;
+public function servicesone($serviceid)
+    {
+        $userid         = Auth::user()->id;
+        $userPermission = DB::table('user_permission')
+            ->where('service_id', '!=', 6)
+            ->where('user_id', Auth::user()->id)
+            ->where('parent_id', 3)
+            ->pluck('service_id');
 
-    $services = DB::table('services')->where('status', '=' , 'Active')->where('parent_id',$serviceid)->orderBy( 'id' , 'Asc' )->get();
-    $sql = "select count(*) as activecount from users where verified = 1 ";
-            $users = DB::select(DB::raw($sql));
-            if (count($users) > 0) {
-                $activecount = $users[0]->activecount;
-    }
-    $sql = "select count(*) as memcount from nalavariyam_customer where refferal = $userid";
-            $users = DB::select(DB::raw($sql));
-            if (count($users) > 0) {
-                $memcount = $users[0]->memcount;
-    }
-    $sql = "select count(*) as memcountref from nalavariyam_customer where refferal = $userid";
-            $users = DB::select(DB::raw($sql));
-            if (count($users) > 0) {
-                $memcountref = $users[0]->memcountref;
-    }
-
-    if ( Auth::user()->id == 1 || Auth::user()->id == 2) {
-
-        $sql = "select count(*) as pending from nalavariyam_form a,nalavariyam_district b,users c where a.dist_id=b.id and a.log_id=c.id and a.service_status = 'Pending'";
-        $result = DB::select(DB::raw($sql));
-        if (count($result) > 0) {
-            $pendingcount = $result[0]->pending;
-        }
-
+        $adminPermission = DB::table('user_permission')
+            ->where('service_id', '!=', 6)
+            ->where('user_id', 2) // admin id
+            ->where('parent_id', 3)
+            ->pluck('service_id');
+        $finalServiceIds = $userPermission->intersect($adminPermission)->push(6);
+        if (Auth::user()->user_type_id == 1) {
+            $services = DB::table('services')->where('status', '=', 'Active')->where('parent_id', $serviceid)->orderBy('id', 'Asc')->get();
         } else {
-            $log_id = Auth::user()->id;
-            $sql = "select count(*) as pending from nalavariyam_form a,nalavariyam_district b,nalavariyam_customer c where a.dist_id=b.id and a.customer_id=c.id and a.service_status = 'Pending' and a.log_id = $log_id";
-            $result = DB::select( DB::raw( $sql ) );
-            if ( count( $result ) > 0 ) {
-                $pendingcount = $result[ 0 ]->pending;
-            }
+            $services = DB::table('services')->where('status', '=', 'Active')->where('parent_id', $serviceid)->whereIn('id', $finalServiceIds)->orderBy('id', 'Asc')->get();
         }
-
-        if ( Auth::user()->id == 1 || Auth::user()->id == 2) {
-
-        $sql = "select count(*) as resubmit from nalavariyam_form a,nalavariyam_district b,users c where a.dist_id=b.id and a.log_id=c.id and a.service_status = 'Resubmit'";
-        $result = DB::select(DB::raw($sql));
-        if (count($result) > 0) {
-            $resubmitcount = $result[0]->resubmit;
-        }
-
-        } else {
-            $log_id = Auth::user()->id;
-            $sql = "select count(*) as resubmit from nalavariyam_form a,nalavariyam_district b,nalavariyam_customer c where a.dist_id=b.id and a.customer_id=c.id and a.service_status = 'Resubmit' and a.log_id = $log_id";
-            $result = DB::select( DB::raw( $sql ) );
-            if ( count( $result ) > 0 ) {
-                $resubmitcount = $result[ 0 ]->resubmit;
-            }
-        }
-
-        if ( Auth::user()->id == 1 || Auth::user()->id == 2) {
-
-        $sql = "select count(*) as approved from nalavariyam_form a,nalavariyam_district b,users c where a.dist_id=b.id and a.log_id=c.id and a.service_status = 'Completed'";
-        $result = DB::select(DB::raw($sql));
-        if (count($result) > 0) {
-            $approvedcount = $result[0]->approved;
-        }
-
-        } else {
-            $log_id = Auth::user()->id;
-            $sql = "select count(*) as approved from nalavariyam_form a,nalavariyam_district b,nalavariyam_customer c where a.dist_id=b.id and a.customer_id=c.id and a.service_status = 'Completed' and a.log_id = $log_id";
-            $result = DB::select( DB::raw( $sql ) );
-            if ( count( $result ) > 0 ) {
-                $approvedcount = $result[ 0 ]->approved;
-            }
-        }
-          $districts = DB::table( 'nalavariyam_district' )->get();
-          $rawallet = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
-
- return view('services.servicesone',compact( 'services','serviceid','activecount','memcount','memcountref','pendingcount','resubmitcount','approvedcount','districts','rawallet'));
-}
-
+     $rawallet = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+        return view('services.servicesone', compact('services', 'serviceid','rawallet'));
+    }
+    
 public function applyservice($serviceid,$customerid) {
     $districts = DB::table( 'district' )->get();
     $getservicename = DB::table( 'services' )->where('id',$serviceid)->first();
