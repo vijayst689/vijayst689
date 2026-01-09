@@ -442,7 +442,7 @@ private function getSubServices($parent_id)
     return $subs;
 }
 
-  public function adduser_activation(Request $request)
+ public function adduser_activation(Request $request)
 {
     // ✅ Validate request
     $request->validate([
