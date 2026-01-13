@@ -2615,3 +2615,44 @@ alter table medicalscheme add vao_or_income_certificate varchar(20) Default NULL
 
 alter table voteridpdf_download add api_processing text DEFAULT NULL after certificate;
 alter table voteridpdf_download add api_approved text DEFAULT NULL after api_processing;
+
+//13-01-2026
+
+CREATE TABLE `pvc_card` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `delivery_name` varchar(90) DEFAULT NULL,
+  `delivery_mobile` varchar(20) DEFAULT NULL,
+  `delivery_address` varchar(500) DEFAULT NULL,
+  `pincode` varchar(10) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(100) DEFAULT NULL,
+  `application` varchar(100) DEFAULT NULL,
+  `lects` varchar(50) DEFAULT NULL,
+  `selects` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE pvc_details (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    pvc_id INT UNSIGNED NOT NULL,
+    service_name VARCHAR(100) NOT NULL,
+    password VARCHAR(255) DEFAULT NULL,
+    document VARCHAR(255) DEFAULT NULL,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+
+    INDEX (pvc_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+alter table pvc_details add pvc_rationpdf varchar(255) DEFAULT NULL after document;

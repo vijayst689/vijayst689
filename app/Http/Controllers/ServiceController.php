@@ -516,8 +516,8 @@ public function applyservices($serviceid) {
 }  elseif ($serviceid == 155 || $serviceid == 156){
    return view( 'applyservice.birthcertificate_service',compact('serviceid','districts','servicename','amount','payment','customers'));
 
-}  elseif ($serviceid == 157 ){
-   return view( 'applyservice.pmkissanservice',compact('serviceid','districts','servicename','amount','payment','customers'));
+// }  elseif ($serviceid == 157 ){
+//    return view( 'applyservice.pmkissanservice',compact('serviceid','districts','servicename','amount','payment','customers'));
 
 }  elseif ($serviceid == 165 ){
    return view( 'applyservice.tec_csc_service',compact('serviceid','districts','servicename','amount','payment','customers'));
@@ -577,6 +577,10 @@ public function applyservices($serviceid) {
     $mainbalance = DB::table( 'users' )->select('wallet')->where('id',2)->first();
     $pandetails = DB::table( 'utislpan' )->where('user_id',Auth::user()->id)->where('service_id',$serviceid)->orderBy( 'id', 'Desc' )->get();
     return view( 'applyservice.utislpancorrection',compact('serviceid','districts','servicename','amount','customers','payment','pandetails','mainbalance'));
+
+} elseif ($serviceid == 157) {
+    return view('applyservice.pvccardprint', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment'));
+
 }
 }
 
@@ -8877,4 +8881,126 @@ if($coordinator_permission == 1){
 return redirect("appliedservice/Pending")->With("success","Application submitted Succesfully");
 
 }
+
+public function submitpvccardprint(Request $request){
+$user_id        = 0;
+$retailer_id    = 0;
+$distributor_id = 0;
+
+if (Auth::user()->user_type_id == 3) {
+    $user_id        = $request->user_id;
+    $distributor_id = Auth::user()->id;
+
+} elseif (Auth::user()->user_type_id == 4) {
+    $user_id     = $request->user_id;
+    $retailer_id = Auth::user()->id;
+
+} elseif (Auth::user()->user_type_id == 5) {
+    $user_id = Auth::user()->id;
+}
+
+   $pvc_id = DB::table('pvc_card')->insertGetId([
+    'user_id'        => $user_id,
+    'retailer_id'    => $retailer_id,
+    'distributor_id' => $distributor_id,
+    'service_id'     => $request->serviceid,
+    'amount'   => $request->service_amount,
+
+    'delivery_name'    => $request->delivery['name'] ?? null,
+    'delivery_mobile'  => $request->delivery['mobile'] ?? null,
+    'delivery_address' => $request->delivery['address'] ?? null,
+    'pincode'          => $request->delivery['pincode'] ?? null,
+
+    'status'        => 'Pending',
+    'applied_date'  => date('Y-m-d'),
+    'created_at'    => date('Y-m-d'),
+]);
+
+if (!empty($request->service)) {
+    foreach ($request->service as $service) {
+        $filePath = null;
+        $filePath1 = null;
+
+        if (isset($service['file']) && $service['file'] instanceof \Illuminate\Http\UploadedFile) {
+            $file = $service['file'];
+
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('upload/pvc_documents');
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            // Move file to destination
+            $file->move($destinationPath, $filename);
+
+            // Relative file path to save in DB
+            $filePath = 'upload/pvc_documents/' . $filename;
+        }
+        if (isset($service['ration_pdf']) && $service['ration_pdf'] instanceof \Illuminate\Http\UploadedFile) {
+            $file = $service['ration_pdf'];
+
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('upload/pvc_rationpdf');
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            // Move file to destination
+            $file->move($destinationPath, $filename);
+
+            // Relative file path to save in DB
+            $filePath1 = 'upload/pvc_rationpdf/' . $filename;
+        }
+
+        DB::table('pvc_details')->insert([
+            'pvc_id'        => $pvc_id,
+            'service_name'  => $service['name'],
+            'password'      => $service['password'] ?? null,
+            'document'      => $filePath,
+            'pvc_rationpdf' => $filePath1,
+            'created_at'  => now(),
+        ]);
+    }
+}
+
+  $servicepayment = $request->service_amount;
+        if (Auth::user()->user_type_id == 3) {
+            $user_id = $distributor_id;
+        } elseif (Auth::user()->user_type_id == 4) {
+            $user_id = $retailer_id;
+        } elseif (Auth::user()->user_type_id == 5) {
+            $user_id = $user_id;
+        }
+        $getservicename = DB::table('services')->select('service_name')->where('id', $request->serviceid)->first();
+        $servicename    = "";
+        if ($getservicename) {
+            $servicename = $getservicename->service_name;
+        }
+        $date           = date('Y-m-d');
+        $time           = date('H:i:s');
+        $service_status = 'Out Payment';
+        $ad_info        = 'Service Payment' . ' ' . $servicename;
+        $getwallet      = DB::table('users')->select('wallet')->where('id', 2)->first();
+        $balance        = 0;
+        if ($getwallet) {
+            $balance = $getwallet->wallet;
+        }
+        $newbalance  = $balance + $servicepayment;
+        $newbalance1 = Auth::user()->wallet - $servicepayment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
+        DB::insert(DB::raw($sql));
+        $sql = "update users set wallet = wallet + $servicepayment where id = 2";
+        DB::update(DB::raw($sql));
+        $service_status = 'IN Payment';
+        $sql            = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
+        DB::insert(DB::raw($sql));
+        $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+        DB::update(DB::raw($sql));
+
+        return redirect("appliedservice/Pending")->With("success", "Application submitted Succesfully");
+
+    }
 }
