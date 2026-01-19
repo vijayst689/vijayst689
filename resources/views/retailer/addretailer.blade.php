@@ -55,7 +55,7 @@
                                         <div class="col-md-6">
                                             <label for="input3" class="form-label">Phone</label>
                                             <input required onkeyup="duplicatephone(0)" id="phone" type="text"
-                                                name="phone" maxlength="10" class="form-control" id="input3"
+                                                name="phone" maxlength="10" class="form-control number" id="input3"
                                                 placeholder="Phone">
                                             <span id="dupphone" style="color:red"></span>
                                         </div>
