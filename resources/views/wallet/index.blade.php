@@ -47,7 +47,7 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table id="example" class="table table-striped table-bordered">
+                        <table id="example2" class="table table-striped table-bordered">
                             <thead class="table-dark">
                                 <tr>
                                     <th>Sl No</th>

@@ -6943,192 +6943,190 @@ class ServiceController extends Controller
         }
     }
 
-    public function submitapply_tailorshop(Request $request)
-    {
+public function submitapply_tailorshop(Request $request){
 
-        $user_id        = 0;
-        $retailer_id    = 0;
-        $distributor_id = 0;
-        if (Auth::user()->user_type_id == 3) {
-            $user_id        = $request->user_id;
-            $distributor_id = Auth::user()->id;
-        } elseif (Auth::user()->user_type_id == 4) {
-            $user_id     = $request->user_id;
-            $retailer_id = Auth::user()->id;
-        } elseif (Auth::user()->user_type_id == 5) {
-            $user_id = Auth::user()->id;
-        }
-        $serviceid = $request->serviceid;
-        if ($serviceid == 152 || $serviceid == 153 || $serviceid == 154) {
-            DB::table('tailor')->insert([
-                'user_id'            => $user_id,
-                'retailer_id'        => $retailer_id,
-                'distributor_id'     => $distributor_id,
-                'service_id'         => $request->serviceid,
-                'amount'             => $request->amount,
-                'dist_id'            => $request->dist_id,
-                'taluk_id'           => $request->taluk_id,
-                'panchayath_id'      => $request->panchayath_id,
-                'name'               => $request->name,
-                'aadhaar_no'         => $request->aadhaar_no,
-                'door_no'            => $request->door_no,
-                'significant'        => $request->significant,
-                'street_name'        => $request->street_name,
-                'course_name'        => $request->course_name,
-                'father_or_hus_name' => $request->father_or_hus_name,
-                'postal_area'        => $request->postal_area,
-                'pincode'            => $request->pincode,
-                'status'             => 'Pending',
-                'applied_date'       => date("Y-m-d"),
-                'created_at'         => date("Y-m-d"),
-            ]);
-
-            $insertid     = DB::getPdo()->lastInsertId();
-            $pan_card     = "";
-            $photo        = "";
-            $aadhaar_card = "";
-            $signature    = "";
-
-            if ($request->photo != null) {
-                $photo    = uniqid() . '.' . $request->file('photo')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
-
-            }
-            DB::table('tailor')->where('id', $insertid)->update([
-                'photo' => $photo,
-            ]);
-
-        }
-
-        $servicepayment = $request->service_amount;
-        if (Auth::user()->user_type_id == 3) {
-            $user_id = $distributor_id;
-        } elseif (Auth::user()->user_type_id == 4) {
-            $user_id = $retailer_id;
-        } elseif (Auth::user()->user_type_id == 5) {
-            $user_id = $user_id;
-        }
-        $getservicename = DB::table('services')->select('service_name')->where('id', $serviceid)->first();
-        $servicename    = "";
-        if ($getservicename) {
-            $servicename = $getservicename->service_name;
-        }
-        $date           = date('Y-m-d');
-        $time           = date('H:i:s');
-        $service_status = 'Out Payment';
-        $ad_info        = 'Service Payment' . ' ' . $servicename;
-        $getwallet      = DB::table('users')->select('wallet')->where('id', 2)->first();
-        $balance        = 0;
-        if ($getwallet) {
-            $balance = $getwallet->wallet;
-        }
-        $newbalance  = $balance + $servicepayment;
-        $newbalance1 = Auth::user()->wallet - $servicepayment;
-
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
-        DB::insert(DB::raw($sql));
-        $sql = "update users set wallet = wallet + $servicepayment where id = 2";
-        DB::update(DB::raw($sql));
-        $service_status = 'IN Payment';
-        $sql            = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
-        DB::insert(DB::raw($sql));
-        $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
-        DB::update(DB::raw($sql));
-
-        $getpermission          = DB::table('service_payment')->where('service_id', $serviceid)->first();
-        $coordinator_permission = 0;
-        $admin_payment          = 0;
-        if ($getpermission) {
-            $coordinator_permission = $getpermission->coordinator_permission;
-            $admin_payment          = $getpermission->admin_amount;
-        }
-        if ($coordinator_permission == 1) {
-            $getdata = DB::table('tailor')->where('id', $insertid)->first();
-            if ($getdata) {
-
-                $service_id    = $getdata->service_id;
-                $rowid         = $getdata->id;
-                $status        = $getdata->status;
-                $name          = $getdata->name;
-                $dist_id       = $getdata->dist_id;
-                $taluk_id      = $getdata->taluk_id;
-                $panchayath_id = $getdata->panchayath_id;
-                $aadhaar_no    = $getdata->aadhaar_no;
-                $door_no       = $getdata->door_no;
-                $significant   = $getdata->significant;
-                $street_name   = $getdata->street_name;
-                $postal_area   = $getdata->postal_area;
-                $course_name   = $getdata->course_name;
-                $course_name   = str_replace('&', "-", $course_name);
-                //echo $course_name;die;
-                $father_or_hus_name = $getdata->father_or_hus_name;
-                $pincode            = $getdata->pincode;
-                $url                = url('/');
-                $photo_url          = $url . '/upload/services/photo/' . $photo;
-                $API_KEY            = env('API_KEY', '');
-                $RAMJIPAY_URL       = env('RAMJIPAY_URL', '');
-                $WEBSITE_INDEX      = env('WEBSITE_INDEX', '');
-                $ch                 = curl_init();
-                if ($serviceid == 152) {
-                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo_file=$photo_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&dist_id=$dist_id&taluk_id=$taluk_id&panchayath_id=$panchayath_id&aadhaar_no=$aadhaar_no&door_no=$door_no&significant=$significant&postal_area=$postal_area&street_name=$street_name&course_name=$course_name&father_or_hus_name=$father_or_hus_name&pincode=$pincode";
-                } elseif ($serviceid == 153) {
-                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo_file=$photo_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&dist_id=$dist_id&taluk_id=$taluk_id&panchayath_id=$panchayath_id&aadhaar_no=$aadhaar_no&door_no=$door_no&significant=$significant&street_name=$street_name&postal_area=$postal_area&course_name=$course_name&father_or_hus_name=$father_or_hus_name&pincode=$pincode";
-                } elseif ($serviceid == 154) {
-                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo_file=$photo_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&dist_id=$dist_id&taluk_id=$taluk_id&panchayath_id=$panchayath_id&aadhaar_no=$aadhaar_no&door_no=$door_no&significant=$significant&street_name=$street_name&postal_area=$postal_area&course_name=$course_name&father_or_hus_name=$father_or_hus_name&pincode=$pincode";
-                }
-
-                //dd($post_data);
-                $url1 = $RAMJIPAY_URL . '/api/get_tailor_api';
-                // echo $url1;die;
-                curl_setopt($ch, CURLOPT_URL, $url1);
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                $server_output = curl_exec($ch);
-                curl_close($ch);
-                $resdata = json_decode($server_output, true);
-                // dd($resdata);
-                if ($resdata) {
-                    $status = $resdata['message'];
-                    if ($status == "Success") {
-                        $date           = date('Y-m-d');
-                        $time           = date('H:i:s');
-                        $service_status = 'Out Payment';
-                        $ad_info        = 'Ramji Wallet Debit' . ' ' . $servicename;
-                        $getrawallet    = DB::table('users')->select('rawallet')->where('id', 1)->first();
-                        $rawallet       = 0;
-                        if ($getrawallet) {
-                            $balance1 = $getrawallet->rawallet;
-                        }
-
-                        $getrawallet1 = DB::table('users')->select('rawallet')->where('id', 2)->first();
-                        $rawallet1    = 0;
-                        if ($getrawallet1) {
-                            $balance2 = $getrawallet1->rawallet;
-                        }
-                        $newbalance2 = $balance1 + $admin_payment;
-                        $newbalance3 = $balance2 - $admin_payment;
-                        $sql         = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
-                        DB::insert(DB::raw($sql));
-                        $sql = "update users set nalavariyamwallet = nalavariyamwallet + $admin_payment where id = 1";
-                        DB::update(DB::raw($sql));
-                        $service_status = 'IN Payment';
-                        $ad_info        = 'Ramji Wallet Credit' . ' ' . $servicename;
-
-                        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
-                        DB::insert(DB::raw($sql));
-                        $sql = "update users set nalavariyamwallet = nalavariyamwallet - $admin_payment where id = 2";
-                        DB::update(DB::raw($sql));
-                    }
-                }
-
-            }
-        }
-
-        return redirect("appliedservice/Pending")->With("success", "Application submitted Succesfully");
-
+    $user_id = 0;
+    $retailer_id = 0;
+    $distributor_id = 0;
+    if(Auth::user()->user_type_id == 3){
+        $user_id = $request ->user_id;
+        $distributor_id = Auth::user()->id;
+    }elseif(Auth::user()->user_type_id == 4){
+        $user_id = $request ->user_id;
+        $retailer_id = Auth::user()->id;
+    } elseif(Auth::user()->user_type_id == 5){
+        $user_id = Auth::user()->id;
     }
+    $serviceid = $request ->serviceid;
+    if($serviceid == 152 || $serviceid == 153 || $serviceid == 154){
+        DB::table( 'tailor' )->insert( [
+            'user_id'             => $user_id,
+            'retailer_id'         => $retailer_id,
+            'distributor_id'      => $distributor_id,
+            'service_id'          => $request ->serviceid,
+            'amount'              => $request->amount,
+            'dist_id'             => $request->dist_id,
+            'taluk_id'            => $request->taluk_id,
+            'panchayath_id'       => $request->panchayath_id,
+            'name'                => $request->name,
+            'aadhaar_no'          => $request->aadhaar_no,
+            'door_no'             => $request->door_no,
+            'significant'         => $request->significant,
+            'street_name'         => $request->street_name,
+            'course_name'         => $request->course_name,
+            'father_or_hus_name'  => $request->father_or_hus_name,
+            'pincode'             => $request->pincode,
+            'postal_area'         => $request->postal_area,
+            'status'              => 'Pending',
+            'applied_date'        => date("Y-m-d"),
+            'created_at'          => date("Y-m-d"),
+        ] );
+
+        $insertid = DB::getPdo()->lastInsertId();
+        $pan_card = "";
+        $photo = "";
+        $aadhaar_card = "";
+        $signature = "";
+
+
+        if ($request->photo != null) {
+            $photo = uniqid().'.'.$request->file('photo')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
+            move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
+
+
+        DB::table('tailor')->where('id', $insertid)->update([
+            'photo' => $photo,
+        ]);
+     }
+    }
+    $servicepayment = $request->service_amount;
+    if(Auth::user()->user_type_id == 3){
+        $user_id = $distributor_id;
+    }elseif(Auth::user()->user_type_id == 4){
+        $user_id = $retailer_id;
+    }elseif(Auth::user()->user_type_id == 5){
+        $user_id = $user_id;
+    }
+    $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+    $servicename = "";
+    if($getservicename){
+        $servicename = $getservicename->service_name;
+    }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = 'Service Payment'. ' '. $servicename;
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+    $balance = 0;
+    if($getwallet){
+        $balance = $getwallet->wallet;
+    }
+    $newbalance = $balance + $servicepayment;
+    $newbalance1 = Auth::user()->wallet - $servicepayment;
+
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
+    DB::insert( DB::raw( $sql ) );
+    $sql = "update users set wallet = wallet + $servicepayment where id = 2";
+    DB::update( DB::raw( $sql ) );
+    $service_status = 'IN Payment';
+    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
+    DB::insert( DB::raw( $sql ) );
+    $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+    DB::update( DB::raw( $sql ) );
+
+$getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+$coordinator_permission = 0;
+$admin_payment = 0;
+if($getpermission){
+    $coordinator_permission = $getpermission->coordinator_permission;
+    $admin_payment = $getpermission->admin_amount;
+}
+if($coordinator_permission == 1){
+    $getdata = DB::table( 'tailor' )->where('id',$insertid)->first();
+    if($getdata){
+
+     $service_id = $getdata->service_id;
+     $rowid = $getdata->id;
+     $status = $getdata->status;
+     $name = $getdata->name;
+     $dist_id = $getdata->dist_id;
+     $taluk_id = $getdata->taluk_id;
+     $panchayath_id = $getdata->panchayath_id;
+     $aadhaar_no = $getdata->aadhaar_no;
+     $door_no = $getdata->door_no;
+     $significant = $getdata->significant;
+     $street_name = $getdata->street_name;
+     $postal_area = $getdata->postal_area;
+     $course_name = $getdata->course_name;
+     $course_name = str_replace('&', "-", $course_name);
+     //echo $course_name;die;
+     $father_or_hus_name = $getdata->father_or_hus_name;
+     $pincode = $getdata->pincode;
+     $url = url('/');
+     $photo_url = $url.'/upload/services/photo/'.$photo;
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+     $ch = curl_init();
+     if($serviceid == 152){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo_file=$photo_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&dist_id=$dist_id&taluk_id=$taluk_id&panchayath_id=$panchayath_id&aadhaar_no=$aadhaar_no&door_no=$door_no&significant=$significant&postal_area=$postal_area&street_name=$street_name&course_name=$course_name&father_or_hus_name=$father_or_hus_name&pincode=$pincode";
+     }elseif($serviceid == 153){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo_file=$photo_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&dist_id=$dist_id&taluk_id=$taluk_id&panchayath_id=$panchayath_id&aadhaar_no=$aadhaar_no&door_no=$door_no&significant=$significant&street_name=$street_name&postal_area=$postal_area&course_name=$course_name&father_or_hus_name=$father_or_hus_name&pincode=$pincode";
+     }elseif($serviceid == 154){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo_file=$photo_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&dist_id=$dist_id&taluk_id=$taluk_id&panchayath_id=$panchayath_id&aadhaar_no=$aadhaar_no&door_no=$door_no&significant=$significant&street_name=$street_name&postal_area=$postal_area&course_name=$course_name&father_or_hus_name=$father_or_hus_name&pincode=$pincode";
+}
+
+    //dd($post_data);
+     $url1 = $RAMJIPAY_URL.'/api/get_tailor_api';
+  // echo $url1;die;
+     curl_setopt( $ch, CURLOPT_URL, $url1 );
+     curl_setopt( $ch, CURLOPT_POST, 1 );
+     curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+     $server_output = curl_exec( $ch );
+     curl_close( $ch );
+     $resdata = json_decode($server_output, true);
+        // dd($resdata);
+     if($resdata){
+        $status = $resdata['message'];
+        if($status == "Success"){
+         $date = date( 'Y-m-d' );
+         $time = date( 'H:i:s' );
+         $service_status = 'Out Payment';
+         $ad_info = 'Ramji Wallet Debit'.' '.$servicename;
+         $getrawallet = DB::table( 'users' )->select('nalavariyamwallet')->where('id',1)->first();
+         $rawallet = 0;
+         if($getrawallet){
+             $balance1 = $getrawallet->nalavariyamwallet;
+         }
+
+         $getrawallet1 = DB::table( 'users' )->select('nalavariyamwallet')->where('id',2)->first();
+         $rawallet1 = 0;
+         if($getrawallet1){
+             $balance2 = $getrawallet1->nalavariyamwallet;
+         }
+         $newbalance2 = $balance1 + $admin_payment;
+         $newbalance3 = $balance2 - $admin_payment;
+         $sql = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+         DB::insert( DB::raw( $sql ) );
+         $sql = "update users set nalavariyamwallet = nalavariyamwallet + $admin_payment where id = 1";
+         DB::update( DB::raw( $sql ) );
+         $service_status = 'IN Payment';
+         $ad_info = 'Ramji Wallet Credit'.' '.$servicename;
+
+         $sql = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+         DB::insert( DB::raw( $sql ) );
+         $sql = "update users set nalavariyamwallet = nalavariyamwallet - $admin_payment where id = 2";
+         DB::update( DB::raw( $sql ) );
+   }
+ }
+
+}
+}
+    return redirect("appliedservice/Pending")->With("success","Application submitted Succesfully");
+
+}
 
     public function savepmkissan(Request $request)
     {
