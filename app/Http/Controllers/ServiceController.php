@@ -290,7 +290,6 @@ class ServiceController extends Controller
     public function servicesone($serviceid)
     {
           $userid         = Auth::user()->id;
-         $userid         = Auth::user()->id;
         $userPermission = DB::table('user_permission')
             ->where('service_id', '!=', 6)
             ->where('user_id', Auth::user()->id)
@@ -308,8 +307,9 @@ class ServiceController extends Controller
         } else {
             $services = DB::table('services')->where('status', '=', 'Active')->where('parent_id', $serviceid)->whereIn('id', $finalServiceIds)->orderBy('id', 'Asc')->get();
         }
+        // dd($services);
     //Count
-        $services = DB::table('services')->where('status', '=', 'Active')->where('parent_id', $serviceid)->orderBy('id', 'Asc')->get();
+
         $sql      = "select count(*) as activecount from users where verified = 1 ";
         $users    = DB::select(DB::raw($sql));
         if (count($users) > 0) {
