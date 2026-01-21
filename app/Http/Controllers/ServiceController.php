@@ -289,7 +289,8 @@ class ServiceController extends Controller
 
     public function servicesone($serviceid)
     {
-        $userid         = Auth::user()->id;
+          $userid         = Auth::user()->id;
+         $userid         = Auth::user()->id;
         $userPermission = DB::table('user_permission')
             ->where('service_id', '!=', 6)
             ->where('user_id', Auth::user()->id)
@@ -749,6 +750,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('tnega_services')->insert([
             'user_id'                     => $user_id,
             'retailer_id'                 => $retailer_id,
@@ -1099,6 +1117,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('tnega_services')->insert([
             'user_id'                     => $user_id,
             'retailer_id'                 => $retailer_id,
@@ -1566,6 +1601,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('tnega_services')->insert([
             'user_id'                     => $user_id,
             'retailer_id'                 => $retailer_id,
@@ -1869,6 +1921,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('tnega_services')->insert([
             'user_id'                     => $user_id,
             'retailer_id'                 => $retailer_id,
@@ -2111,6 +2180,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('tnega_services')->insert([
             'user_id'                     => $user_id,
             'retailer_id'                 => $retailer_id,
@@ -2674,6 +2760,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('tnega_services')->insert([
             'user_id'                     => $user_id,
             'retailer_id'                 => $retailer_id,
@@ -2952,6 +3055,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('msme')->insert([
             'user_id'            => $user_id,
             'distributor_id'     => $distributor_id,
@@ -3073,6 +3193,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('itr')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -3178,6 +3315,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if ($serviceid == 155 || $serviceid == 156) {
             DB::table('birth_certificate')->insert([
                 'user_id'        => $user_id,
@@ -3256,6 +3410,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('gst')->insert([
             'user_id'                    => $user_id,
             'retailer_id'                => $retailer_id,
@@ -3408,6 +3579,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('tec_exam')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -3500,6 +3688,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('tec_exam')->insert([
             'user_id'            => $user_id,
             'retailer_id'        => $retailer_id,
@@ -3593,6 +3798,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('tec_exam')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -3705,6 +3927,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('tec_exam')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -3787,6 +4026,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('tec_exam')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -3869,6 +4125,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('tec_exam')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -3966,6 +4239,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('tec_exam')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -4060,6 +4350,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if ($serviceid == 36) {
             DB::table('smartcard')->insert([
                 'user_id'                   => $user_id,
@@ -4706,6 +5013,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if ($serviceid == 56) {
             DB::table('aadhaarcard')->insert([
                 'user_id'             => $user_id,
@@ -5072,6 +5396,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('aadhaarcard')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -5153,6 +5494,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
 
         if ($serviceid == 1 || $serviceid == 121) {
             DB::table('can_edit')->insert([
@@ -5597,6 +5955,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if ($serviceid == 77) {
             DB::table('smartcard')->insert([
                 'user_id'        => $user_id,
@@ -5900,6 +6275,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('bond')->insert([
             'user_id'         => $user_id,
             'retailer_id'     => $retailer_id,
@@ -5937,6 +6329,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if ($serviceid == 113 || $serviceid == 120 || $serviceid == 164 || $serviceid == 182 || $serviceid == 181) {
             DB::table('voterid')->insert([
                 'user_id'                    => $user_id,
@@ -6162,6 +6571,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if ($serviceid == 122 || $serviceid == 123) {
 
             DB::table('fssai')->insert([
@@ -6417,6 +6843,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('covid')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -6488,6 +6931,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('nalavariyam')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -6578,6 +7038,23 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if ($serviceid == 150 || $serviceid == 148) {
 
             DB::table('license')->insert([
@@ -6957,7 +7434,24 @@ public function submitapply_tailorshop(Request $request){
     } elseif(Auth::user()->user_type_id == 5){
         $user_id = Auth::user()->id;
     }
-    $serviceid = $request ->serviceid;
+    $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
     if($serviceid == 152 || $serviceid == 153 || $serviceid == 154){
         DB::table( 'tailor' )->insert( [
             'user_id'             => $user_id,
@@ -7144,6 +7638,23 @@ if($coordinator_permission == 1){
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('pmkissan')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -7229,6 +7740,23 @@ if($coordinator_permission == 1){
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('tec_exam')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -7364,6 +7892,23 @@ if($coordinator_permission == 1){
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if ($serviceid == 179) {
             DB::table('medicalscheme')->insert([
                 'user_id'          => $user_id,
@@ -7652,6 +8197,23 @@ if($coordinator_permission == 1){
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if ($serviceid == 183 || $serviceid == 184 || $serviceid == 185 || $serviceid == 186) {
             DB::table('dharsan')->insert([
                 'user_id'        => $user_id,
@@ -7745,131 +8307,6 @@ if($coordinator_permission == 1){
         return view('pdfservice.dlservice', compact('mainbalance', 'dldetails'));
     }
 
-    public function submitdlfind(Request $request)
-    {
-        $dl_no  = $request->dl_no;
-        $dob    = $request->dob;
-        $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
-        $amount = $request->amount;
-
-        $url = "https://goodapi.in/serviceApi/V1/driving_licence_hd.php";
-
-        $data = [
-            'apiKey' => $apikey,
-            'dlNo'   => $dl_no,
-            'dob'    => $dob,
-        ];
-
-        $curl = curl_init();
-        curl_setopt_array($curl, [
-            CURLOPT_URL            => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING       => '',
-            CURLOPT_MAXREDIRS      => 10,
-            CURLOPT_TIMEOUT        => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST  => 'POST',
-            CURLOPT_POSTFIELDS     => $data,
-        ]);
-
-        $response = curl_exec($curl);
-        curl_close($curl);
-
-        $resdata = json_decode($response, true);
-        //dd($resdata);
-
-        if ($resdata['StatusCode'] == "100") {
-            $pdf     = $resdata['pdf'];
-            $message = $resdata['message'];
-            DB::table('dl')->insert([
-                'user_id'  => Auth::user()->id,
-                'dlnumber' => $request->dl_no,
-                'dob'      => $dob,
-                'pdf'      => $pdf,
-                'status'   => 'Approved',
-                'date'     => date("Y-m-d H:i:s"),
-            ]);
-            $date           = date('Y-m-d');
-            $time           = date('H:i:s');
-            $service_status = 'Out Payment';
-            $ad_info        = 'Ramji Wallet Debit(DL PDF)';
-            $sql            = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2')";
-            DB::insert(DB::raw($sql));
-            $sql = "update users set rawallet = rawallet + $amount where id = 1";
-            DB::update(DB::raw($sql));
-            $service_status = 'IN Payment';
-            $ad_info        = 'Ramji Wallet Credit(DL PDF)';
-            $sql            = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2')";
-            DB::insert(DB::raw($sql));
-            $sql = "update users set rawallet = rawallet - $amount where id = 2";
-            DB::update(DB::raw($sql));
-            return redirect('/dlfind')->with('success', $message);
-        } else {
-            $error = $resdata['error'];
-            return redirect('/dlfind')->with('error', $error);
-        }
-    }
-
-    public function rcfind()
-    {
-        $rcdetails   = DB::table('rc')->orderBy('id', 'Desc')->get();
-        $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
-        return view('pdfservice.rcservice', compact('mainbalance', 'rcdetails'));
-    }
-
-    public function submitrcfind(Request $request)
-    {
-        $rc_no  = $request->rc_no;
-        $apikey = 'e6890313368bd0f5c8c8e9383fa83763';
-        $amount = $request->amount;
-        $url    = "https://apipanel.online/api/rc/rcpdf.php?api_key=$apikey&rcno=$rc_no";
-        $crl    = curl_init();
-        curl_setopt($crl, CURLOPT_URL, $url);
-        curl_setopt($crl, CURLOPT_FRESH_CONNECT, true);
-        curl_setopt($crl, CURLOPT_RETURNTRANSFER, true);
-        $result = curl_exec($crl);
-        $result = json_decode($result);
-        curl_close($crl);
-
-        if ($result) {
-            if ($result->status == "success") {
-                $name    = $result->name;
-                $message = $result->message;
-                $pdf     = $result->pdf;
-                DB::table('rc')->insert([
-                    'user_id' => Auth::user()->id,
-                    'rc_no'   => $request->rc_no,
-                    'name'    => $name,
-                    'pdf'     => $pdf,
-                    'status'  => 'Approved',
-                    'date'    => date("Y-m-d H:i:s"),
-                ]);
-                $date           = date('Y-m-d');
-                $time           = date('H:i:s');
-                $service_status = 'Out Payment';
-                $ad_info        = 'Ramji Wallet Debit(RC PDF)';
-                $sql            = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2')";
-                DB::insert(DB::raw($sql));
-                $sql = "update users set rawallet = rawallet + $amount where id = 1";
-                DB::update(DB::raw($sql));
-                $service_status = 'IN Payment';
-                $ad_info        = 'Ramji Wallet Credit(RC PDF)';
-                $sql            = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2')";
-                DB::insert(DB::raw($sql));
-                $sql = "update users set rawallet = rawallet - $amount where id = 2";
-                DB::update(DB::raw($sql));
-                return redirect('/rcfind')->with('success', $message);
-            } else {
-                $error = $result->error;
-                return redirect('/rcfind')->with('error', $error);
-            }
-        } else {
-            return redirect('/rcfind')->with('error', 'Something Went Wrong.....');
-        }
-
-    }
-
     public function panadvance()
     {
         $pandetails  = DB::table('pancard_find')->orderBy('id', 'Desc')->get();
@@ -7942,75 +8379,6 @@ if($coordinator_permission == 1){
         }
     }
 
-    public function rationcardverify()
-    {
-        $rationdetails = DB::table('ration')->orderBy('id', 'Desc')->get();
-        $mainbalance   = DB::table('users')->select('rawallet')->where('id', 2)->first();
-        return view('pdfservice.rationcardverify', compact('mainbalance', 'rationdetails'));
-    }
-
-    public function submitrationfind(Request $request)
-    {
-        $aadhaar_no = $request->aadhaar_no;
-        $apikey     = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
-        $amount     = $request->amount;
-
-        $curl = curl_init();
-        curl_setopt_array($curl, [
-            CURLOPT_URL            => "https://goodapi.in/serviceApi/V1/RashanVerificationBy_UID.php?apiKey=$apikey&uidNo=$aadhaar_no",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING       => "",
-            CURLOPT_MAXREDIRS      => 25,
-            CURLOPT_TIMEOUT        => 30,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_SSL_VERIFYHOST => false,
-            CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST  => "GET",
-            CURLOPT_HTTPHEADER     => [
-                "cache-control: no-cache",
-            ],
-        ]);
-
-        $response = curl_exec($curl);
-        $err      = curl_error($curl);
-        curl_close($curl);
-        $resdata = json_decode($response, true);
-        $message = $resdata['message'];
-
-        if ($resdata['StatusCode'] == "100") {
-            $pdf  = $resdata['pdf'];
-            $name = $resdata['name'];
-            DB::table('ration')->insert([
-                'user_id'    => Auth::user()->id,
-                'aadhaar_no' => $request->aadhaar_no,
-                'name'       => $name,
-                'pdf'        => $pdf,
-                'status'     => 'Approved',
-                'date'       => date("Y-m-d H:i:s"),
-            ]);
-            $date           = date('Y-m-d');
-            $time           = date('H:i:s');
-            $service_status = 'Out Payment';
-            $ad_info        = 'Ramji Wallet Debit(RATION PDF)';
-            $sql            = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2')";
-            DB::insert(DB::raw($sql));
-            $sql = "update users set rawallet = rawallet + $amount where id = 1";
-            DB::update(DB::raw($sql));
-            $service_status = 'IN Payment';
-            $ad_info        = 'Ramji Wallet Credit(RATION PDF)';
-            $sql            = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2')";
-            DB::insert(DB::raw($sql));
-            $sql = "update users set rawallet = rawallet - $amount where id = 2";
-            DB::update(DB::raw($sql));
-            return redirect('/rationcardverify')->with('success', $message);
-
-        } else {
-            $message = $resdata['message'];
-
-            return redirect('/rationcardverify')->with('error', $message);
-        }
-
-    }
 
     public function submitutislnew(Request $request)
     {
@@ -8028,6 +8396,23 @@ if($coordinator_permission == 1){
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('utislpan')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -8129,6 +8514,23 @@ if($coordinator_permission == 1){
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('utislpan')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -8241,6 +8643,23 @@ if($coordinator_permission == 1){
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('patta')->insert([
             'user_id'         => $user_id,
             'retailer_id'     => $retailer_id,
@@ -8336,6 +8755,23 @@ if($coordinator_permission == 1){
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('smartcard_otp')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -8499,6 +8935,23 @@ if($coordinator_permission == 1){
             $user_id = Auth::user()->id;
         }
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if ($serviceid == 221 || $serviceid == 222 || $serviceid == 227 || $serviceid == 228 || $serviceid == 229 || $serviceid == 230 || $serviceid == 231 || $serviceid == 232 || $serviceid == 235) {
             DB::table('smartcard')->insert([
                 'user_id'        => $user_id,
@@ -8687,6 +9140,23 @@ if($coordinator_permission == 1){
         }
 
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('voteridpdf_download')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,
@@ -8829,8 +9299,25 @@ if($coordinator_permission == 1){
         } elseif (Auth::user()->user_type_id == 5) {
             $user_id = Auth::user()->id;
         }
-
+ 
         $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         DB::table('agri_stack')->insert([
             'user_id'        => $user_id,
             'retailer_id'    => $retailer_id,

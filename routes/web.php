@@ -23,6 +23,7 @@ Route::get('/', function () {
 // Auth //
 
 Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'dashboard']);
+Route::get('spamusers', [App\Http\Controllers\DashboardController::class, 'spamusers']);
 Route::get('login', [CustomAuthController::class, 'index'])->name('login');
 Route::get('admin', [CustomAuthController::class, 'index'])->name('login');
 Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
@@ -38,7 +39,7 @@ Route::post('checkphoneregister', [CustomAuthController::class, 'checkphoneregis
 Route::post('checkpanregister', [CustomAuthController::class, 'checkpanregister'])->name('checkpanregister');
 Route::post('checkemailregisterretailer', [CustomAuthController::class, 'checkemailregisterretailer'])->name('checkemailregisterretailer');
 Route::post('checkaadharregisterretailer', [CustomAuthController::class, 'checkaadharregisterretailer'])->name('checkaadharregisterretailer');
-Route::post('checkphoneregisterretailer', [CustomAuthController::class, 'checkaadharregisterretailer'])->name('checkphoneregisterretailer');
+Route::post('checkphoneregisterretailer', [CustomAuthController::class, 'checkphoneregisterretailer'])->name('checkphoneregisterretailer');
 Route::post('checkpanregisterretailer', [CustomAuthController::class, 'checkpanregisterretailer'])->name('checkpanregisterretailer');
 Route::post('checkemailregistercustomer', [CustomAuthController::class, 'checkemailregistercustomer'])->name('checkemailregistercustomer');
 Route::post('checkaadharregistercustomer', [CustomAuthController::class, 'checkaadharregistercustomer'])->name('checkaadharregistercustomer');

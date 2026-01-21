@@ -137,6 +137,22 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
   }
 
   public function applypdfservice($serviceid) {
+      $userPermission = DB::table('user_permission')
+            ->where('user_id', Auth::user()->id)
+            ->where('parent_id', 1)
+            ->pluck('service_id');
+
+        $adminPermission = DB::table('user_permission')
+            ->where('user_id', 2)
+            ->where('parent_id', 1)
+            ->pluck('service_id');
+
+        $finalServiceIds = $userPermission->intersect($adminPermission);
+
+       if (!$finalServiceIds->contains($serviceid)) {
+    return response()
+        ->view('errors.no_permission', [], 403);
+}
     $getservicename = DB::table( 'find_services' )->where('id',$serviceid)->first();
     $servicename = "";
     $amount = 0;
@@ -201,8 +217,24 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
     $aadhaar = $request->aadhaar_no;
     $amount = $request->amount;
     $wallet = Auth::user()->wallet;
-        $servicepayment = $request->servicepayment;
-        $serviceid = $request->serviceid;
+    $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('find_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if($wallet < $servicepayment){
           return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
         }
@@ -347,8 +379,24 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
     $Apikey = 'cdf94c6d43b5367276d87107b1538aa50b50eb8f8c665fbcd9f1998abe73957e619d4e';
     $amount = $request->amount;
     $wallet = Auth::user()->wallet;
-        $servicepayment = $request->servicepayment;
-        $serviceid = $request->serviceid;
+    $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('find_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if($wallet < $servicepayment){
           return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
         }
@@ -516,8 +564,24 @@ if($resdata){
     $rc_no = $request->rc_no;
     $amount = $request->amount;
     $wallet = Auth::user()->wallet;
-        $servicepayment = $request->servicepayment;
-        $serviceid = $request->serviceid;
+    $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('find_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if($wallet < $servicepayment){
           return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
         }
@@ -672,8 +736,24 @@ public function submitrationfind(Request $request){
   $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
   $amount = $request->amount;
   $wallet = Auth::user()->wallet;
-        $servicepayment = $request->servicepayment;
-        $serviceid = $request->serviceid;
+    $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('find_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if($wallet < $servicepayment){
           return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
         }
@@ -797,8 +877,24 @@ public function submitpanadvance(Request $request){
     $apikey = '61285b3a51c8ad7304175bd5a9816e16f6d3279b3fe4f3b5f1b701b162b6';
     $amount = $request->amount;
     $wallet = Auth::user()->wallet;
-        $servicepayment = $request->servicepayment;
-        $serviceid = $request->serviceid;
+    $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('find_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if($wallet < $servicepayment){
           return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
         }
@@ -953,8 +1049,24 @@ public function submitvoterfind(Request $request){
     $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
     $amount = $request->amount;
     $wallet = Auth::user()->wallet;
-        $servicepayment = $request->servicepayment;
-        $serviceid = $request->serviceid;
+    $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('find_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if($wallet < $servicepayment){
           return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
         }
@@ -1073,8 +1185,24 @@ public function submitvoterpdf(Request $request){
     $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
     $amount = $request->amount;
     $wallet = Auth::user()->wallet;
-        $servicepayment = $request->servicepayment;
-        $serviceid = $request->serviceid;
+    $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('find_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         if($wallet < $servicepayment){
           return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
         }
@@ -1196,8 +1324,24 @@ public function submitaadhaar_verify(Request $request){
   $apikey = 'cdf94c6d43b5367276d87107b1538aa50b50eb8f8c665fbcd9f1998abe73957e619d4e';
   $amount = $request->amount;
   $wallet = Auth::user()->wallet;
-  $servicepayment = $request->servicepayment;
   $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('find_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
   if($wallet < $servicepayment){
     return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
   }
@@ -1313,10 +1457,26 @@ public function submitaadhaar_verify(Request $request){
    $user_id = Auth::user()->id;
     $pan_no = $request->pan_no;
     $apikey = '3d77fb-c95462-6d17f3-a92b88-9b8b9c';
-    $servicepayment = $request->servicepayment;
     $amount = $request->amount;
 
     $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('find_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
 
     $curl = curl_init();
     curl_setopt_array($curl, array(

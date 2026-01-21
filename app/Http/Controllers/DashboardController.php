@@ -1897,7 +1897,7 @@ class DashboardController extends Controller
             ->where('retailer_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stac + $pvc_card;
+            $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
 
 
@@ -2605,5 +2605,19 @@ class DashboardController extends Controller
         }
 
         return redirect("login")->withSuccess('You are not allowed to access');
+    }
+
+        public function spamusers()
+    {
+        $spamUsers = DB::table('users as u')
+    ->leftJoin('request_payment as rp', 'rp.from_id', '=', 'u.id')
+    ->whereNull('rp.id')           // No payment request
+    ->where('u.wallet', '>', 0)    // Wallet > 0
+    ->whereIn('u.status', ['Inactive','Active'])// Already marked inactive
+    ->whereNotIn('u.id', [1, 2])   // Exclude admin/system
+    ->select('u.id', 'u.name', 'u.email', 'u.wallet', 'u.status')
+    ->orderBy('u.wallet', 'desc')
+    ->get();
+        return view('errors.spamusers', compact('spamUsers'));
     }
 }
