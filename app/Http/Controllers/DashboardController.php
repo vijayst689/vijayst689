@@ -44,12 +44,12 @@ class DashboardController extends Controller
                 $distributor_count = $users[0]->distributor_count;
             }
 
-            $sql = "select count(*) as customercount from users where user_type_id = 5";
+            $sql = "select count(*) as customercount from customers where user_type_id = 5";
             $users = DB::select(DB::raw($sql));
             if (count($users) > 0) {
                 $customercount = $users[0]->customercount;
             }
-            $sql = "select count(*) as customer from users where user_type_id = 5 and refferal_id = $logid";
+            $sql = "select count(*) as customer from customers where user_type_id = 5 and refferal_id = $logid";
             $users = DB::select(DB::raw($sql));
             if (count($users) > 0) {
                 $customer = $users[0]->customer;

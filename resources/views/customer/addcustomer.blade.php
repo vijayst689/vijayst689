@@ -15,7 +15,7 @@
                 </div>
                 <div class="ms-auto">
                     <div class="btn-group">
-                        <a href="{{ url('customers') }}" class="btn btn-grd btn-grd-info px-3"><i
+                        <a href="{{ url('customers') }}" class="btn btn-info"><i
                                 class="bi bi-chat me-2"></i>View Customers</a>
                     </div>
                 </div>

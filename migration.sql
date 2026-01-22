@@ -2656,3 +2656,49 @@ CREATE TABLE pvc_details (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 alter table pvc_details add pvc_rationpdf varchar(255) DEFAULT NULL after document;
+
+22-01-2026
+
+CREATE TABLE `customers` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) NOT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `username_type` varchar(50) DEFAULT NULL,
+  `user_type_id` varchar(10) DEFAULT NULL,
+  `nalavariyam_usertype` int DEFAULT NULL,
+  `refferal_id` varchar(10) DEFAULT NULL,
+  `verified` int DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `phone` varchar(10) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `aadhaar_no` varchar(12) DEFAULT NULL,
+  `aadhaar_file` varchar(10) DEFAULT NULL,
+  `pan_no` varchar(10) DEFAULT NULL,
+  `pan_file` varchar(10) DEFAULT NULL,
+  `smartcard` varchar(20) DEFAULT NULL,
+  `smartcard_no` varchar(15) DEFAULT NULL,
+  `signature` varchar(20) DEFAULT NULL,
+  `dist_id` int DEFAULT NULL,
+  `taluk_id` int DEFAULT NULL,
+  `panchayath_id` int DEFAULT NULL,
+  `nalavariyam_dist_id` int DEFAULT NULL,
+  `nalavariyam_taluk_id` int DEFAULT NULL,
+  `panchayath_name` varchar(50) DEFAULT NULL,
+  `can_details` varchar(20) DEFAULT NULL,
+  `can_number` varchar(20) DEFAULT NULL,
+  `date_of_birth` varchar(10) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(191) NOT NULL,
+  `cpassword` varchar(20) DEFAULT NULL,
+  `profile` varchar(10) DEFAULT NULL,
+  `qr_image` varchar(30) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
+  `wallet` decimal(10,2) DEFAULT '0.00',
+  `rawallet` decimal(10,2) DEFAULT '0.00',
+  `remember_token` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `is_completed` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;

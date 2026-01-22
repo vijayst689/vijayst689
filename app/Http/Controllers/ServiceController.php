@@ -383,6 +383,29 @@ class ServiceController extends Controller
     public function applyservice($serviceid, $customerid)
     {
         $districts      = DB::table('district')->get();
+   $userid = Auth::user()->id;
+
+    // Get services user has permission for (excluding service 6)
+    $userPermission = DB::table('user_permission')
+        ->where('service_id', '!=', 6)
+        ->where('user_id', $userid)
+        ->where('parent_id', 3)
+        ->pluck('service_id');
+
+    // Get admin allowed services (excluding service 6)
+    $adminPermission = DB::table('user_permission')
+        ->where('service_id', '!=', 6)
+        ->where('user_id', 2) // admin id
+        ->where('parent_id', 3)
+        ->pluck('service_id');
+
+    // Intersect user and admin permissions + always allow service 6
+    $finalServiceIds = $userPermission->intersect($adminPermission)->push(6);
+
+    // Check if user has permission for this service
+    if (!$finalServiceIds->contains($serviceid)) {
+        return view('errors.no_permission'); // or any view you want
+    }
         $getservicename = DB::table('services')->where('id', $serviceid)->first();
         $servicename    = "";
         $amount         = 0;
@@ -411,7 +434,7 @@ class ServiceController extends Controller
         if ($payment == "") {
             $payment = 0;
         }
-        $customers = DB::table('users')->where('id', $customerid)->first();
+        $customers = DB::table('customers')->where('id', $customerid)->first();
         //dd($customers);
         if ($serviceid == 2) {
             $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
@@ -466,6 +489,22 @@ class ServiceController extends Controller
     public function applyservices($serviceid)
     {
         $districts      = DB::table('district')->get();
+             $userPermission = DB::table('user_permission')
+            ->where('service_id', '!=', 6)
+            ->where('user_id', Auth::user()->id)
+            ->where('parent_id', 3)
+            ->pluck('service_id');
+
+        $adminPermission = DB::table('user_permission')
+            ->where('service_id', '!=', 6)
+            ->where('user_id', 2) // admin id
+            ->where('parent_id', 3)
+            ->pluck('service_id');
+        $finalServiceIds = $userPermission->intersect($adminPermission);
+
+       if (!$finalServiceIds->contains($serviceid)) {
+       return response()->view('errors.no_permission', [], 403);
+}
         $getservicename = DB::table('services')->where('id', $serviceid)->first();
         $servicename    = "";
         $amount         = 0;
