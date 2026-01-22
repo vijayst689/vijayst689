@@ -44,7 +44,6 @@
                                     <th>Phone</th>
                                     <th>Wallet</th>
                                     <th>Status</th>
-                                    <th>Image</th>
                                     <th>Email</th>
                                     <th>Password</th>
                                     <th>Action</th>
@@ -61,12 +60,6 @@
                                         <td>{{ $dis->phone }}</td>
                                         <td class="text-primary">{{ $dis->wallet }}</td>
                                         <td>{{ $dis->status }}</td>
-                                        <td><a class="d-flex align-items-center gap-3" href="{{ url('profile') }}">
-                                                <div class="customer-pic">
-                                                    <img src="/upload/distributor/{{ $dis->profile }}"
-                                                        class="rounded-circle" width="30" height="30" alt="">
-                                                </div>
-                                        </td>
                                         <td>{{ $dis->email }}</td>
                                         <td>{{ $dis->cpassword }}</td>
                                         <td style="white-space: nowrap">
