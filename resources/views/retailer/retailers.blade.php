@@ -55,7 +55,7 @@
                                         <td>R{{ $cus->id }}</td>
                                         <td>{{ $cus->name }}</td>
                                         <td>{{ $cus->phone }}</td>
-                                        <td class="text-primary">{{ $dis->wallet }}</td>
+                                        <td class="text-primary">{{ $cus->wallet }}</td>
                                         <td>{{ $cus->status }}</td>
                                         <td>{{ $cus->email }}</td>
                                         <td>{{ $cus->cpassword }}</td>
