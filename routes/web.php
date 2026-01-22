@@ -56,6 +56,9 @@ Route::get('register/get_taluk_register/{distid}', [App\Http\Controllers\CustomA
 Route::get('register/get_panchayath_register/{taluk_id}', [App\Http\Controllers\CustomAuthController::class, 'get_panchayath_register'])->name('getpanchayathregister');
 Route::post('/check-phonelogin', [CustomAuthController::class, 'checkPhonelogin'])->name('check.phonelogin');
 Route::post('/send-otp', [CustomAuthController::class, 'sendOtp'])->name('send.otp');
+Route::post('checkemailcus', [CustomAuthController::class, 'checkemailcus'])->name('checkemailcus');
+Route::post('checkaadharcus', [CustomAuthController::class, 'checkaadharcus'])->name('checkaadharcus');
+Route::post('checkphonecus', [CustomAuthController::class, 'checkphonecus'])->name('checkphonecus');
 
 
 Route::get('home', [App\Http\Controllers\Frontend\HomeController::class, 'Index']);
