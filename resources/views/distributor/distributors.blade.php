@@ -42,6 +42,7 @@
                                     <th>User Id</th>
                                     <th>Name</th>
                                     <th>Phone</th>
+                                    <th>Wallet</th>
                                     <th>Status</th>
                                     <th>Image</th>
                                     <th>Email</th>
@@ -58,6 +59,7 @@
                                             </a>
                                         </td>
                                         <td>{{ $dis->phone }}</td>
+                                        <td class="text-primary">{{ $dis->wallet }}</td>
                                         <td>{{ $dis->status }}</td>
                                         <td><a class="d-flex align-items-center gap-3" href="{{ url('profile') }}">
                                                 <div class="customer-pic">
