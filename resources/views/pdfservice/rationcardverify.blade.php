@@ -33,7 +33,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    <form onsubmit="return checkpayment(event)" action="{{ url('/submitrationfind') }}"
+                   <form onsubmit="return checkpayment(event)" action="{{ url('/submitrationfind') }}"
                         id="formAccountSettings" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="amount" id="amount">
@@ -58,7 +58,7 @@
                                     <tr>
                                         <th>Sl No</th>
                                         <th>Aadhaar Number</th>
-                                        <th>PDF</th>                                       
+                                        <th>Number</th>
                                         <th>Datetime</th>
                                     </tr>
                                 </thead>
@@ -67,11 +67,29 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $ser->aadhaar_no }}</td>
-                                            @if (pathinfo($ser->pdf, PATHINFO_EXTENSION) != 'pdf')
-                                            <td><a href="<?php echo $ser->pdf; ?>" download class="btn btn-primary btn-sm">Download</a></td>
-                                            @else
-                                            <td><a href="{{ url('/') }}/upload/smartpdf/{{ $ser->pdf }}" download class="btn btn-primary btn-sm">Download</a></td>
-                                            @endif                                            
+                                            @php
+                                                $pdf = $ser->pdf;
+
+                                                // If ration number exists → show number only
+                                                if (!empty($pdf) && is_numeric($pdf)) {
+                                                    $content = $pdf;
+                                                } else {
+                                                    // Old file data → download button
+                                                    if (filter_var($pdf, FILTER_VALIDATE_URL)) {
+                                                        $url = $pdf;
+                                                    } else {
+                                                        $url = url('upload/smartpdf/' . $pdf);
+                                                    }
+
+                                                    $content =
+                                                        '<a href="' .
+                                                        $url .
+                                                        '" download class="btn btn-primary btn-sm">Download</a>';
+                                                }
+                                            @endphp
+
+                                            <td>{!! $content !!}</td>
+
                                             <td>{{ $ser->date }}</td>
                                         </tr>
                                     @endforeach
