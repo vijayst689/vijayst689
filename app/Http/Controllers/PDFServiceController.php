@@ -153,6 +153,11 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
     return response()
         ->view('errors.no_permission', [], 403);
 }
+ $getservicename = DB::table('find_services')->where('id', $serviceid)->first();
+          if ($getservicename->status == "Inactive") {
+            return response()
+                ->view('errors.no_permission', [], 403);
+        }
     $getservicename = DB::table( 'find_services' )->where('status' , 'Active')->where('id',$serviceid)->first();
     $servicename = "";
     $amount = 0;
