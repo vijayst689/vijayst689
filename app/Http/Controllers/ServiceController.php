@@ -376,7 +376,7 @@ class ServiceController extends Controller
             }
         }
         $districts = DB::table('nalavariyam_district')->get();
-        $rawallet  = DB::table('users')->select('rawallet')->where('id', 2)->first();
+        $rawallet = DB::table( 'users' )->select('nalavariyamwallet')->where('id',2)->first();
         return view('services.servicesone', compact('services', 'serviceid', 'rawallet', 'activecount', 'memcount', 'memcountref', 'pendingcount', 'resubmitcount', 'approvedcount', 'districts'));
     }
 

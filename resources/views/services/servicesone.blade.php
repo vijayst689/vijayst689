@@ -1143,7 +1143,7 @@
             window.location.href = "{{ url('applyservices') }}/" + serviceid;
 
         });
-        var ramjibalance = "{{ $rawallet->rawallet }}";
+        var ramjibalance = "{{ $rawallet->nalavariyamwallet }}";
         $(".permissionform").submit(function() {
             var wallet = "{{ Auth::user()->wallet }}";
             var amount = $("#act_amount_hidden").val();
