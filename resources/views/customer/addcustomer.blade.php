@@ -15,7 +15,7 @@
                 </div>
                 <div class="ms-auto">
                     <div class="btn-group">
-                        <a href="{{ url('customers') }}" class="btn btn-grd btn-grd-info px-3"><i
+                        <a href="{{ url('customers') }}" class="btn btn-info"><i
                                 class="bi bi-chat me-2"></i>View Customers</a>
                     </div>
                 </div>
@@ -101,10 +101,10 @@
                                             <div class="mb-3 row">
                                                 <label for="aadhaar_no" class="col-sm-3 form-label">Aadhaar No</label>
                                                 <div class="col-sm-9">
-                                                    <input required onkeyup="duplicateaadhar(0)" class="form-control number"
+                                                    <input required onkeyup="duplicateaadharcus(0)" class="form-control number"
                                                         maxlength="12" type="text" name="aadhaar_no" id="aadhaar_no"
                                                         placeholder="Aadhaar No">
-                                                    <span id="dupaadhar" style="color:red"></span>
+                                                    <span id="dupaadharcus" style="color:red"></span>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -142,10 +142,10 @@
                                             <div class="mb-3 row">
                                                 <label for="example-month-input" class="col-sm-3 form-label">Phone</label>
                                                 <div class="col-sm-9">
-                                                    <input required onkeyup="duplicatephone(0)"
+                                                    <input required onkeyup="duplicatephonecus(0)"
                                                         class="form-control number" type="text" name="phone"
                                                         maxlength="10" id="phone" placeholder="Phone">
-                                                    <span id="dupphone" style="color:red"></span>
+                                                    <span id="dupphonecus" style="color:red"></span>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -325,6 +325,101 @@
                             "<tr><td> <select required name='relationship[]' class='form-control'><option value=''>Select</option><option value='Father'>தகப்பன்</option><option value='Mother'>தாய்</option><option value='Husband'>கணவர்</option><option value='Wife'>மனைவி</option><option value='Son'>மகன்</option><option value='Daughter'>மகள்</option></select></td><td><input class='form-control' required type='text' name='relation_name[]'maxlength='80'></td><td width='10%'><input class='form-control number' required type='text' name='relation_age[]'maxlength='2'></td><td><select required name='profession[]' class='form-control'><option value=''>Select</option><option value='Students'>Students</option><option value='Farmer'>Farmer</option><option value='Daily Wages'>Daily Wages</option><option value='Self Employee'>Self Employee</option><option value='Business'>Business</option><option value='Govt Job'>Govt Job</option><option value='Private Job'>Private Job</option></select></td><td><input class='form-control number' required type='text' name='income[]' maxlength='7' placeholder='Income'></td><td><select required name='relationship_status[]' class='form-control alive_or_dead'><option value=''>Select</option><option value='Dead'>Dead</option><option value='Alive'>Alive</option></select></td><td><P class='changename'></P><input class='form-control' required type='file' name='doc[]' accept='image/jpeg, image/png'></td><td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i class='mdi mdi-delete mdi-18px'></i></a></td></tr>"
                         );
                     }
-                </script>
+
+            function duplicateaadharcus(id) {
+            var aadhaar_no = $("#aadhaar_no").val().trim();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                type: "post",
+                url: '{{ url('checkaadharcus') }}',
+                data: {
+                    id: id,
+                    aadhaar_no: aadhaar_no,
+                    _token: _token
+                },
+
+                success: function(res) {
+                    console.log(res);
+                    if (res.exists) {
+                        $("#save").prop('disabled', true);
+                        $("#dupaadharcus").html("aadhar no alredy exists!");
+                    } else {
+                        $("#dupaadharcus").html("");
+                    }
+                    if ($("#dupphonecus").html() == "" && $("#dupaadharcus").html() == "") {
+                        $("#save").prop('disabled', false);
+                    } else {
+                        $("#save").prop('disabled', true);
+                    }
+                },
+                error: function(jqXHR, exception) {
+                    console.log(exception);
+                }
+            });
+        }
+
+        function duplicatephonecus(id) {
+            var phone = $("#phone").val().trim();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                type: "post",
+                url: '{{ url('checkphonecus') }}',
+                data: {
+                    id: id,
+                    phone: phone,
+                    _token: _token
+                },
+
+                success: function(res) {
+                    if (res.exists) {
+                        $("#save").prop('disabled', true);
+                        $("#dupphonecus").html("mobile no alredy exists!");
+                    } else {
+                        $("#dupphonecus").html("");
+                    }
+                    if ($("#dupphonecus").html() == "" && $("#dupaadharcus").html() == "") {
+                        $("#save").prop('disabled', false);
+                    } else {
+                        $("#save").prop('disabled', true);
+                    }
+                },
+
+                error: function(jqXHR, exception) {
+                    console.log(exception);
+                }
+            });
+        }
+
+        function duplicateemailcus(id) {
+            var email = $("#email").val().trim();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                type: "post",
+                url: '{{ url('checkemailcus') }}',
+                data: {
+                    id: id,
+                    email: email,
+                    _token: _token
+                },
+
+                success: function(res) {
+                    if (res.exists) {
+                        $("#save").prop('disabled', true);
+                        $("#dupemailcus").html("email no alredy exists!");
+                    } else {
+                        $("#dupemailcus").html("");
+                    }
+                    if ($("#dupemailcus").html() == "" && $("#dupemailcus").html() == "") {
+                        $("#save").prop('disabled', false);
+                    } else {
+                        $("#save").prop('disabled', true);
+                    }
+                },
+
+                error: function(jqXHR, exception) {
+                    console.log(exception);
+                }
+            });
+        }
                 </script>
             @endpush

@@ -34,7 +34,7 @@ class UserController extends Controller
 
     public function editcustomer($id)
     {
-        $editcustomer = DB::table('users')->where( 'id', $id )->orderBy('id', 'Asc')->get();
+        $editcustomer = DB::table('customers')->where( 'id', $id )->orderBy('id', 'Asc')->get();
         $editcustomer = json_decode( json_encode( $editcustomer ), true );
         foreach ( $editcustomer as $key => $customer ) {
         $editcustomer[ $key ][ 'familymember' ] = array();
@@ -54,25 +54,25 @@ class UserController extends Controller
 
         if( Auth::user()->user_type_id == 1 ) {
 
-        $viewcustomers = DB::table('users')->where( 'user_type_id', '=', 5)->orderBy( 'id', 'Asc' )->get();
+        $viewcustomers = DB::table('customers')->where( 'user_type_id', '=', 5)->orderBy( 'id', 'Asc' )->get();
 
         }
 
         if( Auth::user()->user_type_id == 2 ) {
 
-        $viewcustomers = DB::table('users')->where( 'user_type_id', '=', 5 )->orderBy( 'id', 'Asc' )->get();
+        $viewcustomers = DB::table('customers')->where( 'user_type_id', '=', 5 )->orderBy( 'id', 'Asc' )->get();
 
         }
 
         if( Auth::user()->user_type_id == 3 ) {
 
-        $viewcustomers = DB::table('users')->where( 'user_type_id', '=', 5 )->where( 'refferal_id', '=', $userid)->orderBy( 'id', 'Asc' )->get();
+        $viewcustomers = DB::table('customers')->where( 'user_type_id', '=', 5 )->where( 'refferal_id', '=', $userid)->orderBy( 'id', 'Asc' )->get();
 
         }
 
         if( Auth::user()->user_type_id == 4 ) {
 
-        $viewcustomers = DB::table('users')->where( 'user_type_id', '=', 5 )->where( 'refferal_id', '=', $userid)->orderBy( 'id', 'Asc' )->get();
+        $viewcustomers = DB::table('customers')->where( 'user_type_id', '=', 5 )->where( 'refferal_id', '=', $userid)->orderBy( 'id', 'Asc' )->get();
 
         }
 
@@ -103,7 +103,7 @@ class UserController extends Controller
     {
 
         $userid = Auth::user()->id;
-      $savecustomer = DB::table('users')->insert([
+      $savecustomer = DB::table('customers')->insert([
         'name'          => $request->name,
         'aadhaar_no'    => $request->aadhaar_no,
         'password'      => Hash::make($request->password),
@@ -157,7 +157,7 @@ class UserController extends Controller
         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'profile_photo' . DIRECTORY_SEPARATOR);
         move_uploaded_file($_FILES['profile']['tmp_name'], $filepath . $profile);
       }
-      $image = DB::table( 'users' )->where( 'id', $insertid )->update( [
+      $image = DB::table( 'customers' )->where( 'id', $insertid )->update( [
         'smartcard'        => $smartcardimg,
         'aadhaar_file'     => $aadhaarimg,
         'signature'        => $signature,
@@ -206,7 +206,7 @@ class UserController extends Controller
 
     public function updatecustomer(Request $request)
     {
-        $updatecustomer = DB::table('users')->where('id', $request->customer_id)->update([
+        $updatecustomer = DB::table('customers')->where('id', $request->customer_id)->update([
            'name'          => $request->name,
             'aadhaar_no'    => $request->aadhaar_no,
             'email'         => $request->email,
@@ -272,7 +272,7 @@ class UserController extends Controller
 
     public function dropcustomer( $id ){
 
-        $dropcustomer = DB::table('users')->where( 'id', $id )->delete();
+        $dropcustomer = DB::table('customers')->where( 'id', $id )->delete();
      return redirect()->back()->with('success', 'Customer Deleted Successfully ... !');
     }
 

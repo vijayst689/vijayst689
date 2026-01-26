@@ -15,7 +15,7 @@
                 </div>
                 <div class="ms-auto">
                     <div class="btn-group">
-                        <a href="{{ url('addcustomer') }}" class="btn btn-grd btn-grd-info px-3"><i
+                        <a href="{{ url('addcustomer') }}"class="btn btn-info"><i
                                 class="bi bi-chat me-2"></i>Add Customers</a>
                     </div>
                 </div>
@@ -44,8 +44,6 @@
                                         <th>User Id</th>
                                         <th>Name</th>
                                         <th>Phone</th>
-                                        {{-- <th>Email</th>
-                                        <th>Password</th> --}}
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -63,8 +61,6 @@
                                             </a>
                                         </td>
                                         <td>{{ $cus->phone }}</td>
-                                        {{-- <td>{{ $cus->email }}</td>
-                                        <td>{{ $cus->cpassword }}</td> --}}
                                         <td style="white-space: nowrap">
 
                                             <a href="{{ url('/editcustomer', $cus->id) }}" style="font-size: small"

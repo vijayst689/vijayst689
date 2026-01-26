@@ -268,21 +268,6 @@ class CustomAuthController extends Controller
             return response()->json( array( 'exists' => false ) );
         }
     }
-    public function checaadhar( Request $request ) {
-        $aadhar = trim( $request->aadhar );
-        $id = trim( $request->id );
-        if ( $id == 0 ) {
-            $sql = "SELECT * FROM users where aadhaar_no='$aadhar'";
-        } else {
-            $sql = "SELECT * FROM users where aadhaar_no='$aadhar' and id <> $id";
-        }
-        $users = DB::select( DB::raw( $sql ) );
-        if ( count( $users ) > 0 ) {
-            return response()->json( array( 'exists' => true ) );
-        } else {
-            return response()->json( array( 'exists' => false ) );
-        }
-    }
     public function checkphone( Request $request )
     {
         $phone = trim( $request->phone );
@@ -496,6 +481,57 @@ class CustomAuthController extends Controller
         }
         $users = DB::select( DB::raw( $sql ) );
         if ( count( $users ) > 0 ) {
+            return response()->json( array( 'exists' => true ) );
+        } else {
+            return response()->json( array( 'exists' => false ) );
+        }
+    }
+
+    // Customer Checking Code
+
+    public function checkemailcus( Request $request )
+    {
+        $email = trim( $request->email );
+        $id = trim( $request->id );
+        if ( $id == 0 ) {
+            $sql = "SELECT * FROM customers where email='$email'";
+        } else {
+            $sql = "SELECT * FROM customers where email='$email' and id <> $id";
+        }
+        $customers = DB::select( DB::raw( $sql ) );
+        if ( count( $customers ) > 0 ) {
+            return response()->json( array( 'exists' => true ) );
+        } else {
+            return response()->json( array( 'exists' => false ) );
+        }
+    }
+    public function checkaadharcus( Request $request )
+    {
+        $aadhaar_no = trim( $request->aadhaar_no );
+        $id = trim( $request->id );
+        if ( $id == 0 ) {
+            $sql = "SELECT * FROM customers where aadhaar_no='$aadhaar_no'";
+        } else {
+            $sql = "SELECT * FROM customers where aadhaar_no='$aadhaar_no' and id <> $id";
+        }
+        $customers = DB::select( DB::raw( $sql ) );
+        if ( count( $customers ) > 0 ) {
+            return response()->json( array( 'exists' => true ) );
+        } else {
+            return response()->json( array( 'exists' => false ) );
+        }
+    }
+    public function checkphonecus( Request $request )
+    {
+        $phone = trim( $request->phone );
+        $id = trim( $request->id );
+        if ( $id == 0 ) {
+            $sql = "SELECT * FROM customers where phone='$phone'";
+        } else {
+            $sql = "SELECT * FROM customers where phone='$phone' and id <> $id";
+        }
+        $customers = DB::select( DB::raw( $sql ) );
+        if ( count( $customers ) > 0 ) {
             return response()->json( array( 'exists' => true ) );
         } else {
             return response()->json( array( 'exists' => false ) );

@@ -2615,3 +2615,90 @@ alter table medicalscheme add vao_or_income_certificate varchar(20) Default NULL
 
 alter table voteridpdf_download add api_processing text DEFAULT NULL after certificate;
 alter table voteridpdf_download add api_approved text DEFAULT NULL after api_processing;
+
+//13-01-2026
+
+CREATE TABLE `pvc_card` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `delivery_name` varchar(90) DEFAULT NULL,
+  `delivery_mobile` varchar(20) DEFAULT NULL,
+  `delivery_address` varchar(500) DEFAULT NULL,
+  `pincode` varchar(10) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(100) DEFAULT NULL,
+  `application` varchar(100) DEFAULT NULL,
+  `lects` varchar(50) DEFAULT NULL,
+  `selects` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE pvc_details (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    pvc_id INT UNSIGNED NOT NULL,
+    service_name VARCHAR(100) NOT NULL,
+    password VARCHAR(255) DEFAULT NULL,
+    document VARCHAR(255) DEFAULT NULL,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+
+    INDEX (pvc_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+alter table pvc_details add pvc_rationpdf varchar(255) DEFAULT NULL after document;
+
+22-01-2026
+
+CREATE TABLE `customers` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) NOT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `username_type` varchar(50) DEFAULT NULL,
+  `user_type_id` varchar(10) DEFAULT NULL,
+  `nalavariyam_usertype` int DEFAULT NULL,
+  `refferal_id` varchar(10) DEFAULT NULL,
+  `verified` int DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `phone` varchar(10) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `aadhaar_no` varchar(12) DEFAULT NULL,
+  `aadhaar_file` varchar(10) DEFAULT NULL,
+  `pan_no` varchar(10) DEFAULT NULL,
+  `pan_file` varchar(10) DEFAULT NULL,
+  `smartcard` varchar(20) DEFAULT NULL,
+  `smartcard_no` varchar(15) DEFAULT NULL,
+  `signature` varchar(20) DEFAULT NULL,
+  `dist_id` int DEFAULT NULL,
+  `taluk_id` int DEFAULT NULL,
+  `panchayath_id` int DEFAULT NULL,
+  `nalavariyam_dist_id` int DEFAULT NULL,
+  `nalavariyam_taluk_id` int DEFAULT NULL,
+  `panchayath_name` varchar(50) DEFAULT NULL,
+  `can_details` varchar(20) DEFAULT NULL,
+  `can_number` varchar(20) DEFAULT NULL,
+  `date_of_birth` varchar(10) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(191) NOT NULL,
+  `cpassword` varchar(20) DEFAULT NULL,
+  `profile` varchar(10) DEFAULT NULL,
+  `qr_image` varchar(30) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
+  `wallet` decimal(10,2) DEFAULT '0.00',
+  `rawallet` decimal(10,2) DEFAULT '0.00',
+  `remember_token` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `is_completed` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;

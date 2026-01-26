@@ -349,17 +349,6 @@
             </li>
             <li>
                 <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon"><i class="bx bx-repeat"></i>
-                    </div>
-                    <div class="menu-title">Services</div>
-                </a>
-                <ul>
-                    <li> <a href="{{ url('/viewservice') }}"><i class='bx bx-radio-circle'></i>Services</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow" href="javascript:;">
                     <div class="parent-icon"> <i class="bx bx-donate-blood"></i>
                     </div>
                     <div class="menu-title">Utility Commission</div>
@@ -527,19 +516,6 @@
             </a>
             <ul>
                 <li> <a href="{{ url('/allservices') }}"><i class='bx bx-radio-circle'></i>Our Service</a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class="bx bx-menu"></i>
-                </div>
-                <div class="menu-title">Retailers</div>
-            </a>
-            <ul>
-                <li> <a href="{{ url('/addretailer') }}"><i class='bx bx-radio-circle'></i>Add Retailers</a>
-                </li>
-                <li> <a href="{{ url('/retailers') }}"><i class='bx bx-radio-circle'></i>Retailers</a>
                 </li>
             </ul>
         </li>

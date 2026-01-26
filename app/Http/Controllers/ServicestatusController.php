@@ -151,6 +151,11 @@ class ServicestatusController extends Controller
             ->where('agri_stack.status',$status)
             ->orderBy('agri_stack.id', 'Desc')->get();
 
+            $pvccard = DB::table('pvc_card')->select('services.service_name', 'pvc_card.*')
+            ->Join('services', 'services.id', '=', 'pvc_card.service_id')
+            ->where('pvc_card.status',$status)
+            ->orderBy('pvc_card.id', 'Desc')->get();
+
             $service = $service->merge($itr);
             $service = $service->merge($gst);
             $service = $service->merge($tec_exam);
@@ -175,6 +180,7 @@ class ServicestatusController extends Controller
             $service = $service->merge($smartcard_otp);
             $service = $service->merge($voteridpdf_download);
             $service = $service->merge($agri_stack);
+            $service = $service->merge($pvccard);
 
             $service = json_decode( json_encode( $service ), true );
         foreach ( $service as $key => $s ) {
@@ -362,6 +368,12 @@ class ServicestatusController extends Controller
             ->where('agri_stack.distributor_id',Auth::user()->id)
             ->orderBy('agri_stack.id', 'Desc')->get();
 
+            $pvccard = DB::table('pvc_card')->select('services.service_name', 'pvc_card.*')
+            ->Join('services', 'services.id', '=', 'pvc_card.service_id')
+            ->where('pvc_card.status',$status)
+            ->where('pvc_card.distributor_id',Auth::user()->id)
+            ->orderBy('pvc_card.id', 'Desc')->get();
+
             $service = $service->merge($itr);
             $service = $service->merge($gst);
             $service = $service->merge($tec_exam);
@@ -386,6 +398,7 @@ class ServicestatusController extends Controller
             $service = $service->merge($smartcard_otp);
             $service = $service->merge($voteridpdf_download);
             $service = $service->merge($agri_stack);
+            $service = $service->merge($pvccard);
 
         }elseif(Auth::user()->user_type_id == 4){
 
@@ -540,6 +553,12 @@ class ServicestatusController extends Controller
             ->where('agri_stack.retailer_id',Auth::user()->id)
             ->orderBy('agri_stack.id', 'Desc')->get();
 
+            $pvccard = DB::table('pvc_card')->select('services.service_name', 'pvc_card.*')
+            ->Join('services', 'services.id', '=', 'pvc_card.service_id')
+            ->where('pvc_card.status',$status)
+            ->where('pvc_card.retailer_id',Auth::user()->id)
+            ->orderBy('pvc_card.id', 'Desc')->get();
+
             $service = $service->merge($itr);
             $service = $service->merge($gst);
             $service = $service->merge($tec_exam);
@@ -564,6 +583,7 @@ class ServicestatusController extends Controller
             $service = $service->merge($smartcard_otp);
             $service = $service->merge($voteridpdf_download);
             $service = $service->merge($agri_stack);
+            $service = $service->merge($pvccard);
 
         }elseif(Auth::user()->user_type_id == 5){
 
@@ -718,6 +738,12 @@ class ServicestatusController extends Controller
             ->where('agri_stack.user_id',Auth::user()->id)
             ->orderBy('agri_stack.id', 'Desc')->get();
 
+            $pvccard = DB::table('pvc_card')->select('services.service_name', 'pvc_card.*')
+            ->Join('services', 'services.id', '=', 'pvc_card.service_id')
+            ->where('pvc_card.status',$status)
+            ->where('pvc_card.user_id',Auth::user()->id)
+            ->orderBy('pvc_card.id', 'Desc')->get();
+
             $service = $service->merge($itr);
             $service = $service->merge($gst);
             $service = $service->merge($tec_exam);
@@ -742,6 +768,7 @@ class ServicestatusController extends Controller
             $service = $service->merge($smartcard_otp);
             $service = $service->merge($voteridpdf_download);
             $service = $service->merge($agri_stack);
+            $service = $service->merge($pvccard);
         }
         return view( 'services.appliedservice',compact('service','status') );
     }
@@ -803,8 +830,8 @@ class ServicestatusController extends Controller
         } elseif($service_id == 152 || $service_id == 153 || $service_id == 154){
             $services = DB::table('tailor')->where('id',$id)->where('status',$status)->first();
 
-        } elseif($service_id == 157 ){
-            $services = DB::table('pmkissan')->where('id',$id)->where('status',$status)->first();
+        // } elseif($service_id == 157 ){
+        //     $services = DB::table('pmkissan')->where('id',$id)->where('status',$status)->first();
         } elseif($service_id == 155 || $service_id == 156){
             $services = DB::table('birth_certificate')->where('id',$id)->where('status',$status)->first();
         } elseif($service_id == 179 || $service_id == 180 ){
@@ -817,7 +844,8 @@ class ServicestatusController extends Controller
             $services = DB::table('patta')->where('id',$id)->where('status',$status)->first();
         }elseif($service_id == 196 || $service_id == 197 ){
             $services = DB::table('utislpan')->where('id',$id)->where('status',$status)->first();
-
+        }elseif($service_id == 217 || $service_id == 218 ){
+            $services = DB::table('utislpan')->where('id',$id)->where('status',$status)->first();
         } elseif($service_id == 220 ){
             $services = DB::table('smartcard_otp')->where('id',$id)->where('status',$status)->first();
 
@@ -879,11 +907,24 @@ class ServicestatusController extends Controller
             }
             $services = json_decode( json_encode( $services ));
            //dd($services);
+        } elseif ($service_id == 157) {
+            $services = DB::table('pvc_card')
+                ->where('id', $id)
+                ->where('status', $status)
+                ->get();
+
+            foreach ($services as $key => $ser) {
+                $services[$key]->details = DB::table('pvc_details')
+                    ->where('pvc_id', $ser->id)
+                    ->orderBy('id', 'asc')
+                    ->get();
+            }
+            // PVC SERVICE
         }else{
             $services = DB::table('tnega_services')->where('id',$id)->where('status',$status)->first();
         }
 
-        if($service_id == 181 || $service_id == 2 || $service_id == 15 || $service_id == 23 ){
+        if($service_id == 181 || $service_id == 2 || $service_id == 15 || $service_id == 23 || $service_id == 157 ){
             if(count($services) > 0){
                 $serviceid = $services[0]->service_id;
                 $user_id = $services[0]->user_id;
@@ -1016,8 +1057,8 @@ class ServicestatusController extends Controller
     }  elseif( $service_id == 95 || $service_id == 96 || $service_id == 97 || $service_id == 98 ){
         return view('servicestatus.nalavariyamupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
 
-    }  elseif( $service_id == 157 ){
-        return view('servicestatus.pmkissanservice_update',compact('id','services','servicename','customers','serviceid','amount','districts') );
+    // }  elseif( $service_id == 157 ){
+    //     return view('servicestatus.pmkissanservice_update',compact('id','services','servicename','customers','serviceid','amount','districts') );
 
     }   elseif( $service_id == 165 ){
         return view('servicestatus.tec_csc_service_update',compact('id','services','servicename','customers','serviceid','amount','districts') );
@@ -1048,6 +1089,10 @@ class ServicestatusController extends Controller
 
     } elseif ($service_id == 69 || $service_id == 70 || $service_id == 71) {
         return view('servicestatus.voteridpdf_statusupdate', compact('id', 'services', 'servicename', 'customers', 'serviceid', 'amount', 'districts'));
+
+    } elseif ($service_id == 157) {
+            return view('servicestatus.pvccardupdate', compact('id', 'services', 'servicename', 'customers', 'serviceid', 'amount', 'districts'));
+    
     }
 
 }
@@ -10768,4 +10813,152 @@ public function agristack_update(Request $request){
     return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
 
+public function pvcprint_update(Request $request)
+    {
+        $apply_user_id = 0;
+        if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+            $apply_user_id = $request->user_id;
+        } elseif ($request->retailer_id == 0) {
+            $apply_user_id = $request->distributor_id;
+        } elseif ($request->distributor_id == 0) {
+            $apply_user_id = $request->retailer_id;
+        }
+        if ($apply_user_id != Auth::user()->id) {
+            $status = $request->status;
+            if ($status == "Resubmit") {
+                DB::table('pvc_card')->where('id', $request->applied_serviceid)->update([
+                    'remarks' => $request->remarks,
+                    'status'  => $status,
+                ]);
+            } elseif ($status == "Processing") {
+                if ($request->acknowledgement != null) {
+                    $acknowledgement = uniqid() . '.' . $request->file('acknowledgement')->extension();
+                    $filepath        = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'acknowledgement' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['acknowledgement']['tmp_name'], $filepath . $acknowledgement);
+                    DB::table('pvc_card')->where('id', $request->applied_serviceid)->update([
+                        'acknowledgement' => $acknowledgement,
+                    ]);
+                }
+                DB::table('pvc_card')->where('id', $request->applied_serviceid)->update([
+                    'status'         => $status,
+                    'application_no' => $request->application_no,
+                    'selects'        => $request->selects,
+                ]);
+            } elseif ($status == "Approved") {
+                if ($request->certificate != null) {
+                    $certificate = uniqid() . '.' . $request->file('certificate')->extension();
+                    $filepath    = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'certificate' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['certificate']['tmp_name'], $filepath . $certificate);
+                    DB::table('pvc_card')->where('id', $request->applied_serviceid)->update([
+                        'certificate'    => $certificate,
+                        'status'         => $status,
+                        'completed_date' => date("Y-m-d"),
+                    ]);
+                }
+                DB::table('pvc_card')->where('id', $request->applied_serviceid)->update([
+                    'status'      => $status,
+                    'application' => $request->application,
+                    'lects'       => $request->lects,
+                ]);
+
+            } elseif ($status == "Rejected") {
+                $serviceid          = $request->serviceid;
+                $getservice_payment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+                $getusers           = DB::table('users')->where('id', $apply_user_id)->first();
+                $usertype           = 0;
+                if ($getusers) {
+                    $usertype = $getusers->user_type_id;
+                }
+                $payment = 0;
+                if ($getservice_payment) {
+                    if ($usertype == 3) {
+                        $payment = $getservice_payment->distributor_amount;
+                    } elseif ($usertype == 4) {
+                        $payment = $getservice_payment->retailer_amount;
+                    } elseif ($usertype == 5) {
+                        $payment = $getservice_payment->customer_amount;
+                    }
+                }
+
+                $getservicename = DB::table('services')->select('service_name')->where('id', $serviceid)->first();
+                $servicename    = "";
+                if ($getservicename) {
+                    $servicename = $getservicename->service_name;
+                }
+                $date           = date('Y-m-d');
+                $time           = date('H:i:s');
+                $service_status = 'Out Payment';
+                $ad_info        = "Service Refund For" . ' ' . $servicename;
+
+                $getwallet = DB::table('users')->select('wallet')->where('id', 1)->first();
+                $balance   = 0;
+                if ($getwallet) {
+                    $balance = $getwallet->wallet;
+                }
+                $getuserswallet = DB::table('users')->select('wallet')->where('id', $apply_user_id)->first();
+                $balance1       = 0;
+                if ($getuserswallet) {
+                    $balance1 = $getuserswallet->wallet;
+                }
+                $newbalance  = $balance - $payment;
+                $newbalance1 = $balance1 + $payment;
+
+                $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','1','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+                DB::insert(DB::raw($sql));
+                $sql = "update users set wallet = wallet - $payment where id = 1";
+                DB::update(DB::raw($sql));
+                $service_status = 'IN Payment';
+                $sql            = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','1','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+                DB::insert(DB::raw($sql));
+                $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+                DB::update(DB::raw($sql));
+
+                DB::table('pvc_card')->where('id', $request->applied_serviceid)->update([
+                    'status'  => $status,
+                    'remarks' => $request->remarks,
+
+                ]);
+            }
+        } else {
+            $status = "Pending";
+            DB::table('pvc_card')->where('id', $request->applied_serviceid)->update([
+                'delivery_name'    => $request->delivery['name'] ?? null,
+                'delivery_mobile'  => $request->delivery['mobile'] ?? null,
+                'delivery_address' => $request->delivery['address'] ?? null,
+                'pincode'          => $request->delivery['pincode'] ?? null,
+                'status'           => 'Pending',
+                'applied_date'     => date("Y-m-d"),
+                'created_at'       => date("Y-m-d"),
+
+            ]);
+            if (! empty($request->service)) {
+                foreach ($request->service as $service) {
+
+                    $documentPath  = null;
+                    $rationPdfPath = null;
+
+                    // Main document
+                    if (! empty($service['file']) && $service['file']->isValid()) {
+                        $filename = uniqid() . '.' . $service['file']->getClientOriginalExtension();
+                        $service['file']->move(public_path('upload/pvc_documents'), $filename);
+                        $documentPath = 'upload/pvc_documents/' . $filename;
+                    }
+
+                    $pvc_id = $request->pvc_id;
+                    DB::table('pvc_details')->where('id', $request->pvc_id)->update([
+                        'pvc_id'       => $pvc_id,
+                        'service_name' => $service['name'],
+                        'password'     => $service['password'] ?? null,
+                        'document'     => $documentPath,
+                        'created_at'   => now(),
+                    ]);
+                }
+            }
+            DB::table('pvc_card')->where('id', $request->applied_serviceid)->update([
+                'status' => $status,
+            ]);
+        }
+
+        return redirect("appliedservice/$status")->With("success", "Application submitted Succesfully");
+    }
 }

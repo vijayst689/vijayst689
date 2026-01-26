@@ -42,9 +42,9 @@
                                     <th>User Id</th>
                                     <th>Name</th>
                                     <th>Phone</th>
+                                    <th>Wallet</th>
                                     <th>Status</th>
                                     <th>Email</th>
-                                    <th>Image</th>
                                     <th>Password</th>
                                     <th>Action</th>
                                 </tr>
@@ -55,10 +55,9 @@
                                         <td>R{{ $cus->id }}</td>
                                         <td>{{ $cus->name }}</td>
                                         <td>{{ $cus->phone }}</td>
+                                        <td class="text-primary">{{ $cus->wallet }}</td>
                                         <td>{{ $cus->status }}</td>
                                         <td>{{ $cus->email }}</td>
-                                        <td><img src="/upload/retailer/{{ $cus->profile }}" class="rounded-circle"
-                                                width="40" height="40" alt=""></td>
                                         <td>{{ $cus->cpassword }}</td>
                                         <td style="white-space: nowrap;">
 

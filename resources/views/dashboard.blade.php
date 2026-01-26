@@ -193,6 +193,21 @@
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-4">
+                        <div class="card radius-10 bg-gradient-ohhappiness">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-auto">
+                                        <a href="{{ url('/nalavariyam/request') }}">
+                                            <p class="mb-0 text-white">Nalavariyam Request</p>
+                                        </a>
+                                        <h4 class="my-1 text-white">Na</h4>
+                                    </div>
+                                    <div id="chart3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
                         <div class="card radius-10 bg-gradient-kyoto">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
@@ -478,7 +493,7 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="col-md-3 col-sm-4">
+                    <div class="col-md-3 col-sm-4">
                         <div class="card radius-10 bg-gradient-ibiza">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
@@ -486,7 +501,7 @@
                                         <a href="{{ url('/nalavariyam/wallet') }}">
                                             <p class="mb-0 text-white">Na Wallet</p>
                                         </a>
-                                        <h4 class="my-1 text-white">{{ $nalavariyamwallet }}</h4>
+                                        <h4 class="my-1 text-white">{{ Auth::user()->nalavariyamwallet }}</h4>
                                     </div>
                                     <div id="chart2"></div>
                                 </div>
@@ -494,7 +509,7 @@
                             <button type="button" class="btn-sm btn btn-success" data-bs-toggle="modal"
                                 data-bs-target="#addMoneyModal">Add Money</button>
                         </div>
-                    </div> --}}
+                    </div>
                     <div class="col-md-3 col-sm-4">
                         <div class="card radius-10 bg-gradient-ohhappiness">
                             <div class="card-body">
@@ -1190,7 +1205,7 @@
             </div>
         </div>
     </div>
-    {{-- <div class="modal fade" id="addMoneyModal" tabindex="-1" aria-labelledby="addMoneyModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addMoneyModal" tabindex="-1" aria-labelledby="addMoneyModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1221,7 +1236,7 @@
                 </form>
             </div>
         </div>
-    </div> --}}
+    </div>
 @endsection
 @push('page_scripts')
     <script type="text/javascript">

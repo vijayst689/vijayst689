@@ -44,12 +44,12 @@ class DashboardController extends Controller
                 $distributor_count = $users[0]->distributor_count;
             }
 
-            $sql = "select count(*) as customercount from users where user_type_id = 5";
+            $sql = "select count(*) as customercount from customers where user_type_id = 5";
             $users = DB::select(DB::raw($sql));
             if (count($users) > 0) {
                 $customercount = $users[0]->customercount;
             }
-            $sql = "select count(*) as customer from users where user_type_id = 5 and refferal_id = $logid";
+            $sql = "select count(*) as customer from customers where user_type_id = 5 and refferal_id = $logid";
             $users = DB::select(DB::raw($sql));
             if (count($users) > 0) {
                 $customer = $users[0]->customer;
@@ -207,7 +207,11 @@ class DashboardController extends Controller
             ->where('status','Pending')
             ->orderBy('id', 'Desc')->count();
 
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Pending')
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Processing')
@@ -305,7 +309,11 @@ class DashboardController extends Controller
             ->where('status','Processing')
             ->orderBy('id', 'Desc')->count();
 
-            $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta +  $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Processing')
+            ->orderBy('id', 'Desc')->count();
+
+            $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta +  $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Resubmit')
@@ -403,7 +411,11 @@ class DashboardController extends Controller
             ->where('status','Resubmit')
             ->orderBy('id', 'Desc')->count();
 
-            $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Resubmit')
+            ->orderBy('id', 'Desc')->count();
+
+            $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Rejected')
@@ -501,7 +513,11 @@ class DashboardController extends Controller
             ->where('status','Rejected')
             ->orderBy('id', 'Desc')->count();
 
-            $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan +  $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Rejected')
+            ->orderBy('id', 'Desc')->count();
+
+            $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan +  $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Approved')
@@ -599,7 +615,11 @@ class DashboardController extends Controller
             ->where('status','Approved')
             ->orderBy('id', 'Desc')->count();
 
-            $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Approved')
+            ->orderBy('id', 'Desc')->count();
+
+            $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
         }elseif(Auth::user()->user_type_id == 3){
 
@@ -723,7 +743,12 @@ class DashboardController extends Controller
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Pending')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Processing')
@@ -845,7 +870,12 @@ class DashboardController extends Controller
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Processing')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Resubmit')
@@ -967,7 +997,12 @@ class DashboardController extends Controller
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Resubmit')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Rejected')
@@ -1089,7 +1124,12 @@ class DashboardController extends Controller
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Rejected')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Approved')
@@ -1211,7 +1251,12 @@ class DashboardController extends Controller
             ->where('distributor_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp  + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Approved')
+            ->where('distributor_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp  + $voteridpdf_download + $agri_stack + $pvc_card;
 
 
 
@@ -1339,7 +1384,12 @@ class DashboardController extends Controller
             ->where('retailer_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Pending')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Processing')
@@ -1461,7 +1511,12 @@ class DashboardController extends Controller
             ->where('retailer_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Processing')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Resubmit')
@@ -1583,7 +1638,12 @@ class DashboardController extends Controller
             ->where('retailer_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Resubmit')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Rejected')
@@ -1705,7 +1765,12 @@ class DashboardController extends Controller
             ->where('retailer_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Rejected')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Approved')
@@ -1827,7 +1892,12 @@ class DashboardController extends Controller
             ->where('retailer_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Approved')
+            ->where('retailer_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
 
 
@@ -1954,7 +2024,12 @@ class DashboardController extends Controller
             ->where('user_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Pending')
+            ->where('user_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Processing')
@@ -2077,7 +2152,12 @@ class DashboardController extends Controller
             ->where('user_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Processing')
+            ->where('user_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Resubmit')
@@ -2200,7 +2280,12 @@ class DashboardController extends Controller
             ->where('user_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Resubmit')
+            ->where('user_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Rejected')
@@ -2323,7 +2408,12 @@ class DashboardController extends Controller
             ->where('user_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Rejected')
+            ->where('user_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
 
             $service = DB::table('msme')
             ->where('status','Approved')
@@ -2446,7 +2536,12 @@ class DashboardController extends Controller
             ->where('user_id',Auth::user()->id)
             ->orderBy('id', 'Desc')->count();
 
-            $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack;
+            $pvc_card = DB::table('pvc_card')
+            ->where('status','Approved')
+            ->where('user_id',Auth::user()->id)
+            ->orderBy('id', 'Desc')->count();
+
+            $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard  + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card;
         }
 
             if ( Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2) {
@@ -2510,5 +2605,19 @@ class DashboardController extends Controller
         }
 
         return redirect("login")->withSuccess('You are not allowed to access');
+    }
+
+        public function spamusers()
+    {
+        $spamUsers = DB::table('users as u')
+    ->leftJoin('request_payment as rp', 'rp.from_id', '=', 'u.id')
+    ->whereNull('rp.id')           // No payment request
+    ->where('u.wallet', '>', 0)    // Wallet > 0
+    ->whereIn('u.status', ['Inactive','Active'])// Already marked inactive
+    ->whereNotIn('u.id', [1, 2])   // Exclude admin/system
+    ->select('u.id', 'u.name', 'u.email', 'u.wallet', 'u.status')
+    ->orderBy('u.wallet', 'desc')
+    ->get();
+        return view('errors.spamusers', compact('spamUsers'));
     }
 }

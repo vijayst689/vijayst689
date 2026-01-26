@@ -21,9 +21,38 @@
     <link href="assets/css/app.css" rel="stylesheet">
     <link href="assets/css/icons.css" rel="stylesheet">
     <title>pkrmsolution.com</title>
+        <script>
+        ! function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '919664389493798');
+        fbq('track', 'PageView');
+    </script>
+
+    <!-- Facebook Domain Verification -->
+    <meta name="facebook-domain-verification" content="o7tjuxul606tpvrxq094bhwog98hc5" />
 </head>
 
 <body class="">
+       <noscript>
+        <img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=919664389493798&ev=PageView&noscript=1" />
+    </noscript>
     @if (session()->has('success'))
         <div class="alert alert-success alert-dismissible" role="alert">
             <strong> {{ session('success') }} </strong>
@@ -340,128 +369,148 @@
             });
         });
 
-        //Distributor Script
+ 
+ //Distributor Script
 
-        function duplicateemail(id) {
-            var email = $("#email").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('checkemailregister') }}',
-                data: {
-                    id: id,
-                    email: email,
-                    _token: _token
-                },
+               function duplicateemail(id) {
+                var email = $("#email").val().trim();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    type: "post",
+                    url: '{{ url('checkemailregister') }}',
+                    data: {
+                        id: id,
+                        email: email,
+                        _token: _token
+                    },
 
-                success: function(res) {
-                    if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#dupemail").html("email id already exists!");
-                    } else {
-                        $("#save").prop('disabled', false);
-                        $("#dupemail").html("");
+                    success: function(res) {
+                        if (res.exists) {
+                            $("#save").prop('disabled', true);
+                            $("#dupemail").html("email alredy exists!");
+                        } else {
+                            $("#dupemail").html("");
+                        }
+                        if ($("#dupemail").html() == "" && $("#dupaadhar").html() == "" && $("#dupphone").html() ==
+                            "") {
+                            $("#save").prop('disabled', false);
+                        } else {
+                            $("#save").prop('disabled', true);
+                        }
+                    },
+
+                    error: function(jqXHR, exception) {
+                        console.log(exception);
                     }
-                },
+                });
+            }
 
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
-            });
-        }
+           function duplicateaadhar(id) {
+                var aadhaar_no = $("#aadhaar_no").val().trim();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    type: "post",
+                    url: '{{ url('checkaadharregister') }}',
+                    data: {
+                        id: id,
+                        aadhaar_no: aadhaar_no,
+                        _token: _token
+                    },
 
-        function duplicateaadhar(id) {
-            var aadhaar_no = $("#aadhaar_no").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('checkaadharregister') }}',
-                data: {
-                    id: id,
-                    aadhaar_no: aadhaar_no,
-                    _token: _token
-                },
-
-                success: function(res) {
-                    if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#dupaadhar").html("aadhar no already exists!");
-                    } else {
-                        $("#save").prop('disabled', false);
-                        $("#dupaadhar").html("");
+                    success: function(res) {
+                        if (res.exists) {
+                            $("#save").prop('disabled', true);
+                            $("#dupaadhar").html("aadhar no alredy exists!");
+                        } else {
+                            $("#save").prop('disabled', false);
+                            $("#dupaadhar").html("");
+                        }
+                        if ($("#dupemail").html() == "" && $("#dupaadhar").html() == "" && $("#dupphone").html() ==
+                            "") {
+                            $("#save").prop('disabled', false);
+                        } else {
+                            $("#save").prop('disabled', true);
+                        }
+                    },
+                    error: function(jqXHR, exception) {
+                        console.log(exception);
                     }
-                },
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
-            });
-        }
+                });
+            }
 
-        function duplicatephone(id) {
-            var phone = $("#phone").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('checkphoneregister') }}',
-                data: {
-                    id: id,
-                    phone: phone,
-                    _token: _token
-                },
+            function duplicatephone(id) {
+                var phone = $("#phone").val().trim();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    type: "post",
+                    url: '{{ url('checkphoneregister') }}',
+                    data: {
+                        id: id,
+                        phone: phone,
+                        _token: _token
+                    },
 
-                success: function(res) {
-                    if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#dupphone").html("mobile no already exists!");
-                    } else {
-                        $("#save").prop('disabled', false);
-                        $("#dupphone").html("");
+                    success: function(res) {
+                        if (res.exists) {
+                            $("#save").prop('disabled', true);
+                            $("#dupphone").html("mobile no alredy exists!");
+                        } else {
+                            $("#save").prop('disabled', false);
+                            $("#dupphone").html("");
+                        }
+
+                        if ($("#dupemail").html() == "" && $("#dupaadhar").html() == "" && $("#dupphone").html() ==
+                            "") {
+                            $("#save").prop('disabled', false);
+                        } else {
+                            $("#save").prop('disabled', true);
+                        }
+                    },
+
+                    error: function(jqXHR, exception) {
+                        console.log(exception);
                     }
-                },
+                });
+            }
 
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
-            });
-        }
 
-        function duplicatepan(id) {
-            var pan_no = $("#pan_no").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('checkpanregister') }}',
-                data: {
-                    id: id,
-                    pan_no: pan_no,
-                    _token: _token
-                },
+            function duplicatepan(id) {
+                var pan_no = $("#pan_no").val().trim();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    type: "post",
+                    url: '{{ url('checkpanregister') }}',
+                    data: {
+                        id: id,
+                        pan_no: pan_no,
+                        _token: _token
+                    },
 
-                success: function(res) {
-                    if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#duppan").html("pan no already exists!");
-                    } else {
-                        $("#duppan").html("");
+                    success: function(res) {
+                        if (res.exists) {
+                            $("#save").prop('disabled', true);
+                            $("#duppan").html("pan no already exists!");
+                        } else {
+                            $("#duppan").html("");
+                        }
+                        if ($("#dupphone").html() == "" && $("#duppan").html() == "" && $("#duppan").html() ==
+                            "") {
+                            $("#save").prop('disabled', false);
+                        } else {
+                            $("#save").prop('disabled', true);
+                        }
+                    },
+                    error: function(jqXHR, exception) {
+                        console.log(exception);
                     }
-                    if ($("#dupphone").html() == "" && $("#duppan").html() == "" && $("#duppan").html() ==
-                        "") {
-                        $("#save").prop('disabled', false);
-                    } else {
-                        $("#save").prop('disabled', true);
-                    }
-                },
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
 
-            });
-        }
+                });
+            }
 
-        //Retailer Script
+//Retailer Script
 
-        function duplicateaadhar1(id) {
-            var aadhaar_no = $("#aadhaar_no").val().trim();
+function duplicateaadhar1(id) {
+            var aadhaar_no = $("#aadhaar_no1").val().trim();
             var _token = $('input[name="_token"]').val();
             $.ajax({
                 type: "post",
@@ -475,12 +524,11 @@
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupaadhar1").html("aadhar no already exists!");
+                        $("#dupaadhar1").html("aadhar no alredy exists!");
                     } else {
                         $("#dupaadhar1").html("");
                     }
-                    if ($("#dupaadhar1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1")
-                    .html() ==
+                    if ($("#dupphone1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1").html() ==
                         "") {
                         $("#save1").prop('disabled', false);
                     } else {
@@ -491,10 +539,11 @@
                     console.log(exception);
                 }
             });
+
         }
 
         function duplicatephone1(id) {
-            var phone = $("#phone").val().trim();
+            var phone = $("#phone1").val().trim();
             var _token = $('input[name="_token"]').val();
             $.ajax({
                 type: "post",
@@ -508,12 +557,11 @@
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupphone1").html("mobile no already exists!");
+                        $("#dupphone1").html("mobile no alredy exists!");
                     } else {
                         $("#dupphone1").html("");
                     }
-                    if ($("#dupphone1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1")
-                    .html() ==
+                    if ($("#dupphone1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1").html() ==
                         "") {
                         $("#save1").prop('disabled', false);
                     } else {
@@ -528,7 +576,7 @@
         }
 
         function duplicateemail1(id) {
-            var email = $("#email").val().trim();
+            var email = $("#email1").val().trim();
             var _token = $('input[name="_token"]').val();
             $.ajax({
                 type: "post",
@@ -542,12 +590,11 @@
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#dupemail1").html("email id already exists!");
+                        $("#dupemail1").html("email no alredy exists!");
                     } else {
                         $("#dupemail1").html("");
                     }
-                    if ($("#dupemail1").html() == "" && $("#dupemail1").html() == "" && $("#dupemail1")
-                    .html() ==
+                    if ($("#dupphone1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1").html() ==
                         "") {
                         $("#save1").prop('disabled', false);
                     } else {
@@ -562,7 +609,7 @@
         }
 
         function duplicatepan1(id) {
-            var pan_no = $("#pan_no").val().trim();
+            var pan_no = $("#pan_no1").val().trim();
             var _token = $('input[name="_token"]').val();
             $.ajax({
                 type: "post",
@@ -576,12 +623,12 @@
                 success: function(res) {
                     if (res.exists) {
                         $("#save").prop('disabled', true);
-                        $("#duppan1").html("pan no already exists!");
+                        $("#duppan1").html("pan no alredy exists!");
                     } else {
                         $("#duppan1").html("");
                     }
-                    if ($("#dupphone1").html() == "" && $("#duppan1").html() == "" && $("#duppan1").html() ==
-                        "") {
+                    if ($("#dupphone1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1").html() ==
+                        "" ) {
                         $("#save1").prop('disabled', false);
                     } else {
                         $("#save1").prop('disabled', true);
@@ -591,10 +638,8 @@
                     console.log(exception);
                 }
             });
-        }
-
-
-
+        }     
+        
         //Register Script
 
         $('#dist_id').on('change', function() {

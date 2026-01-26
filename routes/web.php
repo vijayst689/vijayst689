@@ -23,6 +23,7 @@ Route::get('/', function () {
 // Auth //
 
 Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'dashboard']);
+Route::get('spamusers', [App\Http\Controllers\DashboardController::class, 'spamusers']);
 Route::get('login', [CustomAuthController::class, 'index'])->name('login');
 Route::get('admin', [CustomAuthController::class, 'index'])->name('login');
 Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
@@ -38,7 +39,7 @@ Route::post('checkphoneregister', [CustomAuthController::class, 'checkphoneregis
 Route::post('checkpanregister', [CustomAuthController::class, 'checkpanregister'])->name('checkpanregister');
 Route::post('checkemailregisterretailer', [CustomAuthController::class, 'checkemailregisterretailer'])->name('checkemailregisterretailer');
 Route::post('checkaadharregisterretailer', [CustomAuthController::class, 'checkaadharregisterretailer'])->name('checkaadharregisterretailer');
-Route::post('checkphoneregisterretailer', [CustomAuthController::class, 'checkaadharregisterretailer'])->name('checkphoneregisterretailer');
+Route::post('checkphoneregisterretailer', [CustomAuthController::class, 'checkphoneregisterretailer'])->name('checkphoneregisterretailer');
 Route::post('checkpanregisterretailer', [CustomAuthController::class, 'checkpanregisterretailer'])->name('checkpanregisterretailer');
 Route::post('checkemailregistercustomer', [CustomAuthController::class, 'checkemailregistercustomer'])->name('checkemailregistercustomer');
 Route::post('checkaadharregistercustomer', [CustomAuthController::class, 'checkaadharregistercustomer'])->name('checkaadharregistercustomer');
@@ -55,6 +56,9 @@ Route::get('register/get_taluk_register/{distid}', [App\Http\Controllers\CustomA
 Route::get('register/get_panchayath_register/{taluk_id}', [App\Http\Controllers\CustomAuthController::class, 'get_panchayath_register'])->name('getpanchayathregister');
 Route::post('/check-phonelogin', [CustomAuthController::class, 'checkPhonelogin'])->name('check.phonelogin');
 Route::post('/send-otp', [CustomAuthController::class, 'sendOtp'])->name('send.otp');
+Route::post('checkemailcus', [CustomAuthController::class, 'checkemailcus'])->name('checkemailcus');
+Route::post('checkaadharcus', [CustomAuthController::class, 'checkaadharcus'])->name('checkaadharcus');
+Route::post('checkphonecus', [CustomAuthController::class, 'checkphonecus'])->name('checkphonecus');
 
 
 Route::get('home', [App\Http\Controllers\Frontend\HomeController::class, 'Index']);
@@ -230,6 +234,7 @@ Route::post('/submitapply_tailorshop', [App\Http\Controllers\ServiceController::
 Route::post('/submitapply_voteridpdfdownload', [App\Http\Controllers\ServiceController::class, 'submitapply_voteridpdfdownload'])->name('submitapply_voteridpdfdownload');
 Route::post('/submitapply_medicalscheme', [App\Http\Controllers\ServiceController::class, 'submitapply_medicalscheme'])->name('submitapply_medicalscheme');
 Route::post('/submitapply_agri_stack', [App\Http\Controllers\ServiceController::class, 'submitapply_agri_stack'])->name('submitapply_agri_stack');
+Route::post('/submitpvccardprint', [App\Http\Controllers\ServiceController::class, 'submitpvccardprint'])->name('submitpvccardprint');
 
 Route::post('/submitutislnew', [App\Http\Controllers\ServiceController::class, 'submitutislnew'])->name('submitutislnew');
 
@@ -295,6 +300,7 @@ Route::post('/utislcorection_update', [App\Http\Controllers\ServicestatusControl
 Route::post('/voteridpdf_statusupdate', [App\Http\Controllers\ServicestatusController::class, 'voteridpdf_statusupdate'])->name('voteridpdf_statusupdate');
 Route::post('/medicalscheme_update', [App\Http\Controllers\ServicestatusController::class, 'medicalscheme_update'])->name('medicalscheme_update');
 Route::post('/agristack_update', [App\Http\Controllers\ServicestatusController::class, 'agristack_update'])->name('agristack_update');
+Route::post('/pvcprint_update', [App\Http\Controllers\ServicestatusController::class, 'pvcprint_update'])->name('pvcprint_update');
 
 
 Route::get('/servicepayment/{serviceid}', [App\Http\Controllers\ServicePaymentController::class, 'servicepayment'])->name('servicepayment');
@@ -378,7 +384,7 @@ Route::get('/userpermission/{userid}', [App\Http\Controllers\PermissionControlle
 Route::post('/savepermission', [App\Http\Controllers\PermissionController::class, 'savepermission'])->name('savepermission');
 Route::get('/nalavariyam_permission/{userid}', [App\Http\Controllers\PermissionController::class, 'nalavariyam_permission'])->name('nalavariyam_permission');
 Route::get('activation/get_activationamount/{userid}/{activation_userid}/{service_id}', [App\Http\Controllers\PermissionController::class, 'get_activationamount'])->name('get_activationamount');
-
+Route::get('syncSubServicePermissions', [App\Http\Controllers\PermissionController::class, 'syncSubServicePermissions'])->name('syncSubServicePermissions');
 
 Route::get('/utility', [App\Http\Controllers\RechargeController::class, 'utility'])->name('utility');
 Route::get('/utilityservice/{serviceid}', [App\Http\Controllers\RechargeController::class, 'utilityservice'])->name('utilityservice');
