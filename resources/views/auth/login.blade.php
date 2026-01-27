@@ -49,6 +49,121 @@
 
     <!-- Facebook Domain Verification -->
     <meta name="facebook-domain-verification" content="o7tjuxul606tpvrxq094bhwog98hc5" />
+
+ <style>
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d, #1a2a6c);
+    background-size: 400% 400%;
+    animation: bgMove 15s ease infinite;
+    font-family: 'Roboto', sans-serif;
+}
+
+@keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Floating Center Area */
+.section-authentication-signin {
+    animation: floatPage 6s ease-in-out infinite;
+}
+
+@keyframes floatPage {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+/* Login Card */
+.card {
+    border-radius: 25px !important;
+    background: rgba(255,255,255,0.92) !important;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 30px 90px rgba(0,0,0,0.45) !important;
+    animation: fadeInZoom 1.2s ease;
+    transition: all 0.4s ease;
+}
+
+.card:hover {
+    box-shadow: 0 0 60px rgba(253,187,45,0.8) !important;
+    transform: translateY(-10px) scale(1.03);
+}
+
+/* Logo */
+.card img {
+    filter: drop-shadow(0 0 20px rgba(253,187,45,0.8));
+}
+
+/* Inputs */
+.form-control {
+    border-radius: 16px !important;
+    padding: 14px 16px !important;
+    border: 2px solid rgba(178,31,31,0.2) !important;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #fdbb2d !important;
+    box-shadow: 0 0 18px rgba(253,187,45,0.8) !important;
+    transform: scale(1.04);
+}
+
+/* Button */
+.btn-primary {
+    background: linear-gradient(45deg, #fdbb2d, #b21f1f) !important;
+    border: none !important;
+    border-radius: 18px !important;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 12px 35px rgba(178,31,31,0.7);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #b21f1f, #fdbb2d) !important;
+    box-shadow: 0 0 45px rgba(253,187,45,1);
+    transform: translateY(-4px) scale(1.05);
+}
+
+/* Titles */
+h5 {
+    font-weight: 800;
+    background: linear-gradient(45deg, #b21f1f, #fdbb2d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Links */
+a {
+    color: #b21f1f !important;
+    font-weight: 600;
+}
+
+a:hover {
+    color: #fdbb2d !important;
+}
+
+/* Separater */
+.login-separater span {
+    color: #b21f1f;
+    font-weight: 700;
+}
+
+/* Entry Animation */
+@keyframes fadeInZoom {
+    from {
+        opacity: 0;
+        transform: scale(0.85) translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+</style>
+
+
 </head>
 
 <body class="">
