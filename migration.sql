@@ -2702,3 +2702,5 @@ CREATE TABLE `customers` (
   `is_completed` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+
+alter table aadhaarcard add aadhaar_no varchar(12) DEFAULT NULL;

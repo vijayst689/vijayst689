@@ -5090,6 +5090,7 @@ class ServiceController extends Controller
                 'street_name_tamil'   => $request->street_name_tamil,
                 'postal_area_tamil'   => $request->postal_area_tamil,
                 'relationship'        => $request->relationship,
+                'aadhaar_no'        => $request->aadhaar_no,
                 'status'              => 'Pending',
                 'applied_date'        => date("Y-m-d"),
                 'created_at'          => date("Y-m-d"),
@@ -5357,6 +5358,7 @@ class ServiceController extends Controller
                 $street_name_tamil   = $getdata->street_name_tamil;
                 $postal_area_tamil   = $getdata->postal_area_tamil;
                 $address_tamil       = $getdata->address_tamil;
+                $aadhaar_no       = $getdata->aadhaar_no;
                 $status              = $getdata->status;
                 $url                 = url('/');
                 $aadhaar_url         = $url . '/upload/services/aadhaar_card/' . $aadhaar_card;
@@ -5367,7 +5369,7 @@ class ServiceController extends Controller
                 $WEBSITE_INDEX       = env('WEBSITE_INDEX', '');
                 $ch                  = curl_init();
 
-                $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&photo=$photo_url&signature=$signature_url&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&street_name=$street_name&postal_area_english=$postal_area_english&address_english=$address_english&mobile=$mobile&pin_code=$pin_code&street_name_tamil=$street_name_tamil&postal_area_tamil=$postal_area_tamil&address_tamil=$address_tamil";
+                $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&photo=$photo_url&signature=$signature_url&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&street_name=$street_name&postal_area_english=$postal_area_english&address_english=$address_english&mobile=$mobile&pin_code=$pin_code&street_name_tamil=$street_name_tamil&postal_area_tamil=$postal_area_tamil&address_tamil=$address_tamil&aadhaar_no=$aadhaar_no";
 
                 //dd($post_data);
                 $url1 = $RAMJIPAY_URL . '/api/get_aadhaarcard_api';
