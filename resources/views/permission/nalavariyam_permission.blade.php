@@ -214,7 +214,7 @@
 
         }
 
-         var ramjibalance = "{{ Auth::user()->rawallet }}";
+         var ramjibalance = "{{ Auth::user()->nalavariyamwallet }}";
          $(".permissionform").submit(function() {
              var amount =  $("#act_amount_hidden").val();
              var adminamount =  $("#adminamt").val();
