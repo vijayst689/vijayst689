@@ -752,14 +752,12 @@ if($resdata){
 
 }
 
-
-public function submitrationfind(Request $request){
+ public function submitrationfind(Request $request){
   $user_id = Auth::user()->id;
-  $aadhaar_no = $request->aadhaar_no;
-  $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
-  $amount = $request->amount;
-  $wallet = Auth::user()->wallet;
-   $serviceid         = $request->serviceid;
+    $aadhaar_no = $request->aadhaar_no;
+    $apikey = 'd468061352c00bc0eea59acb1846f358';
+    $wallet = Auth::user()->wallet;
+    $serviceid         = $request->serviceid;
         $servicepayment    = 0;
         $amount    = 0;
          $getadminpayment = DB::table('find_services')->where('id', $serviceid)->first();
@@ -781,54 +779,46 @@ public function submitrationfind(Request $request){
         if (Auth::user()->wallet < $servicepayment) {
             return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
         }
-        if($wallet < $servicepayment){
-          return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
-        }
+    if ($wallet < $servicepayment) {
+      return redirect('/applypdfservice/' . $serviceid)->with('error', 'Low Balance for the Service....Please Check Your Balance...');
+    }
 
-  $curl = curl_init();
-  curl_setopt_array($curl, array(
-    CURLOPT_URL =>  "http://api-good.xyz/serviceApi/V1/RashanVerificationBy_UID.php?apiKey=$apikey&uidNo=$aadhaar_no",
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => "",
-    CURLOPT_MAXREDIRS => 25,
-    CURLOPT_TIMEOUT => 30,
-    CURLOPT_SSL_VERIFYPEER => false,
-    CURLOPT_SSL_VERIFYHOST => false,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => "GET",
-    CURLOPT_HTTPHEADER => array(
-      "cache-control: no-cache",
-    ),
-  ));
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+      CURLOPT_URL =>  "https://goodapi.in/api_services/V1/rasanServices/aadhar_to_rationno_find.php?apiKey=$apikey&uidNumber=$aadhaar_no",
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 25,
+      CURLOPT_TIMEOUT => 30,
+      CURLOPT_SSL_VERIFYPEER => false,
+      CURLOPT_SSL_VERIFYHOST => false,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "GET",
+      CURLOPT_HTTPHEADER => array(
+        "cache-control: no-cache",
+      ),
+    ));
 
-  $response = curl_exec($curl);
-  $err = curl_error($curl);
-  curl_close($curl);
-  $resdata = json_decode($response, true);
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+    $resdata = json_decode($response, true);
+    if ($resdata) {
+     if (isset($resdata['Status']) && $resdata['Status'] == 'Success') {
+        $message = "Successfully Ration Card Details Found";
+        $rationNumber = $resdata['rationNumber'];
+        DB::table('ration')->insert([
+          'user_id'    => Auth::user()->id,
+          'aadhaar_no' => $request->aadhaar_no,
+          'pdf'        => $rationNumber,
+          'service_id' => $serviceid,
+          'amount'     => $servicepayment,
+          'status'     => 'Approved',
+          'date'       => date("Y-m-d H:i:s"),
+        ]);
+        $date = date('Y-m-d');
+        $time = date('H:i:s');
 
-  if($resdata){
-  if($resdata['StatusCode'] == "100"){
-    $pdf=$resdata['pdf'];
-    $message=$resdata['message'];
-    $pdf_parts = explode(";base64", $pdf);
-    $pdf_types = explode("pdf/", $pdf_parts[0]);
-    $pdf_type = base64_decode($pdf_parts[1]);
-    $filename = uniqid().'.pdf';
-    file_put_contents('upload/smartpdf/'.$filename,$pdf_type );
-    $name = $resdata['name'];
-
-    DB::table('ration')->insert([
-      'user_id'    => Auth::user()->id,
-      'aadhaar_no' => $request->aadhaar_no,
-      'name'       => $name,
-      'pdf'        => $filename,
-      'service_id' => $serviceid,
-      'amount'     => $servicepayment,
-      'status'     => 'Approved',
-      'date'       => date("Y-m-d H:i:s"),
-    ]);
-    $date = date( 'Y-m-d' );
-    $time = date( 'H:i:s' );
     $service_status = 'Out Payment';
     $ad_info = 'Ramji Wallet Debit(RATION PDF)';
     $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
@@ -887,14 +877,18 @@ public function submitrationfind(Request $request){
         DB::update( DB::raw( $sql ) );
       }
 
-     return redirect('/applypdfservice/' . $serviceid)->with('success', $message);
-      } else {
-        $error = $resdata['message'];
-        return redirect('/applypdfservice/' . $serviceid)->with('error', $error);
-      }
-    } else {
-      return redirect('/applypdfservice/' . $serviceid)->with('error', 'Something Went Wrong.....');
-    }
+    return redirect('/applypdfservice/'.$serviceid)->with('success',$message);
+
+
+  }else{
+    $message=$resdata['message'];
+
+    return redirect('/applypdfservice/'.$serviceid)->with('error',$message);
+  }
+
+}else{
+    return redirect('/applypdfservice/'.$serviceid)->with('error','Something Went Wrong..Please Check Aadhaar Number...');
+  }
 
 }
 
