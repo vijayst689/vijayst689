@@ -44,9 +44,9 @@ class ServicestatusController extends Controller
             ->where('tec_exam.status',$status)
             ->orderBy('tec_exam.id', 'Desc')->get();
 
-            $tnegaservices = DB::table('tnega_services')->select('services.service_name', 'users.name','tnega_services.*')
+            $tnegaservices = DB::table('tnega_services')->select('services.service_name', 'customers.name','tnega_services.*')
             ->Join('services', 'services.id', '=', 'tnega_services.service_id')
-            ->Join('users', 'users.id', '=', 'tnega_services.user_id')
+            ->Join('customers', 'customers.id', '=', 'tnega_services.user_id')
             ->where('tnega_services.status',$status)
             ->orderBy('tnega_services.id', 'Desc')->get();
 
@@ -198,7 +198,7 @@ class ServicestatusController extends Controller
             $context = "Retailer";
         }
         $user_id = $user_id;
-        $sql = "select name,phone from users where id=$user_id";
+        $sql = "select name,phone from customers where id=$user_id";
         $result = DB::select( $sql );
         $name = "";
         $mobile = "";
@@ -1371,7 +1371,7 @@ public function submit_statusupdate_tnegaservices1(Request $request){
                 $user_id = $ser[ 'user_id' ];
                 $sql = "select * from family_member where service_id=$ser_id order by id Asc";
                 $result = DB::select( $sql );
-                $sql = "select * from users where id=$user_id";
+                $sql = "select * from customers where id=$user_id";
                 $result1 = DB::select( $sql );
                 $getdata[ $key ][ 'family_details' ] = $result;
                 $getdata[ $key ][ 'customer_details' ] = $result1;
