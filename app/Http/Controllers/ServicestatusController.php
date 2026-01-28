@@ -44,9 +44,9 @@ class ServicestatusController extends Controller
             ->where('tec_exam.status',$status)
             ->orderBy('tec_exam.id', 'Desc')->get();
 
-            $tnegaservices = DB::table('tnega_services')->select('services.service_name', 'customers.name','tnega_services.*')
+            $tnegaservices = DB::table('tnega_services')->select('services.service_name', 'users.name','tnega_services.*')
             ->Join('services', 'services.id', '=', 'tnega_services.service_id')
-            ->Join('customers', 'customers.id', '=', 'tnega_services.user_id')
+            ->Join('users', 'users.id', '=', 'tnega_services.user_id')
             ->where('tnega_services.status',$status)
             ->orderBy('tnega_services.id', 'Desc')->get();
 
