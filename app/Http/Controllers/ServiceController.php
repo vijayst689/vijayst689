@@ -435,7 +435,7 @@ class ServiceController extends Controller
             $payment = 0;
         }
         $customers = DB::table('customers')->where('id', $customerid)->first();
-        //dd($customers);
+        // dd($customers);
         if ($serviceid == 2) {
             $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
             return view('applyservice.tnegaservice1', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'mainbalance', 'coordinator_permission', 'admin_payment'));
@@ -1087,7 +1087,7 @@ class ServiceController extends Controller
                 $ch                 = curl_init();
                 //echo "<pre>";print_r($post_data);echo"</pre>";die;
                 //dd(json_encode($post_data));
-                //dd($post_data);
+                dd($post_data);
                 $url1 = $RAMJIPAY_URL . '/api/get_tnegaservices_api';
                 //echo $url1;die;
                 curl_setopt($ch, CURLOPT_URL, $url1);
