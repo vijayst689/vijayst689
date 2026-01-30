@@ -1613,7 +1613,7 @@ $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)-
                 $user_id = $ser[ 'user_id' ];
                 $sql = "select * from family_member where service_id=$ser_id order by id Asc";
                 $result = DB::select( $sql );
-                $sql = "select * from users where id=$user_id";
+                $sql = "select * from customers where id=$user_id";
                 $result1 = DB::select( $sql );
                 $getdata[ $key ][ 'family_details' ] = $result;
                 $getdata[ $key ][ 'customer_details' ] = $result1;
@@ -1881,7 +1881,7 @@ $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)-
                 $user_id = $ser[ 'user_id' ];
                 $sql = "select * from family_member where service_id=$ser_id order by id Asc";
                 $result = DB::select( $sql );
-                $sql = "select * from users where id=$user_id";
+                $sql = "select * from customers where id=$user_id";
                 $result1 = DB::select( $sql );
                  $sql = "select * from agri_details where service_id=$ser_id order by id Asc";
                 $result2 = DB::select( $sql );
@@ -2321,7 +2321,7 @@ public function submit_statusupdate_tnegaservices2(Request $request){
                 $user_id = $ser[ 'user_id' ];
                 $sql = "select * from family_member where service_id=$ser_id order by id Asc";
                 $result = DB::select( $sql );
-                $sql = "select * from users where id=$user_id";
+                $sql = "select * from customers where id=$user_id";
                 $result1 = DB::select( $sql );
                 $getdata[ $key ][ 'family_details' ] = $result;
                 $getdata[ $key ][ 'customer_details' ] = $result1;
@@ -2602,7 +2602,7 @@ public function submit_statusupdate_tnegaservices3(Request $request){
                 $user_id = $ser[ 'user_id' ];
                 $sql = "select * from family_member where service_id=$ser_id order by id Asc";
                 $result = DB::select( $sql );
-                $sql = "select * from users where id=$user_id";
+                $sql = "select * from customers where id=$user_id";
                 $result1 = DB::select( $sql );
                 $getdata[ $key ][ 'family_details' ] = $result;
                 $getdata[ $key ][ 'customer_details' ] = $result1;
@@ -2852,7 +2852,7 @@ public function submit_statusupdate_tnegaservices4(Request $request){
                 $user_id = $ser[ 'user_id' ];
                 $sql = "select * from family_member where service_id=$ser_id order by id Asc";
                 $result = DB::select( $sql );
-                $sql = "select * from users where id=$user_id";
+                $sql = "select * from customers where id=$user_id";
                 $result1 = DB::select( $sql );
                 $getdata[ $key ][ 'family_details' ] = $result;
                 $getdata[ $key ][ 'customer_details' ] = $result1;
@@ -3362,7 +3362,7 @@ $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)-
                 $user_id = $ser[ 'user_id' ];
                 $sql = "select * from family_member where service_id=$ser_id order by id Asc";
                 $result = DB::select( $sql );
-                $sql = "select * from users where id=$user_id";
+                $sql = "select * from customers where id=$user_id";
                 $result1 = DB::select( $sql );
                 $getdata[ $key ][ 'family_details' ] = $result;
                 $getdata[ $key ][ 'customer_details' ] = $result1;
@@ -3658,7 +3658,7 @@ if($request->has('doc_id')){
                 $user_id = $ser[ 'user_id' ];
                 $sql = "select * from family_member where service_id=$ser_id order by id Asc";
                 $result = DB::select( $sql );
-                $sql = "select * from users where id=$user_id";
+                $sql = "select * from customers where id=$user_id";
                 $result1 = DB::select( $sql );
                  $sql = "select * from family_member where service_id=$ser_id and user_id=$ser_id order by id Asc";
                 $result3 = DB::select( $sql );
