@@ -942,7 +942,11 @@ class ServicestatusController extends Controller
             //$serviceid = $votercorrection_services[0]->service_id;
             //$user_id = $votercorrection_services[0]->user_id;
         //}
-        $customers = DB::table('customers')->where('id',$user_id)->first();
+         if($service_id == 2 || $service_id == 3 || $service_id == 4 || $service_id == 11 || $service_id == 14 || $service_id == 20 || $service_id == 22 || $service_id == 23 || $service_id == 24 || $service_id == 25 || $service_id == 26 || $service_id == 27 || $service_id == 28 || $service_id == 129 || $service_id == 15 || $service_id == 151 || $service_id == 170 || $service_id == 171 || $service_id == 172 || $service_id == 176 || $service_id == 177 || $service_id == 178){
+           $customers = DB::table('customers')->where('id',$user_id)->first(); 
+        }else{
+        $customers = DB::table('users')->where('id',$user_id)->first();
+        }
         $districts = DB::table( 'district' )->get();
         $sql = "select service_name,amount from services where id = $serviceid";
         $result = DB::select(DB::raw($sql));
