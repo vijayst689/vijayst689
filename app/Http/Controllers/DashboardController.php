@@ -5,6 +5,8 @@ use Auth;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\File;   // ✅ ADD THIS
 
 class DashboardController extends Controller
 {
@@ -20,6 +22,120 @@ class DashboardController extends Controller
     });
     $this->middleware('auth');
   }
+
+    public function test()
+    {
+    //     $payload = [
+    //         'timestamp' => round(microtime(true) * 1000), // milliseconds
+    //         'partnerId' => 'PS001873', // replace with actual partnerId
+    //         'reqid'     => rand(100000, 999999), // unique integer per request
+    //     ];
+    //     $token = JwtService::generateToken($payload);
+    //     $authorisedKey = 'MDZjYTlkMzQ1MjJkOTA0MjVkNmVmMmNjMWUwY2Q0MTA='; // get from UAT portal
+
+    //     /* $url = 'https://sit.paysprint.in/service-api/api/v1/service/balance/balance/mainbalance'; // Replace 'xyz.xyz' with 'sit.paysprint'
+
+    // $response = Http::withHeaders([
+    //     'Authorisedkey' => $authorisedKey,
+    //     'Content-Type' => 'application/json',
+    //     'Token' => $token, // your actual JWT token
+    //     'Accept' => 'application/json',
+    // ])->post($url);
+
+    // if ($response->successful()) {
+    //     return $response->body(); // or return $response->body(); for raw
+    // } else {
+    //     return  $response->status();
+    // }*/
+
+    //     /* $url = 'https://sit.paysprint.in/service-api/api/v1/service/bill-payment/bill/getoperator';
+
+    // $payload = [
+    //     'mode' => 'online/offline', // or 'online' or 'offline'
+    // ];
+
+
+    // $response = Http::withHeaders([
+    //     'Authorisedkey' => $authorisedKey,
+    //     'Token' => $token,
+    //     'Accept' => 'application/json',
+    //     'Content-Type' => 'application/json',
+    // ])->post($url, $payload);
+
+    // if ($response->successful()) {
+    //      echo "<pre>";print_r($response->object());echo "</pre>"; // Parsed JSON array/object
+    // }*/
+
+    //     /*$url = 'https://sit.paysprint.in/service-api/api/v1/service/bill-payment/bill/fetchbill';
+
+    // $payload = [
+    //     'operator' => '373',
+    //     'canumber' => '0717100797',
+    //     'mode' => 'online',
+
+    //     // 'ad1' => 'value according to operator', // Optional field, pass if required
+    // ];
+    // //$payload = json_encode($payload);
+    // $response = Http::withHeaders([
+    //     'Authorisedkey' => $authorisedKey,
+    //     'Token' => $token,
+    //     'Accept' => 'application/json',
+    //     'Content-Type' => 'application/json',
+    // ])->post($url, $payload);
+
+    // if ($response->successful()) {
+    //     return $response->object(); // ✅ Returns as object (stdClass)
+    // }
+
+    // return response()->json([
+    //     'error' => 'Request failed',
+    //     'status' => $response->status(),
+    //     'message' => $response->body()
+    // ], $response->status());*/
+
+    //     $url = 'https://sit.paysprint.in/service-api/api/v1/service/bus/ticket/source';
+
+    //     $payload = [
+    //         'mode' => 'online/offline', // or 'online' or 'offline'
+    //     ];
+
+
+    //     $response = Http::withHeaders([
+    //         'Authorisedkey' => $authorisedKey,
+    //         'Token' => $token,
+    //         'Accept' => 'application/json',
+    //     ])->post($url);
+    //     //dd($response);
+    //     if ($response->successful()) {
+    //         echo "<pre>";
+    //         print_r($response->object());
+    //         echo "</pre>"; // Parsed JSON array/object
+    //     }
+        //dd($response);
+
+        $oneMonthAgo = Carbon::now()->subMonth()->toDateString();
+
+$records = DB::table('request_payment')
+    ->whereDate('req_date', '<', $oneMonthAgo)
+    ->whereNotNull('req_image')
+    ->get();
+
+foreach ($records as $row) {
+
+    $filePath = public_path('upload/paidimage/' . $row->req_image);
+
+    if (File::exists($filePath)) {
+        File::delete($filePath);
+    }
+
+    // Optional: set req_image = NULL after delete
+    DB::table('request_payment')
+        ->where('id', $row->id)
+        ->update(['req_image' => null]);
+}
+        return  $filePath;
+    }
+
 
     public function dashboard()
     {

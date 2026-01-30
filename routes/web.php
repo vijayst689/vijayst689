@@ -23,6 +23,7 @@ Route::get('/', function () {
 // Auth //
 
 Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'dashboard']);
+Route::get('test', [App\Http\Controllers\DashboardController::class, 'test']);
 Route::get('spamusers', [App\Http\Controllers\DashboardController::class, 'spamusers']);
 Route::get('login', [CustomAuthController::class, 'index'])->name('login');
 Route::get('admin', [CustomAuthController::class, 'index'])->name('login');
