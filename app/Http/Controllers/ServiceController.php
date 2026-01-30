@@ -1071,7 +1071,7 @@ class ServiceController extends Controller
                 $user_id                           = $ser['user_id'];
                 $sql                               = "select * from family_member where service_id=$ser_id order by id Asc";
                 $result                            = DB::select($sql);
-                $sql                               = "select * from users where id=$user_id";
+                $sql                               = "select * from customers where id=$user_id";
                 $result1                           = DB::select($sql);
                 $getdata[$key]['family_details']   = $result;
                 $getdata[$key]['customer_details'] = $result1;
@@ -1087,7 +1087,7 @@ class ServiceController extends Controller
                 $ch                 = curl_init();
                 //echo "<pre>";print_r($post_data);echo"</pre>";die;
                 //dd(json_encode($post_data));
-                dd($post_data);
+                //dd($post_data);
                 $url1 = $RAMJIPAY_URL . '/api/get_tnegaservices_api';
                 //echo $url1;die;
                 curl_setopt($ch, CURLOPT_URL, $url1);
@@ -1098,7 +1098,7 @@ class ServiceController extends Controller
                 $server_output = curl_exec($ch);
                 curl_close($ch);
                 $resdata = json_decode($server_output, true);
-                //
+               //dd($resdata);
                 if ($resdata) {
                     $status = $resdata['message'];
                     if ($status == "Success") {
@@ -1547,7 +1547,7 @@ class ServiceController extends Controller
                 $user_id                           = $ser['user_id'];
                 $sql                               = "select * from family_member where service_id=$ser_id order by id Asc";
                 $result                            = DB::select($sql);
-                $sql                               = "select * from users where id=$user_id";
+                $sql                               = "select * from customers where id=$user_id";
                 $result1                           = DB::select($sql);
                 $sql                               = "select * from agri_details where service_id=$ser_id order by id Asc";
                 $result2                           = DB::select($sql);
@@ -1874,7 +1874,7 @@ class ServiceController extends Controller
                 $user_id                           = $ser['user_id'];
                 $sql                               = "select * from family_member where service_id=$ser_id order by id Asc";
                 $result                            = DB::select($sql);
-                $sql                               = "select * from users where id=$user_id";
+                $sql                               = "select * from customers where id=$user_id";
                 $result1                           = DB::select($sql);
                 $getdata[$key]['family_details']   = $result;
                 $getdata[$key]['customer_details'] = $result1;
@@ -2132,7 +2132,7 @@ class ServiceController extends Controller
                 $user_id                           = $ser['user_id'];
                 $sql                               = "select * from family_member where service_id=$ser_id order by id Asc";
                 $result                            = DB::select($sql);
-                $sql                               = "select * from users where id=$user_id";
+                $sql                               = "select * from customers where id=$user_id";
                 $result1                           = DB::select($sql);
                 $getdata[$key]['family_details']   = $result;
                 $getdata[$key]['customer_details'] = $result1;
@@ -2713,7 +2713,7 @@ class ServiceController extends Controller
                 $user_id                           = $ser['user_id'];
                 $sql                               = "select * from family_member where service_id=$ser_id order by id Asc";
                 $result                            = DB::select($sql);
-                $sql                               = "select * from users where id=$user_id";
+                $sql                               = "select * from customers where id=$user_id";
                 $result1                           = DB::select($sql);
                 $getdata[$key]['family_details']   = $result;
                 $getdata[$key]['customer_details'] = $result1;
@@ -3002,7 +3002,7 @@ class ServiceController extends Controller
                 $sql    = "select * from family_member where service_id=$ser_id order by id Asc";
                 $result = DB::select($sql);
 
-                $sql     = "select * from users where id=$user_id";
+                $sql     = "select * from customers where id=$user_id";
                 $result1 = DB::select($sql);
 
                 $sql     = "select * from family_member where service_id=$ser_id and user_id=$ser_id order by id Asc";
