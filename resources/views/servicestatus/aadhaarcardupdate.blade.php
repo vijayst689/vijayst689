@@ -1,5 +1,142 @@
 @extends('layouts.app')
 @section('content')
+    <style>
+        :root {
+            --primary: #852f75;
+            /* soft green */
+            --border: #cfe8dc;
+            /* mild border */
+            --bg: #f3f7f5;
+            /* page background */
+            --input-bg: #fcfdfc;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            font-family: "Inter", "Noto Sans Tamil", sans-serif;
+        }
+
+        /* Wrapper */
+        .form-wrapper {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 15px;
+        }
+
+        /* Card */
+        .form-card {
+            background: #f9fcfa;
+            /* mild form color */
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+            border: 1.5px solid var(--border);
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 18px;
+            padding-left: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        /* Labels */
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #841010;
+        }
+
+        /* Inputs */
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 11px 12px;
+            font-size: 14px;
+            border-radius: 8px;
+            border: 1.5px solid var(--border);
+            background: var(--input-bg);
+            transition: all .2s ease;
+        }
+
+        /* Focus */
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #156038;
+            box-shadow: 0 0 0 3px rgba(104, 211, 145, 0.25);
+        }
+
+        /* File Upload */
+        .form-group input[type="file"] {
+            background: #f4fbf7;
+            border-style: dashed;
+            cursor: pointer;
+        }
+
+        /* Submit */
+        .submit-wrap {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #ee0716, #ea0404);
+            color: #fff;
+            border: none;
+            padding: 12px 42px;
+            font-size: 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #ee0716, #ea0404);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: span 1;
+            }
+        }
+    </style>
     <div class="page-wrapper">
         <div class="page-content">
             <!--breadcrumb-->
@@ -64,14 +201,16 @@
                                             @if ($serviceid == 56)
                                                 <div class="row mb-3">
                                                     <div class="col-md-6">
-                                                        <label class="form-label text-primary">Aadhaar Number</label>
+                                                        <label style="color:#c718b3" class="form-label">Aadhaar
+                                                            Number</label>
                                                         <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
                                                             type="text" value="{{ $services->aadhaar_no }}"
                                                             class="form-control border border-dark text-dark"
                                                             name="aadhaar_no" maxlength="12" placeholder="Aadhaar Number" />
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="mobile" class="form-label text-primary">Mobile Number
+                                                        <label style="color:#c718b3" for="mobile"
+                                                            class="form-label">Mobile Number
                                                             (Aadhaar
                                                             link)</label>
                                                         <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
@@ -82,7 +221,8 @@
                                                 </div>
                                                 <div class="row mb-3">
                                                     <div class="col-md-6">
-                                                        <label for="name" class="form-label text-primary">Applicant
+                                                        <label style="color:#c718b3" for="name"
+                                                            class="form-label">Applicant
                                                             Name</label>
                                                         <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
                                                             type="text" value="{{ $services->name }}"
@@ -90,7 +230,7 @@
                                                             maxlength="30" placeholder="Applicant Name" />
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="door_no" class="form-label text-primary">Door
+                                                        <label style="color:#c718b3" for="door_no" class="form-label">Door
                                                             Number</label>
                                                         <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
                                                             type="text" value="{{ $services->door_no }}"
@@ -100,14 +240,17 @@
                                                 </div>
                                                 <div class="row mb=3">
                                                     <div class="col-md-6">
-                                                        <label for="address_english" class="form-label text-primary">Address
-                                                            In English</label>
+                                                        <label style="color:#c718b3" for="address_english"
+                                                            class="form-label">Address
+                                                            In
+                                                            English</label>
                                                         <textarea @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
-                                                            value="{{ $services->address_english }}" class="form-control border border-dark text-dark" name="address_english"
-                                                            maxlength="200" placeholder="Address In English">{{ $services->address_english }}</textarea>
+                                                            value="{{ $services->address_english }}" class="form-control border border-dark text-dark"
+                                                            name="address_english" maxlength="200" placeholder="Address In English">{{ $services->address_english }}</textarea>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="address_tamil" class="form-label text-primary">முகவரி
+                                                        <label style="color:#c718b3" for="address_tamil"
+                                                            class="form-label">முகவரி
                                                             தமிழில்</label>
                                                         <textarea @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
                                                             value="{{ $services->address_tamil }}" class="form-control border border-dark text-dark" name="address_tamil"
@@ -116,8 +259,8 @@
                                                 </div>
                                                 <div class="row mb=3">
                                                     <div class="col-md-6">
-                                                        <label for="dist_id"
-                                                            class="form-label text-primary">District</label>
+                                                        <label style="color:#c718b3" for="dist_id"
+                                                            class="form-label">District</label>
                                                         <select @if (Auth::user()->id != $apply_user_id) disabled @endif
                                                             name="dist_id" id="dist_id"
                                                             class="form-control border border-dark text-dark">
@@ -130,8 +273,8 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="taluk_id"
-                                                            class="form-label text-primary">Taluk</label>
+                                                        <label style="color:#c718b3" for="taluk_id"
+                                                            class="form-label">Taluk</label>
                                                         <select @if (Auth::user()->id != $apply_user_id) disabled @endif
                                                             name="taluk_id" id="taluk"
                                                             class="form-control border border-dark text-dark">
@@ -140,16 +283,18 @@
                                                 </div>
                                                 <div class="row mb=3">
                                                     <div class="col-md-6">
-                                                        <label for="postal_area_english"
-                                                            class="form-label text-primary">Postal Area</label>
+                                                        <label style="color:#c718b3" for="postal_area_english"
+                                                            class="form-label">Postal
+                                                            Area</label>
                                                         <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
                                                             type="text" value="{{ $services->postal_area_english }}"
                                                             class="form-control border border-dark text-dark"
-                                                            name="postal_area_english" maxlength="30"
+                                                            name="postal_area_english" maxlength="100"
                                                             placeholder="Postal Area" />
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="pin_code" class="form-label text-primary">Pin
+                                                        <label style="color:#c718b3" for="pin_code"
+                                                            class="form-label">Pin
                                                             code</label>
                                                         <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
                                                             type="text" value="{{ $services->pin_code }}"
@@ -158,153 +303,617 @@
                                                             placeholder="Enter pin code" />
                                                     </div>
                                                 </div>
+                                                <div class="row mb=3">
+                                                    <div class="col-md-6">
+                                                        <label style="color:#c718b3">ஏதேனும் அடையாள ஆதாரம்</label>
+                                                        <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required
+                                                            class="form-control" id="id_proof" name="id_proof"
+                                                            style="width: 100%;">
+                                                            <option value="">Select Proof
+                                                            </option>
+                                                            <option @if ($services->id_proof == 'Bank Passbook') selected @endif
+                                                                value="Bank Passbook">Bank Passbook(With Photo)
+                                                            </option>
+                                                            <option @if ($services->id_proof == 'Smartcard Online Print') selected @endif
+                                                                value="Smartcard Online Print">Smartcard Online Print
+                                                            </option>
+                                                            <option @if ($services->id_proof == 'Voter Id') selected @endif
+                                                                value="Voter Id">Voter Id (Latest)</option>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="mb-3 col-md-6">
+
+                                                        <div class="" id="passbookhide" style="display: none;">
+                                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                                                @if ($services->bank_pass_book != '')
+                                                                    <label style="color:#c718b3" class="form-label">Bank
+                                                                        Passbook(With Photo)</label>
+                                                                    <br><a target="_blank"
+                                                                        href="{{ URL::to('/') }}/upload/services/bank_pass_book/{{ $services->bank_pass_book }}"
+                                                                        class="btn btn-primary me-2">View</a><br>
+                                                                @endif
+                                                            @else
+                                                                <label style="color:#c718b3" class="form-label">Bank
+                                                                    Passbook(With
+                                                                    Photo)</label>
+                                                                <input @if ($services->bank_pass_book == '' && $services->id_proof == 'Bank Passbook')  @endif
+                                                                    class="form-control" type="file"
+                                                                    accept="image/jpeg, image/png" name="bank_pass_book"
+                                                                    id="bank_pass_book">
+                                                                @if ($services->bank_pass_book != '')
+                                                                    <a target="_blank"
+                                                                        href="{{ URL::to('/') }}/upload/services/bank_pass_book/{{ $services->bank_pass_book }}">Download</a><br>
+                                                                @endif
+                                                            @endif
+                                                        </div>
+                                                        <div class="" id="smartcardhide" style="display: none;">
+                                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                                                @if ($services->smartcard_onlineprint != '')
+                                                                    <label style="color:#c718b3"
+                                                                        class="form-label">Smartcard Online
+                                                                        Print</label>
+                                                                    <br><a target="_blank"
+                                                                        href="{{ URL::to('/') }}/upload/services/smartcard_onlineprint/{{ $services->smartcard_onlineprint }}"
+                                                                        class="btn btn-primary me-2">View</a><br>
+                                                                @endif
+                                                            @else
+                                                                <label style="color:#c718b3" class="form-label">Smartcard
+                                                                    Online
+                                                                    Print</label>
+                                                                <input @if ($services->smartcard_onlineprint == '' && $services->id_proof == 'Smartcard Online Print')  @endif
+                                                                    class="form-control" type="file"
+                                                                    accept="image/jpeg, image/png"
+                                                                    name="smartcard_onlineprint"
+                                                                    id="smartcard_onlineprint">
+                                                                @if ($services->smartcard_onlineprint != '')
+                                                                    <a target="_blank"
+                                                                        href="{{ URL::to('/') }}/upload/services/smartcard_onlineprint/{{ $services->smartcard_onlineprint }}">Download</a><br>
+                                                                @endif
+                                                            @endif
+                                                        </div>
+                                                        <div class="" id="voteridhide" style="display: none;">
+                                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                                                @if ($services->voterid != '')
+                                                                    <label style="color:#c718b3" class="form-label">Voter
+                                                                        Id(Latest)</label>
+                                                                    <br><a target="_blank"
+                                                                        href="{{ URL::to('/') }}/upload/services/voterid/{{ $services->voterid }}"
+                                                                        class="btn btn-primary me-2">View</a><br>
+                                                                @endif
+                                                            @else
+                                                                <label style="color:#c718b3" class="form-label">Voter Id
+                                                                    (Latest)</label>
+                                                                <input @if ($services->voterid == '' && $services->id_proof == 'Voter Id')  @endif
+                                                                    class="form-control" type="file"
+                                                                    accept="image/jpeg, image/png" name="voterid"
+                                                                    id="voter_id">
+                                                                @if ($services->voterid != '')
+                                                                    <a target="_blank"
+                                                                        href="{{ URL::to('/') }}/upload/services/voterid/{{ $services->voterid }}">Download</a><br>
+                                                                @endif
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             @elseif ($serviceid == 58)
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="name" class="form-label">Applicant Name</label>
-                                                    <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required
-                                                        type="text" value="{{ $services->name }}"
-                                                        class="form-control" name="name" maxlength="30"
-                                                        placeholder="Name" />
+                                                <div class="form-wrapper">
+                                                    <div class="form-card" style="color: #19c2a9">
+                                                        <div class="section">
+                                                            <div class="grid-2">
+                                                                <div class="form-group">
 
-                                                    <label for="relationship" class="form-label">Relationship</label>
-                                                    <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif
-                                                        class="form-control" name="relationship">
-                                                        <option value="">Select</option>
-                                                        <option @if ($services->relationship == 'Father') selected @endif
-                                                            value="Father">
-                                                            Father
-                                                        </option>
-                                                        <option @if ($services->relationship == 'Mother') selected @endif
-                                                            value="Mother">
-                                                            Mother
-                                                        </option>
-                                                        <option @if ($services->relationship == 'Husband') selected @endif
-                                                            value="Husband">
-                                                            Husband</option>
-                                                        <option @if ($services->relationship == 'Gaurdian') selected @endif
-                                                            value="Gaurdian">
-                                                            Gaurdian</option>
-                                                    </select>
+                                                                    <label class="form-label">Aadhaar Number</label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        required type="text"
+                                                                        value="{{ $services->aadhaar_no }}"
+                                                                        class="form-control" name="aadhaar_no"
+                                                                        maxlength="12" placeholder="Aadhaar Number" />
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="mobile" class="form-label">Mobile
+                                                                        Number
+                                                                        (Aadhaar
+                                                                        link)</label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        required type="text"
+                                                                        value="{{ $services->mobile }}"
+                                                                        class="form-control" name="mobile"
+                                                                        maxlength="30" placeholder="Mobile Number" />
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="name" class="form-label">Applicant
+                                                                        Name</label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        required type="text"
+                                                                        value="{{ $services->name }}"
+                                                                        class="form-control" name="name"
+                                                                        maxlength="30" placeholder="Applicant Name" />
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="door_no" class="form-label">Door
+                                                                        Number</label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        required type="text"
+                                                                        value="{{ $services->door_no }}"
+                                                                        class="form-control" name="door_no"
+                                                                        maxlength="30" placeholder="Door Number" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
-                                                    <label for="name_english" class="form-label">Name In English</label>
-                                                    <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required
-                                                        type="text" value="{{ $services->name_english }}"
-                                                        class="form-control" name="name_english" maxlength="30"
-                                                        placeholder="Name English" />
+                                                        <div class="section">
+                                                            <div class="grid-2">
+                                                                <div class="form-group">
+                                                                    <label for="dist_id"
+                                                                        class="form-label">District</label>
+                                                                    <select
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        name="dist_id" id="dist_id"
+                                                                        class="form-control">
+                                                                        <option value="">Select District</option>
+                                                                        @foreach ($districts as $d)
+                                                                            <option
+                                                                                @if ($d->id == $services->dist_id) selected @endif
+                                                                                value="{{ $d->id }}">
+                                                                                {{ $d->district_name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="taluk_id" class="form-label">Taluk</label>
+                                                                    <select
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        name="taluk_id" id="taluk"
+                                                                        class="form-control">
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="address_english"
+                                                                        class="form-label">Address In
+                                                                        English</label>
+                                                                    <textarea @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                                                        value="{{ $services->address_english }}" class="form-control" name="address_english" maxlength="200"
+                                                                        placeholder="Address In English">{{ $services->address_english }}</textarea>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="address_tamil" class="form-label">முகவரி
+                                                                        தமிழில்</label>
+                                                                    <textarea @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                                                        value="{{ $services->address_tamil }}" class="form-control" name="address_tamil" maxlength="200"
+                                                                        placeholder="முகவரி தமிழில்">{{ $services->address_tamil }}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
-                                                    <label for="name_tamil" class="form-label">தமிழில் பெயர்</label>
-                                                    <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required
-                                                        type="text" value="{{ $services->name_tamil }}"
-                                                        class="form-control" name="name_tamil" maxlength="30"
-                                                        placeholder="தமிழில் பெயர்" />
+                                                        <div class="section">
+                                                            <div class="grid-2">
+                                                                <div class="form-group">
+                                                                    <label for="postal_area_english"
+                                                                        class="form-label">Postal
+                                                                        Area</label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        required type="text"
+                                                                        value="{{ $services->postal_area_english }}"
+                                                                        class="form-control" name="postal_area_english"
+                                                                        maxlength="100" placeholder="Postal Area" />
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="pin_code" class="form-label">Pin
+                                                                        code</label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        required type="text"
+                                                                        value="{{ $services->pin_code }}"
+                                                                        class="form-control" name="pin_code"
+                                                                        maxlength="30" placeholder="Enter pin code" />
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @if (Auth::user()->id != $apply_user_id)
+                                                                        @if ($services->schl_id_card != '')
+                                                                            <label>School Id Card</label>
+                                                                            <br><a target="_blank"
+                                                                                href="{{ URL::to('/') }}/upload/services/schl_id_card/{{ $services->schl_id_card }}"
+                                                                                class="btn btn-primary me-2">View</a><br>
+                                                                        @endif
+                                                                    @else
+                                                                        <label>School Id Card</label>
+                                                                        <input
+                                                                            @if ($services->schl_id_card == '') required @endif
+                                                                            class="form-control" type="file"
+                                                                            accept="image/jpeg, image/png"
+                                                                            name="schl_id_card">
+                                                                        @if ($services->schl_id_card != '')
+                                                                            <a target="_blank"
+                                                                                href="{{ URL::to('/') }}/upload/services/schl_id_card/{{ $services->schl_id_card }}">Download</a><br>
+                                                                        @endif
+                                                                    @endif
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>ஏதேனும் அடையாள ஆதாரம்</label>
+                                                                    <select
+                                                                        @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif
+                                                                        required class="form-control" id="id_proof"
+                                                                        name="id_proof" style="width: 100%;">
+                                                                        <option value="">Select Handicapped Proof
+                                                                        </option>
+                                                                        <option
+                                                                            @if ($services->id_proof == 'Bank Passbook') selected @endif
+                                                                            value="Bank Passbook">Bank Passbook(With Photo)
+                                                                        </option>
+                                                                        <option
+                                                                            @if ($services->id_proof == 'Smartcard Online Print') selected @endif
+                                                                            value="Smartcard Online Print">Smartcard
+                                                                            Online Print
+                                                                        </option>
+                                                                        <option
+                                                                            @if ($services->id_proof == 'Voter Id') selected @endif
+                                                                            value="Voter Id">Voter Id (Latest)</option>
 
-                                                    <label for="address_proof" class="form-label">Address Proof</label>
-                                                    <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif
-                                                        class="form-control" name="address_proof">
-                                                        <option value="">Select</option>
-                                                        <option @if ($services->address_proof == 'Voter id') selected @endif
-                                                            value="Voter id">Voter id
-                                                        </option>
-                                                        <option @if ($services->address_proof == 'Passport') selected @endif
-                                                            value="Passport">Passport
-                                                        </option>
-                                                        <option @if ($services->address_proof == 'Electricity Bill') selected @endif
-                                                            value="Electricity Bill">
-                                                            Electricity Bill</option>
-                                                        <option @if ($services->address_proof == 'Gas Bill') selected @endif
-                                                            value="Gas Bill">
-                                                            Gas Bill</option>
-                                                    </select>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="section">
+                                                            <div class="grid-2">
+                                                                <div class="form-group" id="passbookhide"
+                                                                    style="display: none;">
+                                                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                                                        @if ($services->bank_pass_book != '')
+                                                                            <label>Bank Passbook(With Photo)</label>
+                                                                            <br><a target="_blank"
+                                                                                href="{{ URL::to('/') }}/upload/services/bank_pass_book/{{ $services->bank_pass_book }}"
+                                                                                class="btn btn-primary me-2">View</a><br>
+                                                                        @endif
+                                                                    @else
+                                                                        <label>Bank Passbook(With Photo)</label>
+                                                                        <input @if ($services->bank_pass_book == '' && $services->id_proof == 'Bank Passbook')  @endif
+                                                                            class="form-control" type="file"
+                                                                            accept="image/jpeg, image/png"
+                                                                            name="bank_pass_book" id="bank_pass_book">
+                                                                        @if ($services->bank_pass_book != '')
+                                                                            <a target="_blank"
+                                                                                href="{{ URL::to('/') }}/upload/services/bank_pass_book/{{ $services->bank_pass_book }}">Download</a><br>
+                                                                        @endif
+                                                                    @endif
+                                                                </div>
+                                                                <div class="form-group" id="smartcardhide"
+                                                                    style="display: none;">
+                                                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                                                        @if ($services->smartcard_onlineprint != '')
+                                                                            <label>Smartcard Online Print</label>
+                                                                            <br><a target="_blank"
+                                                                                href="{{ URL::to('/') }}/upload/services/smartcard_onlineprint/{{ $services->smartcard_onlineprint }}"
+                                                                                class="btn btn-primary me-2">View</a><br>
+                                                                        @endif
+                                                                    @else
+                                                                        <label>Smartcard Online Print</label>
+                                                                        <input @if ($services->smartcard_onlineprint == '' && $services->id_proof == 'Smartcard Online Print')  @endif
+                                                                            class="form-control" type="file"
+                                                                            accept="image/jpeg, image/png"
+                                                                            name="smartcard_onlineprint"
+                                                                            id="smartcard_onlineprint">
+                                                                        @if ($services->smartcard_onlineprint != '')
+                                                                            <a target="_blank"
+                                                                                href="{{ URL::to('/') }}/upload/services/smartcard_onlineprint/{{ $services->smartcard_onlineprint }}">Download</a><br>
+                                                                        @endif
+                                                                    @endif
+                                                                </div>
+                                                                <div class="form-group" id="voteridhide"
+                                                                    style="display: none;">
+                                                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                                                        @if ($services->voterid != '')
+                                                                            <label>Voter Id (Latest)</label>
+                                                                            <br><a target="_blank"
+                                                                                href="{{ URL::to('/') }}/upload/services/voterid/{{ $services->voterid }}"
+                                                                                class="btn btn-primary me-2">View</a><br>
+                                                                        @endif
+                                                                    @else
+                                                                        <label>Voter Id (Latest)</label>
+                                                                        <input @if ($services->voterid == '' && $services->id_proof == 'Voter Id')  @endif
+                                                                            class="form-control" type="file"
+                                                                            accept="image/jpeg, image/png" name="voterid"
+                                                                            id="voter_id">
+                                                                        @if ($services->voterid != '')
+                                                                            <a target="_blank"
+                                                                                href="{{ URL::to('/') }}/upload/services/voterid/{{ $services->voterid }}">Download</a><br>
+                                                                        @endif
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @elseif ($serviceid == 158)
+                                                        <div class="form-wrapper">
+                                                            <div class="row mb-3">
+                                                                <div class="col-md-6">
+                                                                    <label style="color:#13ceef"
+                                                                        class="form-label">Aadhaar Number</label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        required type="text"
+                                                                        value="{{ $services->aadhaar_no }}"
+                                                                        class="form-control" name="aadhaar_no"
+                                                                        maxlength="12" placeholder="Aadhaar Number" />
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label style="color:#13ceef" for="mobile"
+                                                                        class="form-label">Mobile
+                                                                        Number (Aadhaar
+                                                                        link)</label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        required type="text"
+                                                                        value="{{ $services->mobile }}"
+                                                                        class="form-control" name="mobile"
+                                                                        maxlength="30" placeholder="Mobile Number" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <div class="col-md-6">
+                                                                    <label style="color:#13ceef" for="name"
+                                                                        class="form-label">Applicant
+                                                                        Name</label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        required type="text"
+                                                                        value="{{ $services->name }}"
+                                                                        class="form-control" name="name"
+                                                                        maxlength="30" placeholder="Applicant Name" />
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label style="color:#13ceef" for="door_no"
+                                                                        class="form-label">Door
+                                                                        Number</label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        required type="text"
+                                                                        value="{{ $services->door_no }}"
+                                                                        class="form-control" name="door_no"
+                                                                        maxlength="30" placeholder="Door Number" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb=3">
+                                                                <div class="col-md-6">
+                                                                    <label style="color:#13ceef" for="address_english"
+                                                                        class="form-label">Address In
+                                                                        English</label>
+                                                                    <textarea @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                                                        value="{{ $services->address_english }}" class="form-control" name="address_english" maxlength="200"
+                                                                        placeholder="Address In English">{{ $services->address_english }}</textarea>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label style="color:#13ceef" for="address_tamil"
+                                                                        class="form-label">முகவரி
+                                                                        தமிழில்</label>
+                                                                    <textarea @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
+                                                                        value="{{ $services->address_tamil }}" class="form-control" name="address_tamil" maxlength="200"
+                                                                        placeholder="முகவரி தமிழில்">{{ $services->address_tamil }}</textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb=3">
+                                                                <div class="col-md-6">
+                                                                    <label style="color:#13ceef" for="dist_id"
+                                                                        class="form-label">District</label>
+                                                                    <select
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        name="dist_id" id="dist_id"
+                                                                        class="form-control">
+                                                                        <option value="">Select District</option>
+                                                                        @foreach ($districts as $d)
+                                                                            <option
+                                                                                @if ($d->id == $services->dist_id) selected @endif
+                                                                                value="{{ $d->id }}">
+                                                                                {{ $d->district_name }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label style="color:#13ceef" for="taluk_id"
+                                                                        class="form-label">Taluk</label>
+                                                                    <select
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        name="taluk_id" id="taluk"
+                                                                        class="form-control">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb=3">
+                                                                <div class="col-md-6">
+                                                                    <label style="color:#13ceef" for="postal_area_english"
+                                                                        class="form-label">Postal
+                                                                        Area</label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        required type="text"
+                                                                        value="{{ $services->postal_area_english }}"
+                                                                        class="form-control" name="postal_area_english"
+                                                                        maxlength="100" placeholder="Postal Area" />
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label style="color:#13ceef" for="pin_code"
+                                                                        class="form-label">Pin
+                                                                        code</label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        required type="text"
+                                                                        value="{{ $services->pin_code }}"
+                                                                        class="form-control" name="pin_code"
+                                                                        maxlength="30" placeholder="Enter pin code" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb=3">
+                                                                <div class="col-md-6">
+                                                                    <label style="color:#13ceef" for="relation_name_tamil"
+                                                                        class="form-label">Relation Name in
+                                                                        English</label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        required type="text"
+                                                                        value="{{ $services->relation_name_tamil }}"
+                                                                        class="form-control" name="relation_name_tamil"
+                                                                        maxlength="100"
+                                                                        placeholder="Relation Name in English" />
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label style="color:#13ceef" for="relation_name_tamil"
+                                                                        class="form-label">உறவினர் பெயர்
+                                                                        தமிழில்</label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        required type="text"
+                                                                        value="{{ $services->relation_name_tamil }}"
+                                                                        class="form-control" name="relation_name_tamil"
+                                                                        maxlength="100"
+                                                                        placeholder="உறவினர் பெயர் தமிழில்" />
+                                                                </div>
 
-                                                    <label for="address_english" class="form-label">Address In
-                                                        English</label>
-                                                    <textarea @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
-                                                        value="{{ $services->address_english }}" class="form-control" name="address_english" maxlength="200"
-                                                        placeholder="address_english">{{ $services->address_english }}</textarea>
-                                                </div>
-                                                <div class="mb-3 col-md-6">
+                                                            </div>
+                                                            <div class="row mb=3">
+                                                                <div class="col-md-6">
 
-                                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                                        @if ($services->aadhaar_card != '')
-                                                            <label>Aadhaar Card</label>
-                                                            <br><a target="_blank"
-                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
-                                                                class="btn btn-primary me-2">View</a><br>
-                                                        @endif
-                                                    @else
-                                                        <label>Aadhaar Card</label>
-                                                        <input @if ($services->aadhaar_card == '') required @endif
-                                                            class="form-control" type="file"
-                                                            accept="image/jpeg, image/png" name="aadhaar_card">
-                                                        @if ($services->aadhaar_card != '')
-                                                            <a target="_blank"
-                                                                href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
-                                                        @endif
-                                                    @endif
-                                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                                        @if ($services->photo != '')
-                                                            <label>Photo</label>
-                                                            <br><a target="_blank"
-                                                                href="{{ URL::to('/') }}/upload/services/photo/{{ $services->photo }}"
-                                                                class="btn btn-primary me-2">View</a><br>
-                                                        @endif
-                                                    @else
-                                                        <label>Photo</label>
-                                                        <input @if ($services->photo == '') required @endif
-                                                            class="form-control" type="file"
-                                                            accept="image/jpeg, image/png" name="photo">
-                                                        @if ($services->photo != '')
-                                                            <a target="_blank"
-                                                                href="{{ URL::to('/') }}/upload/services/photo/{{ $services->photo }}">Download</a><br>
-                                                        @endif
-                                                    @endif
-                                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                                        @if ($services->signature != '')
-                                                            <label>Signature</label>
-                                                            <br><a target="_blank"
-                                                                href="{{ URL::to('/') }}/upload/services/signature/{{ $services->signature }}"
-                                                                class="btn btn-primary me-2">View</a><br>
-                                                        @endif
-                                                    @else
-                                                        <label>Signature</label>
-                                                        <input @if ($services->signature == '') required @endif
-                                                            class="form-control" type="file"
-                                                            accept="image/jpeg, image/png" name="signature">
-                                                        @if ($services->signature != '')
-                                                            <a target="_blank"
-                                                                href="{{ URL::to('/') }}/upload/services/signature/{{ $services->smart_card }}">Download</a><br>
-                                                        @endif
-                                                    @endif
-                                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                                        @if ($services->proof != '')
-                                                            <label>Proof</label>
-                                                            <br><a target="_blank"
-                                                                href="{{ URL::to('/') }}/upload/services/proof/{{ $services->proof }}"
-                                                                class="btn btn-primary me-2">View</a><br>
-                                                        @endif
-                                                    @else
-                                                        <label>Proof</label>
-                                                        <input @if ($services->proof == '') required @endif
-                                                            class="form-control" type="file"
-                                                            accept="image/jpeg, image/png" name="proof">
-                                                        @if ($services->proof != '')
-                                                            <a target="_blank"
-                                                                href="{{ URL::to('/') }}/upload/services/proof/{{ $services->proof }}">Download</a><br>
-                                                        @endif
-                                                    @endif
-                                                    <label for="mobile" class="form-label">Mobile Number</label>
-                                                    <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required
-                                                        type="text" value="{{ $services->mobile }}"
-                                                        class="form-control number" name="mobile" maxlength="10"
-                                                        placeholder="Mobile">
+                                                                    <label style="color:#13ceef" for="relationship1"
+                                                                        class="form-label">Relationship</label>
+                                                                    <select
+                                                                        @if (Auth::user()->id != $apply_user_id) disabled @endif
+                                                                        class="form-control" name="relationship1"
+                                                                        id="relationship1">
+                                                                        <option value="">Select</option>
+                                                                        <option
+                                                                            @if ($services->relationship1 == 'Father') selected @endif
+                                                                            value="Father">
+                                                                            Father</option>
+                                                                        <option
+                                                                            @if ($services->relationship1 == 'Mother') selected @endif
+                                                                            value="Mother">
+                                                                            Mother</option>
+                                                                        <option
+                                                                            @if ($services->relationship1 == 'Spouse') selected @endif
+                                                                            value="Spouse">
+                                                                            Spouse</option>
+                                                                        <option
+                                                                            @if ($services->relationship1 == 'Legal Gaurdian') selected @endif
+                                                                            value="Legal Gaurdian">Legal Gaurdian</option>
+                                                                        <option
+                                                                            @if ($services->relationship1 == 'Siblings') selected @endif
+                                                                            value="Siblings">
+                                                                            Siblings</option>
+                                                                        <option
+                                                                            @if ($services->relationship1 == 'Child or Ward') selected @endif
+                                                                            value="Child or Ward">Child/Ward</option>
+                                                                    </select>
+                                                                </div>
 
-                                                    <label for="address_tamil" class="form-label">முகவரி தமிழில்</label>
-                                                    <textarea @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required type="text"
-                                                        value="{{ $services->address_tamil }}" class="form-control" name="address_tamil" maxlength="200"
-                                                        placeholder="முகவரி தமிழில்">{{ $services->address_tamil }}</textarea>
-                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label style="color:#13ceef"
+                                                                        class="form-label">ஏதேனும் அடையாள ஆதாரம்</label>
+                                                                    <select
+                                                                        @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif
+                                                                        required class="form-control" id="id_proof"
+                                                                        name="id_proof" style="width: 100%;">
+                                                                        <option value="">Select Proof
+                                                                        </option>
+                                                                        <option
+                                                                            @if ($services->id_proof == 'Bank Passbook') selected @endif
+                                                                            value="Bank Passbook">Bank Passbook(With Photo)
+                                                                        </option>
+                                                                        <option
+                                                                            @if ($services->id_proof == 'Smartcard Online Print') selected @endif
+                                                                            value="Smartcard Online Print">Smartcard
+                                                                            Online Print
+                                                                        </option>
+                                                                        <option
+                                                                            @if ($services->id_proof == 'Voter Id') selected @endif
+                                                                            value="Voter Id">
+                                                                            Voter Id (Latest)</option>
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="mb-3 col-md-6">
+
+                                                                <div class="" id="passbookhide"
+                                                                    style="display: none;">
+                                                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                                                        @if ($services->bank_pass_book != '')
+                                                                            <label style="color:#13ceef">Bank Passbook(With
+                                                                                Photo)</label>
+                                                                            <br><a target="_blank"
+                                                                                href="{{ URL::to('/') }}/upload/services/bank_pass_book/{{ $services->bank_pass_book }}"
+                                                                                class="btn btn-primary me-2">View</a><br>
+                                                                        @endif
+                                                                    @else
+                                                                        <label style="color:#13ceef">Bank Passbook(With
+                                                                            Photo)</label>
+                                                                        <input @if ($services->bank_pass_book == '' && $services->id_proof == 'Bank Passbook')  @endif
+                                                                            class="form-control" type="file"
+                                                                            accept="image/jpeg, image/png"
+                                                                            name="bank_pass_book" id="bank_pass_book">
+                                                                        @if ($services->bank_pass_book != '')
+                                                                            <a target="_blank"
+                                                                                href="{{ URL::to('/') }}/upload/services/bank_pass_book/{{ $services->bank_pass_book }}">Download</a><br>
+                                                                        @endif
+                                                                    @endif
+                                                                </div>
+                                                                <div class="" id="smartcardhide"
+                                                                    style="display: none;">
+                                                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                                                        @if ($services->smartcard_onlineprint != '')
+                                                                            <label style="color:#13ceef">Smartcard Online
+                                                                                Print</label>
+                                                                            <br><a target="_blank"
+                                                                                href="{{ URL::to('/') }}/upload/services/smartcard_onlineprint/{{ $services->smartcard_onlineprint }}"
+                                                                                class="btn btn-primary me-2">View</a><br>
+                                                                        @endif
+                                                                    @else
+                                                                        <label style="color:#13ceef">Smartcard Online
+                                                                            Print</label>
+                                                                        <input @if ($services->smartcard_onlineprint == '' && $services->id_proof == 'Smartcard Online Print')  @endif
+                                                                            class="form-control" type="file"
+                                                                            accept="image/jpeg, image/png"
+                                                                            name="smartcard_onlineprint"
+                                                                            id="smartcard_onlineprint">
+                                                                        @if ($services->smartcard_onlineprint != '')
+                                                                            <a target="_blank"
+                                                                                href="{{ URL::to('/') }}/upload/services/smartcard_onlineprint/{{ $services->smartcard_onlineprint }}">Download</a><br>
+                                                                        @endif
+                                                                    @endif
+                                                                </div>
+                                                                <div class="" id="voteridhide"
+                                                                    style="display: none;">
+                                                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                                                        @if ($services->voterid != '')
+                                                                            <label style="color:#13ceef">Voter Id
+                                                                                (Latest)</label>
+                                                                            <br><a target="_blank"
+                                                                                href="{{ URL::to('/') }}/upload/services/voterid/{{ $services->voterid }}"
+                                                                                class="btn btn-primary me-2">View</a><br>
+                                                                        @endif
+                                                                    @else
+                                                                        <label style="color:#13ceef">Voter Id
+                                                                            (Latest)</label>
+                                                                        <input @if ($services->voterid == '' && $services->id_proof == 'Voter Id')  @endif
+                                                                            class="form-control" type="file"
+                                                                            accept="image/jpeg, image/png" name="voterid"
+                                                                            id="voter_id">
+                                                                        @if ($services->voterid != '')
+                                                                            <a target="_blank"
+                                                                                href="{{ URL::to('/') }}/upload/services/voterid/{{ $services->voterid }}">Download</a><br>
+                                                                        @endif
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                             @endif
-
+</div>
                                             @if (Auth::user()->id != $apply_user_id)
                                                 <div class="mb-3 col-md-6">
                                                     <label for="service_name" class="form-label">Service Status</label>
@@ -418,100 +1027,6 @@
                 </div>
             @endsection
             @push('page_scripts')
-                {{-- <script>
-        $(function() {
-            var status = "{{ $services->status }}";
-            var acknowledgement = "{{ $services->acknowledgement }}";
-            var certificate = "{{ $services->certificate }}";
-            var selects = "{{ $services->selects }}";
-            var lects = "{{ $services->lects }}";
-
-            if (status == "Resubmit") {
-            $('#remarkshide').show("slow");
-            $('#remarks').prop("required", true);
-            } else if (status == "Processing") {
-            if (selects == "Text") {
-            $('#applicationnohide').show("slow");
-            }
-            if (selects == "File") {
-            $('#acknowledgementhide').show("slow");
-            if (acknowledgement == "") {
-            $('#acknowledgement').prop("required", true);
-            }
-            }
-            $('#selecthide').show("slow");
-
-
-            } else if (status == "Approved") {
-            if (lects == "Text") {
-            $('#applicationhide').show("slow");
-            }
-            if (lects == "File") {
-            $('#certhide').show("slow");
-            if (certificate == "") {
-            $('#certificate').prop("required", true);
-            }
-            }
-            $('#selectshide').show("slow")
-            }
-            });
-
-            $('#service_status').change(function() {
-            if ($('#service_status').val() == 'Resubmit') {
-            $('#acknowledgementhide').hide("slow");
-            $('#acknowledgement').prop("required", false);
-            $('#applicationnohide').hide("slow");
-            $('#application_no').prop("required", false);
-            $('#certhide').hide("slow");
-            $('#certificate').prop("required", false);
-            $('#remarkshide').show("slow");
-            $('#remarks').prop("required", true);
-            $('#select').prop("required", false);
-            $('#selecthide').hide("slow");
-            $('#selects').prop("required", false);
-            $('#selectshide').hide("slow");
-            } else if ($('#service_status').val() == 'Processing') {
-            $('#acknowledgementhide').hide("slow");
-            $('#acknowledgement').prop("required", false);
-            $('#remarkshide').hide("slow");
-            $('#remarks').prop("required", false);
-            $('#certhide').hide("slow");
-            $('#certificate').prop("required", false);
-            $('#applicationnohide').hide("slow");
-            $('#application_no').prop("required", false);
-            $('#select').prop("required", true);
-            $('#selecthide').show("slow");
-            $('#selects').prop("required", false);
-            $('#selectshide').hide("slow");
-            } else if ($('#service_status').val() == 'Approved') {
-            $('#remarkshide').hide("slow");
-            $('#remarks').prop("required", false);
-            $('#acknowledgementhide').hide("slow");
-            $('#acknowledgement').prop("required", false);
-            $('#certhide').hide("slow");
-            $('#certificate').prop("required", false);
-            $('#applicationnohide').hide("slow");
-            $('#application_no').prop("required", false);
-            $('#select').prop("required", false);
-            $('#selecthide').hide("slow");
-            $('#selects').prop("required", true);
-            $('#selectshide').show("slow");
-            } else {
-            $('#remarkshide').show("slow");
-            $('#remarks').prop("required", false);
-            $('#acknowledgementhide').hide("slow");
-            $('#acknowledgement').prop("required", false);
-            $('#certhide').hide("slow");
-            $('#certificate').prop("required", false);
-            $('#applicationnohide').hide("slow");
-            $('#application_no').prop("required", false);
-            $('#select').prop("required", false);
-            $('#selecthide').hide("slow");
-            $('#selects').prop("required", false);
-            $('#selectshide').hide("slow");
-            }
-            });
-            </script> --}}
                 <script>
                     $(function() {
                         var status = "{{ $services->status }}";
@@ -524,6 +1039,7 @@
                         var lects = "{{ $services->lects }}";
                         var dist_id = "{{ $services->dist_id }}";
                         var taluk_id = "{{ $services->taluk_id }}";
+                        var id_proof = "{{ $services->id_proof }}";
 
                         gettaluk(dist_id);
                         getpanchayath(taluk_id);
@@ -558,6 +1074,17 @@
                             $('#selectshide').show("slow")
                         }
                     });
+
+                    if (id_proof == "Bank Passbook") {
+                        $('#passbookhide').show("slow");
+                        $('#bank_pass_book').prop("required", true);
+                    } else if (id_proof == "Smartcard Online Print") {
+                        $('#smartcardhide').show("slow");
+                        $('#smartcard_onlineprint').prop("required", true);
+                    } else if (id_proof == "Voter Id") {
+                        $('#voteridhide').show("slow");
+                        $('#voterid').prop("required", true);
+                    }
 
                     function gettaluk(dist_id) {
                         var url = "{{ url('service/get_taluk') }}/" + dist_id;
@@ -724,6 +1251,42 @@
                         const btn = document.getElementById("save");
                         btn.disabled = true;
                         btn.innerText = "Submitting...";
+                    });
+
+                    $('#id_proof').change(function() {
+                        if ($('#id_proof').val() == 'Bank Passbook') {
+                            $('#passbookhide').show("slow");
+                            $('#smartcardhide').hide("slow");
+                            $('#voteridhide').hide("slow");
+                            $('#voterid').prop("required", false);
+                            $('#smartcard_onlineprint').prop("required", false);
+                            $('#bank_pass_book').prop("required", true);
+
+                        } else if ($('#id_proof').val() == 'Smartcard Online Print') {
+                            $('#smartcardhide').show("slow");
+                            $('#voteridhide').hide("slow");
+                            $('#passbookhide').hide("slow");
+                            $('#voterid').prop("required", false);
+                            $('#bank_pass_book').prop("required", false);
+                            $('#smartcard_onlineprint').prop("required", true);
+
+                        } else if ($('#id_proof').val() == 'Voter Id') {
+                            $('#voteridhide').show("slow");
+                            $('#smartcardhide').hide("slow");
+                            $('#passbookhide').hide("slow");
+                            $('#bank_pass_book').prop("required", false);
+                            $('#smartcard_onlineprint').prop("required", false);
+                            $('#voterid').prop("required", true);
+
+                        } else {
+                            $('#passbookhide').hide("slow");
+                            $('#smartcardhide').hide("slow");
+                            $('#voteridhide').hide("slow");
+                            $('#bank_pass_book').prop("required", false);
+                            $('#smartcard_onlineprint').prop("required", false);
+                            $('#voterid').prop("required", false);
+
+                        }
                     });
                 </script>
             @endpush
