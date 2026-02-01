@@ -750,14 +750,14 @@
                                                             </div>
                                                             <div class="row mb=3">
                                                                 <div class="col-md-6">
-                                                                    <label style="color:#13ceef" for="relation_name_tamil"
+                                                                    <label style="color:#13ceef" for="relation_name_english"
                                                                         class="form-label">Relation Name in
                                                                         English</label>
                                                                     <input
                                                                         @if (Auth::user()->id != $apply_user_id) disabled @endif
                                                                         required type="text"
-                                                                        value="{{ $services->relation_name_tamil }}"
-                                                                        class="form-control" name="relation_name_tamil"
+                                                                        value="{{ $services->relation_name_english }}"
+                                                                        class="form-control" name="relation_name_english"
                                                                         maxlength="100"
                                                                         placeholder="Relation Name in English" />
                                                                 </div>
