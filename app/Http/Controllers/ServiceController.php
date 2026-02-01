@@ -6711,16 +6711,42 @@ if($coordinator_permission == 1){
                 'retailer_id'    => $retailer_id,
                 'distributor_id' => $distributor_id,
                 'service_id'     => $request->serviceid,
-                'amount'         => $request->amount,
-                'food_service'   => $request->food_service,
-                'shop_name'      => $request->shop_name,
-                'mobile'         => $request->mobile,
-                'mobile_no'      => $request->mobile_no,
-                'email_id'       => $request->email_id,
-                'documents'      => $request->documents,
-                'status'         => 'Pending',
-                'applied_date'   => date("Y-m-d"),
-                'created_at'     => date("Y-m-d"),
+               'amount'                => $request->amount,
+                'shop_name'             => $request->shop_name,
+                'mobile'                => $request->mobile,
+                'mobile_no'             => $request->mobile_no,
+                'email_id'              => $request->email_id,
+                'documents'             => $request->documents,
+                'food_service'          => $request->food_service,
+                'dob'                   => $request->dob,
+                'food_category'         => $request->food_category,
+                'aadhaar_no'            => $request->aadhaar_no,
+                'name_as_pan'           => $request->name_as_pan,
+                'pan_no'                => $request->pan_no,
+                'applicant_name'        => $request->applicant_name,
+                'shop_address'          => $request->shop_address,
+                'block_or_division'     => $request->block_or_division,
+                'pin_code'              => $request->pin_code,
+                'fssai_license'         => $request->fssai_license,
+                'trade_retail'          => $request->trade_retail,
+                'storage'               => $request->storage,
+                'wholesaler'            => $request->wholesaler,
+                'distributor'           => $request->distributor,
+                'transportation'        => $request->transportation,
+                'retailer'              => $request->retailer,
+                'direct_seller'         => $request->direct_seller,
+                'food_vending_agencies' => $request->food_vending_agencies,
+                'importer'              => $request->importer,
+                'trader_merchant'       => $request->trader_merchant,
+                'petty_retailer'        => $request->petty_retailer,
+                'central_govt_agencies' => $request->central_govt_agencies,
+                'storage1'              => $request->storage1,
+                'wholesaler1'           => $request->wholesaler1,
+                'distributor1'          => $request->distributor1,
+                'retailer1'             => $request->retailer1,
+                'status'                => 'Pending',
+                'applied_date'          => date("Y-m-d"),
+                'created_at'            => date("Y-m-d"),
             ]);
 
             $insertid         = DB::getPdo()->lastInsertId();
@@ -6846,100 +6872,123 @@ if($coordinator_permission == 1){
         $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
         DB::update(DB::raw($sql));
 
-        $getpermission          = DB::table('service_payment')->where('service_id', $serviceid)->first();
-        $coordinator_permission = 0;
-        $admin_payment          = 0;
-        if ($getpermission) {
-            $coordinator_permission = $getpermission->coordinator_permission;
-            $admin_payment          = $getpermission->admin_amount;
-        }
-        if ($coordinator_permission == 1) {
-            $getdata = DB::table('fssai')->where('id', $insertid)->first();
-            if ($getdata) {
-                $aadhaar_card        = $getdata->aadhaar_card;
-                $photo               = $getdata->photo;
-                $shop_photo          = $getdata->shop_photo;
-                $pan_card            = $getdata->pan_card;
-                $rental_agreement    = $getdata->rental_agreement;
-                $electricity_bill    = $getdata->electricity_bill;
-                $property_tax        = $getdata->property_tax;
-                $old_food_license    = $getdata->old_food_license;
-                $service_id          = $getdata->service_id;
-                $rowid               = $getdata->id;
-                $food_service        = $getdata->food_service;
-                $shop_name           = $getdata->shop_name;
-                $email_id            = $getdata->email_id;
-                $mobile              = $getdata->mobile;
-                $mobile_no           = $getdata->mobile_no;
-                $documents           = $getdata->documents;
-                $status              = $getdata->status;
-                $url                 = url('/');
-                $aadhaar_url         = $url . '/upload/services/aadhaar_card/' . $aadhaar_card;
-                $photo_url           = $url . '/upload/services/photo/' . $photo;
-                $shopphoto_url       = $url . '/upload/services/shop_photo/' . $shop_photo;
-                $pancard_url         = $url . '/upload/services/pan_card/' . $pan_card;
-                $rentalagreement_url = $url . '/upload/services/rental_agreement/' . $rental_agreement;
-                $electricitybill_url = $url . '/upload/services/electricity_bill/' . $electricity_bill;
-                $propertytax_url     = $url . '/upload/services/property_tax/' . $property_tax;
-                $oldfoodlicense_url  = $url . '/upload/services/old_food_license/' . $old_food_license;
-                $API_KEY             = env('API_KEY', '');
-                $RAMJIPAY_URL        = env('RAMJIPAY_URL', '');
-                $WEBSITE_INDEX       = env('WEBSITE_INDEX', '');
-                $ch                  = curl_init();
+       $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+$coordinator_permission = 0;
+$admin_payment = 0;
+if($getpermission){
+    $coordinator_permission = $getpermission->coordinator_permission;
+    $admin_payment = $getpermission->admin_amount;
+}
+if($coordinator_permission == 1){
+    $getdata = DB::table( 'fssai' )->where('id',$insertid)->first();
+    if($getdata){
+     $aadhaar_card = $getdata->aadhaar_card;
+     $photo = $getdata->photo;
+     $shop_photo = $getdata->shop_photo;
+     $pan_card = $getdata->pan_card;
+     $rental_agreement = $getdata->rental_agreement;
+     $electricity_bill = $getdata->electricity_bill;
+     $property_tax = $getdata->property_tax;
+     $old_food_license = $getdata->old_food_license;
+     $service_id = $getdata->service_id;
+     $rowid = $getdata->id;
+     $food_service = $getdata->food_service;
+     $shop_name = $getdata->shop_name;
+     $shop_address = $getdata->shop_address;
+     $email_id = $getdata->email_id;
+     $mobile = $getdata->mobile;
+     $documents = $getdata->documents;
+     $mobile_no = $getdata->mobile_no;
+     $pan_no = $getdata->pan_no;
+     $name_as_pan = $getdata->name_as_pan;
+     $aadhaar_no = $getdata->aadhaar_no;
+     $food_category = $getdata->food_category;
+     $block_or_division = $getdata->block_or_division;
+     $pin_code = $getdata->pin_code;
+     $fssai_license = $getdata->fssai_license;
+     $trade_retail = $getdata->trade_retail;
+     $storage = $getdata->storage;
+     $wholesaler = $getdata->wholesaler;
+     $distributor = $getdata->distributor;
+     $transportation = $getdata->transportation;
+     $retailer = $getdata->retailer;
+     $direct_seller = $getdata->direct_seller;
+     $food_vending_agencies = $getdata->food_vending_agencies;
+     $importer = $getdata->importer;
+     $trader_merchant = $getdata->trader_merchant;
+     $petty_retailer = $getdata->petty_retailer;
+     $central_govt_agencies = $getdata->central_govt_agencies;
+     $storage1 = $getdata->storage1;
+     $wholesaler1 = $getdata->wholesaler1;
+     $distributor1 = $getdata->distributor1;
+     $retailer1 = $getdata->retailer1;
+     $status = $getdata->status;
+     $url = url('/');
+     $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
+     $photo_url = $url.'/upload/services/photo/'.$photo;
+     $shopphoto_url = $url.'/upload/services/shop_photo/'.$shop_photo;
+     $pancard_url = $url.'/upload/services/pan_card/'.$pan_card;
+     $rentalagreement_url = $url.'/upload/services/rental_agreement/'.$rental_agreement;
+     $electricitybill_url = $url.'/upload/services/electricity_bill/'.$electricity_bill;
+     $propertytax_url = $url.'/upload/services/property_tax/'.$property_tax;
+     $oldfoodlicense_url = $url.'/upload/services/old_food_license/'.$old_food_license;
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+     $ch = curl_init();
 
-                if ($serviceid == 122) {
-                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo_file=$photo_url&photo_file=$photo_url&aadhaar_file=$aadhaar_url&shop_photo_file=$shopphoto_url&pan_card_file=$pancard_url&rental_agreement_file=$rentalagreement_url&electricity_bill_file=$electricitybill_url&property_tax_file=$propertytax_url&service_id=$service_id&rowid=$rowid&status=$status&food_service=$food_service&shop_name=$shop_name&email_id=$email_id&mobile=$mobile&mobile_no=$mobile_no&documents=$documents";
-                } elseif ($serviceid == 123) {
-                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&old_food_license_file=$oldfoodlicense_url&photo_file=$photo_url&aadhaar_file=$aadhaar_url&shop_photo_file=$shopphoto_url&pan_card_file=$pancard_url&service_id=$service_id&rowid=$rowid&status=$status&shop_name=$shop_name&email_id=$email_id&mobile=$mobile";
-                }
+     if($serviceid == 122){
+       $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo_file=$photo_url&aadhaar_file=$aadhaar_url&shop_photo_file=$shopphoto_url&pan_card_file=$pancard_url&rental_agreement_file=$rentalagreement_url&electricity_bill_file=$electricitybill_url&property_tax_file=$propertytax_url&service_id=$service_id&rowid=$rowid&status=$status&food_service=$food_service&shop_name=$shop_name&email_id=$email_id&mobile=$mobile&documents=$documents&mobile_no=$mobile_no&shop_address=$shop_address&storage=$storage&transportation=$transportation&aadhaar_no=$aadhaar_no&food_category=$food_category&block_or_division=$block_or_division&pin_code=$pin_code&wholesaler=$wholesaler&fssai_license=$fssai_license&trade_retail=$trade_retail&distributor=$distributor&retailer=$retailer&direct_seller=$direct_seller&food_vending_agencies=$food_vending_agencies&importer=$importer&trader_merchant=$trader_merchant&petty_retailer=$petty_retailer&central_govt_agencies=$central_govt_agencies&storage1=$storage1&wholesaler1=$wholesaler1&distributor1=$distributor1&retailer1=$retailer1";
+     }elseif($serviceid == 123){
+     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&old_food_license_file=$oldfoodlicense_url&photo_file=$photo_url&aadhaar_file=$aadhaar_url&shop_photo_file=$shopphoto_url&pan_card_file=$pancard_url&service_id=$service_id&rowid=$rowid&status=$status&shop_name=$shop_name&email_id=$email_id&mobile_no=$mobile_no&mobile=$mobile";
+}
 
-                //dd($post_data);
-                $url1 = $RAMJIPAY_URL . '/api/get_fssai_api';
-                //echo $url1;die;
-                curl_setopt($ch, CURLOPT_URL, $url1);
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                $server_output = curl_exec($ch);
-                curl_close($ch);
-                $resdata = json_decode($server_output, true);
-                //dd($resdata);
-                if ($resdata) {
-                    $status = $resdata['message'];
-                    if ($status == "Success") {
-                        $date           = date('Y-m-d');
-                        $time           = date('H:i:s');
-                        $service_status = 'Out Payment';
-                        $ad_info        = 'Ramji Wallet Debit' . ' ' . $servicename;
-                        $getrawallet    = DB::table('users')->select('rawallet')->where('id', 1)->first();
-                        $rawallet       = 0;
-                        if ($getrawallet) {
-                            $balance1 = $getrawallet->rawallet;
-                        }
+     $url1 = $RAMJIPAY_URL.'/api/get_fssai_api';
+    //echo $url1;die;
+    //   dd($post_data);
+     curl_setopt( $ch, CURLOPT_URL, $url1 );
+     curl_setopt( $ch, CURLOPT_POST, 1 );
+     curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+     $server_output = curl_exec( $ch );
+     curl_close( $ch );
+     $resdata = json_decode($server_output, true);
+    //  dd($resdata);
+     if($resdata){
+        $status = $resdata['message'];
+        if($status == "Success"){
+         $date = date( 'Y-m-d' );
+         $time = date( 'H:i:s' );
+         $service_status = 'Out Payment';
+         $ad_info = 'Ramji Wallet Debit'.' '.$servicename;
+         $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
+         $rawallet = 0;
+         if($getrawallet){
+             $balance1 = $getrawallet->rawallet;
+         }
 
-                        $getrawallet1 = DB::table('users')->select('rawallet')->where('id', 2)->first();
-                        $rawallet1    = 0;
-                        if ($getrawallet1) {
-                            $balance2 = $getrawallet1->rawallet;
-                        }
-                        $newbalance2 = $balance1 + $admin_payment;
-                        $newbalance3 = $balance2 - $admin_payment;
-                        $sql         = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
-                        DB::insert(DB::raw($sql));
-                        $sql = "update users set rawallet = rawallet + $admin_payment where id = 1";
-                        DB::update(DB::raw($sql));
-                        $service_status = 'IN Payment';
-                        $ad_info        = 'Ramji Wallet Credit' . ' ' . $servicename;
+         $getrawallet1 = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+         $rawallet1 = 0;
+         if($getrawallet1){
+             $balance2 = $getrawallet1->rawallet;
+         }
+         $newbalance2 = $balance1 + $admin_payment;
+         $newbalance3 = $balance2 - $admin_payment;
+         $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+         DB::insert( DB::raw( $sql ) );
+         $sql = "update users set rawallet = rawallet + $admin_payment where id = 1";
+         DB::update( DB::raw( $sql ) );
+         $service_status = 'IN Payment';
+         $ad_info = 'Ramji Wallet Credit'.' '.$servicename;
+         $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+         DB::insert( DB::raw( $sql ) );
+         $sql = "update users set rawallet = rawallet - $admin_payment where id = 2";
+         DB::update( DB::raw( $sql ) );
+   }
+ }
 
-                        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
-                        DB::insert(DB::raw($sql));
-                        $sql = "update users set rawallet = rawallet - $admin_payment where id = 2";
-                        DB::update(DB::raw($sql));
-                    }
-                }
-
-            }
-        }
+}
+}
         return redirect("appliedservice/Pending")->With("success", "Application submitted Succesfully");
 
     }

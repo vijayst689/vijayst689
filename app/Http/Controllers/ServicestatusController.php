@@ -7816,90 +7816,117 @@ public function fssaiservice_update(Request $request){
 
             DB::table('fssai')->where('id', $request->applied_serviceid)->update([
                 'service_id'        => $request ->serviceid,
-                'shop_name'         => $request->shop_name,
-                'mobile'            => $request->mobile,
-                'mobile_no'         => $request->mobile_no,
-                'email_id'          => $request->email_id,
-                'documents'         => $request->documents,
-                'food_service'      => $request->food_service,
-                'status'            => 'Pending',
-                'applied_date'      => date("Y-m-d"),
-                'created_at'        => date("Y-m-d"),
-            ] );
-
-            if ($request->photo != null) {
-                $photo = uniqid().'.'.$request->file('photo')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
-                DB::table('fssai')->where( 'id', $request->applied_serviceid )->update( [
-                    'photo' => $photo,
+                'amount'            => $request->amount,
+                    'shop_name'            => $request->shop_name,
+                    'mobile'               => $request->mobile,
+                    'mobile_no'            => $request->mobile_no,
+                    'email_id'             => $request->email_id,
+                    'documents'            => $request->documents,
+           'food_service'         => $request->food_service,
+           'dob'                  => $request->dob,
+           'food_category'        => $request->food_category,
+           'aadhaar_no'           => $request->aadhaar_no,
+           'name_as_pan'          => $request->name_as_pan,
+           'pan_no'               => $request->pan_no,
+           'applicant_name'       => $request->applicant_name,
+           'shop_address'         => $request->shop_address,
+           'block_or_division'    => $request->block_or_division,
+           'pin_code'             => $request->pin_code,
+           'fssai_license'        => $request->fssai_license,
+           'trade_retail'         => $request->trade_retail,
+           'storage'              => $request->storage,
+           'wholesaler'           => $request->wholesaler,
+           'distributor'          => $request->distributor,
+           'transportation'       => $request->transportation,
+           'retailer'             => $request->retailer,
+           'direct_seller'        => $request->direct_seller,
+           'food_vending_agencies'=> $request->food_vending_agencies,
+           'importer'             => $request->importer,
+           'trader_merchant'      => $request->trader_merchant,
+           'petty_retailer'       => $request->petty_retailer,
+           'central_govt_agencies'=> $request->central_govt_agencies,
+           'storage1'             => $request->storage1,
+           'wholesaler1'          => $request->wholesaler1,
+           'distributor1'         => $request->distributor1,
+           'retailer1'            => $request->retailer1,
+                    'status'            => 'Pending',
+                    'applied_date'      => date("Y-m-d"),
+                    'created_at'        => date("Y-m-d"),
                 ]);
-            }
-            if ($request->shop_photo != null) {
-                $shop_photo = uniqid().'.'.$request->file('shop_photo')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'shop_photo' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['shop_photo']['tmp_name'], $filepath . $shop_photo);
-                DB::table('fssai')->where( 'id', $request->applied_serviceid )->update( [
-                    'shop_photo' => $shop_photo,
-                ]);
-            }
-            if ($request->aadhaar_card != null) {
-                $aadhaarimg = uniqid().'.'.$request->file('aadhaar_card')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaarimg);
 
-                DB::table('fssai')->where( 'id', $request->applied_serviceid )->update( [
-                    'aadhaar_card' => $aadhaarimg,
-                ]);
-            }
-            if ($request->pan_card != null) {
-                $pan_card = uniqid().'.'.$request->file('pan_card')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'pan_card' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['pan_card']['tmp_name'], $filepath . $pan_card);
+                if ($request->photo != null) {
+                    $photo    = uniqid() . '.' . $request->file('photo')->extension();
+                    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
+                    DB::table('fssai')->where('id', $request->applied_serviceid)->update([
+                        'photo' => $photo,
+                    ]);
+                }
+                if ($request->shop_photo != null) {
+                    $shop_photo = uniqid() . '.' . $request->file('shop_photo')->extension();
+                    $filepath   = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'shop_photo' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['shop_photo']['tmp_name'], $filepath . $shop_photo);
+                    DB::table('fssai')->where('id', $request->applied_serviceid)->update([
+                        'shop_photo' => $shop_photo,
+                    ]);
+                }
+                if ($request->aadhaar_card != null) {
+                    $aadhaarimg = uniqid() . '.' . $request->file('aadhaar_card')->extension();
+                    $filepath   = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaarimg);
 
-                DB::table('fssai')->where( 'id', $request->applied_serviceid )->update( [
-                    'pan_card' => $pan_card,
-                ]);
-            }
-            if ($request->old_food_license != null) {
-                $old_food_license = uniqid().'.'.$request->file('old_food_license')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'old_food_license' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['old_food_license']['tmp_name'], $filepath . $old_food_license);
+                    DB::table('fssai')->where('id', $request->applied_serviceid)->update([
+                        'aadhaar_card' => $aadhaarimg,
+                    ]);
+                }
+                if ($request->pan_card != null) {
+                    $pan_card = uniqid() . '.' . $request->file('pan_card')->extension();
+                    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'pan_card' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['pan_card']['tmp_name'], $filepath . $pan_card);
 
-                DB::table('fssai')->where( 'id', $request->applied_serviceid )->update( [
-                    'old_food_license' => $old_food_license,
-                ]);
-            }
+                    DB::table('fssai')->where('id', $request->applied_serviceid)->update([
+                        'pan_card' => $pan_card,
+                    ]);
+                }
+                if ($request->old_food_license != null) {
+                    $old_food_license = uniqid() . '.' . $request->file('old_food_license')->extension();
+                    $filepath         = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'old_food_license' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['old_food_license']['tmp_name'], $filepath . $old_food_license);
 
-            if ($request->rental_agreement != null) {
-                $rental_agreement = uniqid().'.'.$request->file('rental_agreement')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'rental_agreement' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['rental_agreement']['tmp_name'], $filepath . $rental_agreement);
+                    DB::table('fssai')->where('id', $request->applied_serviceid)->update([
+                        'old_food_license' => $old_food_license,
+                    ]);
+                }
 
-                DB::table('fssai')->where( 'id', $request->applied_serviceid )->update( [
-                    'rental_agreement' => $rental_agreement,
-                ]);
-            }
+                if ($request->rental_agreement != null) {
+                    $rental_agreement = uniqid() . '.' . $request->file('rental_agreement')->extension();
+                    $filepath         = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'rental_agreement' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['rental_agreement']['tmp_name'], $filepath . $rental_agreement);
 
-            if ($request->electricity_bill != null) {
-                $electricity_bill = uniqid().'.'.$request->file('electricity_bill')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'electricity_bill' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['electricity_bill']['tmp_name'], $filepath . $electricity_bill);
+                    DB::table('fssai')->where('id', $request->applied_serviceid)->update([
+                        'rental_agreement' => $rental_agreement,
+                    ]);
+                }
 
-                DB::table('fssai')->where( 'id', $request->applied_serviceid )->update( [
-                    'electricity_bill' => $electricity_bill,
-                ]);
-            }
+                if ($request->electricity_bill != null) {
+                    $electricity_bill = uniqid() . '.' . $request->file('electricity_bill')->extension();
+                    $filepath         = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'electricity_bill' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['electricity_bill']['tmp_name'], $filepath . $electricity_bill);
 
-            if ($request->property_tax != null) {
-                $property_tax = uniqid().'.'.$request->file('property_tax')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'property_tax' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['property_tax']['tmp_name'], $filepath . $property_tax);
+                    DB::table('fssai')->where('id', $request->applied_serviceid)->update([
+                        'electricity_bill' => $electricity_bill,
+                    ]);
+                }
 
-                DB::table('fssai')->where( 'id', $request->applied_serviceid )->update( [
-                    'property_tax' => $property_tax,
-                ]);
-            }
+                if ($request->property_tax != null) {
+                    $property_tax = uniqid() . '.' . $request->file('property_tax')->extension();
+                    $filepath     = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'property_tax' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['property_tax']['tmp_name'], $filepath . $property_tax);
+
+                    DB::table('fssai')->where('id', $request->applied_serviceid)->update([
+                        'property_tax' => $property_tax,
+                    ]);
+                }
 
     $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
     $coordinator_permission = 0;
@@ -7910,7 +7937,7 @@ public function fssaiservice_update(Request $request){
     if($coordinator_permission == 1){
      $getdata = DB::table( 'fssai' )->where('id',$request->applied_serviceid)->first();
      if($getdata){
-     $aadhaar_card = $getdata->aadhaar_card;
+    $aadhaar_card = $getdata->aadhaar_card;
      $photo = $getdata->photo;
      $shop_photo = $getdata->shop_photo;
      $pan_card = $getdata->pan_card;
@@ -7922,10 +7949,34 @@ public function fssaiservice_update(Request $request){
      $rowid = $getdata->id;
      $food_service = $getdata->food_service;
      $shop_name = $getdata->shop_name;
+    $shop_address = $getdata->shop_address;
      $email_id = $getdata->email_id;
      $mobile = $getdata->mobile;
-     $mobile_no = $getdata->mobile_no;
      $documents = $getdata->documents;
+     $mobile_no = $getdata->mobile_no;
+     $pan_no = $getdata->pan_no;
+     $name_as_pan = $getdata->name_as_pan;
+     $aadhaar_no = $getdata->aadhaar_no;
+     $food_category = $getdata->food_category;
+     $block_or_division = $getdata->block_or_division;
+     $pin_code = $getdata->pin_code;
+     $fssai_license = $getdata->fssai_license;
+     $trade_retail = $getdata->trade_retail;
+     $storage = $getdata->storage;
+     $wholesaler = $getdata->wholesaler;
+     $distributor = $getdata->distributor;
+     $transportation = $getdata->transportation;
+     $retailer = $getdata->retailer;
+     $direct_seller = $getdata->direct_seller;
+     $food_vending_agencies = $getdata->food_vending_agencies;
+     $importer = $getdata->importer;
+     $trader_merchant = $getdata->trader_merchant;
+     $petty_retailer = $getdata->petty_retailer;
+     $central_govt_agencies = $getdata->central_govt_agencies;
+     $storage1 = $getdata->storage1;
+     $wholesaler1 = $getdata->wholesaler1;
+     $distributor1 = $getdata->distributor1;
+     $retailer1 = $getdata->retailer1;
      $status = $getdata->status;
      $url = url('/');
      $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
@@ -7943,11 +7994,11 @@ public function fssaiservice_update(Request $request){
      $ch = curl_init();
 
     if($serviceid == 122){
-    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo_file=$photo_url&photo_file=$photo_url&aadhaar_file=$aadhaar_url&shop_photo_file=$shopphoto_url&pan_card_file=$pancard_url&rental_agreement_file=$rentalagreement_url&electricity_bill_file=$electricitybill_url&property_tax_file=$propertytax_url&service_id=$service_id&rowid=$rowid&status=$status&food_service=$food_service&shop_name=$shop_name&email_id=$email_id&mobile=$mobile&mobile_no=$mobile_no&documents=$documents";
+    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo_file=$photo_url&aadhaar_file=$aadhaar_url&shop_photo_file=$shopphoto_url&pan_card_file=$pancard_url&rental_agreement_file=$rentalagreement_url&electricity_bill_file=$electricitybill_url&property_tax_file=$propertytax_url&service_id=$service_id&rowid=$rowid&status=$status&food_service=$food_service&shop_name=$shop_name&email_id=$email_id&mobile=$mobile&documents=$documents&mobile_no=$mobile_no&shop_address=$shop_address&storage=$storage&transportation=$transportation&aadhaar_no=$aadhaar_no&food_category=$food_category&block_or_division=$block_or_division&pin_code=$pin_code&wholesaler=$wholesaler&fssai_license=$fssai_license&trade_retail=$trade_retail&distributor=$distributor&retailer=$retailer&direct_seller=$direct_seller&food_vending_agencies=$food_vending_agencies&importer=$importer&trader_merchant=$trader_merchant&petty_retailer=$petty_retailer&central_govt_agencies=$central_govt_agencies&storage1=$storage1&wholesaler1=$wholesaler1&distributor1=$distributor1&retailer1=$retailer1";
     }elseif($serviceid == 123){
     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&old_food_license_file=$oldfoodlicense_url&photo_file=$photo_url&aadhaar_file=$aadhaar_url&shop_photo_file=$shopphoto_url&pan_card_file=$pancard_url&service_id=$service_id&rowid=$rowid&status=$status&shop_name=$shop_name&email_id=$email_id&mobile=$mobile";
     }else{
-    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo_file=$photo_url&photo_file=$photo_url&aadhaar_file=$aadhaar_url&shop_photo_file=$shopphoto_url&pan_card_file=$pancard_url&rental_agreement_file=$rentalagreement_url&electricity_bill_file=$electricitybill_url&property_tax_file=$propertytax_url&old_food_license_file=$oldfoodlicense_url&service_id=$service_id&rowid=$rowid&status=$status&food_service=$food_service&shop_name=$shop_name&email_id=$email_id&mobile=$mobile&mobile_no=$mobile_no&documents=$documents";
+    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo_file=$photo_url&photo_file=$photo_url&aadhaar_file=$aadhaar_url&shop_photo_file=$shopphoto_url&pan_card_file=$pancard_url&rental_agreement_file=$rentalagreement_url&electricity_bill_file=$electricitybill_url&property_tax_file=$propertytax_url&old_food_license_file=$oldfoodlicense_url&service_id=$service_id&rowid=$rowid&status=$status&food_service=$food_service&shop_name=$shop_name&email_id=$email_id&mobile=$mobile&documents=$documents&mobile_no=$mobile_no&shop_address=$shop_address&storage=$storage&transportation=$transportation&aadhaar_no=$aadhaar_no&food_category=$food_category&block_or_division=$block_or_division&pin_code=$pin_code&wholesaler=$wholesaler&fssai_license=$fssai_license&trade_retail=$trade_retail&distributor=$distributor&retailer=$retailer&direct_seller=$direct_seller&food_vending_agencies=$food_vending_agencies&importer=$importer&trader_merchant=$trader_merchant&petty_retailer=$petty_retailer&central_govt_agencies=$central_govt_agencies&storage1=$storage1&wholesaler1=$wholesaler1&distributor1=$distributor1&retailer1=$retailer1";
     }
         //dd($post_data);
         $url1 = $RAMJIPAY_URL.'/api/update_fssai_api';
@@ -7963,7 +8014,7 @@ public function fssaiservice_update(Request $request){
        //dd($resdata);
     }
 }
-    }
+        }
         DB::table( 'fssai' )->where( 'id', $request->applied_serviceid )->update( [
             'status' => $status,
         ] );
