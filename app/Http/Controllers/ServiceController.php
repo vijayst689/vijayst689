@@ -5093,7 +5093,7 @@ class ServiceController extends Controller
             ]);
 
             $insertid   = DB::getPdo()->lastInsertId();
-             $aadhaarimg = "";
+            $aadhaarimg = "";
             $bank_pass_book  = "";
             $smartcard_onlineprint  = "";
             $voterid  = "";

@@ -1247,12 +1247,6 @@
                         });
                     }
 
-                    document.getElementById("myForm").addEventListener("submit", function() {
-                        const btn = document.getElementById("save");
-                        btn.disabled = true;
-                        btn.innerText = "Submitting...";
-                    });
-
                     $('#id_proof').change(function() {
                         if ($('#id_proof').val() == 'Bank Passbook') {
                             $('#passbookhide').show("slow");
@@ -1287,6 +1281,12 @@
                             $('#voterid').prop("required", false);
 
                         }
+                    });
+
+                    document.getElementById("myForm").addEventListener("submit", function() {
+                        const btn = document.getElementById("save");
+                        btn.disabled = true;
+                        btn.innerText = "Submitting...";
                     });
                 </script>
             @endpush

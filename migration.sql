@@ -2705,10 +2705,10 @@ CREATE TABLE `customers` (
 
 alter table aadhaarcard add aadhaar_no varchar(12) DEFAULT NULL;
 
-alter table aadhaarcard add schl_id_card varchar(20) DEFAULT NULL after address_proof;
-alter table aadhaarcard add bank_pass_book varchar(20) DEFAULT NULL after address_proof;
-alter table aadhaarcard add voterid varchar(20) DEFAULT NULL after address_proof;
-alter table aadhaarcard add id_proof varchar(50) DEFAULT NULL after address_proof;
-alter table aadhaarcard add smartcard_onlineprint varchar(20) DEFAULT NULL after address_proof;
-alter table aadhaarcard add relation_name_tamil varchar(100) DEFAULT NULL after address_proof;
-alter table aadhaarcard add relation_name_english varchar(100) DEFAULT NULL after address_proof;
+alter table aadhaarcard add schl_id_card varchar(20) DEFAULT NULL;
+alter table aadhaarcard add bank_pass_book varchar(20) DEFAULT NULL;
+alter table aadhaarcard add voterid varchar(20) DEFAULT NULL;
+alter table aadhaarcard add id_proof varchar(50) DEFAULT NULL;
+alter table aadhaarcard add smartcard_onlineprint varchar(20) DEFAULT NULL;
+alter table aadhaarcard add relation_name_tamil varchar(100) DEFAULT NULL;
+alter table aadhaarcard add relation_name_english varchar(100) DEFAULT NULL
