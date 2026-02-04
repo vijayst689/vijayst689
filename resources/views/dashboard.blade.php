@@ -518,7 +518,7 @@
                                         <a href="{{ url('/customers') }}">
                                             <p class="mb-0 text-white">Customers</p>
                                         </a>
-                                        <h4 class="my-1 text-white">{{ $customer }}</h4>
+                                        <h4 class="my-1 text-white">{{ $customercount }}</h4>
                                     </div>
                                     <div id="chart3"></div>
                                 </div>
