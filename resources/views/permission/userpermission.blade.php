@@ -91,7 +91,8 @@
         <div class="page-content">
             <!--breadcrumb-->
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-                <div class="breadcrumb-title pe-3">pkrmsolution.com</div>
+               <div class="breadcrumb-title pe-3"><img src="{{ asset('assets/images/logo/Mugavai.png') }}"
+             height="30"></div>
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
@@ -128,14 +129,14 @@
                         $selectedIds3 = collect($checkpermission3)->pluck('service_id')->toArray();
                         $selectedIds4 = collect($checkpermission4)->pluck('service_id')->toArray();
                     @endphp
-                   <div class="card-body">
-                        <h5 class="card-title">Activation Permissions</h5>
+                    <div class="card-body">
+                        <h5 class="card-title text-primary fw-light">Activation Permissions</h5>
                         <div class="row">
                             <form class="row permissionform" method="post" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <input type="hidden" id="activation_userid" name="user_id" value="{{ $userid }}">
 
-                                <h3 class="text-center text-danger">PDF Services</h3>
+                                <h3 class="text-center text-secondary fw-light">PDF Services</h3>
                                 @foreach ($findservices as $ser)
                                     @php
                                         $isSelected = in_array($ser->id, $selectedIds);
@@ -177,7 +178,7 @@
                                         </div>
                                     </div>
                                 @endforeach
-                                {{-- <h3 class="text-center text-danger mt-4">Utility Services</h3>
+                                {{-- <h3 class="text-center text-secondary fw-light mt-4">Utility Services</h3>
                                 @foreach ($utilityservices as $ser1)
                                     @php
                                         $isSelected = in_array($ser1->id, $selectedIds2);
@@ -203,20 +204,12 @@
 
                                             <div class="mt-2">
                                                 <h6 class="mb-1">{{ $ser1->name }}</h6>
-                                                <small class="fw-bold mb-0">ID Cost ₹ {{ $ser1->amount }}</small>
-                                                @if (Auth::user()->user_type_id == 3)
-                                                    <h6 class="mb-1 fw-bold">Service Payment ₹
-                                                        {{ $ser1->distributor_amount }}</h6>
-                                                @endif
-                                                @if (Auth::user()->user_type_id == 4)
-                                                    <h6 class="mb-1 fw-bold">Service Payment ₹ {{ $ser1->retailer_amount }}
-                                                    </h6>
-                                                @endif
+                                                <p class="fw-bold mb-0">₹ {{ $ser1->amount }}</p>
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach --}}
-                                <h3 class="text-center text-danger mt-4">Pancard Services</h3>
+                                <h3 class="text-center text-secondary fw-light mt-4">Pancard Services</h3>
                                 @foreach ($panservices as $ser2)
                                     @php
                                         $isSelected = in_array($ser2->id, $selectedIds4);
@@ -258,12 +251,13 @@
                                         </div>
                                     </div>
                                 @endforeach
-                                <h3 class="text-center text-danger mt-4">Other Services</h3>
-                               @foreach ($mainServices as $main)
+                                <h3 class="text-center text-secondary fw-light mt-4">Other Services</h3>
+
+                                @foreach ($mainServices as $main)
                                     <div class="mb-4">
 
                                         {{-- MAIN SERVICE NAME HEADING --}}
-                                        <h3 class="text-danger border-bottom pb-2">
+                                        <h3 class="text-secondary border-bottom pb-2 fw-light">
                                             {{ $main->service_name ?? $main->name }}
                                         </h3>
 
@@ -409,7 +403,7 @@
                                 }).then((result) => {
                                     if (result.isConfirmed) {
                                         location
-                                    .reload(); // Reload after user clicks OK
+                                            .reload(); // Reload after user clicks OK
                                     }
                                 });
                             } else {
