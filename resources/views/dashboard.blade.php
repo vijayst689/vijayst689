@@ -200,7 +200,7 @@
                                         <a href="{{ url('/nalavariyam/request') }}">
                                             <p class="mb-0 text-white">Nalavariyam Request</p>
                                         </a>
-                                        <h4 class="my-1 text-white">Na</h4>
+                                        <h4 class="my-1 text-white">{{ $nalcount }}</h4>
                                     </div>
                                     <div id="chart3"></div>
                                 </div>
@@ -508,6 +508,21 @@
                             </div>
                             <button type="button" class="btn-sm btn btn-success" data-bs-toggle="modal"
                                 data-bs-target="#addMoneyModal">Add Money</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <div class="card radius-10 bg-gradient-ohhappiness">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-auto">
+                                        <a href="{{ url('/nalavariyam/request') }}">
+                                            <p class="mb-0 text-white">Nalavariyam Request</p>
+                                        </a>
+                                        <h4 class="my-1 text-white">{{ $nalcount }}</h4>
+                                    </div>
+                                    <div id="chart3"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-4">
