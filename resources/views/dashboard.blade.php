@@ -200,7 +200,7 @@
                                         <a href="{{ url('/nalavariyam/request') }}">
                                             <p class="mb-0 text-white">Nalavariyam Request</p>
                                         </a>
-                                        <h4 class="my-1 text-white">Na</h4>
+                                        <h4 class="my-1 text-white">{{ $nalcount }}</h4>
                                     </div>
                                     <div id="chart3"></div>
                                 </div>
@@ -515,10 +515,25 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div class="me-auto">
+                                        <a href="{{ url('/nalavariyam/request') }}">
+                                            <p class="mb-0 text-white">Nalavariyam Request</p>
+                                        </a>
+                                        <h4 class="my-1 text-white">{{ $nalcount }}</h4>
+                                    </div>
+                                    <div id="chart3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <div class="card radius-10 bg-gradient-ohhappiness">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-auto">
                                         <a href="{{ url('/customers') }}">
                                             <p class="mb-0 text-white">Customers</p>
                                         </a>
-                                        <h4 class="my-1 text-white">{{ $customer }}</h4>
+                                        <h4 class="my-1 text-white">{{ $customercount }}</h4>
                                     </div>
                                     <div id="chart3"></div>
                                 </div>

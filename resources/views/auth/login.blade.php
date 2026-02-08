@@ -221,12 +221,14 @@ a:hover {
                                                         for="flexSwitchCheckChecked">Remember Me</label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 text-end"> <a href="">Forgot Password ?</a>
-                                            </div>
+                                         @if ($errors->has('login_error'))
+                                                <div class="alert alert-danger text-center">
+                                                    {{ $errors->first('login_error') }}
+                                                </div>
+                                            @endif
                                             <div class="col-12">
                                                 <div class="d-grid">
-                                                    {{-- <button id="signin-btn" type="submit" class="btn btn-primary" disabled>Sign in</button> --}}
-                                                    <button type="submit" class="btn btn-primary">Sign in</button>
+                                                    <button type="submit" id="login_error" class="btn btn-primary">Sign in</button>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -238,24 +240,6 @@ a:hover {
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="login-separater text-center mb-5"> <span>OR SIGN IN WITH</span>
-                                        <hr />
-                                    </div>
-                                    <div class="list-inline contacts-social text-center">
-                                        <a href="javascript:;"
-                                            class="list-inline-item bg-facebook text-white border-0 rounded-3"><i
-                                                class="bx bxl-facebook"></i></a>
-                                        <a href="javascript:;"
-                                            class="list-inline-item bg-twitter text-white border-0 rounded-3"><i
-                                                class="bx bxl-twitter"></i></a>
-                                        <a href="javascript:;"
-                                            class="list-inline-item bg-google text-white border-0 rounded-3"><i
-                                                class="bx bxl-google"></i></a>
-                                        <a href="javascript:;"
-                                            class="list-inline-item bg-linkedin text-white border-0 rounded-3"><i
-                                                class="bx bxl-linkedin"></i></a>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>

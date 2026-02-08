@@ -18,21 +18,34 @@ class CustomAuthController extends Controller
         return view('auth.login');
     }
 
-    public function customLogin(Request $request)
+public function customLogin(Request $request)
     {
        $validator =  $request->validate([
-            'email'    => 'required',
+            'email' => 'required',
             'password' => 'required',
         ]);
 
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard')
-                        ->withSuccess('Signed in');
+            if (Auth::user()->status != 'Active') {
+
+            // Immediately logout
+            Auth::logout();
+
+            return redirect()->back()->withErrors([
+                'login_error' => 'Your account is inactive. Please contact admin.'
+            ]);
         }
-        $validator['emailPassword'] = 'email address or password is incorrect.';
-        return redirect("login")->withErrors($validator);
+
+        // ✅ Active user
+        return redirect()->intended('dashboard')->with('success', 'Signed in');
+    }
+
+    // Login FAILED → Show message
+    return redirect()->back()
+        ->withErrors(['login_error' => 'Email address or password is incorrect'])
+        ->withInput();
     }
 
    public function addenquiry($id)
