@@ -2712,6 +2712,7 @@ alter table aadhaarcard add id_proof varchar(50) DEFAULT NULL;
 alter table aadhaarcard add smartcard_onlineprint varchar(20) DEFAULT NULL;
 alter table aadhaarcard add relation_name_tamil varchar(100) DEFAULT NULL;
 alter table aadhaarcard add relation_name_english varchar(100) DEFAULT NULL;
+alter table aadhaarcard add relationship1 varchar(50);
 
 alter table fssai add documents varchar(20) Default NULL;
 alter table fssai add rental_agreement varchar(20) Default NULL;

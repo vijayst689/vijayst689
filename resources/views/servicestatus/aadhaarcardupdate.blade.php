@@ -222,8 +222,7 @@
                                                 <div class="row mb-3">
                                                     <div class="col-md-6">
                                                         <label style="color:#c718b3" for="name"
-                                                            class="form-label">Applicant
-                                                            Name</label>
+                                                            class="form-label">Name as per Adhaar/ஆதாரில் இருக்கும் படி பெயரை குறிப்பிடவும்</label>
                                                         <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
                                                             type="text" value="{{ $services->name }}"
                                                             class="form-control border border-dark text-dark" name="name"
@@ -425,8 +424,7 @@
                                                                         maxlength="30" placeholder="Mobile Number" />
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="name" class="form-label">Applicant
-                                                                        Name</label>
+                                                                    <label for="name" class="form-label">Name as per Adhaar/ஆதாரில் இருக்கும் படி பெயரை குறிப்பிடவும்</label>
                                                                     <input
                                                                         @if (Auth::user()->id != $apply_user_id) disabled @endif
                                                                         required type="text"
@@ -657,8 +655,7 @@
                                                             <div class="row mb-3">
                                                                 <div class="col-md-6">
                                                                     <label style="color:#13ceef" for="name"
-                                                                        class="form-label">Applicant
-                                                                        Name</label>
+                                                                        class="form-label">Name as per Adhaar/ஆதாரில் இருக்கும் படி பெயரை குறிப்பிடவும்</label>
                                                                     <input
                                                                         @if (Auth::user()->id != $apply_user_id) disabled @endif
                                                                         required type="text"

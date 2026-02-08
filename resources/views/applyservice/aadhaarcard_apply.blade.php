@@ -211,8 +211,7 @@
 
                                                 <div class="row mb-3">
                                                     <div class="col-md-6">
-                                                        <label for="name" style="color:#c718b3" class="form-label">Applicant
-                                                            Name</label>
+                                                        <label for="name" style="color:#c718b3" class="form-label">Name as per Adhaar/ஆதாரில் இருக்கும் படி பெயரை குறிப்பிடவும்</label>
                                                         <input required type="text"
                                                             class="form-control border border-dark text-dark" name="name"
                                                             placeholder="Applicant Name" maxlength="30" />
@@ -342,7 +341,7 @@
                                                                         placeholder="Mobile Number" required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label>Applicant Name</label>
+                                                                    <label>Name as per Adhaar/ஆதாரில் இருக்கும் படி பெயரை குறிப்பிடவும்</label>
                                                                     <input type="text" name="name" maxlength="100"
                                                                         placeholder="Applicant Name" required>
                                                                 </div>
@@ -475,8 +474,7 @@
 
                                                             <div class="row mb-3">
                                                                 <div class="col-md-6">
-                                                                    <label style="color:#13ceef" for="name" class="form-label">Applicant
-                                                                        Name</label>
+                                                                    <label style="color:#13ceef" for="name" class="form-label">Name as per Adhaar/ஆதாரில் இருக்கும் படி பெயரை குறிப்பிடவும்</label>
                                                                     <input required type="text" class="form-control"
                                                                         name="name" placeholder="Applicant Name"
                                                                         maxlength="30" />
