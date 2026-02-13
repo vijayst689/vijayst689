@@ -434,25 +434,25 @@
                                             </div>
                                         </div>
                                         <!-- <div class="col-sm-6 col-lg-3 col-xxl-3">
-                                        <div class="card bg-success">
-                                            <div class="card-body" data-intro="New Orders">
-                                                <div class="single-widget d-flex align-items-center justify-content-between">
-                                                    <div>
-                                                        <div class="widget-icon">
-                                                            <a href="{{ url('/') }}"><i class="bx bx-mouse-alt"></i></a>
+                                            <div class="card bg-success">
+                                                <div class="card-body" data-intro="New Orders">
+                                                    <div class="single-widget d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <div class="widget-icon">
+                                                                <a href="{{ url('/') }}"><i class="bx bx-mouse-alt"></i></a>
+                                                            </div>
+                                                            <div class="widget-desc">
+                                                                <h5 class="">Special Member</h5>
+                                                            </div>
                                                         </div>
-                                                        <div class="widget-desc">
-                                                            <h5 class="">Special Member</h5>
+                                                        <div class="progress-report" data-title="progress"
+                                                            data-intro="And this is the last step!">
+                                                            <h4></h4>
                                                         </div>
-                                                    </div>
-                                                    <div class="progress-report" data-title="progress"
-                                                        data-intro="And this is the last step!">
-                                                        <h4></h4>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div> -->
+                                        </div> -->
 
                                         <div class="col-sm-6 col-lg-3 col-xxl-3">
                                             <div class="card bg-primary">
@@ -615,31 +615,31 @@
                                             </div>
                                         </div>
                                         <!-- <div class="col-md-3 col-sm-6">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-4 align-self-center">
-                                                        <div class="icon-info">
-                                                            <a href="{{ url('/') }}"><i
-                                                                    class="mdi mdi-account-multiple text-purple"></i></a>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-4 align-self-center">
+                                                            <div class="icon-info">
+                                                                <a href="{{ url('/') }}"><i
+                                                                        class="mdi mdi-account-multiple text-purple"></i></a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-8 align-self-center text-center">
+                                                            <div class="ms-2 text-end">
+                                                                <p class="mb-1 text-muted font-size-13">Special Member</p>
+                                                                <h4 class="mb-1 font-size-20"></h4>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-8 align-self-center text-center">
-                                                        <div class="ms-2 text-end">
-                                                            <p class="mb-1 text-muted font-size-13">Special Member</p>
-                                                            <h4 class="mb-1 font-size-20"></h4>
+                                                    <div class="progress mt-2" style="height:3px;">
+                                                        <div class="progress-bar progress-animated  bg-info" role="progressbar"
+                                                            style="max-width: 55%;" aria-valuenow="55" aria-valuemin="0"
+                                                            aria-valuemax="100">
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="progress mt-2" style="height:3px;">
-                                                    <div class="progress-bar progress-animated  bg-info" role="progressbar"
-                                                        style="max-width: 55%;" aria-valuenow="55" aria-valuemin="0"
-                                                        aria-valuemax="100">
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div> -->
+                                        </div> -->
                                         <div class="col-sm-6 col-lg-3 col-xxl-3">
                                             <div class="card bg-primary">
                                                 <div class="card-body" data-intro="New Orders">
