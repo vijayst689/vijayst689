@@ -987,6 +987,9 @@
                                                     <input class="form-control" type="file" name="certificate"
                                                         id="certificate" />
                                                 </div>
+                                                <div class="mb-3 col-md-6" id="cusnamehide" style="display :none;">
+                                            <label for="cusname" class="form-label">Name</label>
+                                            <input class="form-control" type="text" maxlength="100" placeholder="CusName" name="cusname" id="cusname" />
                                             @else
                                                 <div class="row">
                                                     <div class="mb-3 col-md-6">
@@ -1064,8 +1067,11 @@
                             }
                             if (lects == "File") {
                                 $('#certhide').show("slow");
+                                $('#cusnamehide').show("slow");
                                 if (certificate == "") {
                                     $('#certificate').prop("required", true);
+                                }else{
+                                    $('#cusname').prop("required", true);
                                 }
                             }
                             $('#selectshide').show("slow")
@@ -1123,7 +1129,9 @@
                             $('#applicationnohide').hide("slow");
                             $('#application_no').prop("required", false);
                             $('#certhide').hide("slow");
+                            $('#cusnamehide').hide("slow");
                             $('#certificate').prop("required", false);
+                            $('#cusname').prop("required", false);
                             $('#remarkshide').show("slow");
                             $('#remarks').prop("required", true);
                             $('#select').prop("required", false);
@@ -1136,7 +1144,9 @@
                             $('#remarkshide').hide("slow");
                             $('#remarks').prop("required", false);
                             $('#certhide').hide("slow");
+                            $('#cusnamehide').hide("slow");
                             $('#certificate').prop("required", false);
+                            $('#cusname').prop("required", false);
                             $('#applicationnohide').hide("slow");
                             $('#application_no').prop("required", false);
                             $('#select').prop("required", true);
@@ -1149,7 +1159,9 @@
                             $('#acknowledgementhide').hide("slow");
                             $('#acknowledgement').prop("required", false);
                             $('#certhide').hide("slow");
+                            $('#cusnamehide').hide("slow");
                             $('#certificate').prop("required", false);
+                            $('#cusname').prop("required", false);
                             $('#applicationnohide').hide("slow");
                             $('#application_no').prop("required", false);
                             $('#select').prop("required", false);
@@ -1162,7 +1174,9 @@
                             $('#acknowledgementhide').hide("slow");
                             $('#acknowledgement').prop("required", false);
                             $('#certhide').hide("slow");
+                            $('#cusnamehide').hide("slow");
                             $('#certificate').prop("required", false);
+                            $('#cusname').prop("required", false);
                             $('#applicationnohide').hide("slow");
                             $('#application_no').prop("required", false);
                             $('#select').prop("required", false);
@@ -1196,10 +1210,14 @@
                             $('#applicationhide').show("slow");
                             $('#application').prop("required", true);
                             $('#certhide').hide("slow");
+                            $('#cusnamehide').hide("slow");
                             $('#certificate').prop("required", false);
+                            $('#cusname').prop("required", false);
                         } else if ($('#selects').val() == 'File') {
                             $('#certhide').show("slow");
+                            $('#cusnamehide').show("slow");
                             $('#certificate').prop("required", false);
+                            $('#cusname').prop("required", false);
                             $('#applicationhide').hide("slow");
                             $('#application').prop("required", false);
                         } else {

@@ -5738,6 +5738,7 @@ public function aadhaarcardupdate(Request $request){
                 move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
                 DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
                     'certificate' => $certificate,
+                    'cusname' => $request->cusname,
                     'status' => $status,
                     'completed_date' => date("Y-m-d"),
                 ] );
@@ -7362,6 +7363,7 @@ public function voterid_update(Request $request){
                 move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
                 DB::table( 'voterid' )->where( 'id', $request->applied_serviceid )->update( [
                     'certificate' => $certificate,
+                    'cusname' => $request->cusname,
                     'status' => $status,
                     'completed_date' => date("Y-m-d"),
                 ] );
@@ -10738,6 +10740,7 @@ public function voteridpdf_statusupdate(Request $request){
                 move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
                 DB::table( 'voteridpdf_download' )->where( 'id', $request->applied_serviceid )->update( [
                     'certificate' => $certificate,
+                    'cusname' => $request->cusname,
                     'status' => $status,
                     'completed_date' => date("Y-m-d"),
                 ] );
