@@ -280,7 +280,65 @@
             }
         });
     </script>
+    <script>
+        let debounceTimer = null;
 
+        $(document).on('keyup change', '.dup-check', function() {
+
+            let input = $(this);
+            let value = input.val().trim();
+            let field = input.data('field');
+            let msgBox = input.siblings('.dup-msg');
+            let loader = input.siblings('.loader');
+            let saveBtn = $('#save');
+
+            clearTimeout(debounceTimer);
+
+            if (value.length < 3) {
+                msgBox.text('');
+                saveBtn.prop('disabled', false);
+                return;
+            }
+
+            debounceTimer = setTimeout(() => {
+
+                loader.removeClass('d-none');
+
+                $.ajax({
+                    url: "{{ url('check-duplicate') }}",
+                    type: "POST",
+                    data: {
+                        field: field,
+                        value: value,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(res) {
+
+                        loader.addClass('d-none');
+
+                        if (res.exists) {
+                            msgBox.text(field.replace('_', ' ') + ' already exists');
+                            saveBtn.prop('disabled', true);
+                        } else {
+                            msgBox.text('');
+                            checkAllDuplicates();
+                        }
+                    }
+                });
+
+            }, 500);
+        });
+
+        function checkAllDuplicates() {
+            let hasError = false;
+            $('.dup-msg').each(function() {
+                if ($(this).text() !== '') {
+                    hasError = true;
+                }
+            });
+            $('#save').prop('disabled', hasError);
+        }
+    </script>
     <script>
         function shouldShowPopup() {
             const lastClosed = localStorage.getItem('headerPopupLastClosed');

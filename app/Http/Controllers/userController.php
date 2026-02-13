@@ -321,6 +321,14 @@ class UserController extends Controller
             $sql = "update users set profile='$pro' where id = $userid";
             DB::update( DB::raw( $sql ) );
         }
+        $qr = '';
+        if ( $request->qrimage != null ) {
+            $qr = $userid.'.'.$request->file( 'qrimage' )->extension();
+            $filepath = public_path( 'upload'.DIRECTORY_SEPARATOR.'qrimage'.DIRECTORY_SEPARATOR );
+            move_uploaded_file( $_FILES[ 'qrimage' ][ 'tmp_name' ], $filepath.$qr );
+            $sql = "update users set qrimage='$qr' where id = $userid";
+            DB::update( DB::raw( $sql ) );
+        }
 
         return redirect( '/dashboard' )->with( 'success', 'User Updated Successfully ... !' );
     }

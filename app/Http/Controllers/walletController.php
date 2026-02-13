@@ -30,7 +30,8 @@ class WalletController extends Controller
     }else{
         $viewamount = DB::table( 'payment' )->where( 'from_id', $userid )->orderBy( 'id', 'Desc' )->get();
     }
-    return view('wallet.index',compact('viewamount'));
+    $qrlabel = DB::table( 'users' )->where( 'id', 2 )->orderBy( 'id' , 'Asc' )->first();
+    return view('wallet.index',compact('viewamount','qrlabel'));
   }
 
     public function paymentrequest()

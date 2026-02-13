@@ -315,242 +315,85 @@ public function customLogin(Request $request)
         }
     }
 
-    // Distributer Function
+        public function checkDuplicateAdmin(Request $request)
+{
+    $field = $request->field;   // email | phone | aadhaar_no
+    $value = trim($request->value);
+    $id    = $request->id;
 
-    public function checkemailregister( Request $request )
-    {
-        $email = trim( $request->email );
-        $id = trim( $request->id );
-        if ( $id == 0 ) {
-            $sql = "SELECT * FROM users where email='$email'";
-        } else {
-            $sql = "SELECT * FROM users where email='$email' and id <> $id";
-        }
-        $users = DB::select( DB::raw( $sql ) );
-        if ( count( $users ) > 0 ) {
-            return response()->json( array( 'exists' => true ) );
-        } else {
-            return response()->json( array( 'exists' => false ) );
-        }
+    if (!$field || !$value) {
+        return response()->json(['exists' => false]);
     }
 
-    public function checkaadharregister( Request $request ) {
-        $aadhaar_no = trim( $request->aadhaar_no );
-        $id = trim( $request->id );
-        if ( $id == 0 ) {
-            $sql = "SELECT * FROM users where aadhaar_no='$aadhaar_no'";
-        } else {
-            $sql = "SELECT * FROM users where aadhaar_no='$aadhaar_no' and id <> $id";
-        }
-        $users = DB::select( DB::raw( $sql ) );
-        if ( count( $users ) > 0 ) {
-            return response()->json( array( 'exists' => true ) );
-        } else {
-            return response()->json( array( 'exists' => false ) );
-        }
-    }
-    public function checkphoneregister( Request $request )
-    {
-        $phone = trim( $request->phone );
-        $id = trim( $request->id );
-        if ( $id == 0 ) {
-            $sql = "SELECT * FROM users where phone='$phone'";
-        } else {
-            $sql = "SELECT * FROM users where phone='$phone' and id <> $id";
-        }
-        $users = DB::select( DB::raw( $sql ) );
-        if ( count( $users ) > 0 ) {
-            return response()->json( array( 'exists' => true ) );
-        } else {
-            return response()->json( array( 'exists' => false ) );
-        }
-    }
-    public function checkpanregister( Request $request )
-    {
-        $pan_no = trim( $request->pan_no );
-        $id = trim( $request->id );
-        if ( $id == 0 ) {
-            $sql = "SELECT * FROM users where pan_no='$pan_no'";
-        } else {
-            $sql = "SELECT * FROM users where pan_no='$pan_no' and id <> $id";
-        }
-        $users = DB::select( DB::raw( $sql ) );
-        if ( count( $users ) > 0 ) {
-            return response()->json( array( 'exists' => true ) );
-        } else {
-            return response()->json( array( 'exists' => false ) );
-        }
+    $query = DB::table('users')->where($field, $value);
+
+    if (!empty($id) && is_numeric($id)) {
+        $query->where('id', '<>', $id);
     }
 
-//Retailer Function
-
-    public function checkemailregisterretailer( Request $request )
+    return response()->json([
+        'exists' => $query->exists()
+    ]);
+}
+       private function checkDuplicate($column, $value)
     {
-        $email = trim( $request->email );
-        $id = trim( $request->id );
-        if ( $id == 0 ) {
-            $sql = "SELECT * FROM users where email='$email'";
-        } else {
-            $sql = "SELECT * FROM users where email='$email' and id <> $id";
-        }
-        $users = DB::select( DB::raw( $sql ) );
-        if ( count( $users ) > 0 ) {
-            return response()->json( array( 'exists' => true ) );
-        } else {
-            return response()->json( array( 'exists' => false ) );
-        }
+        return DB::table('users')
+            ->where($column, trim($value))
+            ->exists();
     }
 
-    public function checkaadharregisterretailer( Request $request ) {
-        $aadhaar_no = trim( $request->aadhaar_no );
-        $id = trim( $request->id );
-        if ( $id == 0 ) {
-            $sql = "SELECT * FROM users where aadhaar_no='$aadhaar_no'";
-        } else {
-            $sql = "SELECT * FROM users where aadhaar_no='$aadhaar_no' and id <> $id";
-        }
-        $users = DB::select( DB::raw( $sql ) );
-        if ( count( $users ) > 0 ) {
-            return response()->json( array( 'exists' => true ) );
-        } else {
-            return response()->json( array( 'exists' => false ) );
-        }
-    }
-    public function checkphoneregisterretailer( Request $request )
+    /* ================= DISTRIBUTOR AJAX ================= */
+
+    public function checkphoneregister(Request $request)
     {
-        $phone = trim( $request->phone );
-        $id = trim( $request->id );
-        if ( $id == 0 ) {
-            $sql = "SELECT * FROM users where phone='$phone'";
-        } else {
-            $sql = "SELECT * FROM users where phone='$phone' and id <> $id";
-        }
-        $users = DB::select( DB::raw( $sql ) );
-        if ( count( $users ) > 0 ) {
-            return response()->json( array( 'exists' => true ) );
-        } else {
-            return response()->json( array( 'exists' => false ) );
-        }
-    }
-    public function checkpanregisterretailer( Request $request )
-    {
-        $pan_no = trim( $request->pan_no );
-        $id = trim( $request->id );
-        if ( $id == 0 ) {
-            $sql = "SELECT * FROM users where pan_no='$pan_no'";
-        } else {
-            $sql = "SELECT * FROM users where pan_no='$pan_no' and id <> $id";
-        }
-        $users = DB::select( DB::raw( $sql ) );
-        if ( count( $users ) > 0 ) {
-            return response()->json( array( 'exists' => true ) );
-        } else {
-            return response()->json( array( 'exists' => false ) );
-        }
+        return response()->json([
+            'exists' => $this->checkDuplicate('phone', $request->phone)
+        ]);
     }
 
-//Customer Function
-
-    public function checkemailregistercustomer( Request $request )
+    public function checkemailregister(Request $request)
     {
-        $email = trim( $request->email );
-        $id = trim( $request->id );
-        if ( $id == 0 ) {
-            $sql = "SELECT * FROM users where email='$email'";
-        } else {
-            $sql = "SELECT * FROM users where email='$email' and id <> $id";
-        }
-        $users = DB::select( DB::raw( $sql ) );
-        if ( count( $users ) > 0 ) {
-            return response()->json( array( 'exists' => true ) );
-        } else {
-            return response()->json( array( 'exists' => false ) );
-        }
+        return response()->json([
+            'exists' => $this->checkDuplicate('email', $request->email)
+        ]);
     }
 
-    public function checkaadharregistercustomer( Request $request ) {
-        $aadhaar_no = trim( $request->aadhaar_no );
-        $id = trim( $request->id );
-        if ( $id == 0 ) {
-            $sql = "SELECT * FROM users where aadhaar_no='$aadhaar_no'";
-        } else {
-            $sql = "SELECT * FROM users where aadhaar_no='$aadhaar_no' and id <> $id";
-        }
-        $users = DB::select( DB::raw( $sql ) );
-        if ( count( $users ) > 0 ) {
-            return response()->json( array( 'exists' => true ) );
-        } else {
-            return response()->json( array( 'exists' => false ) );
-        }
-    }
-    public function checkphoneregistercustomer( Request $request )
+    public function checkaadharregister(Request $request)
     {
-        $phone = trim( $request->phone );
-        $id = trim( $request->id );
-        if ( $id == 0 ) {
-            $sql = "SELECT * FROM users where phone='$phone'";
-        } else {
-            $sql = "SELECT * FROM users where phone='$phone' and id <> $id";
-        }
-        $users = DB::select( DB::raw( $sql ) );
-        if ( count( $users ) > 0 ) {
-            return response()->json( array( 'exists' => true ) );
-        } else {
-            return response()->json( array( 'exists' => false ) );
-        }
+        return response()->json([
+            'exists' => $this->checkDuplicate('aadhaar_no', $request->aadhaar_no)
+        ]);
     }
 
-    // Customer Checking Code
-
-    public function checkemailcus( Request $request )
+    public function checkpanregister(Request $request)
     {
-        $email = trim( $request->email );
-        $id = trim( $request->id );
-        if ( $id == 0 ) {
-            $sql = "SELECT * FROM customers where email='$email'";
-        } else {
-            $sql = "SELECT * FROM customers where email='$email' and id <> $id";
-        }
-        $customers = DB::select( DB::raw( $sql ) );
-        if ( count( $customers ) > 0 ) {
-            return response()->json( array( 'exists' => true ) );
-        } else {
-            return response()->json( array( 'exists' => false ) );
-        }
-    }
-    public function checkaadharcus( Request $request )
-    {
-        $aadhaar_no = trim( $request->aadhaar_no );
-        $id = trim( $request->id );
-        if ( $id == 0 ) {
-            $sql = "SELECT * FROM customers where aadhaar_no='$aadhaar_no'";
-        } else {
-            $sql = "SELECT * FROM customers where aadhaar_no='$aadhaar_no' and id <> $id";
-        }
-        $customers = DB::select( DB::raw( $sql ) );
-        if ( count( $customers ) > 0 ) {
-            return response()->json( array( 'exists' => true ) );
-        } else {
-            return response()->json( array( 'exists' => false ) );
-        }
-    }
-    public function checkphonecus( Request $request )
-    {
-        $phone = trim( $request->phone );
-        $id = trim( $request->id );
-        if ( $id == 0 ) {
-            $sql = "SELECT * FROM customers where phone='$phone'";
-        } else {
-            $sql = "SELECT * FROM customers where phone='$phone' and id <> $id";
-        }
-        $customers = DB::select( DB::raw( $sql ) );
-        if ( count( $customers ) > 0 ) {
-            return response()->json( array( 'exists' => true ) );
-        } else {
-            return response()->json( array( 'exists' => false ) );
-        }
+        return response()->json([
+            'exists' => $this->checkDuplicate('pan_no', $request->pan_no)
+        ]);
     }
 
+    /* ================= RETAILER AJAX ================= */
+
+    public function checkphoneregisterretailer(Request $request)
+    {
+        return response()->json([
+            'exists' => $this->checkDuplicate('phone', $request->phone)
+        ]);
+    }
+
+    public function checkemailregisterretailer(Request $request)
+    {
+        return response()->json([
+            'exists' => $this->checkDuplicate('email', $request->email)
+        ]);
+    }
+
+    public function checkaadharregisterretailer(Request $request)
+    {
+        return response()->json([
+            'exists' => $this->checkDuplicate('aadhaar_no', $request->aadhaar_no)
+        ]);
+    }
     public function checkPhonelogin(Request $request)
 {
     $exists = User::where('phone', $request->phone)->exists();

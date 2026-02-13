@@ -60,6 +60,8 @@ Route::post('/send-otp', [CustomAuthController::class, 'sendOtp'])->name('send.o
 Route::post('checkemailcus', [CustomAuthController::class, 'checkemailcus'])->name('checkemailcus');
 Route::post('checkaadharcus', [CustomAuthController::class, 'checkaadharcus'])->name('checkaadharcus');
 Route::post('checkphonecus', [CustomAuthController::class, 'checkphonecus'])->name('checkphonecus');
+Route::post('check-duplicate', [CustomAuthController::class, 'checkDuplicateAdmin'])
+    ->name('check.duplicate');
 
 
 Route::get('home', [App\Http\Controllers\Frontend\HomeController::class, 'Index']);

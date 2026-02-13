@@ -2749,3 +2749,18 @@ alter table fssai add distributor1 text DEFAULT NULL;
 alter table fssai add retailer1 text DEFAULT NULL;
 alter table fssai add hawker  text DEFAULT NULL;
 alter table fssai add fssai_license text DEFAULT NULL;
+
+13-02-2026
+
+-- Name Showing Column
+
+alter table aadhaarcard add cusname varchar(200) after relationship1;
+alter table voterid add cusname varchar(200) after certificate;
+alter table voteridpdf_download add cusname varchar(200) after remarks;
+alter table can_edit add cusname varchar(200) after certificate;
+alter table itr add cusname varchar(200) after remarks;
+alter table msme add cusname varchar(200) after remarks;
+
+-- Qr Change Column
+
+alter table users add qrimage varchar(200) after profile;

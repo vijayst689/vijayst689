@@ -14,7 +14,7 @@
                              {{ csrf_field() }}
                              <div class="modal-body">
                                  <div class="text-center">
-                                     <img src="/upload/qr/qrimg.jpeg" class="img-fluid" alt="...">
+                                    <img src="/upload/qrimage/{{ $qrlabel->qrimage }}" class="img-fluid" alt="">
                                  </div>
                              </div>
                              <div class="row">
