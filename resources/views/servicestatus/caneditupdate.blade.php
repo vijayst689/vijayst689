@@ -587,6 +587,10 @@
                                                         type="text" maxlength="150" name="application"
                                                         id="application" />
                                                 </div>
+                                                 <div class="mb-3 col-md-6" id="cusnamehide" style="display :none;">
+                                            <label for="cusname" class="form-label">Name</label>
+                                            <input class="form-control" type="text" maxlength="100" placeholder="CusName" name="cusname"
+                                                id="cusname" />
                                             @else
                                                 <div class="row">
                                                     <div class="mb-3 col-md-6">
@@ -644,7 +648,9 @@
                         $('#application_no').prop("required", true);
                     } else if (status == "Approved") {
                         $('#applicationhide').show("slow");
+                        $('#cusnamehide').show("slow");
                         $('#application').prop("required", true);
+                        $('#cusname').prop("required", true);
 
                     }
 
@@ -666,7 +672,9 @@
                         $('#applicationnohide').hide("slow");
                         $('#application_no').prop("required", false);
                         $('#applicationhide').hide("slow");
+                        $('#cusnamehide').hide("slow");
                         $('#application').prop("required", false);
+                        $('#cusname').prop("required", false);
                         $('#remarkshide').show("slow");
                         $('#remarks').prop("required", true);
                     } else if ($('#service_status').val() == 'Processing') {
@@ -675,7 +683,9 @@
                         $('#remarkshide').hide("slow");
                         $('#remarks').prop("required", false);
                         $('#applicationhide').hide("slow");
+                        $('#cusnamehide').hide("slow");
                         $('#application').prop("required", false);
+                        $('#cusname').prop("required", false);
                         $('#applicationnohide').show("slow");
                         $('#application_no').prop("required", true);
                     } else if ($('#service_status').val() == 'Approved') {
@@ -684,7 +694,9 @@
                         $('#acknowledgementhide').hide("slow");
                         $('#acknowledgement').prop("required", false);
                         $('#applicationhide').show("slow");
+                        $('#cusnamehide').show("slow");
                         $('#application').prop("required", true);
+                        $('#cusname').prop("required", true);
                         $('#applicationnohide').hide("slow");
                         $('#application_no').prop("required", false);
                     } else {
@@ -693,7 +705,9 @@
                         $('#acknowledgementhide').hide("slow");
                         $('#acknowledgement').prop("required", false);
                         $('#applicationhide').hide("slow");
+                        $('#cusnamehide').hide("slow");
                         $('#application').prop("required", false);
+                        $('#cusname').prop("required", false);
                         $('#applicationnohide').hide("slow");
                         $('#application_no').prop("required", false);
                     }

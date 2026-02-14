@@ -3733,6 +3733,7 @@ public function submit_statusupdate_msme(Request $request){
                 move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
                 DB::table( 'msme' )->where( 'id', $request->applied_serviceid )->update( [
                     'certificate' => $certificate,
+                    'cusname' => $request->cusname,
                     'status' => $status,
                     'completed_date' => date("Y-m-d"),
                 ] );
@@ -3897,6 +3898,7 @@ public function submit_statusupdate_itr(Request $request){
                 move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
                 DB::table( 'itr' )->where( 'id', $request->applied_serviceid )->update( [
                     'certificate' => $certificate,
+                    'cusname' => $request->cusname,
                     'status' => $status,
                     'completed_date' => date("Y-m-d"),
                 ] );
@@ -6378,6 +6380,7 @@ public function caneditupdate(Request $request){
                 DB::table( 'can_edit' )->where( 'id', $request->applied_serviceid )->update( [
                     'status' => $status,
                     'application' => $request->application,
+                    'cusname' => $request->cusname,
                 ] );
             }elseif($status == "Rejected"){
                 $serviceid = $request->serviceid;
