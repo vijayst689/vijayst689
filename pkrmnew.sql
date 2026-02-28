@@ -76,7 +76,7 @@ CREATE TABLE `aadhaarcard` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,7 +112,7 @@ CREATE TABLE `agentregister` (
   `userid` int(11) DEFAULT 0,
   `parent_id` int(11) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +143,7 @@ CREATE TABLE `agri_details` (
   `area` varchar(100) DEFAULT NULL,
   `pattatype` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,7 +187,7 @@ CREATE TABLE `agri_stack` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,7 +214,7 @@ CREATE TABLE `applied_service` (
   `retailer_id` int(11) DEFAULT 0,
   `distributor_id` int(11) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -252,7 +252,7 @@ CREATE TABLE `appointment_reg` (
   `date` varchar(20) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -304,7 +304,7 @@ CREATE TABLE `birth_certificate` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -348,7 +348,7 @@ CREATE TABLE `bond` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -384,7 +384,7 @@ CREATE TABLE `bulk_service_orders` (
   KEY `service_id` (`service_id`),
   KEY `login_id` (`login_id`),
   KEY `district_id` (`district_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -415,7 +415,7 @@ CREATE TABLE `bulk_service_usage` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `service_id` (`service_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -444,7 +444,7 @@ CREATE TABLE `callback` (
   `status` varchar(20) DEFAULT NULL,
   `message` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -528,7 +528,7 @@ CREATE TABLE `can_edit` (
   `api_response` varchar(20) DEFAULT NULL,
   `application_name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -555,7 +555,7 @@ CREATE TABLE `coordinator_permission` (
   `parent_id` int(11) DEFAULT 0,
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -583,7 +583,7 @@ CREATE TABLE `coursepayment` (
   `retailer_amount` decimal(10,2) DEFAULT 0.00,
   `customer_amount` decimal(10,2) DEFAULT 0.00,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -610,7 +610,7 @@ CREATE TABLE `courses` (
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -655,7 +655,7 @@ CREATE TABLE `covid` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -680,7 +680,7 @@ CREATE TABLE `cus_document` (
   `file_name` varchar(100) DEFAULT NULL,
   `cus_docx` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -742,7 +742,7 @@ CREATE TABLE `customers` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `is_completed` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -790,7 +790,7 @@ CREATE TABLE `dharsan` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -815,7 +815,7 @@ CREATE TABLE `district` (
   `short_name` varchar(20) DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -846,7 +846,7 @@ CREATE TABLE `dl` (
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -871,7 +871,7 @@ CREATE TABLE `document` (
   `doc_name` varchar(50) DEFAULT NULL,
   `doc` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -898,7 +898,7 @@ CREATE TABLE `enquiry` (
   `email` varchar(200) DEFAULT NULL,
   `requirement` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -927,7 +927,7 @@ CREATE TABLE `failed_jobs` (
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -963,7 +963,7 @@ CREATE TABLE `family_member` (
   `education` varchar(100) DEFAULT NULL,
   `doc` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -991,7 +991,7 @@ CREATE TABLE `find_payment` (
   `retailer_amount` decimal(10,2) DEFAULT 0.00,
   `customer_amount` decimal(10,2) DEFAULT 0.00,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1020,7 +1020,7 @@ CREATE TABLE `find_services` (
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1074,7 +1074,7 @@ CREATE TABLE `fssai` (
   `electricity_bill` varchar(20) DEFAULT NULL,
   `property_tax` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1131,7 +1131,7 @@ CREATE TABLE `gst` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1182,7 +1182,7 @@ CREATE TABLE `itr` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1227,7 +1227,7 @@ CREATE TABLE `license` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1294,7 +1294,7 @@ CREATE TABLE `medicalscheme` (
   `photo` varchar(20) DEFAULT NULL,
   `vao_or_income_certificate` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1318,7 +1318,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(191) NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1383,7 +1383,7 @@ CREATE TABLE `msme` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1428,7 +1428,7 @@ CREATE TABLE `nalavariyam` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1460,7 +1460,7 @@ CREATE TABLE `nalavariyam_customer` (
   `customer_user_type_id` int(11) DEFAULT 0,
   `date` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1487,7 +1487,7 @@ CREATE TABLE `nalavariyam_district` (
   `user_id` int(11) DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1527,7 +1527,7 @@ CREATE TABLE `nalavariyam_form` (
   `online_reason` text DEFAULT NULL,
   `bill` int(11) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1556,7 +1556,7 @@ CREATE TABLE `nalavariyam_payment` (
   `admin_amount` decimal(10,2) DEFAULT 0.00,
   `time` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1581,7 +1581,7 @@ CREATE TABLE `nalavariyam_remarks` (
   `remarks` text DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1611,7 +1611,7 @@ CREATE TABLE `nalavariyam_request` (
   `req_time` time NOT NULL,
   `file` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1650,7 +1650,7 @@ CREATE TABLE `nalavariyam_service` (
   `to_date` varchar(10) DEFAULT NULL,
   `servicetype` int(11) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1676,7 +1676,7 @@ CREATE TABLE `nalavariyam_taluk` (
   `parent` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=329 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=329;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1717,7 +1717,7 @@ CREATE TABLE `nalavariyampayment` (
   `k_status` int(11) DEFAULT 1,
   `service_entity` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1744,7 +1744,7 @@ CREATE TABLE `newenquiry` (
   `subject` varchar(500) DEFAULT NULL,
   `message` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1769,7 +1769,7 @@ CREATE TABLE `notification` (
   `notify` varchar(2000) DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1797,7 +1797,7 @@ CREATE TABLE `operator` (
   `retailer_commission` decimal(10,2) DEFAULT 0.00,
   `ramjiservice_id` int(11) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1858,7 +1858,7 @@ CREATE TABLE `pancard` (
   `message` varchar(500) DEFAULT NULL,
   `father_name` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1893,7 +1893,7 @@ CREATE TABLE `pancard_find` (
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1919,7 +1919,7 @@ CREATE TABLE `panchayath` (
   `taluk_id` int(11) DEFAULT NULL,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17857 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17857;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1948,7 +1948,7 @@ CREATE TABLE `panpayment` (
   `retailer_amount` decimal(10,2) DEFAULT 0.00,
   `customer_amount` decimal(10,2) DEFAULT 0.00,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1977,7 +1977,7 @@ CREATE TABLE `panservice` (
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2053,7 +2053,7 @@ CREATE TABLE `passport` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2077,7 +2077,7 @@ CREATE TABLE `password_resets` (
   `token` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   KEY `password_resets_email_index` (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2126,7 +2126,7 @@ CREATE TABLE `patta` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2166,7 +2166,7 @@ CREATE TABLE `payment` (
   `k_status` int(11) DEFAULT 1,
   `service_entity` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2199,7 +2199,7 @@ CREATE TABLE `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2244,7 +2244,7 @@ CREATE TABLE `pmkissan` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2303,7 +2303,7 @@ CREATE TABLE `pstm` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2346,7 +2346,7 @@ CREATE TABLE `pvc_card` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2375,7 +2375,7 @@ CREATE TABLE `pvc_details` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `pvc_id` (`pvc_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2415,7 +2415,7 @@ CREATE TABLE `ramji_payment` (
   `k_status` int(11) DEFAULT 1,
   `service_entity` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2447,7 +2447,7 @@ CREATE TABLE `ration` (
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2477,7 +2477,7 @@ CREATE TABLE `rc` (
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2512,7 +2512,7 @@ CREATE TABLE `recharge` (
   `status` varchar(20) DEFAULT NULL,
   `message` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2540,7 +2540,7 @@ CREATE TABLE `recharge_payment` (
   `retailer_amount` decimal(10,2) DEFAULT 0.00,
   `customer_amount` decimal(10,2) DEFAULT 0.00,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2569,7 +2569,7 @@ CREATE TABLE `request_payment` (
   `status` varchar(20) DEFAULT NULL,
   `req_image` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2600,7 +2600,7 @@ CREATE TABLE `serverpayment` (
   `payment_proof` text DEFAULT NULL,
   `website_name` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2626,7 +2626,7 @@ CREATE TABLE `service_details` (
   `service_type` int(11) DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=329 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=329;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2657,7 +2657,7 @@ CREATE TABLE `service_payment` (
   `admin_amount` decimal(10,2) DEFAULT 0.00,
   `coordinator_permission` int(11) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=86;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2699,7 +2699,7 @@ CREATE TABLE `services` (
   `software` varchar(50) DEFAULT NULL,
   `amount` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=242 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=242;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2733,7 +2733,7 @@ CREATE TABLE `sitepayment` (
   `created_at` varchar(20) DEFAULT NULL,
   `paid_image` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2842,7 +2842,7 @@ CREATE TABLE `smartcard` (
   `created_at` varchar(10) DEFAULT NULL,
   `dob` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2889,7 +2889,7 @@ CREATE TABLE `smartcard_otp` (
   `name_tamil` varchar(100) DEFAULT NULL,
   `name_english` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2919,7 +2919,7 @@ CREATE TABLE `smartcard_payment` (
   `admin_amount` decimal(10,2) DEFAULT 0.00,
   `time` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2961,7 +2961,7 @@ CREATE TABLE `software` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3014,7 +3014,7 @@ CREATE TABLE `tailor` (
   `created_at` varchar(10) DEFAULT NULL,
   `entity` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3040,7 +3040,7 @@ CREATE TABLE `taluk` (
   `taluk_name` varchar(100) DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=314 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=314;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3116,7 +3116,7 @@ CREATE TABLE `tec_exam` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3296,7 +3296,7 @@ CREATE TABLE `tnega_services` (
   `lease_agreement` text DEFAULT NULL,
   `it_return_document` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3323,7 +3323,7 @@ CREATE TABLE `user_permission` (
   `service_id` int(11) DEFAULT 0,
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3353,7 +3353,7 @@ CREATE TABLE `useractivation` (
   `admin_amount` decimal(10,2) DEFAULT 0.00,
   `superadmin_amount` decimal(10,2) DEFAULT 0.00,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3416,7 +3416,7 @@ CREATE TABLE `users` (
   `is_completed` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=19;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3443,7 +3443,7 @@ CREATE TABLE `utility_services` (
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3491,7 +3491,7 @@ CREATE TABLE `utislpan` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3518,7 +3518,7 @@ CREATE TABLE `utislpanpayment` (
   `retailer_amount` decimal(10,2) DEFAULT 0.00,
   `customer_amount` decimal(10,2) DEFAULT 0.00,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3544,7 +3544,7 @@ CREATE TABLE `utislpanservice` (
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3579,7 +3579,7 @@ CREATE TABLE `voter_find` (
   `status` varchar(20) DEFAULT NULL,
   `date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3625,7 +3625,7 @@ CREATE TABLE `voterid` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3654,7 +3654,7 @@ CREATE TABLE `voterid_details` (
   `voterid_correction` varchar(20) DEFAULT NULL,
   `doc` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3700,7 +3700,7 @@ CREATE TABLE `voteridpdf_download` (
   `completed_date` varchar(10) DEFAULT NULL,
   `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3728,7 +3728,7 @@ CREATE TABLE `wallet_topup` (
   `status` varchar(30) DEFAULT NULL,
   `payment_proof` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

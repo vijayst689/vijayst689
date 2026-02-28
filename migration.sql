@@ -2764,3 +2764,41 @@ alter table msme add cusname varchar(200) after remarks;
 -- Qr Change Column
 
 alter table users add qrimage varchar(200) after profile;
+
+
+//28-2-2026//
+
+USE pkrm;
+
+ALTER TABLE aadhaarcard
+ADD relation_name_english varchar(100) DEFAULT NULL,
+ADD relation_name_tamil varchar(100) DEFAULT NULL,
+ADD smartcard_onlineprint varchar(50) DEFAULT NULL,
+ADD id_proof varchar(50) DEFAULT NULL,
+ADD voterid varchar(50) DEFAULT NULL,
+ADD bank_pass_book varchar(50) DEFAULT NULL,
+ADD schl_id_card varchar(50) DEFAULT NULL,
+ADD relationship1 varchar(100) DEFAULT NULL,
+ADD with_proof varchar(50) DEFAULT NULL,
+ADD father_hus_aadhaar_no varchar(12) DEFAULT NULL,
+ADD father_aadhaar_no varchar(12) DEFAULT NULL,
+ADD father_hus_mobile varchar(10) DEFAULT NULL,
+ADD father_mobile varchar(10) DEFAULT NULL,
+ADD document_type varchar(30) DEFAULT NULL,
+ADD applicant_document_type varchar(30) DEFAULT NULL,
+ADD parent_mobile varchar(10) DEFAULT NULL,
+ADD parent_aadhaar_front varchar(20) DEFAULT NULL,
+ADD parent_aadhaar varchar(15) DEFAULT NULL,
+ADD parent_name TEXT DEFAULT NULL,
+ADD parent_document_type varchar(30) DEFAULT NULL,
+ADD relative_address_tamil TEXT DEFAULT NULL,
+ADD relative_address_english TEXT DEFAULT NULL,
+ADD relation_name TEXT DEFAULT NULL,
+ADD relation_aadhaar varchar(15) DEFAULT NULL,
+ADD relation_mobile varchar(10) DEFAULT NULL,
+ADD marital_status varchar(30) DEFAULT NULL,
+ADD birth_certificate varchar(30) DEFAULT NULL,
+ADD eid_no varchar(50) DEFAULT NULL,
+ADD date varchar(20) DEFAULT NULL,
+ADD time varchar(20) DEFAULT NULL;
+ALTER TABLE aadhaarcard MODIFY created_at DATETIME NULL;
