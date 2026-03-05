@@ -21,11 +21,11 @@ class PermissionController extends Controller
     $this->middleware('auth');
   }
   
-    public function userpermission($userid){
-  $userId = Auth::user()->id;
+    public function userpermission($userid)
+    {
+        $userId = Auth::user()->id;
 
- 
-  if (Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2) {
+        if (Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2) {
 
             // MAIN SERVICES
             $mainServices = DB::table('services')
@@ -43,7 +43,6 @@ class PermissionController extends Controller
                 ->orderBy('id')
                 ->get()
                 ->groupBy('parent_id');
-
         } else {
 
             // USER PERMISSION
@@ -82,9 +81,9 @@ class PermissionController extends Controller
                 ->groupBy('parent_id');
         }
 
-// =============================
-// PAYMENT LOGIC FOR MAIN SERVICES
-// =============================
+        // =============================
+        // PAYMENT LOGIC FOR MAIN SERVICES
+        // =============================
         foreach ($mainServices as $main) {
 
             $payment = DB::table('useractivation')
@@ -108,9 +107,9 @@ class PermissionController extends Controller
             $main->amount = $amount; // ADD PRICE
         }
 
-// =============================
-// PAYMENT LOGIC FOR SUB SERVICES
-// =============================
+        // =============================
+        // PAYMENT LOGIC FOR SUB SERVICES
+        // =============================
         foreach ($subServices as $parentId => $group) {
 
             foreach ($group as $sub) {
@@ -150,31 +149,16 @@ class PermissionController extends Controller
                     }
                 }
 
-                 $payment2 = DB::table('useractivation')
-                    ->where('service_id', $sub->id)
-                    ->first();
-
-                $adminamount = 0;
-
-                if ($payment2) {
-
-                        $adminamount = $payment2->admin_amount;
-                    
-                }
-
                 $sub->amount        = $amount;        // ADD PRICE
                 $sub->serviceamount = $serviceamount; // ADD PRICE
-                $sub->adminamount = $adminamount; // ADD PRICE
             }
         }
 
         if (Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2) {
 
             $findservices = DB::table('find_services')->where('status', 'Active')->orderBy('id', 'Asc')->get();
-
         } elseif (Auth::user()->user_type_id == 3 || Auth::user()->user_type_id == 4) {
 
-            // Pdf services payment show Start code
 
             $userPermissionServices = DB::table('user_permission')
                 ->where('user_id', $userId)
@@ -191,8 +175,6 @@ class PermissionController extends Controller
                 ->unique();
 
             $findservices = DB::table('find_services')->whereIn('id', $finalServiceIds)->where('status', 'Active')->orderBy('id', 'Asc')->get();
-
-
         }
 
         $findservices = json_decode(json_encode($findservices), true);
@@ -200,7 +182,6 @@ class PermissionController extends Controller
             $service_id = $service['id'];
             $payment    = DB::table('useractivation')->where('service_id', $service_id)->where('parent_id', 1)->first();
             $amount     = 0;
-            $adminamount     = 0;
             if ($payment) {
                 if (Auth::user()->user_type_id == 2) {
                     $amount = $payment->admin_amount;
@@ -210,19 +191,18 @@ class PermissionController extends Controller
                     $amount = $payment->retailer_amount;
                 }
             }
-             $payment1    = DB::table('find_payment')->where('service_id', $service_id)->first();
+            $payment1    = DB::table('find_payment')->where('service_id', $service_id)->first();
             $distributor_amount      = 0;
             $retailer_amount      = 0;
             if ($payment1) {
-             
-            if (Auth::user()->user_type_id == 3) {
+
+                if (Auth::user()->user_type_id == 3) {
                     $distributor_amount = $payment1->distributor_amount;
                 } elseif (Auth::user()->user_type_id == 4) {
                     $retailer_amount = $payment1->retailer_amount;
                 }
             }
             $findservices[$key]['amount'] = $amount;
-            $findservices[$key]['adminamount'] = $adminamount;
             $findservices[$key]['distributor_amount'] = $distributor_amount;
             $findservices[$key]['retailer_amount'] = $retailer_amount;
         }
@@ -268,10 +248,10 @@ class PermissionController extends Controller
         if (Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2) {
 
             $panservices = DB::table('panservice')->where('status', 'Active')->orderBy('id', 'Asc')->get();
-
         } elseif (Auth::user()->user_type_id == 3 || Auth::user()->user_type_id == 4) {
 
-// PanCard Payment Show Code Start
+            // PanCard Payment Show Code Start
+
 
             $userPermissionServices = DB::table('user_permission')
                 ->where('user_id', $userId)
@@ -303,13 +283,12 @@ class PermissionController extends Controller
                     $amount = $payment->retailer_amount;
                 }
             }
-
-             $payment1    = DB::table('panpayment')->where('service_id', $service_id)->first();
+            $payment1    = DB::table('panpayment')->where('service_id', $service_id)->first();
             $distributor_amount      = 0;
             $retailer_amount      = 0;
             if ($payment1) {
-             
-            if (Auth::user()->user_type_id == 3) {
+
+                if (Auth::user()->user_type_id == 3) {
                     $distributor_amount = $payment1->distributor_amount;
                 } elseif (Auth::user()->user_type_id == 4) {
                     $retailer_amount = $payment1->retailer_amount;
@@ -336,7 +315,7 @@ class PermissionController extends Controller
             'service_id',
             'user_id',
             'parent_id',
-            'activation_amount',
+            
         ]);
 
         $user     = Auth::user();
@@ -364,14 +343,44 @@ class PermissionController extends Controller
                 break;
             case 4:
                 $services = DB::table('panservice')->where('id', $service_id)->first();
+                break;
             default:
                 $services = collect(); // empty collection
                 break;
         }
+        $activation_amount = 0;
+        $activation       = DB::table('useractivation')
+            ->where('service_id', $service_id)
+            ->where('parent_id', $parent_id)
+            ->first();
+        if ($activation) {
+            if ($userType == 2) {
+                $activation_amount = $activation->admin_amount;
+            } elseif ($userType == 3) {
+                $activation_amount = $activation->distributor_amount;
+            } elseif ($userType == 4) {
+                $activation_amount = $activation->retailer_amount;
+            }
+        }
+            if ($user->user_type_id == 2) {
+        if ($user->rawallet < $activation_amount) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Insufficient Ramji wallet balance'
+            ]);
+        }
+    } else {
+        if ($user->wallet < $activation_amount) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Insufficient wallet balance'
+            ]);
+        }
+    }
         $servicename      = $services->name ?? $services->service_name;
         $Activationuserid = $data['user_id'];
         if ($userType == 2) {
-            $activationpayment = $data['activation_amount'];
+            $activationpayment = $activation_amount;
             $date              = date('Y-m-d');
             $time              = date('H:i:s');
             $service_status    = 'Out Payment';
@@ -401,7 +410,7 @@ class PermissionController extends Controller
             DB::update(DB::raw($sql));
         } elseif ($userType == 3 || $userType == 4) {
 
-            $activationpayment = $data['activation_amount'];
+            $activationpayment = $activation_amount;
             $date              = date('Y-m-d');
             $time              = date('H:i:s');
             $service_status    = 'Out Payment';
@@ -413,7 +422,7 @@ class PermissionController extends Controller
             $sql = "update users set wallet = wallet - $activationpayment where id = $userId";
             DB::update(DB::raw($sql));
 
-            $getwallet = DB::table('users')->select('wallet')->where('id', 1)->first();
+            $getwallet = DB::table('users')->select('wallet')->where('id', 2)->first();
             $balance   = 0;
             if ($getwallet) {
                 $balance = $getwallet->wallet;
@@ -426,7 +435,6 @@ class PermissionController extends Controller
             $ad_info        = 'Activation Payment (' . $servicename . ' - ' . $Activationuserid . ')';
             $sql            = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$userId','2','$userId','$activationpayment','$ad_info', '$service_status','$time','$date','$userId','$newbalance')";
             DB::insert(DB::raw($sql));
-
         }
         return response()->json(['success' => true, 'message' => 'Service activated and payment logged.']);
     }

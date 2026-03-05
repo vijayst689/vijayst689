@@ -34,17 +34,38 @@
     <!-- Main CSS File -->
     <link href="https://bootstrapmade.com/content/demo/Forma/assets/css/main.css" rel="stylesheet">
 
-    <!-- =======================================================
-  * Template Name: Forma
-  * Template URL: https://bootstrapmade.com/forma-bootstrap-agency-template/
-  * Updated: Nov 08 2025 with Bootstrap v5.3.8
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+        <script>
+        ! function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '919664389493798');
+        fbq('track', 'PageView');
+    </script>
+
+    <!-- Facebook Domain Verification -->
+    <meta name="facebook-domain-verification" content="o7tjuxul606tpvrxq094bhwog98hc5" />
 </head>
 
 <body class="index-page">
-
+       <noscript>
+        <img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=919664389493798&ev=PageView&noscript=1" />
+    </noscript>
     <header id="header" class="header d-flex align-items-center sticky-top">
         <div class="container position-relative d-flex align-items-center justify-content-between">
 

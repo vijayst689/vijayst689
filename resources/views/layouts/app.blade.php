@@ -26,12 +26,40 @@
     <link rel="stylesheet" href="{{ asset('assets/css/dark-theme.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
     <title>pkrmsolution.com</title>
+    <script>
+        ! function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '919664389493798');
+        fbq('track', 'PageView');
+    </script>
+
+    <!-- Facebook Domain Verification -->
+    <meta name="facebook-domain-verification" content="o7tjuxul606tpvrxq094bhwog98hc5" />
 </head>
 
 <body onload="info_noti()">
-
+    <noscript>
+        <img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=919664389493798&ev=PageView&noscript=1" />
+    </noscript>
     <div id="layout-wrapper">
         @include('layouts.header')
 
@@ -81,7 +109,6 @@
 
     @stack('page_scripts')
     <script>
-
         $(document).ready(function() {
             var table = $('#example2').DataTable({
                 lengthChange: false,
@@ -253,7 +280,65 @@
             }
         });
     </script>
+    <script>
+        let debounceTimer = null;
 
+        $(document).on('keyup change', '.dup-check', function() {
+
+            let input = $(this);
+            let value = input.val().trim();
+            let field = input.data('field');
+            let msgBox = input.siblings('.dup-msg');
+            let loader = input.siblings('.loader');
+            let saveBtn = $('#save');
+
+            clearTimeout(debounceTimer);
+
+            if (value.length < 3) {
+                msgBox.text('');
+                saveBtn.prop('disabled', false);
+                return;
+            }
+
+            debounceTimer = setTimeout(() => {
+
+                loader.removeClass('d-none');
+
+                $.ajax({
+                    url: "{{ url('check-duplicate') }}",
+                    type: "POST",
+                    data: {
+                        field: field,
+                        value: value,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(res) {
+
+                        loader.addClass('d-none');
+
+                        if (res.exists) {
+                            msgBox.text(field.replace('_', ' ') + ' already exists');
+                            saveBtn.prop('disabled', true);
+                        } else {
+                            msgBox.text('');
+                            checkAllDuplicates();
+                        }
+                    }
+                });
+
+            }, 500);
+        });
+
+        function checkAllDuplicates() {
+            let hasError = false;
+            $('.dup-msg').each(function() {
+                if ($(this).text() !== '') {
+                    hasError = true;
+                }
+            });
+            $('#save').prop('disabled', hasError);
+        }
+    </script>
     <script>
         function shouldShowPopup() {
             const lastClosed = localStorage.getItem('headerPopupLastClosed');

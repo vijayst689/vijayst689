@@ -2616,40 +2616,189 @@ alter table medicalscheme add vao_or_income_certificate varchar(20) Default NULL
 alter table voteridpdf_download add api_processing text DEFAULT NULL after certificate;
 alter table voteridpdf_download add api_approved text DEFAULT NULL after api_processing;
 
-CREATE TABLE `vehicle_mobilefind` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int DEFAULT 0,
-  `service_id` int DEFAULT 0,
-  `rcno` varchar(20) DEFAULT NULL,
-  `mobile` varchar(20) DEFAULT NULL,
-  `amount` decimal(10,2) DEFAULT 0,
-  `message` varchar(1000) DEFAULT NULL,
-  `status` varchar(20) DEFAULT NULL,
-  `date` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-)  ENGINE=InnoDB;
+//13-01-2026
 
-CREATE TABLE `sharmcard` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int DEFAULT 0,
-  `service_id` int DEFAULT 0,
-  `uan` varchar(30) DEFAULT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `aadhaar` varchar(20) DEFAULT NULL,
-  `pdf` longtext DEFAULT NULL,
+CREATE TABLE `pvc_card` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `delivery_name` varchar(90) DEFAULT NULL,
+  `delivery_mobile` varchar(20) DEFAULT NULL,
+  `delivery_address` varchar(500) DEFAULT NULL,
+  `pincode` varchar(10) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(100) DEFAULT NULL,
+  `application` varchar(100) DEFAULT NULL,
+  `lects` varchar(50) DEFAULT NULL,
+  `selects` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
-  `date` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-)  ENGINE=InnoDB;
+) ENGINE=InnoDB;
 
-CREATE TABLE `agristack_instant` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int DEFAULT 0,
-  `service_id` int DEFAULT 0,
-  `name` varchar(100) DEFAULT NULL,
-  `aadhaar` varchar(20) DEFAULT NULL,
-  `pdf` longtext DEFAULT NULL,
-  `status` varchar(20) DEFAULT NULL,
-  `date` varchar(20) DEFAULT NULL,
+CREATE TABLE pvc_details (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    pvc_id INT UNSIGNED NOT NULL,
+    service_name VARCHAR(100) NOT NULL,
+    password VARCHAR(255) DEFAULT NULL,
+    document VARCHAR(255) DEFAULT NULL,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+
+    INDEX (pvc_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+alter table pvc_details add pvc_rationpdf varchar(255) DEFAULT NULL after document;
+
+22-01-2026
+
+CREATE TABLE `customers` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) NOT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `username_type` varchar(50) DEFAULT NULL,
+  `user_type_id` varchar(10) DEFAULT NULL,
+  `nalavariyam_usertype` int DEFAULT NULL,
+  `refferal_id` varchar(10) DEFAULT NULL,
+  `verified` int DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `phone` varchar(10) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `aadhaar_no` varchar(12) DEFAULT NULL,
+  `aadhaar_file` varchar(10) DEFAULT NULL,
+  `pan_no` varchar(10) DEFAULT NULL,
+  `pan_file` varchar(10) DEFAULT NULL,
+  `smartcard` varchar(20) DEFAULT NULL,
+  `smartcard_no` varchar(15) DEFAULT NULL,
+  `signature` varchar(20) DEFAULT NULL,
+  `dist_id` int DEFAULT NULL,
+  `taluk_id` int DEFAULT NULL,
+  `panchayath_id` int DEFAULT NULL,
+  `nalavariyam_dist_id` int DEFAULT NULL,
+  `nalavariyam_taluk_id` int DEFAULT NULL,
+  `panchayath_name` varchar(50) DEFAULT NULL,
+  `can_details` varchar(20) DEFAULT NULL,
+  `can_number` varchar(20) DEFAULT NULL,
+  `date_of_birth` varchar(10) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(191) NOT NULL,
+  `cpassword` varchar(20) DEFAULT NULL,
+  `profile` varchar(10) DEFAULT NULL,
+  `qr_image` varchar(30) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
+  `wallet` decimal(10,2) DEFAULT '0.00',
+  `rawallet` decimal(10,2) DEFAULT '0.00',
+  `remember_token` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `is_completed` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-)  ENGINE=InnoDB;
+) ENGINE=InnoDB;
+
+alter table aadhaarcard add aadhaar_no varchar(12) DEFAULT NULL;
+
+alter table aadhaarcard add schl_id_card varchar(20) DEFAULT NULL;
+alter table aadhaarcard add bank_pass_book varchar(20) DEFAULT NULL;
+alter table aadhaarcard add voterid varchar(20) DEFAULT NULL;
+alter table aadhaarcard add id_proof varchar(50) DEFAULT NULL;
+alter table aadhaarcard add smartcard_onlineprint varchar(20) DEFAULT NULL;
+alter table aadhaarcard add relation_name_tamil varchar(100) DEFAULT NULL;
+alter table aadhaarcard add relation_name_english varchar(100) DEFAULT NULL;
+alter table aadhaarcard add relationship1 varchar(50);
+
+alter table fssai add documents varchar(20) Default NULL;
+alter table fssai add rental_agreement varchar(20) Default NULL;
+alter table fssai add electricity_bill varchar(20) Default NULL;
+alter table fssai add property_tax varchar(20) Default NULL;
+alter table fssai add food_service varchar(20) Default NULL;
+alter table fssai add shop_photo varchar(20) Default NULL;
+alter table fssai add mobile_no varchar(10) DEFAULT NULL;
+alter table fssai add pan_no varchar(15) DEFAULT NULL;
+alter table fssai add dob varchar(10) DEFAULT NULL;
+alter table fssai add aadhaar_no varchar(15) DEFAULT NULL;
+alter table fssai add name_as_pan text DEFAULT NULL;
+alter table fssai add applicant_name text DEFAULT NULL;
+alter table fssai add food_category text DEFAULT NULL;
+alter table fssai add shop_address text DEFAULT NULL;
+alter table fssai add block_or_division text DEFAULT NULL;
+alter table fssai add pin_code varchar(10) DEFAULT NULL;
+alter table fssai modify shop_name varchar(100);
+alter table fssai add trade_retail text DEFAULT NULL;
+alter table fssai add storage text DEFAULT NULL;
+alter table fssai add wholesaler text DEFAULT NULL;
+alter table fssai add distributor text DEFAULT NULL;
+alter table fssai add transportation text DEFAULT NULL;
+alter table fssai add retailer text DEFAULT NULL;
+alter table fssai add direct_seller text DEFAULT NULL;
+alter table fssai add food_vending_agencies text DEFAULT NULL;
+alter table fssai add importer text DEFAULT NULL;
+alter table fssai add trader_merchant text DEFAULT NULL;
+alter table fssai add petty_retailer text DEFAULT NULL;
+alter table fssai add central_govt_agencies text DEFAULT NULL;
+alter table fssai add storage1 text DEFAULT NULL;
+alter table fssai add wholesaler1 text DEFAULT NULL;
+alter table fssai add distributor1 text DEFAULT NULL;
+alter table fssai add retailer1 text DEFAULT NULL;
+alter table fssai add hawker  text DEFAULT NULL;
+alter table fssai add fssai_license text DEFAULT NULL;
+
+13-02-2026
+
+-- Name Showing Column
+
+alter table aadhaarcard add cusname varchar(200) after relationship1;
+alter table voterid add cusname varchar(200) after certificate;
+alter table voteridpdf_download add cusname varchar(200) after remarks;
+alter table can_edit add cusname varchar(200) after certificate;
+alter table itr add cusname varchar(200) after remarks;
+alter table msme add cusname varchar(200) after remarks;
+
+-- Qr Change Column
+
+alter table users add qrimage varchar(200) after profile;
+
+
+//28-2-2026//
+
+USE pkrm;
+
+ALTER TABLE aadhaarcard
+ADD relation_name_english varchar(100) DEFAULT NULL,
+ADD relation_name_tamil varchar(100) DEFAULT NULL,
+ADD smartcard_onlineprint varchar(50) DEFAULT NULL,
+ADD id_proof varchar(50) DEFAULT NULL,
+ADD voterid varchar(50) DEFAULT NULL,
+ADD bank_pass_book varchar(50) DEFAULT NULL,
+ADD schl_id_card varchar(50) DEFAULT NULL,
+ADD relationship1 varchar(100) DEFAULT NULL,
+ADD with_proof varchar(50) DEFAULT NULL,
+ADD father_hus_aadhaar_no varchar(12) DEFAULT NULL,
+ADD father_aadhaar_no varchar(12) DEFAULT NULL,
+ADD father_hus_mobile varchar(10) DEFAULT NULL,
+ADD father_mobile varchar(10) DEFAULT NULL,
+ADD document_type varchar(30) DEFAULT NULL,
+ADD applicant_document_type varchar(30) DEFAULT NULL,
+ADD parent_mobile varchar(10) DEFAULT NULL,
+ADD parent_aadhaar_front varchar(20) DEFAULT NULL,
+ADD parent_aadhaar varchar(15) DEFAULT NULL,
+ADD parent_name TEXT DEFAULT NULL,
+ADD parent_document_type varchar(30) DEFAULT NULL,
+ADD relative_address_tamil TEXT DEFAULT NULL,
+ADD relative_address_english TEXT DEFAULT NULL,
+ADD relation_name TEXT DEFAULT NULL,
+ADD relation_aadhaar varchar(15) DEFAULT NULL,
+ADD relation_mobile varchar(10) DEFAULT NULL,
+ADD marital_status varchar(30) DEFAULT NULL,
+ADD birth_certificate varchar(30) DEFAULT NULL,
+ADD eid_no varchar(50) DEFAULT NULL,
+ADD date varchar(20) DEFAULT NULL,
+ADD time varchar(20) DEFAULT NULL;
+ALTER TABLE aadhaarcard MODIFY created_at DATETIME NULL;

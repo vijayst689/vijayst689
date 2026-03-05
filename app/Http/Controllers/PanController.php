@@ -133,6 +133,20 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
   }
 
   public function applypanservice($serviceid) {
+    $userPermission = DB::table('user_permission')
+    ->where('user_id', Auth::user()->id)
+    ->where('parent_id', 4)
+    ->pluck('service_id');
+
+$adminPermission = DB::table('user_permission')
+    ->where('user_id', 2) 
+    ->where('parent_id', 4)
+    ->pluck('service_id');
+
+$finalServiceIds = $userPermission->intersect($adminPermission);
+ if (!$finalServiceIds->contains($serviceid)) {
+        return view('errors.no_permission'); 
+    }
     $getservicename = DB::table( 'panservice' )->where('id',$serviceid)->first();
     $servicename = "";
     $amount = 0;
@@ -174,7 +188,24 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
   public function submitnewpancard( Request $request ) {
     // dd($request->all());
         $user_id = Auth::user()->id;
-        $serviceid = $request->serviceid;
+         $serviceid = $request->serviceid;
+         $servicepayment = 0;
+        $getservicepayment = DB::table('panpayment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+               $payment = $amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         $mobile = $request->mobile;
         $mode = $request->mode;
         $orderid = rand(000000000,999999999);
@@ -335,7 +366,24 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
 
     public function submitpancorrection( Request $request ) {
         $user_id = Auth::user()->id;
-        $serviceid = $request->serviceid;
+         $serviceid = $request->serviceid;
+         $servicepayment = 0;
+        $getservicepayment = DB::table('panpayment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            
+            if (Auth::user()->user_type_id == 2) {
+               $payment = $amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->service_amount;
+            }
+        }
+        if(Auth::user()->wallet < $servicepayment){
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
         $mobile = $request->mobile;
         $mode = $request->mode;
         $orderid = rand(000000000,999999999);

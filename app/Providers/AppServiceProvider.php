@@ -68,7 +68,9 @@ class AppServiceProvider extends ServiceProvider
             if (Auth::check()) {
                 $user = Auth::user();
                 $this->activation = DB::table('users')->where('id', $user->id)->get();
+                $this->qrlabel = DB::table( 'users' )->where( 'id', 2 )->orderBy( 'id' , 'Asc' )->first();
                 $view->with(['activation' => $this->activation]);
+                $view->with(['qrlabel' => $this->qrlabel]);
 
                 $showPopup = false;
                 $daysLeft  = null;

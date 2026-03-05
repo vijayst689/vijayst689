@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
- <style>
+    <style>
         /* Smooth animation for cards */
         .service-card {
             border-radius: 12px;
@@ -65,7 +65,7 @@
         <div class="page-content">
             <!--breadcrumb-->
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-                <div class="breadcrumb-title pe-3">pkrmsolution.com</div>
+                <div class="breadcrumb-title pe-3">Pkrmsolution.com</div>
                 <div class="ps-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 p-0">
@@ -102,46 +102,36 @@
                                 Auth::user()->user_type_id == 3 ||
                                 Auth::user()->user_type_id == 4)
                             <div class="col-4 col-md-2 mb-3 category_data">
-                                <div class="card p-2 h-100">
-                                    <a href="{{ url('/customers') }}">
-                                        <div class="mb-1">
-                                            <img src="/upload/mylogo/tnega.jpg" width="100%" />
-                                            <p class="text-primary">TNEGA</p>
+                                <div class="card service-card">
+                                    <a href="{{ url('/customers') }}" class="service-link">
+                                        <div class="service-content">
+                                            <img src="/upload/mylogo/tnega.jpg" class="service-img" />
+                                            <p class="service-title">TNEGA</p>
                                         </div>
                                     </a>
                                 </div>
                             </div>
                         @endif
                         <div class="col-4 col-md-2 mb-3 category_data">
-                            <div class="card p-2 h-100">
-                                <a href="{{ url('/pdfservices') }}">
-                                    <div class="mb-1">
-                                        <img src="/upload/mylogo/pdf.jpg" width="100%" />
-                                        <p class="text-primary">PDF</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        {{-- <div class="col-4 col-md-2 mb-3 category_data">
-                            <div class="card p-2 h-100">
-                                <a href="{{ url('/panservices') }}">
-                                    <div class="mb-1">
-                                        <img src="/upload/mylogo/nsdl.jpg" width="100%" />
-                                        <p class="text-primary">NSDL PAN</p>
+                            <div class="card service-card">
+                                <a href="{{ url('/pdfservices') }}" class="service-link">
+                                    <div class="service-content">
+                                        <img src="/upload/mylogo/pdf.jpg" class="service-img" />
+                                        <p class="service-title">PDF</p>
                                     </div>
                                 </a>
                             </div>
                         </div>
                         <div class="col-4 col-md-2 mb-3 category_data">
-                            <div class="card p-2 h-100">
-                                <a href="{{ url('/utility') }}">
-                                    <div class="mb-1">
-                                        <img src="/upload/mylogo/uti.jpg" width="100%" />
-                                        <p class="text-primary">UTILITY</p>
+                            <div class="card service-card">
+                                <a href="{{ url('/panservices') }}" class="service-link">
+                                    <div class="service-content">
+                                        <img src="/upload/mylogo/nsdl.jpg" class="service-img" />
+                                        <p class="service-title">NSDL PAN</p>
                                     </div>
                                 </a>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
                 <div class="container-fluid mt-1">
@@ -149,36 +139,46 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="container-xxl flex-grow-1">
-                                    <div id="category_div" class="row">
+                                    <div id="category_div" class="row text-center">
+
                                         @foreach ($ourservice as $ser)
-                                            <div class="col-4 col-md-2 mb-3 category_data">
-                                                <div class="card p-2 h-100">
+                                            <div class="col-6 col-md-3 col-lg-2 mb-4 category_data">
+                                                <div class="card service-card h-100">
+
                                                     @if ($ser->id == 119)
-                                                        <a href="{{ url('/licservices', $ser->id) }}">
+                                                        <a href="{{ url('/licservices', $ser->id) }}" class="service-link">
                                                         @elseif ($ser->id == 224)
-                                                            <a href="{{ url('/applyservices/225') }}">
+                                                            <a href="{{ url('/applyservices/225') }}" class="service-link">
                                                             @else
-                                                                <a href="{{ url('/servicesone', $ser->id) }}">
+                                                                <a href="{{ url('/servicesone', $ser->id) }}"
+                                                                    class="service-link">
                                                     @endif
-                                                    <div class="mb-1">
+
+                                                    <div class="service-content">
                                                         <img src="/upload/service/{{ $ser->service_image }}"
-                                                            style="width: 120px; height: 130px;" />
-                                                        <p class="text-primary">{{ $ser->service_name }}</p>
+                                                            class="service-img" />
+
+                                                        <p class="service-title">
+                                                            {{ $ser->service_name }}
+                                                        </p>
                                                     </div>
+
                                                     </a>
                                                 </div>
                                             </div>
                                         @endforeach
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
-@endsection
-@push('page_scripts')
+    @endsection
+    @push('page_scripts')
         <script>
             $('#serviceid').on('change', function() {
                 var parentid = this.value;

@@ -33,39 +33,40 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    <form onsubmit="return checkpayment(event)" action="{{ url('/submitrcfind') }}" id="formAccountSettings"
+                     <form onsubmit="return checkpayment(event)" action="{{ url('/submitrcfind') }}" id="formAccountSettings"
                         method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="amount" id="amount">
                         <input type="hidden" name="serviceid" value="{{ $serviceid }}">
                         <input type="hidden" name="servicepayment" value="{{ $payment }}">
-                       <div class="row">
-                                <div class="mb-3 col-md-4">
-                                    <div class="form-check form-check-inline">
-                                        <input required class="form-check-input" checked type="radio" name="ser"
-                                            id="inlineRadio1" value="1" />
-                                        <label class="form-check-label" for="inlineRadio1">Server 1</label>
-                                    </div>
-
-                                    <div class="form-check form-check-inline">
-                                        <input required class="form-check-input" type="radio" name="ser"
-                                            id="inlineRadio2" value="2" />
-                                        <label class="form-check-label" for="inlineRadio2">Server 2</label>
-                                    </div>
-
-                                    <div class="form-check form-check-inline">
-                                        <input required class="form-check-input" type="radio" name="ser"
-                                            id="inlineRadio3" value="3" />
-                                        <label class="form-check-label" for="inlineRadio3">Server 3</label>
-                                    </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-4">
+                                <div class="form-check form-check-inline">
+                                    <input required class="form-check-input" type="radio" name="ser" id="inlineRadio1"
+                                        value="1" />
+                                    <label class="form-check-label" for="inlineRadio1">Server 1</label>
                                 </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="rc_no" class="form-label">Vehicle Number</label>
-                                    <input class="form-control" type="text" name="rc_no" maxlength="10" required
-                                        autofocus placeholder="Enter Vehicle Number" />
+
+                                <div class="form-check form-check-inline">
+                                    <input required class="form-check-input" type="radio" name="ser" id="inlineRadio2"
+                                        value="2" />
+                                    <label class="form-check-label" for="inlineRadio2">Server 2</label>
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    <input required class="form-check-input" type="radio" name="ser" id="inlineRadio3"
+                                        value="3" />
+                                    <label class="form-check-label" for="inlineRadio3">Server 3</label>
                                 </div>
 
                             </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="rc_no" class="form-label">Vehicle Number</label>
+                                <input class="form-control" type="text" name="rc_no" maxlength="10" required autofocus
+                                    placeholder="Enter Vehicle Number" />
+                            </div>
+
+                        </div>
                         <div class="mt-2 text-center" id="nopayment"></div>
                         <div class="mt-2 text-center">
                             <button type="submit" id="save" class="btn btn-primary me-2">Submit</button>

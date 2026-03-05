@@ -47,7 +47,7 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table id="example" class="table table-striped table-bordered">
+                        <table id="example2" class="table table-striped table-bordered">
                             <thead class="table-dark">
                                 <tr>
                                     <th>Sl No</th>
@@ -114,7 +114,7 @@
                                 <div class="col">
                                     <div class="card-body">
                                         <div class="text-center">
-                                            <img src="upload/qr/qrimg.jpeg" class="w-50 mb-4 rounded" alt="...">
+                                            <img src="/upload/qrimage/{{ $qrlabel->qrimage }}" class="w-50 mb-4 rounded" alt="">
                                         </div>
                                     </div>
                                 </div>

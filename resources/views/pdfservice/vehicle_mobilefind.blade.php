@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-   <div class="page-wrapper">
+    <div class="page-wrapper">
         <div class="page-content">
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
                 <div class="breadcrumb-title pe-3">{{ $servicename }}</div>
@@ -33,24 +33,24 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    <form onsubmit="return checkpayment(event)" action="{{ url('/submitvehicle_mobilefind') }}" id="formAccountSettings"
-                        method="POST" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="amount" id="amount">
-                        <input type="hidden" name="serviceid" value="{{ $serviceid }}">
-                        <input type="hidden" name="servicepayment" value="{{ $payment }}">
-                       <div class="row">
+                    <form onsubmit="return checkpayment(event)" action="{{ url('/submitvehicle_mobilefind') }}"
+                            id="formAccountSettings" method="POST" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="amount" id="amount">
+                            <input type="hidden" name="serviceid" value="{{ $serviceid }}">
+                            <input type="hidden" name="servicepayment" value="{{ $payment }}">
+                            <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label for="pan_no" class="form-label">Vehicle Number</label>
                                     <input class="form-control" type="text" name="rcno" maxlength="15" required
                                         autofocus placeholder="Vehicle Number" />
                                 </div>
                             </div>
-                        <div class="mt-2 text-center" id="nopayment"></div>
-                        <div class="mt-2 text-center">
-                            <button type="submit" id="save" class="btn btn-primary me-2">Submit</button>
-                        </div>
-                    </form>
+                            <div class="mt-2 text-center" id="nopayment"></div>
+                            <div class="mt-2 text-center">
+                                <button type="submit" id="save" class="btn btn-primary me-2">Submit</button>
+                            </div>
+                        </form>
                     <div class="customer-table">
                         <div class="table-responsive white-space-nowrap">
                             <table id="example2" class="table align-middle">
@@ -80,11 +80,26 @@
                 </div>
             </div>
         </div>
-        </div>
-        </div>
+    </div>
+    </div>
 @endsection
 @push('page_scripts')
     <script>
+        $(function() {
+
+            var wallet = "{{ Auth::user()->wallet }}";
+            var amount = "{{ $payment }}";
+            if (parseFloat(amount) > parseInt(wallet)) {
+                $('#save').prop("disabled", true);
+                $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
+                    'color': 'red',
+                    'font-size': '150%',
+                    'font-weight': 'bold'
+                });
+            }
+
+
+        });
         var ramjibalance = "{{ $mainbalance->rawallet }}";
         var amount = "{{ $amount }}";
         ramjibalance = parseFloat(ramjibalance);
@@ -108,18 +123,5 @@
 
             }
         }
-
-        $(function() {
-            var wallet = "{{ Auth::user()->wallet }}";
-            var amount = "{{ $payment }}";
-            if (parseFloat(amount) > parseInt(wallet)) {
-                $('#save').prop("disabled", true);
-                $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
-                    'color': 'red',
-                    'font-size': '150%',
-                    'font-weight': 'bold'
-                });
-            }
-        });
     </script>
 @endpush

@@ -314,7 +314,7 @@ public function online_services($id)
         }
         $bulkservice = json_decode(json_encode($bulkservice));
         // dd($bulkservice);
-        $rabalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
+        $rabalance = DB::table('users')->select('nalavariyamwallet')->where('id', 2)->first();
         $nalavariyamcustomer = DB::table('nalavariyam_customer')->where('refferal', Auth::user()->id)->get();
         return view('nalavariyam/online_services', compact('services', 'balance', 'customers', 'rabalance', 'bulkservice', 'nalavariyamcustomer'));
     }
@@ -379,30 +379,30 @@ if(Auth::user()->user_type_id == 2){
        $time = date( 'H:i:s' );
        $service_status = 'Out Payment';
        $ad_info = 'Service Payment'. ' '. $servicename;
-$getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
+$getrawallet = DB::table( 'users' )->select('nalavariyamwallet')->where('id',1)->first();
           $rawallet = 0;
           if($getrawallet){
-            $balance1 = $getrawallet->rawallet;
+            $balance1 = $getrawallet->nalavariyamwallet;
           }
 
-          $getrawallet1 = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+          $getrawallet1 = DB::table( 'users' )->select('nalavariyamwallet')->where('id',2)->first();
           $rawallet1 = 0;
           if($getrawallet1){
-            $balance2 = $getrawallet1->rawallet;
+            $balance2 = $getrawallet1->nalavariyamwallet;
           }
           $newbalance2 = $balance1 + $admin_amount;
           $newbalance3 = $balance2 - $admin_amount;
-       $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+       $sql = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
        DB::insert( DB::raw( $sql ) );
-       $sql = "update users set rawallet = rawallet + $admin_amount where id = 1";
+       $sql = "update users set nalavariyamwallet = nalavariyamwallet + $admin_amount where id = 1";
        DB::update( DB::raw( $sql ) );
        $service_status = 'IN Payment';
        $ad_info = 'Service Payment'. ' '. $servicename;
 
 
-       $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+       $sql = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
        DB::insert( DB::raw( $sql ) );
-       $sql = "update users set rawallet = rawallet - $admin_amount where id = 2";
+       $sql = "update users set nalavariyamwallet = nalavariyamwallet - $admin_amount where id = 2";
        DB::update( DB::raw( $sql ) );
   return redirect( "online_services/$customer_id" );
 }
@@ -1556,30 +1556,30 @@ public function updatenalavariyam_activation(Request $request)
 
         $service_status = 'Out Payment';
        $ad_info = 'Activation Payment';
-$getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
+       $getrawallet = DB::table( 'users' )->select('nalavariyamwallet')->where('id',1)->first();
           $rawallet = 0;
           if($getrawallet){
-            $balance1 = $getrawallet->rawallet;
+            $balance1 = $getrawallet->nalavariyamwallet;
           }
 
-          $getrawallet1 = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+          $getrawallet1 = DB::table( 'users' )->select('nalavariyamwallet')->where('id',2)->first();
           $rawallet1 = 0;
           if($getrawallet1){
-            $balance2 = $getrawallet1->rawallet;
+            $balance2 = $getrawallet1->nalavariyamwallet;
           }
           $newbalance2 = $balance1 + $admin_amount;
           $newbalance3 = $balance2 - $admin_amount;
-       $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+       $sql = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
        DB::insert( DB::raw( $sql ) );
-       $sql = "update users set rawallet = rawallet + $admin_amount where id = 1";
+       $sql = "update users set nalavariyamwallet = nalavariyamwallet + $admin_amount where id = 1";
        DB::update( DB::raw( $sql ) );
        $service_status = 'IN Payment';
        $ad_info = 'Activation Payment';
 
 
-       $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+       $sql = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
        DB::insert( DB::raw( $sql ) );
-       $sql = "update users set rawallet = rawallet - $admin_amount where id = 2";
+       $sql = "update users set nalavariyamwallet = nalavariyamwallet - $admin_amount where id = 2";
        DB::update( DB::raw( $sql ) );
         }
     $updatenalavariyam_activation = DB::table('users')->where('id', $request->userid)->update([
@@ -1593,7 +1593,6 @@ $getrawallet = DB::table( 'users' )->select('rawallet')->where('id',1)->first();
 
     return redirect()->back()->with('success', 'User activation Updated Successfully ... !');
 }
-
 public function get_activationamount($usertype)
 {
      $payment = DB::table('useractivation')->where('service_id',6)->where('parent_id',3)->first();

@@ -61,7 +61,6 @@ class DistributorController extends Controller
         'email'         => $request->email,
         'phone'         => $request->phone,
         'address'       => $request->address,
-        'gender'        => $request->gender,
         'refferal_id'   => $userid,
         'user_type_id'  => '3',
         'status'        => 'Active'

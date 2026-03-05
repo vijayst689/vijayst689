@@ -1,4 +1,109 @@
 <!--sidebar wrapper -->
+<style>
+/* ================================
+   SIDEBAR BACKGROUND & COLORS (ROYAL TECH THEME)
+================================ */
+
+/* Main sidebar background */
+.sidebar-wrapper {
+    background: linear-gradient(180deg, #0f0c29, #302b63, #24243e) !important;
+}
+
+/* Sidebar header */
+.sidebar-header {
+    background: linear-gradient(90deg, #fc466b, #3f5efb) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Logo text */
+.logo-text {
+    color: #ffd6ff !important;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(252,70,107,0.6);
+}
+
+/* Menu title */
+.metismenu .menu-title {
+    color: #dcd6f7 !important;
+}
+
+/* Menu icons */
+.metismenu .parent-icon i {
+    color: #a5b4fc !important;
+}
+
+/* Menu links */
+.metismenu a {
+    color: #e0e7ff !important;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect (Neon Pink Glow) */
+.metismenu a:hover {
+    background: linear-gradient(90deg, rgba(252,70,107,0.3), rgba(63,94,251,0.3)) !important;
+    color: #ffffff !important;
+    border-left: 4px solid #fc466b;
+    box-shadow: inset 0 0 12px rgba(252,70,107,0.5);
+}
+
+/* Active menu */
+.metismenu .mm-active > a {
+    background: linear-gradient(90deg, #fc466b, #8f5cff) !important;
+    color: #1a103d !important;
+    font-weight: 700;
+    box-shadow: 0 0 15px rgba(252,70,107,0.9);
+}
+
+/* Submenu background */
+.metismenu ul {
+    background: rgba(255,255,255,0.06) !important;
+}
+
+/* Submenu links */
+.metismenu ul li a {
+    color: #c7d2fe !important;
+    padding-left: 45px !important;
+}
+
+/* Submenu hover */
+.metismenu ul li a:hover {
+    background: rgba(252,70,107,0.25) !important;
+    color: #ffffff !important;
+}
+
+/* Toggle icon */
+.toggle-icon i {
+    color: #fc466b !important;
+}
+
+/* ================================
+   SCROLLBAR COLOR (PINK NEON)
+================================ */
+
+.sidebar-wrapper::-webkit-scrollbar {
+    width: 7px;
+}
+
+.sidebar-wrapper::-webkit-scrollbar-track {
+    background: #0f0c29;
+}
+
+.sidebar-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(#fc466b, #8f5cff);
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(252,70,107,0.8);
+}
+
+/* ================================
+   LIGHT SHAKE ON HOVER
+================================ */
+
+.metismenu li:hover {
+    animation: lightShake 0.25s;
+}
+
+</style>  
 <div class="wrapper">
     <div class="sidebar-wrapper" data-simplebar="true">
         <div class="sidebar-header">
@@ -349,17 +454,6 @@
             </li>
             <li>
                 <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon"><i class="bx bx-repeat"></i>
-                    </div>
-                    <div class="menu-title">Services</div>
-                </a>
-                <ul>
-                    <li> <a href="{{ url('/viewservice') }}"><i class='bx bx-radio-circle'></i>Services</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow" href="javascript:;">
                     <div class="parent-icon"> <i class="bx bx-donate-blood"></i>
                     </div>
                     <div class="menu-title">Utility Commission</div>
@@ -527,19 +621,6 @@
             </a>
             <ul>
                 <li> <a href="{{ url('/allservices') }}"><i class='bx bx-radio-circle'></i>Our Service</a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class="bx bx-menu"></i>
-                </div>
-                <div class="menu-title">Retailers</div>
-            </a>
-            <ul>
-                <li> <a href="{{ url('/addretailer') }}"><i class='bx bx-radio-circle'></i>Add Retailers</a>
-                </li>
-                <li> <a href="{{ url('/retailers') }}"><i class='bx bx-radio-circle'></i>Retailers</a>
                 </li>
             </ul>
         </li>

@@ -105,291 +105,235 @@
             <hr />
             <div class="card">
                 <div class="card-body">
-                    @if (session()->has('success'))
-                        <div class="alert alert-success alert-dismissible" role="alert">
-                            <strong> {{ session('success') }} </strong>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-                    @if (session()->has('error'))
-                        <div class="alert alert-success alert-dismissible" role="alert">
-                            <strong> {{ session('error') }} </strong>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-                     <h5 class="card-title">Apply Service</h5>
-
-                     <div class="card-body">
-                                        <div class="row">
-                                            <form class="row g-4" action="#" enctype="multipart/form-data"
-                                                method="post">
-                                                <div class="col-lg-12">
-                                                    <div class="mb-3 row">
-                                                        {{-- <input type="hidden" id="customerid" name="customerid" value="{{ $talukid }}"> --}}
-                                                        @if ($serviceid == 119)
-                                                            @foreach ($services as $service)
-                                                                <div class="col-sm-4 col-md-6 col-xl-2 mb-2">
-                                                                    <div
-                                                                        class="d-flex align-items-center justify-content-between">
-                                                                        <span class="bg-label">
-                                                                            <a
-                                                                                href="{{ url('/applyservices', $service->id) }}"><img
-                                                                                    src="/upload/service/{{ $service->service_image }}"
-                                                                                    alt="user-avatar"
-                                                                                    style="width: 160px; height: 180px;"
-                                                                                    id="uploadedAvatar">
-                                                                        </span></a>
-                                                                    </div>
-                                                                </div>
-                                                            @endforeach
-                                                        @elseif($serviceid == 10)
-                                                            @foreach ($services as $service)
-                                                                <div class="col-md-3 col-lg-2 col-sm-4 mb-2">
-                                                                    <div class="text-center">
-                                                                        <a
-                                                                            href="{{ url('/softwareservices', $service->id) }}">
-                                                                            <img src="/upload/sub_service/{{ $service->sub_service_image }}"
-                                                                                alt=""
-                                                                                class="rounded-circle img-thumbnail avatar-xl"></a>
-                                                                        <h5 class="text-danger">
-                                                                            {{ $service->service_name }}</h5>
-                                                                    </div>
-                                                                </div>
-                                                            @endforeach
-                                                    </div>
-                                                </div>
-                                            @elseif($serviceid == 103)
-                                                @foreach ($services as $service)
-                                                    <div class="col-xl-3 col-md-3 col-sm-6">
-                                                        <div class="card mb-0">
-                                                            <div class="card-body bg-dark">
-                                                                <div class="position-relative">
-                                                                    <img src="/upload/sub_service/{{ $service->sub_service_image }}"
-                                                                        class="img-fluid rounded"
-                                                                        style="width: 200px; height: 150px;"
-                                                                        alt="">
-                                                                </div>
-                                                                <div class="text-center mt-1 pt-1">
-                                                                    <p class="mb-0 text-success">
-                                                                        <b>{{ $service->service_name }}</b>
-                                                                    </p>
-                                                                    <hr class="text-black">
-                                                                    {{-- <h6 class="mb-2 text-danger">Amount: {{ $service->payment }}</h6> --}}
-                                                                </div>
-                                                                <div
-                                                                    class="d-flex align-items-center justify-content-between">
-                                                                    <a href="{{ url('/applyservices', $service->id) }}"
-                                                                        class="btn btn-light">Apply</a>
-                                                                    <a href="{{ url('/applyservices', $service->id) }}"
-                                                                        class="btn btn-primary">List</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                        </div>
-                                    </div>
-                                @else
-                    <div class="container-fluid mt-1">
-
-                        <div class="row">
-                            <div class="container-xxl flex-grow-1">
-                                <div id="category_div" class="row text-center">
-                                    @if ($services->isEmpty())
-                                        <div class="d-flex justify-content-center align-items-center py-5">
-                                            <div class="no-service-card text-center p-4">
-                                                <h4 class="no-service-title mb-3">No Services Activated</h4>
-                                                <p class="no-service-subtitle mb-4">Please activate services to continue</p>
-
-                                                <a href="{{ url('/userpermission') }}/{{ Auth::user()->id }}"
-                                                    class="btn manage-btn">
-                                                    Manage User Permissions
-                                                </a>
-                                            </div>
-                                        </div>
-                                    @else
-                                        @foreach ($services as $ser)
-                                            <div class="col-6 col-md-3 col-lg-2 mb-4 category_data">
-                                                <div class="card service-card h-100">
-
-
-                                                    <a href="{{ url('/applyservices', $ser->id) }}" class="service-link">
-
-
-                                                        <div class="service-content">
-                                                            <img src="{{ !empty($ser->sub_service_image)
-                                                                ? asset('upload/sub_service/' . $ser->sub_service_image)
-                                                                : asset('upload/service/default.png') }}"
-                                                                class="service-img" style="width: 100px; height: 100px;" />
-
-                                                            <p class="service-title">
-                                                                {{ $ser->service_name }}
-                                                            </p>
-                                                        </div>
-
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                </div>
-            </div>
-            </form>
                     @if ($serviceid == 6)
                         @if (Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2)
-                            <div class="main-content">
-                                <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
-                                    <div class="col-md-3 col-sm-4">
-                                        <div class="card radius-10 bg-gradient-ibiza">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-auto">
-                                                        <a href="{{ url('/activationmember') }}">
-                                                            <p class="mb-0 text-white">User Activation</p>
-                                                        </a>
-                                                        <h4 class="my-1 text-white">{{ $activecount }}</h4>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                        <div class="card bg-danger">
+                                            <div class="card-body" data-intro="New Orders">
+                                                <div
+                                                    class="single-widget d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <div class="widget-icon">
+                                                            <a href="{{ url('/activationmember') }}"><i
+                                                                    class="bx bx-mouse-alt"></i></a>
+                                                        </div>
+                                                        <div class="widget-desc">
+                                                            <h5 class="">User Activation</h5>
+                                                        </div>
                                                     </div>
-                                                    <div id="chart2"></div>
+                                                    <div class="progress-report" data-title="progress"
+                                                        data-intro="And this is the last step!">
+                                                        <h4>{{ $activecount }}</h4>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-4">
-                                        <div class="card radius-10 bg-gradient-ohhappiness">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-auto">
-                                                        <a href="{{ url('/member') }}">
-                                                            <p class="mb-0 text-white">Member</p>
-                                                        </a>
-                                                        <h4 class="my-1 text-white">{{ $memcount }}</h4>
+                                    <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                        <div class="card bg-warning">
+                                            <div class="card-body" data-intro="New Orders">
+                                                <div
+                                                    class="single-widget d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <div class="widget-icon">
+                                                            <a href="{{ url('/member') }}"><i
+                                                                    class="bx bx-mouse-alt"></i></a>
+                                                        </div>
+                                                        <div class="widget-desc">
+                                                            <h5 class="">Member</h5>
+                                                        </div>
                                                     </div>
-                                                    <div id="chart2"></div>
+                                                    <div class="progress-report" data-title="progress"
+                                                        data-intro="And this is the last step!">
+                                                        <h4>{{ $memcount }}</h4>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-4">
-                                        <div class="card radius-10 bg-gradient-cosmic">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-auto">
-                                                        <a href="{{ url('/special_member') }}">
-                                                            <p class="mb-0 text-white">Special Member</p>
-                                                        </a>
-                                                        <h4 class="my-1 text-white">0</h4>
+                                    <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                        <div class="card bg-success">
+                                            <div class="card-body" data-intro="New Orders">
+                                                <div
+                                                    class="single-widget d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <div class="widget-icon">
+                                                            <a href=""><i class="bx bx-mouse-alt"></i></a>
+                                                        </div>
+                                                        <div class="widget-desc">
+                                                            <h5 class="">Special Member</h5>
+                                                        </div>
                                                     </div>
-                                                    <div id="chart2"></div>
+                                                    <div class="progress-report" data-title="progress"
+                                                        data-intro="And this is the last step!">
+                                                        <h4></h4>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-4">
-                                        <div class="card radius-10 bg-gradient-ibiza">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-auto">
-                                                        <a href="{{ url('/bulkorder') }}">
-                                                            <p class="mb-0 text-white">Bulk Order</p>
-                                                        </a>
-                                                        <h4 class="my-1 text-white">0</h4>
+                                    <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                        <div class="card bg-primary">
+                                            <div class="card-body" data-intro="New Orders">
+                                                <div
+                                                    class="single-widget d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <div class="widget-icon">
+                                                            <a href="{{ url('/bulkorder') }}"><i
+                                                                    class="bx bx-mouse-alt"></i></a>
+                                                        </div>
+                                                        <div class="widget-desc">
+                                                            <h5 class="">Bulk Order</h5>
+                                                        </div>
                                                     </div>
-                                                    <div id="chart2"></div>
+                                                    <div class="progress-report" data-title="progress"
+                                                        data-intro="And this is the last step!">
+                                                        <h4></h4>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-4">
-                                        <div class="card radius-10 bg-gradient-cosmic">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-auto">
-                                                        <a href="{{ url('/bulkorderstatus') }}">
-                                                            <p class="mb-0 text-dark">Bulk Order Status</p>
-                                                        </a>
-                                                        <h4 class="my-1 text-dark">0</h4>
+
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                        <div class="card bg-info">
+                                            <div class="card-body" data-intro="New Orders">
+                                                <div
+                                                    class="single-widget d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <div class="widget-icon">
+                                                            <a href="{{ url('/bulkorderstatus') }}"><i
+                                                                    class="bx bx-mouse-alt"></i></a>
+                                                        </div>
+                                                        <div class="widget-desc">
+                                                            <h5 class="">Bulk Order Status</h5>
+                                                        </div>
                                                     </div>
-                                                    <div id="chart4"></div>
+                                                    <div class="progress-report" data-title="progress"
+                                                        data-intro="And this is the last step!">
+                                                        <h4></h4>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-4">
-                                        <div class="card radius-10 bg-gradient-kyoto">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-auto">
-                                                        <a href="{{ url('/nalavariyam/form') }}/pending">
-                                                            <p class="mb-0 text-dark">Pending</p>
-                                                        </a>
-                                                        <h4 class="my-1 text-dark">{{ $pendingcount }}</h4>
+                                    <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                        <div class="card bg-warning">
+                                            <div class="card-body" data-intro="New Orders">
+                                                <div
+                                                    class="single-widget d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <div class="widget-icon">
+                                                            <a href="{{ url('/nalavariyam/form') }}/pending"><i
+                                                                    class="bx bx-mouse-alt"></i></a>
+                                                        </div>
+                                                        <div class="widget-desc">
+                                                            <h5 class="">Pending</h5>
+                                                        </div>
                                                     </div>
-                                                    <div id="chart4"></div>
+                                                    <div class="progress-report" data-title="progress"
+                                                        data-intro="And this is the last step!">
+                                                        <h4>{{ $pendingcount }}</h4>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-4">
-                                        <div class="card radius-10 bg-gradient-ibiza">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-auto">
-                                                        <a href="{{ url('/nalavariyam/form') }}/resubmit">
-                                                            <p class="mb-0 text-dark">Resubmit</p>
-                                                        </a>
-                                                        <h4 class="my-1 text-dark">{{ $resubmitcount }}</h4>
+                                    <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                        <div class="card bg-danger">
+                                            <div class="card-body" data-intro="New Orders">
+                                                <div
+                                                    class="single-widget d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <div class="widget-icon">
+                                                            <a href="{{ url('/nalavariyam/form') }}/resubmit"><i
+                                                                    class="bx bx-mouse-alt"></i></a>
+                                                        </div>
+                                                        <div class="widget-desc">
+                                                            <h5 class="">Resubmit</h5>
+                                                        </div>
                                                     </div>
-                                                    <div id="chart4"></div>
+                                                    <div class="progress-report" data-title="progress"
+                                                        data-intro="And this is the last step!">
+                                                        <h4>{{ $resubmitcount }}</h4>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-4">
-                                        <div class="card radius-10 bg-gradient-cosmic">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-auto">
-                                                        <a href="{{ url('/nalavariyam/form') }}/approved">
-                                                            <p class="mb-0 text-dark">Approved</p>
-                                                        </a>
-                                                        <h4 class="my-1 text-dark">{{ $approvedcount }}</h4>
+                                    <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                        <div class="card bg-warning">
+                                            <div class="card-body" data-intro="New Orders">
+                                                <div
+                                                    class="single-widget d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <div class="widget-icon">
+                                                            <a href="{{ url('/nalavariyam/form') }}/approved"><i
+                                                                    class="bx bx-mouse-alt"></i></a>
+                                                        </div>
+                                                        <div class="widget-desc">
+                                                            <h5 class="">Approved</h5>
+                                                        </div>
                                                     </div>
-                                                    <div id="chart4"></div>
+                                                    <div class="progress-report" data-title="progress"
+                                                        data-intro="And this is the last step!">
+                                                        <h4>{{ $approvedcount }}</h4>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-4">
-                                        <div class="card radius-10 bg-gradient-ohhappiness">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-auto">
-                                                        <a href="{{ url('/application_status') }}">
-                                                            <p class="mb-0 text-white">Application Status</p>
-                                                        </a>
-                                                        <h4 class="my-1 text-white">0</h4>
+
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                        <div class="card bg-info">
+                                            <div class="card-body" data-intro="New Orders">
+                                                <div
+                                                    class="single-widget d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <div class="widget-icon">
+                                                            <a href="{{ url('/application_status') }}"><i
+                                                                    class="bx bx-mouse-alt"></i></a>
+                                                        </div>
+                                                        <div class="widget-desc">
+                                                            <h5 class="">Application Status</h5>
+                                                        </div>
                                                     </div>
-                                                    <div id="chart2"></div>
+                                                    <div class="progress-report" data-title="progress"
+                                                        data-intro="And this is the last step!">
+                                                        <h4></h4>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-4">
-                                        <div class="card radius-10 bg-gradient-ibiza">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-auto">
-                                                        <a href="{{ url('/nalavariyam_services') }}">
-                                                            <p class="mb-0 text-dark">Service</p>
-                                                        </a>
-                                                        <h4 class="my-1 text-dark">0</h4>
+                                    <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                        <div class="card bg-info">
+                                            <div class="card-body" data-intro="New Orders">
+                                                <div
+                                                    class="single-widget d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <div class="widget-icon">
+                                                            <a href="{{ url('/nalavariyam_services') }}"><i
+                                                                    class="bx bx-mouse-alt"></i></a>
+                                                        </div>
+                                                        <div class="widget-desc">
+                                                            <h5 class="">Service</h5>
+                                                        </div>
                                                     </div>
-                                                    <div id="chart4"></div>
+                                                    <div class="progress-report" data-title="progress"
+                                                        data-intro="And this is the last step!">
+                                                        <h4></h4>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -399,109 +343,157 @@
                         @endif
                         @if (Auth::user()->verified == 1)
                             @if (Auth::user()->user_type_id == 3)
-                                <div class="main-content">
-                                    <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="card radius-10 bg-gradient-kyoto">
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-auto">
-                                                            <a href="{{ url('/nalavariyam/form') }}/pending">
-                                                                <p class="mb-0 text-dark">Pending</p>
-                                                            </a>
-                                                            <h4 class="my-1 text-dark">{{ $pendingcount }}</h4>
+                                <div class="col-xl-12">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                            <div class="card bg-info">
+                                                <div class="card-body" data-intro="New Orders">
+                                                    <div
+                                                        class="single-widget d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <div class="widget-icon">
+                                                                <a href="{{ url('/nalavariyam/form') }}/pending"><i
+                                                                        class="bx bx-mouse-alt"></i></a>
+                                                            </div>
+                                                            <div class="widget-desc">
+                                                                <h5 class="">Pending</h5>
+                                                            </div>
                                                         </div>
-                                                        <div id="chart4"></div>
+                                                        <div class="progress-report" data-title="progress"
+                                                            data-intro="And this is the last step!">
+                                                            <h4>{{ $pendingcount }}</h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="card radius-10 bg-gradient-ibiza">
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-auto">
-                                                            <a href="{{ url('/nalavariyam/form') }}/resubmit">
-                                                                <p class="mb-0 text-dark">Resubmit</p>
-                                                            </a>
-                                                            <h4 class="my-1 text-dark">{{ $resubmitcount }}</h4>
+                                        <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                            <div class="card bg-warning">
+                                                <div class="card-body" data-intro="New Orders">
+                                                    <div
+                                                        class="single-widget d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <div class="widget-icon">
+                                                                <a href="{{ url('/nalavariyam/form') }}/resubmit"><i
+                                                                        class="bx bx-mouse-alt"></i></a>
+                                                            </div>
+                                                            <div class="widget-desc">
+                                                                <h5 class="">Resubmit</h5>
+                                                            </div>
                                                         </div>
-                                                        <div id="chart4"></div>
+                                                        <div class="progress-report" data-title="progress"
+                                                            data-intro="And this is the last step!">
+                                                            <h4>{{ $resubmitcount }}</h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="card radius-10 bg-gradient-cosmic">
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-auto">
-                                                            <a href="{{ url('/nalavariyam/form') }}/approved">
-                                                                <p class="mb-0 text-dark">Approved</p>
-                                                            </a>
-                                                            <h4 class="my-1 text-dark">{{ $approvedcount }}</h4>
+                                        <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                            <div class="card bg-danger">
+                                                <div class="card-body" data-intro="New Orders">
+                                                    <div
+                                                        class="single-widget d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <div class="widget-icon">
+                                                                <a href="{{ url('/nalavariyam/form') }}/approved"><i
+                                                                        class="bx bx-mouse-alt"></i></a>
+                                                            </div>
+                                                            <div class="widget-desc">
+                                                                <h5 class="">Approved</h5>
+                                                            </div>
                                                         </div>
-                                                        <div id="chart4"></div>
+                                                        <div class="progress-report" data-title="progress"
+                                                            data-intro="And this is the last step!">
+                                                            <h4>{{ $approvedcount }}</h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="card radius-10 bg-gradient-ohhappiness">
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-auto">
-                                                            <a href="{{ url('/member') }}">
-                                                                <p class="mb-0 text-white">Member</p>
-                                                            </a>
-                                                            <h4 class="my-1 text-white">{{ $memcount }}</h4>
+                                        <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                            <div class="card bg-info">
+                                                <div class="card-body" data-intro="New Orders">
+                                                    <div
+                                                        class="single-widget d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <div class="widget-icon">
+                                                                <a href="{{ url('member') }}"><i
+                                                                        class="bx bx-mouse-alt"></i></a>
+                                                            </div>
+                                                            <div class="widget-desc">
+                                                                <h5 class="">Member</h5>
+                                                            </div>
                                                         </div>
-                                                        <div id="chart2"></div>
+                                                        <div class="progress-report" data-title="progress"
+                                                            data-intro="And this is the last step!">
+                                                            <h4>{{ $memcountref }}</h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="card radius-10 bg-gradient-cosmic">
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-auto">
-                                                            <a href="{{ url('/special_member') }}">
-                                                                <p class="mb-0 text-white">Special Member</p>
-                                                            </a>
-                                                            <h4 class="my-1 text-white">0</h4>
+                                        <!-- <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                            <div class="card bg-success">
+                                                <div class="card-body" data-intro="New Orders">
+                                                    <div class="single-widget d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <div class="widget-icon">
+                                                                <a href="{{ url('/') }}"><i class="bx bx-mouse-alt"></i></a>
+                                                            </div>
+                                                            <div class="widget-desc">
+                                                                <h5 class="">Special Member</h5>
+                                                            </div>
                                                         </div>
-                                                        <div id="chart2"></div>
+                                                        <div class="progress-report" data-title="progress"
+                                                            data-intro="And this is the last step!">
+                                                            <h4></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
+                                        <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                            <div class="card bg-primary">
+                                                <div class="card-body" data-intro="New Orders">
+                                                    <div
+                                                        class="single-widget d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <div class="widget-icon">
+                                                                <a href="{{ url('/bulkorder') }}"><i
+                                                                        class="bx bx-mouse-alt"></i></a>
+                                                            </div>
+                                                            <div class="widget-desc">
+                                                                <h5 class="">Bulk Order</h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="progress-report" data-title="progress"
+                                                            data-intro="And this is the last step!">
+                                                            <h4></h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="card radius-10 bg-gradient-ibiza">
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-auto">
-                                                            <a href="{{ url('/bulkorder') }}">
-                                                                <p class="mb-0 text-white">Bulk Order</p>
-                                                            </a>
-                                                            <h4 class="my-1 text-white">0</h4>
+                                        <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                            <div class="card bg-info">
+                                                <div class="card-body" data-intro="New Orders">
+                                                    <div
+                                                        class="single-widget d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <div class="widget-icon">
+                                                                <a href="{{ url('/bulkorders') }}"><i
+                                                                        class="bx bx-mouse-alt"></i></a>
+                                                            </div>
+                                                            <div class="widget-desc">
+                                                                <h5 class="">Bulk Order Status</h5>
+                                                            </div>
                                                         </div>
-                                                        <div id="chart2"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="card radius-10 bg-gradient-kyoto">
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-auto">
-                                                            <a href="{{ url('/bulkorders') }}">
-                                                                <p class="mb-0 text-dark">Bulk Order Status</p>
-                                                            </a>
-                                                            <h4 class="my-1 text-dark">0</h4>
+                                                        <div class="progress-report" data-title="progress"
+                                                            data-intro="And this is the last step!">
+                                                            <h4></h4>
                                                         </div>
-                                                        <div id="chart4"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -510,109 +502,184 @@
                                 </div>
                             @endif
                             @if (Auth::user()->user_type_id == 4)
-                                <div class="main-content">
-                                    <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="card radius-10 bg-gradient-kyoto">
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-auto">
-                                                            <a href="{{ url('/nalavariyam/form') }}/pending">
-                                                                <p class="mb-0 text-dark">Pending</p>
-                                                            </a>
-                                                            <h4 class="my-1 text-dark">{{ $pendingcount }}</h4>
+                                <div class="col-xl-12">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                            <div class="card bg-info">
+                                                <div class="card-body" data-intro="New Orders">
+                                                    <div
+                                                        class="single-widget d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <div class="widget-icon">
+                                                                <a href="{{ url('/nalavariyam/form') }}/pending"><i
+                                                                        class="bx bx-mouse-alt"></i></a>
+                                                            </div>
+                                                            <div class="widget-desc">
+                                                                <h5 class="">Pending</h5>
+                                                            </div>
                                                         </div>
-                                                        <div id="chart4"></div>
+                                                        <div class="progress-report" data-title="progress"
+                                                            data-intro="And this is the last step!">
+                                                            <h4>{{ $pendingcount }}</h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="card radius-10 bg-gradient-ibiza">
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-auto">
-                                                            <a href="{{ url('/nalavariyam/form') }}/resubmit">
-                                                                <p class="mb-0 text-dark">Resubmit</p>
-                                                            </a>
-                                                            <h4 class="my-1 text-dark">{{ $resubmitcount }}</h4>
+                                        <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                            <div class="card bg-warning">
+                                                <div class="card-body" data-intro="New Orders">
+                                                    <div
+                                                        class="single-widget d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <div class="widget-icon">
+                                                                <a href="{{ url('/nalavariyam/form') }}/resubmit"><i
+                                                                        class="bx bx-mouse-alt"></i></a>
+                                                            </div>
+                                                            <div class="widget-desc">
+                                                                <h5 class="">Resubmit</h5>
+                                                            </div>
                                                         </div>
-                                                        <div id="chart4"></div>
+                                                        <div class="progress-report" data-title="progress"
+                                                            data-intro="And this is the last step!">
+                                                            <h4>{{ $resubmitcount }}</h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="card radius-10 bg-gradient-cosmic">
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-auto">
-                                                            <a href="{{ url('/nalavariyam/form') }}/approved">
-                                                                <p class="mb-0 text-dark">Approved</p>
-                                                            </a>
-                                                            <h4 class="my-1 text-dark">{{ $approvedcount }}</h4>
+                                        <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                            <div class="card bg-danger">
+                                                <div class="card-body" data-intro="New Orders">
+                                                    <div
+                                                        class="single-widget d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <div class="widget-icon">
+                                                                <a href="{{ url('/nalavariyam/form') }}/approved"><i
+                                                                        class="bx bx-mouse-alt"></i></a>
+                                                            </div>
+                                                            <div class="widget-desc">
+                                                                <h5 class="">Approved</h5>
+                                                            </div>
                                                         </div>
-                                                        <div id="chart4"></div>
+                                                        <div class="progress-report" data-title="progress"
+                                                            data-intro="And this is the last step!">
+                                                            <h4>{{ $approvedcount }}</h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="card radius-10 bg-gradient-ohhappiness">
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-auto">
-                                                            <a href="{{ url('/member') }}">
-                                                                <p class="mb-0 text-white">Member</p>
-                                                            </a>
-                                                            <h4 class="my-1 text-white">{{ $memcount }}</h4>
+                                        <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                            <div class="card bg-info">
+                                                <div class="card-body" data-intro="New Orders">
+                                                    <div
+                                                        class="single-widget d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <div class="widget-icon">
+                                                                <a href="{{ url('member') }}"><i
+                                                                        class="bx bx-mouse-alt"></i></a>
+                                                            </div>
+                                                            <div class="widget-desc">
+                                                                <h5 class="">Member</h5>
+                                                            </div>
                                                         </div>
-                                                        <div id="chart2"></div>
+                                                        <div class="progress-report" data-title="progress"
+                                                            data-intro="And this is the last step!">
+                                                            <h4>{{ $memcountref }}</h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="card radius-10 bg-gradient-cosmic">
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-auto">
-                                                            <a href="{{ url('/special_member') }}">
-                                                                <p class="mb-0 text-white">Special Member</p>
-                                                            </a>
-                                                            <h4 class="my-1 text-white">0</h4>
+                                        <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                            <div class="card bg-success">
+                                                <div class="card-body" data-intro="New Orders">
+                                                    <div
+                                                        class="single-widget d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <div class="widget-icon">
+                                                                <a href="{{ url('/') }}"><i
+                                                                        class="bx bx-mouse-alt"></i></a>
+                                                            </div>
+                                                            <div class="widget-desc">
+                                                                <h5 class="">Special Member</h5>
+                                                            </div>
                                                         </div>
-                                                        <div id="chart2"></div>
+                                                        <div class="progress-report" data-title="progress"
+                                                            data-intro="And this is the last step!">
+                                                            <h4></h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="card radius-10 bg-gradient-ibiza">
+                                        <!-- <div class="col-md-3 col-sm-6">
+                                            <div class="card">
                                                 <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-auto">
-                                                            <a href="{{ url('/bulkorder') }}">
-                                                                <p class="mb-0 text-white">Bulk Order</p>
-                                                            </a>
-                                                            <h4 class="my-1 text-white">0</h4>
+                                                    <div class="row">
+                                                        <div class="col-4 align-self-center">
+                                                            <div class="icon-info">
+                                                                <a href="{{ url('/') }}"><i
+                                                                        class="mdi mdi-account-multiple text-purple"></i></a>
+                                                            </div>
                                                         </div>
-                                                        <div id="chart2"></div>
+                                                        <div class="col-8 align-self-center text-center">
+                                                            <div class="ms-2 text-end">
+                                                                <p class="mb-1 text-muted font-size-13">Special Member</p>
+                                                                <h4 class="mb-1 font-size-20"></h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="progress mt-2" style="height:3px;">
+                                                        <div class="progress-bar progress-animated  bg-info" role="progressbar"
+                                                            style="max-width: 55%;" aria-valuenow="55" aria-valuemin="0"
+                                                            aria-valuemax="100">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                            <div class="card bg-primary">
+                                                <div class="card-body" data-intro="New Orders">
+                                                    <div
+                                                        class="single-widget d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <div class="widget-icon">
+                                                                <a href="{{ url('/bulkorder') }}"><i
+                                                                        class="bx bx-mouse-alt"></i></a>
+                                                            </div>
+                                                            <div class="widget-desc">
+                                                                <h5 class="">Bulk Order</h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="progress-report" data-title="progress"
+                                                            data-intro="And this is the last step!">
+                                                            <h4></h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="card radius-10 bg-gradient-kyoto">
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-auto">
-                                                            <a href="{{ url('bulkorders') }}">
-                                                                <p class="mb-0 text-dark">Bulk Order Status</p>
-                                                            </a>
-                                                            <h4 class="my-1 text-dark">0</h4>
+                                        <div class="col-sm-6 col-lg-3 col-xxl-3">
+                                            <div class="card bg-info">
+                                                <div class="card-body" data-intro="New Orders">
+                                                    <div
+                                                        class="single-widget d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <div class="widget-icon">
+                                                                <a href="{{ url('/bulkorders') }}"><i
+                                                                        class="bx bx-mouse-alt"></i></a>
+                                                            </div>
+                                                            <div class="widget-desc">
+                                                                <h5 class="">Bulk Order Status</h5>
+                                                            </div>
                                                         </div>
-                                                        <div id="chart4"></div>
+                                                        <div class="progress-report" data-title="progress"
+                                                            data-intro="And this is the last step!">
+                                                            <h4></h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -628,7 +695,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     @if (Auth::user()->is_completed == 0 || ($data && $data->status == 'Resubmit'))
-                                        <h1 class="card-title">பதவி நியமனச் சான்றிதழ்</h1>
+                                        <h5 class="card-title">பதவி நியமனச் சான்றிதழ்</h5>
                                         <div class="row">
                                             <form class="row g-4" action="{{ url('add_appointment') }}"
                                                 enctype="multipart/form-data" method="post" id="myForm">
@@ -741,7 +808,7 @@
                                 </div>
                         @endif
                     @else
-                        <h3 class="text-center">Please Verify Your ID...</h3>
+                        <h4 class="text-center">Please Verify Your ID...</h4>
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -751,12 +818,12 @@
                                         @csrf
                                         <div class="row">
                                             <input type="hidden" name="userid" value="{{ Auth::user()->id }}" />
-                                            <input type="hidden" name="activation_amount_hidden"
-                                                id="act_amount_hidden" />
+                                            <input type="hidden" name="activation_amount_hidden" id="act_amount_hidden"
+                                                value="0" />
+                                            <input type="hidden" name="admin_amount" id="adminamt" / value="0">
                                             <div class="mb-3 col-md-6">
                                                 @if (Auth::user()->user_type_id != 2)
-                                                    <label for="nalavariyam_usertype" class="form-label">User
-                                                        Type</label>
+                                                    <label for="nalavariyam_usertype" class="form-label">User Type</label>
                                                     <select required type="text" class="form-control"
                                                         id="nalavariyam_usertype" name="nalavariyam_usertype">
                                                         <option value="">Select</option>
@@ -810,8 +877,7 @@
                                             </div>
                                             <div class="mb-3 col-md-6">
                                                 @if (Auth::user()->user_type_id != 2)
-                                                    <label for="name" class="form-label">Activation
-                                                        Payment</label>
+                                                    <label for="name" class="form-label">Activation Payment</label>
                                                     <input readonly required="required" type="text"
                                                         class="form-control" name="activation_amount" id="act_amount">
                                                 @endif
@@ -860,10 +926,10 @@
                                             aria-label="Close"></button>
                                     </div>
                                 @endif
-{{-- 
+
                                 <div class="card-body">
                                     <h5 class="card-title">Apply Service</h5>
-                                    @if ($serviceid == 568)
+                                    @if ($serviceid == 68)
                                         <div class="d-flex align-items-center gap-2 justify-content-lg-end ">
                                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                                 data-bs-target="#agentreg">Agent Register</button>
@@ -875,7 +941,7 @@
                                                 method="post">
                                                 <div class="col-lg-12">
                                                     <div class="mb-3 row">
-                                                        <input type="hidden" id="customerid" name="customerid" value="{{ $talukid }}">
+                                                        {{-- <input type="hidden" id="customerid" name="customerid" value="{{ $talukid }}"> --}}
                                                         @if ($serviceid == 119)
                                                             @foreach ($services as $service)
                                                                 <div class="col-sm-4 col-md-6 col-xl-2 mb-2">
@@ -924,7 +990,7 @@
                                                                         <b>{{ $service->service_name }}</b>
                                                                     </p>
                                                                     <hr class="text-black">
-                                                                    <h6 class="mb-2 text-danger">Amount: {{ $service->payment }}</h6>
+                                                                    {{-- <h6 class="mb-2 text-danger">Amount: {{ $service->payment }}</h6> --}}
                                                                 </div>
                                                                 <div
                                                                     class="d-flex align-items-center justify-content-between">
@@ -940,18 +1006,58 @@
                                         </div>
                                     </div>
                                 @else
-                                    <label for="input1" class="form-label">Service</label>
-                                    <div class="col-sm-10">
-                                        <select id="serviceid" class="form-select">
-                                            <option value="">Select</option>
-                                            @foreach ($services as $service)
-                                                <option value="{{ $service->id }}">{{ $service->service_name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                    <div class="container-fluid mt-1">
+
+                                        <div class="row">
+                                            <div class="container-xxl flex-grow-1">
+                                                <div id="category_div" class="row text-center">
+                                                    @if ($services->isEmpty())
+                                                        <div class="d-flex justify-content-center align-items-center py-5">
+                                                            <div class="no-service-card text-center p-4">
+                                                                <h4 class="no-service-title mb-3">No Services Activated
+                                                                </h4>
+                                                                <p class="no-service-subtitle mb-4">Please activate
+                                                                    services to continue</p>
+
+                                                                <a href="{{ url('/userpermission') }}/{{ Auth::user()->id }}"
+                                                                    class="btn manage-btn">
+                                                                    Manage User Permissions
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        @foreach ($services as $ser)
+                                                            <div class="col-6 col-md-3 col-lg-2 mb-4 category_data">
+                                                                <div class="card service-card h-100">
+
+
+                                                                    <a href="{{ url('/applyservices', $ser->id) }}"
+                                                                        class="service-link">
+
+
+                                                                        <div class="service-content">
+                                                                            <img src="{{ !empty($ser->sub_service_image)
+                                                                                ? asset('upload/sub_service/' . $ser->sub_service_image)
+                                                                                : asset('upload/service/default.png') }}"
+                                                                                class="service-img"
+                                                                                style="width: 100px; height: 100px;" />
+
+                                                                            <p class="service-title">
+                                                                                {{ $ser->service_name }}
+                                                                            </p>
+                                                                        </div>
+
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     @endif
-                                </div> --}}
+                                </div>
                             </div>
                             </form>
                         </div>
@@ -1028,7 +1134,6 @@
     </div>
     </div>
     </div>
-
 @endsection
 @push('page_scripts')
     <script>
@@ -1038,7 +1143,7 @@
             window.location.href = "{{ url('applyservices') }}/" + serviceid;
 
         });
-        var ramjibalance = "{{ $rawallet->rawallet }}";
+        var ramjibalance = "{{ $rawallet->nalavariyamwallet }}";
         $(".permissionform").submit(function() {
             var wallet = "{{ Auth::user()->wallet }}";
             var amount = $("#act_amount_hidden").val();
@@ -1179,10 +1284,10 @@
             $('#verifybtnhide').show();
             var d = "";
             if (usertypeid == 3) {
-                d = "ஐடி ஆக்டிவ் கட்டணம் ரூ.4,000/- விண்ணப்ப கட்டணம் ரூ. 90/-";
-                com = 2000;
+                d = "ஐடி ஆக்டிவ் கட்டணம் ரூ.3,000/- விண்ணப்ப கட்டணம் ரூ. 75/-";
+                com = 1500;
             } else {
-                d = "ஐடி ஆக்டிவ் கட்டணம் ரூ.15,00/- விண்ணப்ப கட்டணம் ரூ. 120/-";
+                d = "ஐடி ஆக்டிவ் கட்டணம் ரூ.1,000/- விண்ணப்ப கட்டணம் ரூ. 90/-";
                 com = 500;
 
             }
@@ -1213,18 +1318,6 @@
                         return false;
                     }
 
-                    if (parseInt(com) > parseFloat(ramjibalance)) {
-                        alert("LOW BALANCE");
-                        $('#save').prop("disabled", true);
-                        $('#nopayment').html("Low Balance For the Service.Please Contact Admin...")
-                            .css({
-                                'color': 'red',
-                                'font-size': '130%',
-                                'font-weight': 'bold'
-                            });
-                        $('#verifybtnhide').hide();
-                        return false;
-                    }
                 }
             });
 

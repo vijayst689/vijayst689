@@ -102,6 +102,13 @@
                                                 <input type="file" name="profile" class="form-control"
                                                     id="input6">
                                             </div>
+                                            @if( Auth::user()->user_type_id == 2)
+                                            <div class="col-md-6">
+                                                <label for="input6" class="form-label">Qrimage</label>
+                                                <input type="file" name="qrimage" class="form-control"
+                                                    id="input6">
+                                            </div>
+                                            @endif
 
                                             <div class="col-md-6">
                                                 <label for="input11" class="form-label">Address</label>

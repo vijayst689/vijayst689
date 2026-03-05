@@ -21,9 +21,38 @@
     <link href="assets/css/app.css" rel="stylesheet">
     <link href="assets/css/icons.css" rel="stylesheet">
     <title>pkrmsolution.com</title>
+    <script>
+        ! function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '919664389493798');
+        fbq('track', 'PageView');
+    </script>
+
+    <!-- Facebook Domain Verification -->
+    <meta name="facebook-domain-verification" content="o7tjuxul606tpvrxq094bhwog98hc5" />
 </head>
 
 <body class="">
+    <noscript>
+        <img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=919664389493798&ev=PageView&noscript=1" />
+    </noscript>
     @if (session()->has('success'))
         <div class="alert alert-success alert-dismissible" role="alert">
             <strong> {{ session('success') }} </strong>
@@ -69,63 +98,46 @@
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
                                                             <label for="field-2" class="form-label">Phone</label>
-                                                            <input required onkeyup="duplicatephone(0)" id="phone"
-                                                                type="text" name="phone"
-                                                                class="form-control number" id="field-2"
-                                                                maxlength="10" placeholder="Phone">
-                                                            <span id="dupphone" style="color:red"></span>
+                                                            <input  class="form-control check-duplicate" name="phone"
+                                                                data-field="phone"
+                                                                data-url="{{ url('checkphoneregister') }}"
+                                                                data-error="#dist_phone_err" data-btn="#dist_submit"
+                                                                maxlength="10" required>
+                                                            <span class="spinner"></span>
+                                                            <small id="dist_phone_err" class="text-danger"></small>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label for="field-1" class="form-label">Aadhaar No</label>
-                                                            <input required onkeyup="duplicateaadhar(0)" id="aadhaar_no"
-                                                                type="text" name="aadhaar_no"
-                                                                class="form-control number" maxlength="12"
-                                                                placeholder="Aadhaar No">
-                                                            <span id="dupaadhar" style="color:red"></span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label for="field-1" class="form-label">District</label>
-                                                            <select required name="dist_id" id="dist_ids"
-                                                                class="form-control">
-                                                                <option value="">Select District</option>
-                                                                @foreach ($districts as $d)
-                                                                    <option value="{{ $d->id }}">
-                                                                        {{ $d->district_name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                
                                                     <div class="col-md-12">
                                                         <div class="mb-3">
-                                                            <label for="taluk" class="form-label">Taluk</label>
-                                                            <select required name="taluk_id" id="taluks"
-                                                                class="form-control">
-                                                            </select>
+                                                            <label for="field-1" class="form-label">Aadhaar No</label>
+                                                            <input class="form-control check-duplicate"
+                                                                name="aadhaar_no" data-field="aadhaar_no"
+                                                                data-url="{{ url('checkaadharregister') }}"
+                                                                data-error="#dist_aadhaar_err" data-btn="#dist_submit"
+                                                                maxlength="12" required>
+                                                            <span class="spinner"></span>
+                                                            <small id="dist_aadhaar_err" class="text-danger"></small>
                                                         </div>
                                                     </div>
+                                                </div>
+
+                                                <div class="row">
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
                                                             <label for="field-1" class="form-label">Email</label>
-                                                            <input required onkeyup="duplicateemail(0)" id="email"
-                                                                type="text" name="email" class="form-control"
-                                                                maxlength="30" placeholder="Email">
-
+                                                            <input class="form-control check-duplicate" name="email"
+                                                                data-field="email"
+                                                                data-url="{{ url('checkemailregister') }}"
+                                                                data-error="#dist_email_err" data-btn="#dist_submit"
+                                                                required>
+                                                            <span class="spinner"></span>
+                                                            <small id="dist_email_err" class="text-danger"></small>
                                                         </div>
-                                                        <span id="dupemail" style="color:red"></span>
                                                     </div>
 
                                                     <div class="col-md-6">
@@ -148,14 +160,14 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="d-grid">
-                                                    <button type="submit" id="save"
-                                                        class="btn btn-primary">Sign up</button>
+                                                    <button type="submit" id="dist_submit" class="btn btn-primary"
+                                                        disabled>Sign up</button>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="text-center ">
                                                     <p class="mb-0">Already have an account? <a
-                                                            href="{{ url('login') }}">Sign in</a></p>
+                                                            href="{{ url('login') }}">Sign in here</a></p>
                                                 </div>
                                             </div>
                                         </form>
@@ -209,51 +221,28 @@
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
                                                             <label for="phone" class="form-label">Phone</label>
-                                                            <input required onkeyup="duplicatephone1(0)"
-                                                                id="phone1" type="text" name="phone"
-                                                                class="form-control number" maxlength="10"
-                                                                placeholder="Phone">
-                                                            <span id="dupphone1" style="color:red"></span>
+                                                            <input class="form-control check-duplicate" name="phone"
+                                                                data-field="phone"
+                                                                data-url="{{ url('checkphoneregisterretailer') }}"
+                                                                data-error="#ret_phone_err" data-btn="#ret_submit"
+                                                                maxlength="10" required>
+                                                            <span class="spinner"></span>
+                                                            <small id="ret_phone_err" class="text-danger"></small>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-12">
                                                         <div class="mb-3">
                                                             <label for="field-1" class="form-label">Aadhaar
                                                                 No</label>
-                                                            <input required onkeyup="duplicateaadhar1(0)"
-                                                                id="aadhaar_no1" type="text" name="aadhaar_no"
-                                                                class="form-control number" maxlength="12"
-                                                                placeholder="Aadhaar No">
-                                                            <span id="dupaadhar1" style="color:red"></span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                           <label for="field-1" class="form-label">District</label>
-                                                            <select required name="dist_id" id="dist_id"
-                                                                class="form-control">
-                                                                <option value="">Select District</option>
-                                                                @foreach ($districts as $d)
-                                                                    <option value="{{ $d->id }}">
-                                                                        {{ $d->district_name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-
-                                                    <div class="col-md-12">
-                                                        <div class="mb-3">
-                                                            <label for="taluk" class="form-label">Taluk</label>
-                                                            <select required name="taluk_id" id="taluk"
-                                                                class="form-control">
-                                                            </select>
+                                                            <input required class="form-control check-duplicate"
+                                                                name="aadhaar_no" data-field="aadhaar_no"
+                                                                data-url="{{ url('checkaadharregisterretailer') }}"
+                                                                data-error="#ret_aadhaar_err" data-btn="#ret_submit">
+                                                            <span class="spinner"></span>
+                                                            <small id="ret_aadhaar_err" class="text-danger"></small>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -262,11 +251,13 @@
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
                                                             <label for="field-1" class="form-label">Email</label>
-                                                            <input required onkeyup="duplicateemail1(0)"
-                                                                id="email1" type="text" name="email"
-                                                                class="form-control" maxlength="30"
-                                                                placeholder="Email">
-                                                            <span id="dupemail1" style="color:red"></span>
+                                                            <input class="form-control check-duplicate" name="email"
+                                                                data-field="email"
+                                                                data-url="{{ url('checkemailregisterretailer') }}"
+                                                                data-error="#ret_email_err" data-btn="#ret_submit"
+                                                                required>
+                                                            <span class="spinner"></span>
+                                                            <small id="ret_email_err" class="text-danger"></small>
                                                         </div>
                                                     </div>
 
@@ -290,14 +281,14 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="d-grid">
-                                                    <button type="submit" id="save1"
-                                                        class="btn btn-primary">Sign up</button>
+                                                    <button type="submit" id="ret_submit" class="btn btn-primary"
+                                                        disabled>Sign up</button>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="text-center ">
                                                     <p class="mb-0">Already have an account? <a
-                                                            href="{{ url('login') }}">Sign in</a></p>
+                                                            href="{{ url('login') }}">Sign in here</a></p>
                                                 </div>
                                             </div>
                                         </form>
@@ -341,366 +332,57 @@
         });
 
         //Distributor Script
+        let debounceTimer = null;
 
-        function duplicateemail(id) {
-            var email = $("#email").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('checkemailregister') }}',
-                data: {
-                    id: id,
-                    email: email,
-                    _token: _token
-                },
+        $(document).on('keyup', '.check-duplicate', function() {
 
-                success: function(res) {
+            let input = $(this);
+            let value = input.val().trim();
+            let url = input.data('url');
+            let field = input.data('field');
+            let errorBox = $(input.data('error'));
+            let submitBtn = $(input.data('btn'));
+            let spinner = input.siblings('.spinner');
+
+            clearTimeout(debounceTimer);
+
+            if (value.length < 3) {
+                input.removeClass('is-valid is-invalid');
+                errorBox.text('');
+                submitBtn.prop('disabled', true);
+                return;
+            }
+
+            debounceTimer = setTimeout(() => {
+
+                spinner.show();
+
+                $.post(url, {
+                    [field]: value,
+                    _token: "{{ csrf_token() }}"
+                }, function(res) {
+
+                    spinner.hide();
+
                     if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#dupemail").html("email id already exists!");
+                        input.addClass('is-invalid').removeClass('is-valid');
+                        errorBox.text(field.replace('_', ' ') + ' already exists');
+                        submitBtn.prop('disabled', true);
                     } else {
-                        $("#save").prop('disabled', false);
-                        $("#dupemail").html("");
+                        input.addClass('is-valid').removeClass('is-invalid');
+                        errorBox.text('');
+                        toggleSubmit(submitBtn);
                     }
-                },
 
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
-            });
-        }
+                });
 
-        function duplicateaadhar(id) {
-            var aadhaar_no = $("#aadhaar_no").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('checkaadharregister') }}',
-                data: {
-                    id: id,
-                    aadhaar_no: aadhaar_no,
-                    _token: _token
-                },
-
-                success: function(res) {
-                    if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#dupaadhar").html("aadhar no already exists!");
-                    } else {
-                        $("#save").prop('disabled', false);
-                        $("#dupaadhar").html("");
-                    }
-                },
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
-            });
-        }
-
-        function duplicatephone(id) {
-            var phone = $("#phone").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('checkphoneregister') }}',
-                data: {
-                    id: id,
-                    phone: phone,
-                    _token: _token
-                },
-
-                success: function(res) {
-                    if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#dupphone").html("mobile no already exists!");
-                    } else {
-                        $("#save").prop('disabled', false);
-                        $("#dupphone").html("");
-                    }
-                },
-
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
-            });
-        }
-
-        function duplicatepan(id) {
-            var pan_no = $("#pan_no").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('checkpanregister') }}',
-                data: {
-                    id: id,
-                    pan_no: pan_no,
-                    _token: _token
-                },
-
-                success: function(res) {
-                    if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#duppan").html("pan no already exists!");
-                    } else {
-                        $("#duppan").html("");
-                    }
-                    if ($("#dupphone").html() == "" && $("#duppan").html() == "" && $("#duppan").html() ==
-                        "") {
-                        $("#save").prop('disabled', false);
-                    } else {
-                        $("#save").prop('disabled', true);
-                    }
-                },
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
-
-            });
-        }
-
-        //Retailer Script
-
-        function duplicateaadhar1(id) {
-            var aadhaar_no = $("#aadhaar_no").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('checkaadharregisterretailer') }}',
-                data: {
-                    id: id,
-                    aadhaar_no: aadhaar_no,
-                    _token: _token
-                },
-
-                success: function(res) {
-                    if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#dupaadhar1").html("aadhar no already exists!");
-                    } else {
-                        $("#dupaadhar1").html("");
-                    }
-                    if ($("#dupaadhar1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1")
-                    .html() ==
-                        "") {
-                        $("#save1").prop('disabled', false);
-                    } else {
-                        $("#save1").prop('disabled', true);
-                    }
-                },
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
-            });
-        }
-
-        function duplicatephone1(id) {
-            var phone = $("#phone").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('checkphoneregisterretailer') }}',
-                data: {
-                    id: id,
-                    phone: phone,
-                    _token: _token
-                },
-
-                success: function(res) {
-                    if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#dupphone1").html("mobile no already exists!");
-                    } else {
-                        $("#dupphone1").html("");
-                    }
-                    if ($("#dupphone1").html() == "" && $("#dupaadhar1").html() == "" && $("#dupemail1")
-                    .html() ==
-                        "") {
-                        $("#save1").prop('disabled', false);
-                    } else {
-                        $("#save1").prop('disabled', true);
-                    }
-                },
-
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
-            });
-        }
-
-        function duplicateemail1(id) {
-            var email = $("#email").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('checkemailregisterretailer') }}',
-                data: {
-                    id: id,
-                    email: email,
-                    _token: _token
-                },
-
-                success: function(res) {
-                    if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#dupemail1").html("email id already exists!");
-                    } else {
-                        $("#dupemail1").html("");
-                    }
-                    if ($("#dupemail1").html() == "" && $("#dupemail1").html() == "" && $("#dupemail1")
-                    .html() ==
-                        "") {
-                        $("#save1").prop('disabled', false);
-                    } else {
-                        $("#save1").prop('disabled', true);
-                    }
-                },
-
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
-            });
-        }
-
-        function duplicatepan1(id) {
-            var pan_no = $("#pan_no").val().trim();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                type: "post",
-                url: '{{ url('checkpanregisterretailer') }}',
-                data: {
-                    id: id,
-                    pan_no: pan_no,
-                    _token: _token
-                },
-
-                success: function(res) {
-                    if (res.exists) {
-                        $("#save").prop('disabled', true);
-                        $("#duppan1").html("pan no already exists!");
-                    } else {
-                        $("#duppan1").html("");
-                    }
-                    if ($("#dupphone1").html() == "" && $("#duppan1").html() == "" && $("#duppan1").html() ==
-                        "") {
-                        $("#save1").prop('disabled', false);
-                    } else {
-                        $("#save1").prop('disabled', true);
-                    }
-                },
-                error: function(jqXHR, exception) {
-                    console.log(exception);
-                }
-            });
-        }
-
-
-
-        //Register Script
-
-        $('#dist_id').on('change', function() {
-            var dist_id = this.value;
-            $("#taluk").html('');
-            var url = "{{ url('register/get_taluk_register') }}/" + dist_id;
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function(result) {
-                    $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
-                    $.each(result, function(key, value) {
-                        $("#taluk").append('<option value="' + value
-                            .id + '">' + value.taluk_name + '</option>');
-                    });
-                    $('#panchayath').html('<option value="">-- Select Panchayath --</option>');
-                }
-            });
+            }, 500);
         });
 
-        $('#taluk').on('change', function() {
-            var taluk_id = this.value;
-            $("#panchayath").html('');
-            var url = "{{ url('register/get_panchayath_register') }}/" + taluk_id;
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function(result) {
-                    $('#panchayath').html('<option value="">-- Select Panchayath Name --</option>');
-                    $.each(result, function(key, value) {
-                        $("#panchayath").append('<option value="' + value
-                            .id + '">' + value.panchayath_name + '</option>');
-                    });
-                }
-            });
-        });
-
-        $('#dist_ids').on('change', function() {
-            var dist_id = this.value;
-            $("#taluks").html('');
-            var url = "{{ url('register/get_taluk_register') }}/" + dist_id;
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function(result) {
-                    $('#taluks').html('<option value="">-- Select Taluk Name --</option>');
-                    $.each(result, function(key, value) {
-                        $("#taluks").append('<option value="' + value
-                            .id + '">' + value.taluk_name + '</option>');
-                    });
-                    $('#panchayaths').html('<option value="">-- Select Panchayath --</option>');
-                }
-            });
-        });
-
-        $('#taluks').on('change', function() {
-            var taluk_id = this.value;
-            $("#panchayaths").html('');
-            var url = "{{ url('register/get_panchayath_register') }}/" + taluk_id;
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function(result) {
-                    $('#panchayaths').html('<option value="">-- Select Panchayath Name --</option>');
-                    $.each(result, function(key, value) {
-                        $("#panchayaths").append('<option value="' + value
-                            .id + '">' + value.panchayath_name + '</option>');
-                    });
-                }
-            });
-        });
-
-        $('#dist_idc').on('change', function() {
-            var dist_id = this.value;
-            $("#talukc").html('');
-            var url = "{{ url('register/get_taluk_register') }}/" + dist_id;
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function(result) {
-                    $('#talukc').html('<option value="">-- Select Taluk Name --</option>');
-                    $.each(result, function(key, value) {
-                        $("#talukc").append('<option value="' + value
-                            .id + '">' + value.taluk_name + '</option>');
-                    });
-                    $('#panchayathc').html('<option value="">-- Select Panchayath --</option>');
-                }
-            });
-        });
-
-        $('#talukc').on('change', function() {
-            var taluk_id = this.value;
-            $("#panchayathc").html('');
-            var url = "{{ url('register/get_panchayath_register') }}/" + taluk_id;
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function(result) {
-                    $('#panchayathc').html('<option value="">-- Select Panchayath Name --</option>');
-                    $.each(result, function(key, value) {
-                        $("#panchayathc").append('<option value="' + value
-                            .id + '">' + value.panchayath_name + '</option>');
-                    });
-                }
-            });
-        });
+        function toggleSubmit(button) {
+            let form = button.closest('form');
+            button.prop('disabled', form.find('.is-invalid').length > 0);
+        }
     </script>
     <!--app JS-->
     <script src="assets/js/app.js"></script>

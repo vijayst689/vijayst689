@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('content')
+<<<<<<< HEAD
    <div class="page-wrapper">
+=======
+    <div class="page-wrapper">
+>>>>>>> e4755c316d43accf24172136c56648e4396ddc68
         <div class="page-content">
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
                 <div class="breadcrumb-title pe-3">{{ $servicename }}</div>
@@ -33,21 +37,21 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    <form onsubmit="return checkpayment(event)" action="{{ url('/submitsharmcard') }}" id="formAccountSettings"
-                        method="POST" enctype="multipart/form-data">
+                    <form onsubmit="return checkpayment(event)" action="{{ url('/submitsharmcard') }}"
+                        id="formAccountSettings" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="amount" id="amount">
                         <input type="hidden" name="serviceid" value="{{ $serviceid }}">
                         <input type="hidden" name="servicepayment" value="{{ $payment }}">
-                       <div class="row">
 
-                                <div class="mb-3 col-md-6">
-                                    <label for="aadhaar" class="form-label">Aadhaar Number</label>
-                                    <input class="form-control number" type="text" name="aadhaar" maxlength="12" required
-                                        placeholder="Aadhaar Number" />
-                                </div>
-
+                        <div class="row">
+                            <div class="mb-3 col-md-4">
+                                <label for="aadhaar" class="form-label">Aadhaar Number</label>
+                                <input class="form-control number" type="text" name="aadhaar" maxlength="12" required
+                                    autofocus placeholder="Enter Aadhaar Number" />
                             </div>
+                        </div>
+
                         <div class="mt-2 text-center" id="nopayment"></div>
                         <div class="mt-2 text-center">
                             <button type="submit" id="save" class="btn btn-primary me-2">Submit</button>
@@ -57,7 +61,7 @@
                         <div class="table-responsive white-space-nowrap">
                             <table id="example2" class="table align-middle">
                                 <thead class="table-dark">
-                                   <tr>
+                                    <tr>
                                         <th>Sl No</th>
                                         <th>UAN Number</th>
                                         <th>Name</th>
@@ -71,10 +75,9 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $s->uan }}</td>
                                             <td>{{ $s->name }}</td>
-                                            <td><a href="{{ url('/') }}/upload/sharmcard/{{ $s->pdf }}" download
-                                class="btn btn-primary btn-sm">Download</a></td>
+                                            <td><a href="{{ url('/') }}/upload/sharmcard/{{ $s->pdf }}"
+                                                    download class="btn btn-primary btn-sm">Download</a></td>
                                             <td>{{ $s->date }}</td>
-
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -84,11 +87,26 @@
                 </div>
             </div>
         </div>
-        </div>
-        </div>
+    </div>
+    </div>
 @endsection
 @push('page_scripts')
     <script>
+        $(function() {
+
+            var wallet = "{{ Auth::user()->wallet }}";
+            var amount = "{{ $payment }}";
+            if (parseFloat(amount) > parseInt(wallet)) {
+                $('#save').prop("disabled", true);
+                $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
+                    'color': 'red',
+                    'font-size': '150%',
+                    'font-weight': 'bold'
+                });
+            }
+
+
+        });
         var ramjibalance = "{{ $mainbalance->rawallet }}";
         var amount = "{{ $amount }}";
         ramjibalance = parseFloat(ramjibalance);
@@ -112,18 +130,5 @@
 
             }
         }
-
-        $(function() {
-            var wallet = "{{ Auth::user()->wallet }}";
-            var amount = "{{ $payment }}";
-            if (parseFloat(amount) > parseInt(wallet)) {
-                $('#save').prop("disabled", true);
-                $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
-                    'color': 'red',
-                    'font-size': '150%',
-                    'font-weight': 'bold'
-                });
-            }
-        });
     </script>
 @endpush
