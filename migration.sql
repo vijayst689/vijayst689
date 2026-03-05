@@ -2615,3 +2615,41 @@ alter table medicalscheme add vao_or_income_certificate varchar(20) Default NULL
 
 alter table voteridpdf_download add api_processing text DEFAULT NULL after certificate;
 alter table voteridpdf_download add api_approved text DEFAULT NULL after api_processing;
+
+CREATE TABLE `vehicle_mobilefind` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `rcno` varchar(20) DEFAULT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT 0,
+  `message` varchar(1000) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `sharmcard` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `uan` varchar(30) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `aadhaar` varchar(20) DEFAULT NULL,
+  `pdf` longtext DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
+
+CREATE TABLE `agristack_instant` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT 0,
+  `service_id` int DEFAULT 0,
+  `name` varchar(100) DEFAULT NULL,
+  `aadhaar` varchar(20) DEFAULT NULL,
+  `pdf` longtext DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;
