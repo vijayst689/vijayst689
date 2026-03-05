@@ -54,14 +54,14 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="input3" class="form-label">Phone</label>
-                                            <input class="form-control dup-check" data-field="phone" id="phone" type="text" name="phone"
+                                            <input required class="form-control dup-check" data-field="phone" id="phone" type="text" name="phone"
                                                 maxlength="10" class="form-control" id="input3" placeholder="Phone">
                                             <small class="text-danger dup-msg"></small>
                                         <div class="spinner-border spinner-border-sm text-primary d-none loader"></div>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="input3" class="form-label">Aadhaar No</label>
-                                            <input class="form-control dup-check" data-field="aadhaar_no" id="aadhaar_no" type="text"
+                                            <input required class="form-control dup-check" data-field="aadhaar_no" id="aadhaar_no" type="text"
                                                 name="aadhaar_no" maxlength="12" class="form-control number" id="input3"
                                                 placeholder="Aadhaar No">
                                             <small class="text-danger dup-msg"></small>
@@ -69,7 +69,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="input4" class="form-label">Email</label>
-                                            <input class="form-control dup-check" data-field="email" id="email" type="email" name="email"
+                                            <input required class="form-control dup-check" data-field="email" id="email" type="email" name="email"
                                                 maxlength="40" class="form-control" id="input4" placeholder="Email">
                                             <small class="text-danger dup-msg"></small>
                                          <div class="spinner-border spinner-border-sm text-primary d-none loader"></div>

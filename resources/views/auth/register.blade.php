@@ -98,7 +98,7 @@
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
                                                             <label for="field-2" class="form-label">Phone</label>
-                                                            <input class="form-control check-duplicate" name="phone"
+                                                            <input  class="form-control check-duplicate" name="phone"
                                                                 data-field="phone"
                                                                 data-url="{{ url('checkphoneregister') }}"
                                                                 data-error="#dist_phone_err" data-btn="#dist_submit"
@@ -237,7 +237,7 @@
                                                         <div class="mb-3">
                                                             <label for="field-1" class="form-label">Aadhaar
                                                                 No</label>
-                                                            <input class="form-control check-duplicate"
+                                                            <input required class="form-control check-duplicate"
                                                                 name="aadhaar_no" data-field="aadhaar_no"
                                                                 data-url="{{ url('checkaadharregisterretailer') }}"
                                                                 data-error="#ret_aadhaar_err" data-btn="#ret_submit">
