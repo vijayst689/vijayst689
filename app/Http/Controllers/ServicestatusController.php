@@ -5705,107 +5705,116 @@ public function submitsmartcard_register_update(Request $request){
 
     return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
-public function aadhaarcardupdate(Request $request){
-   $apply_user_id = 0;
-    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
-        $apply_user_id = $request->user_id;
-    }
-    elseif($request->retailer_id == 0){
-        $apply_user_id = $request->distributor_id;
-    }elseif($request->distributor_id == 0){
-        $apply_user_id = $request->retailer_id;
-    }
-    if($apply_user_id != Auth::user()->id){
-        $status = $request->status;
-        if($status == "Resubmit"){
-            DB::table( 'aadhaarcard' )->where('id', $request->applied_serviceid)->update( [
-                'remarks' => $request->remarks,
-                'status'  => $status,
-            ] );
-        }elseif($status == "Processing"){
-            if ( $request->acknowledgement != null ) {
-                $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
-                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
-                move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
+  public function aadhaarcardupdate(Request $request){
+        $apply_user_id = 0;
+        if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+            $apply_user_id = $request->user_id;
+        }
+        elseif($request->retailer_id == 0){
+            $apply_user_id = $request->distributor_id;
+        }elseif($request->distributor_id == 0){
+            $apply_user_id = $request->retailer_id;
+        }
+        //echo Auth::user()->id;die;
+        if($apply_user_id != Auth::user()->id){
+            $status = $request->status;
+            if($status == "Resubmit"){
+                DB::table( 'aadhaarcard' )->where('id', $request->applied_serviceid)->update( [
+                    'remarks' => $request->remarks,
+                    'status'  => $status,
+                ] );
+            }elseif($status == "Processing"){
+                if ( $request->acknowledgement != null ) {
+                    $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
+                    $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
+                    DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
+                        'acknowledgement' => $acknowledgement,
+                    ] );
+                }
                 DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
-                    'acknowledgement' => $acknowledgement,
                     'status' => $status,
                     'application_no' => $request->application_no,
+                    'selects' => $request->selects,
                 ] );
-            }
-        }elseif($status == "Approved"){
-            if ( $request->certificate != null ) {
-                $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
-                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'certificate'. DIRECTORY_SEPARATOR);
-                move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
+            }elseif($status == "Approved"){
+                if ( $request->certificate != null ) {
+                    $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
+                    $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'certificate'. DIRECTORY_SEPARATOR);
+                    move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
+                    DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
+                        'certificate' => $certificate,
+                        'status' => $status,
+                        'completed_date' => date("Y-m-d"),
+                    ] );
+                }
                 DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
-                    'certificate' => $certificate,
-                    'cusname' => $request->cusname,
                     'status' => $status,
-                    'completed_date' => date("Y-m-d"),
+                    'application' => $request->application,
+                    'lects' => $request->lects,
                 ] );
-            }
-                }elseif($status == "Rejected"){
-            $serviceid = $request->serviceid;
-            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
-            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
-            $usertype = 0;
-            if($getusers){
-                $usertype = $getusers->user_type_id;
-            }
-            $payment = 0;
-            if($getservice_payment){
-                if($usertype == 3){
-                  $payment = $getservice_payment->distributor_amount;
-              }elseif($usertype == 4){
-                  $payment = $getservice_payment->retailer_amount;
-              }elseif($usertype == 5){
-                  $payment = $getservice_payment->customer_amount;
+            }elseif($status == "Rejected"){
+                $serviceid = $request->serviceid;
+                $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+                $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+                $usertype = 0;
+                if($getusers){
+                    $usertype = $getusers->user_type_id;
+                }
+                $payment = 0;
+                if($getservice_payment){
+                    if($usertype == 3){
+                      $payment = $getservice_payment->distributor_amount;
+                  }elseif($usertype == 4){
+                      $payment = $getservice_payment->retailer_amount;
+                  }elseif($usertype == 5){
+                      $payment = $getservice_payment->customer_amount;
+                  }
               }
-          }
 
-          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
-          $servicename = "";
-          if($getservicename){
-            $servicename = $getservicename->service_name;
-        }
-        $date = date( 'Y-m-d' );
-        $time = date( 'H:i:s' );
-        $service_status = 'Out Payment';
-        $ad_info = "Service Refund For". ' ' .$servicename;
+              $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+              $servicename = "";
+              if($getservicename){
+                $servicename = $getservicename->service_name;
+            }
+            $date = date( 'Y-m-d' );
+            $time = date( 'H:i:s' );
+            $service_status = 'Out Payment';
+            $ad_info = "Service Refund For". ' ' .$servicename;
 
-        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
-        $balance = 0;
-        if($getwallet){
-            $balance = $getwallet->wallet;
-        }
-        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
-        $balance1 = 0;
-        if($getuserswallet){
-            $balance1 = $getuserswallet->wallet;
-        }
-        $newbalance = $balance - $payment;
-        $newbalance1 = $balance1 + $payment;
+            $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+            $balance = 0;
+            if($getwallet){
+                $balance = $getwallet->wallet;
+            }
+            $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+            $balance1 = 0;
+            if($getuserswallet){
+                $balance1 = $getuserswallet->wallet;
+            }
+            $newbalance = $balance - $payment;
+            $newbalance1 = $balance1 + $payment;
 
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
-        DB::insert( DB::raw( $sql ) );
-        $sql = "update users set wallet = wallet - $payment where id = 2";
-        DB::update( DB::raw( $sql ) );
-        $service_status = 'IN Payment';
-        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
-        DB::insert( DB::raw( $sql ) );
-        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
-        DB::update( DB::raw( $sql ) );
+            $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+            DB::insert( DB::raw( $sql ) );
+            $sql = "update users set wallet = wallet - $payment where id = 2";
+            DB::update( DB::raw( $sql ) );
+            $service_status = 'IN Payment';
+            $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+            DB::insert( DB::raw( $sql ) );
+            $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+            DB::update( DB::raw( $sql ) );
 
-        DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
-            'status' => $status,
-            'remarks' => $request->remarks,
-        ] );
-        }
-    }else{
-        $status = "Pending";
-        $serviceid = $request->serviceid;
-        if($serviceid == 56){
+            DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'remarks'  => $request->remarks,
+
+            ] );
+            }
+        }else{
+            $status = "Pending";
+            $serviceid = $request->serviceid;
+            if($serviceid == 56){
             if ($request->aadhaar_card != null) {
                     $aadhaar_card = uniqid() . '.' . $request->file('aadhaar_card')->extension();
                     $filepath     = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
@@ -5853,9 +5862,9 @@ public function aadhaarcardupdate(Request $request){
                 'postal_area_english' => $request->postal_area_english,
                 'pin_code'            => $request->pin_code,
                 'id_proof'        => $request->id_proof,
-                    'status'               => 'Pending',
-                    'applied_date'         => date("Y-m-d"),
-                    'created_at'           => date("Y-m-d"),
+                'status'               => 'Pending',
+                'applied_date'         => date("Y-m-d"),
+                'created_at'           => date("Y-m-d"),
                 ]);
 
     $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
@@ -5888,8 +5897,8 @@ public function aadhaarcardupdate(Request $request){
      $status = $getdata->status;
      $url = url('/');
      $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
-      $bank_pass_book_url = $url . '/upload/services/bank_pass_book/' . $bank_pass_book;
-    $smartcard_onlineprint_url = $url . '/upload/services/smartcard_onlineprint/' . $smartcard_onlineprint;
+     $bank_pass_book_url = $url . '/upload/services/bank_pass_book/' . $bank_pass_book;
+     $smartcard_onlineprint_url = $url . '/upload/services/smartcard_onlineprint/' . $smartcard_onlineprint;
      $voterid_url = $url . '/upload/services/voterid/' . $voterid;
      $API_KEY = env( 'API_KEY', '' );
      $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
@@ -5913,126 +5922,334 @@ public function aadhaarcardupdate(Request $request){
     }
 }
 
-        }elseif($serviceid == 58){
+    } elseif ($serviceid == 58) {
 
-            if ($request->aadhaar_card != null) {
-                    $aadhaar_card = uniqid() . '.' . $request->file('aadhaar_card')->extension();
-                    $filepath     = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
-                    move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
-                    DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->update([
-                        'aadhaar_card' => $aadhaar_card,
-                    ]);
-                }
+    DB::table('aadhaarcard')->where('id',$request->applied_serviceid)->update([
 
-                if ($request->schl_id_card != null) {
-                    $schl_id_card    = uniqid() . '.' . $request->file('schl_id_card')->extension();
-                    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'schl_id_card' . DIRECTORY_SEPARATOR);
-                    move_uploaded_file($_FILES['schl_id_card']['tmp_name'], $filepath . $schl_id_card);
-                    DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->update([
-                        'schl_id_card' => $schl_id_card,
-                    ]);
-                }
-                if ($request->bank_pass_book != null) {
-                    $bank_pass_book    = uniqid() . '.' . $request->file('bank_pass_book')->extension();
-                    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'bank_pass_book' . DIRECTORY_SEPARATOR);
-                    move_uploaded_file($_FILES['bank_pass_book']['tmp_name'], $filepath . $bank_pass_book);
-                    DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->update([
-                        'bank_pass_book' => $bank_pass_book,
-                    ]);
-                }
-                if ($request->smartcard_onlineprint != null) {
-                    $smartcard_onlineprint    = uniqid() . '.' . $request->file('smartcard_onlineprint')->extension();
-                    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smartcard_onlineprint' . DIRECTORY_SEPARATOR);
-                    move_uploaded_file($_FILES['smartcard_onlineprint']['tmp_name'], $filepath . $smartcard_onlineprint);
-                    DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->update([
-                        'smartcard_onlineprint' => $smartcard_onlineprint,
-                    ]);
-                }
-                if ($request->voterid != null) {
-                    $voterid    = uniqid() . '.' . $request->file('voterid')->extension();
-                    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'voterid' . DIRECTORY_SEPARATOR);
-                    move_uploaded_file($_FILES['voterid']['tmp_name'], $filepath . $voterid);
-                    DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->update([
-                        'voterid' => $voterid,
-                    ]);
-                }
+    'name' => $request->applicant_name,
+    'aadhaar_no' => $request->applicant_aadhaar,
+    'mobile' => $request->applicant_mobile,
+    'applicant_document_type' => $request->applicant_document_type,
 
-            DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->update([
-                'amount'              => $request->amount,
-                'dist_id'             => $request->dist_id,
-                'taluk_id'            => $request->taluk_id,
-                'name'                => $request->name,
-                'mobile'              => $request->mobile,
-                'address_tamil'       => $request->address_tamil,
-                'address_english'     => $request->address_english,
-                'door_no'             => $request->door_no,
-                'aadhaar_no'          => $request->aadhaar_no,
-                'postal_area_english' => $request->postal_area_english,
-                'pin_code'            => $request->pin_code,
-                'id_proof'            => $request->id_proof,
-                'status'            => 'Pending',
-                'applied_date'      => date("Y-m-d"),
-                'created_at'        => date("Y-m-d"),
-            ]);
+    'relationship' => $request->relationship,
+    'parent_name' => $request->parent_name,
+    'parent_aadhaar' => $request->parent_aadhaar,
+    'parent_mobile' => $request->parent_mobile,
+    'parent_document_type' => $request->document_type,
 
-            $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
-    $coordinator_permission = 0;
-    if($getpermission){
-        $coordinator_permission = $getpermission->coordinator_permission;
-    }
-    //echo$coordinator_permission;die;
-    if($coordinator_permission == 1){
-     $getdata = DB::table( 'aadhaarcard' )->where('id',$request->applied_serviceid)->first();
-     if($getdata){
-     $aadhaar_card = $getdata->aadhaar_card;
-     $schl_id_card = $getdata->schl_id_card;
-     $voterid = $getdata->voterid;
-     $bank_pass_book = $getdata->bank_pass_book;
-     $smartcard_onlineprint = $getdata->smartcard_onlineprint;
-     $service_id = $getdata->service_id;
-     $rowid = $getdata->id;
-     $name = $getdata->name;
-     $door_no = $getdata->door_no;
-     $dist_id = $getdata->dist_id;
-     $taluk_id = $getdata->taluk_id;
-     $street_name = $getdata->street_name;
-     $postal_area_english = $getdata->postal_area_english;
-     $address_english = $getdata->address_english;
-     $mobile = $getdata->mobile;
-     $pin_code = $getdata->pin_code;
-     $address_tamil = $getdata->address_tamil;
-     $aadhaar_no = $getdata->aadhaar_no;
-     $id_proof = $getdata->id_proof;
-     $status = $getdata->status;
-     $url = url('/');
-     $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
-      $bank_pass_book_url = $url . '/upload/services/bank_pass_book/' . $bank_pass_book;
-     $smartcard_onlineprint_url = $url . '/upload/services/smartcard_onlineprint/' . $smartcard_onlineprint;
-     $voterid_url = $url . '/upload/services/voterid/' . $voterid;
-     $schl_id_card_url = $url . '/upload/services/schl_id_card/' . $schl_id_card;
-     $API_KEY = env( 'API_KEY', '' );
-     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
-     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+    'address_tamil' => $request->address_tamil,
+    'relative_address_tamil' => $request->relative_address_tamil,
+    'relative_address_english' => $request->relative_address_english,
 
-     $ch = curl_init();
-        $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&schl_id_card=$schl_id_card_url&bank_pass_book=$bank_pass_book_url&smartcard_onlineprint=$smartcard_onlineprint_url&voterid=$voterid_url&service_id=$service_id&rowid=$rowid&status=$status&aadhaar_no=$aadhaar_no&mobile=$mobile&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&address_english=$address_english&address_tamil=$address_tamil&postal_area_english=$postal_area_english&pin_code=$pin_code&id_proof=$id_proof";
+ 'status'              => 'Pending',
+]);
 
-        //dd($post_data);
-        $url1 = $RAMJIPAY_URL.'/api/update_aadhaarcard_api';
-        //echo $url1;die;
+$docType = $request->applicant_document_type;
 
-        curl_setopt( $ch, CURLOPT_URL, $url1 );
-        curl_setopt( $ch, CURLOPT_POST, 1 );
-        curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-        $server_output = curl_exec( $ch );
-        curl_close( $ch );
-        $resdata = json_decode($server_output, true);
-       //dd($resdata);
-    }
+switch ($docType) {
+    case 'aadhaar':
+        $applicantColumn = 'aadhaar_card';
+        break;
+
+    case 'school':
+        $applicantColumn = 'schl_id_card';
+        break;
+
+    case 'birth':
+        $applicantColumn = 'birth_certificate';
+        break;
+
+    case 'photo':
+        $applicantColumn = 'photo';
+        break;
+
+    default:
+        $applicantColumn = null;
+        break;
 }
 
-        }elseif($serviceid == 158 || $serviceid == 159 ){
+if ($applicantColumn && $request->hasFile($applicantColumn)) {
+
+    $file = $request->file($applicantColumn);
+    $filename = 'APP_' . time() . '.' . $file->getClientOriginalExtension();
+
+    $path = public_path('upload/services/doctype');
+    if (!file_exists($path)) {
+        mkdir($path, 0755, true);
+    }
+
+    $file->move($path, $filename);
+
+    DB::table('aadhaarcard')->where('id',$request->applied_serviceid)->update([
+        $applicantColumn => $filename
+    ]);
+}
+
+          $parentDocType = $request->document_type;
+
+switch ($parentDocType) {
+    case 'aadhaar':
+        $parentColumn = 'parent_aadhaar_front';
+        break;
+
+    case 'voter':
+        $parentColumn = 'voterid';
+        break;
+
+    case 'bank':
+        $parentColumn = 'bank_pass_book';
+        break;
+
+    default:
+        $parentColumn = null;
+        break;
+}
+
+if ($parentColumn && $request->hasFile($parentColumn)) {
+
+    $file = $request->file($parentColumn);
+    $filename = 'PAR_' . time() . '.' . $file->getClientOriginalExtension();
+
+    $path = public_path('upload/services/parentdoctype');
+    if (!file_exists($path)) {
+        mkdir($path, 0755, true);
+    }
+
+    $file->move($path, $filename);
+
+    DB::table('aadhaarcard')->where('id',$request->applied_serviceid)->update([
+        $parentColumn => $filename
+    ]);
+}
+
+                $getpermission = DB::table('service_payment')->where('service_id', $serviceid)->first();
+                $coordinator_permission = 0;
+                if ($getpermission) {
+                    $coordinator_permission = $getpermission->coordinator_permission;
+                }
+                //echo$coordinator_permission;die;
+                if ($coordinator_permission == 1) {
+                    $getdata = DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->first();
+                    if ($getdata) {
+                $bank_pass_book = $getdata->bank_pass_book;
+                $voterid = $getdata->voterid;
+                $aadhaar_card = $getdata->aadhaar_card;
+                $parent_aadhaar_front = $getdata->parent_aadhaar_front;
+                $schl_id_card = $getdata->schl_id_card;
+                $photo = $getdata->photo;
+                $birth_certificate = $getdata->birth_certificate;
+                $service_id = $getdata->service_id;
+                $rowid = $getdata->id;
+                $name = $getdata->name;
+                $mobile = $getdata->mobile;
+                $aadhaar_no = $getdata->aadhaar_no;
+                $relationship = $getdata->relationship;
+                $applicant_document_type = $getdata->applicant_document_type;
+                $parent_document_type = $getdata->parent_document_type;
+                $parent_mobile = $getdata->parent_mobile;
+                $parent_aadhaar = $getdata->parent_aadhaar;
+                $parent_name = $getdata->parent_name;
+                $relative_address_tamil = $getdata->relative_address_tamil;
+                $relative_address_english = $getdata->relative_address_english;
+                $relation_name = $getdata->relation_name;
+                $relation_aadhaar = $getdata->relation_aadhaar;
+                $relation_mobile = $getdata->relation_mobile;
+                $marital_status = $getdata->marital_status;
+                $status = $getdata->status;
+                $url = url('/');
+            
+                $doctype_aadhaar_url = $url . '/upload/services/doctype/' . $aadhaar_card;
+                $doctype_photo_url = $url . '/upload/services/doctype/' . $photo;
+                $doctype_birth_certificate_url = $url . '/upload/services/doctype/' . $birth_certificate;
+                $doctype_schl_id_card_url = $url . '/upload/services/doctype/' . $schl_id_card;
+
+                $parent_aadhaar_url = $url . '/upload/services/parentdoctype/' . $parent_aadhaar_front;
+                $parentdoctype_bank_pass_book_url = $url . '/upload/services/parentdoctype/' . $bank_pass_book;
+                $parentdoctype_voterid_url = $url . '/upload/services/parentdoctype/' . $voterid;
+                        $API_KEY = env('API_KEY', '');
+                        $RAMJIPAY_URL = env('RAMJIPAY_URL', '');
+                        $WEBSITE_INDEX = env('WEBSITE_INDEX', '');
+
+                        $ch = curl_init();
+                        $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=$service_id&rowid=$rowid&status=$status&aadhaar_no=$aadhaar_no&mobile=$mobile&name=$name&relationship=$relationship&parent_name=$parent_name&parent_aadhaar=$parent_aadhaar&parent_mobile=$parent_mobile&relative_address_english=$relative_address_english&relative_address_tamil=$relative_address_tamil&applicant_document_type=$applicant_document_type&parent_document_type=$parent_document_type&aadhaar_card=$doctype_aadhaar_url&schl_id_card=$doctype_schl_id_card_url&birth_certificate=$doctype_birth_certificate_url&photo=$doctype_photo_url&parent_aadhaar_front=$parent_aadhaar_url&bank_pass_book=$parentdoctype_bank_pass_book_url&voterid=$parentdoctype_voterid_url";
+
+                        //dd($post_data);
+                        $url1 = $RAMJIPAY_URL . '/api/update_aadhaarcard_api';
+                        //echo $url1;die;
+
+                        curl_setopt($ch, CURLOPT_URL, $url1);
+                        curl_setopt($ch, CURLOPT_POST, 1);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                        $server_output = curl_exec($ch);
+                        curl_close($ch);
+                        $resdata = json_decode($server_output, true);
+                        //dd($resdata);
+                    }
+                }
+} elseif ($serviceid == 158) {
+
+DB::table('aadhaarcard')->where('id',$request->applied_serviceid)->update([
+
+    'name' => $request->applicant_name,
+    'aadhaar_no' => $request->applicant_aadhaar,
+    'mobile' => $request->applicant_mobile,
+    'applicant_document_type' => $request->applicant_document_type,
+
+    'relationship' => $request->relationship,
+    'marital_status' => $request->marital_status,
+    'relation_name' => $request->relation_name,
+    'relation_aadhaar' => $request->relation_aadhaar,
+    'relation_mobile' => $request->relation_mobile,
+    'parent_document_type' => $request->document_type,
+
+    'address_tamil' => $request->address_tamil,
+    'relative_address_tamil' => $request->relative_address_tamil,
+    'relative_address_english' => $request->relative_address_english,
+
+ 'status'              => 'Pending',
+]);
+
+$docType = $request->applicant_document_type;
+
+switch ($docType) {
+    case 'aadhaar':
+        $applicantColumn = 'aadhaar_card';
+        break;
+
+    case 'smartcard':
+        $applicantColumn = 'smartcard_onlineprint';
+        break;
+
+    case 'voterid':
+        $applicantColumn = 'voterid';
+        break;
+
+    default:
+        $applicantColumn = null;
+        break;
+}
+
+if ($applicantColumn && $request->hasFile($applicantColumn)) {
+
+    $file = $request->file($applicantColumn);
+    $filename = 'APP_' . time() . '.' . $file->getClientOriginalExtension();
+
+    $path = public_path('upload/services/doctype');
+    if (!file_exists($path)) {
+        mkdir($path, 0755, true);
+    }
+
+    $file->move($path, $filename);
+
+    DB::table('aadhaarcard')->where('id',$request->applied_serviceid)->update([
+        $applicantColumn => $filename
+    ]);
+}
+
+          $parentDocType = $request->document_type;
+
+switch ($parentDocType) {
+    case 'aadhaar':
+        $parentColumn = 'parent_aadhaar_front';
+        break;
+
+    case 'voter':
+        $parentColumn = 'voterid';
+        break;
+
+    case 'bank':
+        $parentColumn = 'bank_pass_book';
+        break;
+
+    default:
+        $parentColumn = null;
+        break;
+}
+
+if ($parentColumn && $request->hasFile($parentColumn)) {
+
+    $file = $request->file($parentColumn);
+    $filename = 'PAR_' . time() . '.' . $file->getClientOriginalExtension();
+
+    $path = public_path('upload/services/parentdoctype');
+    if (!file_exists($path)) {
+        mkdir($path, 0755, true);
+    }
+
+    $file->move($path, $filename);
+
+    DB::table('aadhaarcard')->where('id',$request->applied_serviceid)->update([
+        $parentColumn => $filename
+    ]);
+}
+                $getpermission = DB::table('service_payment')->where('service_id', $serviceid)->first();
+                $coordinator_permission = 0;
+                if ($getpermission) {
+                    $coordinator_permission = $getpermission->coordinator_permission;
+                }
+                //echo$coordinator_permission;die;
+                if ($coordinator_permission == 1) {
+                    $getdata = DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->first();
+                    if ($getdata) {
+                $bank_pass_book = $getdata->bank_pass_book;
+                $voterid = $getdata->voterid;
+                $aadhaar_card = $getdata->aadhaar_card;
+                $parent_aadhaar_front = $getdata->parent_aadhaar_front;
+                $smartcard_onlineprint = $getdata->smartcard_onlineprint;
+                $voterid_file = $getdata->voterid;
+                $service_id = $getdata->service_id;
+                $rowid = $getdata->id;
+                $name = $getdata->name;
+                $mobile = $getdata->mobile;
+                $aadhaar_no = $getdata->aadhaar_no;
+                $relationship = $getdata->relationship;
+                $applicant_document_type = $getdata->applicant_document_type;
+                $parent_document_type = $getdata->parent_document_type;
+                $parent_mobile = $getdata->parent_mobile;
+                $parent_aadhaar = $getdata->parent_aadhaar;
+                $parent_name = $getdata->parent_name;
+                $relative_address_tamil = $getdata->relative_address_tamil;
+                $relative_address_english = $getdata->relative_address_english;
+                $relation_name = $getdata->relation_name;
+                $relation_aadhaar = $getdata->relation_aadhaar;
+                $relation_mobile = $getdata->relation_mobile;
+                $marital_status = $getdata->marital_status;
+                $status = $getdata->status;
+                $url = url('/');
+            
+                $doctype_aadhaar_url = $url . '/upload/services/doctype/' . $aadhaar_card;
+                $doctype_voterid_url = $url . '/upload/services/doctype/' . $voterid;
+                $doctype_smartcard_onlineprint_url = $url . '/upload/services/doctype/' . $smartcard_onlineprint;
+
+                $parent_aadhaar_url = $url . '/upload/services/parentdoctype/' . $parent_aadhaar_front;
+                $parentdoctype_bank_pass_book_url = $url . '/upload/services/parentdoctype/' . $bank_pass_book;
+                $parentdoctype_voterid_url = $url . '/upload/services/parentdoctype/' . $voterid;                     
+                        $API_KEY = env('API_KEY', '');
+                        $RAMJIPAY_URL = env('RAMJIPAY_URL', '');
+                        $WEBSITE_INDEX = env('WEBSITE_INDEX', '');
+                        $ch = curl_init();
+
+                        if ($serviceid == 158) {
+                              $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=$service_id&rowid=$rowid&status=$status&aadhaar_no=$aadhaar_no&mobile=$mobile&name=$name&relationship=$relationship&relation_name=$relation_name&relation_aadhaar=$relation_aadhaar&relation_mobile=$relation_mobile&relative_address_english=$relative_address_english&relative_address_tamil=$relative_address_tamil&marital_status=$marital_status&applicant_document_type=$applicant_document_type&parent_document_type=$parent_document_type&aadhaar_card=$doctype_aadhaar_url&smartcard_onlineprint=$doctype_smartcard_onlineprint_url&voterid_file=$doctype_voterid_url&parent_aadhaar_front=$parent_aadhaar_url&bank_pass_book=$parentdoctype_bank_pass_book_url&voterid=$parentdoctype_voterid_url";
+                       
+                        }
+
+                        //dd($post_data);
+                        $url1 = $RAMJIPAY_URL . '/api/update_aadhaarcard_api';
+                        //echo $url1;die;
+
+                        curl_setopt($ch, CURLOPT_URL, $url1);
+                        curl_setopt($ch, CURLOPT_POST, 1);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                        $server_output = curl_exec($ch);
+                        curl_close($ch);
+                        $resdata = json_decode($server_output, true);
+                        //dd($resdata);
+                    }
+                }
+        }elseif($serviceid == 159 ){
             if ($request->aadhaar_card != null) {
                     $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
                     $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR. 'aadhaar_card' . DIRECTORY_SEPARATOR);
@@ -6085,27 +6302,24 @@ public function aadhaarcardupdate(Request $request){
                     ]);
                 }
             DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->update([
-                'amount'                      => $request->amount,
-                'dist_id'             => $request->dist_id,
-                'taluk_id'            => $request->taluk_id,
+              
+        'service_id'        => $request ->serviceid,
+         'amount'                      => $request->amount,
+   
                 'name'                => $request->name,
                 'mobile'              => $request->mobile,
-                'address_tamil'       => $request->address_tamil,
-                'address_english'     => $request->address_english,
-                'door_no'             => $request->door_no,
+                
                 'aadhaar_no'          => $request->aadhaar_no,
-                'postal_area_english' => $request->postal_area_english,
-                'pin_code'            => $request->pin_code,
-                'relationship1'               => $request->relationship1,
-                'id_proof'            => $request->id_proof,
-                'relation_name_tamil'            => $request->relation_name_tamil,
-                'relation_name_english'            => $request->relation_name_english,
-                'status'            => 'Pending',
-                'applied_date'      => date("Y-m-d"),
-                'created_at'        => date("Y-m-d"),
+
+                'father_hus_aadhaar_no' => $request->father_hus_aadhaar_no,
+                'father_hus_mobile'     => $request->father_hus_mobile,
+               
+        'status'            => 'Pending',
+        'applied_date'      => date("Y-m-d"),
+        'created_at'        => date("Y-m-d"),
             ]);
 
-            $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
     $coordinator_permission = 0;
     if($getpermission){
         $coordinator_permission = $getpermission->coordinator_permission;
@@ -6115,38 +6329,24 @@ public function aadhaarcardupdate(Request $request){
      $getdata = DB::table( 'aadhaarcard' )->where('id',$request->applied_serviceid)->first();
      if($getdata){
      $aadhaar_card = $getdata->aadhaar_card;
-     $voterid = $getdata->voterid;
-     $bank_pass_book = $getdata->bank_pass_book;
-     $smartcard_onlineprint = $getdata->smartcard_onlineprint;
+    
      $service_id = $getdata->service_id;
      $rowid = $getdata->id;
-     $name = $getdata->name;
      $mobile = $getdata->mobile;
-     $relationship1 = $getdata->relationship1;
-     $door_no = $getdata->door_no;
-    $dist_id = $getdata->dist_id;
-     $taluk_id = $getdata->taluk_id;
-     $postal_area_english = $getdata->postal_area_english;
-     $address_english = $getdata->address_english;
-     $pin_code = $getdata->pin_code;
-     $address_tamil = $getdata->address_tamil;
      $aadhaar_no = $getdata->aadhaar_no;
-     $relation_name_tamil = $getdata->relation_name_tamil;
-     $relation_name_english = $getdata->relation_name_english;
-     $id_proof = $getdata->id_proof;
+     
+     $father_hus_aadhaar_no = $getdata->father_hus_aadhaar_no;
+     $father_hus_mobile = $getdata->father_hus_mobile;
      $status = $getdata->status;
      $url = url('/');
-     $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
-     $smartcard_onlineprint_url = $url . '/upload/services/smartcard_onlineprint/' . $smartcard_onlineprint;
-     $bank_pass_book_url = $url . '/upload/services/bank_pass_book/' . $bank_pass_book;
-     $voterid_url = $url . '/upload/services/voterid/' . $voterid;
+     
      $API_KEY = env( 'API_KEY', '' );
      $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
      $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
      $ch = curl_init();
 
     if($serviceid == 158){
-      $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bank_pass_book=$bank_pass_book_url&smartcard_onlineprint=$smartcard_onlineprint_url&voterid=$voterid_url&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&address_english=$address_english&address_tamil=$address_tamil&postal_area_english=$postal_area_english&pin_code=$pin_code&relationship1=$relationship1&mobile=$mobile&aadhaar_no=$aadhaar_no&id_proof=$id_proof&relation_name_tamil=$relation_name_tamil&relation_name_english=$relation_name_english";
+      $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=$service_id&rowid=$rowid&status=$status&mobile=$mobile&aadhaar_no=$aadhaar_no&father_hus_aadhaar_no=$father_hus_aadhaar_no&father_hus_mobile=$father_hus_mobile";
     
     }else{
       $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&schl_id_card=$schl_id_card_url&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&relationship1=$relationship1&relation_name_tamil=$relation_name_tamil&relation_name_english=$relation_name_english&bank_pass_book=$bank_pass_book_url&smartcard_onlineprint=$smartcard_onlineprint_url&voterid=$voterid_url&name=$name&relationship1=$relationship1&proof=$proof&mobile=$mobile&aadhaar_no=$aadhaar_no&smart_card=$smartcard_url&community_certificate=$communitycertificate_url&marksheet=$marksheet_url&tc=$tc_url&father_name_tamil=$father_name_tamil&father_name_english=$father_name_english&mother_name_tamil=$mother_name_tamil&mother_name_english=$mother_name_english&spouse_name_tamil=$spouse_name_tamil&spouse_name_english=$spouse_name_english&legal_gaurdian_name_tamil=$legal_gaurdian_name_tamil&legal_gaurdian_name_english=$legal_gaurdian_name_english&siblings_name_tamil=$siblings_name_tamil&siblings_name_english=$siblings_name_english&child_ward_name_tamil=$child_ward_name_tamil&child_ward_name_english=$child_ward_name_english&relation_aadhaar=$relation_aadhaar_url&with_proof=$with_proof";
@@ -6166,63 +6366,64 @@ public function aadhaarcardupdate(Request $request){
        //dd($resdata);
     }
 }
-        }elseif($serviceid == 160 || $serviceid == 161 ){
+            }elseif($serviceid == 160 || $serviceid == 161 ){
 
-            if ($request->enrollment_slip != null) {
-                $enrollment_slip = uniqid().'.'.$request->file('enrollment_slip')->extension();
-                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'enrollment_slip' . DIRECTORY_SEPARATOR);
-                move_uploaded_file($_FILES['enrollment_slip']['tmp_name'], $filepath . $enrollment_slip);
-                DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
-                    'enrollment_slip'             => $enrollment_slip,
-                ] );
+                if ($request->enrollment_slip != null) {
+                    $enrollment_slip = uniqid().'.'.$request->file('enrollment_slip')->extension();
+                    $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'enrollment_slip' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['enrollment_slip']['tmp_name'], $filepath . $enrollment_slip);
+                    DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
+                        'enrollment_slip'             => $enrollment_slip,
+                    ] );
+                }
+
+                DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->update([
+                    'user_id'           => $request->user_id,
+                    'retailer_id'       => $request->retailer_id,
+                    'service_id'        => $request ->serviceid,
+                    'name'              => $request->name,
+                    'enrollment_no'     => $request->enrollment_no,
+                    'enrollment_type'   => $request->enrollment_type,
+                    'status'            => 'Pending',
+                    'applied_date'      => date("Y-m-d"),
+                    'created_at'        => date("Y-m-d"),
+                ]);
+            }elseif($serviceid == 162 ){
+
+                DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->update([
+                    'user_id'           => $request->user_id,
+                    'retailer_id'       => $request->retailer_id,
+                    'service_id'        => $request ->serviceid,
+                    'name'              => $request->name,
+                    'mobile'            => $request->mobile,
+                    'aadhaar_no'        => $request->aadhaar_no,
+                    'status'            => 'Pending',
+                    'applied_date'      => date("Y-m-d"),
+                    'created_at'        => date("Y-m-d"),
+                ]);
+            }elseif($serviceid == 163 ){
+                DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->update([
+                    'user_id'           => $request->user_id,
+                    'retailer_id'       => $request->retailer_id,
+                    'service_id'        => $request ->serviceid,
+                    'amount'            => $request->amount,
+                    'name'              => $request->name,
+                    'aadhaar_no'        => $request->aadhaar_no,
+                    'status'            => 'Pending',
+                    'applied_date'      => date("Y-m-d"),
+                    'created_at'        => date("Y-m-d"),
+                ]);
             }
 
-            DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->update([
-                'user_id'           => $request->user_id,
-                'retailer_id'       => $request->retailer_id,
-                'service_id'        => $request ->serviceid,
-                'name'              => $request->name,
-                'enrollment_no'     => $request->enrollment_no,
-                'enrollment_type'   => $request->enrollment_type,
-                'status'            => 'Pending',
-                'applied_date'      => date("Y-m-d"),
-                'created_at'        => date("Y-m-d"),
-            ]);
-        }elseif($serviceid == 162 ){
+            DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+            ] );
 
-            DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->update([
-                'user_id'           => $request->user_id,
-                'retailer_id'       => $request->retailer_id,
-                'service_id'        => $request ->serviceid,
-                'name'              => $request->name,
-                'mobile'            => $request->mobile,
-                'aadhaar_no'        => $request->aadhaar_no,
-                'status'            => 'Pending',
-                'applied_date'      => date("Y-m-d"),
-                'created_at'        => date("Y-m-d"),
-            ]);
-        }elseif($serviceid == 163 ){
-            DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->update([
-                'user_id'           => $request->user_id,
-                'retailer_id'       => $request->retailer_id,
-                'service_id'        => $request ->serviceid,
-                'amount'            => $request->amount,
-                'name'              => $request->name,
-                'aadhaar_no'        => $request->aadhaar_no,
-                'status'            => 'Pending',
-                'applied_date'      => date("Y-m-d"),
-                'created_at'        => date("Y-m-d"),
-            ]);
         }
 
-        DB::table( 'aadhaarcard' )->where( 'id', $request->applied_serviceid )->update( [
-            'status' => $status,
-        ] );
+        return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 
     }
-
-    return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
-}
 public function findaadhaar_numberupdate(Request $request){
 //dd($request->all());
     $apply_user_id = 0;
