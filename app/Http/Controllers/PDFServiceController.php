@@ -391,9 +391,9 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
     $user_id = Auth::user()->id;
     $dl_no = $request->dl_no;
     $dob = $request->dob;
-    if($request->ser == 2){
+    if ($request->ser == 2) {
       $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9';
-    }else{
+    } else {
       $apikey = '2f8c633222b317bca08c80f46dbdbc38e5a1659b45338a82bc80330d4f53f071';
     }
     $Apikey = 'cdf94c6d43b5367276d87107b1538aa50b50eb8f8c665fbcd9f1998abe73957e619d4e';
@@ -401,96 +401,104 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
     $wallet = Auth::user()->wallet;
         $servicepayment = $request->servicepayment;
         $serviceid = $request->serviceid;
-        if($wallet < $servicepayment){
-          return redirect('/applypdfservice/'.$serviceid)->with('error','Low Balance for the Service....Please Check Your Balance...');
-        }
+        if ($wallet < $servicepayment) {
+      return redirect('/applypdfservice/' . $serviceid)->with('error', 'Low Balance for the Service....Please Check Your Balance...');
+    }
 
-$apidomain = "https://www.apizone.in";
-$api_key = "61285b3a51c8ad7304175bd5a9816e16f6d3279b3fe4f3b5f1b701b162b6"; // Replace with your actual API key
-$cardtype = "2"; // Enter 1 for white background and 2 for Light Blue background
+    $apidomain = "https://www.apizone.in";
+    $api_key = "61285b3a51c8ad7304175bd5a9816e16f6d3279b3fe4f3b5f1b701b162b6"; // Replace with your actual API key
+    $cardtype = "2"; // Enter 1 for white background and 2 for Light Blue background
 
-if($request->ser == 1){
-$dob = date("d-m-Y", strtotime($dob));
+    if ($request->ser == 1) {
+      $url = "https://secure.thenextgenapi.co.in/dl_pdf_verification?apikey=TNG-API-ac66a9-666d5f-8a416b-99647d-ac35b1&dl_number=$dl_no&dob=$dob&dltype=1";
+    } elseif ($request->ser == 2) {
 
-    $url = "$apidomain/api/dl_pdf/dlprint.php?api_key=$api_key&dlno=$dl_no&dob=$dob&cardtype=$cardtype";
-   }elseif($request->ser == 2){
-      $url = "http://api-good.xyz/serviceApi/V1/driving_licence_hd.php";
 
-   }elseif($request->ser == 3){
-    $url = "https://usedaily.co.in/serviceApi/V1/driving_licence_hd.php";
+      $dob = date("d-m-Y", strtotime($dob));
 
-   }else{
+      $url = "$apidomain/api/dl_pdf/dlprint.php?api_key=$api_key&dlno=$dl_no&dob=$dob&cardtype=$cardtype";
+    } elseif ($request->ser == 3) {
+      $url = "https://usedaily.co.in/serviceApi/V1/driving_licence_hd.php";
+    } else {
       $url = "https://authorized.p4point.co.in/api/v1/dlVerificationPDF?apiKey=$Apikey&dlNo=$dl_no&dob=$dob";
-
-   }
+    }
     $data = array(
       'apiKey' => $apikey,
       'dlNo' => $dl_no,
       'dob' => $dob
     );
-    if($request->ser == 2 || $request->ser == 3){
-    $curl = curl_init();
-    curl_setopt_array($curl, array(
-      CURLOPT_URL => $url,
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => '',
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 0,
-      CURLOPT_FOLLOWLOCATION => true,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => 'POST',
-      CURLOPT_POSTFIELDS => $data,
-    ));
-  }elseif($request->ser == 1 || $request->ser == 4){
-    $curl = curl_init();
-    curl_setopt_array($curl, array(
-    CURLOPT_URL =>  $url,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 30,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => 'GET',
-    CURLOPT_VERBOSE => true,
-    ));
-  }
+    if ($request->ser == 3) {
+     $curl = curl_init();
+      curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => $data,
+      ));
+    } elseif ($request->ser == 1 || $request->ser == 2) {
+      $curl = curl_init();
+      curl_setopt_array($curl, array(
+        CURLOPT_URL =>  $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_VERBOSE => true,
+      ));
+    }
 
-$response = curl_exec($curl);
+    $response = curl_exec($curl);
     $resdata = json_decode($response, true);
-// dd($resdata);
-if($resdata){
-      if (($request->ser == 1 && $resdata['status'] == "200") || ($request->ser == 2 && $resdata['StatusCode'] == "100") || ($request->ser == 3 && $resdata['StatusCode'] == "100") || ($request->ser == 4 && $resdata['status'] == "100")) {
-        $pdf = $resdata['pdf'];
-           if($request->ser == 1){
-             $filename = uniqid() . '.pdf';
-        $filePath = 'upload/dl/' . $filename;
+    // dd($resdata);
+    if ($resdata) {
+      if (($request->ser == 1 && $resdata['Message'] == "Success") || ($request->ser == 2 && $resdata['status'] == "200") || ($request->ser == 3 && $resdata['StatusCode'] == "100") || ($request->ser == 4 && $resdata['status'] == "100")) {
+        $pdf = "";
+        if ($request->ser == 2) {
+          $pdf = $resdata['pdf'];
 
-        file_put_contents($filePath, base64_decode($pdf));
-           }else{
-      $pdf_parts = explode(";base64", $pdf);
-       $pdf_types = explode("pdf/", $pdf_parts[0]);
-       $pdf_type = base64_decode($pdf_parts[1]);
-        $filename = uniqid() . '.pdf';
-        $filePath = 'upload/dl/' . $filename;
+          $filename = uniqid() . '.pdf';
+          $filePath = 'upload/dl/' . $filename;
 
-        file_put_contents($filePath, $pdf_type);
-           }
-      
-      if($request->ser == 1 || $request->ser == 2 || $request->ser == 3){
-      $message = $resdata['message'];
-      }else{
-      $message = $resdata['statusMessage'];
-      }
-  DB::table('dl')->insert([
-    'user_id' => Auth::user()->id,
-    'dlnumber' => $request->dl_no,
-    'dob' => $dob,
-    'pdf' => $filename,
-    'service_id' => $serviceid,
-    'amount' => $servicepayment,
-    'status'    => 'Approved',
-    'date'    => date("Y-m-d H:i:s"),
-  ]);
+          file_put_contents($filePath, base64_decode($pdf));
+        } else {
+          if ($request->ser == 1) {
+            $pdf = $resdata['Driving_Pdf'];
+          }
+
+
+          $pdf_parts = explode(";base64", $pdf);
+          $pdf_types = explode("pdf/", $pdf_parts[0]);
+          $pdf_type = base64_decode($pdf_parts[1]);
+          $filename = uniqid() . '.pdf';
+          $filePath = 'upload/dl/' . $filename;
+
+          file_put_contents($filePath, $pdf_type);
+        }
+
+        if ($request->ser == 1 || $request->ser == 2 || $request->ser == 3) {
+          $message = $resdata['message'];
+        } else {
+          $message = $resdata['statusMessage'];
+        }
+
+        DB::table('dl')->insert([
+          'user_id' => Auth::user()->id,
+          'dlnumber' => $request->dl_no,
+          'dob' => $dob,
+          'pdf' => $filename,
+          'service_id' => $serviceid,
+          'amount' => $servicepayment,
+          'status'    => 'Approved',
+          'date'    => date("Y-m-d H:i:s"),
+        ]);
+
       $date = date( 'Y-m-d' );
       $time = date( 'H:i:s' );
       $service_status = 'Out Payment';
@@ -1869,8 +1877,8 @@ public function updatestatusfind(Request $request)
       ]);
 
       return redirect('/viewutility')->with('success', 'utility Status Updated Successfully ... !');
-    }
-
+    
+    }  
     public function submitagristackcard(Request $request)
     {
         $user_id         = Auth::user()->id;
