@@ -398,14 +398,26 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
         $status = $result->status;
         $url = "";
         $message = "";
-        if($status == "Success"){
-            $url = $result->url;
-            $orderid = $result->orderid;
-            $message = $result->message;
-        }else{
-            $orderid = $result->orderid;
-            $message = $result->message;
-        }
+        if ($status == "Success") {
+
+    $url      = $result->url ?? '';
+    $orderid  = $result->orderid ?? '';
+    $message  = $result->message ?? '';
+
+} else {
+
+    $orderid  = $result->orderid ?? '';
+    $message  = $result->message ?? '';
+
+}
+        // if($status == "Success"){
+        //     $url = $result->url;
+        //     $orderid = $result->orderid;
+        //     $message = $result->message;
+        // }else{
+        //     $orderid = $result->orderid;
+        //     $message = $result->message;
+        // }
         curl_close($crl);
 
         DB::table( 'pancard' )->insert( [
