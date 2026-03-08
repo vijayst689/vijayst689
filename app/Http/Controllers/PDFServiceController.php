@@ -227,13 +227,12 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
   }
 
     public function submitpanfind(Request $request)
-    {
+  {
 
-        $user_id         = Auth::user()->id;
-        $aadhaar         = $request->aadhaar_no;
-        $wallet          = Auth::user()->wallet;
-        $serviceid       = $request->serviceid;
-        $servicepayment  = 0;
+    $user_id = Auth::user()->id;
+    $aadhaar = $request->aadhaar_no;
+    $wallet = Auth::user()->wallet;
+    $servicepayment  = 0;
         $amount          = 0;
         $getadminpayment = DB::table('find_services')->where('id', $serviceid)->first();
         if ($getadminpayment) {
@@ -257,7 +256,20 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
         if ($wallet < $servicepayment) {
             return redirect('/applypdfservice/' . $serviceid)->with('error', 'Low Balance for the Service....Please Check Your Balance...');
         }
-        $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9'; // Base 64 api Key Here
+    $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9'; // Base 64 api Key Here
+    // $axnapikey = '2f8c633222b317bca08c80f46dbdbc38e5a1659b45338a82bc80330d4f53f071'; // Base 64 api Key Here
+
+    $application_no = rand(00000000, 99999999); // Application Number
+    // if($request->ser == 1){
+    //   $url = "https://usedaily.co.in/serviceApi/V1/panFind.php?apiKey=$axnapikey&uidNumber=$aadhaar";
+
+    // }elseif( $request->ser == 2 ){
+    //    $url = "https://upbgroup.aisensy.in/api/data_fetch?api_key=3d77fb-c95462-6d17f3-a92b88-9b8b9c&application_no=$application_no&aadhaar_no=$aadhaar";
+
+    // }else{
+    //   $url = "http://source.api-good.xyz/serviceApi/V1/panFind?apiKey=$apikey&order_id=$application_no&uidNumber=$aadhaar";
+    // }
+    $key = '61285b3a51c8ad7304175bd5a9816e16f6d3279b3fe4f3b5f1b701b162b6';
 
     if ($request->ser == 1) {
       $url = "https://www.apizone.info/api/find_pan/aadhaar_to_pan.php?api_key=$key&aadhaar_no=$aadhaar";
@@ -271,22 +283,16 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
 
     $curl = curl_init();
     curl_setopt_array($curl, array(
-      CURLOPT_URL =>  "https://goodapi.in/api_services/V1/rasanServices/aadhar_to_rationno_find.php?apiKey=$apikey&uidNumber=$aadhaar_no",
+      CURLOPT_URL => $url,
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => "",
-      CURLOPT_MAXREDIRS => 25,
-      CURLOPT_TIMEOUT => 30,
-      CURLOPT_SSL_VERIFYPEER => false,
-      CURLOPT_SSL_VERIFYHOST => false,
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
       CURLOPT_CUSTOMREQUEST => "GET",
-      CURLOPT_HTTPHEADER => array(
-        "cache-control: no-cache",
-      ),
     ));
-
     $response = curl_exec($curl);
-    $err = curl_error($curl);
     curl_close($curl);
     $resdata = json_decode($response, true);
     //dd($resdata);
@@ -318,13 +324,16 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
         DB::table('pancard_find')->insert([
           'user_id' => Auth::user()->id,
           'aadhaar_no' => $request->aadhaar_no,
-          'pdf'        => $rationNumber,
+          'pan_no' => $pan,
+          'name' => $name,
+          'dob' => $dob,
           'service_id' => $serviceid,
-          'amount'     => $servicepayment,
-          'status'     => 'Approved',
-          'date'       => date("Y-m-d H:i:s"),
+          'amount' => $servicepayment,
+          'message' => $message,
+          'status'    => 'Approved',
+          'date'    => date("Y-m-d "),
         ]);
-        $date = date('Y-m-d');
+ $date = date('Y-m-d');
         $time = date('H:i:s');
 
           $getrawallet1 = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
@@ -386,6 +395,167 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
     }
 
   }
+
+  //   public function submitpanfind(Request $request)
+  //   {
+
+  //       $user_id         = Auth::user()->id;
+  //       $aadhaar         = $request->aadhaar_no;
+  //       $wallet          = Auth::user()->wallet;
+  //       $serviceid       = $request->serviceid;
+  //       $servicepayment  = 0;
+  //       $amount          = 0;
+  //       $getadminpayment = DB::table('find_services')->where('id', $serviceid)->first();
+  //       if ($getadminpayment) {
+  //           $amount = $getadminpayment->amount;
+  //       }
+  //       $getservicepayment = DB::table('find_payment')->where('service_id', $serviceid)->first();
+  //       if ($getservicepayment) {
+  //           if (Auth::user()->user_type_id == 2) {
+  //               $amount;
+  //           } elseif (Auth::user()->user_type_id == 3) {
+  //               $servicepayment = $getservicepayment->distributor_amount;
+  //           } elseif (Auth::user()->user_type_id == 4) {
+  //               $servicepayment = $getservicepayment->retailer_amount;
+  //           } elseif (Auth::user()->user_type_id == 5) {
+  //               $servicepayment = $getservicepayment->customer_amount;
+  //           }
+  //       }
+  //       if (Auth::user()->wallet < $servicepayment) {
+  //           return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+  //       }
+  //       if ($wallet < $servicepayment) {
+  //           return redirect('/applypdfservice/' . $serviceid)->with('error', 'Low Balance for the Service....Please Check Your Balance...');
+  //       }
+  //       $apikey = '3e2a83212d3e5e4755390b84612f110d45d393c8c75946786de9ea4f283dcaa9'; // Base 64 api Key Here
+
+  //   if ($request->ser == 1) {
+  //     $url = "https://www.apizone.info/api/find_pan/aadhaar_to_pan.php?api_key=$key&aadhaar_no=$aadhaar";
+
+  //   } elseif ($request->ser == 2) {
+  //     $url = "https://darkxen.in/api/v3/PAN/aadhaar_to_pan_verification.php?apiKey=c28c9690a9c95592ceabb5a2901e32d82779b8077a23b3ffb9bbc4673e0a4492&uidNumber=$aadhaar";
+  //   } else {
+  //      $url = "https://upbgroup.aisensy.in/api/data_fetch?api_key=3d77fb-c95462-6d17f3-a92b88-9b8b9c&application_no=$application_no&aadhaar_no=$aadhaar";
+
+  //   }
+
+  //   $curl = curl_init();
+  //   curl_setopt_array($curl, array(
+  //     CURLOPT_URL =>  "https://goodapi.in/api_services/V1/rasanServices/aadhar_to_rationno_find.php?apiKey=$apikey&uidNumber=$aadhaar_no",
+  //     CURLOPT_RETURNTRANSFER => true,
+  //     CURLOPT_ENCODING => "",
+  //     CURLOPT_MAXREDIRS => 25,
+  //     CURLOPT_TIMEOUT => 30,
+  //     CURLOPT_SSL_VERIFYPEER => false,
+  //     CURLOPT_SSL_VERIFYHOST => false,
+  //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  //     CURLOPT_CUSTOMREQUEST => "GET",
+  //     CURLOPT_HTTPHEADER => array(
+  //       "cache-control: no-cache",
+  //     ),
+  //   ));
+
+  //   $response = curl_exec($curl);
+  //   $err = curl_error($curl);
+  //   curl_close($curl);
+  //   $resdata = json_decode($response, true);
+  //   //dd($resdata);
+  //   if ($resdata) {
+  //     $status = "";
+  //     if ($request->ser == 1) {
+  //       $status = $resdata['status'];
+  //     }elseif ($request->ser == 2 || $request->ser == 3) {
+  //       $status = $resdata['status'];
+  //     } else {
+  //       $status = $resdata['Status'];
+  //     }
+  //     if (($request->ser == 1 && $status == "200") || ($request->ser == 3 && $status == "true") || ($request->ser == 2 && $status == "100")) {
+
+  //       $name = "";
+  //       $dob = "";
+  //       $pan = "";
+
+  //       if ($request->ser == 1 || $request->ser == 3) {
+  //                   $message = $resdata['message'];
+  //                   $pan     = $resdata['pan_no'];
+  //               }else{
+  //                 $message = "Pan find Successfully...";
+  //                 $pan     = $resdata['panNumber'];
+
+  //               }
+
+
+  //       DB::table('pancard_find')->insert([
+  //         'user_id' => Auth::user()->id,
+  //         'aadhaar_no' => $request->aadhaar_no,
+  //         'pdf'        => $rationNumber,
+  //         'service_id' => $serviceid,
+  //         'amount'     => $servicepayment,
+  //         'status'     => 'Approved',
+  //         'date'       => date("Y-m-d H:i:s"),
+  //       ]);
+  //       $date = date('Y-m-d');
+  //       $time = date('H:i:s');
+
+  //         $getrawallet1 = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
+  //         $rawallet1 = 0;
+  //         if($getrawallet1){
+  //           $balance2 = $getrawallet1->rawallet;
+  //         }
+  //         $newbalance2 = $balance1 + $amount;
+  //         $newbalance3 = $balance2 - $amount;
+  //       $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+  //       DB::insert( DB::raw( $sql ) );
+  //       $sql = "update users set rawallet = rawallet + $amount where id = 1";
+  //       DB::update( DB::raw( $sql ) );
+  //       $service_status = 'IN Payment';
+  //       $ad_info = 'Ramji Wallet Credit(PanCard)';
+
+  //       $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+  //       DB::insert( DB::raw( $sql ) );
+  //       $sql = "update users set rawallet = rawallet - $amount where id = 2";
+  //       DB::update( DB::raw( $sql ) );
+
+  //       if(Auth::user()->user_type_id != 2){
+  //         $getservicename = DB::table( 'find_services' )->select('name')->where('id',$serviceid)->first();
+  //         $servicename = "";
+  //         if($getservicename){
+  //           $servicename = $getservicename->name;
+  //         }
+  //         $date = date( 'Y-m-d' );
+  //         $time = date( 'H:i:s' );
+  //         $service_status = 'Out Payment';
+  //         $ad_info = 'Service Payment'. ' '. $servicename;
+
+  //         $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+  //         $balance = 0;
+  //         if($getwallet){
+  //           $balance = $getwallet->wallet;
+  //         }
+  //         $newbalance = $balance + $servicepayment;
+  //         $newbalance1 = Auth::user()->wallet - $servicepayment;
+
+  //         $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
+  //         DB::insert( DB::raw( $sql ) );
+  //         $sql = "update users set wallet = wallet + $servicepayment where id = 2";
+  //         DB::update( DB::raw( $sql ) );
+  //         $service_status = 'IN Payment';
+  //         $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
+  //         DB::insert( DB::raw( $sql ) );
+  //         $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+  //         DB::update( DB::raw( $sql ) );
+  //       }
+  //      return redirect('/applypdfservice/' . $serviceid)->with('success', 'Pan No Find Successfully');
+  //     } else {
+
+  //       $message = $resdata['message'];
+  //       return redirect('/applypdfservice/' . $serviceid)->with('error', $message);
+  //     }
+  //   } else {
+  //     return redirect('/applypdfservice/' . $serviceid)->with('error', 'Something Went Wrong..Please Check Aadhaar Number...');
+  //   }
+
+  // }
 
      public function submitdlfind(Request $request)
     {
