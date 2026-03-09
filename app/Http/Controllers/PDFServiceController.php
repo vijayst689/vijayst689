@@ -669,7 +669,7 @@ class PDFServiceController extends Controller
         $result = json_decode($response, true);
         if ($result) {
             if ($request->ser == 2) {
-                $status = $result['Message'];
+                $status = $result['message'];
             } else {
                 $status = $result['status'];
             }
