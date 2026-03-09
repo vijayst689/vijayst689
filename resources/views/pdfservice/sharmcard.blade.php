@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('content')
+<<<<<<< HEAD
+   <div class="page-wrapper">
+=======
     <div class="page-wrapper">
+>>>>>>> e4755c316d43accf24172136c56648e4396ddc68
         <div class="page-content">
             <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
                 <div class="breadcrumb-title pe-3">{{ $servicename }}</div>
