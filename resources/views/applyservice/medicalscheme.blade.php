@@ -53,76 +53,43 @@
                                             <div class="row">
                                                 @if ($serviceid == 179)
                                                     <div class="mb-3 col-md-6">
-                                                        <label for="" class="form-label text-dark">VAO
+                                                        <label for="" class="form-label text-primary">VAO
                                                             Certificate</label><br>
-                                                        <a download class="btn btn-sm btn-info"
+                                                        <a download class="btn btn-sm btn-danger"
                                                             href="{{ URL::to('/') }}/upload/vao_certificate/EnrolmentForm2024.pdf">Download</a><br>
 
-                                                        <label for="family_head_name" class="form-label text-dark">Family
-                                                            Head
-                                                            Name</label>
-                                                        <input required type="text" class="form-control"
-                                                            name="family_head_name" maxlength="30"
-                                                            placeholder="Family Head Name" />
-
-                                                        <label for="father_name" class="form-label text-dark">Father
-                                                            Name</label>
-                                                        <input required type="text" class="form-control"
-                                                            name="father_name" maxlength="100" placeholder="Father Name" />
-
-                                                        <label for="smartcard_no" class="form-label text-dark">Smartcard
+                                                        <label for="smartcard_no" class="form-label text-primary">Smartcard
                                                             Number</label>
                                                         <input required type="text" class="form-control"
                                                             name="smartcard_no" maxlength="15"
                                                             placeholder="Smartcard Number" />
 
-                                                        <label for="aadhaar_no" class="form-label text-dark">Aadhaar
+                                                        <label for="aadhaar_no" class="form-label text-primary">Aadhaar
                                                             Number</label>
                                                         <input required type="text" class="form-control"
                                                             name="aadhaar_no" maxlength="12" placeholder="Aadhaar Number" />
 
-                                                        <label for="passportsize_photo"
-                                                            class="form-label text-dark">Passport Size
-                                                            Photo</label>
-                                                        <input required accept="image/jpeg" type="file"
-                                                            class="form-control" name="passportsize_photo" />
-
-                                                        <label for="pin_code" class="form-label text-dark">Pin Code</label>
-                                                        <input required type="text" maxlength="6"
-                                                            class="form-control number" name="pin_code"
-                                                            placeholder="Pin Code" />
-                                                    </div>
-                                                    <div class="mb-3 col-md-6">
-                                                        <label for="vao_or_income_certificate"
-                                                            class="form-label text-dark">VAO
-                                                            Certificate/Income Certificate(1,20,000)</label>
-                                                        <input required accept="application/pdf" type="file"
-                                                            class="form-control" name="vao_or_income_certificate" />
-
-                                                        <label for="mobile" class="form-label text-dark">Cell Number
+                                                        <label for="mobile" class="form-label text-primary">Cell Number
                                                         </label>
                                                         <input required type="text" class="form-control number"
                                                             name="mobile" maxlength="10" placeholder="Cell Number " />
 
-                                                        <label for="husband_name" class="form-label text-dark">Husband
-                                                            Name</label>
-                                                        <input required type="text" class="form-control"
-                                                            name="husband_name" maxlength="100"
-                                                            placeholder="Husband Name" />
+                                                        <label for="pin_code" class="form-label text-primary">Pin
+                                                            Code</label>
+                                                        <input required type="text" maxlength="6"
+                                                            class="form-control number" name="pin_code"
+                                                            placeholder="Pin Code" />
 
-                                                        <label for="smartcard_onlineprint"
-                                                            class="form-label text-dark">Smart card
-                                                            (Online
-                                                            print)</label>
-                                                        <input required accept="application/pdf" type="file"
-                                                            class="form-control" name="smartcard_onlineprint" />
+                                                        <label class="form-label text-primary" for="relation">குடும்ப
+                                                            உறுப்பினரின் தந்தை அல்லது கணவர் பெயர்</label>
+                                                        <select required id="relation" name="relation"
+                                                            class="form-control">
+                                                            <option value="">Select Name</option>
+                                                            <option value="Father Name">தந்தை பெயர்</option>
+                                                            <option value="Husband Name">கணவர் பெயர்</option>
+                                                        </select>
 
-                                                        <label for="live_photo" class="form-label text-dark">Live
-                                                            Photo</label>
-                                                        <input required accept="image/jpeg" type="file"
-                                                            class="form-control" name="photo" />
-
-                                                        <label for="marital_status" class="form-label text-dark">Marital
+                                                        <label for="marital_status" class="form-label text-primary">Marital
                                                             Status</label>
                                                         <select name="marital_status" class="form-control" required>
                                                             <option value="">Select Status</option>
@@ -131,6 +98,52 @@
                                                             <option value="Divorced">Divorced</option>
                                                             <option value="Widowed">Widowed</option>
                                                         </select>
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label for="vao_or_income_certificate"
+                                                            class="form-label text-primary">VAO
+                                                            Certificate/Income Certificate(1,20,000)</label>
+                                                        <input required accept="application/pdf" type="file"
+                                                            class="form-control" name="vao_or_income_certificate" />
+
+
+                                                        <label for="smartcard_onlineprint"
+                                                            class="form-label text-primary">Smart card</label>
+                                                        <input required accept="application/pdf" type="file"
+                                                            class="form-control" name="smartcard_onlineprint" />
+
+                                                        <label for="aadhaar_card" class="form-label text-primary">Adhaar
+                                                            card (Front &
+                                                            Back)</label>
+                                                        <input required accept="image/jpeg, image/png" type="file"
+                                                            class="form-control" name="aadhaar_card" />
+
+                                                        <label for="photo" class="form-label text-primary">Live
+                                                            Photo(Family Memebers)</label>
+                                                        <input required accept="image/jpeg" type="file"
+                                                            class="form-control" name="photo" />
+
+                                                        <label for="passportsize_photo"
+                                                            class="form-label text-primary">Passport Size
+                                                            Photo</label>
+                                                        <input required accept="image/jpeg" type="file"
+                                                            class="form-control" name="passportsize_photo" />
+
+                                                        <div class="mb-3 col-md-6" id="father_namehide"
+                                                            style="display: none;">
+                                                            <label class="form-label text-primary" for="father_name">தந்தை
+                                                                பெயர்</label>
+                                                            <input type="text" maxlength="100" class="form-control"
+                                                                name="father_name" placeholder="தந்தை பெயர்" />
+                                                        </div>
+
+                                                        <div class="mb-3 col-md-6" id="husband_namehide"
+                                                            style="display: none;">
+                                                            <label class="form-label text-primary"
+                                                                for="husband_name">கணவர் பெயர்</label>
+                                                            <input type="text" maxlength="100" class="form-control"
+                                                                name="husband_name" placeholder="கணவர் பெயர்" />
+                                                        </div>
                                                     </div>
                                                 @elseif ($serviceid == 180)
                                                     <div class="mb-3 col-md-6">
@@ -324,6 +337,29 @@
                             $('#aadhaar4').prop("required", false);
                             $('#aadhaar5').prop("required", false);
                             $('#aadhaar6').prop("required", false);
+
+                        }
+                    });
+
+                    $('#relation').change(function() {
+
+                        if ($('#relation').val() == 'Father Name') {
+                            $('#father_namehide').show("slow");
+                            $('#husband_namehide').hide("slow");
+                            $('#husband_name').prop("required", false);
+                            $('#father_name').prop("required", true);
+
+                        } else if ($('#relation').val() == 'Husband Name') {
+                            $('#husband_namehide').show("slow");
+                            $('#father_namehide').hide("slow");
+                            $('#father_name').prop("required", false);
+                            $('#husband_name').prop("required", true);
+
+                        } else {
+                            $('#father_namehide').hide("slow");
+                            $('#husband_namehide').hide("slow");
+                            $('#father_name').prop("required", false);
+                            $('#husband_name').prop("required", false);
 
                         }
                     });
