@@ -156,6 +156,16 @@ class ServicestatusController extends Controller
             ->where('pvc_card.status',$status)
             ->orderBy('pvc_card.id', 'Desc')->get();
 
+            $smartcard_pdf = DB::table('smartcard_pdf')->select('services.service_name', 'smartcard_pdf.*')
+                ->Join('services', 'services.id', '=', 'smartcard_pdf.service_id')
+                ->where('smartcard_pdf.status', $status)
+                ->orderBy('smartcard_pdf.id', 'Desc')->get();
+
+            $aadhaarfind = DB::table('aadhaarfind')->select('services.service_name', 'aadhaarfind.*')
+                ->Join('services', 'services.id', '=', 'aadhaarfind.service_id')
+                ->where('aadhaarfind.status', $status)
+                ->orderBy('aadhaarfind.id', 'Desc')->get();
+
             $service = $service->merge($itr);
             $service = $service->merge($gst);
             $service = $service->merge($tec_exam);
@@ -181,6 +191,8 @@ class ServicestatusController extends Controller
             $service = $service->merge($voteridpdf_download);
             $service = $service->merge($agri_stack);
             $service = $service->merge($pvccard);
+             $service = $service->merge($smartcard_pdf);
+            $service = $service->merge($aadhaarfind);
 
             $service = json_decode( json_encode( $service ), true );
         foreach ( $service as $key => $s ) {
@@ -374,6 +386,18 @@ class ServicestatusController extends Controller
             ->where('pvc_card.distributor_id',Auth::user()->id)
             ->orderBy('pvc_card.id', 'Desc')->get();
 
+            $smartcard_pdf = DB::table('smartcard_pdf')->select('services.service_name', 'smartcard_pdf.*')
+                ->Join('services', 'services.id', '=', 'smartcard_pdf.service_id')
+                ->where('smartcard_pdf.status', $status)
+                ->where('smartcard_pdf.distributor_id', Auth::user()->id)
+                ->orderBy('smartcard_pdf.id', 'Desc')->get();
+
+            $aadhaarfind = DB::table('aadhaarfind')->select('services.service_name', 'aadhaarfind.*')
+                ->Join('services', 'services.id', '=', 'aadhaarfind.service_id')
+                ->where('aadhaarfind.status', $status)
+                ->where('aadhaarfind.distributor_id', Auth::user()->id)
+                ->orderBy('aadhaarfind.id', 'Desc')->get();
+
             $service = $service->merge($itr);
             $service = $service->merge($gst);
             $service = $service->merge($tec_exam);
@@ -399,6 +423,8 @@ class ServicestatusController extends Controller
             $service = $service->merge($voteridpdf_download);
             $service = $service->merge($agri_stack);
             $service = $service->merge($pvccard);
+             $service = $service->merge($smartcard_pdf);
+            $service = $service->merge($aadhaarfind);
 
         }elseif(Auth::user()->user_type_id == 4){
 
@@ -559,6 +585,18 @@ class ServicestatusController extends Controller
             ->where('pvc_card.retailer_id',Auth::user()->id)
             ->orderBy('pvc_card.id', 'Desc')->get();
 
+            $smartcard_pdf = DB::table('smartcard_pdf')->select('services.service_name', 'smartcard_pdf.*')
+                ->Join('services', 'services.id', '=', 'smartcard_pdf.service_id')
+                ->where('smartcard_pdf.status', $status)
+                ->where('smartcard_pdf.retailer_id', Auth::user()->id)
+                ->orderBy('smartcard_pdf.id', 'Desc')->get();
+
+            $aadhaarfind = DB::table('aadhaarfind')->select('services.service_name', 'aadhaarfind.*')
+                ->Join('services', 'services.id', '=', 'aadhaarfind.service_id')
+                ->where('aadhaarfind.status', $status)
+                ->where('aadhaarfind.retailer_id', Auth::user()->id)
+                ->orderBy('aadhaarfind.id', 'Desc')->get();
+
             $service = $service->merge($itr);
             $service = $service->merge($gst);
             $service = $service->merge($tec_exam);
@@ -584,6 +622,8 @@ class ServicestatusController extends Controller
             $service = $service->merge($voteridpdf_download);
             $service = $service->merge($agri_stack);
             $service = $service->merge($pvccard);
+             $service = $service->merge($smartcard_pdf);
+            $service = $service->merge($aadhaarfind);
 
         }elseif(Auth::user()->user_type_id == 5){
 
@@ -744,6 +784,18 @@ class ServicestatusController extends Controller
             ->where('pvc_card.user_id',Auth::user()->id)
             ->orderBy('pvc_card.id', 'Desc')->get();
 
+            $smartcard_pdf = DB::table('smartcard_pdf')->select('services.service_name', 'smartcard_pdf.*')
+                ->Join('services', 'services.id', '=', 'smartcard_pdf.service_id')
+                ->where('smartcard_pdf.status', $status)
+                ->where('smartcard_pdf.user_id', Auth::user()->id)
+                ->orderBy('smartcard_pdf.id', 'Desc')->get();
+
+            $aadhaarfind = DB::table('aadhaarfind')->select('services.service_name', 'aadhaarfind.*')
+                ->Join('services', 'services.id', '=', 'aadhaarfind.service_id')
+                ->where('aadhaarfind.status', $status)
+                ->where('aadhaarfind.user_id', Auth::user()->id)
+                ->orderBy('aadhaarfind.id', 'Desc')->get();
+
             $service = $service->merge($itr);
             $service = $service->merge($gst);
             $service = $service->merge($tec_exam);
@@ -769,6 +821,8 @@ class ServicestatusController extends Controller
             $service = $service->merge($voteridpdf_download);
             $service = $service->merge($agri_stack);
             $service = $service->merge($pvccard);
+             $service = $service->merge($smartcard_pdf);
+            $service = $service->merge($aadhaarfind);
         }
         return view( 'services.appliedservice',compact('service','status') );
     }
@@ -794,7 +848,7 @@ class ServicestatusController extends Controller
         } elseif($service_id == 36 || $service_id == 37 || $service_id == 38 || $service_id == 39 || $service_id == 41 || $service_id == 42 || $service_id == 43 || $service_id == 77 || $service_id == 78 || $service_id == 79 || $service_id == 80 || $service_id == 81 || $service_id == 82 || $service_id == 83 || $service_id == 84 || $service_id == 221 || $service_id == 222 || $service_id == 227 || $service_id == 228 || $service_id == 229 || $service_id == 230 || $service_id == 231 || $service_id == 232 || $service_id == 235){
             $services = DB::table('smartcard')->where('id',$id)->where('status',$status)->first();
 
-        } elseif($service_id == 56 || $service_id == 58 || $service_id == 74 || $service_id == 158 || $service_id == 159 || $service_id == 160 || $service_id == 161 || $service_id == 162 || $service_id == 163 || $service_id == 72){
+        } elseif($service_id == 56 || $service_id == 58 || $service_id == 74 || $service_id == 158 || $service_id == 159 || $service_id == 160 || $service_id == 161 || $service_id == 162 || $service_id == 163){
             $services = DB::table('aadhaarcard')->where('id',$id)->where('status',$status)->first();
 
         } elseif($service_id == 60 || $service_id == 62 || $service_id == 63 || $service_id == 64 || $service_id == 65 || $service_id == 66 || $service_id == 67 || $service_id == 121){
@@ -832,7 +886,12 @@ class ServicestatusController extends Controller
 
         // } elseif($service_id == 157 ){
         //     $services = DB::table('pmkissan')->where('id',$id)->where('status',$status)->first();
-        } elseif($service_id == 155 || $service_id == 156){
+        }elseif ($service_id == 245) {
+            $services = DB::table('smartcard_pdf')->where('id', $id)->where('status', $status)->first();
+
+        } elseif ($service_id == 72) {
+            $services = DB::table('aadhaarfind')->where('id', $id)->where('status', $status)->first();
+} elseif($service_id == 155 || $service_id == 156){
             $services = DB::table('birth_certificate')->where('id',$id)->where('status',$status)->first();
         } elseif($service_id == 179 || $service_id == 180 ){
             $services = DB::table('medicalscheme')->where('id',$id)->where('status',$status)->first();
@@ -1027,9 +1086,7 @@ class ServicestatusController extends Controller
         //     $mainbalance = DB::table( 'users' )->select('rawallet')->where('id',2)->first();
         //     $services = DB::table('pancard')->where('id',$id)->where('status',$status)->first();
 
-        } elseif($service_id == 72 ){
-            return view('servicestatus.findaadhaar_numberupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
-
+       
         } elseif($service_id == 113 || $service_id == 120 || $service_id == 164 || $service_id == 182){
             return view('servicestatus.voteridupdate',compact('id','services','servicename','customers','serviceid','amount','districts','selectedCorrections') );
 
@@ -1097,7 +1154,11 @@ class ServicestatusController extends Controller
     } elseif ($service_id == 157) {
             return view('servicestatus.pvccardupdate', compact('id', 'services', 'servicename', 'customers', 'serviceid', 'amount', 'districts'));
     
-    }
+    }elseif ($service_id == 245) {
+            return view('servicestatus.smartcard_pdfstatusupdate', compact('id', 'services', 'servicename', 'customers', 'serviceid', 'amount', 'districts'));
+        } elseif ($service_id == 72) {
+            return view('servicestatus.aadhaarfind_statusupdate', compact('id', 'services', 'servicename', 'customers', 'serviceid', 'amount', 'districts'));
+        }
 
 }
 
@@ -11383,6 +11444,369 @@ public function pvcprint_update(Request $request)
                 }
             }
             DB::table('pvc_card')->where('id', $request->applied_serviceid)->update([
+                'status' => $status,
+            ]);
+        }
+
+        return redirect("appliedservice/$status")->With("success", "Application submitted Succesfully");
+    }
+    public function smartcard_pdf_statusupdate(Request $request)
+    {
+        $apply_user_id = 0;
+        if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+            $apply_user_id = $request->user_id;
+        } elseif ($request->retailer_id == 0) {
+            $apply_user_id = $request->distributor_id;
+        } elseif ($request->distributor_id == 0) {
+            $apply_user_id = $request->retailer_id;
+        }
+        if ($apply_user_id != Auth::user()->id) {
+            $status = $request->status;
+            if ($status == "Resubmit") {
+                DB::table('smartcard_pdf')->where('id', $request->applied_serviceid)->update([
+                    'remarks' => $request->remarks,
+                    'status'  => $status,
+                ]);
+            } elseif ($status == "Processing") {
+                if ($request->acknowledgement != null) {
+                    $acknowledgement = uniqid() . '.' . $request->file('acknowledgement')->extension();
+                    $filepath        = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'acknowledgement' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['acknowledgement']['tmp_name'], $filepath . $acknowledgement);
+                    DB::table('smartcard_pdf')->where('id', $request->applied_serviceid)->update([
+                        'acknowledgement' => $acknowledgement,
+                    ]);
+                }
+                DB::table('smartcard_pdf')->where('id', $request->applied_serviceid)->update([
+                    'status'         => $status,
+                    'application_no' => $request->application_no,
+                    'selects'        => $request->selects,
+                ]);
+            } elseif ($status == "Approved") {
+                if ($request->certificate != null) {
+                    $certificate = uniqid() . '.' . $request->file('certificate')->extension();
+                    $filepath    = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'certificate' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['certificate']['tmp_name'], $filepath . $certificate);
+                    DB::table('smartcard_pdf')->where('id', $request->applied_serviceid)->update([
+                        'certificate'    => $certificate,
+                        'status'         => $status,
+                        'completed_date' => date("Y-m-d"),
+                    ]);
+                }
+                DB::table('smartcard_pdf')->where('id', $request->applied_serviceid)->update([
+                    'status'      => $status,
+                    'application' => $request->application,
+                    'lects'       => $request->lects,
+                ]);
+            } elseif ($status == "Rejected") {
+                $serviceid          = $request->serviceid;
+                $getservice_payment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+                $getusers           = DB::table('users')->where('id', $apply_user_id)->first();
+                $usertype           = 0;
+                if ($getusers) {
+                    $usertype = $getusers->user_type_id;
+                }
+                $payment = 0;
+                if ($getservice_payment) {
+                    if ($usertype == 3) {
+                        $payment = $getservice_payment->distributor_amount;
+                    } elseif ($usertype == 4) {
+                        $payment = $getservice_payment->retailer_amount;
+                    } elseif ($usertype == 5) {
+                        $payment = $getservice_payment->customer_amount;
+                    }
+                }
+
+                $getservicename = DB::table('services')->select('service_name')->where('id', $serviceid)->first();
+                $servicename    = "";
+                if ($getservicename) {
+                    $servicename = $getservicename->service_name;
+                }
+                $date           = date('Y-m-d');
+                $time           = date('H:i:s');
+                $service_status = 'Out Payment';
+                $ad_info        = "Service Refund For" . ' ' . $servicename;
+
+                $getwallet = DB::table('users')->select('wallet')->where('id', 2)->first();
+                $balance   = 0;
+                if ($getwallet) {
+                    $balance = $getwallet->wallet;
+                }
+                $getuserswallet = DB::table('users')->select('wallet')->where('id', $apply_user_id)->first();
+                $balance1       = 0;
+                if ($getuserswallet) {
+                    $balance1 = $getuserswallet->wallet;
+                }
+                $newbalance  = $balance - $payment;
+                $newbalance1 = $balance1 + $payment;
+
+                $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+                DB::insert(DB::raw($sql));
+                $sql = "update users set wallet = wallet - $payment where id = 2";
+                DB::update(DB::raw($sql));
+                $service_status = 'IN Payment';
+                $sql            = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+                DB::insert(DB::raw($sql));
+                $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+                DB::update(DB::raw($sql));
+
+                DB::table('smartcard_pdf')->where('id', $request->applied_serviceid)->update([
+                    'status'  => $status,
+                    'remarks' => $request->remarks,
+
+                ]);
+            }
+        } else {
+            $status    = "Pending";
+            $serviceid = $request->serviceid;
+
+            DB::table('smartcard_pdf')->where('id', $request->applied_serviceid)->update([
+                'status'       => 'Pending',
+                'applied_date' => date("Y-m-d"),
+                'created_at'   => date("Y-m-d"),
+
+            ]);
+
+            if ($request->smartcard_onlineprint != null) {
+                $smartcard_onlineprint = uniqid() . '.' . $request->file('smartcard_onlineprint')->extension();
+                $filepath              = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smartcard_onlineprint' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['smartcard_onlineprint']['tmp_name'], $filepath . $smartcard_onlineprint);
+                DB::table('smartcard_pdf')->where('id', $request->applied_serviceid)->update([
+                    'smartcard_onlineprint' => $smartcard_onlineprint,
+                ]);
+            }
+
+            if ($request->smartcard_back_side != null) {
+                $smartcard_back_side = uniqid() . '.' . $request->file('smartcard_back_side')->extension();
+                $filepath            = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smartcard_back_side' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['smartcard_back_side']['tmp_name'], $filepath . $smartcard_back_side);
+                DB::table('smartcard_pdf')->where('id', $request->applied_serviceid)->update([
+                    'smartcard_back_side' => $smartcard_back_side,
+                ]);
+            }
+
+            if ($request->smartcard_front_side != null) {
+                $smartcard_front_side = uniqid() . '.' . $request->file('smartcard_front_side')->extension();
+                $filepath             = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smartcard_front_side' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['smartcard_front_side']['tmp_name'], $filepath . $smartcard_front_side);
+                DB::table('smartcard_pdf')->where('id', $request->applied_serviceid)->update([
+                    'smartcard_front_side' => $smartcard_front_side,
+                ]);
+            }
+
+            $getpermission          = DB::table('service_payment')->where('service_id', $serviceid)->first();
+            $coordinator_permission = 0;
+            if ($getpermission) {
+                $coordinator_permission = $getpermission->coordinator_permission;
+            }
+            //echo$coordinator_permission;die;
+            if ($coordinator_permission == 1) {
+                $getdata = DB::table('smartcard_pdf')->where('id', $request->applied_serviceid)->first();
+                if ($getdata) {
+
+                    $service_id                = $getdata->service_id;
+                    $rowid                     = $getdata->id;
+                    $smartcard_onlineprint     = $getdata->smartcard_onlineprint;
+                    $smartcard_front_side      = $getdata->smartcard_front_side;
+                    $smartcard_back_side       = $getdata->smartcard_back_side;
+                    $status                    = $getdata->status;
+                    $url                       = url('/');
+                    $smartcard_onlineprint_url = $url . '/upload/services/smartcard_onlineprint/' . $smartcard_onlineprint;
+                    $smartcard_front_side_url  = $url . '/upload/services/smartcard_front_side/' . $smartcard_front_side;
+                    $smartcard_back_side_url   = $url . '/upload/services/smartcard_back_side/' . $smartcard_back_side;
+                    $API_KEY                   = env('API_KEY', '');
+                    $RAMJIPAY_URL              = env('RAMJIPAY_URL', '');
+                    $WEBSITE_INDEX             = env('WEBSITE_INDEX', '');
+
+                    $ch = curl_init();
+                    //  if($serviceid == 69){
+                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=279&rowid=$rowid&status=$status&smartcard_onlineprint=$smartcard_onlineprint_url&smartcard_front_side=$smartcard_front_side_url&smartcard_back_side=$smartcard_back_side_url";
+                    //  }else{
+                    //     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=$service_id&rowid=$rowid&status=$status&mobile=$mobile&name=$name&epic_no=$epic_no";
+                    //  }
+                    //dd($post_data);
+                    $url1 = $RAMJIPAY_URL . '/api/update_smartcard_pdf_api';
+                    //echo $url1;die;
+
+                    curl_setopt($ch, CURLOPT_URL, $url1);
+                    curl_setopt($ch, CURLOPT_POST, 1);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    $server_output = curl_exec($ch);
+                    curl_close($ch);
+                    $resdata = json_decode($server_output, true);
+                    //dd($resdata);
+                }
+            }
+            DB::table('smartcard_pdf')->where('id', $request->applied_serviceid)->update([
+                'status' => $status,
+            ]);
+        }
+        return redirect("appliedservice/$status")->With("success", "Application submitted Succesfully");
+    }
+
+    public function aadhaarfind_update(Request $request)
+    {
+        //dd($request->all());
+        $apply_user_id = 0;
+        if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+            $apply_user_id = $request->user_id;
+        } elseif ($request->retailer_id == 0) {
+            $apply_user_id = $request->distributor_id;
+        } elseif ($request->distributor_id == 0) {
+            $apply_user_id = $request->retailer_id;
+        }
+        //echo Auth::user()->id;die;
+        if ($apply_user_id != Auth::user()->id) {
+            $status = $request->status;
+            if ($status == "Resubmit") {
+                DB::table('aadhaarfind')->where('id', $request->applied_serviceid)->update([
+                    'remarks' => $request->remarks,
+                    'status'  => $status,
+                ]);
+            } elseif ($status == "Processing") {
+                if ($request->acknowledgement != null) {
+                    $acknowledgement = uniqid() . '.' . $request->file('acknowledgement')->extension();
+                    $filepath        = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'acknowledgement' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['acknowledgement']['tmp_name'], $filepath . $acknowledgement);
+                    DB::table('aadhaarfind')->where('id', $request->applied_serviceid)->update([
+                        'acknowledgement' => $acknowledgement,
+                    ]);
+                }
+                DB::table('aadhaarfind')->where('id', $request->applied_serviceid)->update([
+                    'status'         => $status,
+                    'application_no' => $request->application_no,
+                    'selects'        => $request->selects,
+                ]);
+            } elseif ($status == "Approved") {
+                if ($request->certificate != null) {
+                    $certificate = uniqid() . '.' . $request->file('certificate')->extension();
+                    $filepath    = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'certificate' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['certificate']['tmp_name'], $filepath . $certificate);
+                    DB::table('aadhaarfind')->where('id', $request->applied_serviceid)->update([
+                        'certificate'    => $certificate,
+                        'status'         => $status,
+                        'completed_date' => date("Y-m-d"),
+                    ]);
+                }
+                DB::table('aadhaarfind')->where('id', $request->applied_serviceid)->update([
+                    'status'      => $status,
+                    'application' => $request->application,
+                    'lects'       => $request->lects,
+                ]);
+            } elseif ($status == "Rejected") {
+                $serviceid          = $request->serviceid;
+                $getservice_payment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+                $getusers           = DB::table('users')->where('id', $apply_user_id)->first();
+                $usertype           = 0;
+                if ($getusers) {
+                    $usertype = $getusers->user_type_id;
+                }
+                $payment = 0;
+                if ($getservice_payment) {
+                    if ($usertype == 3) {
+                        $payment = $getservice_payment->distributor_amount;
+                    } elseif ($usertype == 4) {
+                        $payment = $getservice_payment->retailer_amount;
+                    } elseif ($usertype == 5) {
+                        $payment = $getservice_payment->customer_amount;
+                    }
+                }
+
+                $getservicename = DB::table('services')->select('service_name')->where('id', $serviceid)->first();
+                $servicename    = "";
+                if ($getservicename) {
+                    $servicename = $getservicename->service_name;
+                }
+                $date           = date('Y-m-d');
+                $time           = date('H:i:s');
+                $service_status = 'Out Payment';
+                $ad_info        = "Service Refund For" . ' ' . $servicename;
+
+                $getwallet = DB::table('users')->select('wallet')->where('id', 2)->first();
+                $balance   = 0;
+                if ($getwallet) {
+                    $balance = $getwallet->wallet;
+                }
+                $getuserswallet = DB::table('users')->select('wallet')->where('id', $apply_user_id)->first();
+                $balance1       = 0;
+                if ($getuserswallet) {
+                    $balance1 = $getuserswallet->wallet;
+                }
+                $newbalance  = $balance - $payment;
+                $newbalance1 = $balance1 + $payment;
+
+                $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+                DB::insert(DB::raw($sql));
+                $sql = "update users set wallet = wallet - $payment where id = 2";
+                DB::update(DB::raw($sql));
+                $service_status = 'IN Payment';
+                $sql            = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+                DB::insert(DB::raw($sql));
+                $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+                DB::update(DB::raw($sql));
+
+                DB::table('aadhaarfind')->where('id', $request->applied_serviceid)->update([
+                    'status'  => $status,
+                    'remarks' => $request->remarks,
+
+                ]);
+            }
+        } else {
+            $status    = "Pending";
+            $serviceid = $request->serviceid;
+
+            DB::table('aadhaarfind')->where('id', $request->applied_serviceid)->update([
+                'amount'             => $request->amount,
+                'name'               => $request->name,
+                'mobile'             => $request->mobile,
+                'find_number'        => $request->find_number,
+                'nalavariyam_reg_no' => $request->nalavariyam_reg_no,
+                'status'             => 'Pending',
+                'applied_date'       => date("Y-m-d"),
+                'created_at'         => date("Y-m-d"),
+            ]);
+
+            $getpermission          = DB::table('service_payment')->where('service_id', $serviceid)->first();
+            $coordinator_permission = 0;
+            if ($getpermission) {
+                $coordinator_permission = $getpermission->coordinator_permission;
+            }
+            //echo$coordinator_permission;die;
+            if ($coordinator_permission == 1) {
+                $getdata = DB::table('aadhaarfind')->where('id', $request->applied_serviceid)->first();
+                if ($getdata) {
+                    $service_id         = $getdata->service_id;
+                    $rowid              = $getdata->id;
+                    $name               = $getdata->name;
+                    $mobile             = $getdata->mobile;
+                    $find_number        = $getdata->find_number;
+                    $nalavariyam_reg_no = $getdata->nalavariyam_reg_no;
+                    $status             = $getdata->status;
+                    $url                = url('/');
+                    $API_KEY            = env('API_KEY', '');
+                    $RAMJIPAY_URL       = env('RAMJIPAY_URL', '');
+                    $WEBSITE_INDEX      = env('WEBSITE_INDEX', '');
+                    $ch                 = curl_init();
+
+                    if ($serviceid == 72) {
+                        $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=271&rowid=$rowid&status=$status&find_number=$find_number&mobile=$mobile&name=$name&nalavariyam_reg_no=$nalavariyam_reg_no";
+                    }
+
+                    //dd($post_data);
+                    $url1 = $RAMJIPAY_URL . '/api/update_aadhaarfind_api';
+                    //echo $url1;die;
+
+                    curl_setopt($ch, CURLOPT_URL, $url1);
+                    curl_setopt($ch, CURLOPT_POST, 1);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    $server_output = curl_exec($ch);
+                    curl_close($ch);
+                    $resdata = json_decode($server_output, true);
+                    //dd($resdata);
+                }
+            }
+            DB::table('aadhaarfind')->where('id', $request->applied_serviceid)->update([
                 'status' => $status,
             ]);
         }

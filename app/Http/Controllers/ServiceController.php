@@ -599,9 +599,6 @@ class ServiceController extends Controller
         } elseif ($serviceid == 113 || $serviceid == 120 || $serviceid == 164 || $serviceid == 182 || $serviceid == 181) {
             return view('applyservice.voteridservice', compact('serviceid', 'districts', 'servicename', 'amount', 'payment', 'customers'));
 
-        } elseif ($serviceid == 72) {
-            return view('applyservice.find_aadhaarcard_number', compact('serviceid', 'districts', 'servicename', 'amount', 'payment', 'customers'));
-
         } elseif ($serviceid == 95 || $serviceid == 96 || $serviceid == 97 || $serviceid == 98) {
             return view('applyservice.nalavariyamservice', compact('serviceid', 'districts', 'servicename', 'amount', 'payment', 'customers'));
 
@@ -694,6 +691,13 @@ class ServiceController extends Controller
         } elseif ($serviceid == 157) {
             return view('applyservice.pvccardprint', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment'));
 
+        }   elseif ($serviceid == 245) {
+            $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
+            return view('applyservice.smartcard_pdfservice', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'mainbalance', 'coordinator_permission', 'admin_payment'));
+        }
+        elseif ($serviceid == 72) {
+             $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
+            return view('applyservice.aadhaar_findservice', compact('serviceid', 'districts', 'servicename', 'amount', 'payment', 'customers', 'mainbalance', 'coordinator_permission', 'admin_payment'));
         }
     }
 
@@ -9824,4 +9828,351 @@ if($coordinator_permission == 1){
         return redirect("appliedservice/Pending")->With("success", "Application submitted Succesfully");
 
     }
+    
+  public function submitapply_smartcard_pdf(Request $request)
+    {
+        $user_id = 0;
+        $retailer_id = 0;
+        $distributor_id = 0;
+        if (Auth::user()->user_type_id == 3) {
+            $user_id = $request->user_id;
+            $distributor_id = Auth::user()->id;
+        } elseif (Auth::user()->user_type_id == 4) {
+            $user_id = $request->user_id;
+            $retailer_id = Auth::user()->id;
+        } elseif (Auth::user()->user_type_id == 5) {
+            $user_id = Auth::user()->id;
+        }
+
+        $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->customer_amount;
+            }
+        }
+        if (Auth::user()->wallet < $servicepayment) {
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
+
+        DB::table('smartcard_pdf')->insert([
+            'user_id'             => $user_id,
+            'retailer_id'         => $retailer_id,
+            'distributor_id'      => $distributor_id,
+            'service_id'          => $request->serviceid,
+            'status'              => 'Pending',
+            'applied_date'        => date("Y-m-d"),
+            'created_at'          => date("Y-m-d"),
+        ]);
+
+        $insertid = DB::getPdo()->lastInsertId();
+        $smartcard_onlineprint = "";
+        $smartcard_back_side = "";
+        $smartcard_front_side = "";
+
+        if ($request->smartcard_onlineprint != null) {
+            $smartcard_onlineprint = uniqid() . '.' . $request->file('smartcard_onlineprint')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smartcard_onlineprint' . DIRECTORY_SEPARATOR);
+            move_uploaded_file($_FILES['smartcard_onlineprint']['tmp_name'], $filepath . $smartcard_onlineprint);
+        }
+        DB::table('smartcard_pdf')->where('id', $insertid)->update([
+            'smartcard_onlineprint' => $smartcard_onlineprint,
+        ]);
+
+        if ($request->smartcard_back_side != null) {
+            $smartcard_back_side = uniqid() . '.' . $request->file('smartcard_back_side')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smartcard_back_side' . DIRECTORY_SEPARATOR);
+            move_uploaded_file($_FILES['smartcard_back_side']['tmp_name'], $filepath . $smartcard_back_side);
+        }
+        DB::table('smartcard_pdf')->where('id', $insertid)->update([
+            'smartcard_back_side' => $smartcard_back_side,
+        ]);
+
+        if ($request->smartcard_front_side != null) {
+            $smartcard_front_side = uniqid() . '.' . $request->file('smartcard_front_side')->extension();
+            $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smartcard_front_side' . DIRECTORY_SEPARATOR);
+            move_uploaded_file($_FILES['smartcard_front_side']['tmp_name'], $filepath . $smartcard_front_side);
+        }
+        DB::table('smartcard_pdf')->where('id', $insertid)->update([
+            'smartcard_front_side' => $smartcard_front_side,
+        ]);
+
+
+        $servicepayment = $request->service_amount;
+        if (Auth::user()->user_type_id == 3) {
+            $user_id = $distributor_id;
+        } elseif (Auth::user()->user_type_id == 4) {
+            $user_id = $retailer_id;
+        } elseif (Auth::user()->user_type_id == 5) {
+            $user_id = $user_id;
+        }
+        $getservicename = DB::table('services')->select('service_name')->where('id', $serviceid)->first();
+        $servicename = "";
+        if ($getservicename) {
+            $servicename = $getservicename->service_name;
+        }
+        $date = date('Y-m-d');
+        $time = date('H:i:s');
+        $service_status = 'Out Payment';
+        $ad_info = 'Service Payment' . ' ' . $servicename;
+        $getwallet = DB::table('users')->select('wallet')->where('id', 2)->first();
+        $balance = 0;
+        if ($getwallet) {
+            $balance = $getwallet->wallet;
+        }
+        $newbalance = $balance + $servicepayment;
+        $newbalance1 = Auth::user()->wallet - $servicepayment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
+        DB::insert(DB::raw($sql));
+        $sql = "update users set wallet = wallet + $servicepayment where id = 2";
+        DB::update(DB::raw($sql));
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
+        DB::insert(DB::raw($sql));
+        $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+        DB::update(DB::raw($sql));
+
+        $getpermission = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        $coordinator_permission = 0;
+        $admin_payment = 0;
+        if ($getpermission) {
+            $coordinator_permission = $getpermission->coordinator_permission;
+            $admin_payment = $getpermission->admin_amount;
+        }
+        if ($coordinator_permission == 1) {
+            $getdata = DB::table('smartcard_pdf')->where('id', $insertid)->first();
+            if ($getdata) {
+                $smartcard_onlineprint = $getdata->smartcard_onlineprint;
+                $smartcard_front_side = $getdata->smartcard_front_side;
+                $smartcard_back_side = $getdata->smartcard_back_side;
+                $service_id = $getdata->service_id;
+                $rowid = $getdata->id;
+                $status = $getdata->status;
+                $url = url('/');
+                $smartcard_onlineprint_url = $url . '/upload/services/smartcard_onlineprint/' . $smartcard_onlineprint;
+                $smartcard_front_side_url = $url . '/upload/services/smartcard_front_side/' . $smartcard_front_side;
+                $smartcard_back_side_url = $url . '/upload/services/smartcard_back_side/' . $smartcard_back_side;
+                $API_KEY = env('API_KEY', '');
+                $RAMJIPAY_URL = env('RAMJIPAY_URL', '');
+                $WEBSITE_INDEX = env('WEBSITE_INDEX', '');
+                $ch = curl_init();
+
+                $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=279&rowid=$rowid&status=$status&smartcard_onlineprint=$smartcard_onlineprint_url&smartcard_front_side=$smartcard_front_side_url&smartcard_back_side=$smartcard_back_side_url";
+
+                //dd($post_data);
+                $url1 = $RAMJIPAY_URL . '/api/get_smartcard_pdf_api';
+                //echo $url1;die;
+                curl_setopt($ch, CURLOPT_URL, $url1);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $server_output = curl_exec($ch);
+                curl_close($ch);
+                $resdata = json_decode($server_output, true);
+                //dd($resdata);
+                if ($resdata) {
+                    $status = $resdata['message'];
+                    if ($status == "Success") {
+                        $date = date('Y-m-d');
+                        $time = date('H:i:s');
+                        $service_status = 'Out Payment';
+                        $ad_info = 'Ramji Wallet Debit' . ' ' . $servicename;
+                        $getrawallet = DB::table('users')->select('rawallet')->where('id', 1)->first();
+                        $rawallet = 0;
+                        if ($getrawallet) {
+                            $balance1 = $getrawallet->rawallet;
+                        }
+
+                        $getrawallet1 = DB::table('users')->select('rawallet')->where('id', 2)->first();
+                        $rawallet1 = 0;
+                        if ($getrawallet1) {
+                            $balance2 = $getrawallet1->rawallet;
+                        }
+                        $newbalance2 = $balance1 + $admin_payment;
+                        $newbalance3 = $balance2 - $admin_payment;
+                        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+                        DB::insert(DB::raw($sql));
+                        $sql = "update users set rawallet = rawallet + $admin_payment where id = 1";
+                        DB::update(DB::raw($sql));
+                        $service_status = 'IN Payment';
+                        $ad_info = 'Ramji Wallet Credit' . ' ' . $servicename;
+                        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+                        DB::insert(DB::raw($sql));
+                        $sql = "update users set rawallet = rawallet - $admin_payment where id = 2";
+                        DB::update(DB::raw($sql));
+                    }
+                }
+            }
+        }
+        return redirect("appliedservice/Pending")->With("success", "Application submitted Succesfully");
+    }
+
+      public function submitapply_aadhaarfind(Request $request)
+    {
+
+        $user_id = 0;
+        $retailer_id = 0;
+        $distributor_id = 0;
+        if (Auth::user()->user_type_id == 3) {
+            $user_id = $request->user_id;
+            $distributor_id = Auth::user()->id;
+        } elseif (Auth::user()->user_type_id == 4) {
+            $user_id = $request->user_id;
+            $retailer_id = Auth::user()->id;
+        } elseif (Auth::user()->user_type_id == 5) {
+            $user_id = Auth::user()->id;
+        }
+        $serviceid = $request->serviceid;
+        $servicepayment = 0;
+        $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+
+            if (Auth::user()->user_type_id == 2) {
+                $servicepayment = $getservicepayment->admin_amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->customer_amount;
+            }
+        }
+        if (Auth::user()->wallet < $servicepayment) {
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+        }
+        DB::table('aadhaarfind')->insert([
+            'user_id'           => $user_id,
+            'retailer_id'       => $retailer_id,
+            'distributor_id'    => $distributor_id,
+            'service_id'        => $request->serviceid,
+            'amount'            => $request->amount,
+            'name'              => $request->name,
+            'mobile'              => $request->mobile,
+            'find_number'         => $request->find_number,
+            'nalavariyam_reg_no'       => $request->nalavariyam_reg_no,
+            'status'            => 'Pending',
+            'applied_date'      => date("Y-m-d"),
+            'created_at'        => date("Y-m-d"),
+        ]);
+
+        $insertid = DB::getPdo()->lastInsertId();
+
+        if (Auth::user()->user_type_id == 3) {
+            $user_id = $distributor_id;
+        } elseif (Auth::user()->user_type_id == 4) {
+            $user_id = $retailer_id;
+        } elseif (Auth::user()->user_type_id == 5) {
+            $user_id = $user_id;
+        }
+        $getservicename = DB::table('services')->select('service_name')->where('id', $serviceid)->first();
+        $servicename = "";
+        if ($getservicename) {
+            $servicename = $getservicename->service_name;
+        }
+        $date = date('Y-m-d');
+        $time = date('H:i:s');
+        $service_status = 'Out Payment';
+        $ad_info = 'Service Payment' . ' ' . $servicename;
+        $getwallet = DB::table('users')->select('wallet')->where('id', 2)->first();
+        $balance = 0;
+        if ($getwallet) {
+            $balance = $getwallet->wallet;
+        }
+        $newbalance = $balance + $servicepayment;
+        $newbalance1 = Auth::user()->wallet - $servicepayment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','$user_id','2','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance1')";
+        DB::insert(DB::raw($sql));
+        $sql = "update users set wallet = wallet + $servicepayment where id = 2";
+        DB::update(DB::raw($sql));
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$user_id','2','$user_id','$servicepayment','$ad_info', '$service_status','$time','$date','$user_id','$newbalance')";
+        DB::insert(DB::raw($sql));
+        $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
+        DB::update(DB::raw($sql));
+
+         $getpermission = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        $coordinator_permission = 0;
+        $admin_payment = 0;
+        if ($getpermission) {
+            $coordinator_permission = $getpermission->coordinator_permission;
+            $admin_payment = $getpermission->admin_amount;
+        }
+        if ($coordinator_permission == 1) {
+            $getdata = DB::table('aadhaarfind')->where('id', $insertid)->first();
+            if ($getdata) {
+                $service_id = $getdata->service_id;
+                $rowid = $getdata->id;
+                $name = $getdata->name;
+                $mobile = $getdata->mobile;
+                $find_number = $getdata->find_number;
+                $nalavariyam_reg_no = $getdata->nalavariyam_reg_no;
+                $status = $getdata->status;
+                $url = url('/');
+                $API_KEY = env('API_KEY', '');
+                $RAMJIPAY_URL = env('RAMJIPAY_URL', '');
+                $WEBSITE_INDEX = env('WEBSITE_INDEX', '');
+                $ch = curl_init();
+
+                if ($serviceid == 72) {
+                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=271&rowid=$rowid&status=$status&find_number=$find_number&mobile=$mobile&name=$name&nalavariyam_reg_no=$nalavariyam_reg_no";              
+                }
+
+                //dd($post_data);
+                $url1 = $RAMJIPAY_URL . '/api/get_aadhaarfind_api';
+                curl_setopt($ch, CURLOPT_URL, $url1);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $server_output = curl_exec($ch);
+                curl_close($ch);
+                $resdata = json_decode($server_output, true);
+                //dd($resdata);
+                if ($resdata) {
+                    $status = $resdata['message'];
+                    if ($status == "Success") {
+                        $date = date('Y-m-d');
+                        $time = date('H:i:s');
+                        $service_status = 'Out Payment';
+                        $ad_info = 'Ramji Wallet Debit' . ' ' . $servicename;
+                        $getrawallet = DB::table('users')->select('rawallet')->where('id', 1)->first();
+                        $rawallet = 0;
+                        if ($getrawallet) {
+                            $balance1 = $getrawallet->rawallet;
+                        }
+
+                        $getrawallet1 = DB::table('users')->select('rawallet')->where('id', 2)->first();
+                        $rawallet1 = 0;
+                        if ($getrawallet1) {
+                            $balance2 = $getrawallet1->rawallet;
+                        }
+                        $newbalance2 = $balance1 + $admin_payment;
+                        $newbalance3 = $balance2 - $admin_payment;
+                        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+                        DB::insert(DB::raw($sql));
+                        $sql = "update users set rawallet = rawallet + $admin_payment where id = 1";
+                        DB::update(DB::raw($sql));
+                        $service_status = 'IN Payment';
+                        $ad_info = 'Ramji Wallet Credit' . ' ' . $servicename;
+
+                        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+                        DB::insert(DB::raw($sql));
+                        $sql = "update users set rawallet = rawallet - $admin_payment where id = 2";
+                        DB::update(DB::raw($sql));
+                    }
+                }
+            }
+        }
+        return redirect("appliedservice/Pending")->With("success", "Application submitted Succesfully");
+    }
+
 }

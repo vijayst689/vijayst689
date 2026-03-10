@@ -67,3 +67,9 @@ Route::post('/get_voteridpdf_downloadestatus', [App\Http\Controllers\api\ApiCont
 
 //AGRI STACK SERVICE 
 Route::post('/get_agristack_status', [App\Http\Controllers\api\ApiController::class, 'get_agristack_status'])->name('get_agristack_status');
+
+// SMARTCARD PDF SERVICE 
+Route::post('/get_smartcardpdf_status', [App\Http\Controllers\api\ApiController::class, 'get_smartcardpdf_status'])->name('get_smartcardpdf_status');
+
+// AADHAAR FIND SERVICE 
+Route::post('/get_aadhaarfind_status', [App\Http\Controllers\api\ApiController::class, 'get_aadhaarfind_status'])->name('get_aadhaarfind_status');
