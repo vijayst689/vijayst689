@@ -238,6 +238,8 @@ Route::post('/submitapply_voteridpdfdownload', [App\Http\Controllers\ServiceCont
 Route::post('/submitapply_medicalscheme', [App\Http\Controllers\ServiceController::class, 'submitapply_medicalscheme'])->name('submitapply_medicalscheme');
 Route::post('/submitapply_agri_stack', [App\Http\Controllers\ServiceController::class, 'submitapply_agri_stack'])->name('submitapply_agri_stack');
 Route::post('/submitpvccardprint', [App\Http\Controllers\ServiceController::class, 'submitpvccardprint'])->name('submitpvccardprint');
+Route::post('/submitapply_smartcard_pdf', [App\Http\Controllers\ServiceController::class, 'submitapply_smartcard_pdf'])->name('submitapply_smartcard_pdf');
+Route::post('/submitapply_aadhaarfind', [App\Http\Controllers\ServiceController::class, 'submitapply_aadhaarfind'])->name('submitapply_aadhaarfind');
 
 Route::post('/submitutislnew', [App\Http\Controllers\ServiceController::class, 'submitutislnew'])->name('submitutislnew');
 
@@ -304,6 +306,8 @@ Route::post('/voteridpdf_statusupdate', [App\Http\Controllers\ServicestatusContr
 Route::post('/medicalscheme_update', [App\Http\Controllers\ServicestatusController::class, 'medicalscheme_update'])->name('medicalscheme_update');
 Route::post('/agristack_update', [App\Http\Controllers\ServicestatusController::class, 'agristack_update'])->name('agristack_update');
 Route::post('/pvcprint_update', [App\Http\Controllers\ServicestatusController::class, 'pvcprint_update'])->name('pvcprint_update');
+Route::post('/smartcard_pdf_statusupdate', [App\Http\Controllers\ServicestatusController::class, 'smartcard_pdf_statusupdate'])->name('smartcard_pdf_statusupdate');
+Route::post('/aadhaarfind_update', [App\Http\Controllers\ServicestatusController::class, 'aadhaarfind_update'])->name('aadhaarfind_update');
 
 
 Route::get('/servicepayment/{serviceid}', [App\Http\Controllers\ServicePaymentController::class, 'servicepayment'])->name('servicepayment');
