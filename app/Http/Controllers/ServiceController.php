@@ -8179,40 +8179,50 @@ if($coordinator_permission == 1){
         }
         if ($serviceid == 179) {
             DB::table('medicalscheme')->insert([
-                'user_id'          => $user_id,
-                'retailer_id'      => $retailer_id,
-                'distributor_id'   => $distributor_id,
-                'service_id'       => $request->serviceid,
-                'amount'           => $request->amount,
+                'user_id'      => $user_id,
+                'retailer_id'  => $retailer_id,
+                'distributor_id' => $distributor_id,
+                'service_id'   => $request->serviceid,
+                'amount'       => $request->amount,
                 'family_head_name' => $request->family_head_name,
-                'mobile'           => $request->mobile,
-                'relationship'     => $request->relationship,
-                'smartcard_no'     => $request->smartcard_no,
+                'mobile'       => $request->mobile,
+                'relationship'       => $request->relationship,
+                'smartcard_no'       => $request->smartcard_no,
                 'aadhaar_no'       => $request->aadhaar_no,
-                'marital_status'   => $request->marital_status,
-                'father_name'      => $request->father_name,
-                'husband_name'     => $request->husband_name,
-                'pin_code'         => $request->pin_code,
-                'status'           => 'Pending',
-                'applied_date'     => date("Y-m-d"),
-                'created_at'       => date("Y-m-d"),
+                'marital_status'       => $request->marital_status,
+                'father_name'       => $request->father_name,
+                'husband_name'       => $request->husband_name,
+                'pin_code'       => $request->pin_code,
+                'relation'       => $request->relation,
+                'status'       => 'Pending',
+                'applied_date' => date("Y-m-d"),
+                'created_at'   => date("Y-m-d"),
             ]);
 
-            $insertid                  = DB::getPdo()->lastInsertId();
-            $passportsize_photo        = "";
-            $smartcard_onlineprint     = "";
+            $insertid = DB::getPdo()->lastInsertId();
+            $passportsize_photo = "";
+            $smartcard_onlineprint = "";
             $vao_or_income_certificate = "";
-            $photo                     = "";
-            $aadhaarimg                = "";
-            $aadhaarimg2               = "";
-            $aadhaarimg3               = "";
-            $aadhaarimg4               = "";
-            $aadhaarimg5               = "";
-            $aadhaarimg6               = "";
+            $photo = "";
+            $aadhaarimg = "";
+            $aadhaarimg2 = "";
+            $aadhaarimg3 = "";
+            $aadhaarimg4 = "";
+            $aadhaarimg5 = "";
+            $aadhaarimg6 = "";
+            $aadhaar_card = "";
 
+            if ($request->aadhaar_card != null) {
+                $aadhaar_card = uniqid() . '.' . $request->file('aadhaar_card')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
+            }
+            DB::table('medicalscheme')->where('id', $insertid)->update([
+                'aadhaar_card' => $aadhaar_card,
+            ]);
             if ($request->passportsize_photo != null) {
                 $passportsize_photo = uniqid() . '.' . $request->file('passportsize_photo')->extension();
-                $filepath           = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'passportsize_photo' . DIRECTORY_SEPARATOR);
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'passportsize_photo' . DIRECTORY_SEPARATOR);
                 move_uploaded_file($_FILES['passportsize_photo']['tmp_name'], $filepath . $passportsize_photo);
             }
             DB::table('medicalscheme')->where('id', $insertid)->update([
@@ -8220,7 +8230,7 @@ if($coordinator_permission == 1){
             ]);
             if ($request->smartcard_onlineprint != null) {
                 $smartcard_onlineprint = uniqid() . '.' . $request->file('smartcard_onlineprint')->extension();
-                $filepath              = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smartcard_onlineprint' . DIRECTORY_SEPARATOR);
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smartcard_onlineprint' . DIRECTORY_SEPARATOR);
                 move_uploaded_file($_FILES['smartcard_onlineprint']['tmp_name'], $filepath . $smartcard_onlineprint);
             }
             DB::table('medicalscheme')->where('id', $insertid)->update([
@@ -8229,7 +8239,7 @@ if($coordinator_permission == 1){
 
             if ($request->vao_or_income_certificate != null) {
                 $vao_or_income_certificate = uniqid() . '.' . $request->file('vao_or_income_certificate')->extension();
-                $filepath                  = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'vao_or_income_certificate' . DIRECTORY_SEPARATOR);
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'vao_or_income_certificate' . DIRECTORY_SEPARATOR);
                 move_uploaded_file($_FILES['vao_or_income_certificate']['tmp_name'], $filepath . $vao_or_income_certificate);
             }
             DB::table('medicalscheme')->where('id', $insertid)->update([
@@ -8237,10 +8247,9 @@ if($coordinator_permission == 1){
             ]);
 
             if ($request->photo != null) {
-                $photo    = uniqid() . '.' . $request->file('photo')->extension();
+                $photo = uniqid() . '.' . $request->file('photo')->extension();
                 $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'photo' . DIRECTORY_SEPARATOR);
                 move_uploaded_file($_FILES['photo']['tmp_name'], $filepath . $photo);
-
             }
             DB::table('medicalscheme')->where('id', $insertid)->update([
                 'photo' => $photo,
@@ -8248,7 +8257,7 @@ if($coordinator_permission == 1){
 
             if ($request->aadhaar != null) {
                 $aadhaarimg = uniqid() . '.' . $request->file('aadhaar')->extension();
-                $filepath   = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar' . DIRECTORY_SEPARATOR);
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar' . DIRECTORY_SEPARATOR);
                 move_uploaded_file($_FILES['aadhaar']['tmp_name'], $filepath . $aadhaarimg);
             }
             DB::table('medicalscheme')->where('id', $insertid)->update([
@@ -8256,45 +8265,40 @@ if($coordinator_permission == 1){
             ]);
             if ($request->aadhaar2 != null) {
                 $aadhaarimg2 = uniqid() . '.' . $request->file('aadhaar2')->extension();
-                $filepath    = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar2' . DIRECTORY_SEPARATOR);
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar2' . DIRECTORY_SEPARATOR);
                 move_uploaded_file($_FILES['aadhaar2']['tmp_name'], $filepath . $aadhaarimg2);
-
             }
             DB::table('medicalscheme')->where('id', $insertid)->update([
                 'aadhaar2' => $aadhaarimg2,
             ]);
             if ($request->aadhaar3 != null) {
                 $aadhaarimg3 = uniqid() . '.' . $request->file('aadhaar3')->extension();
-                $filepath    = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar3' . DIRECTORY_SEPARATOR);
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar3' . DIRECTORY_SEPARATOR);
                 move_uploaded_file($_FILES['aadhaar3']['tmp_name'], $filepath . $aadhaarimg3);
-
             }
             DB::table('medicalscheme')->where('id', $insertid)->update([
                 'aadhaar3' => $aadhaarimg3,
             ]);
             if ($request->aadhaar4 != null) {
                 $aadhaarimg4 = uniqid() . '.' . $request->file('aadhaar4')->extension();
-                $filepath    = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar4' . DIRECTORY_SEPARATOR);
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar4' . DIRECTORY_SEPARATOR);
                 move_uploaded_file($_FILES['aadhaar4']['tmp_name'], $filepath . $aadhaarimg4);
-
             }
             DB::table('medicalscheme')->where('id', $insertid)->update([
                 'aadhaar4' => $aadhaarimg4,
             ]);
             if ($request->aadhaar5 != null) {
                 $aadhaarimg5 = uniqid() . '.' . $request->file('aadhaar5')->extension();
-                $filepath    = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar5' . DIRECTORY_SEPARATOR);
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar5' . DIRECTORY_SEPARATOR);
                 move_uploaded_file($_FILES['aadhaar5']['tmp_name'], $filepath . $aadhaarimg5);
-
             }
             DB::table('medicalscheme')->where('id', $insertid)->update([
                 'aadhaar5' => $aadhaarimg5,
             ]);
             if ($request->aadhaar6 != null) {
                 $aadhaarimg6 = uniqid() . '.' . $request->file('aadhaar6')->extension();
-                $filepath    = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar6' . DIRECTORY_SEPARATOR);
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar6' . DIRECTORY_SEPARATOR);
                 move_uploaded_file($_FILES['aadhaar6']['tmp_name'], $filepath . $aadhaarimg6);
-
             }
             DB::table('medicalscheme')->where('id', $insertid)->update([
                 'aadhaar6' => $aadhaarimg6,
@@ -8325,7 +8329,6 @@ if($coordinator_permission == 1){
             ]);
         }
 
-        $servicepayment = $request->service_amount;
         if (Auth::user()->user_type_id == 3) {
             $user_id = $distributor_id;
         } elseif (Auth::user()->user_type_id == 4) {
@@ -8360,44 +8363,46 @@ if($coordinator_permission == 1){
         $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
         DB::update(DB::raw($sql));
 
-        $getpermission          = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        $getpermission = DB::table('service_payment')->where('service_id', $serviceid)->first();
         $coordinator_permission = 0;
-        $admin_payment          = 0;
+        $admin_payment = 0;
         if ($getpermission) {
             $coordinator_permission = $getpermission->coordinator_permission;
-            $admin_payment          = $getpermission->admin_amount;
+            $admin_payment = $getpermission->admin_amount;
         }
         if ($coordinator_permission == 1) {
             $getdata = DB::table('medicalscheme')->where('id', $insertid)->first();
             if ($getdata) {
-                $passportsize_photo            = $getdata->passportsize_photo;
-                $vao_or_income_certificate     = $getdata->vao_or_income_certificate;
-                $smartcard_onlineprint         = $getdata->smartcard_onlineprint;
-                $photo                         = $getdata->photo;
-                $service_id                    = $getdata->service_id;
-                $rowid                         = $getdata->id;
-                $family_head_name              = $getdata->family_head_name;
-                $father_name                   = $getdata->father_name;
-                $smartcard_no                  = $getdata->smartcard_no;
-                $mobile                        = $getdata->mobile;
-                $aadhaar_no                    = $getdata->aadhaar_no;
-                $pin_code                      = $getdata->pin_code;
-                $husband_name                  = $getdata->husband_name;
-                $marital_status                = $getdata->marital_status;
-                $status                        = $getdata->status;
-                $url                           = url('/');
-                $photo_url                     = $url . '/upload/services/photo/' . $photo;
-                $smartcard_url                 = $url . '/upload/services/smartcard_onlineprint/' . $smartcard_onlineprint;
+                $aadhaar_card = $getdata->aadhaar_card;
+                $passportsize_photo = $getdata->passportsize_photo;
+                $vao_or_income_certificate = $getdata->vao_or_income_certificate;
+                $smartcard_onlineprint = $getdata->smartcard_onlineprint;
+                $photo = $getdata->photo;
+                $service_id = $getdata->service_id;
+                $rowid = $getdata->id;
+                $family_head_name = $getdata->family_head_name;
+                $father_name = $getdata->father_name;
+                $smartcard_no = $getdata->smartcard_no;
+                $mobile = $getdata->mobile;
+                $aadhaar_no = $getdata->aadhaar_no;
+                $pin_code = $getdata->pin_code;
+                $husband_name = $getdata->husband_name;
+                $marital_status = $getdata->marital_status;
+                $relation = $getdata->relation;
+                $status = $getdata->status;
+                $url = url('/');
+                $photo_url = $url . '/upload/services/photo/' . $photo;
+                $smartcard_url = $url . '/upload/services/smartcard_onlineprint/' . $smartcard_onlineprint;
                 $vao_or_income_certificate_url = $url . '/upload/services/vao_or_income_certificate/' . $vao_or_income_certificate;
-                $passportsize_url              = $url . '/upload/services/passportsize_photo/' . $passportsize_photo;
-                $API_KEY                       = env('API_KEY', '');
-                $RAMJIPAY_URL                  = env('RAMJIPAY_URL', '');
-                $WEBSITE_INDEX                 = env('WEBSITE_INDEX', '');
-                $ch                            = curl_init();
+                $passportsize_url = $url . '/upload/services/passportsize_photo/' . $passportsize_photo;
+                $aadhaar_url = $url . '/upload/services/aadhaar_card/' . $aadhaar_card;
+                $API_KEY = env('API_KEY', '');
+                $RAMJIPAY_URL = env('RAMJIPAY_URL', '');
+                $WEBSITE_INDEX = env('WEBSITE_INDEX', '');
+                $ch = curl_init();
 
                 if ($serviceid == 179) {
-                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&photo=$photo_url&passportsize_photo=$passportsize_url&vao_or_income_certificate=$vao_or_income_certificate_url&smartcard_onlineprint=$smartcard_url&service_id=$service_id&rowid=$rowid&status=$status&family_head_name=$family_head_name&father_name=$father_name&smartcard_no=$smartcard_no&mobile=$mobile&aadhaar_no=$aadhaar_no&pin_code=$pin_code&husband_name=$husband_name&marital_status=$marital_status";
-
+                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_card=$aadhaar_url&photo=$photo_url&passportsize_photo=$passportsize_url&vao_or_income_certificate=$vao_or_income_certificate_url&smartcard_onlineprint=$smartcard_url&service_id=$service_id&rowid=$rowid&status=$status&family_head_name=$family_head_name&father_name=$father_name&smartcard_no=$smartcard_no&mobile=$mobile&aadhaar_no=$aadhaar_no&pin_code=$pin_code&husband_name=$husband_name&marital_status=$marital_status&relation=$relation";
                 }
 
                 //dd($post_data);

@@ -2802,3 +2802,15 @@ ADD eid_no varchar(50) DEFAULT NULL,
 ADD date varchar(20) DEFAULT NULL,
 ADD time varchar(20) DEFAULT NULL;
 ALTER TABLE aadhaarcard MODIFY created_at DATETIME NULL;
+
+
+alter table medicalscheme add aadhaar_card text DEFAULT null;
+alter table medicalscheme add relation varchar(100) DEFAULT null;
+alter table medicalscheme add api_processing text DEFAULT NULL after certificate;
+alter table medicalscheme add api_approved text DEFAULT NULL after api_processing;
+alter table medicalscheme add relationship text DEFAULT NULL after certificate;
+alter table medicalscheme add smartcard_no text DEFAULT NULL after api_processing;
+alter table medicalscheme add aadhaar_no text DEFAULT NULL after api_processing;
+alter table medicalscheme add aadhaar_no text DEFAULT NULL after api_processing;
+alter table medicalscheme add father_name text DEFAULT NULL after api_processing;
+alter table medicalscheme add marital_status text DEFAULT NULL after api_processing;
