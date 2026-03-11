@@ -20,813 +20,251 @@ class ServicestatusController extends Controller
     $this->middleware('auth');
   }
 
-    public function appliedservice($status)
+      public function approvedList(Request $request)
     {
-        if(Auth::user()->user_type_id == 2 || Auth::user()->user_type_id == 1){
+        $table = $request->table;
+        $serviceId = $request->service_id;
 
-            $service = DB::table('msme')->select('services.service_name', 'msme.*')
-            ->Join('services', 'services.id', '=', 'msme.service_id')
-            ->where('msme.status',$status)
-            ->orderBy('msme.id', 'Desc')->get();
+        // Get approved services
+      $user = Auth::user();
 
-            $itr = DB::table('itr')->select('services.service_name', 'itr.*')
-            ->Join('services', 'services.id', '=', 'itr.service_id')
-            ->where('itr.status',$status)
-            ->orderBy('itr.id', 'Desc')->get();
+$services = DB::table($table)
+    ->join('services', 'services.id', '=', "$table.service_id")
+    ->select(
+        "$table.*",
+        'services.service_name as service_name'
+    )
+    ->where("$table.status", 'Approved')
+    ->where("$table.service_id", $serviceId);
 
-            $gst = DB::table('gst')->select('services.service_name', 'gst.*')
-            ->Join('services', 'services.id', '=', 'gst.service_id')
-            ->where('gst.status',$status)
-            ->orderBy('gst.id', 'Desc')->get();
+// 🎯 Role Based Filtering
+if (in_array($user->user_type_id, [3,4,5])) {
 
-            $tec_exam = DB::table('tec_exam')->select('services.service_name', 'tec_exam.*')
-            ->Join('services', 'services.id', '=', 'tec_exam.service_id')
-            ->where('tec_exam.status',$status)
-            ->orderBy('tec_exam.id', 'Desc')->get();
+    $column = null;
 
-            $tnegaservices = DB::table('tnega_services')->select('services.service_name', 'users.name','tnega_services.*')
-            ->Join('services', 'services.id', '=', 'tnega_services.service_id')
-            ->Join('users', 'users.id', '=', 'tnega_services.user_id')
-            ->where('tnega_services.status',$status)
-            ->orderBy('tnega_services.id', 'Desc')->get();
+    switch ($user->user_type_id) {
+        case 3:
+            $column = 'distributor_id';
+            break;
 
-            $smartcard = DB::table('smartcard')->select('services.service_name', 'smartcard.*')
-            ->Join('services', 'services.id', '=', 'smartcard.service_id')
-            ->where('smartcard.status',$status)
-            ->orderBy('smartcard.id', 'Desc')->get();
+        case 4:
+            $column = 'retailer_id';
+            break;
 
-            $aadhaarcard = DB::table('aadhaarcard')->select('services.service_name', 'aadhaarcard.*')
-            ->Join('services', 'services.id', '=', 'aadhaarcard.service_id')
-            ->where('aadhaarcard.status',$status)
-            ->orderBy('aadhaarcard.id', 'Desc')->get();
+        case 5:
+            $column = 'user_id';
+            break;
+    }
 
-            $can_edit = DB::table('can_edit')->select('services.service_name', 'users.name','can_edit.*')
-            ->Join('services', 'services.id', '=', 'can_edit.service_id')
-            ->Join('users', 'users.id', '=', 'can_edit.user_id')
-            ->where('can_edit.status',$status)
-            ->orderBy('can_edit.id', 'Desc')->get();
+    $services->where("$table.$column", $user->id);
+}
 
-            $bond = DB::table('bond')->select('services.service_name', 'bond.*')
-            ->Join('services', 'services.id', '=', 'bond.service_id')
-            ->where('bond.status',$status)
-            ->orderBy('bond.id', 'Desc')->get();
-
-            $voterid = DB::table('voterid')->select('services.service_name', 'voterid.*')
-            ->Join('services', 'services.id', '=', 'voterid.service_id')
-            ->where('voterid.status',$status)
-            ->orderBy('voterid.id', 'Desc')->get();
-
-            $fssai = DB::table('fssai')->select('services.service_name', 'fssai.*')
-            ->Join('services', 'services.id', '=', 'fssai.service_id')
-            ->where('fssai.status',$status)
-            ->orderBy('fssai.id', 'Desc')->get();
-
-            $covid = DB::table('covid')->select('services.service_name', 'covid.*')
-            ->Join('services', 'services.id', '=', 'covid.service_id')
-            ->where('covid.status',$status)
-            ->orderBy('covid.id', 'Desc')->get();
-
-            $nalavariyam = DB::table('nalavariyam')->select('services.service_name', 'nalavariyam.*')
-            ->Join('services', 'services.id', '=', 'nalavariyam.service_id')
-            ->where('nalavariyam.status',$status)
-            ->orderBy('nalavariyam.id', 'Desc')->get();
-
-            $license = DB::table('license')->select('services.service_name', 'license.*')
-            ->Join('services', 'services.id', '=', 'license.service_id')
-            ->where('license.status',$status)
-            ->orderBy('license.id', 'Desc')->get();
-
-            $tailor = DB::table('tailor')->select('services.service_name', 'tailor.*')
-            ->Join('services', 'services.id', '=', 'tailor.service_id')
-            ->where('tailor.status',$status)
-            ->orderBy('tailor.id', 'Desc')->get();
-
-            $pmkissan = DB::table('pmkissan')->select('services.service_name', 'pmkissan.*')
-            ->Join('services', 'services.id', '=', 'pmkissan.service_id')
-            ->where('pmkissan.status',$status)
-            ->orderBy('pmkissan.id', 'Desc')->get();
-
-            $birth_certificate = DB::table('birth_certificate')->select('services.service_name', 'birth_certificate.*')
-            ->Join('services', 'services.id', '=', 'birth_certificate.service_id')
-            ->where('birth_certificate.status',$status)
-            ->orderBy('birth_certificate.id', 'Desc')->get();
-
-            $medicalscheme = DB::table('medicalscheme')->select('services.service_name', 'medicalscheme.*')
-            ->Join('services', 'services.id', '=', 'medicalscheme.service_id')
-            ->where('medicalscheme.status',$status)
-            ->orderBy('medicalscheme.id', 'Desc')->get();
-
-            $dharsan = DB::table('dharsan')->select('services.service_name', 'dharsan.*')
-            ->Join('services', 'services.id', '=', 'dharsan.service_id')
-            ->where('dharsan.status',$status)
-            ->orderBy('dharsan.id', 'Desc')->get();
-
-            $utisl = DB::table('utislpan')->select('services.service_name', 'utislpan.*')
-            ->Join('services', 'services.id', '=', 'utislpan.service_id')
-            ->where('utislpan.status',$status)
-            ->orderBy('utislpan.id', 'Desc')->get();
-
-            $patta = DB::table('patta')->select('services.service_name', 'patta.*')
-            ->Join('services', 'services.id', '=', 'patta.service_id')
-            ->where('patta.status',$status)
-            ->orderBy('patta.id', 'Desc')->get();
-
-            $software = DB::table('software')->select('services.service_name', 'software.*')
-            ->Join('services', 'services.id', '=', 'software.service_id')
-            ->where('software.status',$status)
-            ->orderBy('software.id', 'Desc')->get();
-
-            $smartcard_otp = DB::table('smartcard_otp')->select('services.service_name', 'smartcard_otp.*')
-            ->Join('services', 'services.id', '=', 'smartcard_otp.service_id')
-            ->where('smartcard_otp.status',$status)
-            ->orderBy('smartcard_otp.id', 'Desc')->get();
-
-            $voteridpdf_download = DB::table('voteridpdf_download')->select('services.service_name', 'voteridpdf_download.*')
-            ->Join('services', 'services.id', '=', 'voteridpdf_download.service_id')
-            ->where('voteridpdf_download.status',$status)
-            ->orderBy('voteridpdf_download.id', 'Desc')->get();
-
-            $agri_stack = DB::table('agri_stack')->select('services.service_name', 'agri_stack.*')
-            ->Join('services', 'services.id', '=', 'agri_stack.service_id')
-            ->where('agri_stack.status',$status)
-            ->orderBy('agri_stack.id', 'Desc')->get();
-
-            $pvccard = DB::table('pvc_card')->select('services.service_name', 'pvc_card.*')
-            ->Join('services', 'services.id', '=', 'pvc_card.service_id')
-            ->where('pvc_card.status',$status)
-            ->orderBy('pvc_card.id', 'Desc')->get();
-
-            $smartcard_pdf = DB::table('smartcard_pdf')->select('services.service_name', 'smartcard_pdf.*')
-                ->Join('services', 'services.id', '=', 'smartcard_pdf.service_id')
-                ->where('smartcard_pdf.status', $status)
-                ->orderBy('smartcard_pdf.id', 'Desc')->get();
-
-            $aadhaarfind = DB::table('aadhaarfind')->select('services.service_name', 'aadhaarfind.*')
-                ->Join('services', 'services.id', '=', 'aadhaarfind.service_id')
-                ->where('aadhaarfind.status', $status)
-                ->orderBy('aadhaarfind.id', 'Desc')->get();
-
-            $service = $service->merge($itr);
-            $service = $service->merge($gst);
-            $service = $service->merge($tec_exam);
-            $service = $service->merge($tnegaservices);
-            $service = $service->merge($smartcard);
-            $service = $service->merge($aadhaarcard);
-            $service = $service->merge($can_edit);
-            $service = $service->merge($bond);
-            $service = $service->merge($voterid);
-            $service = $service->merge($fssai);
-            $service = $service->merge($covid);
-            $service = $service->merge($nalavariyam);
-            $service = $service->merge($license);
-            $service = $service->merge($tailor);
-            $service = $service->merge($pmkissan);
-            $service = $service->merge($birth_certificate);
-            $service = $service->merge($medicalscheme);
-            $service = $service->merge($dharsan);
-            $service = $service->merge($utisl);
-            $service = $service->merge($patta);
-            $service = $service->merge($software);
-            $service = $service->merge($smartcard_otp);
-            $service = $service->merge($voteridpdf_download);
-            $service = $service->merge($agri_stack);
-            $service = $service->merge($pvccard);
-             $service = $service->merge($smartcard_pdf);
-            $service = $service->merge($aadhaarfind);
-
-            $service = json_decode( json_encode( $service ), true );
-        foreach ( $service as $key => $s ) {
+$services = $services
+    ->orderBy("$table.id", 'DESC')
+    ->get()
+    ->toArray();
+        // Preprocess each record
+        foreach ($services as $key => $s) {
             $user_id = 0;
             $context = "";
-            if($s['retailer_id'] == 0 && $s['distributor_id'] == 0){
-            $user_id = $s['user_id'];
-            $context = "Customer";
+
+            // Determine user type
+            if ($s->retailer_id == 0 && $s->distributor_id == 0) {
+                $user_id = $s->user_id;
+                $context = "Customer";
+            } elseif ($s->retailer_id == 0) {
+                $user_id = $s->distributor_id;
+                $context = "Distributor";
+            } elseif ($s->distributor_id == 0) {
+                $user_id = $s->retailer_id;
+                $context = "Retailer";
+            }
+
+            // Fetch user details
+            $user = DB::table('users')->select('name', 'phone', 'refferal_id')->where('id', $user_id)->first();
+            $name = $user->name ?? '';
+            $mobile = $user->phone ?? '';
+            $refferal_id = $user->refferal_id ?? 0;
+
+            // Fetch district name
+            $district_name = '';
+            if (!empty($s->dist_id)) {
+                $district = DB::table('district')->select('district_name')->where('id', $s->dist_id)->first();
+                $district_name = $district->district_name ?? '';
+            }
+
+            // Attach processed fields
+            $s->applyname     = $name;
+            $s->applymobile   = $mobile;
+            $s->context       = $context;
+            $s->applyuserid   = $user_id;
+            $s->refferal_id   = $refferal_id;
+            $s->district_name = $district_name;
         }
-        elseif($s['retailer_id'] == 0){
-            $user_id = $s['distributor_id'];
-            $context = "Distributor";
-        }elseif($s['distributor_id'] == 0){
-            $user_id = $s['retailer_id'];
-            $context = "Retailer";
-        }
-        $user_id = $user_id;
-        $sql = "select name,phone from customers where id=$user_id";
-        $result = DB::select( $sql );
-        $name = "";
-        $mobile = "";
-        if(count($result) > 0){
-            $name = $result[0]->name;
-            $mobile = $result[0]->phone;
-        }
-        $service[ $key ][ 'applyname' ] = $name;
-        $service[ $key ][ 'applymobile' ] = $mobile;
-        $service[ $key ][ 'context' ] = $context;
-        $service[ $key ][ 'applyuserid' ] = $user_id;
-    }
-        $service = json_decode( json_encode( $service ));
 
-        }elseif(Auth::user()->user_type_id == 3){
-
-            $service = DB::table('msme')->select('services.service_name', 'msme.*')
-            ->Join('services', 'services.id', '=', 'msme.service_id')
-            ->Join('users', 'users.id', '=', 'msme.user_id')
-            ->where('msme.status',$status)
-            ->where('msme.distributor_id',Auth::user()->id)
-            ->orderBy('msme.id', 'Desc')->get();
-
-
-            $itr = DB::table('itr')->select('services.service_name', 'itr.*')
-            ->Join('services', 'services.id', '=', 'itr.service_id')
-            ->where('itr.status',$status)
-            ->where('itr.distributor_id',Auth::user()->id)
-            ->orderBy('itr.id', 'Desc')->get();
-
-            $gst = DB::table('gst')->select('services.service_name', 'gst.*')
-            ->Join('services', 'services.id', '=', 'gst.service_id')
-            ->where('gst.status',$status)
-            ->where('gst.distributor_id',Auth::user()->id)
-            ->orderBy('gst.id', 'Desc')->get();
-
-            $tec_exam = DB::table('tec_exam')->select('services.service_name', 'tec_exam.*')
-            ->Join('services', 'services.id', '=', 'tec_exam.service_id')
-            ->where('tec_exam.status',$status)
-            ->where('tec_exam.distributor_id',Auth::user()->id)
-            ->orderBy('tec_exam.id', 'Desc')->get();
-
-            $tnegaservices = DB::table('tnega_services')->select('services.service_name', 'tnega_services.*')
-            ->Join('services', 'services.id', '=', 'tnega_services.service_id')
-            ->where('tnega_services.status',$status)
-            ->where('tnega_services.distributor_id',Auth::user()->id)
-            ->orderBy('tnega_services.id', 'Desc')->get();
-
-            $smartcard = DB::table('smartcard')->select('services.service_name', 'smartcard.*')
-            ->Join('services', 'services.id', '=', 'smartcard.service_id')
-            ->where('smartcard.status',$status)
-            ->where('smartcard.distributor_id',Auth::user()->id)
-            ->orderBy('smartcard.id', 'Desc')->get();
-
-            $aadhaarcard = DB::table('aadhaarcard')->select('services.service_name', 'aadhaarcard.*')
-            ->Join('services', 'services.id', '=', 'aadhaarcard.service_id')
-            ->where('aadhaarcard.status',$status)
-            ->where('aadhaarcard.distributor_id',Auth::user()->id)
-            ->orderBy('aadhaarcard.id', 'Desc')->get();
-
-            $can_edit = DB::table('can_edit')->select('services.service_name', 'users.name','can_edit.*')
-            ->Join('services', 'services.id', '=', 'can_edit.service_id')
-            ->Join('users', 'users.id', '=', 'can_edit.user_id')
-            ->where('can_edit.status',$status)
-            ->where('can_edit.distributor_id',Auth::user()->id)
-            ->orderBy('can_edit.id', 'Desc')->get();
-
-            $bond = DB::table('bond')->select('services.service_name', 'bond.*')
-            ->Join('services', 'services.id', '=', 'bond.service_id')
-            ->where('bond.status',$status)
-            ->where('bond.distributor_id',Auth::user()->id)
-            ->orderBy('bond.id', 'Desc')->get();
-
-            $voterid = DB::table('voterid')->select('services.service_name', 'voterid.*')
-            ->Join('services', 'services.id', '=', 'voterid.service_id')
-            ->where('voterid.status',$status)
-            ->where('voterid.distributor_id',Auth::user()->id)
-            ->orderBy('voterid.id', 'Desc')->get();
-
-            $fssai = DB::table('fssai')->select('services.service_name', 'fssai.*')
-            ->Join('services', 'services.id', '=', 'fssai.service_id')
-            ->where('fssai.status',$status)
-            ->where('fssai.distributor_id',Auth::user()->id)
-            ->orderBy('fssai.id', 'Desc')->get();
-
-            $covid = DB::table('covid')->select('services.service_name', 'covid.*')
-            ->Join('services', 'services.id', '=', 'covid.service_id')
-            ->where('covid.status',$status)
-            ->where('covid.distributor_id',Auth::user()->id)
-            ->orderBy('covid.id', 'Desc')->get();
-
-            $nalavariyam = DB::table('nalavariyam')->select('services.service_name', 'nalavariyam.*')
-            ->Join('services', 'services.id', '=', 'nalavariyam.service_id')
-            ->where('nalavariyam.status',$status)
-            ->where('nalavariyam.distributor_id',Auth::user()->id)
-            ->orderBy('nalavariyam.id', 'Desc')->get();
-
-            $license = DB::table('license')->select('services.service_name', 'license.*')
-            ->Join('services', 'services.id', '=', 'license.service_id')
-            ->where('license.status',$status)
-            ->where('license.distributor_id',Auth::user()->id)
-            ->orderBy('license.id', 'Desc')->get();
-
-            $tailor = DB::table('tailor')->select('services.service_name', 'tailor.*')
-            ->Join('services', 'services.id', '=', 'tailor.service_id')
-            ->where('tailor.status',$status)
-            ->where('tailor.distributor_id',Auth::user()->id)
-            ->orderBy('tailor.id', 'Desc')->get();
-
-            $pmkissan = DB::table('pmkissan')->select('services.service_name', 'pmkissan.*')
-            ->Join('services', 'services.id', '=', 'pmkissan.service_id')
-            ->where('pmkissan.status',$status)
-            ->where('pmkissan.distributor_id',Auth::user()->id)
-            ->orderBy('pmkissan.id', 'Desc')->get();
-
-            $birth_certificate = DB::table('birth_certificate')->select('services.service_name', 'birth_certificate.*')
-            ->Join('services', 'services.id', '=', 'birth_certificate.service_id')
-            ->where('birth_certificate.status',$status)
-            ->where('birth_certificate.distributor_id',Auth::user()->id)
-            ->orderBy('birth_certificate.id', 'Desc')->get();
-
-            $medicalscheme = DB::table('medicalscheme')->select('services.service_name', 'medicalscheme.*')
-            ->Join('services', 'services.id', '=', 'medicalscheme.service_id')
-            ->where('medicalscheme.status',$status)
-            ->where('medicalscheme.distributor_id',Auth::user()->id)
-            ->orderBy('medicalscheme.id', 'Desc')->get();
-
-            $dharsan = DB::table('dharsan')->select('services.service_name', 'dharsan.*')
-            ->Join('services', 'services.id', '=', 'dharsan.service_id')
-            ->where('dharsan.status',$status)
-            ->where('dharsan.distributor_id',Auth::user()->id)
-            ->orderBy('dharsan.id', 'Desc')->get();
-
-            $utisl = DB::table('utislpan')->select('services.service_name', 'utislpan.*')
-            ->Join('services', 'services.id', '=', 'utislpan.service_id')
-            ->where('utislpan.status',$status)
-            ->where('utislpan.distributor_id',Auth::user()->id)
-            ->orderBy('utislpan.id', 'Desc')->get();
-
-            $patta = DB::table('patta')->select('services.service_name', 'patta.*')
-            ->Join('services', 'services.id', '=', 'patta.service_id')
-            ->where('patta.status',$status)
-            ->where('patta.distributor_id',Auth::user()->id)
-            ->orderBy('patta.id', 'Desc')->get();
-
-            $software = DB::table('software')->select('services.service_name', 'software.*')
-            ->Join('services', 'services.id', '=', 'software.service_id')
-            ->where('software.status',$status)
-            ->where('software.distributor_id',Auth::user()->id)
-            ->orderBy('software.id', 'Desc')->get();
-
-            $smartcard_otp = DB::table('smartcard_otp')->select('services.service_name', 'smartcard_otp.*')
-            ->Join('services', 'services.id', '=', 'smartcard_otp.service_id')
-            ->where('smartcard_otp.status',$status)
-            ->where('smartcard_otp.distributor_id',Auth::user()->id)
-            ->orderBy('smartcard_otp.id', 'Desc')->get();
-
-            $voteridpdf_download = DB::table('voteridpdf_download')->select('services.service_name', 'voteridpdf_download.*')
-            ->Join('services', 'services.id', '=', 'voteridpdf_download.service_id')
-            ->where('voteridpdf_download.status',$status)
-            ->where('voteridpdf_download.distributor_id',Auth::user()->id)
-            ->orderBy('voteridpdf_download.id', 'Desc')->get();
-
-            $agri_stack = DB::table('agri_stack')->select('services.service_name', 'agri_stack.*')
-            ->Join('services', 'services.id', '=', 'agri_stack.service_id')
-            ->where('agri_stack.status',$status)
-            ->where('agri_stack.distributor_id',Auth::user()->id)
-            ->orderBy('agri_stack.id', 'Desc')->get();
-
-            $pvccard = DB::table('pvc_card')->select('services.service_name', 'pvc_card.*')
-            ->Join('services', 'services.id', '=', 'pvc_card.service_id')
-            ->where('pvc_card.status',$status)
-            ->where('pvc_card.distributor_id',Auth::user()->id)
-            ->orderBy('pvc_card.id', 'Desc')->get();
-
-            $smartcard_pdf = DB::table('smartcard_pdf')->select('services.service_name', 'smartcard_pdf.*')
-                ->Join('services', 'services.id', '=', 'smartcard_pdf.service_id')
-                ->where('smartcard_pdf.status', $status)
-                ->where('smartcard_pdf.distributor_id', Auth::user()->id)
-                ->orderBy('smartcard_pdf.id', 'Desc')->get();
-
-            $aadhaarfind = DB::table('aadhaarfind')->select('services.service_name', 'aadhaarfind.*')
-                ->Join('services', 'services.id', '=', 'aadhaarfind.service_id')
-                ->where('aadhaarfind.status', $status)
-                ->where('aadhaarfind.distributor_id', Auth::user()->id)
-                ->orderBy('aadhaarfind.id', 'Desc')->get();
-
-            $service = $service->merge($itr);
-            $service = $service->merge($gst);
-            $service = $service->merge($tec_exam);
-            $service = $service->merge($tnegaservices);
-            $service = $service->merge($smartcard);
-            $service = $service->merge($aadhaarcard);
-            $service = $service->merge($can_edit);
-            $service = $service->merge($bond);
-            $service = $service->merge($voterid);
-            $service = $service->merge($fssai);
-            $service = $service->merge($covid);
-            $service = $service->merge($nalavariyam);
-            $service = $service->merge($license);
-            $service = $service->merge($tailor);
-            $service = $service->merge($pmkissan);
-            $service = $service->merge($birth_certificate);
-            $service = $service->merge($medicalscheme);
-            $service = $service->merge($dharsan);
-            $service = $service->merge($utisl);
-            $service = $service->merge($patta);
-            $service = $service->merge($software);
-            $service = $service->merge($smartcard_otp);
-            $service = $service->merge($voteridpdf_download);
-            $service = $service->merge($agri_stack);
-            $service = $service->merge($pvccard);
-             $service = $service->merge($smartcard_pdf);
-            $service = $service->merge($aadhaarfind);
-
-        }elseif(Auth::user()->user_type_id == 4){
-
-            $service = DB::table('msme')->select('services.service_name', 'msme.*')
-            ->Join('services', 'services.id', '=', 'msme.service_id')
-            ->where('msme.status',$status)
-            ->where('msme.retailer_id',Auth::user()->id)
-            ->orderBy('msme.id', 'Desc')->get();
-
-            $itr = DB::table('itr')->select('services.service_name', 'itr.*')
-            ->Join('services', 'services.id', '=', 'itr.service_id')
-            ->where('itr.status',$status)
-            ->where('itr.retailer_id',Auth::user()->id)
-            ->orderBy('itr.id', 'Desc')->get();
-
-            $gst = DB::table('gst')->select('services.service_name', 'gst.*')
-            ->Join('services', 'services.id', '=', 'gst.service_id')
-            ->where('gst.status',$status)
-            ->where('gst.retailer_id',Auth::user()->id)
-            ->orderBy('gst.id', 'Desc')->get();
-
-            $tec_exam = DB::table('tec_exam')->select('services.service_name', 'tec_exam.*')
-            ->Join('services', 'services.id', '=', 'tec_exam.service_id')
-            ->where('tec_exam.status',$status)
-            ->where('tec_exam.retailer_id',Auth::user()->id)
-            ->orderBy('tec_exam.id', 'Desc')->get();
-
-            $tnegaservices = DB::table('tnega_services')->select('services.service_name', 'tnega_services.*')
-            ->Join('services', 'services.id', '=', 'tnega_services.service_id')
-            ->where('tnega_services.status',$status)
-            ->where('tnega_services.retailer_id',Auth::user()->id)
-            ->orderBy('tnega_services.id', 'Desc')->get();
-
-            $smartcard = DB::table('smartcard')->select('services.service_name', 'smartcard.*')
-            ->Join('services', 'services.id', '=', 'smartcard.service_id')
-            ->where('smartcard.status',$status)
-            ->where('smartcard.retailer_id',Auth::user()->id)
-            ->orderBy('smartcard.id', 'Desc')->get();
-
-            $aadhaarcard = DB::table('aadhaarcard')->select('services.service_name', 'aadhaarcard.*')
-            ->Join('services', 'services.id', '=', 'aadhaarcard.service_id')
-            ->where('aadhaarcard.status',$status)
-            ->where('aadhaarcard.retailer_id',Auth::user()->id)
-            ->orderBy('aadhaarcard.id', 'Desc')->get();
-
-            $can_edit = DB::table('can_edit')->select('services.service_name', 'users.name','can_edit.*')
-            ->Join('services', 'services.id', '=', 'can_edit.service_id')
-            ->Join('users', 'users.id', '=', 'can_edit.user_id')
-            ->where('can_edit.status',$status)
-            ->where('can_edit.retailer_id',Auth::user()->id)
-            ->orderBy('can_edit.id', 'Desc')->get();
-
-            $bond = DB::table('bond')->select('services.service_name', 'bond.*')
-            ->Join('services', 'services.id', '=', 'bond.service_id')
-            ->where('bond.status',$status)
-            ->where('bond.retailer_id',Auth::user()->id)
-            ->orderBy('bond.id', 'Desc')->get();
-
-            $voterid = DB::table('voterid')->select('services.service_name', 'voterid.*')
-            ->Join('services', 'services.id', '=', 'voterid.service_id')
-            ->where('voterid.status',$status)
-            ->where('voterid.retailer_id',Auth::user()->id)
-            ->orderBy('voterid.id', 'Desc')->get();
-
-            $fssai = DB::table('fssai')->select('services.service_name', 'fssai.*')
-            ->Join('services', 'services.id', '=', 'fssai.service_id')
-            ->where('fssai.status',$status)
-            ->where('fssai.retailer_id',Auth::user()->id)
-            ->orderBy('fssai.id', 'Desc')->get();
-
-            $covid = DB::table('covid')->select('services.service_name', 'covid.*')
-            ->Join('services', 'services.id', '=', 'covid.service_id')
-            ->where('covid.status',$status)
-            ->where('covid.retailer_id',Auth::user()->id)
-            ->orderBy('covid.id', 'Desc')->get();
-
-            $nalavariyam = DB::table('nalavariyam')->select('services.service_name', 'nalavariyam.*')
-            ->Join('services', 'services.id', '=', 'nalavariyam.service_id')
-            ->where('nalavariyam.status',$status)
-            ->where('nalavariyam.retailer_id',Auth::user()->id)
-            ->orderBy('nalavariyam.id', 'Desc')->get();
-
-            $license = DB::table('license')->select('services.service_name', 'license.*')
-            ->Join('services', 'services.id', '=', 'license.service_id')
-            ->where('license.status',$status)
-            ->where('license.retailer_id',Auth::user()->id)
-            ->orderBy('license.id', 'Desc')->get();
-
-            $tailor = DB::table('tailor')->select('services.service_name', 'tailor.*')
-            ->Join('services', 'services.id', '=', 'tailor.service_id')
-            ->where('tailor.status',$status)
-            ->where('tailor.retailer_id',Auth::user()->id)
-            ->orderBy('tailor.id', 'Desc')->get();
-
-            $pmkissan = DB::table('pmkissan')->select('services.service_name', 'pmkissan.*')
-            ->Join('services', 'services.id', '=', 'pmkissan.service_id')
-            ->where('pmkissan.status',$status)
-            ->where('pmkissan.retailer_id',Auth::user()->id)
-            ->orderBy('pmkissan.id', 'Desc')->get();
-
-            $birth_certificate = DB::table('birth_certificate')->select('services.service_name', 'birth_certificate.*')
-            ->Join('services', 'services.id', '=', 'birth_certificate.service_id')
-            ->where('birth_certificate.status',$status)
-            ->where('birth_certificate.retailer_id',Auth::user()->id)
-            ->orderBy('birth_certificate.id', 'Desc')->get();
-
-            $medicalscheme = DB::table('medicalscheme')->select('services.service_name', 'medicalscheme.*')
-            ->Join('services', 'services.id', '=', 'medicalscheme.service_id')
-            ->where('medicalscheme.status',$status)
-            ->where('medicalscheme.retailer_id',Auth::user()->id)
-            ->orderBy('medicalscheme.id', 'Desc')->get();
-
-            $dharsan = DB::table('dharsan')->select('services.service_name', 'dharsan.*')
-            ->Join('services', 'services.id', '=', 'dharsan.service_id')
-            ->where('dharsan.status',$status)
-            ->where('dharsan.retailer_id',Auth::user()->id)
-            ->orderBy('dharsan.id', 'Desc')->get();
-
-            $utisl = DB::table('utislpan')->select('services.service_name', 'utislpan.*')
-            ->Join('services', 'services.id', '=', 'utislpan.service_id')
-            ->where('utislpan.status',$status)
-            ->where('utislpan.retailer_id',Auth::user()->id)
-            ->orderBy('utislpan.id', 'Desc')->get();
-
-            $patta = DB::table('patta')->select('services.service_name', 'patta.*')
-            ->Join('services', 'services.id', '=', 'patta.service_id')
-            ->where('patta.status',$status)
-            ->where('patta.retailer_id',Auth::user()->id)
-            ->orderBy('patta.id', 'Desc')->get();
-
-            $software = DB::table('software')->select('services.service_name', 'software.*')
-            ->Join('services', 'services.id', '=', 'software.service_id')
-            ->where('software.status',$status)
-            ->where('software.retailer_id',Auth::user()->id)
-            ->orderBy('software.id', 'Desc')->get();
-
-            $smartcard_otp = DB::table('smartcard_otp')->select('services.service_name', 'smartcard_otp.*')
-            ->Join('services', 'services.id', '=', 'smartcard_otp.service_id')
-            ->where('smartcard_otp.status',$status)
-            ->where('smartcard_otp.retailer_id',Auth::user()->id)
-            ->orderBy('smartcard_otp.id', 'Desc')->get();
-
-            $voteridpdf_download = DB::table('voteridpdf_download')->select('services.service_name', 'voteridpdf_download.*')
-            ->Join('services', 'services.id', '=', 'voteridpdf_download.service_id')
-            ->where('voteridpdf_download.status',$status)
-            ->where('voteridpdf_download.retailer_id',Auth::user()->id)
-            ->orderBy('voteridpdf_download.id', 'Desc')->get();
-
-            $agri_stack = DB::table('agri_stack')->select('services.service_name', 'agri_stack.*')
-            ->Join('services', 'services.id', '=', 'agri_stack.service_id')
-            ->where('agri_stack.status',$status)
-            ->where('agri_stack.retailer_id',Auth::user()->id)
-            ->orderBy('agri_stack.id', 'Desc')->get();
-
-            $pvccard = DB::table('pvc_card')->select('services.service_name', 'pvc_card.*')
-            ->Join('services', 'services.id', '=', 'pvc_card.service_id')
-            ->where('pvc_card.status',$status)
-            ->where('pvc_card.retailer_id',Auth::user()->id)
-            ->orderBy('pvc_card.id', 'Desc')->get();
-
-            $smartcard_pdf = DB::table('smartcard_pdf')->select('services.service_name', 'smartcard_pdf.*')
-                ->Join('services', 'services.id', '=', 'smartcard_pdf.service_id')
-                ->where('smartcard_pdf.status', $status)
-                ->where('smartcard_pdf.retailer_id', Auth::user()->id)
-                ->orderBy('smartcard_pdf.id', 'Desc')->get();
-
-            $aadhaarfind = DB::table('aadhaarfind')->select('services.service_name', 'aadhaarfind.*')
-                ->Join('services', 'services.id', '=', 'aadhaarfind.service_id')
-                ->where('aadhaarfind.status', $status)
-                ->where('aadhaarfind.retailer_id', Auth::user()->id)
-                ->orderBy('aadhaarfind.id', 'Desc')->get();
-
-            $service = $service->merge($itr);
-            $service = $service->merge($gst);
-            $service = $service->merge($tec_exam);
-            $service = $service->merge($tnegaservices);
-            $service = $service->merge($smartcard);
-            $service = $service->merge($aadhaarcard);
-            $service = $service->merge($can_edit);
-            $service = $service->merge($bond);
-            $service = $service->merge($voterid);
-            $service = $service->merge($fssai);
-            $service = $service->merge($covid);
-            $service = $service->merge($nalavariyam);
-            $service = $service->merge($license);
-            $service = $service->merge($tailor);
-            $service = $service->merge($pmkissan);
-            $service = $service->merge($birth_certificate);
-            $service = $service->merge($medicalscheme);
-            $service = $service->merge($dharsan);
-            $service = $service->merge($utisl);
-            $service = $service->merge($patta);
-            $service = $service->merge($software);
-            $service = $service->merge($smartcard_otp);
-            $service = $service->merge($voteridpdf_download);
-            $service = $service->merge($agri_stack);
-            $service = $service->merge($pvccard);
-             $service = $service->merge($smartcard_pdf);
-            $service = $service->merge($aadhaarfind);
-
-        }elseif(Auth::user()->user_type_id == 5){
-
-            $service = DB::table('msme')->select('services.service_name', 'msme.*')
-            ->Join('services', 'services.id', '=', 'msme.service_id')
-            ->where('msme.status',$status)
-            ->where('msme.user_id',Auth::user()->id)
-            ->orderBy('msme.id', 'Desc')->get();
-
-            $itr = DB::table('itr')->select('services.service_name', 'itr.*')
-            ->Join('services', 'services.id', '=', 'itr.service_id')
-            ->where('itr.status',$status)
-            ->where('itr.user_id',Auth::user()->id)
-            ->orderBy('itr.id', 'Desc')->get();
-
-            $gst = DB::table('gst')->select('services.service_name', 'gst.*')
-            ->Join('services', 'services.id', '=', 'gst.service_id')
-            ->where('gst.status',$status)
-            ->where('gst.user_id',Auth::user()->id)
-            ->orderBy('gst.id', 'Desc')->get();
-
-            $tec_exam = DB::table('tec_exam')->select('services.service_name', 'tec_exam.*')
-            ->Join('services', 'services.id', '=', 'tec_exam.service_id')
-            ->where('tec_exam.status',$status)
-            ->where('tec_exam.user_id',Auth::user()->id)
-            ->orderBy('tec_exam.id', 'Desc')->get();
-
-            $tnegaservices = DB::table('tnega_services')->select('services.service_name', 'tnega_services.*')
-            ->Join('services', 'services.id', '=', 'tnega_services.service_id')
-            ->where('tnega_services.status',$status)
-            ->where('tnega_services.user_id',Auth::user()->id)
-            ->orderBy('tnega_services.id', 'Desc')->get();
-
-            $smartcard = DB::table('smartcard')->select('services.service_name', 'smartcard.*')
-            ->Join('services', 'services.id', '=', 'smartcard.service_id')
-            ->where('smartcard.status',$status)
-            ->where('smartcard.user_id',Auth::user()->id)
-            ->orderBy('smartcard.id', 'Desc')->get();
-
-            $aadhaarcard = DB::table('aadhaarcard')->select('services.service_name', 'aadhaarcard.*')
-            ->Join('services', 'services.id', '=', 'aadhaarcard.service_id')
-            ->where('aadhaarcard.status',$status)
-            ->where('aadhaarcard.user_id',Auth::user()->id)
-            ->orderBy('aadhaarcard.id', 'Desc')->get();
-
-            $can_edit = DB::table('can_edit')->select('services.service_name', 'users.name','can_edit.*')
-            ->Join('services', 'services.id', '=', 'can_edit.service_id')
-            ->Join('users', 'users.id', '=', 'can_edit.user_id')
-            ->where('can_edit.status',$status)
-            ->where('can_edit.user_id',Auth::user()->id)
-            ->orderBy('can_edit.id', 'Desc')->get();
-
-            $bond = DB::table('bond')->select('services.service_name', 'bond.*')
-            ->Join('services', 'services.id', '=', 'bond.service_id')
-            ->where('bond.status',$status)
-            ->where('bond.user_id',Auth::user()->id)
-            ->orderBy('bond.id', 'Desc')->get();
-
-            $voterid = DB::table('voterid')->select('services.service_name', 'voterid.*')
-            ->Join('services', 'services.id', '=', 'voterid.service_id')
-            ->where('voterid.status',$status)
-            ->where('voterid.user_id',Auth::user()->id)
-            ->orderBy('voterid.id', 'Desc')->get();
-
-            $fssai = DB::table('fssai')->select('services.service_name', 'fssai.*')
-            ->Join('services', 'services.id', '=', 'fssai.service_id')
-            ->where('fssai.status',$status)
-            ->where('fssai.user_id',Auth::user()->id)
-            ->orderBy('fssai.id', 'Desc')->get();
-
-            $covid = DB::table('covid')->select('services.service_name', 'covid.*')
-            ->Join('services', 'services.id', '=', 'covid.service_id')
-            ->where('covid.status',$status)
-            ->where('covid.user_id',Auth::user()->id)
-            ->orderBy('covid.id', 'Desc')->get();
-
-            $nalavariyam = DB::table('nalavariyam')->select('services.service_name', 'nalavariyam.*')
-            ->Join('services', 'services.id', '=', 'nalavariyam.service_id')
-            ->where('nalavariyam.status',$status)
-            ->where('nalavariyam.user_id',Auth::user()->id)
-            ->orderBy('nalavariyam.id', 'Desc')->get();
-
-            $license = DB::table('license')->select('services.service_name', 'license.*')
-            ->Join('services', 'services.id', '=', 'license.service_id')
-            ->where('license.status',$status)
-            ->where('license.user_id',Auth::user()->id)
-            ->orderBy('license.id', 'Desc')->get();
-
-            $tailor = DB::table('tailor')->select('services.service_name', 'tailor.*')
-            ->Join('services', 'services.id', '=', 'tailor.service_id')
-            ->where('tailor.status',$status)
-            ->where('tailor.user_id',Auth::user()->id)
-            ->orderBy('tailor.id', 'Desc')->get();
-
-            $pmkissan = DB::table('pmkissan')->select('services.service_name', 'pmkissan.*')
-            ->Join('services', 'services.id', '=', 'pmkissan.service_id')
-            ->where('pmkissan.status',$status)
-            ->where('pmkissan.user_id',Auth::user()->id)
-            ->orderBy('pmkissan.id', 'Desc')->get();
-
-            $birth_certificate = DB::table('birth_certificate')->select('services.service_name', 'birth_certificate.*')
-            ->Join('services', 'services.id', '=', 'birth_certificate.service_id')
-            ->where('birth_certificate.status',$status)
-            ->where('birth_certificate.user_id',Auth::user()->id)
-            ->orderBy('birth_certificate.id', 'Desc')->get();
-
-            $medicalscheme = DB::table('medicalscheme')->select('services.service_name', 'medicalscheme.*')
-            ->Join('services', 'services.id', '=', 'medicalscheme.service_id')
-            ->where('medicalscheme.status',$status)
-            ->where('medicalscheme.user_id',Auth::user()->id)
-            ->orderBy('medicalscheme.id', 'Desc')->get();
-
-            $dharsan = DB::table('dharsan')->select('services.service_name', 'dharsan.*')
-            ->Join('services', 'services.id', '=', 'dharsan.service_id')
-            ->where('dharsan.status',$status)
-            ->where('dharsan.user_id',Auth::user()->id)
-            ->orderBy('dharsan.id', 'Desc')->get();
-
-            $utisl = DB::table('utislpan')->select('services.service_name', 'utislpan.*')
-            ->Join('services', 'services.id', '=', 'utislpan.service_id')
-            ->where('utislpan.status',$status)
-            ->where('utislpan.user_id',Auth::user()->id)
-            ->orderBy('utislpan.id', 'Desc')->get();
-
-            $patta = DB::table('patta')->select('services.service_name', 'patta.*')
-            ->Join('services', 'services.id', '=', 'patta.service_id')
-            ->where('patta.status',$status)
-            ->where('patta.user_id',Auth::user()->id)
-            ->orderBy('patta.id', 'Desc')->get();
-
-            $software = DB::table('software')->select('services.service_name', 'software.*')
-            ->Join('services', 'services.id', '=', 'software.service_id')
-            ->where('software.status',$status)
-            ->where('software.user_id',Auth::user()->id)
-            ->orderBy('software.id', 'Desc')->get();
-
-            $smartcard_otp = DB::table('smartcard_otp')->select('services.service_name', 'smartcard_otp.*')
-            ->Join('services', 'services.id', '=', 'smartcard_otp.service_id')
-            ->where('smartcard_otp.status',$status)
-            ->where('smartcard_otp.user_id',Auth::user()->id)
-            ->orderBy('smartcard_otp.id', 'Desc')->get();
-
-            $voteridpdf_download = DB::table('voteridpdf_download')->select('services.service_name', 'voteridpdf_download.*')
-            ->Join('services', 'services.id', '=', 'voteridpdf_download.service_id')
-            ->where('voteridpdf_download.status',$status)
-            ->where('voteridpdf_download.user_id',Auth::user()->id)
-            ->orderBy('voteridpdf_download.id', 'Desc')->get();
-
-            $agri_stack = DB::table('agri_stack')->select('services.service_name', 'agri_stack.*')
-            ->Join('services', 'services.id', '=', 'agri_stack.service_id')
-            ->where('agri_stack.status',$status)
-            ->where('agri_stack.user_id',Auth::user()->id)
-            ->orderBy('agri_stack.id', 'Desc')->get();
-
-            $pvccard = DB::table('pvc_card')->select('services.service_name', 'pvc_card.*')
-            ->Join('services', 'services.id', '=', 'pvc_card.service_id')
-            ->where('pvc_card.status',$status)
-            ->where('pvc_card.user_id',Auth::user()->id)
-            ->orderBy('pvc_card.id', 'Desc')->get();
-
-            $smartcard_pdf = DB::table('smartcard_pdf')->select('services.service_name', 'smartcard_pdf.*')
-                ->Join('services', 'services.id', '=', 'smartcard_pdf.service_id')
-                ->where('smartcard_pdf.status', $status)
-                ->where('smartcard_pdf.user_id', Auth::user()->id)
-                ->orderBy('smartcard_pdf.id', 'Desc')->get();
-
-            $aadhaarfind = DB::table('aadhaarfind')->select('services.service_name', 'aadhaarfind.*')
-                ->Join('services', 'services.id', '=', 'aadhaarfind.service_id')
-                ->where('aadhaarfind.status', $status)
-                ->where('aadhaarfind.user_id', Auth::user()->id)
-                ->orderBy('aadhaarfind.id', 'Desc')->get();
-
-            $service = $service->merge($itr);
-            $service = $service->merge($gst);
-            $service = $service->merge($tec_exam);
-            $service = $service->merge($tnegaservices);
-            $service = $service->merge($smartcard);
-            $service = $service->merge($aadhaarcard);
-            $service = $service->merge($can_edit);
-            $service = $service->merge($bond);
-            $service = $service->merge($voterid);
-            $service = $service->merge($fssai);
-            $service = $service->merge($covid);
-            $service = $service->merge($nalavariyam);
-            $service = $service->merge($license);
-            $service = $service->merge($tailor);
-            $service = $service->merge($pmkissan);
-            $service = $service->merge($birth_certificate);
-            $service = $service->merge($medicalscheme);
-            $service = $service->merge($dharsan);
-            $service = $service->merge($utisl);
-            $service = $service->merge($patta);
-            $service = $service->merge($software);
-            $service = $service->merge($smartcard_otp);
-            $service = $service->merge($voteridpdf_download);
-            $service = $service->merge($agri_stack);
-            $service = $service->merge($pvccard);
-             $service = $service->merge($smartcard_pdf);
-            $service = $service->merge($aadhaarfind);
-        }
-        return view( 'services.appliedservice',compact('service','status') );
+        // Convert back to object if needed
+        $services = json_decode(json_encode($services));
+        return view('admin.approved_list', compact('services', 'table', 'serviceId'));
     }
 
+  public function appliedservice($status)
+{
+    $tables = [
+       'itr','gst','tec_exam','tnega_services','smartcard','aadhaarcard',
+    'can_edit','bond','voterid','fssai','covid','nalavariyam','license',
+    'tailor','pmkissan','birth_certificate','medicalscheme','dharsan',
+    'software','smartcard_otp','smartcard_pdf','pvc_card','aadhaarfind','patta','utislpan','agri_stack','voteridpdf_download'
+    ];
+
+    $user = auth()->user();
+
+    /*
+    |--------------------------------------------------------------------------
+    | 🔥 APPROVED DASHBOARD (Grouped Summary)
+    |--------------------------------------------------------------------------
+    */
+
+    if ($status === 'Approved') {
+
+        $approvedCounts = collect();
+
+        foreach ($tables as $tbl) {
+
+            $query = DB::table($tbl)
+                ->join('services as sub', 'sub.id', '=', "$tbl.service_id")
+                ->join('services as parent', 'parent.id', '=', 'sub.parent_id')
+                ->where("$tbl.status", 'Approved');
+
+            // 🎯 Role Filtering
+            if ($user->user_type_id == 3) {
+                $query->where("$tbl.distributor_id", $user->id);
+            }
+
+            if ($user->user_type_id == 4) {
+                $query->where("$tbl.retailer_id", $user->id);
+            }
+
+            if ($user->user_type_id == 5) {
+                $query->where("$tbl.user_id", $user->id);
+            }
+
+            $rows = $query->select(
+                    'parent.id as parent_id',
+                    'parent.service_name as parent_service',
+                    'sub.id as sub_id',
+                    'sub.service_name as sub_service',
+                    DB::raw("'$tbl' as table_name"),
+                    DB::raw('COUNT(*) as total')
+                )
+                ->groupBy(
+                    'parent.id',
+                    'parent.service_name',
+                    'sub.id',
+                    'sub.service_name'
+                )
+                ->get();
+
+            $approvedCounts = $approvedCounts->merge($rows);
+        }
+
+        $approvedCounts = $approvedCounts
+            ->groupBy('parent_id')
+            ->map(function ($items) {
+                return [
+                    'parent_name' => $items->first()->parent_service,
+                    'total'       => $items->sum('total'),
+                    'subs'        => $items->values()
+                ];
+            });
+
+        return view('admin.approved_dashboard', compact('approvedCounts'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | 🚀 NORMAL LIST VIEW
+    |--------------------------------------------------------------------------
+    */
+
+    $merged = collect();
+
+    foreach ($tables as $tbl) {
+
+        $query = DB::table($tbl)
+            ->join('services', 'services.id', '=', "$tbl.service_id")
+
+            ->leftJoin('users as u', function ($join) use ($tbl) {
+                $join->on('u.id', '=', DB::raw("
+                    CASE
+                        WHEN $tbl.retailer_id = 0 AND $tbl.distributor_id = 0 THEN $tbl.user_id
+                        WHEN $tbl.retailer_id = 0 THEN $tbl.distributor_id
+                        WHEN $tbl.distributor_id = 0 THEN $tbl.retailer_id
+                    END
+                "));
+            })
+
+            ->select(
+                "$tbl.*",
+                'services.service_name',
+                'u.name as applyname',
+                'u.phone as applymobile',
+
+                DB::raw("
+                    CASE
+                        WHEN $tbl.retailer_id = 0 AND $tbl.distributor_id = 0 THEN $tbl.user_id
+                        WHEN $tbl.retailer_id = 0 THEN $tbl.distributor_id
+                        WHEN $tbl.distributor_id = 0 THEN $tbl.retailer_id
+                    END as applyuserid
+                "),
+
+                DB::raw("
+                    CASE
+                        WHEN $tbl.retailer_id = 0 AND $tbl.distributor_id = 0 THEN 'Customer'
+                        WHEN $tbl.retailer_id = 0 THEN 'Distributor'
+                        WHEN $tbl.distributor_id = 0 THEN 'Retailer'
+                        ELSE 'Unknown'
+                    END as context
+                "),
+
+                DB::raw("'$tbl' as table_type")
+            )
+
+            ->where("$tbl.status", $status);
+
+        /*
+        |--------------------------------------------------------------------------
+        | 🎯 ROLE FILTERING
+        |--------------------------------------------------------------------------
+        */
+
+        if (in_array($user->user_type_id, [3,4,5])) {
+
+            $column = null;
+
+            switch ($user->user_type_id) {
+                case 3:
+                    $column = 'distributor_id';
+                    break;
+                case 4:
+                    $column = 'retailer_id';
+                    break;
+                case 5:
+                    $column = 'user_id';
+                    break;
+            }
+
+            $query->where("$tbl.$column", $user->id);
+        }
+
+        $rows = $query->orderBy("$tbl.id", 'DESC')->get();
+
+        $merged = $merged->merge($rows);
+    }
+
+    $service = $merged->sortByDesc('id')->values();
+
+    return view('services.appliedservice', compact('service', 'status'));
+}
 
     public function servicestatus($status,$id,$service_id)
     {

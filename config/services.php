@@ -34,5 +34,12 @@ return [
     'token' => env('TWILIO_TOKEN'),
     'from' => env('TWILIO_FROM'),
 ],
+'ditasol'    => [
+        'token' => env('DITASOL_USER_TOKEN'),
+    ],
+
+    'ditasol_ra' => [
+        'token' => env('DITASOL_RA_TOKEN'),
+    ],
 
 ];

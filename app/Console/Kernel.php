@@ -16,6 +16,19 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('payments:check-pending')
+            ->cron('*/10 * * * *') // 0,10,20,30,40,50
+            ->withoutOverlapping()
+            ->runInBackground();
+
+        $schedule->command('payments:check-ra-wallet')
+            ->cron('2-59/10 * * * *') // 2,12,22,32,42,52
+            ->withoutOverlapping()
+            ->runInBackground();
+
+        $schedule->command('server:auto-debit')
+            ->monthlyOn(4, '00:05')
+            ->withoutOverlapping();
     }
 
     /**

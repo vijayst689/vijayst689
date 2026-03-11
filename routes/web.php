@@ -607,3 +607,47 @@ Route::get('nalavariyam/request', [App\Http\Controllers\NalavariyamWalletControl
 Route::post('nalavariyam/wallet/add', [App\Http\Controllers\NalavariyamWalletController::class, 'addMoney'])->name('addMoney');
 Route::post('nalavariyam/payment/approve', [App\Http\Controllers\NalavariyamWalletController::class, 'approve'])->name('addMoney');
 Route::get('nalavariyam/payment/decline/{id}', [App\Http\Controllers\NalavariyamWalletController::class, 'decline'])->name('addMoney');
+
+
+Route::prefix('rawallet')->group(function () {
+
+    Route::post('/create', 
+        [App\Http\Controllers\RamjiOnlinePaymentController::class, 'create']
+    )->name('ramjionline.create');
+
+    Route::get('/return/{order_id}', 
+        [App\Http\Controllers\RamjiOnlinePaymentController::class, 'return']
+    )->name('ramjionline.return');
+
+    Route::get('/success/{order_id}', 
+        [App\Http\Controllers\RamjiOnlinePaymentController::class, 'success']
+    )->name('ramjionline.success');
+
+    Route::get('/failed/{order_id}', 
+        [App\Http\Controllers\RamjiOnlinePaymentController::class, 'failed']
+    )->name('ramjionline.failed');
+
+});
+
+// Nalavariyam AutoMatic Payment
+
+    Route::post('/create', 
+        [App\Http\Controllers\NalavariyamOnlinePaymentController::class, 'create']
+    )->name('nalavariyamonline.create');
+
+    Route::get('/return/{order_id}', 
+        [App\Http\Controllers\NalavariyamOnlinePaymentController::class, 'return']
+    )->name('nalavariyamonline.return');
+
+    Route::get('/success/{order_id}', 
+        [App\Http\Controllers\NalavariyamOnlinePaymentController::class, 'success']
+    )->name('nalavariyamonline.success');
+
+    Route::get('/failed/{order_id}', 
+        [App\Http\Controllers\NalavariyamOnlinePaymentController::class, 'failed']
+    )->name('nalavariyamonline.failed');
+
+// ServicestatusController
+
+Route::get('/approved-list', [App\Http\Controllers\ServicestatusController::class, 'approvedList'])
+    ->name('approved.list');

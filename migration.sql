@@ -2814,3 +2814,21 @@ alter table medicalscheme add aadhaar_no text DEFAULT NULL after api_processing;
 alter table medicalscheme add aadhaar_no text DEFAULT NULL after api_processing;
 alter table medicalscheme add father_name text DEFAULT NULL after api_processing;
 alter table medicalscheme add marital_status text DEFAULT NULL after api_processing;
+
+alter table wallet_topup add order_id varchar(50) DEFAULT NULL after id;
+alter table wallet_topup add transaction_id varchar(100) DEFAULT NULL after order_id;
+alter table wallet_topup add updated_at varchar(30) DEFAULT NULL after date;
+
+CREATE TABLE `wallet_topup_nalavariyam` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `order_id` varchar(50) DEFAULT NULL,
+  `transaction_id` varchar(100) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `website_index` varchar(50) DEFAULT NULL,
+  `payment` decimal(10,2) DEFAULT 0,
+  `date` varchar(30) DEFAULT NULL,
+  `updated_at` varchar(30) DEFAULT NULL,
+  `status` varchar(30) DEFAULT NULL,
+  `payment_proof` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB;

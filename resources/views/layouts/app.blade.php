@@ -109,6 +109,78 @@
 
     @stack('page_scripts')
     <script>
+
+
+      document.addEventListener('DOMContentLoaded', function () {
+
+    document.querySelectorAll('.modal').forEach(function(modal){
+
+        const amountInput  = modal.querySelector('.amountInput');
+        const payBtn       = modal.querySelector('.payBtn');
+        const payBtnText   = modal.querySelector('.payBtnText');
+        const payLoader    = modal.querySelector('.payLoader');
+        const finalAmount  = modal.querySelector('.finalAmount');
+        const onlineForm   = modal.querySelector('.onlinePaymentForm');
+        const manualLink   = modal.querySelector('.switchToManual');
+       const manualTabBtn = modal.querySelector('[data-bs-target*="manualTab"]');
+
+        if (!amountInput || !payBtn || !onlineForm) return;
+
+        // Quick amount buttons inside this modal
+        modal.querySelectorAll('.quick-amount').forEach(btn => {
+            btn.addEventListener('click', function () {
+
+                modal.querySelectorAll('.quick-amount')
+                    .forEach(b => b.classList.remove('active'));
+
+                this.classList.add('active');
+                amountInput.value = this.dataset.amount;
+                validateAmount();
+            });
+        });
+
+        function validateAmount() {
+            let amount = parseInt(amountInput.value);
+
+            if (isNaN(amount) || amount < 1) {
+                payBtn.disabled = true;
+                return false;
+            }
+
+            payBtn.disabled = false;
+            finalAmount.value = amount;
+            return true;
+        }
+
+        amountInput.addEventListener('input', function () {
+            modal.querySelectorAll('.quick-amount')
+                .forEach(b => b.classList.remove('active'));
+            validateAmount();
+        });
+
+        onlineForm.addEventListener('submit', function (e) {
+
+            if (!validateAmount()) {
+                e.preventDefault();
+                return;
+            }
+
+            payBtn.disabled = true;
+            payBtnText.textContent = 'Processing...';
+            payLoader.classList.remove('d-none');
+        });
+
+        if (manualLink && manualTabBtn) {
+            manualLink.addEventListener('click', function (e) {
+                e.preventDefault();
+                new bootstrap.Tab(manualTabBtn).show();
+            });
+        }
+
+    });
+
+});
+
         $(document).ready(function() {
             var table = $('#example2').DataTable({
                 lengthChange: false,
