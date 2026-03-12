@@ -95,7 +95,7 @@ class UserController extends Controller
 
     public function applyservice()
     {
-        $viewcustomers = DB::table('users')->where( 'user_type_id', '=', 5)->orderBy( 'id', 'Asc' )->get();
+        $viewcustomers = DB::table('customers')->where( 'user_type_id', '=', 5)->orderBy( 'id', 'Asc' )->get();
         return view('customer.customers',compact('viewcustomers'));
     }
 
