@@ -282,7 +282,7 @@ class PDFServiceController extends Controller
             $url = "https://www.apizone.info/api/find_pan/aadhaar_to_pan.php?api_key=$key&aadhaar_no=$aadhaar";
 
         } elseif ($request->ser == 2) {
-            $url = "https://darkxen.in/api/v3/PAN/aadhaar_to_pan_verification.php?apiKey=c28c9690a9c95592ceabb5a2901e32d82779b8077a23b3ffb9bbc4673e0a4492&uidNumber=$aadhaar";
+            $url = "https://darkxen.in/api/v3/PAN/aadhaar_to_pan_verification.php?apiKey=dbc548c2ae72c7434c9c8a5301222353a40fb641a2f4b3aa2a39f1fc9c55e336&uidNumber=$aadhaar";
         } else {
             $url = "https://upbgroup.aisensy.in/api/data_fetch?api_key=3d77fb-c95462-6d17f3-a92b88-9b8b9c&application_no=$application_no&aadhaar_no=$aadhaar";
 
@@ -647,7 +647,7 @@ class PDFServiceController extends Controller
                 "&cardtype=" . $cardtype .
                 "&chiptype=" . $chiptype;
         } elseif ($request->ser == 2) {
-            $url = "https://darkxen.in/api/v3/VEHICLE/vehicle_rcpdf_verification?apiKey=c28c9690a9c95592ceabb5a2901e32d82779b8077a23b3ffb9bbc4673e0a4492&rcno=$rc_no";
+            $url = "https://darkxen.in/api/v3/VEHICLE/vehicle_rcpdf_verification?apiKey=dbc548c2ae72c7434c9c8a5301222353a40fb641a2f4b3aa2a39f1fc9c55e336&rcno=$rc_no";
         } else {
             $application_no = rand(00000000, 99999999);
             $url            = "https://server.webtechly.co.in/rcpdf.php?api_key=3d77fb-c95462-6d17f3-a92b88-9b8b9c&application_no=$application_no&rc_number=$rc_no";
@@ -1966,7 +1966,7 @@ class PDFServiceController extends Controller
 
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL            => "https://darkxen.in/api/v3/FARMER/agri_farmer_card_pdf_verification.php?apiKey=c28c9690a9c95592ceabb5a2901e32d82779b8077a23b3ffb9bbc4673e0a4492&aadhar=" . $aadhaar . "&state=TN",
+            CURLOPT_URL            => "https://darkxen.in/api/v3/FARMER/agri_farmer_card_pdf_verification.php?apiKey=dbc548c2ae72c7434c9c8a5301222353a40fb641a2f4b3aa2a39f1fc9c55e336&aadhar=" . $aadhaar . "&state=TN",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING       => "",
             CURLOPT_MAXREDIRS      => 10,
