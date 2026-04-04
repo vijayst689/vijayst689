@@ -34,26 +34,6 @@ class Controller extends BaseController
 
 public function restrictIfSitePaymentDueFromSession()
 {
-    $user = Auth::user();
-
-    if ($user && $user->user_type_id == 2) {
-        $today = \Carbon\Carbon::today()->startOfDay();
-
-        // Check if we already have a selected unpaid payment in session
-       $unpaidPayment = DB::table('sitepayment')
-    ->where('payment_status', 'UNPAID')
-    ->orderBy('payment_date', 'asc') // oldest first
-    ->first();
-
-        // Check if today is the payment date or overdue
-        if ($unpaidPayment && $unpaidPayment->payment_date) {
-            $paymentDate = \Carbon\Carbon::parse($unpaidPayment->payment_date)->startOfDay();
-            $daysDiff = $today->diffInDays($paymentDate, false); // negative if past
-            
-            if ($daysDiff <= 0) {
-                return redirect('/websitepayment')->send();
-            }
-        }
-    }
+   
 }
 }
