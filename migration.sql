@@ -2832,3 +2832,17 @@ CREATE TABLE `wallet_topup_nalavariyam` (
   `payment_proof` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 )  ENGINE=InnoDB;
+
+
+alter table aadhaarcard add apartment varchar(50) DEFAULT NULL;
+alter table aadhaarcard add state_tamil text DEFAULT NULL;
+alter table aadhaarcard add state text DEFAULT NULL;
+alter table aadhaarcard add district text DEFAULT NULL;
+alter table aadhaarcard add district_tamil text DEFAULT NULL;
+alter table aadhaarcard add village text DEFAULT NULL;
+alter table aadhaarcard add village_tamil text DEFAULT NULL;
+alter table aadhaarcard add post_office text DEFAULT NULL;
+alter table aadhaarcard add post_office_tamil text DEFAULT NULL;
+alter table aadhaarcard add taluka text DEFAULT NULL;
+alter table aadhaarcard add taluka_tamil text DEFAULT NULL;
+alter table aadhaarcard add centerno text DEFAULT NULL;

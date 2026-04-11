@@ -511,7 +511,10 @@ $services = $services
         }elseif( $service_id == 36 || $service_id == 37 || $service_id == 38 || $service_id == 39 || $service_id == 41 || $service_id == 42 || $service_id == 43 ){
 ///dd($services);
             return view('servicestatus.smartcardstatusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
-        }elseif($service_id == 56 || $service_id == 58 || $service_id == 158 || $service_id == 159 || $service_id == 160 || $service_id == 161 || $service_id == 162 || $service_id == 163){
+        }elseif($service_id == 56 ){
+            return view('servicestatus.aadhaarcardupdate1',compact('id','services','servicename','customers','serviceid','amount','districts') );
+
+        }elseif($service_id == 58 || $service_id == 158 || $service_id == 159 || $service_id == 160 || $service_id == 161 || $service_id == 162 || $service_id == 163){
 ///dd($services);
             return view('servicestatus.aadhaarcardupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
         } elseif($service_id == 60 || $service_id == 62 || $service_id == 63 || $service_id == 64 || $service_id == 66 || $service_id  == 121 ){
@@ -5349,18 +5352,32 @@ public function submitsmartcard_register_update(Request $request){
                 }
             DB::table('aadhaarcard')->where('id', $request->applied_serviceid)->update([
                
-                'amount'              => $request->amount,
-                'dist_id'             => $request->dist_id,
-                'taluk_id'            => $request->taluk_id,
-                'name'                => $request->name,
-                'mobile'              => $request->mobile,
-                'address_tamil'       => $request->address_tamil,
-                'address_english'     => $request->address_english,
-                'door_no'             => $request->door_no,
-                'aadhaar_no'          => $request->aadhaar_no,
-                'postal_area_english' => $request->postal_area_english,
-                'pin_code'            => $request->pin_code,
-                'id_proof'        => $request->id_proof,
+                 'amount'              => $request->amount,
+                    'dist_id'             => $request->dist_id,
+                    'taluk_id'            => $request->taluk_id,
+                    'name'                => $request->name,
+                    'mobile'              => $request->mobile,
+                    'address_tamil'       => $request->address_tamil,
+                    'address_english'     => $request->address_english,
+                    'door_no'             => $request->door_no,
+                    'aadhaar_no'          => $request->aadhaar_no,
+                    'postal_area_english' => $request->postal_area_english,
+                    'pin_code'            => $request->pin_code,
+                    'id_proof'            => $request->id_proof,
+                    'state'               => $request->state,
+                    'postal_area_tamil'   => $request->postal_area_tamil,
+                    'apartment'           => $request->apartment,
+                    'street_name'         => $request->street_name,
+                    'street_name_tamil'   => $request->street_name_tamil,
+                    'state_tamil'         => $request->state_tamil,
+                    'district_tamil'      => $request->district_tamil,
+                    'post_office'         => $request->post_office,
+                    'post_office_tamil'   => $request->post_office_tamil,
+                    'village'               => $request->village,
+                    'village_tamil'               => $request->village_tamil,
+                    'district'               => $request->district,
+                    'taluka'               => $request->taluka,
+                    'taluka_tamil'               => $request->taluka_tamil,
                 'status'               => 'Pending',
                 'applied_date'         => date("Y-m-d"),
                 'created_at'           => date("Y-m-d"),
@@ -5375,7 +5392,7 @@ public function submitsmartcard_register_update(Request $request){
     if($coordinator_permission == 1){
      $getdata = DB::table( 'aadhaarcard' )->where('id',$request->applied_serviceid)->first();
      if($getdata){
-     $aadhaar_card = $getdata->aadhaar_card;
+      $aadhaar_card = $getdata->aadhaar_card;
      $voterid = $getdata->voterid;
      $bank_pass_book = $getdata->bank_pass_book;
      $smartcard_onlineprint = $getdata->smartcard_onlineprint;
@@ -5385,14 +5402,25 @@ public function submitsmartcard_register_update(Request $request){
      $door_no = $getdata->door_no;
      $dist_id = $getdata->dist_id;
      $taluk_id = $getdata->taluk_id;
-     $street_name = $getdata->street_name;
      $postal_area_english = $getdata->postal_area_english;
-     $address_english = $getdata->address_english;
+     $street_name_tamil = $getdata->street_name_tamil;
      $mobile = $getdata->mobile;
      $pin_code = $getdata->pin_code;
-     $address_tamil = $getdata->address_tamil;
+     $street_name = $getdata->street_name;
      $aadhaar_no = $getdata->aadhaar_no;
      $id_proof = $getdata->id_proof;
+    $postal_area_tamil = $getdata->postal_area_tamil;
+    $apartment = $getdata->apartment;
+    $state_tamil = $getdata->state_tamil;
+    $district_tamil = $getdata->district_tamil;
+    $post_office = $getdata->post_office;
+    $post_office_tamil = $getdata->post_office_tamil;
+    $village = $getdata->village;
+    $village_tamil = $getdata->village_tamil;
+    $district = $getdata->district;
+    $taluka = $getdata->taluka;
+    $taluka_tamil = $getdata->taluka_tamil;
+    $state = $getdata->state;
      $status = $getdata->status;
      $url = url('/');
      $aadhaar_url = $url.'/upload/services/aadhaar_card/'.$aadhaar_card;
@@ -5404,7 +5432,7 @@ public function submitsmartcard_register_update(Request $request){
      $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
 
      $ch = curl_init();
-         $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bank_pass_book=$bank_pass_book_url&smartcard_onlineprint=$smartcard_onlineprint_url&voterid=$voterid_url&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&postal_area_english=$postal_area_english&address_english=$address_english&mobile=$mobile&pin_code=$pin_code&address_tamil=$address_tamil&aadhaar_no=$aadhaar_no&id_proof=$id_proof";
+        $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bank_pass_book=$bank_pass_book_url&smartcard_onlineprint=$smartcard_onlineprint_url&voterid=$voterid_url&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&postal_area_tamil=$postal_area_tamil&postal_area_english=$postal_area_english&state=$state&mobile=$mobile&pin_code=$pin_code&apartment=$apartment&aadhaar_no=$aadhaar_no&id_proof=$id_proof&street_name=$street_name&street_name_tamil=$street_name_tamil&state_tamil=$state_tamil&district_tamil=$district_tamil&post_office=$post_office&post_office_tamil=$post_office_tamil&village=$village&village_tamil=$village_tamil&district=$district&taluka=$taluka&taluka_tamil=$taluka_tamil";
      
         //dd($post_data);
         $url1 = $RAMJIPAY_URL.'/api/update_aadhaarcard_api';

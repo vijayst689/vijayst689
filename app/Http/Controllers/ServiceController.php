@@ -584,7 +584,11 @@ class ServiceController extends Controller
         } elseif ($serviceid == 124) {
             return view('applyservice.techcorrectionservice', compact('serviceid', 'districts', 'servicename', 'amount', 'payment', 'customers'));
 
-        } elseif ($serviceid == 56 || $serviceid == 58 || $serviceid == 158) {
+        } elseif ($serviceid == 56) {
+            $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
+            return view('applyservice.aadhaarcard_apply1', compact('serviceid', 'districts', 'servicename', 'amount', 'payment', 'customers', 'mainbalance', 'coordinator_permission', 'admin_payment'));
+
+        } elseif ($serviceid == 58 || $serviceid == 158) {
             $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
             return view('applyservice.aadhaarcard_apply', compact('serviceid', 'districts', 'servicename', 'amount', 'payment', 'customers', 'mainbalance', 'coordinator_permission', 'admin_payment'));
 
@@ -5073,22 +5077,34 @@ class ServiceController extends Controller
         }
         if ($serviceid == 56) {
             DB::table('aadhaarcard')->insert([
-                'user_id'               => $user_id,
-                'retailer_id'           => $retailer_id,
-                'distributor_id'        => $distributor_id,
-                'service_id'            => $request->serviceid,
+                'user_id'             => $user_id,
+                'retailer_id'         => $retailer_id,
+                'distributor_id'      => $distributor_id,
+                'service_id'          => $request->serviceid,
                 'amount'              => $request->amount,
                 'dist_id'             => $request->dist_id,
                 'taluk_id'            => $request->taluk_id,
                 'name'                => $request->name,
-                'mobile'              => $request->mobile,
-                'address_tamil'       => $request->address_tamil,
-                'address_english'     => $request->address_english,
+                'mobile'              => $request->mobile,                
                 'door_no'             => $request->door_no,
                 'aadhaar_no'          => $request->aadhaar_no,
                 'postal_area_english' => $request->postal_area_english,
                 'pin_code'            => $request->pin_code,
-                'id_proof'        => $request->id_proof,
+                'id_proof'            => $request->id_proof,
+                'state'               => $request->state,
+                'postal_area_tamil'          => $request->postal_area_tamil,
+                'apartment'       => $request->apartment,
+                'street_name'     => $request->street_name,
+                'street_name_tamil'               => $request->street_name_tamil,
+                'state_tamil'               => $request->state_tamil,
+                'district_tamil'               => $request->district_tamil,
+                'post_office'               => $request->post_office,
+                'post_office_tamil'               => $request->post_office_tamil,
+                'village'               => $request->village,
+                'village_tamil'               => $request->village_tamil,
+                'district'               => $request->district,
+                'taluka'               => $request->taluka,
+                'taluka_tamil'               => $request->taluka_tamil,
                 'status'                => 'Pending',
                 'applied_date'          => date("Y-m-d"),
                 'created_at'            => date("Y-m-d"),
@@ -5488,11 +5504,12 @@ switch ($parentDocType) {
         if ($coordinator_permission == 1) {
             $getdata = DB::table('aadhaarcard')->where('id', $insertid)->first();
             if ($getdata) {
-                $bank_pass_book = $getdata->bank_pass_book;
+                 $bank_pass_book = $getdata->bank_pass_book;
                 $smartcard_onlineprint = $getdata->smartcard_onlineprint;
                 $voterid = $getdata->voterid;
                 $voterid_file = $getdata->voterid;
                 $aadhaar_card = $getdata->aadhaar_card;
+                $aadhaar_file = $getdata->aadhaar_card;
                 $parent_aadhaar_front = $getdata->parent_aadhaar_front;
                 $schl_id_card = $getdata->schl_id_card;
                 $photo = $getdata->photo;
@@ -5504,10 +5521,10 @@ switch ($parentDocType) {
                 $dist_id = $getdata->dist_id;
                 $taluk_id = $getdata->taluk_id;
                 $postal_area_english = $getdata->postal_area_english;
-                $address_english = $getdata->address_english;
+                $street_name_tamil = $getdata->street_name_tamil;
                 $mobile = $getdata->mobile;
                 $pin_code = $getdata->pin_code;
-                $address_tamil = $getdata->address_tamil;
+                $street_name = $getdata->street_name;
                 $aadhaar_no = $getdata->aadhaar_no;
                 $id_proof = $getdata->id_proof;
                 $relationship = $getdata->relationship;
@@ -5522,6 +5539,18 @@ switch ($parentDocType) {
                 $relation_aadhaar = $getdata->relation_aadhaar;
                 $relation_mobile = $getdata->relation_mobile;
                 $marital_status = $getdata->marital_status;
+                $postal_area_tamil = $getdata->postal_area_tamil;
+                $apartment = $getdata->apartment;
+                $state_tamil = $getdata->state_tamil;
+                $district_tamil = $getdata->district_tamil;
+                $post_office = $getdata->post_office;
+                $post_office_tamil = $getdata->post_office_tamil;
+                $village = $getdata->village;
+                $village_tamil = $getdata->village_tamil;
+                $district = $getdata->district;
+                $taluka = $getdata->taluka;
+                $taluka_tamil = $getdata->taluka_tamil;
+                $state = $getdata->state;
                 $status = $getdata->status;
                 $url = url('/');
                 $aadhaar_url = $url . '/upload/services/aadhaar_card/' . $aadhaar_card;
@@ -5545,7 +5574,7 @@ switch ($parentDocType) {
                 $ch = curl_init();
 
                 if ($serviceid == 56) {
-                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bank_pass_book=$bank_pass_book_url&smartcard_onlineprint=$smartcard_onlineprint_url&voterid=$voterid_url&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&postal_area_english=$postal_area_english&address_english=$address_english&mobile=$mobile&pin_code=$pin_code&address_tamil=$address_tamil&aadhaar_no=$aadhaar_no&id_proof=$id_proof";
+                   $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bank_pass_book=$bank_pass_book_url&smartcard_onlineprint=$smartcard_onlineprint_url&voterid=$voterid_url&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&postal_area_tamil=$postal_area_tamil&postal_area_english=$postal_area_english&state=$state&mobile=$mobile&pin_code=$pin_code&apartment=$apartment&aadhaar_no=$aadhaar_no&id_proof=$id_proof&street_name=$street_name&street_name_tamil=$street_name_tamil&state_tamil=$state_tamil&district_tamil=$district_tamil&post_office=$post_office&post_office_tamil=$post_office_tamil&village=$village&village_tamil=$village_tamil&district=$district&taluka=$taluka&taluka_tamil=$taluka_tamil";
                 } elseif ($serviceid == 58) {
                     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=$service_id&rowid=$rowid&status=$status&aadhaar_no=$aadhaar_no&mobile=$mobile&name=$name&relationship=$relationship&parent_name=$parent_name&parent_aadhaar=$parent_aadhaar&parent_mobile=$parent_mobile&relative_address_english=$relative_address_english&relative_address_tamil=$relative_address_tamil&applicant_document_type=$applicant_document_type&parent_document_type=$parent_document_type&aadhaar_card=$doctype_aadhaar_url&schl_id_card=$doctype_schl_id_card_url&birth_certificate=$doctype_birth_certificate_url&photo=$doctype_photo_url&parent_aadhaar_front=$parent_aadhaar_url&bank_pass_book=$parentdoctype_bank_pass_book_url&voterid=$parentdoctype_voterid_url";
                 } elseif ($serviceid == 158) {
