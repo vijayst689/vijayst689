@@ -43,7 +43,8 @@
                                         class="text-danger">{{ $payment }}</span></h6>
                                 <div class="card-body p-4">
                                     <form class="row g-4" action="{{ url('submitapply_smart_nametransfer') }}"
-                                        enctype="multipart/form-data" method="post" id="myForm">
+                                        enctype="multipart/form-data" onsubmit="return checkpayment(event)" method="post"
+                                        id="myForm">
                                         @csrf
                                         <div class="row">
                                             <input type="hidden" name="serviceid" value="{{ $serviceid }}">
@@ -443,11 +444,11 @@
             @endsection
             @push('page_scripts')
                 <script>
-         document.getElementById("myForm").addEventListener("submit", function() {
-            const btn = document.getElementById("save");
-            btn.disabled = true;
-            btn.innerText = "Submitting...";
-        });
+                    document.getElementById("myForm").addEventListener("submit", function() {
+                        const btn = document.getElementById("save");
+                        btn.disabled = true;
+                        btn.innerText = "Submitting...";
+                    });
                     $(function() {
                         var wallet = "{{ Auth::user()->wallet }}";
                         var amount = "{{ $payment }}";
@@ -460,7 +461,29 @@
                             });
                         }
                     });
+                    var ramjibalance = "{{ $mainbalance->rawallet }}";
+                    //alert(ramjibalance);
+                    ramjibalance = parseFloat(ramjibalance);
 
+                    function checkpayment(e) {
+                        var amount = {{ $admin_payment }};
+                        if (amount > ramjibalance) {
+                            alert("LOW BALANCE");
+                            $('#save').prop("disabled", true);
+                            $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
+                                'color': 'red',
+                                'font-size': '130%',
+                                'font-weight': 'bold'
+                            });
+                            return false;
+                        } else {
+                            $("#nopayment").html("");
+                            $("#save").attr("disabled", true);
+                            $("#ramjidebit_amount").val(amount);
+                            return true;
+
+                        }
+                    }
                     $('#dist_id').on('change', function() {
                         var dist_id = this.value;
                         $("#taluk").html('');

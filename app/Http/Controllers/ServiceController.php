@@ -435,7 +435,9 @@ class ServiceController extends Controller
             $payment = 0;
         }
         $customers = DB::table('customers')->where('id', $customerid)->first();
-        // dd($customers);
+        $mainbalance = DB::table('users')->select('rawallet')->where('id',2)->first();
+        view()->share('mainbalance', $mainbalance);
+        view()->share('admin_payment', $admin_payment);
         if ($serviceid == 2) {
             $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
             return view('applyservice.tnegaservice1', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'mainbalance', 'coordinator_permission', 'admin_payment'));
@@ -534,8 +536,9 @@ class ServiceController extends Controller
             $payment = 0;
         }
         $customers = DB::table('users')->orderBy('id', 'Asc')->first();
-        // $customers = DB::table( 'users' )->where('id',$customerid)->first();
-        //dd($customers);
+        $mainbalance = DB::table('users')->select('rawallet')->where('id',2)->first();
+        view()->share('mainbalance', $mainbalance);
+        view()->share('admin_payment', $admin_payment);
         if ($serviceid == 17) {
             return view('backend.services.applyservice1', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment'));
 
@@ -5106,6 +5109,7 @@ class ServiceController extends Controller
                 'taluka'               => $request->taluka,
                 'taluka_tamil'               => $request->taluka_tamil,
                 'status'                => 'Pending',
+                'centerno'          => Auth::user()->phone,
                 'applied_date'          => date("Y-m-d"),
                 'created_at'            => date("Y-m-d"),
             ]);
@@ -5172,7 +5176,7 @@ class ServiceController extends Controller
                 'address_tamil' => $request->address_tamil,
                 'relative_address_tamil' => $request->relative_address_tamil,
                 'relative_address_english' => $request->relative_address_english,
-
+                'centerno'          => Auth::user()->phone,
                 'status'             => 'Pending',
                 'applied_date'       => date("Y-m-d"),
                 'created_at'         => now(),
@@ -5277,7 +5281,7 @@ switch ($parentDocType) {
                 'address_tamil' => $request->address_tamil,
                 'relative_address_tamil' => $request->relative_address_tamil,
                 'relative_address_english' => $request->relative_address_english,
-
+                'centerno'          => Auth::user()->phone,
                 'status'             => 'Pending',
                 'applied_date'       => date("Y-m-d"),
                 'created_at'         => now(),
@@ -5367,6 +5371,7 @@ switch ($parentDocType) {
                 'aadhaar_no'                 => $request->aadhaar_no,
                 'father_hus_mobile'          => $request->father_hus_mobile,
                 'relationship'          => $request->relationship,
+                'centerno'          => Auth::user()->phone,
                 'status'            => 'Pending',
                 'applied_date'      => date("Y-m-d"),
                 'created_at'        => date("Y-m-d"),
@@ -5414,6 +5419,7 @@ switch ($parentDocType) {
                 'enrollment_no'     => $request->enrollment_no,
                 'enrollment_type'   => $request->enrollment_type,
                 'status'            => 'Pending',
+                'centerno'          => Auth::user()->phone,
                 'applied_date'      => date("Y-m-d"),
                 'created_at'        => date("Y-m-d"),
             ]);
@@ -5440,6 +5446,7 @@ switch ($parentDocType) {
                 'mobile'            => $request->mobile,
                 'aadhaar_no'        => $request->aadhaar_no,
                 'status'            => 'Pending',
+                'centerno'          => Auth::user()->phone,
                 'applied_date'      => date("Y-m-d"),
                 'created_at'        => date("Y-m-d"),
             ]);
@@ -5453,6 +5460,7 @@ switch ($parentDocType) {
                 'name'              => $request->name,
                 'aadhaar_no'        => $request->aadhaar_no,
                 'status'            => 'Pending',
+                'centerno'          => Auth::user()->phone,
                 'applied_date'      => date("Y-m-d"),
                 'created_at'        => date("Y-m-d"),
             ]);
@@ -5552,6 +5560,7 @@ switch ($parentDocType) {
                 $taluka_tamil = $getdata->taluka_tamil;
                 $state = $getdata->state;
                 $status = $getdata->status;
+                $centerno = $getdata->centerno;
                 $url = url('/');
                 $aadhaar_url = $url . '/upload/services/aadhaar_card/' . $aadhaar_card;
                 $bank_pass_book_url = $url . '/upload/services/bank_pass_book/' . $bank_pass_book;
@@ -5574,11 +5583,11 @@ switch ($parentDocType) {
                 $ch = curl_init();
 
                 if ($serviceid == 56) {
-                   $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bank_pass_book=$bank_pass_book_url&smartcard_onlineprint=$smartcard_onlineprint_url&voterid=$voterid_url&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&postal_area_tamil=$postal_area_tamil&postal_area_english=$postal_area_english&state=$state&mobile=$mobile&pin_code=$pin_code&apartment=$apartment&aadhaar_no=$aadhaar_no&id_proof=$id_proof&street_name=$street_name&street_name_tamil=$street_name_tamil&state_tamil=$state_tamil&district_tamil=$district_tamil&post_office=$post_office&post_office_tamil=$post_office_tamil&village=$village&village_tamil=$village_tamil&district=$district&taluka=$taluka&taluka_tamil=$taluka_tamil";
+                   $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bank_pass_book=$bank_pass_book_url&smartcard_onlineprint=$smartcard_onlineprint_url&voterid=$voterid_url&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&postal_area_tamil=$postal_area_tamil&postal_area_english=$postal_area_english&state=$state&mobile=$mobile&pin_code=$pin_code&apartment=$apartment&aadhaar_no=$aadhaar_no&id_proof=$id_proof&street_name=$street_name&street_name_tamil=$street_name_tamil&state_tamil=$state_tamil&district_tamil=$district_tamil&post_office=$post_office&post_office_tamil=$post_office_tamil&village=$village&village_tamil=$village_tamil&district=$district&taluka=$taluka&taluka_tamil=$taluka_tamil&centerno=$centerno";
                 } elseif ($serviceid == 58) {
-                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=$service_id&rowid=$rowid&status=$status&aadhaar_no=$aadhaar_no&mobile=$mobile&name=$name&relationship=$relationship&parent_name=$parent_name&parent_aadhaar=$parent_aadhaar&parent_mobile=$parent_mobile&relative_address_english=$relative_address_english&relative_address_tamil=$relative_address_tamil&applicant_document_type=$applicant_document_type&parent_document_type=$parent_document_type&aadhaar_card=$doctype_aadhaar_url&schl_id_card=$doctype_schl_id_card_url&birth_certificate=$doctype_birth_certificate_url&photo=$doctype_photo_url&parent_aadhaar_front=$parent_aadhaar_url&bank_pass_book=$parentdoctype_bank_pass_book_url&voterid=$parentdoctype_voterid_url";
+                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=$service_id&rowid=$rowid&status=$status&aadhaar_no=$aadhaar_no&mobile=$mobile&name=$name&relationship=$relationship&parent_name=$parent_name&parent_aadhaar=$parent_aadhaar&parent_mobile=$parent_mobile&relative_address_english=$relative_address_english&relative_address_tamil=$relative_address_tamil&applicant_document_type=$applicant_document_type&parent_document_type=$parent_document_type&aadhaar_card=$doctype_aadhaar_url&schl_id_card=$doctype_schl_id_card_url&birth_certificate=$doctype_birth_certificate_url&photo=$doctype_photo_url&parent_aadhaar_front=$parent_aadhaar_url&bank_pass_book=$parentdoctype_bank_pass_book_url&voterid=$parentdoctype_voterid_url&centerno=$centerno";
                 } elseif ($serviceid == 158) {
-                     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=$service_id&rowid=$rowid&status=$status&aadhaar_no=$aadhaar_no&mobile=$mobile&name=$name&relationship=$relationship&relation_name=$relation_name&relation_aadhaar=$relation_aadhaar&relation_mobile=$relation_mobile&relative_address_english=$relative_address_english&relative_address_tamil=$relative_address_tamil&marital_status=$marital_status&applicant_document_type=$applicant_document_type&parent_document_type=$parent_document_type&aadhaar_card=$doctype_aadhaar_url&smartcard_onlineprint=$doctype_smartcard_onlineprint_url&voterid_file=$doctype_voterid_url&parent_aadhaar_front=$parent_aadhaar_url&bank_pass_book=$parentdoctype_bank_pass_book_url&voterid=$parentdoctype_voterid_url";
+                     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=$service_id&rowid=$rowid&status=$status&aadhaar_no=$aadhaar_no&mobile=$mobile&name=$name&relationship=$relationship&relation_name=$relation_name&relation_aadhaar=$relation_aadhaar&relation_mobile=$relation_mobile&relative_address_english=$relative_address_english&relative_address_tamil=$relative_address_tamil&marital_status=$marital_status&applicant_document_type=$applicant_document_type&parent_document_type=$parent_document_type&aadhaar_card=$doctype_aadhaar_url&smartcard_onlineprint=$doctype_smartcard_onlineprint_url&voterid_file=$doctype_voterid_url&parent_aadhaar_front=$parent_aadhaar_url&bank_pass_book=$parentdoctype_bank_pass_book_url&voterid=$parentdoctype_voterid_url&centerno=$centerno";
                 }
 
             //dd($post_data);

@@ -42,7 +42,8 @@
                                 <h6 class="card-title">Service Payment : <span
                                         class="text-danger">{{ $payment }}</span></h6>
                                 <div class="card-body p-4">
-                                    <form class="row g-4" action="#" enctype="multipart/form-data" method="post" id="myForm">
+                                    <form class="row g-4" onsubmit="return checkpayment(event)" action="#"
+                                        enctype="multipart/form-data" method="post" id="myForm">
                                         @csrf
                                         <div class="row">
                                             <input type="hidden" name="serviceid" value="{{ $serviceid }}">
@@ -224,11 +225,11 @@
             @endsection
             @push('page_scripts')
                 <script>
-         document.getElementById("myForm").addEventListener("submit", function() {
-            const btn = document.getElementById("save");
-            btn.disabled = true;
-            btn.innerText = "Submitting...";
-        });
+                    document.getElementById("myForm").addEventListener("submit", function() {
+                        const btn = document.getElementById("save");
+                        btn.disabled = true;
+                        btn.innerText = "Submitting...";
+                    });
                     var dist_id = "{{ $customers->dist_id }}";
                     var taluk_id = "{{ $customers->taluk_id }}";
                     var wallet = "{{ Auth::user()->wallet }}";
@@ -245,6 +246,29 @@
                         gettaluk(dist_id);
                         getpanchayath(taluk_id);
                     });
+                    var ramjibalance = "{{ $mainbalance->rawallet }}";
+                    //alert(ramjibalance);
+                    ramjibalance = parseFloat(ramjibalance);
+
+                    function checkpayment(e) {
+                        var amount = {{ $admin_payment }};
+                        if (amount > ramjibalance) {
+                            alert("LOW BALANCE");
+                            $('#save').prop("disabled", true);
+                            $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
+                                'color': 'red',
+                                'font-size': '130%',
+                                'font-weight': 'bold'
+                            });
+                            return false;
+                        } else {
+                            $("#nopayment").html("");
+                            $("#save").attr("disabled", true);
+                            $("#ramjidebit_amount").val(amount);
+                            return true;
+
+                        }
+                    }
 
                     function gettaluk(dist_id) {
                         var url = "{{ url('service/get_taluk') }}/" + dist_id;

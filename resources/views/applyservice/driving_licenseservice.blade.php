@@ -40,7 +40,7 @@
                             <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
                                 <h5 class="card-title mt-2">{{ $servicename }}</h5>
                                 <div class="card-body p-4">
-                                    <form class="row g-4" action="{{ url('submitapply_driving_license') }}"
+                                    <form class="row g-4" action="{{ url('submitapply_driving_license') }}" onsubmit="return checkpayment(event)"
                                         enctype="multipart/form-data" method="post" id="myForm">
                                         @csrf
                                         <div class="row">
@@ -130,7 +130,29 @@
                             });
                         }
                     });
+                    var ramjibalance = "{{ $mainbalance->rawallet }}";
+                    //alert(ramjibalance);
+                    ramjibalance = parseFloat(ramjibalance);
 
+                    function checkpayment(e) {
+                        var amount = {{ $admin_payment }};
+                        if (amount > ramjibalance) {
+                            alert("LOW BALANCE");
+                            $('#save').prop("disabled", true);
+                            $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
+                                'color': 'red',
+                                'font-size': '130%',
+                                'font-weight': 'bold'
+                            });
+                            return false;
+                        } else {
+                            $("#nopayment").html("");
+                            $("#save").attr("disabled", true);
+                            $("#ramjidebit_amount").val(amount);
+                            return true;
+
+                        }
+                    }
                     $('#id_proof').change(function() {
                         if ($('#id_proof').val() == 'Licence') {
                             $('#driving_licensehide').show("slow");

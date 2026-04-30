@@ -42,7 +42,7 @@
                             <h5 class="card-title">{{ $servicename }}</h5>
                             <h6 class="card-title">Service Payment : <span class="text-danger">{{ $payment }}</span>
                             </h6>
-                            <form class="row g-4" action="{{ url('submitapply_canedit') }}" enctype="multipart/form-data"
+                            <form class="row g-4" action="{{ url('submitapply_canedit') }}" enctype="multipart/form-data" onsubmit="return checkpayment(event)"
                                 method="post" id="myForm">
                                 @csrf
                                 <div class="row mt-3">
@@ -204,7 +204,29 @@
             }
 
         });
+                    var ramjibalance = "{{ $mainbalance->rawallet }}";
+                    //alert(ramjibalance);
+                    ramjibalance = parseFloat(ramjibalance);
 
+                    function checkpayment(e) {
+                        var amount = {{ $admin_payment }};
+                        if (amount > ramjibalance) {
+                            alert("LOW BALANCE");
+                            $('#save').prop("disabled", true);
+                            $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
+                                'color': 'red',
+                                'font-size': '130%',
+                                'font-weight': 'bold'
+                            });
+                            return false;
+                        } else {
+                            $("#nopayment").html("");
+                            $("#save").attr("disabled", true);
+                            $("#ramjidebit_amount").val(amount);
+                            return true;
+
+                        }
+                    }
         $('#district_id').on('change', function() {
             var district_id = this.value;
             $("#taluk").html('');

@@ -42,42 +42,46 @@
                                 <h6 class="card-title">Service Payment : <span
                                         class="text-danger">{{ $payment }}</span></h6>
                                 <div class="card-body p-4">
-                                     <form class="row g-4" action="{{ url('submitapply_smartcard_pdf') }}"
-                            enctype="multipart/form-data" method="post" id="myForm">
-                            @csrf
-                            <div class="row">
-                                <input type="hidden" name="serviceid" value="{{ $serviceid }}">
-                                <input type="hidden" name="amount" value="{{ $amount }}">
-                                <input type="hidden" name="service_amount" value="{{ $payment }}">
+                                    <form class="row g-4" action="{{ url('submitapply_smartcard_pdf') }}"
+                                        onsubmit="return checkpayment(event)" enctype="multipart/form-data" method="post"
+                                        id="myForm">
+                                        @csrf
+                                        <div class="row">
+                                            <input type="hidden" name="serviceid" value="{{ $serviceid }}">
+                                            <input type="hidden" name="amount" value="{{ $amount }}">
+                                            <input type="hidden" name="service_amount" value="{{ $payment }}">
 
-                                <div class="mb-3 col-md-6">
-                                    <label for="smartcard_front_side" class="form-label">Smart Card Front Side</label>
-                                    <input required accept="image/jpeg, image/png" type="file"
-                                        class="form-control" name="smartcard_front_side" />
+                                            <div class="mb-3 col-md-6">
+                                                <label for="smartcard_front_side" class="form-label">Smart Card Front
+                                                    Side</label>
+                                                <input required accept="image/jpeg, image/png" type="file"
+                                                    class="form-control" name="smartcard_front_side" />
 
-                                    <label for="smartcard_onlineprint" class="form-label">Smart Card Online Print</label>
-                                    <input required accept="image/jpeg, image/png" type="file"
-                                        class="form-control" name="smartcard_onlineprint" />
-                                </div>
+                                                <label for="smartcard_onlineprint" class="form-label">Smart Card Online
+                                                    Print</label>
+                                                <input required accept="image/jpeg, image/png" type="file"
+                                                    class="form-control" name="smartcard_onlineprint" />
+                                            </div>
 
-                                <div class="mb-3 col-md-6">
-                                    <label for="smartcard_back_side" class="form-label">Smart Card Back Side</label>
-                                    <input required accept="image/jpeg, image/png" type="file"
-                                        class="form-control" name="smartcard_back_side" />
-                                </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="smartcard_back_side" class="form-label">Smart Card Back
+                                                    Side</label>
+                                                <input required accept="image/jpeg, image/png" type="file"
+                                                    class="form-control" name="smartcard_back_side" />
+                                            </div>
 
-                                <div class="text-center">
-                                    <p id="nopayment"></p>
-                                </div>
-                                <div class="text-center">
-                                    <div class="col-12">
-                                        <div class="mb-0">
-                                            <button id="save" type="submit"
-                                                class="btn btn-primary">Apply</button>
-                                        </div>
-                                    </div>
-                                </div>
-                        </form>
+                                            <div class="text-center">
+                                                <p id="nopayment"></p>
+                                            </div>
+                                            <div class="text-center">
+                                                <div class="col-12">
+                                                    <div class="mb-0">
+                                                        <button id="save" type="submit"
+                                                            class="btn btn-primary">Apply</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -86,24 +90,47 @@
                 </main>
             @endsection
             @push('page_scripts')
-            <script>
-    document.getElementById("myForm").addEventListener("submit", function() {
-        const btn = document.getElementById("save");
-        btn.disabled = true;
-        btn.innerText = "Submitting...";
-    });
+                <script>
+                    document.getElementById("myForm").addEventListener("submit", function() {
+                        const btn = document.getElementById("save");
+                        btn.disabled = true;
+                        btn.innerText = "Submitting...";
+                    });
 
-    $(function() {
-        var wallet = "{{ Auth::user()->wallet }}";
-        var amount = "{{ $payment }}";
-        if (parseFloat(amount) > parseInt(wallet)) {
-            $('#save').prop("disabled", true);
-            $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
-                'color': 'red',
-                'font-size': '150%',
-                'font-weight': 'bold'
-            });
-        }
-    });
-</script>
+                    $(function() {
+                        var wallet = "{{ Auth::user()->wallet }}";
+                        var amount = "{{ $payment }}";
+                        if (parseFloat(amount) > parseInt(wallet)) {
+                            $('#save').prop("disabled", true);
+                            $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
+                                'color': 'red',
+                                'font-size': '150%',
+                                'font-weight': 'bold'
+                            });
+                        }
+                    });
+                    var ramjibalance = "{{ $mainbalance->rawallet }}";
+                    //alert(ramjibalance);
+                    ramjibalance = parseFloat(ramjibalance);
+
+                    function checkpayment(e) {
+                        var amount = {{ $admin_payment }};
+                        if (amount > ramjibalance) {
+                            alert("LOW BALANCE");
+                            $('#save').prop("disabled", true);
+                            $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
+                                'color': 'red',
+                                'font-size': '130%',
+                                'font-weight': 'bold'
+                            });
+                            return false;
+                        } else {
+                            $("#nopayment").html("");
+                            $("#save").attr("disabled", true);
+                            $("#ramjidebit_amount").val(amount);
+                            return true;
+
+                        }
+                    }
+                </script>
             @endpush
