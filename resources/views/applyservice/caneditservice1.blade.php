@@ -96,23 +96,24 @@
                                                 class="form-label">Applicant Name</label>
                                             <input required type="text" maxlength="100" class="form-control"
                                                 name="applicant_name" placeholder="Applicant Name" />
-                                            <label for="aadhaar_card" class="form-label text-danger">Aadhaar Card
+                                            {{-- <label for="aadhaar_card" class="form-label text-danger">Aadhaar Card
                                                 (Front & Back)</label>
                                             <input required accept="image/jpeg, image/png" type="file"
-                                                class="form-control" name="aadhaar_card" />
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            <label style="color:#23e156" for="can_number" class="form-label"> Can
-                                                Number</label>
-                                            <input required type="text" class="form-control" name="can_number"
-                                                placeholder="Can Number" maxlength="30" />
-                                            <label style="color:#23e156" for="certificate_number"
+                                                class="form-control" name="aadhaar_card" /> --}}
+                                                <label style="color:#23e156" for="certificate_number"
                                                 class="form-label number">Legal Heir Certificate Number</label>
                                             <select required id="certificate_number" name="certificate_number"
                                                 class="form-control">
                                                 <option value="">Select certificate</option>
                                                 <option value="Legal Heir Certificate">Legal Heir Certificate</option>
                                             </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label style="color:#23e156" for="can_number" class="form-label"> Can
+                                                Number</label>
+                                            <input required type="text" class="form-control" name="can_number"
+                                                placeholder="Can Number" maxlength="30" />
+                                            
                                         </div>
                                      @elseif($serviceid == 225)
                                         <div class="mb-3 col-md-6">
@@ -124,16 +125,17 @@
                                                 class="form-label">Applicant Name</label>
                                             <input required type="text" maxlength="100" class="form-control"
                                                 name="applicant_name" placeholder="Applicant Name" />
-                                            <label style="color:#23e156" for="certificate_number"
+                                           
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                             <label style="color:#23e156" for="certificate_number"
                                                 class="form-label">Certificate Number</label>
                                             <input required type="text" maxlength="100" class="form-control"
                                                 name="certificate_number" placeholder="Certificate Number" />
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front
+                                            {{-- <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front
                                                 & Back) </label>
                                             <input required accept="image/jpeg, image/png" type="file"
-                                                class="form-control" name="aadhaar_card" />
+                                                class="form-control" name="aadhaar_card" /> --}}
                                             <label style="color:#23e156" for="certificate_name"
                                                 class="form-label">Certificate Name</label>
                                             <input required type="text" maxlength="100" class="form-control"
@@ -149,16 +151,17 @@
                                                 class="form-label">Applicant Name</label>
                                             <input required type="text" maxlength="100" class="form-control"
                                                 name="applicant_name" placeholder="Applicant Name" />
-                                            <label style="color:#23e156" for="certificate_number"
+                                           
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                             <label style="color:#23e156" for="certificate_number"
                                                 class="form-label">Certificate Number</label>
                                             <input required type="text" maxlength="100" class="form-control"
                                                 name="certificate_number" placeholder="Certificate Number" />
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front)
+                                            {{-- <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card (Front)
                                             </label>
                                             <input required accept="image/jpeg, image/png" type="file"
-                                                class="form-control" name="aadhaar_card" />
+                                                class="form-control" name="aadhaar_card" /> --}}
                                             <label style="color:#23e156" for="certificate_name"
                                                 class="form-label">Certificate Name</label>
                                             <input required type="text" maxlength="100" class="form-control"

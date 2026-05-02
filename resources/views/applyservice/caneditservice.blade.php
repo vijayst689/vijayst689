@@ -270,11 +270,11 @@
                                                     </select>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card
+                                                    {{-- <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card
                                                         (Front)
                                                     </label>
                                                     <input required accept="image/jpeg, image/png" type="file"
-                                                        class="form-control" name="aadhaar_card" />
+                                                        class="form-control" name="aadhaar_card" /> --}}
                                                     <label style="color:#23e156" for="can_number" class="form-label"> Can
                                                         Number</label>
                                                     <input required type="text" class="form-control" name="can_number"
@@ -318,10 +318,10 @@
                                                         Number</label>
                                                     <input required type="text" class="form-control" name="can_number"
                                                         placeholder="Can Number" maxlength="30" />
-                                                    <label for="aadhaar_card" class="form-label text-danger">Aadhaar Card
+                                                    {{-- <label for="aadhaar_card" class="form-label text-danger">Aadhaar Card
                                                         (Front)</label>
                                                     <input required accept="image/jpeg, image/png" type="file"
-                                                        class="form-control" name="aadhaar_card" />
+                                                        class="form-control" name="aadhaar_card" /> --}}
 
 
                                                 </div>
