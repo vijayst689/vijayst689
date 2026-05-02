@@ -262,7 +262,7 @@
                 $("#cusid").val(id);
                 $("#editcustomer").modal("show");
             }
-                    function applyQuickFilter(type) {
+            function applyQuickFilter(type) {
             let from = document.querySelector('[name="from_date"]');
             let to = document.querySelector('[name="to_date"]');
 
