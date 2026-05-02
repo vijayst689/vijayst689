@@ -3,32 +3,34 @@
     <style>
         .sliding-text-container {
             width: 100%;
-            /* or a fixed width if needed */
             overflow: hidden;
-            /* hides the text when it goes outside */
             white-space: nowrap;
-            /* prevents text wrapping */
-            position: relative;
         }
 
         .sliding-text {
             display: inline-block;
-            overflow: hidden;
             padding-left: 100%;
-            /* Start from the right */
-            animation: slide-left 70s linear infinite;
+            font-size: 20px;
+            font-weight: 600;
+            white-space: nowrap;
         }
 
-        @keyframes slide-left {
-            0% {
-                transform: translateX(100%);
+        /* 🔥 முக்கிய மாற்றம் */
+        .sliding-wrapper {
+            display: inline-flex;
+            white-space: nowrap;
+            animation: slide linear infinite;
+            animation-duration: 120s;
+            /* speed control */
+        }
+
+        /* 🔥 dynamic distance (important) */
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
             }
 
-            1% {
-                transform: translateX(0%);
-            }
-
-            100% {
+            to {
                 transform: translateX(-100%);
             }
         }
@@ -256,10 +258,12 @@
                 @endif
                 @if (Auth::user()->user_type_id == 2)
                     <div class="sliding-text-container">
-                        @foreach ($notify as $n)
-                            <h5 class="sliding-text text-danger">{{ $n->notify }}&nbsp;&nbsp;|&nbsp;&nbsp;</h5>
-                        @endforeach
-                    </div>
+                            <div class="sliding-text" id="ticker">
+                                @foreach ($notify as $n)
+                                    {{ $n->notify }} &nbsp;&nbsp; | &nbsp;&nbsp;
+                                @endforeach
+                            </div>
+                        </div>
                     @if (Auth::user()->verified == 1)
                         <div class="container-xxl flex-grow-1 container-p-y">
                             <div class="row">
@@ -625,10 +629,12 @@
                 @endif
                 @if (Auth::user()->user_type_id == 3)
                     <div class="sliding-text-container">
-                        @foreach ($notify as $n)
-                            <h5 class="sliding-text text-danger">{{ $n->notify }}&nbsp;&nbsp;|&nbsp;&nbsp;</h5>
-                        @endforeach
-                    </div>
+                            <div class="sliding-text" id="ticker">
+                                @foreach ($notify as $n)
+                                    {{ $n->notify }} &nbsp;&nbsp; | &nbsp;&nbsp;
+                                @endforeach
+                            </div>
+                        </div>
                     @if (Auth::user()->verified == 1)
                         <div class="container-xxl flex-grow-1 container-p-y">
                             <div class="row">
@@ -845,10 +851,12 @@
                 @endif
                 @if (Auth::user()->user_type_id == 4)
                     <div class="sliding-text-container">
-                        @foreach ($notify as $n)
-                            <h5 class="sliding-text text-danger">{{ $n->notify }}&nbsp;&nbsp;|&nbsp;&nbsp;</h5>
-                        @endforeach
-                    </div>
+                            <div class="sliding-text" id="ticker">
+                                @foreach ($notify as $n)
+                                    {{ $n->notify }} &nbsp;&nbsp; | &nbsp;&nbsp;
+                                @endforeach
+                            </div>
+                        </div>
                     @if (Auth::user()->verified == 1)
                         <div class="container-xxl flex-grow-1 container-p-y">
                             <div class="row">
@@ -1065,10 +1073,12 @@
                 @endif
                 @if (Auth::user()->user_type_id == 5)
                     <div class="sliding-text-container">
-                        @foreach ($notify as $n)
-                            <h5 class="sliding-text text-danger">{{ $n->notify }}&nbsp;&nbsp;|&nbsp;&nbsp;</h5>
-                        @endforeach
-                    </div>
+                            <div class="sliding-text" id="ticker">
+                                @foreach ($notify as $n)
+                                    {{ $n->notify }} &nbsp;&nbsp; | &nbsp;&nbsp;
+                                @endforeach
+                            </div>
+                        </div>
                     <div class="col-md-3 col-sm-4">
                         <div class="card radius-10 bg-gradient-cosmic">
                             <div class="card-body">
@@ -1317,7 +1327,11 @@
 
                     <!-- ================= MANUAL PAYMENT ================= -->
                     <div class="tab-pane fade" id="manualTab">
-
+<div class="text-center mb-3">
+                                    <img src="/upload/qr/qrimgramji.jpeg" alt="QR Code"
+                                        class="img-fluid"
+                                        style="max-width:300px">
+                                </div>
 
                         <form method="POST"
                             action="{{ url('/nalavariyam/wallet/add') }}"
@@ -1397,5 +1411,17 @@
 
 
         }
+    </script>
+         <script>
+        window.onload = function() {
+            const el = document.getElementById("ticker");
+
+            let distance = el.scrollWidth; // full text width
+            let speed = 50; // 👈 increase = slower
+
+            let duration = distance / speed;
+
+            el.style.animation = `marquee ${duration}s linear infinite`;
+        };
     </script>
 @endpush

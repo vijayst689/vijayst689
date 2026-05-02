@@ -79,7 +79,7 @@
 
                     <!-- Header -->
                     <div class="modal-header">
-                        <h5 class="modal-title">Add Money to Rawallet</h5>
+                        <h5 class="modal-title">Add Money to Apiwallet</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
@@ -247,7 +247,7 @@
                  </div>
              @elseif (Auth::user()->user_type_id == 2)
                  <div class="d-flex align-items-center gap-2 justify-content-lg-end">
-                     <span class="text-danger"><b>Ramji Wallet : {{ Auth::user()->rawallet }}</b></span>&nbsp;
+                     <span class="text-danger"><b>Api Wallet : {{ Auth::user()->rawallet }}</b></span>&nbsp;
                      <button type="button" class="btn-sm btn btn-danger" data-bs-toggle="modal"
                          data-bs-target="#ramjirequest">Add Money</button>
                  </div>
