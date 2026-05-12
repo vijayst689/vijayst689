@@ -99,6 +99,208 @@ class UserController extends Controller
         return view('customer.customers',compact('viewcustomers'));
     }
 
+    public function resizeUserPhoto($filePath, $width = 250, $height = 250, $targetKB = 50)
+{
+    if (!file_exists($filePath)) {
+        return false;
+    }
+
+    $info = getimagesize($filePath);
+    if (!$info) {
+        return false;
+    }
+
+    // Load image
+    switch ($info['mime']) {
+        case 'image/jpeg':
+        case 'image/jpg':
+            $source = imagecreatefromjpeg($filePath);
+            break;
+
+        case 'image/png':
+            $source = imagecreatefrompng($filePath);
+            break;
+
+        case 'image/webp':
+            $source = imagecreatefromwebp($filePath);
+            break;
+
+        default:
+            return false;
+    }
+
+    // Original dimensions
+    $srcWidth  = imagesx($source);
+    $srcHeight = imagesy($source);
+
+    // Create 250x250 canvas
+    $resized = imagecreatetruecolor($width, $height);
+
+    // White background
+    $white = imagecolorallocate($resized, 255, 255, 255);
+    imagefill($resized, 0, 0, $white);
+
+    // Resize image exactly to 250x250
+    imagecopyresampled(
+        $resized,
+        $source,
+        0, 0, 0, 0,
+        $width,
+        $height,
+        $srcWidth,
+        $srcHeight
+    );
+
+    // Compress to target size
+    $targetBytes = $targetKB * 1024;
+    $quality = 90;
+    $tempFile = $filePath . '.tmp.jpg';
+
+    do {
+        imagejpeg($resized, $tempFile, $quality);
+        clearstatcache(true, $tempFile);
+        $size = filesize($tempFile);
+
+        $quality -= 5;
+
+        if ($quality < 10) {
+            break;
+        }
+    } while ($size > $targetBytes);
+
+    // Replace original file
+    copy($tempFile, $filePath);
+    unlink($tempFile);
+
+    // Free memory
+    imagedestroy($source);
+    imagedestroy($resized);
+
+    return true;
+}
+
+
+public function compressFileTo200KB($filePath, $targetKB = 200)
+{
+    if (!file_exists($filePath)) {
+        return false;
+    }
+
+    $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+
+    // PDF compression
+    if ($extension === 'pdf') {
+        return $this->compressPdfToTarget($filePath, $targetKB);
+    }
+
+    // Image compression
+    return $this->compressImageToTarget($filePath, $targetKB);
+}
+
+/**
+ * Compress JPG/PNG/WEBP images.
+ */
+public function compressImageToTarget($filePath, $targetKB = 200)
+{
+    $info = getimagesize($filePath);
+    if (!$info) {
+        return false;
+    }
+
+    switch ($info['mime']) {
+        case 'image/jpeg':
+        case 'image/jpg':
+            $image = imagecreatefromjpeg($filePath);
+            break;
+
+        case 'image/png':
+            $image = imagecreatefrompng($filePath);
+            break;
+
+        case 'image/webp':
+            $image = imagecreatefromwebp($filePath);
+            break;
+
+        default:
+            return false;
+    }
+
+    $targetBytes = $targetKB * 1024;
+    $quality = 90;
+    $tempFile = $filePath . '.tmp.jpg';
+
+    do {
+        imagejpeg($image, $tempFile, $quality);
+        clearstatcache(true, $tempFile);
+        $size = filesize($tempFile);
+
+        $quality -= 5;
+        if ($quality < 10) {
+            break;
+        }
+    } while ($size > $targetBytes);
+
+    copy($tempFile, $filePath);
+    unlink($tempFile);
+    imagedestroy($image);
+
+    return true;
+}
+
+/**
+ * Compress PDF using Ghostscript.
+ */
+public function compressPdfToTarget($filePath, $targetKB = 200)
+{
+    $targetBytes = $targetKB * 1024;
+
+    // If already below target, do nothing
+    if (filesize($filePath) <= $targetBytes) {
+        return true;
+    }
+
+    $tempFile = $filePath . '.tmp.pdf';
+
+    // Ghostscript executable
+    $gs = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'
+        ? 'gswin64c'
+        : 'gs';
+
+    // PDF quality presets (best to strongest compression)
+    $settings = [
+        '/ebook',
+        '/screen',
+    ];
+
+    foreach ($settings as $setting) {
+        $command = $gs
+            . ' -sDEVICE=pdfwrite'
+            . ' -dCompatibilityLevel=1.4'
+            . ' -dPDFSETTINGS=' . $setting
+            . ' -dNOPAUSE -dQUIET -dBATCH'
+            . ' -sOutputFile=' . escapeshellarg($tempFile)
+            . ' ' . escapeshellarg($filePath);
+
+        exec($command, $output, $returnVar);
+
+        if ($returnVar === 0 && file_exists($tempFile)) {
+            clearstatcache(true, $tempFile);
+
+            if (filesize($tempFile) <= $targetBytes) {
+                copy($tempFile, $filePath);
+                unlink($tempFile);
+                return true;
+            }
+
+            // Keep smallest version even if not exactly 200 KB
+            copy($tempFile, $filePath);
+            unlink($tempFile);
+        }
+    }
+
+    return true;
+}
+
     public function savecustomer(Request $request)
     {
 
@@ -141,21 +343,30 @@ class UserController extends Controller
         $aadhaarimg = $insertid.'.'.$request->file('aadhaar_file')->extension();
         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'aadhaar_file' . DIRECTORY_SEPARATOR);
         move_uploaded_file($_FILES['aadhaar_file']['tmp_name'], $filepath . $aadhaarimg);
+         $this->compressFileTo200KB($filepath . $aadhaarimg, 200);
       }
       if ($request->smartcard != null) {
         $smartcardimg = $insertid.'.'.$request->file('smartcard')->extension();
         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'smart_card' . DIRECTORY_SEPARATOR);
         move_uploaded_file($_FILES['smartcard']['tmp_name'], $filepath . $smartcardimg);
+         $this->compressFileTo200KB($filepath . $smartcardimg, 200);
       }
       if ($request->signature != null) {
         $signature = $insertid.'.'.$request->file('signature')->extension();
         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'signature' . DIRECTORY_SEPARATOR);
         move_uploaded_file($_FILES['signature']['tmp_name'], $filepath . $signature);
+          $this->resizeUserPhoto($filepath . $signature, 250, 250, 50);
       }
       if ($request->profile != null) {
         $profile = $insertid.'.'.$request->file('profile')->extension();
         $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'profile_photo' . DIRECTORY_SEPARATOR);
         move_uploaded_file($_FILES['profile']['tmp_name'], $filepath . $profile);
+         $this->resizeUserPhoto(
+        $filepath . $profile,
+        250,   // width
+        250,   // height
+        50     // KB
+    );
       }
       $image = DB::table( 'customers' )->where( 'id', $insertid )->update( [
         'smartcard'        => $smartcardimg,
