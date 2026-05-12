@@ -341,17 +341,6 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a class="has-arrow" href="javascript:;">
-                        <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
-                        </div>
-                        <div class="menu-title">Application</div>
-                    </a>
-                    <ul>
-                        <li> <a href="{{ url('/application') }}"><i class='bx bx-radio-circle'></i>Application</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
     </div>
     @endif
@@ -558,17 +547,6 @@
                     </li>
                 </ul>
             </li>
-            <li>
-                <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
-                    </div>
-                    <div class="menu-title">Application</div>
-                </a>
-                <ul>
-                    <li> <a href="{{ url('/application') }}"><i class='bx bx-radio-circle'></i>Application</a>
-                    </li>
-                </ul>
-            </li>
         </ul>
 </div>
 @endif
@@ -637,17 +615,6 @@
                 </li>
             </ul>
         </li>
-        <li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
-                </div>
-                <div class="menu-title">Application</div>
-            </a>
-            <ul>
-                <li> <a href="{{ url('/application') }}"><i class='bx bx-radio-circle'></i>Application</a>
-                </li>
-            </ul>
-        </li>
     </ul>
     </div>
 @endif
@@ -713,17 +680,6 @@
                 <li> <a href="{{ url('/wallet') }}"><i class='bx bx-radio-circle'></i>Wallet</a>
                 </li>
                 <li> <a href="{{ url('/paymentrequest') }}"><i class='bx bx-radio-circle'></i>Paymentrequest</a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
-                </div>
-                <div class="menu-title">Application</div>
-            </a>
-            <ul>
-                <li> <a href="{{ url('/application') }}"><i class='bx bx-radio-circle'></i>Application</a>
                 </li>
             </ul>
         </li>

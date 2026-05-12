@@ -43,7 +43,7 @@
                                     <h4 class="card-title">Service Payment : <span
                                             class="text-danger">{{ $payment }}</span></h4>
                                     <div class="row">
-                                        <form class="row g-4" action="{{ url('submitapply_tailorshop') }}"
+                                        <form class="row g-4" action="{{ url('submitapply_tailorshop') }}" onsubmit="return checkpayment(event)"
                                             enctype="multipart/form-data" method="post" id="myForm">
                                             @csrf
                                             <div class="row">
@@ -308,7 +308,7 @@
                     ramjibalance = parseFloat(ramjibalance);
 
                     function checkpayment(e) {
-                        var amount = 250;
+                        var amount = {{ $admin_payment }};
                         if (amount > ramjibalance) {
                             alert("LOW BALANCE");
                             $('#save').prop("disabled", true);

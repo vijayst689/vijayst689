@@ -43,7 +43,7 @@
                                     <h6 class="card-title">Service Payment : <span
                                             class="text-danger">{{ $payment }}</span>
                                     </h6>
-                                    <form class="row g-4" action="{{ url('submitapply_canedit') }}"
+                                    <form class="row g-4" action="{{ url('submitapply_canedit') }}" onsubmit="return checkpayment(event)"
                                         enctype="multipart/form-data" method="post" id="myForm">
                                         @csrf
                                         <div class="row mt-4">
@@ -98,13 +98,13 @@
                                                     <input type="text" maxlength="100" class="form-control"
                                                         name="name_english" placeholder="Name In English" />
                                                 </div>
-                                                <div class="mb-3 col-md-6">
+                                                {{-- <div class="mb-3 col-md-6">
                                                     <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card
                                                         (Front)
                                                     </label>
                                                     <input required accept="image/jpeg, image/png" type="file"
                                                         class="form-control" name="aadhaar_card" />
-                                                </div>
+                                                </div> --}}
                                             @elseif($serviceid == 209)
                                                 <div class="mb-3 col-md-6">
                                                     <label style="color:#23e156" for="dist_id"
@@ -155,13 +155,13 @@
                                                     <input type="text" maxlength="100" class="form-control"
                                                         name="name_english" placeholder="Name In English" />
                                                 </div>
-                                                <div class="mb-3 col-md-6">
+                                                {{-- <div class="mb-3 col-md-6">
                                                     <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card
                                                         (Front)
                                                     </label>
                                                     <input required accept="image/jpeg, image/png" type="file"
                                                         class="form-control" name="aadhaar_card" />
-                                                </div>
+                                                </div> --}}
                                             @elseif($serviceid == 210)
                                                 <div class="mb-3 col-md-6">
                                                     <label style="color:#23e156" for="dist_id"
@@ -180,11 +180,11 @@
                                                     <input required type="text" class="form-control" name="dob"
                                                         placeholder="ddmmyyyy" maxlength="8" />
 
-                                                    <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card
+                                                    {{-- <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card
                                                         (Front)
                                                     </label>
                                                     <input required accept="image/jpeg, image/png" type="file"
-                                                        class="form-control" name="aadhaar_card" />
+                                                        class="form-control" name="aadhaar_card" /> --}}
                                                 </div>
                                                 <div class="mb-3 col-md-6">
                                                     <label style="color:#23e156" for="can_number" class="form-label">Can
@@ -237,11 +237,11 @@
                                                         [05041997]</label>
                                                     <input required type="text" class="form-control" name="dob"
                                                         placeholder="ddmmyyyy" maxlength="8" />
-                                                    <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card
+                                                    {{-- <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card
                                                         (Front)
                                                     </label>
                                                     <input required accept="image/jpeg, image/png" type="file"
-                                                        class="form-control" name="aadhaar_card" />
+                                                        class="form-control" name="aadhaar_card" /> --}}
                                                 </div>
                                                 <div class="mb-3 col-md-6" id="name_tamilhide" style="display: none;">
                                                     <label style="color:#23e156" for="name_tamil"
@@ -275,11 +275,11 @@
                                                         class="form-label">தந்தையின் பெயர் தமிழில்</label>
                                                     <input required type="text" maxlength="100" class="form-control"
                                                         name="father_name" placeholder="தந்தையின் பெயர் தமிழில்" />
-                                                    <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card
+                                                    {{-- <label for="aadhaar_card" class="form-label text-danger"> Aadhaar Card
                                                         (Front
                                                         & Back) </label>
                                                     <input required accept="image/jpeg, image/png" type="file"
-                                                        class="form-control" name="aadhaar_card" />
+                                                        class="form-control" name="aadhaar_card" /> --}}
                                                 </div>
                                                 <div class="mb-3 col-md-6">
                                                     <label style="color:#23e156" for="can_number" class="form-label">Can
@@ -382,7 +382,29 @@
                             });
                         }
                     });
+                    var ramjibalance = "{{ $mainbalance->rawallet }}";
+                    //alert(ramjibalance);
+                    ramjibalance = parseFloat(ramjibalance);
 
+                    function checkpayment(e) {
+                        var amount = {{ $admin_payment }};
+                        if (amount > ramjibalance) {
+                            alert("LOW BALANCE");
+                            $('#save').prop("disabled", true);
+                            $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
+                                'color': 'red',
+                                'font-size': '130%',
+                                'font-weight': 'bold'
+                            });
+                            return false;
+                        } else {
+                            $("#nopayment").html("");
+                            $("#save").attr("disabled", true);
+                            $("#ramjidebit_amount").val(amount);
+                            return true;
+
+                        }
+                    }
                     $('#dist_id').on('change', function() {
                         var dist_id = this.value;
                         $("#taluk").html('');

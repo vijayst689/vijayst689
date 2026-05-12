@@ -138,31 +138,29 @@
             btn.disabled = true;
             btn.innerText = "Submitting...";
         });
-        var ramjibalance = "{{ $mainbalance->wallet }}";
-        var amount = "{{ $amount }}";
+                    var ramjibalance = "{{ $mainbalance->rawallet }}";
+                    //alert(ramjibalance);
+                    ramjibalance = parseFloat(ramjibalance);
 
-        ramjibalance = parseFloat(ramjibalance);
-        amount = parseInt(amount);
+                    function checkpayment(e) {
+                        var amount = {{ $admin_payment }};
+                        if (amount > ramjibalance) {
+                            alert("LOW BALANCE");
+                            $('#save').prop("disabled", true);
+                            $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
+                                'color': 'red',
+                                'font-size': '130%',
+                                'font-weight': 'bold'
+                            });
+                            return false;
+                        } else {
+                            $("#nopayment").html("");
+                            $("#save").attr("disabled", true);
+                            $("#ramjidebit_amount").val(amount);
+                            return true;
 
-        function checkpayment(e) {
-            if (amount > ramjibalance) {
-                alert("LOW BALANCE");
-                $('#save').prop("disabled", true);
-                $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
-                    'color': 'red',
-                    'font-size': '130%',
-                    'font-weight': 'bold'
-                });
-                return false;
-            } else {
-                $("#nopayment").html("");
-                $("#save").attr("disabled", true);
-                $("#amount").val(amount);
-                return true;
-
-            }
-        }
-
+                        }
+                    }
         $(function() {
             var wallet = "{{ Auth::user()->wallet }}";
             var amount = "{{ $payment }}";

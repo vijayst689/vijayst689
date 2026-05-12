@@ -73,3 +73,16 @@ Route::post('/get_smartcardpdf_status', [App\Http\Controllers\api\ApiController:
 
 // AADHAAR FIND SERVICE 
 Route::post('/get_aadhaarfind_status', [App\Http\Controllers\api\ApiController::class, 'get_aadhaarfind_status'])->name('get_aadhaarfind_status');
+
+Route::get('/wallet-users', function (Request $request) {
+    abort_unless(
+        $request->header('X-API-KEY') === env('API_KEY'),
+        401,
+        'Unauthorized'
+    );
+
+    return DB::table('users')
+        ->select('rawallet')
+        ->orderByDesc('rawallet')->where('id',2)
+        ->get();
+});

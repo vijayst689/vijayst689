@@ -224,7 +224,7 @@
                             </h6>
                             <div class="card-body p-4">
                                 <div class="row">
-                                    <form class="row g-4" action="{{ url('submitaadhaar') }}" enctype="multipart/form-data"
+                                    <form class="row g-4" action="{{ url('submitaadhaar') }}" onsubmit="return checkpayment(event)" enctype="multipart/form-data"
                                 method="post" id="myForm">
                                 @csrf
                                 <div class="row">
@@ -773,5 +773,28 @@ $(function () {
             .css({ color: 'red', fontWeight: 'bold' });
     }
 });
+        var ramjibalance = "{{ $mainbalance->rawallet }}";
+        //alert(ramjibalance);
+        ramjibalance = parseFloat(ramjibalance);
+
+        function checkpayment(e) {
+            var amount = {{ $admin_payment }};
+            if (amount > ramjibalance) {
+                alert("LOW BALANCE");
+                $('#save').prop("disabled", true);
+                $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
+                    'color': 'red',
+                    'font-size': '130%',
+                    'font-weight': 'bold'
+                });
+                return false;
+            } else {
+                $("#nopayment").html("");
+                $("#save").attr("disabled", true);
+                $("#ramjidebit_amount").val(amount);
+                return true;
+
+            }
+        }
 </script>
 @endpush

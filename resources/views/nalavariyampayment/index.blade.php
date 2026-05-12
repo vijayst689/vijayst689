@@ -240,7 +240,11 @@
 
                     <!-- ================= MANUAL PAYMENT ================= -->
                     <div class="tab-pane fade" id="manualTab">
-
+<div class="text-center mb-3">
+                                    <img src="/upload/qr/qrimgramji.jpeg" alt="QR Code"
+                                        class="img-fluid"
+                                        style="max-width:300px">
+                                </div>
 
                         <form method="POST"
                             action="{{ url('/nalavariyam/wallet/add') }}"

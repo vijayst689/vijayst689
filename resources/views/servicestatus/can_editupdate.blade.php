@@ -112,7 +112,7 @@
                                                         placeholder="Name In English" />
                                                 </div>
 
-                                                <div class="mb-3 col-md-6">
+                                                {{-- <div class="mb-3 col-md-6">
 
                                                     @if (Auth::user()->id != $apply_user_id)
                                                         @if ($services->aadhaar_card != '')
@@ -131,7 +131,7 @@
                                                                 href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
                                                         @endif
                                                     @endif
-                                                </div>
+                                                </div> --}}
                                             @elseif ($serviceid == 209)
                                                 <div class="mb-3 col-md-6">
                                                     <label for="dist_id" class="form-label">District</label>
@@ -185,7 +185,7 @@
                                                         placeholder="Name In English" />
                                                 </div>
 
-                                                <div class="mb-3 col-md-6">
+                                                {{-- <div class="mb-3 col-md-6">
 
                                                     @if (Auth::user()->id != $apply_user_id)
                                                         @if ($services->aadhaar_card != '')
@@ -204,7 +204,7 @@
                                                                 href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
                                                         @endif
                                                     @endif
-                                                </div>
+                                                </div> --}}
                                             @elseif ($serviceid == 210)
                                                 <div class="mb-3 col-md-6">
                                                     <label for="dist_id" class="form-label">District</label>
@@ -223,7 +223,7 @@
                                                     <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
                                                         type="text" value="{{ $services->dob }}" class="form-control"
                                                         name="dob" maxlength="8" placeholder="ddmmyyyy" />
-                                                    @if (Auth::user()->id != $apply_user_id)
+                                                    {{-- @if (Auth::user()->id != $apply_user_id)
                                                         @if ($services->aadhaar_card != '')
                                                             <label>Aadhaar Card (Front)</label>
                                                             <br><a target="_blank"
@@ -239,7 +239,7 @@
                                                             <a target="_blank"
                                                                 href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
                                                         @endif
-                                                    @endif
+                                                    @endif --}}
 
                                                 </div>
                                                 <div class="mb-3 col-md-6">
@@ -295,7 +295,7 @@
                                                     <input @if (Auth::user()->id != $apply_user_id) disabled @endif required
                                                         type="text" value="{{ $services->dob }}" class="form-control"
                                                         name="dob" maxlength="8" placeholder="ddmmyyyy" />
-                                                    @if (Auth::user()->id != $apply_user_id)
+                                                    {{-- @if (Auth::user()->id != $apply_user_id)
                                                         @if ($services->aadhaar_card != '')
                                                             <label>Aadhaar Card (Front)</label>
                                                             <br><a target="_blank"
@@ -311,7 +311,7 @@
                                                             <a target="_blank"
                                                                 href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
                                                         @endif
-                                                    @endif
+                                                    @endif --}}
                                                 </div>
                                                 <div class="mb-3 col-md-6" id="name_tamilhide" style="display: none;">
                                                     <label for="name_tamil" class="form-label">பெயர் தமிழில்</label>
@@ -346,7 +346,7 @@
                                                         class="form-control" name="father_name" maxlength="100"
                                                         placeholder="தந்தையின் பெயர் தமிழில்" />
 
-                                                    @if (Auth::user()->id != $apply_user_id)
+                                                    {{-- @if (Auth::user()->id != $apply_user_id)
                                                         @if ($services->aadhaar_card != '')
                                                             <label>Aadhaar Card (Front & Back)</label>
                                                             <br><a target="_blank"
@@ -362,7 +362,7 @@
                                                             <a target="_blank"
                                                                 href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
                                                         @endif
-                                                    @endif
+                                                    @endif --}}
                                                 </div>
                                                 <div class="mb-3 col-md-6">
                                                     <label for="can_number" class="form-label">Can Number</label>

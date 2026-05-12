@@ -46,6 +46,36 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
+                    <form method="GET" action="{{ url()->current() }}">
+                        <div class="row g-2 align-items-end mb-3">
+
+                            <div class="col-md-3">
+                                <label class="form-label">From Date</label>
+                                <input type="date" name="from_date" value="{{ request('from_date') }}"
+                                    class="form-control">
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">To Date</label>
+                                <input type="date" name="to_date" value="{{ request('to_date') }}" class="form-control">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Quick Filter</label>
+                                <select class="form-select" onchange="applyQuickFilter(this.value)">
+                                    <option value="">-- Select --</option>
+                                    <option value="today">Today</option>
+                                    <option value="7days">Last 7 Days</option>
+                                    <option value="month">This Month</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2 d-grid">
+                                <button class="btn btn-primary">Filter</button>
+                            </div>
+
+                        </div>
+                    </form>
                     <div class="table-responsive">
                         <table id="example2" class="table table-striped table-bordered">
                             <thead class="table-dark">
@@ -184,6 +214,32 @@
             $("#editstatus").val(status);
             $("#cusid").val(id);
             $("#editcustomer").modal("show");
+        }
+                function applyQuickFilter(type) {
+            let from = document.querySelector('[name="from_date"]');
+            let to = document.querySelector('[name="to_date"]');
+
+            let today = new Date();
+            let yyyy = today.getFullYear();
+            let mm = String(today.getMonth() + 1).padStart(2, '0');
+            let dd = String(today.getDate()).padStart(2, '0');
+
+            if (type === 'today') {
+                from.value = `${yyyy}-${mm}-${dd}`;
+                to.value = `${yyyy}-${mm}-${dd}`;
+            }
+
+            if (type === '7days') {
+                let prev = new Date();
+                prev.setDate(today.getDate() - 7);
+                from.value = prev.toISOString().slice(0, 10);
+                to.value = today.toISOString().slice(0, 10);
+            }
+
+            if (type === 'month') {
+                from.value = `${yyyy}-${mm}-01`;
+                to.value = `${yyyy}-${mm}-${dd}`;
+            }
         }
     </script>
 @endpush

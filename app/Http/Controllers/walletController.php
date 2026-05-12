@@ -22,17 +22,33 @@ class WalletController extends Controller
   }
 
     public function index()
-  {
-    $userid = Auth::user()->id;
+    {
+        $query = DB::table('payment')
+            ->where('from_id', Auth::id());
 
-    if(Auth::user()->user_type_id == 2){
-        $viewamount = DB::table( 'payment' )->where( 'from_id', $userid )->orderBy( 'id', 'Desc' )->get();
-    }else{
-        $viewamount = DB::table( 'payment' )->where( 'from_id', $userid )->orderBy( 'id', 'Desc' )->get();
+        if (! request()->filled('from_date') && ! request()->filled('to_date')) {
+            $query->whereDate('paydate', '>=', now()->subDays(2));
+        }
+
+        if (request()->filled('from_date') && request()->filled('to_date')) {
+            $query->whereBetween('paydate', [
+                request('from_date'),
+                request('to_date'),
+            ]);
+        }
+
+        if (Auth::user()->user_type_id == 2) {
+            $viewamount = $query
+                ->orderBy('id', 'desc')
+                ->get();
+        } else {
+            $viewamount = $query
+                ->orderBy('id', 'desc')
+                ->get();
+        }
+        $qrlabel = DB::table('users')->where('id', 2)->orderBy('id', 'Asc')->first();
+        return view('wallet.index', compact('viewamount', 'qrlabel'));
     }
-    $qrlabel = DB::table( 'users' )->where( 'id', 2 )->orderBy( 'id' , 'Asc' )->first();
-    return view('wallet.index',compact('viewamount','qrlabel'));
-  }
 
     public function paymentrequest()
   {
@@ -78,19 +94,34 @@ class WalletController extends Controller
 return redirect( "/paymentrequest" );
 }
 
-public function rawallet()
-{
-  $userid = Auth::user()->id;
+    public function rawallet()
+    {
+        $query = DB::table('ramji_payment')
+            ->where('to_id', Auth::id());
 
-  if(Auth::user()->user_type_id == 1){
+        if (! request()->filled('from_date') && ! request()->filled('to_date')) {
+            $query->whereDate('paydate', '>=', now()->subDays(2));
+        }
 
-      $raviewamount = DB::table( 'ramji_payment' )->where( 'to_id', $userid )->orderBy( 'id', 'desc' )->get();
-  }elseif (Auth::user()->user_type_id == 2) {
+        if (request()->filled('from_date') && request()->filled('to_date')) {
+            $query->whereBetween('paydate', [
+                request('from_date'),
+                request('to_date'),
+            ]);
+        }
+        if (Auth::user()->user_type_id == 1) {
 
-      $raviewamount = DB::table( 'ramji_payment' )->where( 'to_id', 2 )->orderBy( 'id', 'desc' )->get();
-  }
-  return view('wallet.rawallet',compact('raviewamount'));
-}
+            $raviewamount = $query
+                ->orderBy('id', 'desc')
+                ->get();
+        } elseif (Auth::user()->user_type_id == 2) {
+
+            $raviewamount = $query
+                ->orderBy('id', 'desc')
+                ->get();
+        }
+        return view('wallet.rawallet', compact('raviewamount'));
+    }
 
  public function rapaymentrequest()
   {

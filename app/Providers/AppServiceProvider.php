@@ -71,37 +71,35 @@ class AppServiceProvider extends ServiceProvider
                 $view->with(['activation' => $this->activation]);
                 $view->with(['qrlabel' => $this->qrlabel]);
 
-                $showPopup = false;
-                $daysLeft  = null;
+                $showPopup     = false;
+                $daysLeft      = null;
                 $siteshowPopup = false;
                 $sitedaysLeft  = null;
 
                 if ($user->user_type_id == 2 && $user->payment_date) {
-                 $today = \Carbon\Carbon::today();
+                    $today = \Carbon\Carbon::today();
 
-    // If today is 3rd of month
-    if ($today->day == 3) {
-        $showPopup = true;
-        $daysLeft  = 1; // because tomorrow is 4th (debit day)
-    }
-}
-
+                    // If today is 3rd of month
+                    if ($today->day == 3) {
+                        $showPopup = true;
+                        $daysLeft  = 1; // because tomorrow is 4th (debit day)
+                    }
+                }
 
                 $view->with([
                     'showPopup' => $showPopup,
-                    'daysLeft'  => $daysLeft
+                    'daysLeft'  => $daysLeft,
                 ]);
-
 
                 // if we have a selected unpaid payment in session → use it
 
-           $unpaidPayment = DB::table('sitepayment')
-    ->where('payment_status', 'UNPAID')
-    ->orderBy('payment_date', 'asc') // oldest first
-    ->first();
+                $unpaidPayment = DB::table('sitepayment')
+                    ->where('payment_status', 'UNPAID')
+                    ->orderBy('payment_date', 'asc') // oldest first
+                    ->first();
 
-        // if not found or already paid → pick new one
-    
+                // if not found or already paid → pick new one
+
                 if ($user->user_type_id == 2 && $unpaidPayment && $unpaidPayment->payment_date) {
                     $paymentDate = Carbon::parse($unpaidPayment->payment_date)->startOfDay();
                     $today       = Carbon::today()->startOfDay();
