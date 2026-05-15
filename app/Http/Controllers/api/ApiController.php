@@ -281,6 +281,7 @@ public function get_cannumberstatus(Request $request){
 
                  DB::table('can_edit')->where('id', $row_id)->update([
                     'status' => $status,
+                    'remarks' => $request->remarks,
             ]);
             }
            
@@ -433,6 +434,7 @@ public function get_tailorstatus(Request $request){
 
                  DB::table('tailor')->where('id', $row_id)->update([
                     'status' => $status,
+                    'remarks' => $request->remarks,
             ]);
             }
            
@@ -583,6 +585,7 @@ public function get_smartcardstatus(Request $request){
             }
             DB::table('smartcard')->where('id', $row_id)->update([
                     'status' => $status,
+                    'remarks' => $request->remarks,
             ]);
         }
 
@@ -730,6 +733,7 @@ public function get_smartcardotpstatus(Request $request){
             }
             DB::table('smartcard_otp')->where('id', $row_id)->update([
                     'status' => $status,
+                    'remarks' => $request->remarks,
             ]);
         }
 
@@ -875,6 +879,7 @@ public function get_fssaistatus(Request $request){
             }
             DB::table('fssai')->where('id', $row_id)->update([
                     'status' => $status,
+                    'remarks' => $request->remarks,
             ]);
         }
 
@@ -1077,6 +1082,7 @@ public function get_aadhaarcardstatus(Request $request){
             }
             DB::table('aadhaarcard')->where('id', $row_id)->update([
                     'status' => $status,
+                    'remarks' => $request->remarks,
             ]);
         }
 
@@ -1218,6 +1224,7 @@ public function get_tnegaservicesstatus(Request $request){
             }
             DB::table('tnega_services')->where('id', $row_id)->update([
                     'status' => $status,
+                    'remarks' => $request->remarks,
             ]);
         }
 
