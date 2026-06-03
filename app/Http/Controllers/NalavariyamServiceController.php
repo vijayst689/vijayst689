@@ -1133,7 +1133,7 @@ public function nalavariyam_customer()
 
 public function addnalavariyam_customer( Request $request ) {
 
-    $addcustomer = DB::table( 'nalavariyam_customer' )->insert( [
+    $customer_id = DB::table( 'nalavariyam_customer' )->insertGetId( [
         'name'       => $request->name,
         'district'   => $request->dist_id,
         'taluk'      => $request->taluk_id,
@@ -1142,6 +1142,22 @@ public function addnalavariyam_customer( Request $request ) {
         'status'     => 'Active',
 
     ] );
+
+    $response = Http::post(
+    'https://erp.nalavariyam.org/api/generate-member-id',
+    [
+        'year'        => 2025,
+        'customer_id' => $customer_id
+    ]
+);
+
+$data = $response->json();
+DB::table('nalavariyam_customer')
+    ->where('id', $customer_id)
+    ->update([
+        'member_id' => $data['member_id']
+    ]);
+
 
     return redirect()->back()->with( 'success', 'Customer Added Successfully ... !' );
 }
@@ -1528,6 +1544,22 @@ public function updatenalavariyam_activation(Request $request)
     $activationamount = $request->activation_amount_hidden;
     $admin_amount = $request->admin_amount;
     $userid = $request->userid;
+
+            $response = Http::post(
+    'https://erp.nalavariyam.org/api/generate-member-id',
+    [
+        'year'    => 2025,
+        'user_id' => $userid
+    ]
+);
+
+$data = $response->json();
+
+DB::table('users')
+    ->where('id', $userid)
+    ->update([
+        'member_id' => $data['member_id']
+    ]);
 
         $date = date( 'Y-m-d' );
         $time = date( 'H:i:s' );

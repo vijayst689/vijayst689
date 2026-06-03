@@ -2846,3 +2846,6 @@ alter table aadhaarcard add post_office_tamil text DEFAULT NULL;
 alter table aadhaarcard add taluka text DEFAULT NULL;
 alter table aadhaarcard add taluka_tamil text DEFAULT NULL;
 alter table aadhaarcard add centerno text DEFAULT NULL;
+
+alter table users add column member_id varchar(20) default NULL;
+alter table nalavariyam_customer add column member_id varchar(20) default NULL;

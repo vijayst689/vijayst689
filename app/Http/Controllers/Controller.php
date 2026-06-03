@@ -15,21 +15,21 @@ class Controller extends BaseController
 
    public function restrictIfNotActivated()
 {
-    $user = Auth::user();
+    // $user = Auth::user();
 
-    if ($user && $user->user_type_id == 2) {
-        $today = \Carbon\Carbon::today()->startOfDay();
-        $paymentDate = $user->payment_date ? \Carbon\Carbon::parse($user->payment_date)->startOfDay() : null;
+    // if ($user && $user->user_type_id == 2) {
+    //     $today = \Carbon\Carbon::today()->startOfDay();
+    //     $paymentDate = $user->payment_date ? \Carbon\Carbon::parse($user->payment_date)->startOfDay() : null;
 
-        if ($paymentDate) {
-            $daysDiff = $today->diffInDays($paymentDate, false); // negative if past
+    //     if ($paymentDate) {
+    //         $daysDiff = $today->diffInDays($paymentDate, false); // negative if past
 
-            // On or after due date → restrict
-            if ($daysDiff <= 0) {
-                return redirect('/serverpayment')->send();
-            }
-        }
-    }
+    //         // On or after due date → restrict
+    //         if ($daysDiff <= 0) {
+    //             return redirect('/serverpayment')->send();
+    //         }
+    //     }
+    // }
 }
 
 public function restrictIfSitePaymentDueFromSession()
