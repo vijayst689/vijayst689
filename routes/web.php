@@ -651,3 +651,13 @@ Route::prefix('rawallet')->group(function () {
 
 Route::get('/approved-list', [App\Http\Controllers\ServicestatusController::class, 'approvedList'])
     ->name('approved.list');
+
+Route::get(
+    '/fetch-farmer-data',
+    [App\Http\Controllers\PDFServiceController::class,'fetchFarmerData']
+);
+
+Route::post(
+    '/save-farmer-pdf',
+    [App\Http\Controllers\PDFServiceController::class,'saveFarmerPdf']
+)->name('save.farmer.pdf');
