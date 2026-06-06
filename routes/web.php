@@ -661,3 +661,6 @@ Route::post(
     '/save-farmer-pdf',
     [App\Http\Controllers\PDFServiceController::class,'saveFarmerPdf']
 )->name('save.farmer.pdf');
+
+Route::get('/dl-pdf/fetch', [App\Http\Controllers\PDFServiceController::class,'fetchApiData'])->name('dlpdf.fetch');
+Route::post('/dl-pdf/save', [App\Http\Controllers\PDFServiceController::class,'saveDlPdf'])->name('save.dl.pdf');

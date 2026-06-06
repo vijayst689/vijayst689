@@ -209,53 +209,59 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
         $mobile = $request->mobile;
         $mode = $request->mode;
         $orderid = rand(000000000,999999999);
-        $panurl =  "https://connect.inspay.in/v4/nsdl/new_pan?username=IP7598984380&token=836a596851ed939b19a4b71157c47e1d&number=$mobile&mode=$mode&orderid=$orderid";
-        $crl = curl_init();
-        curl_setopt( $crl, CURLOPT_URL, $panurl );
-        curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
-        curl_setopt( $crl, CURLOPT_RETURNTRANSFER, true );
-        $result = curl_exec($crl);
-        $result = json_decode($result);
-        // echo "<pre>"; print_r($result);echo "</pre>";die;
-        $status = $result->status;
-        $url = "";
-        $message = "";
-        if($status == "Success"){
-            $url = $result->url;
-            $orderid = $result->orderid;
-            $message = $result->message;
-        }else{
-            $orderid = $result->orderid;
-            $message = $result->message;
-        }
-        curl_close($crl);
+       $panurl =  "https://connect.inspay.in/v4/nsdl/new_pan?username=IP7598984380&token=836a596851ed939b19a4b71157c47e1d&number=$mobile&mode=$mode&orderid=$orderid";
+    //echo $panurl;die;
+    $crl = curl_init();
+    curl_setopt( $crl, CURLOPT_URL, $panurl );
+    curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
+    curl_setopt( $crl, CURLOPT_RETURNTRANSFER, true );
+    $result = curl_exec($crl);
+    $result = json_decode($result);
+    //echo "<pre>"; print_r($result);echo "</pre>";die;
+    $status = $result->status;
+    $url = "";
+    $message = "";
+if ($status == "Success") {
 
-        DB::table( 'pancard' )->insert( [
+    $url      = $result->url ?? '';
+    $orderid  = $result->orderid ?? '';
+    $message  = $result->message ?? '';
 
-           'user_id'      => $user_id,
-           'service_id'   => $request->serviceid,
-           'amount'       => $request->servicepayment,
-           'name'         => $request->name,
-           'mode'         => $request->mode,
-           'aadhaar_no'   => $request->aadhaar_no,
-           'mobile'       => $request->mobile,
-           'status'       => 'Pending',
-           'applied_date' => date("Y-m-d"),
-           'created_at'   => date("Y-m-d"),
-       ] );
+} else {
+
+    $orderid  = $result->orderid ?? '';
+    $message  = $result->message ?? '';
+
+}
+    curl_close($crl);
+
+    DB::table( 'pancard' )->insert( [
+
+       'user_id'      => $user_id,
+       'service_id'   => $request->serviceid,
+       'amount'       => $request->servicepayment,
+       'name'         => $request->name,
+       'mode'         => $request->mode,
+       'aadhaar_no'   => $request->aadhaar_no,
+       'mobile'       => $request->mobile,
+       'status'       => 'Pending',
+       'applied_date' => date("Y-m-d"),
+       'created_at'   => date("Y-m-d"),
+   ] );
 
          $insertid = DB::getPdo()->lastInsertId();
 
 
         if($status == "Success"){
-       
-          DB::table('pancard')->where('id', $insertid)->update([
-            'api_url' => $url,
-            'api_status' => $status,
-            'api_txid' => $orderid,
-            'message' => $message,
-            'status' => 'Processing'
-          ]);
+
+      DB::table('pancard')->where('id', $insertid)->update([
+        'api_url' => $url,
+        'api_status' => $status,
+        'api_txid' => $orderid,
+        'message' => $message,
+        'status' => 'Processing'
+      ]);
+
           $amount = $request->amount;
           $servicepayment = $request->servicepayment;
           $date = date( 'Y-m-d' );

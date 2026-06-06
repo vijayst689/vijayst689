@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\JsonResponse;
 
 class PDFServiceController extends Controller
 {
@@ -2483,7 +2484,7 @@ class PDFServiceController extends Controller
                 $date           = date('Y-m-d');
                 $time           = date('H:i:s');
                 $service_status = 'Out Payment';
-                $ad_info        = 'Ramji Wallet Debit(Agri Stack Pdf)';
+                $ad_info        = 'Ramji Wallet Debit(Agri Stack PDF)';
                 $getrawallet    = DB::table('users')->select('rawallet')->where('id', 1)->first();
                 $rawallet       = 0;
                 if ($getrawallet) {
@@ -2502,7 +2503,7 @@ class PDFServiceController extends Controller
                 $sql = "update users set rawallet = rawallet + $amount where id = 1";
                 DB::update(DB::raw($sql));
                 $service_status = 'IN Payment';
-                $ad_info        = 'Ramji Wallet Credit(DL PDF)';
+                $ad_info        = 'Ramji Wallet Credit(Agri Stack PDF)';
                 $sql            = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
                 DB::insert(DB::raw($sql));
                 $sql = "update users set rawallet = rawallet - $amount where id = 2";
@@ -2538,4 +2539,446 @@ class PDFServiceController extends Controller
     }
 }
 
+public function fetchApiData(Request $request): JsonResponse
+{
+    $dlno = trim($request->query('dlno'));
+    $dob = trim($request->query('dob'));
+
+    // 1. Validate Parameters
+    if (empty($dlno) || empty($dob)) {
+        return response()->json([
+            "status" => "error", 
+            "message" => "Missing parameters."
+        ], 400, [], JSON_PRETTY_PRINT);
+    }
+
+    try {
+        // 2. Primary Attempt: Call the Remote Third-Party API Gateway
+        $response = Http::withoutVerifying()
+            ->timeout(15) // Shorter timeout so fallback triggers quickly if the API stalls
+            ->get("https://smartpdf.in.net/members/Dlpdf/api.php", [
+                'dlno' => $dlno,
+                'dob' => $dob
+            ]);
+
+        // If the API call succeeded and returned a valid structural payload
+        if ($response->successful()) {
+            $apiData = $response->json();
+            
+            // Check if the API explicitly sent a success block inside its payload
+            if (isset($apiData['status']) && $apiData['status'] === 'success') {
+                return response()->json(
+                    $apiData, 
+                    200, 
+                    [], 
+                    JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+                );
+            }
+        }
+        
+        // If execution reaches here, the API failed. Fall through to the backup scraper.
+    } catch (\Exception $apiException) {
+        // Log the exception if needed, then let execution continue downward to the scraper fallback
+        // Log::warning("Primary DL API failed: " . $apiException->getMessage());
+    }
+
+   try {
+    // 3. Fallback Attempt: Execute Sarathi Scraping Engine Directly
+    $scrapedData = $this->scraperService->scrapeDrivingLicense($dlno, $dob);
+
+    return response()->json([
+        "status" => "success",
+        "message" => "Details Extracted Successfully via Backup Scraper",
+        "data" => $scrapedData
+    ], 200, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+
+} catch (\Exception $scraperException) {
+    $errorMessage = $scraperException->getMessage();
+
+    // If the scraper specifically reports bad data/captcha, return a clean validation code (422)
+    if (str_contains($errorMessage, 'Invalid') || str_contains($errorMessage, 'Captcha')) {
+        return response()->json([
+            "status" => "error",
+            "message" => "Sarathi Validation Failed: Please verify your DL Number, DOB, or try again shortly."
+        ], 422, [], JSON_PRETTY_PRINT);
+    }
+
+    // Otherwise, it was a system connection timeout / scraper crash code (500)
+    return response()->json([
+        "status" => "error",
+        "message" => "All retrieval methods exhausted. System Error: " . $errorMessage
+    ], 500, [], JSON_PRETTY_PRINT);
+}
+}
+public function saveDLPdf(Request $request)
+{
+    try {
+
+        DB::beginTransaction();
+
+        $user_id =
+            Auth::user()->id;
+
+        $serviceid =
+            $request->service_id;
+
+        $servicepayment =
+            (float)$request->amount;
+             $servicepayment  = 0;
+        $amount          = 0;
+        $wallet          = Auth::user()->wallet;
+             $getadminpayment = DB::table('find_services')->where('id', $serviceid)->first();
+        if ($getadminpayment) {
+            $amount = $getadminpayment->amount;
+        }
+        $getservicepayment = DB::table('find_payment')->where('service_id', $serviceid)->first();
+        if ($getservicepayment) {
+            if (Auth::user()->user_type_id == 2) {
+                $amount;
+            } elseif (Auth::user()->user_type_id == 3) {
+                $servicepayment = $getservicepayment->distributor_amount;
+            } elseif (Auth::user()->user_type_id == 4) {
+                $servicepayment = $getservicepayment->retailer_amount;
+            } elseif (Auth::user()->user_type_id == 5) {
+                $servicepayment = $getservicepayment->customer_amount;
+            }
+        }
+        if (Auth::user()->wallet < $servicepayment) {
+            return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
+             return response()->json([
+
+            'status' =>
+                'failed',
+
+            'message' =>
+                'Insufficient wallet balance. Please recharge your wallet to proceed.'
+
+        ]);
+        }
+        if ($wallet < $servicepayment) {
+
+             return response()->json([
+
+            'status' =>
+                'failed',
+
+            'message' =>
+                'Low Balance for the Service....Please Check Your Balance...'
+
+        ]);
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PDF SAVE
+        |--------------------------------------------------------------------------
+        */
+
+        $pdfData =
+            $request->pdf;
+
+        $pdfData =
+            str_replace(
+                'data:application/pdf;base64,',
+                '',
+                $pdfData
+            );
+
+        $pdfData =
+            str_replace(
+                ' ',
+                '+',
+                $pdfData
+            );
+
+             $pdf = str_replace(
+    'data:application/pdf;filename=generated.pdf;base64,',
+    '',
+    $pdfData
+);
+
+        $pdfBinary =
+            base64_decode($pdf);
+
+        $filename =
+            time().'_'.rand(1000,9999).'.pdf';
+
+        $folder =
+            public_path('upload/dl');
+
+        if (!file_exists($folder)) {
+
+            mkdir(
+                $folder,
+                0777,
+                true
+            );
+        }
+
+        file_put_contents(
+            public_path(
+                'upload/dl/'.$filename
+            ),
+            $pdfBinary
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | INSERT AGRISTACK
+        |--------------------------------------------------------------------------
+        */
+
+         DB::table('dl')->insert([
+
+            'service_id' =>
+                $serviceid,
+
+            'dlnumber' =>
+                $request->dl_number,
+
+            'status' =>
+                'Completed',
+
+            'user_id' =>
+                $user_id,
+
+              'dob' =>
+                $request->dob,
+
+            'pdf' =>
+                $filename,
+
+            'date' =>
+                now(),
+
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | WALLET DEDUCTION
+        |--------------------------------------------------------------------------
+        */
+
+        if (Auth::user()->user_type_id != 2) {
+
+            $getservicename =
+                DB::table('find_services')
+                    ->select('name')
+                    ->where('id',$serviceid)
+                    ->first();
+
+            $servicename =
+                $getservicename->name ?? '';
+
+            $date =
+                date('Y-m-d');
+
+            $time =
+                date('H:i:s');
+
+            $service_status =
+                'Out Payment';
+
+            $ad_info =
+                'Service Payment '.$servicename;
+
+            /*
+            |--------------------------------------------------------------------------
+            | ADMIN WALLET
+            |--------------------------------------------------------------------------
+            */
+
+            $admin =
+                DB::table('users')
+                    ->where('id',2)
+                    ->first();
+
+            $adminBalance =
+                $admin->wallet +
+                $servicepayment;
+
+            /*
+            |--------------------------------------------------------------------------
+            | USER WALLET
+            |--------------------------------------------------------------------------
+            */
+
+            $user =
+                DB::table('users')
+                    ->where('id',$user_id)
+                    ->first();
+
+            $userBalance =
+                $user->wallet -
+                $servicepayment;
+
+            /*
+            |--------------------------------------------------------------------------
+            | PAYMENT OUT ENTRY
+            |--------------------------------------------------------------------------
+            */
+
+            DB::table('payment')->insert([
+
+                'log_id' =>
+                    $user_id,
+
+                'from_id' =>
+                    $user_id,
+
+                'to_id' =>
+                    2,
+
+                'amount' =>
+                    $servicepayment,
+
+                'ad_info' =>
+                    $ad_info,
+
+                'service_status' =>
+                    'Out Payment',
+
+                'time' =>
+                    $time,
+
+                'paydate' =>
+                    $date,
+
+                'pay_id' =>
+                    $user_id,
+
+                'newbalance' =>
+                    $userBalance
+
+            ]);
+
+            /*
+            |--------------------------------------------------------------------------
+            | ADMIN WALLET UPDATE
+            |--------------------------------------------------------------------------
+            */
+
+            DB::table('users')
+                ->where('id',2)
+                ->update([
+
+                    'wallet' =>
+                        $adminBalance
+
+                ]);
+
+            /*
+            |--------------------------------------------------------------------------
+            | PAYMENT IN ENTRY
+            |--------------------------------------------------------------------------
+            */
+
+            DB::table('payment')->insert([
+
+                'log_id' =>
+                    $user_id,
+
+                'from_id' =>
+                    2,
+
+                'to_id' =>
+                    $user_id,
+
+                'amount' =>
+                    $servicepayment,
+
+                'ad_info' =>
+                    $ad_info,
+
+                'service_status' =>
+                    'IN Payment',
+
+                'time' =>
+                    $time,
+
+                'paydate' =>
+                    $date,
+
+                'pay_id' =>
+                    $user_id,
+
+                'newbalance' =>
+                    $adminBalance
+
+            ]);
+
+            /*
+            |--------------------------------------------------------------------------
+            | USER WALLET UPDATE
+            |--------------------------------------------------------------------------
+            */
+
+            DB::table('users')
+                ->where('id',$user_id)
+                ->update([
+
+                    'wallet' =>
+                        $userBalance
+
+                ]);
+
+        }
+                $date           = date('Y-m-d');
+                $time           = date('H:i:s');
+                $service_status = 'Out Payment';
+                $ad_info        = 'Ramji Wallet Debit(DL Pdf)';
+                $getrawallet    = DB::table('users')->select('rawallet')->where('id', 1)->first();
+                $rawallet       = 0;
+                if ($getrawallet) {
+                    $balance1 = $getrawallet->rawallet;
+                }
+
+                $getrawallet1 = DB::table('users')->select('rawallet')->where('id', 2)->first();
+                $rawallet1    = 0;
+                if ($getrawallet1) {
+                    $balance2 = $getrawallet1->rawallet;
+                }
+                $newbalance2 = $balance1 + $amount;
+                $newbalance3 = $balance2 - $amount;
+                $sql         = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+                DB::insert(DB::raw($sql));
+                $sql = "update users set rawallet = rawallet + $amount where id = 1";
+                DB::update(DB::raw($sql));
+                $service_status = 'IN Payment';
+                $ad_info        = 'Ramji Wallet Credit(DL PDF)';
+                $sql            = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+                DB::insert(DB::raw($sql));
+                $sql = "update users set rawallet = rawallet - $amount where id = 2";
+                DB::update(DB::raw($sql));
+
+        DB::commit();
+
+        return response()->json([
+
+            'status' =>
+                'success',
+
+            'file' =>
+                url(
+                    '/upload/dl/'.$filename
+                )
+
+        ]);
+
+    } catch (\Exception $e) {
+
+        DB::rollback();
+
+        return response()->json([
+
+            'status' =>
+                'failed',
+
+            'message' =>
+                $e->getMessage()
+
+        ]);
+    }
+}
 }
