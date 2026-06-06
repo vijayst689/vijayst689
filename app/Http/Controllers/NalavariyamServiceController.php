@@ -1800,4 +1800,539 @@ public function appointment()
             return view('view_appointment',compact('appointment'));
         }
 
+            public function additionaldistrict(){
+        $districts = DB::table('nalavariyam_district')->where('status', 'Active')->orderBy('id', 'Asc')->get();
+        return view('nalavariyam/additionaldistrict', compact('districts'));
+    }
+
+    public function saveadditionaldistrict(Request $request)
+    {
+        $verify = '1';
+        //  dd($request->all());
+        $activationamount = $request->activation_amount_hidden;
+        $userid           = $request->userid;
+        $newDistrictId    = $request->nalavariyam_dist_id;
+
+         DB::beginTransaction();
+
+        $date           = date('Y-m-d');
+        $time           = date('H:i:s');
+        $service_status = 'Out Payment';
+        $ad_info        = 'Activation Payment for Additional District';
+        $getwallet = DB::table('users')->select('wallet')->where('id', 2)->first();
+        $balance = 0;
+        if ($getwallet) {
+            $balance = $getwallet->wallet;
+        }
+        $newbalance = $balance + $activationamount;
+        $newbalance1 = Auth::user()->wallet - $activationamount;
+        if ($activationamount != 0) {
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$userid','$userid','2','$activationamount','$ad_info', '$service_status','$time','$date','$userid','$newbalance1')";
+        DB::insert(DB::raw($sql));
+        $sql = "update users set wallet = wallet + $activationamount where id = 2";
+        DB::update(DB::raw($sql));
+        $service_status = 'IN Payment';
+        $ad_info = 'Activation Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$userid','2','$userid','$activationamount','$ad_info', '$service_status','$time','$date','$userid','$newbalance')";
+        DB::insert(DB::raw($sql));
+        $sql = "update users set wallet = wallet - $activationamount where id = $userid";
+        DB::update(DB::raw($sql));
+
+        $service_status = 'Out Payment';
+        $ad_info = 'Activation Payment for Additional District';
+        $amount = $activationamount;
+        $getrawallet    = DB::table('users')->select('rawallet')->where('id', 1)->first();
+                $rawallet       = 0;
+                if ($getrawallet) {
+                    $balance1 = $getrawallet->rawallet;
+                }
+
+                $getrawallet1 = DB::table('users')->select('rawallet')->where('id', 2)->first();
+                $rawallet1    = 0;
+                if ($getrawallet1) {
+                    $balance2 = $getrawallet1->rawallet;
+                }
+                $newbalance2 = $balance1 + $amount;
+                $newbalance3 = $balance2 - $amount;
+                $sql         = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+                DB::insert(DB::raw($sql));
+                $sql = "update users set rawallet = rawallet + $amount where id = 1";
+                DB::update(DB::raw($sql));
+                $service_status = 'IN Payment';
+                $ad_info        = 'Activation Payment for Additional District';
+                $sql            = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+                DB::insert(DB::raw($sql));
+                $sql = "update users set rawallet = rawallet - $amount where id = 2";
+                DB::update(DB::raw($sql));
+
+        }
+        $currentDistricts = DB::table('users')
+            ->where('id', $userid)
+            ->value('nalavariyam_dist_id');
+
+        $districtArray = [];
+
+        if (!empty($currentDistricts)) {
+            $districtArray = array_filter(
+                array_map('intval', explode(',', $currentDistricts))
+            );
+        }
+
+        // Add new district only if not already exists
+        if (!in_array($newDistrictId, $districtArray)) {
+            $districtArray[] = $newDistrictId;
+        }
+
+        // Convert back to comma-separated string
+        $updatedDistricts = implode(',', $districtArray);
+
+        // Update user districts
+        DB::table('users')
+            ->where('id', $userid)
+            ->update([
+                'nalavariyam_dist_id' => $updatedDistricts
+            ]);
+
+        DB::commit();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Additional district activated successfully!');
+
+    }
+
+            public function updatenalavariyam_member(Request $request)
+{
+    $id = $request->id;
+
+    // OLD DATA
+    $member = DB::table('nalavariyam_customer')
+        ->where('id', $id)
+        ->first();
+
+    if (!$member) {
+        return redirect()->back()->with('error', 'Member Not Found');
+    }
+
+    // UPDATE BASIC DETAILS
+    DB::table('nalavariyam_customer')
+        ->where('id', $id)
+        ->update([
+
+            'name'          => $request->name,
+            'district'      => $request->dist_id,
+            'taluk'         => $request->taluk_id,
+            'phone'         => $request->phone,
+            'aadhaar_no'    => $request->aadhaar_no,
+            'work_type'     => $request->work_type,
+            'dob'           => $request->dob,
+            'status'        => $request->status,
+
+        ]);
+
+    // =====================================================
+    // SIGNATURE UPLOAD
+    // =====================================================
+
+    if ($request->hasFile('signature')) {
+
+        // DELETE OLD SIGNATURE
+        if (!empty($member->signature)) {
+
+            $oldSignature = public_path(
+                'upload/nalavariyam_document/signature/' .
+                $member->signature
+            );
+
+            if (file_exists($oldSignature)) {
+                unlink($oldSignature);
+            }
+        }
+
+        $signature =
+            $id .
+            '_signature.' .
+            $request->file('signature')->extension();
+
+        $sigPath =
+            public_path(
+                'upload/nalavariyam_document/signature/'
+            );
+
+        if (!file_exists($sigPath)) {
+            mkdir($sigPath, 0755, true);
+        }
+
+        $request->file('signature')->move(
+            $sigPath,
+            $signature
+        );
+
+        DB::table('nalavariyam_customer')
+            ->where('id', $id)
+            ->update([
+                'signature' => $signature,
+            ]);
+    }
+
+    // =====================================================
+    // PHOTO UPLOAD
+    // =====================================================
+
+// =====================================================
+// PHOTO UPDATE WITH AUTO FACE CENTER CROP
+// =====================================================
+
+if ($request->hasFile('photo')) {
+
+    // DELETE OLD PHOTO
+    if (!empty($member->photo)) {
+
+        $oldPhoto = public_path(
+            'upload/nalavariyam_document/photo/' .
+            $member->photo
+        );
+
+        if (file_exists($oldPhoto)) {
+            unlink($oldPhoto);
+        }
+    }
+
+    $photoFile = $request->file('photo');
+
+    $extension = strtolower($photoFile->extension());
+
+    $photoName =
+        $id .
+        '_photo.' .
+        $extension;
+
+    $photoPath =
+        public_path(
+            'upload/nalavariyam_document/photo/'
+        );
+
+    if (!file_exists($photoPath)) {
+        mkdir($photoPath, 0755, true);
+    }
+
+    $targetFile = $photoPath . $photoName;
+
+    $tmpSource = $photoFile->getRealPath();
+
+    // =================================================
+    // LOAD IMAGE
+    // =================================================
+
+    $srcImg = null;
+
+    if ($extension == 'jpg' || $extension == 'jpeg') {
+
+        $srcImg = imagecreatefromjpeg($tmpSource);
+
+    } elseif ($extension == 'png') {
+
+        $srcImg = imagecreatefrompng($tmpSource);
+
+    } elseif ($extension == 'webp') {
+
+        $srcImg = imagecreatefromwebp($tmpSource);
+
+    }
+
+    if ($srcImg) {
+
+        // ORIGINAL SIZE
+        $origWidth = imagesx($srcImg);
+        $origHeight = imagesy($srcImg);
+
+        // =================================================
+        // SMART CENTER FACE CROP
+        // =================================================
+
+        $cropSize = min($origWidth, $origHeight);
+
+        // FACE UPPER POSITION
+        $srcX = ($origWidth - $cropSize) / 2;
+
+        $srcY = ($origHeight - $cropSize) / 4;
+
+        if ($srcY < 0) {
+            $srcY = 0;
+        }
+
+        // CREATE 250x250 IMAGE
+        $dstImg = imagecreatetruecolor(250, 250);
+
+        // PNG TRANSPARENCY
+        if ($extension == 'png') {
+
+            imagealphablending($dstImg, false);
+
+            imagesavealpha($dstImg, true);
+        }
+
+        // CROP + RESIZE
+        imagecopyresampled(
+            $dstImg,
+            $srcImg,
+            0,
+            0,
+            $srcX,
+            $srcY,
+            250,
+            250,
+            $cropSize,
+            $cropSize
+        );
+
+        // =================================================
+        // SHARPEN FILTER
+        // =================================================
+
+        $sharpenMatrix = [
+            [0, -1, 0],
+            [-1, 5, -1],
+            [0, -1, 0]
+        ];
+
+        imageconvolution(
+            $dstImg,
+            $sharpenMatrix,
+            1,
+            0
+        );
+
+        // =================================================
+        // SAVE IMAGE
+        // =================================================
+
+        if ($extension == 'jpg' || $extension == 'jpeg') {
+
+            imagejpeg($dstImg, $targetFile, 95);
+
+        } elseif ($extension == 'png') {
+
+            imagepng($dstImg, $targetFile, 5);
+
+        } elseif ($extension == 'webp') {
+
+            imagewebp($dstImg, $targetFile, 90);
+        }
+
+        // FREE MEMORY
+        imagedestroy($srcImg);
+
+        imagedestroy($dstImg);
+
+        // UPDATE DATABASE
+        DB::table('nalavariyam_customer')
+            ->where('id', $id)
+            ->update([
+                'photo' => $photoName,
+            ]);
+
+    } else {
+
+        // NORMAL UPLOAD FALLBACK
+        $photoFile->move(
+            $photoPath,
+            $photoName
+        );
+
+        DB::table('nalavariyam_customer')
+            ->where('id', $id)
+            ->update([
+                'photo' => $photoName,
+            ]);
+    }
+}
+
+    return redirect()->back()->with(
+        'success',
+        'Member Updated Successfully'
+    );
+}
+
+public function idcardPdf($id)
+    {
+       $member = DB::table('nalavariyam_customer')
+        ->leftJoin('nalavariyam_district', 'nalavariyam_customer.district', '=', 'nalavariyam_district.id')
+        ->leftJoin('nalavariyam_taluk', 'nalavariyam_customer.taluk', '=', 'nalavariyam_taluk.id')
+        ->where('nalavariyam_customer.id', $id)
+        ->select(
+            'nalavariyam_customer.*', 
+            'nalavariyam_district.district_name as district_title', // Avoids column name overriding clashes
+            'nalavariyam_taluk.taluk_name as taluk_title'
+        )
+        ->first();
+        //return response()->json($member);
+        $workTypes = [
+    ['code' => 'MAFW_1', 'description' => 'MAFW - பட்டாசு தொழில்'],
+    ['code' => 'MAFW_2', 'description' => 'MAFW - தீப்பெட்டி தொழில்'],
+    ['code' => 'AUTO_1', 'description' => 'AUTO - ஆட்டோ ஓட்டுனர்'],
+    ['code' => 'AUTO_2', 'description' => 'AUTO - டாக்சி ஓட்டு்னர்'],
+    ['code' => 'AUWO_1', 'description' => 'AUWO - ஆட்டோ மொபைல் ஒர்க் ஷாப்'],
+    ['code' => 'COOK_1', 'description' => 'COOK - சமையல் வேலை'],
+    ['code' => 'SOES_1', 'description' => 'SOES - கடைகளில் பணிபுரிதல்'],
+    ['code' => 'SOES_2', 'description' => 'SOES - நிறுவனங்களில் பணிபுரிதல்'],
+    ['code' => 'CATR_1', 'description' => 'CATR - உணவு நிறுவனங்கள்'],
+    ['code' => 'STVE_1', 'description' => 'STVE - தெரு வியாபாரம்'],
+    ['code' => 'PRLI_1', 'description' => 'PRLI - விசைத்தறி தொழில்'],
+    ['code' => 'DOME_1', 'description' => 'DOME - வீட்டு வேலைகள்'],
+    ['code' => 'POWO_1', 'description' => 'POWO - மண்பாண்ட தொழில்'],
+    ['code' => 'GSAM_1', 'description' => 'GSAM - தங்க வௌ்ளி ஆபரணம் தயாரித்தல்'],
+    ['code' => 'ARTS_1', 'description' => 'ARTS - ஓவியம் வரைதல்'],
+    ['code' => 'FLGM_1', 'description' => 'FLGM - காலணி தயாரித்தல்'],
+    ['code' => 'FLGM_2', 'description' => 'FLGM - தோல் பொருட்கள் தயாரித்தல்'],
+    ['code' => 'TALE_1', 'description' => 'TALE - தோல் பதனிடுதல்'],
+    ['code' => 'HHSW_1', 'description' => 'HHSW - கைத்தறி நெசவுத் தொழில்'],
+    ['code' => 'HHSW_2', 'description' => 'HHSW - கைத்தறி பட்டு நெசவுத் தொழில்'],
+    ['code' => 'TREE_1', 'description' => 'TREE - மரம் ஏறும் தொழில்'],
+    ['code' => 'NEET_1', 'description' => 'NEET - பதனீர் தயாரித்தல்'],
+    ['code' => 'HAND_1', 'description' => 'HAND - கைவினைத் தொழில்'],
+    ['code' => 'SCLP_1', 'description' => 'SCLP - சிற்ப வேலை செய்தல்'],
+    ['code' => 'VEMA_1', 'description' => 'VEMA - பாத்திரங்கள் தயாரித்தல்'],
+    ['code' => 'TAIL_1', 'description' => 'TAIL - தையல் தொழில்'],
+    ['code' => 'LAWA_1', 'description' => 'LAWA - சலவை துணி துவைத்தல்'],
+    ['code' => 'HRBP_1', 'description' => 'HRBP - முடி திருத்துதல்'],
+    ['code' => 'HRBP_2', 'description' => 'HRBP - அழகு நிலையங்களில் பணிபுரிதல்'],
+    ['code' => 'GIGW_1', 'description' => 'GIGW - இணையம் சார்ந்த கிக் தொழில்கள்'],
+    ['code' => 'MSTY_1', 'description' => 'MSTY - மேஸ்திரி'],
+    ['code' => 'SAWR_1', 'description' => 'SAWR - மரம் அறுப்பவர்'],
+    ['code' => 'CARP_1', 'description' => 'CARP - தச்சர்'],
+    ['code' => 'PNTR_1', 'description' => 'PNTR - பெயின்டர்'],
+    ['code' => 'PNTR_2', 'description' => 'PNTR -  வார்னீஷ் பூசுபவர்'],
+    ['code' => 'PNDL_1', 'description' => 'PNDL - பந்தல் கட்டுமானம்'],
+    ['code' => 'MSON_1', 'description' => 'MSON - கொத்தனார்'],
+    ['code' => 'MSON_2', 'description' => 'MSON - செங்கல் அடுக்குபவர்'],
+    ['code' => 'STON_1', 'description' => 'STON - கல் உடைப்பவர்'],
+    ['code' => 'STON_2', 'description' => 'STON - கல் வெட்டுபவர்'],
+    ['code' => 'STON_3', 'description' => 'STON - கல் பொடிப்பவர்'],
+    ['code' => 'ROCK_1', 'description' => 'ROCK - quarry கல் உடைப்பவர்'],
+    ['code' => 'ERTH_1', 'description' => 'ERTH - மண் வேலை செய்பவர்'],
+    ['code' => 'WATH_1', 'description' => 'WATH - காவலாளி'],
+    ['code' => 'WELD_1', 'description' => 'WELD - வெல்டர்'],
+    ['code' => 'MZDR_1', 'description' => 'MZDR - கூலியாள்'],
+    ['code' => 'HDMZ_1', 'description' => 'HDMZ - தலைமை கூலியாள்'],
+    ['code' => 'WELL_1', 'description' => 'WELL - கிணறு தோண்டுபவர்'],
+    ['code' => 'MECH_1', 'description' => 'MECH - மெக்கானிக்'],
+    ['code' => 'ELCT_1', 'description' => 'ELCT - எலக்ட்ரிஷியன்'],
+    ['code' => 'PACK_1', 'description' => 'PACK - மரம் வெட்டுபவர்'],
+    ['code' => 'PACK_2', 'description' => 'PACK - கல் வெட்டுபவர்'],
+    ['code' => 'MXDR_1', 'description' => 'MXDR - மிக்ஸர் டிரைவர்'],
+    ['code' => 'THAT_1', 'description' => 'THAT - கூரை வேய்பவர்'],
+    ['code' => 'PUMP_1', 'description' => 'PUMP - பம்ப் ஆபரேட்டர்'],
+    ['code' => 'ROLR_1', 'description' => 'ROLR - ரோலர் டிரைவர்'],
+    ['code' => 'ENGR_1', 'description' => 'ENGR - பொறியியல் தொழில்'],
+    ['code' => 'FOTG_1', 'description' => 'FOTG - துணி மடித்தல்'],
+    ['code' => 'GUNI_1', 'description' => 'GUNI - சாக்கு தைத்தல்'],
+    ['code' => 'NIBG_1', 'description' => 'NIBG - பேனா எழுதுமுனை தயாரித்தல்'],
+    ['code' => 'INCS_1', 'description' => 'INCS - அகர்பத்தி தயாரித்தல்'],
+    ['code' => 'PLID_1', 'description' => 'PLID - பிளாஸ்டிக் தொழில்'],
+    ['code' => 'LULC_1', 'description' => 'LULC - கடைகள் நிறுவனங்களில் சுமை ஏற்றுதல்'],
+    ['code' => 'LULT_1', 'description' => 'LULT - பொதுத்துறை வாகனத்தில் சுமை ஏற்றுதல்'],
+    ['code' => 'SALT_1', 'description' => 'SALT - உப்பளங்களில் வேலை செய்தல்'],
+    ['code' => 'BOAT_1', 'description' => 'BOAT - படகு தயாரிக்கும் தொழில்'],
+    ['code' => 'TMBR_1', 'description' => 'TMBR - மரம் அறுவை'],
+    ['code' => 'COIR_1', 'description' => 'COIR - கயிறு தயாரித்தல்'],
+    ['code' => 'SAGO_1', 'description' => 'SAGO - ஜவ்வரிசி தயாரித்தல்'],
+    ['code' => 'APLM_1', 'description' => 'APLM - அப்பளம் தயாரித்தல்'],
+    ['code' => 'BLDY_1', 'description' => 'BLDY - சாயப்பட்டறை தொழில்'],
+    ['code' => 'SRCE_1', 'description' => 'SRCE - பட்டுப்புழு வளர்த்தல்'],
+    ['code' => 'COPL_1', 'description' => 'COPL - தேங்காய் உரித்தல்'],
+    ['code' => 'TOUR_1', 'description' => 'TOUR - சுற்றுலா சார்ந்த தொழில்'],
+    ['code' => 'TINC_1', 'description' => 'TINC - தகர அமைப்பான்கள் தயாரித்தல்'],
+    ['code' => 'BKCD_1', 'description' => 'BKCD - மாட்டு வண்டி'],
+    ['code' => 'SYGM_1', 'description' => 'SYGM - சிந்தெடிக் ஜெம் கட்டிங் தொழில்'],
+    ['code' => 'LULF_1', 'description' => 'LULF - உணவு சேமிப்பு கிடங்கில் தானியங்களை கையாளுதல் வகை பிரித்தல்'],
+    ['code' => 'RAPI_1', 'description' => 'RAPI - குப்பைகள் கழிவு பொருள் சேகரித்தல்'],
+    ['code' => 'PASS_1', 'description' => 'PASS - தனியார் பாதுகாவல்'],
+    ['code' => 'PRPR_1', 'description' => 'PRPR - அச்சு மற்றும் பிரிண்டிங்'],
+    ['code' => 'BEND_1', 'description' => 'BEND - பிட்டர் உட்பட கம்பி வளைப்பவர்'],
+    ['code' => 'PMBR_1', 'description' => 'PMBR - சாலை குழாய் பதிப்பு பணி'],
+    ['code' => 'SILT_1', 'description' => 'SILT - கிணற்றில் தூர் எடுப்பவர்'],
+    ['code' => 'HAMR_1', 'description' => 'HAMR - கருமான் (சம்மட்டி ஆள்)'],
+    ['code' => 'BLAK_1', 'description' => 'BLAK - கருமான் கொள்ளன்'],
+    ['code' => 'LIES_1', 'description' => 'LIES - மின் தூக்கி மற்றும் மின்படி பொருத்துதல்'],
+    ['code' => 'MIXR_1', 'description' => 'MIXR - கான்கிரீட் கலப்பவர்'],
+    ['code' => 'TUNL_1', 'description' => 'TUNL - சுரங்க வழி தோண்டுபவர்'],
+    ['code' => 'MSIC_1', 'description' => 'MSIC - மொசைக் பாலீஷ் செய்பவர்'],
+    ['code' => 'ROAD_1', 'description' => 'ROAD - சாலை செப்பனிடுதல்'],
+    ['code' => 'CIGR_1', 'description' => 'CIGR - சுרוட்டுத் தயாரித்தல்'],
+    ['code' => 'CASH_1', 'description' => 'CASH - முந்திரி தொழிற்சாலைகளில் பணிபுரிதல்'],
+    ['code' => 'VIPH_1', 'description' => 'VIPH - வீடியோ மற்றும் புகைப்பட ஒளிப்பதிவு'],
+    ['code' => 'CYCL_1', 'description' => 'CYCL - சைக்கிள் ரிக்ஷா ஓட்டும் தொழில்'],
+    ['code' => 'SDLT_1', 'description' => 'SDLT - ஒலி ,ஒளிஅமைப்புத் தொழில்'],
+    ['code' => 'CYRE_1', 'description' => 'CYRE - சைக்கிள் ரிப்பேர்'],
+    ['code' => 'WASI_1', 'description' => 'WASI - வார்த்தத்து வடித்தல்'],
+    ['code' => 'LPGC_1', 'description' => 'LPGC - சமையல் வாயு சிலிண்டர்கள் விநியோகித்தல்'],
+    ['code' => 'ELSR_1', 'description' => 'ELSR - எலக்ட்ரானிக் பழுதுபார்த்தல்'],
+    ['code' => 'FOPR_1', 'description' => 'FOPR - வனப்பொருள் சேகரித்தல்'],
+    ['code' => 'FORD_1', 'description' => 'FORD - மாவுமில்களில் பணிபுரிதல்'],
+    ['code' => 'FORD_2', 'description' => 'FORD - ஆயில் மில்களில் பணிபுரிதல்'],
+    ['code' => 'FORD_3', 'description' => 'FORD - அரிசி மில்களில் பணிபுரிதல்'],
+    ['code' => 'WOWO_1', 'description' => 'WOWO - மர வேலைகள்'],
+    ['code' => 'PWTL_1', 'description' => 'PWTL - பொது பூங்கா அமைத்தல்'],
+    ['code' => 'PWTL_2', 'description' => 'PWTL - நடைபாதை போன்ற கட்டுமானம் காட்சி அமைத்தல்'],
+    ['code' => 'PWTL_3', 'description' => 'PWTL - பொது பூங்கா, நடைபாதை போன்ற கட்டுமானம் மற்றும் இயற்கை நிலை காட்சி அமைத்தல்'],
+    ['code' => 'SPRY_1', 'description' => 'SPRY - தெளிப்பவர் (தார் ஜல்லி)'],
+    ['code' => 'SPRY_2', 'description' => 'SPRY - கலப்பவர் (தார் ஜல்லி)'],
+    ['code' => 'LIME_1', 'description' => 'LIME - சுண்ணாம்பு பதப்படுத்துவோர்'],
+    ['code' => 'SEAE_1', 'description' => 'SEAE - கடல் அரிப்பு தடுப்பு பணியில் ஈடுபடும் வேலையாள்'],
+    ['code' => 'ROFN_1', 'description' => 'ROFN - ரோட்டரி மற்றும் செயற்கை நீரூற்று போன்ற கட்டுமானம்'],
+    ['code' => 'FFSM_1', 'description' => 'FFSM - தீயணைப்பு கருவிகளை பொருத்துதல்'],
+    ['code' => 'FFSM_2', 'description' => 'FFSM - தீயணைப்பு கருவிகளை பழுதுபார்த்தல்'],
+    ['code' => 'COHE_1', 'description' => 'COHE - குளிரூட்டுதல் கருவிகளை பழுதுபார்த்தல்'],
+    ['code' => 'COHE_2', 'description' => 'COHE - குளிரூட்டுதல் கருவிகளை பொருத்துதல்'],
+    ['code' => 'COHE_3', 'description' => 'COHE - சூடுபடுத்துதல் கருவிகளை பழுதுபார்த்தல்'],
+    ['code' => 'COHE_4', 'description' => 'COHE - சூடுபடுத்துதல் கருவிகளை பொருத்துதல்'],
+    ['code' => 'SGDS_1', 'description' => 'SGDS - பாதுகாப்பு கதவுகள் பொருத்துதல்'],
+    ['code' => 'SGDS_2', 'description' => 'SGDS - பாதுகாப்பு கருவிகள் பொருத்துதல்'],
+    ['code' => 'CAUK_1', 'description' => 'CAUK - சந்துகள் அடைத்து நீர் உட்புகாமல் செய்பவர்'],
+    ['code' => 'WHVS_1', 'description' => 'WHVS - நீர் எடுக்கும் கட்டமைப்பு தொடர்பான கட்டுமானம்'],
+    ['code' => 'KALS_1', 'description' => 'KALS - கலாசிஸ்'],
+    ['code' => 'MRBL_1', 'description' => 'MRBL - சலவைக்கல் தொழில் செய்பவர்'],
+    ['code' => 'DEMN_1', 'description' => 'DEMN - Demolition worker engaged in dams'],
+    ['code' => 'DEMN_2', 'description' => 'DEMN - Demolition worker engaged in bridges'],
+    ['code' => 'DEMN_3', 'description' => 'DEMN - Demolition worker engaged in roads'],
+    ['code' => 'DEMN_4', 'description' => 'DEMN - Demolition worker engaged in any other building'],
+    ['code' => 'BRIK_1', 'description' => 'BRIK - தொழிற்சாலைசட்டதின்கீழ் வராத செங்கல் சூளை தொழிலாளர்கள்'],
+    ['code' => 'IGWD_1', 'description' => 'IGWD - இரும்பு மற்றும் உலோக கிராதி, ஜன்னல், கதவுகள் புனைத்து கட்டுதல் மற்றும் பொருத்துதல்'],
+    ['code' => 'CGGP_1', 'description' => 'CGGP - கண்ணாடி வெட்டுதல்'],
+    ['code' => 'CGGP_2', 'description' => 'CGGP - கண்ணாடி இழைத்தல்'],
+    ['code' => 'CGGP_3', 'description' => 'CGGP - கண்ணாடி பேனல்கள் பொருத்துதல்'],
+    ['code' => 'EESP_1', 'description' => 'EESP - சோலார் பேனல் போன்ற மின் மிகை சாதனங்கள் பொருத்துதல்'],
+    ['code' => 'ESRS_1', 'description' => 'ESRS - கல் பெயர் பலகை அமைத்தல்'],
+    ['code' => 'ESRS_2', 'description' => 'ESRS - தெரு அரைகலன்கள் அமைத்தல்'],
+    ['code' => 'ESRS_3', 'description' => 'ESRS - பேருந்து நிழற்கூரை அமைத்தல்'],
+    ['code' => 'ESRS_4', 'description' => 'ESRS - பேருந்து பணிமனைகள் அமைத்தல்'],
+    ['code' => 'ESRS_5', 'description' => 'ESRS - பேருந்து நிறுத்தங்கள் அமைத்தல் மற்றும் அறிவிப்பு போன்ற கட்டுமானம் மற்றும் நிறுத்துதல்'],
+    ['code' => 'ESRS_6', 'description' => 'ESRS - பேருந்து அறிவிப்பு போன்ற கட்டுமானம் மற்றும் நிறுத்துதல்'],
+    ['code' => 'OTHR_1', 'description' => 'OTHR - எல்லாவிதமான கட்டுமானப் பணிகளையும் செய்யும் தொழிலாளர்கள்'],
+    ['code' => 'OTHR_2', 'description' => 'OTHR - அணை, பாலம், சாலை போன்றவற்றின் பராமரிப்பு பணிகளை செய்யும் தொழிலாளர்கள்'],
+    ['code' => 'PFCM_1', 'description' => 'PFCM - முன் புனைத்து அமைக்கப்பட்ட கான்கிரீட் பொருட்கள் பொருத்தல்'],
+    ['code' => 'SPGC_1', 'description' => 'SPGC - கோல்ப் மைதானம் அமைத்தல்'],
+    ['code' => 'SPGC_2', 'description' => 'SPGC - நீச்சல் குளம் உட்பட்ட விளையாட்டு மற்றும் பொழுதுபோக்கு அரங்குகளை கட்டுதல்'],
+    ['code' => 'CFCP_1', 'description' => 'CFCP - கார்பெட்டிங்'],
+    ['code' => 'CFCP_2', 'description' => 'CFCP - பொய்கூரை அமைத்தல்'],
+    ['code' => 'CFCP_3', 'description' => 'CFCP - மேற்பூச்சுதல் தொடர்பான உள்ளலங்காரம்.'],
+    ['code' => 'CFCP_4', 'description' => 'CFCP - விளக்கு அமைத்தல்'],
+    ['code' => 'MOKN_1', 'description' => 'MOKN - சமையல் கூடம் போன்ற இடங்களில் நவீன அறைகலன் அமைத்தல்']
+];
+
+    // 2. Translate the db value to human-readable text
+  $displayWorkType = "---";
+
+if (!empty($member->work_type)) {
+    // அரே-வை கலெக்ஷனாக மாற்றி, 'code' பொருந்துகிறதா என்று பார்க்கிறோம்
+    $work = collect($workTypes)->firstWhere('code', $member->work_type);
+
+    if ($work) {
+        $displayWorkType = $work['description'];
+    }
+}
+        return view('nalavariyam/idcard', compact('member', 'displayWorkType'));
+    }
+
 }
