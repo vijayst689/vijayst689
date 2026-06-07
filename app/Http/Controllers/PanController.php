@@ -190,6 +190,7 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
         $user_id = Auth::user()->id;
          $serviceid = $request->serviceid;
          $servicepayment = 0;
+          $amount = 0;
         $getservicepayment = DB::table('panpayment')->where('service_id', $serviceid)->first();
         if ($getservicepayment) {
             
@@ -374,6 +375,7 @@ if ($status == "Success") {
         $user_id = Auth::user()->id;
          $serviceid = $request->serviceid;
          $servicepayment = 0;
+          $amount = 0;
         $getservicepayment = DB::table('panpayment')->where('service_id', $serviceid)->first();
         if ($getservicepayment) {
             

@@ -664,3 +664,29 @@ Route::post(
 
 Route::get('/dl-pdf/fetch', [App\Http\Controllers\PDFServiceController::class,'fetchApiData'])->name('dlpdf.fetch');
 Route::post('/dl-pdf/save', [App\Http\Controllers\PDFServiceController::class,'saveDlPdf'])->name('save.dl.pdf');
+
+    Route::get('/check-wallet-balance/{userid}/{amount}', function ($userid, $amount) {
+    $wallet = DB::table('users')
+        ->where('id', $userid)
+        ->sum('wallet');
+
+    return response()->json([
+        'status' => 'success',
+        'wallet_balance' => number_format($wallet, 2, '.', ''),
+        'has_balance' => $wallet >= $amount,
+        'message' => $wallet >= $amount
+            ? 'Sufficient wallet balance.'
+            : 'Insufficient wallet balance.'
+    ]);
+});
+
+Route::get(
+    '/idcard-pdf/{id}',
+    [App\Http\Controllers\NalavariyamServiceController::class,'idcardPdf']
+);
+Route::Post(
+    '/updatenalavariyam_member',
+    [App\Http\Controllers\NalavariyamServiceController::class,'updatenalavariyam_member']
+)->name('updatenalavariyam_member');
+Route::get('additionaldistrict', [App\Http\Controllers\NalavariyamServiceController::class, 'additionaldistrict'])->name('additionaldistrict');
+Route::post('saveadditionaldistrict', [App\Http\Controllers\NalavariyamServiceController::class, 'saveadditionaldistrict'])->name('saveadditionaldistrict');

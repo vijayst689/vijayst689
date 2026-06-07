@@ -2849,3 +2849,11 @@ alter table aadhaarcard add centerno text DEFAULT NULL;
 
 alter table users add column member_id varchar(20) default NULL;
 alter table nalavariyam_customer add column member_id varchar(20) default NULL;
+
+alter table nalavariyam_customer add photo varchar(20) DEFAULT NULL;
+alter table nalavariyam_customer add signature varchar(20) DEFAULT NULL;
+alter table nalavariyam_customer add work_type varchar(200) DEFAULT NULL;
+alter table nalavariyam_customer add dob varchar(10) DEFAULT NULL;
+
+ALTER TABLE users
+MODIFY COLUMN nalavariyam_dist_id TEXT NULL;
