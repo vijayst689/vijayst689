@@ -12,6 +12,8 @@ use App\Services\SarathiScraperService;
 
 class PDFServiceController extends Controller
 {
+        protected $scraperService;
+
     public function __construct(SarathiScraperService $scraperService)
     {
         $this->middleware(function ($request, $next) {
