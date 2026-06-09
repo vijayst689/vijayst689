@@ -37,13 +37,13 @@ class DistributorController extends Controller
 
         if( Auth::user()->user_type_id == 1 ) {
 
-        $distributors = DB::table('users')->where( 'user_type_id', '=', 3)->orderBy( 'id', 'Asc' )->get();;
+        $distributors = DB::table('users')->where( 'user_type_id', '=', 3)->orderBy( 'id', 'Dsc' )->get();;
 
         }
 
         if( Auth::user()->user_type_id == 2 ) {
 
-        $distributors = DB::table('users')->where( 'user_type_id', '=', 3 )->orderBy( 'id', 'Asc' )->get();
+        $distributors = DB::table('users')->where( 'user_type_id', '=', 3 )->orderBy( 'id', 'Dsc' )->get();
 
         }
 
