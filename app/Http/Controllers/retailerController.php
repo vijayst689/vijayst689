@@ -37,13 +37,13 @@ class RetailerController extends Controller
 
         if( Auth::user()->user_type_id == 1 ) {
 
-            $viewretailers = DB::table('users')->where( 'user_type_id', '=', 4 )->orderBy( 'id', 'Dsc' )->get();
+            $viewretailers = DB::table('users')->where( 'user_type_id', '=', 4 )->orderBy( 'id', 'Desc' )->get();
 
         }
 
         if( Auth::user()->user_type_id == 2 ) {
 
-            $viewretailers = DB::table('users')->where( 'user_type_id', '=', 4 )->orderBy( 'id', 'Dsc' )->get();
+            $viewretailers = DB::table('users')->where( 'user_type_id', '=', 4 )->orderBy( 'id', 'Desc' )->get();
 
         }
 
