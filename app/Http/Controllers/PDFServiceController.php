@@ -8,9 +8,13 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\JsonResponse;
 
+use App\Services\SarathiScraperService;
+
 class PDFServiceController extends Controller
 {
-    public function __construct()
+        protected $scraperService;
+
+    public function __construct(SarathiScraperService $scraperService)
     {
         $this->middleware(function ($request, $next) {
             $this->restrictIfNotActivated();
@@ -21,6 +25,7 @@ class PDFServiceController extends Controller
             return $next($request);
         });
         $this->middleware('auth');
+        $this->scraperService = $scraperService;
     }
 
     public function addfindservice()
