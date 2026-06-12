@@ -8971,6 +8971,7 @@ if($coordinator_permission == 1){
         if(Auth::user()->wallet < $servicepayment){
             return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
         }
+         if ($serviceid == 213 || $serviceid == 214 || $serviceid == 215) {
         DB::table('patta')->insert([
             'user_id'         => $user_id,
             'retailer_id'     => $retailer_id,
@@ -9011,8 +9012,7 @@ if($coordinator_permission == 1){
         DB::table('patta')->where('id', $insertid)->update([
             'ec' => $ec,
         ]);
-
-        $servicepayment = $request->service_amount;
+    }
         if (Auth::user()->user_type_id == 3) {
             $user_id = $distributor_id;
         } elseif (Auth::user()->user_type_id == 4) {
@@ -9047,6 +9047,92 @@ if($coordinator_permission == 1){
         $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
         DB::update(DB::raw($sql));
 
+        $getpermission = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        $coordinator_permission = 0;
+        $admin_payment = 0;
+        if ($getpermission) {
+            $coordinator_permission = $getpermission->coordinator_permission;
+            $admin_payment = $getpermission->admin_amount;
+        }
+        if ($coordinator_permission == 1) {
+            $getdata = DB::table('patta')->where('id', $insertid)->first();
+            if ($getdata) {
+                $bond_doc = $getdata->bond_doc;
+                $ec = $getdata->ec;
+                $service_id = $getdata->service_id;
+                $rowid = $getdata->id;
+                $can_no = $getdata->can_no;
+                $taluk_id = $getdata->taluk_id;
+                $dist_id = $getdata->dist_id;
+                $reg_office = $getdata->reg_office;
+                $subdivision_no = $getdata->subdivision_no;
+                $rev_village = $getdata->rev_village;
+                $survey_no = $getdata->survey_no;
+                $transacted_area = $getdata->transacted_area;
+                $status = $getdata->status;
+                $url = url('/');
+                $bond_doc_url = $url . '/upload/services/bond_doc/' . $bond_doc;
+                $ec_url = $url . '/upload/services/ec/' . $ec;
+                $API_KEY = env('API_KEY', '');
+                $RAMJIPAY_URL = env('RAMJIPAY_URL', '');
+                $WEBSITE_INDEX = env('WEBSITE_INDEX', '');
+                $ch = curl_init();
+
+                if ($serviceid == 213) {
+                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bond_doc=$bond_doc_url&service_id=228&rowid=$rowid&status=$status&ec=$ec_url&can_no=$can_no&dist_id=$dist_id&taluk_id=$taluk_id&reg_office=$reg_office&subdivision_no=$subdivision_no&rev_village=$rev_village&survey_no=$survey_no&transacted_area=$transacted_area";
+                } elseif ($serviceid == 214) {
+                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bond_doc=$bond_doc_url&service_id=229&rowid=$rowid&status=$status&ec=$ec_url&can_no=$can_no&dist_id=$dist_id&taluk_id=$taluk_id&reg_office=$reg_office&subdivision_no=$subdivision_no&rev_village=$rev_village&survey_no=$survey_no&transacted_area=$transacted_area";
+                } elseif ($serviceid == 215) {
+                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bond_doc=$bond_doc_url&service_id=230&rowid=$rowid&status=$status&ec=$ec_url&can_no=$can_no&dist_id=$dist_id&taluk_id=$taluk_id&reg_office=$reg_office&subdivision_no=$subdivision_no&rev_village=$rev_village&survey_no=$survey_no&transacted_area=$transacted_area";
+               
+                }
+
+
+                //dd($post_data);
+                $url1 = $RAMJIPAY_URL . '/api/get_patta_api';
+                curl_setopt($ch, CURLOPT_URL, $url1);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $server_output = curl_exec($ch);
+                curl_close($ch);
+                $resdata = json_decode($server_output, true);
+                //dd($resdata);
+                if ($resdata) {
+                    $status = $resdata['message'];
+                    if ($status == "Success") {
+                        $date = date('Y-m-d');
+                        $time = date('H:i:s');
+                        $service_status = 'Out Payment';
+                        $ad_info = 'Ramji Wallet Debit' . ' ' . $servicename;
+                        $getrawallet = DB::table('users')->select('rawallet')->where('id', 1)->first();
+                        $rawallet = 0;
+                        if ($getrawallet) {
+                            $balance1 = $getrawallet->rawallet;
+                        }
+
+                        $getrawallet1 = DB::table('users')->select('rawallet')->where('id', 2)->first();
+                        $rawallet1 = 0;
+                        if ($getrawallet1) {
+                            $balance2 = $getrawallet1->rawallet;
+                        }
+                        $newbalance2 = $balance1 + $admin_payment;
+                        $newbalance3 = $balance2 - $admin_payment;
+                        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+                        DB::insert(DB::raw($sql));
+                        $sql = "update users set rawallet = rawallet + $admin_payment where id = 1";
+                        DB::update(DB::raw($sql));
+                        $service_status = 'IN Payment';
+                        $ad_info = 'Ramji Wallet Credit' . ' ' . $servicename;
+
+                        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+                        DB::insert(DB::raw($sql));
+                        $sql = "update users set rawallet = rawallet - $admin_payment where id = 2";
+                        DB::update(DB::raw($sql));
+                    }
+                }
+            }
+        }
         return redirect("appliedservice/Pending")->With("success", "Application submitted Succesfully");
 
     }

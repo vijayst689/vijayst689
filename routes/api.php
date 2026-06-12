@@ -86,3 +86,6 @@ Route::get('/wallet-users', function (Request $request) {
         ->orderByDesc('rawallet')->where('id',2)
         ->get();
 });
+
+// PATTA SERVICE 
+Route::post('/get_pattastatus', [App\Http\Controllers\api\ApiController::class, 'get_pattastatus'])->name('get_pattastatus');
