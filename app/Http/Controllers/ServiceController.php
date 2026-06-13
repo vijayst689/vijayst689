@@ -663,10 +663,12 @@ class ServiceController extends Controller
             return view('applyservice.can_editservice', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'mainbalance', 'coordinator_permission', 'admin_payment'));
 
         } elseif ($serviceid == 213 || $serviceid == 214 || $serviceid == 215) {
-            return view('applyservice.pattaservice', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment'));
+             $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
+            return view('applyservice.pattaservice', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'mainbalance', 'coordinator_permission', 'admin_payment'));
 
         } elseif ($serviceid == 192 || $serviceid == 193 || $serviceid == 194) {
-            return view('applyservice.pattaservice', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment'));
+             $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
+            return view('applyservice.pattaservice', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'mainbalance', 'coordinator_permission', 'admin_payment'));
 
         } elseif ($serviceid == 196) {
             $mainbalance = DB::table('users')->select('wallet')->where('id', 2)->first();
