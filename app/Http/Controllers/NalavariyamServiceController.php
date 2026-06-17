@@ -1367,20 +1367,25 @@ public function activationmember()
     return view('permission/activationmember', compact('member'));
 }
 
-public function member()
-{
+    public function member()
+    {
 
-    $nalavariyam_service = DB::table( 'nalavariyam_service' )->orderBy( 'id', 'Asc' )->get();
+        $nalavariyam_service = DB::table('nalavariyam_service')->orderBy('id', 'Asc')->get();
 
-    $member = DB::table('nalavariyam_customer')->select('nalavariyam_district.district_name','nalavariyam_customer.*')
-    ->Join('nalavariyam_district', 'nalavariyam_district.id', '=', 'nalavariyam_customer.district')
-    ->where('refferal' , Auth::user()->id)
-    ->orderBy('nalavariyam_customer.id', 'Desc')->get();
+        $member = DB::table('nalavariyam_customer')->select('nalavariyam_district.district_name', 'nalavariyam_customer.*')
+            ->Join('nalavariyam_district', 'nalavariyam_district.id', '=', 'nalavariyam_customer.district')
+            ->where('refferal', Auth::user()->id)
+            ->orderBy('nalavariyam_customer.id', 'Desc')->get();
 
-    $district = DB::table( 'nalavariyam_district' )->where('id',Auth::user()->nalavariyam_dist_id)->where( 'status', 'Active' )->orderBy( 'id', 'Asc' )->get();
+        $districtIds = explode(',', Auth::user()->nalavariyam_dist_id);
 
-    return view( 'nalavariyam/member', compact( 'nalavariyam_service','district','member' ) );
-}
+        $district = DB::table('nalavariyam_district')
+            ->whereIn('id', $districtIds)
+            ->where('status', 'Active')
+            ->orderBy('district_name', 'ASC')
+            ->get();
+        return view('nalavariyam/member', compact('nalavariyam_service', 'district', 'member'));
+    }
 
 public function addnalavariyam_member( Request $request ) {
 
