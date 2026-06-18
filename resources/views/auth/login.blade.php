@@ -163,7 +163,35 @@ a:hover {
 }
 </style>
 
+        <style>
+    .wallet-modal {
+    border-radius: 20px;
+    background: linear-gradient(135deg, #eef3f8, #dbe6f3);
+}
 
+.amount-input {
+    font-size: 20px;
+    padding: 12px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.quick-amount {
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    border-radius: 12px;
+}
+
+
+.quick-amount.active {
+    background-color: #0d6efd;
+    color: #fff;
+    border-color: #0d6efd;
+}
+</style>
 </head>
 
 <body class="">
