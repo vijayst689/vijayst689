@@ -2857,3 +2857,8 @@ alter table nalavariyam_customer add dob varchar(10) DEFAULT NULL;
 
 ALTER TABLE users
 MODIFY COLUMN nalavariyam_dist_id TEXT NULL;
+
+alter table aadhaarcard add relationship_tamil varchar(70) DEFAULT NULL;
+
+ALTER TABLE nalavariyam_form
+MODIFY COLUMN dist_id TEXT NULL;

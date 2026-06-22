@@ -95,7 +95,7 @@
                                                     @elseif($service->action == "Pay Now" && ($service->pay_amount > $balance ))
                                                     <a class="btn btn-sm btn-info rounded-pill px-3">Low Balance</a>
                                                     @elseif($service->action == "Upload Form" || $service->action == "Resubmit Form")
-                                                    <a onclick="show_image_upload('{{ $service->id }}','{{ $customers->id }}','{{ $customers->customer_user_type_id }}')" class="btn btn-sm btn-info rounded-pill px-3">{{ $service->action }}</a>
+                                                    <a onclick="show_image_upload('{{ $service->id }}','{{ $customers->id }}','{{ $customers->customer_user_type_id }}','{{ $customers->district }}')" class="btn btn-sm btn-info rounded-pill px-3">{{ $service->action }}</a>
                                                     @elseif($service->action == "Pending")
                                                     <a class="btn btn-sm btn-info rounded-pill px-3">{{ $service->action }}</a>
                                                     @elseif($service->action == "Waiting")
@@ -292,6 +292,7 @@
                                 <input type="hidden" id="imcustomer_id" name="imcustomer_id" value="">
                                 <input type="hidden" id="imcustomer_user_type_id" name="imcustomer_user_type_id"
                                     value="">
+                                <input type="hidden" id="imdist_id" name="imdist_id">
                                 {{ csrf_field() }}
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -395,10 +396,11 @@
                     $("#paynow_modal").modal("show");
                 }
 
-                function show_image_upload(service_id, customer_id, customer_user_type_id) {
+                function show_image_upload(service_id, customer_id, customer_user_type_id, district) {
                     $("#imservice_id").val(service_id);
                     $("#imcustomer_id").val(customer_id);
                     $("#imcustomer_user_type_id").val(customer_user_type_id);
+                    $("#imdist_id").val(district);
                     $("#image_modal").modal("show");
                 }
 

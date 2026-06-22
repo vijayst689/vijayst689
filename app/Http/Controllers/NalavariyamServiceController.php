@@ -1367,20 +1367,25 @@ public function activationmember()
     return view('permission/activationmember', compact('member'));
 }
 
-public function member()
-{
+    public function member()
+    {
 
-    $nalavariyam_service = DB::table( 'nalavariyam_service' )->orderBy( 'id', 'Asc' )->get();
+        $nalavariyam_service = DB::table('nalavariyam_service')->orderBy('id', 'Asc')->get();
 
-    $member = DB::table('nalavariyam_customer')->select('nalavariyam_district.district_name','nalavariyam_customer.*')
-    ->Join('nalavariyam_district', 'nalavariyam_district.id', '=', 'nalavariyam_customer.district')
-    ->where('refferal' , Auth::user()->id)
-    ->orderBy('nalavariyam_customer.id', 'Desc')->get();
+        $member = DB::table('nalavariyam_customer')->select('nalavariyam_district.district_name', 'nalavariyam_customer.*')
+            ->Join('nalavariyam_district', 'nalavariyam_district.id', '=', 'nalavariyam_customer.district')
+            ->where('refferal', Auth::user()->id)
+            ->orderBy('nalavariyam_customer.id', 'Desc')->get();
 
-    $district = DB::table( 'nalavariyam_district' )->where('id',Auth::user()->nalavariyam_dist_id)->where( 'status', 'Active' )->orderBy( 'id', 'Asc' )->get();
+        $districtIds = explode(',', Auth::user()->nalavariyam_dist_id);
 
-    return view( 'nalavariyam/member', compact( 'nalavariyam_service','district','member' ) );
-}
+        $district = DB::table('nalavariyam_district')
+            ->whereIn('id', $districtIds)
+            ->where('status', 'Active')
+            ->orderBy('district_name', 'ASC')
+            ->get();
+        return view('nalavariyam/member', compact('nalavariyam_service', 'district', 'member'));
+    }
 
 public function addnalavariyam_member( Request $request ) {
 
@@ -1832,7 +1837,7 @@ public function appointment()
         $sql = "update users set wallet = wallet + $activationamount where id = 2";
         DB::update(DB::raw($sql));
         $service_status = 'IN Payment';
-        $ad_info = 'Activation Payment';
+        $ad_info = 'Activation Payment for Additional District';
         $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$userid','2','$userid','$activationamount','$ad_info', '$service_status','$time','$date','$userid','$newbalance')";
         DB::insert(DB::raw($sql));
         $sql = "update users set wallet = wallet - $activationamount where id = $userid";
@@ -1847,22 +1852,22 @@ public function appointment()
                     $balance1 = $getrawallet->rawallet;
                 }
 
-                $getrawallet1 = DB::table('users')->select('rawallet')->where('id', 2)->first();
+                $getrawallet1 = DB::table('users')->select('nalavariyamwallet')->where('id', 2)->first();
                 $rawallet1    = 0;
                 if ($getrawallet1) {
-                    $balance2 = $getrawallet1->rawallet;
+                    $balance2 = $getrawallet1->nalavariyamwallet;
                 }
                 $newbalance2 = $balance1 + $amount;
                 $newbalance3 = $balance2 - $amount;
-                $sql         = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+                $sql         = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
                 DB::insert(DB::raw($sql));
-                $sql = "update users set rawallet = rawallet + $amount where id = 1";
+                $sql = "update users set nalavariyamwallet = nalavariyamwallet + $amount where id = 1";
                 DB::update(DB::raw($sql));
                 $service_status = 'IN Payment';
                 $ad_info        = 'Activation Payment for Additional District';
-                $sql            = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+                $sql            = "insert into nalavariyampayment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$amount','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
                 DB::insert(DB::raw($sql));
-                $sql = "update users set rawallet = rawallet - $amount where id = 2";
+                $sql = "update users set nalavariyamwallet = nalavariyamwallet - $amount where id = 2";
                 DB::update(DB::raw($sql));
 
         }

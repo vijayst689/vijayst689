@@ -591,10 +591,12 @@ class ServiceController extends Controller
             $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
             return view('applyservice.aadhaarcard_apply1', compact('serviceid', 'districts', 'servicename', 'amount', 'payment', 'customers', 'mainbalance', 'coordinator_permission', 'admin_payment'));
 
-        } elseif ($serviceid == 58 || $serviceid == 158) {
+        } elseif ($serviceid == 58 ) {
             $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
             return view('applyservice.aadhaarcard_apply', compact('serviceid', 'districts', 'servicename', 'amount', 'payment', 'customers', 'mainbalance', 'coordinator_permission', 'admin_payment'));
-
+        } elseif ($serviceid == 158 ) {
+            $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
+            return view('applyservice.aadhaarcard_apply2', compact('serviceid', 'districts', 'servicename', 'amount', 'payment', 'customers', 'mainbalance', 'coordinator_permission', 'admin_payment'));
         } elseif ($serviceid == 69 || $serviceid == 70 || $serviceid == 71) {
             $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
             return view('applyservice.voterid_pdfdownloadservice', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'mainbalance', 'coordinator_permission', 'admin_payment'));
@@ -663,10 +665,12 @@ class ServiceController extends Controller
             return view('applyservice.can_editservice', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'mainbalance', 'coordinator_permission', 'admin_payment'));
 
         } elseif ($serviceid == 213 || $serviceid == 214 || $serviceid == 215) {
-            return view('applyservice.pattaservice', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment'));
+             $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
+            return view('applyservice.pattaservice', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'mainbalance', 'coordinator_permission', 'admin_payment'));
 
         } elseif ($serviceid == 192 || $serviceid == 193 || $serviceid == 194) {
-            return view('applyservice.pattaservice', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment'));
+             $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
+            return view('applyservice.pattaservice', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'mainbalance', 'coordinator_permission', 'admin_payment'));
 
         } elseif ($serviceid == 196) {
             $mainbalance = DB::table('users')->select('wallet')->where('id', 2)->first();
@@ -5264,100 +5268,82 @@ switch ($parentDocType) {
                 'user_id'            => $user_id,
                 'retailer_id'        => $retailer_id,
                 'distributor_id'     => $distributor_id,
-                'service_id'     => $serviceid,
-
-                'name' => $request->applicant_name,
-                'aadhaar_no' => $request->applicant_aadhaar,
-                'mobile' => $request->applicant_mobile,
-                'applicant_document_type' => $request->applicant_document_type,
-
-                'relationship' => $request->relationship,
-                'marital_status' => $request->marital_status,
-                'relation_name' => $request->relation_name,
-                'relation_aadhaar' => $request->relation_aadhaar,
-                'relation_mobile' => $request->relation_mobile,
-                'parent_document_type' => $request->document_type,
-
-                'address_tamil' => $request->address_tamil,
-                'relative_address_tamil' => $request->relative_address_tamil,
-                'relative_address_english' => $request->relative_address_english,
-                'centerno'          => Auth::user()->phone,
+                'service_id'         => $serviceid,
+                'dist_id'             => $request->dist_id,
+                'taluk_id'            => $request->taluk_id,
+                'name'                => $request->name,
+                'mobile'              => $request->mobile,                
+                'door_no'             => $request->door_no,
+                'aadhaar_no'          => $request->aadhaar_no,
+                'postal_area_english' => $request->postal_area_english,
+                'pin_code'            => $request->pin_code,
+                'id_proof'            => $request->id_proof,
+                'state'               => $request->state,
+                'postal_area_tamil'          => $request->postal_area_tamil,
+                'apartment'       => $request->apartment,
+                'street_name'     => $request->street_name,
+                'street_name_tamil'               => $request->street_name_tamil,
+                'state_tamil'               => $request->state_tamil,
+                'district_tamil'               => $request->district_tamil,
+                'post_office'               => $request->post_office,
+                'post_office_tamil'               => $request->post_office_tamil,
+                'village'               => $request->village,
+                'village_tamil'               => $request->village_tamil,
+                'district'               => $request->district,
+                'taluka'               => $request->taluka,
+                'taluka_tamil'               => $request->taluka_tamil,
+                'relationship'               => $request->relationship,
+                'relation_name_tamil'               => $request->relation_name_tamil,
+                'relation_name_english'               => $request->relation_name_english,
+                'relation_aadhaar'               => $request->relation_aadhaar,
+                'relationship_tamil'               => $request->relationship_tamil,
+                'centerno'            => Auth::user()->phone,
+               
                 'status'             => 'Pending',
                 'applied_date'       => date("Y-m-d"),
                 'created_at'         => now(),
             ]);
-          $docType = $request->applicant_document_type;
+         
+            $insertid = DB::getPdo()->lastInsertId();
+            $aadhaarimg = "";
+            $bank_pass_book  = "";
+            $smartcard_onlineprint  = "";
+            $voterid  = "";
 
-switch ($docType) {
-    case 'aadhaar':
-        $applicantColumn = 'aadhaar_card';
-        break;
-
-    case 'smartcard':
-        $applicantColumn = 'smartcard_onlineprint';
-        break;
-
-    case 'voterid':
-        $applicantColumn = 'voterid';
-        break;
-
-    default:
-        $applicantColumn = null;
-        break;
-}
-            if ($request->hasFile($applicantColumn)) {
-
-                $file = $request->file($applicantColumn);
-                $filename = 'APP_' . time() . '.' . $file->getClientOriginalExtension();
-
-                $path = public_path('upload/services/doctype');
-                if (!file_exists($path)) {
-                    mkdir($path, 0755, true);
-                }
-
-                $file->move($path, $filename);
-
-                DB::table('aadhaarcard')->where('id', $insertid)->update([
-                    $applicantColumn => $filename
-                ]);
+            if ($request->aadhaar_card != null) {
+                $aadhaarimg = uniqid() . '.' . $request->file('aadhaar_card')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaarimg);
             }
+            DB::table('aadhaarcard')->where('id', $insertid)->update([
+                'aadhaar_card' => $aadhaarimg,
+            ]);
 
-           $parentDocType = $request->document_type;
-
-switch ($parentDocType) {
-    case 'aadhaar':
-        $parentColumn = 'parent_aadhaar_front';
-        break;
-
-    case 'voter':
-        $parentColumn = 'voterid';
-        break;
-
-    case 'bank':
-        $parentColumn = 'bank_pass_book';
-        break;
-
-    default:
-        $parentColumn = null;
-        break;
-}
-
-            if ($request->hasFile($parentColumn)) {
-
-                $file = $request->file($parentColumn);
-                $filename = 'PAR_' . time() . '.' . $file->getClientOriginalExtension();
-
-                $path = public_path('upload/services/parentdoctype');
-                if (!file_exists($path)) {
-                    mkdir($path, 0755, true);
-                }
-
-                $file->move($path, $filename);
-
-                DB::table('aadhaarcard')->where('id', $insertid)->update([
-                    $parentColumn => $filename
-                ]);
+            if ($request->bank_pass_book != null) {
+                $bank_pass_book    = uniqid() . '.' . $request->file('bank_pass_book')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'bank_pass_book' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['bank_pass_book']['tmp_name'], $filepath . $bank_pass_book);
             }
+            DB::table('aadhaarcard')->where('id', $insertid)->update([
+                'bank_pass_book' => $bank_pass_book,
+            ]);
+            if ($request->smartcard_onlineprint != null) {
+                $smartcard_onlineprint    = uniqid() . '.' . $request->file('smartcard_onlineprint')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'smartcard_onlineprint' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['smartcard_onlineprint']['tmp_name'], $filepath . $smartcard_onlineprint);
+            }
+            DB::table('aadhaarcard')->where('id', $insertid)->update([
+                'smartcard_onlineprint' => $smartcard_onlineprint,
+            ]);
+            if ($request->voterid != null) {
+                $voterid    = uniqid() . '.' . $request->file('voterid')->extension();
+                $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'voterid' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['voterid']['tmp_name'], $filepath . $voterid);
+            }
+            DB::table('aadhaarcard')->where('id', $insertid)->update([
+                'voterid' => $voterid,
+            ]);
+
         } elseif ($serviceid == 159) {
             DB::table('aadhaarcard')->insert([
                 'user_id'           => $user_id,
@@ -5512,7 +5498,7 @@ switch ($parentDocType) {
         if ($coordinator_permission == 1) {
             $getdata = DB::table('aadhaarcard')->where('id', $insertid)->first();
             if ($getdata) {
-                 $bank_pass_book = $getdata->bank_pass_book;
+                  $bank_pass_book = $getdata->bank_pass_book;
                 $smartcard_onlineprint = $getdata->smartcard_onlineprint;
                 $voterid = $getdata->voterid;
                 $voterid_file = $getdata->voterid;
@@ -5559,6 +5545,10 @@ switch ($parentDocType) {
                 $taluka = $getdata->taluka;
                 $taluka_tamil = $getdata->taluka_tamil;
                 $state = $getdata->state;
+                $relationship = $getdata->relationship;
+                $relation_name_tamil = $getdata->relation_name_tamil;
+                $relation_name_english = $getdata->relation_name_english;
+                $relationship_tamil = $getdata->relationship_tamil;
                 $status = $getdata->status;
                 $centerno = $getdata->centerno;
                 $url = url('/');
@@ -5583,12 +5573,13 @@ switch ($parentDocType) {
                 $ch = curl_init();
 
                 if ($serviceid == 56) {
-                   $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bank_pass_book=$bank_pass_book_url&smartcard_onlineprint=$smartcard_onlineprint_url&voterid=$voterid_url&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&postal_area_tamil=$postal_area_tamil&postal_area_english=$postal_area_english&state=$state&mobile=$mobile&pin_code=$pin_code&apartment=$apartment&aadhaar_no=$aadhaar_no&id_proof=$id_proof&street_name=$street_name&street_name_tamil=$street_name_tamil&state_tamil=$state_tamil&district_tamil=$district_tamil&post_office=$post_office&post_office_tamil=$post_office_tamil&village=$village&village_tamil=$village_tamil&district=$district&taluka=$taluka&taluka_tamil=$taluka_tamil&centerno=$centerno";
+                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bank_pass_book=$bank_pass_book_url&smartcard_onlineprint=$smartcard_onlineprint_url&voterid=$voterid_url&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&postal_area_tamil=$postal_area_tamil&postal_area_english=$postal_area_english&state=$state&mobile=$mobile&pin_code=$pin_code&apartment=$apartment&aadhaar_no=$aadhaar_no&id_proof=$id_proof&street_name=$street_name&street_name_tamil=$street_name_tamil&state_tamil=$state_tamil&district_tamil=$district_tamil&post_office=$post_office&post_office_tamil=$post_office_tamil&village=$village&village_tamil=$village_tamil&district=$district&taluka=$taluka&taluka_tamil=$taluka_tamil&centerno=$centerno";
                 } elseif ($serviceid == 58) {
                     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=$service_id&rowid=$rowid&status=$status&aadhaar_no=$aadhaar_no&mobile=$mobile&name=$name&relationship=$relationship&parent_name=$parent_name&parent_aadhaar=$parent_aadhaar&parent_mobile=$parent_mobile&relative_address_english=$relative_address_english&relative_address_tamil=$relative_address_tamil&applicant_document_type=$applicant_document_type&parent_document_type=$parent_document_type&aadhaar_card=$doctype_aadhaar_url&schl_id_card=$doctype_schl_id_card_url&birth_certificate=$doctype_birth_certificate_url&photo=$doctype_photo_url&parent_aadhaar_front=$parent_aadhaar_url&bank_pass_book=$parentdoctype_bank_pass_book_url&voterid=$parentdoctype_voterid_url&centerno=$centerno";
                 } elseif ($serviceid == 158) {
-                     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=$service_id&rowid=$rowid&status=$status&aadhaar_no=$aadhaar_no&mobile=$mobile&name=$name&relationship=$relationship&relation_name=$relation_name&relation_aadhaar=$relation_aadhaar&relation_mobile=$relation_mobile&relative_address_english=$relative_address_english&relative_address_tamil=$relative_address_tamil&marital_status=$marital_status&applicant_document_type=$applicant_document_type&parent_document_type=$parent_document_type&aadhaar_card=$doctype_aadhaar_url&smartcard_onlineprint=$doctype_smartcard_onlineprint_url&voterid_file=$doctype_voterid_url&parent_aadhaar_front=$parent_aadhaar_url&bank_pass_book=$parentdoctype_bank_pass_book_url&voterid=$parentdoctype_voterid_url&centerno=$centerno";
+                     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bank_pass_book=$bank_pass_book_url&smartcard_onlineprint=$smartcard_onlineprint_url&voterid=$voterid_url&aadhaar_file=$aadhaar_url&service_id=$service_id&rowid=$rowid&status=$status&name=$name&door_no=$door_no&dist_id=$dist_id&taluk_id=$taluk_id&postal_area_tamil=$postal_area_tamil&postal_area_english=$postal_area_english&state=$state&mobile=$mobile&pin_code=$pin_code&apartment=$apartment&aadhaar_no=$aadhaar_no&id_proof=$id_proof&street_name=$street_name&street_name_tamil=$street_name_tamil&state_tamil=$state_tamil&district_tamil=$district_tamil&post_office=$post_office&post_office_tamil=$post_office_tamil&village=$village&village_tamil=$village_tamil&district=$district&taluka=$taluka&taluka_tamil=$taluka_tamil&centerno=$centerno&relationship=$relationship&relation_name_tamil=$relation_name_tamil&relation_name_english=$relation_name_english&relation_aadhaar=$relation_aadhaar&relationship_tamil=$relationship_tamil";
                 }
+
 
             //dd($post_data);
                 $url1 = $RAMJIPAY_URL . '/api/get_aadhaarcard_api';
@@ -8971,6 +8962,7 @@ if($coordinator_permission == 1){
         if(Auth::user()->wallet < $servicepayment){
             return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
         }
+         if ($serviceid == 213 || $serviceid == 214 || $serviceid == 215) {
         DB::table('patta')->insert([
             'user_id'         => $user_id,
             'retailer_id'     => $retailer_id,
@@ -9011,8 +9003,7 @@ if($coordinator_permission == 1){
         DB::table('patta')->where('id', $insertid)->update([
             'ec' => $ec,
         ]);
-
-        $servicepayment = $request->service_amount;
+    }
         if (Auth::user()->user_type_id == 3) {
             $user_id = $distributor_id;
         } elseif (Auth::user()->user_type_id == 4) {
@@ -9047,6 +9038,92 @@ if($coordinator_permission == 1){
         $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
         DB::update(DB::raw($sql));
 
+        $getpermission = DB::table('service_payment')->where('service_id', $serviceid)->first();
+        $coordinator_permission = 0;
+        $admin_payment = 0;
+        if ($getpermission) {
+            $coordinator_permission = $getpermission->coordinator_permission;
+            $admin_payment = $getpermission->admin_amount;
+        }
+        if ($coordinator_permission == 1) {
+            $getdata = DB::table('patta')->where('id', $insertid)->first();
+            if ($getdata) {
+                $bond_doc = $getdata->bond_doc;
+                $ec = $getdata->ec;
+                $service_id = $getdata->service_id;
+                $rowid = $getdata->id;
+                $can_no = $getdata->can_no;
+                $taluk_id = $getdata->taluk_id;
+                $dist_id = $getdata->dist_id;
+                $reg_office = $getdata->reg_office;
+                $subdivision_no = $getdata->subdivision_no;
+                $rev_village = $getdata->rev_village;
+                $survey_no = $getdata->survey_no;
+                $transacted_area = $getdata->transacted_area;
+                $status = $getdata->status;
+                $url = url('/');
+                $bond_doc_url = $url . '/upload/services/bond_doc/' . $bond_doc;
+                $ec_url = $url . '/upload/services/ec/' . $ec;
+                $API_KEY = env('API_KEY', '');
+                $RAMJIPAY_URL = env('RAMJIPAY_URL', '');
+                $WEBSITE_INDEX = env('WEBSITE_INDEX', '');
+                $ch = curl_init();
+
+                if ($serviceid == 213) {
+                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bond_doc=$bond_doc_url&service_id=228&rowid=$rowid&status=$status&ec=$ec_url&can_no=$can_no&dist_id=$dist_id&taluk_id=$taluk_id&reg_office=$reg_office&subdivision_no=$subdivision_no&rev_village=$rev_village&survey_no=$survey_no&transacted_area=$transacted_area";
+                } elseif ($serviceid == 214) {
+                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bond_doc=$bond_doc_url&service_id=229&rowid=$rowid&status=$status&ec=$ec_url&can_no=$can_no&dist_id=$dist_id&taluk_id=$taluk_id&reg_office=$reg_office&subdivision_no=$subdivision_no&rev_village=$rev_village&survey_no=$survey_no&transacted_area=$transacted_area";
+                } elseif ($serviceid == 215) {
+                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&bond_doc=$bond_doc_url&service_id=230&rowid=$rowid&status=$status&ec=$ec_url&can_no=$can_no&dist_id=$dist_id&taluk_id=$taluk_id&reg_office=$reg_office&subdivision_no=$subdivision_no&rev_village=$rev_village&survey_no=$survey_no&transacted_area=$transacted_area";
+               
+                }
+
+
+                //dd($post_data);
+                $url1 = $RAMJIPAY_URL . '/api/get_patta_api';
+                curl_setopt($ch, CURLOPT_URL, $url1);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $server_output = curl_exec($ch);
+                curl_close($ch);
+                $resdata = json_decode($server_output, true);
+                //dd($resdata);
+                if ($resdata) {
+                    $status = $resdata['message'];
+                    if ($status == "Success") {
+                        $date = date('Y-m-d');
+                        $time = date('H:i:s');
+                        $service_status = 'Out Payment';
+                        $ad_info = 'Ramji Wallet Debit' . ' ' . $servicename;
+                        $getrawallet = DB::table('users')->select('rawallet')->where('id', 1)->first();
+                        $rawallet = 0;
+                        if ($getrawallet) {
+                            $balance1 = $getrawallet->rawallet;
+                        }
+
+                        $getrawallet1 = DB::table('users')->select('rawallet')->where('id', 2)->first();
+                        $rawallet1 = 0;
+                        if ($getrawallet1) {
+                            $balance2 = $getrawallet1->rawallet;
+                        }
+                        $newbalance2 = $balance1 + $admin_payment;
+                        $newbalance3 = $balance2 - $admin_payment;
+                        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+                        DB::insert(DB::raw($sql));
+                        $sql = "update users set rawallet = rawallet + $admin_payment where id = 1";
+                        DB::update(DB::raw($sql));
+                        $service_status = 'IN Payment';
+                        $ad_info = 'Ramji Wallet Credit' . ' ' . $servicename;
+
+                        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+                        DB::insert(DB::raw($sql));
+                        $sql = "update users set rawallet = rawallet - $admin_payment where id = 2";
+                        DB::update(DB::raw($sql));
+                    }
+                }
+            }
+        }
         return redirect("appliedservice/Pending")->With("success", "Application submitted Succesfully");
 
     }
