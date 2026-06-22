@@ -210,7 +210,7 @@ $finalServiceIds = $userPermission->intersect($adminPermission);
         $mobile = $request->mobile;
         $mode = $request->mode;
         $orderid = rand(000000000,999999999);
-       $panurl =  "https://connect.inspay.in/v4/nsdl/new_pan?username=IP7598984380&token=836a596851ed939b19a4b71157c47e1d&number=$mobile&mode=$mode&orderid=$orderid";
+       $panurl = "https://inspay.in/v4/nsdl/new_pan?username=CL_6a2bafa0df6c0&token=55d64aa18672747619cb3f7e0af4424a&number=$mobile&mode=$mode&orderid=$orderid";
     //echo $panurl;die;
     $crl = curl_init();
     curl_setopt( $crl, CURLOPT_URL, $panurl );
@@ -395,7 +395,7 @@ if ($status == "Success") {
         $mobile = $request->mobile;
         $mode = $request->mode;
         $orderid = rand(000000000,999999999);
-        $panurl =  "https://connect.inspay.in/v4/nsdl/correction?username=IP7598984380&token=836a596851ed939b19a4b71157c47e1d&number=$mobile&mode=$mode&orderid=$orderid";
+        $panurl = "https://inspay.in/v4/nsdl/correction?username=CL_6a2bafa0df6c0&token=55d64aa18672747619cb3f7e0af4424a&number=$mobile&mode=$mode&orderid=$orderid";
         $crl = curl_init();
         curl_setopt( $crl, CURLOPT_URL, $panurl );
         curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
@@ -548,7 +548,7 @@ if ($status == "Success") {
 
   public function pancard_reapply($txid,$serviceid){
 
-    $panurl =  "https://connect.inspay.in/v4/nsdl/incomplete?username=IP7598984380&token=836a596851ed939b19a4b71157c47e1d&orderid=$txid";
+    $panurl =  "https://inspay.in/v4/nsdl/incomplete?username=CL_6a2bafa0df6c0&token=55d64aa18672747619cb3f7e0af4424a&orderid=$txid";
     $crl = curl_init();
     curl_setopt( $crl, CURLOPT_URL, $panurl );
     curl_setopt( $crl, CURLOPT_FRESH_CONNECT, true );
