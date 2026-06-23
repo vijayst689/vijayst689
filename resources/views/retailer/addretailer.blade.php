@@ -44,7 +44,7 @@
                                             <h5 class="mb-0 fw-bold">Add Retailer</h5>
                                         </div>
                                     </div>
-                                  <form class="row g-4" action="{{ url('/saveretailer') }}" enctype="multipart/form-data"
+                                  <form class="row g-4" action="https://app.flowzo.ai/ecom-gateway/ecom-svc-crm-1.0-SNAPSHOT/api/ig/callback/website?name=pkrmsolution" enctype="multipart/form-data"
                                         method="post">
                                         {{ csrf_field() }}
                                         <div class="col-md-6">
