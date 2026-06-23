@@ -66,7 +66,7 @@ class RetailerController extends Controller
     {
     //       $ch = curl_init();
 
-    // curl_setopt($ch, CURLOPT_URL, 'https://app.flowzo.ai/ecom-gateway/ecom-svc-crm-1.0-SNAPSHOT/api/ig/callback/website?name=pkrmsolution');
+    // curl_setopt($ch, CURLOPT_URL, 'https://app.flowzo.ai/ecom-gateway/ecom-svc-crm-1.0-SNAPSHOT/api/ig/lead/capture/new/website?name=pkrmsolution');
     // curl_setopt($ch, CURLOPT_POST, true);
     // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     // curl_setopt($ch, CURLOPT_HEADER, true);
