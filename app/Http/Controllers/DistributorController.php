@@ -52,6 +52,19 @@ class DistributorController extends Controller
 
     public function savedistributor(Request $request)
     {
+    //             $ch = curl_init();
+
+    // curl_setopt($ch, CURLOPT_URL, 'https://app.flowzo.ai/ecom-gateway/ecom-svc-crm-1.0-SNAPSHOT/api/ig/callback/website?name=pkrmsolution');
+    // curl_setopt($ch, CURLOPT_POST, true);
+    // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    // curl_setopt($ch, CURLOPT_HEADER, true);
+
+    // $response = curl_exec($ch);
+
+    // dd(
+    //     curl_getinfo($ch, CURLINFO_HTTP_CODE),
+    //     $response
+    // );
       $userid = Auth::user()->id;
       $savedistributor = DB::table('users')->insert([
         'name'          => $request->name,
