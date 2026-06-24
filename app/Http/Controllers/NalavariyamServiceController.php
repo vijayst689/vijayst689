@@ -850,9 +850,13 @@ public function nalavariyam_createapplication( Request $request ) {
     $marge_bottom = $result[ 0 ]->marge_bottom;
 
     $targetDir = 'upload/output/';
-    $API_KEY = env( 'API_KEY', '' );
+     $API_KEY = env( 'API_KEY', '' );
     $ch = curl_init();
+    $dist_ids = explode(',', $dist_id);
+    $dist_id = trim($dist_ids[0]); // first district
+
     $post_data = "key=$API_KEY&dist_id=$dist_id";
+    // dd($dist_id);
     //dd($post_data);
     $website_url = "https://erp.nalavariyam.org";
     $url = $website_url.'/api/getsignature';

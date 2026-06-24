@@ -54,7 +54,7 @@ class DistributorController extends Controller
     {
     //             $ch = curl_init();
 
-    // curl_setopt($ch, CURLOPT_URL, 'https://app.flowzo.ai/ecom-gateway/ecom-svc-crm-1.0-SNAPSHOT/api/ig/callback/website?name=pkrmsolution');
+    // curl_setopt($ch, CURLOPT_URL, 'https://app.flowzo.ai/ecom-gateway/ecom-svc-crm-1.0-SNAPSHOT/api/ig/lead/capture/new/website?name=pkrmsolution');
     // curl_setopt($ch, CURLOPT_POST, true);
     // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     // curl_setopt($ch, CURLOPT_HEADER, true);
@@ -65,6 +65,24 @@ class DistributorController extends Controller
     //     curl_getinfo($ch, CURLINFO_HTTP_CODE),
     //     $response
     // );
+
+//     $ch = curl_init();
+
+// curl_setopt($ch, CURLOPT_URL, 'https://app.flowzo.ai/ecom-gateway/ecom-svc-crm-1.0-SNAPSHOT/api/ig/lead/capture/new/website?name=pkrmsolution.com');
+// curl_setopt($ch, CURLOPT_POST, true);
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+// curl_setopt($ch, CURLOPT_HEADER, true);
+// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+// curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
+// $response = curl_exec($ch);
+
+// dd([
+//     'http_code' => curl_getinfo($ch, CURLINFO_HTTP_CODE),
+//     'error_no'  => curl_errno($ch),
+//     'error'     => curl_error($ch),
+//     'response'  => $response,
+// ]);
       $userid = Auth::user()->id;
       $savedistributor = DB::table('users')->insert([
         'name'          => $request->name,
