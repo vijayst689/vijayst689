@@ -111,7 +111,7 @@ class RetailerController extends Controller
             'phone'        => $request->phone,
             'address'      => $request->address,
             'refferal_id'  => $userid,
-            'user_type_id' => '3',
+            'user_type_id' => '4',
             'status'       => 'Active',
         ]);
 
