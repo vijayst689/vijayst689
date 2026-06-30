@@ -135,13 +135,50 @@ public function customLogin(Request $request)
 
     public function savedistributorregister(Request $request)
     {
+                $postData = [
+            "name"       => $request->name,
+            "aadhaar_no" => $request->aadhaar_no,
+            "password"   => $request->password,
+            "email"      => $request->email,
+            "phone"      => $request->phone,
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://app.flowzo.ai/ecom-gateway/ecom-svc-crm-1.0-SNAPSHOT/api/ig/lead/capture/new/website?name=pkrmsolution');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+        ]);
+
+        $response = curl_exec($ch);
+
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error    = curl_error($ch);
+
+        curl_close($ch);
+
+// Optional Log
+        \Log::info('Flowzo API Response', [
+            'http_code' => $httpCode,
+            'response'  => $response,
+            'error'     => $error,
+        ]);
+
+// API fail aana stop pannalam
+        if ($httpCode != 200) {
+            return back()->with('error', 'Lead API Failed');
+        }
+        // dd($httpCode, json_decode($response, true), $error);
+
         DB::table( 'users' )->insert( [
             'name'          => $request->name,
             'phone'         => $request->phone,
             'email'         => $request->email,
             'aadhaar_no'    => $request->aadhaar_no,
-            'dist_id'       => $request->dist_id,
-            'taluk_id'      => $request->taluk_id,
             'password'      => Hash::make($request->password),
             'cpassword'     => $request->password,
             'status'        => 'Active',
@@ -157,7 +194,46 @@ public function customLogin(Request $request)
     }
 
     public function saveretailerregister(Request $request)
-    {
+    {   
+                $postData = [
+            "name"       => $request->name,
+            "aadhaar_no" => $request->aadhaar_no,
+            "password"   => $request->password,
+            "email"      => $request->email,
+            "phone"      => $request->phone,
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://app.flowzo.ai/ecom-gateway/ecom-svc-crm-1.0-SNAPSHOT/api/ig/lead/capture/new/website?name=pkrmsolution');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+        ]);
+
+        $response = curl_exec($ch);
+
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error    = curl_error($ch);
+
+        curl_close($ch);
+
+// Optional Log
+        \Log::info('Flowzo API Response', [
+            'http_code' => $httpCode,
+            'response'  => $response,
+            'error'     => $error,
+        ]);
+
+// API fail aana stop pannalam
+        if ($httpCode != 200) {
+            return back()->with('error', 'Lead API Failed');
+        }
+        // dd($httpCode, json_decode($response, true), $error);
+        
         DB::table( 'users' )->insert( [
             'name'          => $request->name,
             'phone'         => $request->phone,

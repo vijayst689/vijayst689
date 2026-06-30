@@ -98,7 +98,7 @@ class RetailerController extends Controller
         if ($httpCode != 200) {
             return back()->with('error', 'Lead API Failed');
         }
-        dd($httpCode, json_decode($response, true), $error);
+        // dd($httpCode, json_decode($response, true), $error);
 
         $userid = Auth::user()->id;
 

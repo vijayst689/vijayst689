@@ -98,12 +98,16 @@
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
                                                             <label for="field-2" class="form-label">Phone</label>
-                                                            <input  class="form-control check-duplicate" name="phone"
-                                                                data-field="phone"
+
+                                                            <input type="text"
+                                                                class="form-control check-duplicate number"
+                                                                name="phone" data-field="phone"
                                                                 data-url="{{ url('checkphoneregister') }}"
                                                                 data-error="#dist_phone_err" data-btn="#dist_submit"
                                                                 maxlength="10" required>
+
                                                             <span class="spinner"></span>
+
                                                             <small id="dist_phone_err" class="text-danger"></small>
                                                         </div>
                                                     </div>
@@ -113,11 +117,12 @@
                                                     <div class="col-md-12">
                                                         <div class="mb-3">
                                                             <label for="field-1" class="form-label">Aadhaar No</label>
-                                                            <input class="form-control check-duplicate"
+                                                            <input type="text" required
+                                                                class="form-control check-duplicate number"
                                                                 name="aadhaar_no" data-field="aadhaar_no"
                                                                 data-url="{{ url('checkaadharregister') }}"
-                                                                data-error="#dist_aadhaar_err" data-btn="#dist_submit"
-                                                                maxlength="12" required>
+                                                                data-error="#ret_aadhaar_err" data-btn="#ret_submit"
+                                                                maxlength="12">
                                                             <span class="spinner"></span>
                                                             <small id="dist_aadhaar_err" class="text-danger"></small>
                                                         </div>
@@ -217,17 +222,20 @@
                                                                 placeholder="Name">
                                                         </div>
                                                     </div>
-
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
-                                                            <label for="phone" class="form-label">Phone</label>
-                                                            <input class="form-control check-duplicate" name="phone"
-                                                                data-field="phone"
+                                                            <label for="field-2" class="form-label">Phone</label>
+
+                                                            <input type="text"
+                                                                class="form-control check-duplicate number"
+                                                                name="phone" data-field="phone"
                                                                 data-url="{{ url('checkphoneregisterretailer') }}"
-                                                                data-error="#ret_phone_err" data-btn="#ret_submit"
+                                                                data-error="#dist_phone_err" data-btn="#dist_submit"
                                                                 maxlength="10" required>
+
                                                             <span class="spinner"></span>
-                                                            <small id="ret_phone_err" class="text-danger"></small>
+
+                                                            <small id="dist_phone_err" class="text-danger"></small>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -237,10 +245,12 @@
                                                         <div class="mb-3">
                                                             <label for="field-1" class="form-label">Aadhaar
                                                                 No</label>
-                                                            <input required class="form-control check-duplicate"
+                                                            <input type="text" required
+                                                                class="form-control check-duplicate number"
                                                                 name="aadhaar_no" data-field="aadhaar_no"
                                                                 data-url="{{ url('checkaadharregisterretailer') }}"
-                                                                data-error="#ret_aadhaar_err" data-btn="#ret_submit">
+                                                                data-error="#ret_aadhaar_err" data-btn="#ret_submit"
+                                                                maxlength="12">
                                                             <span class="spinner"></span>
                                                             <small id="ret_aadhaar_err" class="text-danger"></small>
                                                         </div>
@@ -383,6 +393,10 @@
             let form = button.closest('form');
             button.prop('disabled', form.find('.is-invalid').length > 0);
         }
+
+        $(".number").on("input", function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
     </script>
     <!--app JS-->
     <script src="assets/js/app.js"></script>
