@@ -59,6 +59,75 @@
 
     <!-- Facebook Domain Verification -->
     <meta name="facebook-domain-verification" content="o7tjuxul606tpvrxq094bhwog98hc5" />
+    <style>
+        #policy{
+    background: linear-gradient(135deg,#0f172a,#111827,#1e293b);
+    padding:80px 0;
+}
+
+#policy .section-title h2,
+#policy .section-title span,
+#policy .intro-title{
+    color:#fff;
+}
+
+#policy .intro-text{
+    color:#cbd5e1;
+}
+
+#policy .card{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:18px;
+    backdrop-filter:blur(12px);
+    color:#e5e7eb;
+    transition:.4s;
+    overflow:hidden;
+}
+
+#policy .card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 45px rgba(0,0,0,.35);
+}
+
+#policy .card-header{
+    background:linear-gradient(90deg,#2563eb,#0ea5e9)!important;
+    border:none;
+    padding:18px 25px;
+}
+
+#policy .card:last-child .card-header{
+    background:linear-gradient(90deg,#9333ea,#6366f1)!important;
+}
+
+#policy .card-body{
+    padding:28px;
+}
+
+#policy h5{
+    color:#60a5fa;
+    margin-top:22px;
+    font-weight:700;
+}
+
+#policy p,
+#policy li{
+    color:#d1d5db;
+    line-height:1.8;
+}
+
+#policy ul{
+    padding-left:20px;
+}
+
+#policy li{
+    margin-bottom:8px;
+}
+
+#policy strong{
+    color:#fff;
+}
+    </style>    
 </head>
 
 <body class="index-page">
@@ -81,6 +150,7 @@
                     <li><a href="#hero" class="active">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#services">Services</a></li>
+                    <li><a href="#policy">Privacy Policy</a></li>
                     <li><a href="{{ url('register') }}">Register</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -330,26 +400,6 @@
                             </a>
                         </div>
                     </div>
-                    {{-- <div class="col-4 col-md-3 mb-3 category_data">
-                        <div class="card p-2 h-100">
-                            <a>
-                                <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/aadhar.jpg') }}" width="100%" />
-                                    <p class="text-primary">Adhaar Card Services</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div> --}}
-                    {{-- <div class="col-4 col-md-3 mb-3 category_data">
-                        <div class="card p-2 h-100">
-                            <a>
-                                <div class="mb-1">
-                                    <img src="{{ asset('assets/images/mylogo/can.jpg') }}" width="100%" />
-                                    <p class="text-primary">CAN EDIT</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div> --}}
                     <div class="col-4 col-md-3 mb-3 category_data">
                         <div class="card p-2 h-100">
                             <a>
@@ -671,6 +721,180 @@
             </div>
 
         </section><!-- /Services Section -->
+<section id="policy" class="services section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Privacy Policy</h2>
+        <div>
+            <span>Privacy Policy &</span>
+            <span class="description-title">Terms & Conditions</span>
+        </div>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="section-intro mb-5">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="intro-title">PKRM Solution</h2>
+                    <p class="intro-text">
+                        👉 Please read our Privacy Policy and Terms & Conditions carefully before using PKRM Solution services.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- START CONTENT -->
+
+        <div class="row">
+
+            <!-- Privacy Policy -->
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow-sm h-100 border-0">
+
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Privacy Policy</h4>
+                    </div>
+
+                    <div class="card-body">
+
+                        <p><strong>Effective Date:</strong> 09 July 2026</p>
+
+                        <p>
+                            Welcome to <strong>PKRM Solution</strong>.
+                            We respect your privacy and are committed to protecting your personal information.
+                        </p>
+
+                        <h5>Information We Collect</h5>
+
+                        <ul>
+                            <li>Name</li>
+                            <li>Mobile Number</li>
+                            <li>Email Address</li>
+                            <li>Business Information</li>
+                            <li>Any information submitted through our contact or registration forms</li>
+                        </ul>
+
+                        <h5>How We Use Your Information</h5>
+
+                        <ul>
+                            <li>To respond to your enquiries</li>
+                            <li>To provide our products and services</li>
+                            <li>To contact you regarding demos or support</li>
+                            <li>To improve our website and customer experience</li>
+                            <li>To send service-related updates</li>
+                        </ul>
+
+                        <h5>Information Sharing</h5>
+
+                        <p>
+                            We do not sell, rent, or share your personal information with third parties except when required by law or to provide our services.
+                        </p>
+
+                        <h5>Cookies</h5>
+
+                        <p>
+                            Our website may use cookies and analytics tools to improve website performance and user experience.
+                        </p>
+
+                        <h5>Data Security</h5>
+
+                        <p>
+                            We take reasonable measures to protect your personal information. However, no internet transmission is completely secure.
+                        </p>
+
+                        <h5>Your Consent</h5>
+
+                        <p>
+                            By using our website, you agree to this Privacy Policy.
+                        </p>
+
+                        <h5>Contact Us</h5>
+
+                        <p>
+                            If you have any questions regarding this Privacy Policy, please contact PKRM Solution through the contact details available on our website.
+                        </p>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Terms -->
+            <div class="col-lg-6 mb-4">
+
+                <div class="card shadow-sm h-100 border-0">
+
+                    <div class="card-header bg-dark text-white">
+                        <h4 class="mb-0">Terms & Conditions</h4>
+                    </div>
+
+                    <div class="card-body">
+
+                        <p><strong>Effective Date:</strong> 09 July 2026</p>
+
+                        <p>
+                            By accessing and using the PKRM Solution website, you agree to the following terms and conditions.
+                        </p>
+
+                        <h5>Website Usage</h5>
+
+                        <ul>
+                            <li>Use this website only for lawful purposes.</li>
+                            <li>Provide accurate information when submitting forms.</li>
+                            <li>Do not attempt unauthorized access or misuse of the website.</li>
+                        </ul>
+
+                        <h5>Intellectual Property</h5>
+
+                        <p>
+                            All website content, including text, images, logos, graphics and trademarks belongs to PKRM Solution.
+                        </p>
+
+                        <h5>Service Availability</h5>
+
+                        <p>
+                            PKRM Solution may modify, update or discontinue any service without prior notice.
+                        </p>
+
+                        <h5>Limitation of Liability</h5>
+
+                        <p>
+                            PKRM Solution is not responsible for any direct or indirect loss arising from the use of this website.
+                        </p>
+
+                        <h5>Applicable Law</h5>
+
+                        <p>
+                            These Terms & Conditions are governed by the laws of India.
+                        </p>
+
+                        <h5>Acceptance</h5>
+
+                        <p>
+                            By continuing to use this website, you accept these Terms & Conditions.
+                        </p>
+
+                        <h5>Contact Us</h5>
+
+                        <p>
+                            For any questions regarding these Terms & Conditions, please contact PKRM Solution.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- END CONTENT -->
+
+    </div>
+
+</section>
 
         <!-- Why Us Section -->
         <section id="why-us" class="why-us section light-background">
@@ -882,6 +1106,7 @@
                         <li><a href="#">Home</a></li>
                         <li><a href="#">About us</a></li>
                         <li><a href="#">Services</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
                     </ul>
                 </div>
 
