@@ -89,3 +89,18 @@ Route::get('/wallet-users', function (Request $request) {
 
 // PATTA SERVICE 
 Route::post('/get_pattastatus', [App\Http\Controllers\api\ApiController::class, 'get_pattastatus'])->name('get_pattastatus');
+
+//ESEVAI SERVICE 
+Route::post('/get_esevai_servicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_esevai_servicesstatus'])->name('get_esevai_servicesstatus');
+
+//NATIVITY SERVICE 
+Route::post('/get_nativity_servicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_nativity_servicesstatus'])->name('get_nativity_servicesstatus');
+
+//NATIVITY SERVICE 
+Route::post('/get_residence_servicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_residence_servicesstatus'])->name('get_residence_servicesstatus');
+
+//UNEMPLOYED SERVICE 
+Route::post('/get_unemployed_servicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_unemployed_servicesstatus'])->name('get_unemployed_servicesstatus');
+
+//INCOME SERVICE 
+Route::post('/get_income_servicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_income_servicesstatus'])->name('get_income_servicesstatus');

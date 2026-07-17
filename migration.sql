@@ -2862,3 +2862,691 @@ alter table aadhaarcard add relationship_tamil varchar(70) DEFAULT NULL;
 
 ALTER TABLE nalavariyam_form
 MODIFY COLUMN dist_id TEXT NULL;
+
+17-07-2026
+
+
+CREATE TABLE `tnega_customers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `name` text DEFAULT NULL,
+  `name_tamil` text DEFAULT NULL,
+  `aadhaar_no` text DEFAULT NULL,
+  `mobile` varchar(10) DEFAULT NULL,
+  `can_number` text DEFAULT NULL,
+  `dob` varchar(10) DEFAULT NULL,
+  `religion` text DEFAULT NULL,
+  `mother_name_tamil` text DEFAULT NULL,
+  `mother_name_english` text DEFAULT NULL,
+  `father_name_tamil` text DEFAULT NULL,
+  `father_name_english` text DEFAULT NULL,
+  `gender` text DEFAULT NULL,
+  `district_name` text DEFAULT NULL,
+  `panchayath_name` text DEFAULT NULL,
+  `taluk_name` text DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `address_tamil` text DEFAULT NULL,
+  `marital_status` text DEFAULT NULL,
+  `status` text DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+alter table family_member add sex varchar(20) DEFAULT NULL after income;
+alter table family_member add living_status varchar(100) DEFAULT NULL after sex;
+
+alter table family_member add sex varchar(20) DEFAULT NULL after income;
+alter table family_member add living_status varchar(100) DEFAULT NULL after sex;
+
+ALTER TABLE family_member
+MODIFY profession varchar(100);
+
+ALTER TABLE family_member ADD COLUMN family_name_tamil VARCHAR(100) NULL;
+ALTER TABLE family_member ADD COLUMN family_name_english VARCHAR(100) NULL;
+ALTER TABLE family_member ADD COLUMN age TINYINT NULL;
+ALTER TABLE family_member ADD COLUMN sex VARCHAR(20) NULL;
+ALTER TABLE family_member ADD COLUMN profession VARCHAR(50) NULL;
+ALTER TABLE family_member ADD COLUMN family_profession VARCHAR(100) NULL;
+ALTER TABLE family_member ADD COLUMN income_source VARCHAR(100) NULL;
+ALTER TABLE family_member ADD COLUMN relationship VARCHAR(50) NULL;
+
+
+ALTER TABLE family_member ADD COLUMN name_tamil VARCHAR(100) NULL;
+ALTER TABLE family_member ADD COLUMN name_english VARCHAR(100) NULL;
+ALTER TABLE family_member ADD COLUMN age TINYINT NULL;
+ALTER TABLE family_member ADD COLUMN sex VARCHAR(20) NULL;
+ALTER TABLE family_member ADD COLUMN profession VARCHAR(100) NULL;
+ALTER TABLE family_member ADD COLUMN income_source VARCHAR(100) NULL;
+
+
+ALTER TABLE family_member ADD COLUMN family_profession VARCHAR(100) NULL;
+ALTER TABLE family_member ADD COLUMN family_income_source VARCHAR(100) NULL;
+ALTER TABLE family_member ADD COLUMN pan_card VARCHAR(20) NULL;
+ALTER TABLE family_member ADD COLUMN extra_document VARCHAR(100) NULL;
+alter table family_member add father_form varchar(100) DEFAULT NULL after living_status;
+alter table family_member add education_document varchar(100) DEFAULT NULL after father_form;
+
+alter table family_member add tamil_name varchar(100) DEFAULT NULL after education_document;
+alter table family_member add english_name varchar(100) DEFAULT NULL after tamil_name;
+
+
+CREATE TABLE `family_member_new` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `relation` varchar(255) DEFAULT NULL,
+  `tamil_name` varchar(255) DEFAULT NULL,
+  `english_name` varchar(255) DEFAULT NULL,
+  `relation_age` varchar(50) DEFAULT NULL,
+  `living_status` varchar(100) DEFAULT NULL,
+  `education` varchar(255) DEFAULT NULL,
+  `doc` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+alter table family_member_new add family_count varchar(20) DEFAULT NULL after doc;
+
+ALTER TABLE family_member ADD COLUMN pancard VARCHAR(20) NULL;
+ALTER TABLE family_member ADD COLUMN family_extra  VARCHAR(60) NULL;
+ALTER TABLE family_member ADD COLUMN family_pan  VARCHAR(60) NULL;
+
+ALTER TABLE family_member
+ADD applied_service_id INT(11) DEFAULT 0;
+
+alter table tnega_services add employment_card text DEFAULT NULL after nativity_type;   
+alter table tnega_services add school_college_name text DEFAULT NULL after employment_card;   
+alter table tnega_services add board_university text DEFAULT NULL after school_college_name;   
+alter table tnega_services add year_of_birth text DEFAULT NULL after board_university;   
+alter table tnega_services add graduation text DEFAULT NULL after year_of_birth;   
+alter table tnega_services add qualification text DEFAULT NULL after graduation;   
+
+alter table family_member add salary_slip varchar(20) DEFAULT NULL;
+alter table family_member add land_hold varchar(20) DEFAULT NULL;
+alter table family_member add tin_number varchar(20) DEFAULT NULL;
+alter table family_member add owned_house varchar(20) DEFAULT NULL;
+
+CREATE TABLE obc_castes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    serial_no INT NOT NULL,
+    caste_name text NOT NULL
+);
+
+INSERT INTO obc_castes (serial_no, caste_name) VALUES
+(41,'Gounder'),
+(42,'Gowda (including Gammala, Kalali and Anuppa Gounder)'),
+(43,'Hegde'),
+(44,'Idiga'),
+(45,'Illathu Pillaimar, Illuvar, Ezhuvar and Illathar'),
+(46,'Inji Koravar (In Thanjavur, Tiruchirapalli and Pudukottai districts)'),
+(47,'Isaivellalar'),
+(48,'Jambuvankodai'),
+(49,'Jangam'),
+(50,'Jhetty'),
+(51,'Jogi (including Jogis)'),
+(52,'Kabbera'),
+(53,'Kaikolan, Kaikolar, Sengunthar'),
+(54,'Kaladi'),
+(55,'Kala Koravar (In Thanjavur, Tiruchirapalli and Pudukottai districts)'),
+(56,'Kalari Kurup including Kalari Panicker (In Kanniyakumari district and Shencottah taluk of Tirunelveli district)'),
+(57,'Kalingi'),
+(58,'Kalinji Dabikoravar (In Thanjavur and Pudukottai districts)'),
+(59,'Kallar (including Easanattu Kallar, Gandarvakkottai Kallar, Koottappal Kallar, Piramalai Kallar and Periasooriyur Kallar)'),
+(60,'Kalveli Gounder'),
+(61,'Kambar'),
+(62,'Kammalar or Viswakarama, Viswakammala (including Thattar, Porkollar, Kannar, Karumar, Kollar, Thacher, Kalthacher, Kamsala and Viswabrahmin)'),
+(63,'Kani, Kanisu, Kaniyar Panikkar'),
+(64,'Kannada Saineegar, Kannadiyar (throughout the State) and Dasapalanjika (Coimbatore, Erode and Nilgiris districts)'),
+(65,'Karuneegar (Seer Karuneegar, Sri Karuneegar, Sarattu Karuneegar, Kaikatti Karuneegar, Mathu Vazhi Kanakkar, Sozhi Kanakkar and Sunnambu Karuneegar)'),
+(66,'Katesar, Pattamkatti'),
+(67,'Kavuthiyar'),
+(68,'Kepmari (in Chengalpattu, Pudukottai and Tiruchirapalli districts)'),
+(69,'Kerala Mudali'),
+(70,'Kharvi'),
+(71,'Khatri'),
+(72,'Kongu Chettiar (in Coimbatore and Periyar district only)'),
+(73,'Kongu Vellalar (including Vellala Gounder, Nattu Gounder, Narambukkatti Gounder, Tirumudi Vellalar, Thondu Vellalar, Pala Gounder, Poosari Gounder, Anuppa Vellala Gounder, Kurumba Gounder, Padaithalai Gounder, Chendalai Gounder, Pavalankatti Vellala Gounder, Pala Vellala Gounder, Sanku Vellala Gounder and Rathinagiri Gounder)'),
+(74,'Koppala Velama'),
+(75,'Koracha'),
+(76,'Koravar (in Chengalpattu, Ramanathapuram, Kamarajar, Pasumpon Muthuramalingam, Pudukottai, Thanjavur, Tiruchirappalli, Tirunelveli, Madras, Madurai and the Nilgiris districts)'),
+(77,'Koteyar'),
+(78,'Krishnanvaka (in Kanniyakumari district and Shencottah taluk of Tirunelveli district)'),
+(79,'Kudumbi (in Kanniyakumari district and Shencottah taluk of Tirunelveli district)'),
+(80,'Kulala (including Kuyavar, Kumbarar and Velar)'),
+(81,'Kunchidigar'),
+(82,'Kunnuvar Mannadi'),
+(83,'Kurhini Chetty'),
+(84,'Kurumba (where they are not Scheduled Tribe)'),
+(85,'Labbai, Rowthar and Marakayar (whether their spoken language is Tamil or Urdu)'),
+(86,'Lambadi'),
+(87,'Latin Catholic (in Kanniyakumari district and Shencottah taluk of Tirunelveli district)'),
+(88,'Jangama'),
+(89,'Mahratta (non-Brahmin) (including Namdev Mahratta)'),
+(90,'Mahendra, Medara'),
+(91,'Malayan, Malayar'),
+(92,'Male'),
+(93,'Maniagar'),
+(94,'Mapilla'),
+(95,'Maravar (including Karumaravar, Appanad Kondayamkottai Maravar and Sembanad Maravar)'),
+(96,'Maruthuvar, Navithar, Mangala, Velakkattalavar, Velakkattalanair and Pronopakari'),
+(97,'Meenavar, Parvatharajakulam, Pattanavar, Sembadavar (including converts to Christianity)'),
+(98,'Monda Koravar'),
+(99,'Mooppan'),
+(100,'Moundadan Chetty'),
+(101,'Mukkuvan, Mukkuvar or Mukayar (including converts to Christianity)'),
+(102,'Muthuraja, Muthuracha, Muttiriyar, Muthiriyar, Mutharaiyar'),
+(103,'Mutlakampatti'),
+(104,'Nadar, Shanar and Gramani (including Christian Nadar, Christian Shanar and Christian Gramani)'),
+(105,'Nagaram'),
+(106,'Naikkar (in Kanniyakumari district and Shencottah taluk of Tirunelveli district)'),
+(107,'Nanjil Mudali (in Kanniyakumari district and Shencottah taluk of Tirunelveli district)'),
+(108,'Narikoravar'),
+(109,'Nokkar'),
+(110,'Odar (in Kanniyakumari district and Shencottah taluk of Tirunelveli district)'),
+(111,'Odiya'),
+(112,'Ovachar'),
+(113,'Pamulu'),
+(114,'Panar (Except in Kanniyakumari district and Shencottah taluk of Tirunelveli district where the community is a Scheduled Caste)'),
+(115,'Pannayar (including Kathikarar in Kanniyakumari district)'),
+(116,'Pannirandam Chettiar or Uthama Chettiar'),
+(117,'Paravar including converts to Christianity (except in Kanniyakumari district and Shencottah taluk of Tirunelveli district where the community is a Scheduled Caste)'),
+(118,'Parkavakulam (Suruthimar including those Suruthimar who call themselves as Moopanar, Nathamar including those Nathamar who call themselves as Nainar, Malayamar)'),
+(119,'Perike (including Perike Balija)'),
+(120,'Perumkollar (in Kanniyakumari district and Shencottah taluk of Tirunelveli district)'),
+(121,'Ponnai Koravar (in North Arcot district)'),
+(122,'Poraya'),
+(123,'Pulluvar or Pooluvar, Pooluva Gounder'),
+(124,'Pusala'),
+(125,'Sadhu Chetty (including Telugu Chetty, Telugupatty Chetty, Twenty-four Manai Telugu Chetty)'),
+(126,'Sakkaravar or Kavathi (in Kanniyakumari district and Shencottah taluk of Tirunelveli district)'),
+(127,'Sakkaraithamadai Koravar (in North Arcot district)'),
+(128,'Salem Melnad Koravar (in Madurai, Coimbatore, Periyar, Pudukottai, Tiruchirappalli, Salem and North Arcot districts)'),
+(129,'Salem Uppu Koravar (in Salem district)'),
+(130,'Salivagana, Salivahana'),
+(131,'Saliyar, Padmasaliyar, Pattusaliyar, Pattariyar and Adhaviyar'),
+(132,'Saranga Palli Koravar'),
+(133,'Sathatha Srivaishnava (including Sathanai, Chattadi and Chattada Srivaishnava)'),
+(134,'Savalakkarar'),
+(135,'Senaithalaivar, Senaikudiyar and Illaivaniar'),
+(136,'Sourashtra (Patnulkarar)'),
+(137,'Sozhia Chetty'),
+(138,'Sozhia Vellalar (including Sozha Vellalar, Vetrilaikarar, Kodikalkarar and Keeraikarar)'),
+(139,'Srisayar'),
+(140,'Thalli Koravar (in Salem district)'),
+(141,'Thogamalai Koravar or Kepmari (in Tiruchirappalli and Pudukottai districts)'),
+(142,'Thogatta Veerakshatriya'),
+(143,'Tholkollar (in Kanniyakumari district and Shencottah taluk of Tirunelveli district)'),
+(144,'Tholuva Naicker and Vetalakara Naicker'),
+(145,'Thondaman'),
+(146,'Thoriyar, Badaga Thoraiyar of Nilgiris'),
+(147,'Thottiya Naicker (including Rajakambalam, Gollavar, Sillavar, Thockalavar and Tholuva Naicker)'),
+(148,'Uppara, Uppillia and Sagara'),
+(149,'Uppukoravar or Settipalli Koravar (in Thanjavur, Pudukottai, Madurai and North Arcot districts)'),
+(150,'Urali Gounder (throughout the State) and Orudya Gounder or Oorudaya Gounder (in Madurai, Coimbatore, Periyar, Tiruchirapalli, Pudukottai and Salem districts)'),
+(151,'Vaduvarpatti Koravar (in Madurai, Ramanathapuram, Pasumpon Muthuramalingam, Kamarajar, Tirunelveli, Tiruchirappalli and Pudukottai districts)'),
+(152,'Valaiyar (including Chettinad Valaiyar)'),
+(153,'Vallambar'),
+(154,'Valmiki'),
+(155,'Vaniyar, Vania Chettiar (including Gandla, Ganika, Telikula and Chekkalar)'),
+(156,'Vannar (Salavai Thozhilalar) including Agasa, Madivala, Ekali, Rajakula, Veluthadar and Rajaka (except in Kanniyakumari district and Shencottah taluk of Tirunelveli district where the community is a Scheduled Caste)'),
+(157,'Vanniyakula Kshatriya (including Vanniya, Vanniyar, Vannia Gounder, Gounder or Kander, Padayachi, Palli and Agnikula Kshatriya)'),
+(158,'Varaganeri Koravar (in Tiruchirappalli and Pudukottai districts)'),
+(159,'Vayalpad or Nawalpeta Koracha'),
+(160,'Veduvar/Vettaikkarar (throughout the State) and Vedar (except in Kanniyakumari district and Shencottah taluk of Tirunelveli district where the community is a Scheduled Caste)'),
+(161,'Veerasaiva (in Kanniyakumari district and Shencottah taluk of Tirunelveli district)'),
+(162,'Vellan Chettiar'),
+(163,'Veluthodathu Nair (in Kanniyakumari district and Shencottah taluk of Tirunelveli district)'),
+(164,'Vetta Koravar (in Salem district)'),
+(165,'Vettuva Gounder, Punnan Vettuva Gounder'),
+(165.1,'Virakodi Vellala (former Panisaivan only)'),
+(166,'Vokkaligar (including Vakkaligar, Okkaligar, Kappiliyar, Kappiliya, Okkaliya, Gowda, Okkaliya Gowda, Okkaliga Gowda, Okkaliya Gowder)'),
+(167,'Wynad Chetty (The Nilgiris district)'),
+(168,'Yadava (including Idaiyar, Telugu speaking Idaiyar known as Vaduga Ayar or Vaduga Idaiyar or Golla, Mond Golla and Asthanthra Golla)'),
+(169,'Yavana'),
+(170,'Yerukula'),
+(171,'Yogeeswarar'),
+(172,'Christian converts from any Hindu Backward Classes'),
+(173,'Battu Turkas'),
+(174,'Devagudi Talayari'),
+(175,'Podikara Vellalar'),
+(176,'Pulavar'),
+(177,'Nangudi Vellalar'),
+(178,'Kuga Vellalar'),
+(179,'Kallar Kula Thondaman'),
+(180,'Thiyya');
+
+alter table family_member add relation_name_english varchar(100) DEFAULT NULL;
+
+
+CREATE TABLE `nativity` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `dist_id` int(11) DEFAULT 0,
+  `taluk_id` int(11) DEFAULT 0,
+  `aadhaar_no` varchar(15) DEFAULT NULL,
+  `nativity_type` varchar(100) DEFAULT NULL,
+  `nativity_district` varchar(100) DEFAULT NULL,
+  `nativity_taluk` varchar(100) DEFAULT NULL,
+  `revenue_village` varchar(100) DEFAULT NULL,
+  `street_name` varchar(100) DEFAULT NULL,
+  `door_no` varchar(50) DEFAULT NULL,
+  `pin_code` varchar(10) DEFAULT NULL,
+  `from_date` varchar(10) DEFAULT NULL,
+  `to_date` varchar(10) DEFAULT NULL,
+  `address_count` varchar(50) DEFAULT NULL,
+  `photo` varchar(20) DEFAULT NULL,
+  `aadhaar_card` varchar(20) DEFAULT NULL,
+  `signature` varchar(20) DEFAULT NULL,
+  `school_proof` varchar(20) DEFAULT NULL,
+  `birth_photo` varchar(20) DEFAULT NULL,
+  `resisdence_birth_certificate` varchar(20) DEFAULT NULL,
+  `birth_aadhaar_card` varchar(20) DEFAULT NULL,
+  `birth_certificate` varchar(20) DEFAULT NULL,
+  `birth_signature` varchar(20) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(100) DEFAULT NULL,
+  `application` varchar(100) DEFAULT NULL,
+  `lects` varchar(50) DEFAULT NULL,
+  `selects` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `income` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `dist_id` int(11) DEFAULT 0,
+  `taluk_id` int(11) DEFAULT 0,
+  `income` int(11) DEFAULT 0,
+  `age` varchar(10) DEFAULT NULL,
+  `family_count` varchar(10) DEFAULT NULL,
+  `income_source` varchar(50) DEFAULT NULL,
+  `profession` varchar(50) DEFAULT NULL,
+  `relation` varchar(100) DEFAULT NULL,
+  `name_english` varchar(100) DEFAULT NULL,
+  `name_tamil` varchar(100) DEFAULT NULL,
+  `tin_number` varchar(50) DEFAULT NULL,
+  `sex` varchar(50) DEFAULT NULL,
+  `owned_house` varchar(50) DEFAULT NULL,
+  `land_hold` varchar(20) DEFAULT NULL,
+  `salary_slip` varchar(20) DEFAULT NULL,
+  `pancard` varchar(20) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(100) DEFAULT NULL,
+  `application` varchar(100) DEFAULT NULL,
+  `lects` varchar(50) DEFAULT NULL,
+  `selects` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `tnega_obc` (
+       `id` int(11) NOT NULL AUTO_INCREMENT,
+       `service_id` int(11) DEFAULT 0,
+       `user_id` int(11) DEFAULT 0,
+       `retailer_id` int(11) DEFAULT 0,
+       `distributor_id` int(11) DEFAULT 0,
+       `admin_id` int(11) DEFAULT 0,
+       `amount` decimal(10,2) DEFAULT 0.00,
+      `name` text DEFAULT NULL,
+      `serial_no` text DEFAULT NULL,
+      `father_alive` text DEFAULT NULL,
+       `father_occupation` text DEFAULT NULL,
+       `father_status` text DEFAULT NULL,
+       `father_pay_scale` text DEFAULT NULL,
+       `father_designation` text DEFAULT NULL,
+       `father_service` text DEFAULT NULL,
+       `pay_scale` text DEFAULT NULL,
+      `father_date_of_appointment` text DEFAULT NULL,
+      `father_promotion_age` text DEFAULT NULL,
+       `name_organization` text DEFAULT NULL,
+       `service_fromdate` text DEFAULT NULL,
+       `service_todate` text DEFAULT NULL,
+       `father_death_date` text DEFAULT NULL,
+       `father_incapacitation_details` text DEFAULT NULL,
+      `father_psu_appointment_date` text DEFAULT NULL,
+      `father_profession` text DEFAULT NULL,
+       `father_irrigated_land` text DEFAULT NULL,
+       `father_irrigated_percentage` text DEFAULT NULL,
+       `father_holding_size` text DEFAULT NULL,
+       `father_conversion_formula` text DEFAULT NULL,
+       `father_crops_fruits` text DEFAULT NULL,
+       `father_area_plantation` text DEFAULT NULL,
+       `father_unirrigated_land` text DEFAULT NULL,
+       `father_location` text DEFAULT NULL,
+      `father_size_holding` text DEFAULT NULL,
+      `father_property_use` text DEFAULT NULL,
+       `father_property_details` text DEFAULT NULL,
+       `father_annual_income` text DEFAULT NULL,
+       `father_tax_payer` text DEFAULT NULL,
+       `father_wealth_tax` text DEFAULT NULL,
+      `father_wealth_tax_details` text DEFAULT NULL,
+       `father_other_remarks` text DEFAULT NULL,
+       `mother_alive` text DEFAULT NULL,
+       `mother_occupation` text DEFAULT NULL,
+       `mother_status` text DEFAULT NULL,
+       `mother_pay_scale` text DEFAULT NULL,
+      `mother_designation` text DEFAULT NULL,
+       `mother_service` text DEFAULT NULL,
+       `mother_gov_designation` text DEFAULT NULL,
+      `mother_scale_of_pay` text DEFAULT NULL,
+       `mother_date_of_appointment` text DEFAULT NULL,
+       `mother_promotion_age` text DEFAULT NULL,
+       `mother_name_organization` text DEFAULT NULL,
+      `mother_servicefromdate` text DEFAULT NULL,
+      `mother_servicetodate` text DEFAULT NULL,
+      `mother_death_date` text DEFAULT NULL,
+      `mother_incapacitation_details` text DEFAULT NULL,
+       `mother_psu_organisation` text DEFAULT NULL,
+       `mother_psu_appointment_date` text DEFAULT NULL,
+      `mother_profession` text DEFAULT NULL,
+       `mother_location` text DEFAULT NULL,
+      `mother_irrigated_land` text DEFAULT NULL,
+     `mother_irrigated_percentage` text DEFAULT NULL,
+        `mother_holding_size` text DEFAULT NULL,
+       `mother_conversion_formula` text DEFAULT NULL,
+       `mother_crops_fruits` text DEFAULT NULL,
+       `mother_area_plantation` text DEFAULT NULL,
+      `mother_unirrigated_land` text DEFAULT NULL,
+     `mother_property_use` text DEFAULT NULL,
+      `mother_property_details` text DEFAULT NULL,
+      `mother_annual_income` text DEFAULT NULL,
+      `mother_tax_payer` text DEFAULT NULL,
+      `mother_wealth_tax` text DEFAULT NULL,
+      `mother_wealth_tax_details` text DEFAULT NULL,
+      `mother_other_remarks` text DEFAULT NULL,
+       `tnega_religion` text DEFAULT NULL,
+      `status` varchar(20) DEFAULT NULL,
+       `remarks` text DEFAULT NULL,
+       `application_no` text DEFAULT NULL,
+      `certificate` varchar(20) DEFAULT NULL,
+      `applied_date` varchar(10) DEFAULT NULL,
+       `completed_date` varchar(10) DEFAULT NULL,
+      `created_at` varchar(10) DEFAULT NULL,
+       PRIMARY KEY (`id`)
+     ) ENGINE=InnoDB;
+
+alter table tnega_obc add caste text DEFAULT NULL after name; 
+alter table tnega_obc add graduation text DEFAULT NULL after caste; 
+alter table tnega_obc add dist_id int(11) DEFAULT 0 after admin_id; 
+alter table tnega_obc add taluk_id int(11) DEFAULT 0 after dist_id; 
+alter table tnega_obc add selects text after application_no; 
+alter table tnega_obc add lects text after selects; 
+alter table tnega_obc add application text after lects; 
+alter table tnega_obc add acknowledgement  text after application;
+
+alter table income add relationship  varchar(50) DEFAULT NULL; 
+alter table income add relation_name_tamil varchar(100) DEFAULT NULL; 
+alter table income add relation_name_english varchar(100) DEFAULT NULL; 
+alter table income add relation_age varchar(10) DEFAULT NULL; 
+alter table income add relation_status varchar(50) DEFAULT NULL; 
+alter table income add family_income_source  varchar(50) DEFAULT NULL; 
+alter table income add photo varchar(20) DEFAULT NULL; 
+alter table income add smart_card varchar(20) DEFAULT NULL; 
+alter table income add signature varchar(20) DEFAULT NULL; 
+alter table income add aadhaar_card varchar(20) DEFAULT NULL; 
+
+ALTER TABLE nativity
+MODIFY door_no TEXT,
+MODIFY street_name TEXT,
+MODIFY pin_code TEXT,
+MODIFY revenue_village TEXT,
+MODIFY nativity_taluk TEXT,
+MODIFY nativity_district TEXT,
+MODIFY from_date TEXT,
+MODIFY to_date TEXT;
+
+alter table tnega_obc add photo text DEFAULT NULL after tnega_religion; 
+alter table tnega_obc add aadhaar_card text DEFAULT NULL after photo; 
+alter table tnega_obc add community text DEFAULT NULL after aadhaar_card; 
+alter table tnega_obc add signature text DEFAULT NULL after community; 
+alter table tnega_obc add mother_income_proof text DEFAULT NULL after signature; 
+alter table tnega_obc add mother_income_proof_file text DEFAULT NULL after mother_income_proof; 
+alter table tnega_obc add father_income_proof_file text DEFAULT NULL after mother_income_proof_file; 
+alter table tnega_obc add father_income_proof text DEFAULT NULL after father_income_proof_file; 
+
+CREATE TABLE `tnega_residence` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `service_id` int(11) DEFAULT 0,
+    `user_id` int(11) DEFAULT 0,
+    `retailer_id` int(11) DEFAULT 0,
+    `distributor_id` int(11) DEFAULT 0,
+    `admin_id` int(11) DEFAULT 0,
+    `amount` decimal(10,2) DEFAULT 0.00,
+    `street_name` longtext DEFAULT NULL,
+    `pin_code` longtext DEFAULT NULL,
+    `door_no` longtext DEFAULT NULL,
+    `revenue_village` longtext DEFAULT NULL,
+    `nativity_taluk` longtext DEFAULT NULL,
+    `nativity_district` longtext DEFAULT NULL,
+    `from_date` longtext DEFAULT NULL,
+    `to_date` longtext DEFAULT NULL,
+    `photo` varchar(255) DEFAULT NULL,
+    `aadhaar_card` varchar(255) DEFAULT NULL,
+    `signature` varchar(255) DEFAULT NULL,
+    `school_proof` varchar(255) DEFAULT NULL,
+    `status` varchar(20) DEFAULT NULL,
+    `remarks` text DEFAULT NULL,
+    `application_no` text DEFAULT NULL,
+    `certificate` varchar(255) DEFAULT NULL,
+    `applied_date` varchar(10) DEFAULT NULL,
+    `completed_date` varchar(10) DEFAULT NULL,
+    `created_at` varchar(20) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+alter table tnega_residence add birth_certificate text DEFAULT NULL after aadhaar_card; 
+alter table tnega_residence add nativity_type text DEFAULT NULL after revenue_village; 
+alter table tnega_residence add selects text DEFAULT NULL after application_no; 
+alter table tnega_residence add address_count text DEFAULT NULL after street_name; 
+alter table tnega_residence add lects text DEFAULT NULL after selects; 
+alter table tnega_residence add application text DEFAULT NULL after application_no; 
+alter table tnega_residence add acknowledgement text DEFAULT NULL after certificate; 
+alter table tnega_residence add dist_id int(11) DEFAULT 0 after admin_id; 
+alter table tnega_residence add taluk_id int(11) DEFAULT 0 after dist_id; 
+
+
+CREATE TABLE `tnega_unemployed` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `service_id` int(11) DEFAULT 0,
+    `user_id` int(11) DEFAULT 0,
+    `retailer_id` int(11) DEFAULT 0,
+    `distributor_id` int(11) DEFAULT 0,
+    `admin_id` int(11) DEFAULT 0,
+    `dist_id` int(11) DEFAULT 0,
+    `taluk_id` int(11) DEFAULT 0,
+    `amount` decimal(10,2) DEFAULT 0.00,
+    `graduation` longtext DEFAULT NULL,
+    `school_college_name` longtext DEFAULT NULL,
+    `year_of_birth` longtext DEFAULT NULL,
+    `year_of_passing` longtext DEFAULT NULL,
+    `qualification` longtext DEFAULT NULL,
+    `board_university` longtext DEFAULT NULL,
+    `from_date` longtext DEFAULT NULL,
+    `to_date` longtext DEFAULT NULL,
+    `photo` text DEFAULT NULL,
+    `aadhaar_card` text DEFAULT NULL,
+    `signature` text DEFAULT NULL,
+    `study_proof` text DEFAULT NULL,
+    `income_certificate` text DEFAULT NULL,
+    `employment_card` text DEFAULT NULL,
+    `applicant_tc` text DEFAULT NULL,
+    `status` varchar(20) DEFAULT NULL,
+    `remarks` text DEFAULT NULL,
+    `application_no` text DEFAULT NULL,
+    `selects` text DEFAULT NULL,
+    `lects` text DEFAULT NULL,
+    `application` text DEFAULT NULL,
+    `certificate` text DEFAULT NULL,
+    `acknowledgement` text DEFAULT NULL,
+    `applied_date` varchar(10) DEFAULT NULL,
+    `completed_date` varchar(10) DEFAULT NULL,
+    `created_at` varchar(20) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `tnega_unmarried` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `service_id` int(11) DEFAULT 0,
+    `user_id` int(11) DEFAULT 0,
+    `retailer_id` int(11) DEFAULT 0,
+    `distributor_id` int(11) DEFAULT 0,
+    `admin_id` int(11) DEFAULT 0,
+    `dist_id` int(11) DEFAULT 0,
+    `taluk_id` int(11) DEFAULT 0,
+    `amount` decimal(10,2) DEFAULT 0.00,
+    `document_type` text DEFAULT NULL,
+    `photo` text DEFAULT NULL,
+    `aadhaar_card` text DEFAULT NULL,
+    `signature` text DEFAULT NULL,
+    `licence` text DEFAULT NULL,
+    `marksheet` text DEFAULT NULL,
+    `voterid` text DEFAULT NULL,
+    `birth_certificate` text DEFAULT NULL,
+    `applicant_tc` text DEFAULT NULL,
+    `marriage_invitation` text DEFAULT NULL,
+    `status` varchar(20) DEFAULT NULL,
+    `remarks` text DEFAULT NULL,
+    `application_no` text DEFAULT NULL,
+    `selects` text DEFAULT NULL,
+    `lects` text DEFAULT NULL,
+    `application` text DEFAULT NULL,
+    `certificate` text DEFAULT NULL,
+    `acknowledgement` text DEFAULT NULL,
+    `applied_date` varchar(10) DEFAULT NULL,
+    `completed_date` varchar(10) DEFAULT NULL,
+    `created_at` varchar(20) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+alter table income add work_tamil varchar(200) DEFAULT NULL; 
+alter table income add work_english varchar(200) DEFAULT NULL; 
+alter table family_member add work_tamil varchar(200) DEFAULT NULL; 
+alter table family_member add work_english varchar(200) DEFAULT NULL; 
+
+CREATE TABLE `tnega_handicap` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `service_id` int(11) DEFAULT 0,
+    `user_id` int(11) DEFAULT 0,
+    `retailer_id` int(11) DEFAULT 0,
+    `distributor_id` int(11) DEFAULT 0,
+    `admin_id` int(11) DEFAULT 0,
+    `dist_id` int(11) DEFAULT 0,
+    `taluk_id` int(11) DEFAULT 0,
+    `amount` decimal(10,2) DEFAULT 0.00,
+    `category_disability` text DEFAULT NULL,
+    `differently_abled_type` text DEFAULT NULL,
+    `nidc_disability_type` text DEFAULT NULL,
+    `national_idcardno` text DEFAULT NULL,
+    `id_card_type` text DEFAULT NULL,
+    `temporary_valid_till` text DEFAULT NULL,
+    `scheme` text DEFAULT NULL,
+    `state_id_card` text DEFAULT NULL,
+    `udid_number` text DEFAULT NULL,
+    `bank_name` text DEFAULT NULL,  
+    `bank_district` text DEFAULT NULL,  
+    `branch_name` text DEFAULT NULL,  
+    `ifsc_code` text DEFAULT NULL,  
+    `account_number` text DEFAULT NULL,  
+    `micr_number` text DEFAULT NULL,  
+    `percentage` text DEFAULT NULL,
+    `photo` text DEFAULT NULL,
+    `aadhaar_card` text DEFAULT NULL,
+    `parent_guardian_id` text DEFAULT NULL,
+    `bank_passbook` text DEFAULT NULL,
+    `ration_card` text DEFAULT NULL,
+    `disability_certificate` text DEFAULT NULL,
+    `parent_photo` text DEFAULT NULL,
+    `udid` text DEFAULT NULL,
+    `marriage_invitation` text DEFAULT NULL,
+    `status` varchar(20) DEFAULT NULL,
+    `remarks` text DEFAULT NULL,
+    `application_no` text DEFAULT NULL,
+    `selects` text DEFAULT NULL,
+    `lects` text DEFAULT NULL,
+    `application` text DEFAULT NULL,
+    `certificate` text DEFAULT NULL,
+    `acknowledgement` text DEFAULT NULL,
+    `applied_date` varchar(10) DEFAULT NULL,
+    `completed_date` varchar(10) DEFAULT NULL,
+    `created_at` varchar(20) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+
+CREATE TABLE `tnega_widow` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `service_id` int(11) DEFAULT 0,
+    `user_id` int(11) DEFAULT 0,
+    `retailer_id` int(11) DEFAULT 0,
+    `distributor_id` int(11) DEFAULT 0,
+    `admin_id` int(11) DEFAULT 0,
+    `dist_id` int(11) DEFAULT 0,
+    `taluk_id` int(11) DEFAULT 0,
+    `amount` decimal(10,2) DEFAULT 0.00,
+    `relationship` text DEFAULT NULL,
+    `guardian_name` text DEFAULT NULL,
+    `guardian_name_tamil` text DEFAULT NULL,
+    `spouse_name` text DEFAULT NULL,
+    `spouse_name_tamil` text DEFAULT NULL,
+    `date_of_marriage` text DEFAULT NULL,
+    `date_of_death` text DEFAULT NULL,
+    `death_certificate_no` text DEFAULT NULL,
+    `photo` text DEFAULT NULL,
+    `address_proof` text DEFAULT NULL,
+    `death_certificate_husband` text DEFAULT NULL,
+    `marriage_proof` text DEFAULT NULL,
+    `status` varchar(20) DEFAULT NULL,
+    `remarks` text DEFAULT NULL,
+    `application_no` text DEFAULT NULL,
+    `selects` text DEFAULT NULL,
+    `lects` text DEFAULT NULL,
+    `application` text DEFAULT NULL,
+    `certificate` text DEFAULT NULL,
+    `acknowledgement` text DEFAULT NULL,
+    `applied_date` varchar(10) DEFAULT NULL,
+    `completed_date` varchar(10) DEFAULT NULL,
+    `created_at` varchar(20) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `declaration` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `declaration_form` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+INSERT INTO `declaration`(id,declaration_form) VALUES (1,'join declarasion form.pdf');
+
+alter table services add ramjiservice_id int(11) DEFAULT 0 after parent_id;
+alter table find_services add ramjiservice_id int(11) DEFAULT 0 after id;
+alter table operator add ramjiservice_id int(11) DEFAULT 0;
+alter table panservice add ramjiservice_id int(11) DEFAULT 0 after id;
+alter table service_payment add ramjiservice_id int(11) DEFAULT 0 after parent_id;
+alter table find_payment add ramjiservice_id int(11) DEFAULT 0 after service_id;
+alter table recharge_payment add ramjiservice_id int(11) DEFAULT 0 after service_id;
+alter table panpayment add ramjiservice_id int(11) DEFAULT 0 after service_id;

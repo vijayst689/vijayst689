@@ -262,6 +262,7 @@ Route::get('viewcanservice', [App\Http\Controllers\ServiceController::class, 'vi
 
 Route::get('viewpattaservice', [App\Http\Controllers\ServiceController::class, 'viewpattaservice']);
 
+Route::post('/search-customer-aadhaar', [App\Http\Controllers\ServiceController::class, 'searchCustomerAadhaar']);
 
 
 Route::get('/appliedservice/{status}', [App\Http\Controllers\ServicestatusController::class, 'appliedservice'])->name('appliedservice');

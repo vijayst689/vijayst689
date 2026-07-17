@@ -919,12 +919,15 @@
                                                         @foreach ($services as $service)
                                                         <div class="col-md-3 col-lg-2 col-sm-4 mb-2">
                                                             <div class="text-center">
-                                                                <a href="{{ url('/softwareservices', $service->id) }}">
-                                                                    <img src="/upload/sub_service/{{ $service->sub_service_image }}"
-                                                                        alt=""
-                                                                        class="rounded-circle img-thumbnail avatar-xl"></a>
-                                                                <h5 class="text-danger">
-                                                                    {{ $service->service_name }}</h5>
+                                                                <a href="javascript:void(0)"
+                                                    onclick="openAadhaarModal('{{ $service->id }}')" class="service-link">
+                                                    {{-- {{ dd($service); }} --}}
+                                        <img src="/upload/sub_service/{{ $service->sub_service_image }}"
+                                            alt="{{ $service->service_name }}"
+                                            class="rounded-circle img-thumbnail fixed-round">
+                                    </a>
+                                                                <h6 class="text-danger">
+                                                                    {{ $service->service_name }}</h6>
                                                             </div>
                                                         </div>
                                                         @endforeach
@@ -1094,6 +1097,25 @@
 </div>
 </div>
 </div>
+  <div class="modal fade" id="aadhaarModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Enter Aadhaar Number</h5>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="aadhaar_no" class="form-control"  oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,12)">
+                    <input type="hidden" id="service_id" class="form-control">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="searchCustomer()">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('page_scripts')
 <script>
@@ -1282,5 +1304,50 @@ $('#nalavariyam_usertype').on('change', function() {
     });
 
 });
+
+             function searchCustomer() {
+
+    var aadhaar_no = $('#aadhaar_no').val().trim();
+    var service_id = $('#service_id').val();
+
+    // Empty Check
+    if (aadhaar_no == '') {
+        alert('Please enter Aadhaar Number');
+        $('#aadhaar_no').focus();
+        return false;
+    }
+
+    // 12 Digit Check
+    if (!/^\d{12}$/.test(aadhaar_no)) {
+        alert('Aadhaar Number must be exactly 12 digits');
+        $('#aadhaar_no').focus();
+        return false;
+    }
+
+$.ajax({
+    url: "{{ url('/search-customer-aadhaar') }}",
+    type: "POST",
+    data: {
+        aadhaar_no: aadhaar_no,
+        service_id: service_id,
+        _token: "{{ csrf_token() }}"
+    },
+success: function(response) {
+
+    if (response.status) {
+        window.location.href = "/applyservice/" + service_id + "/" + encodeURIComponent(response.customer_id);
+    } else {
+        window.location.href = "/applyservice/" + service_id + "/0";
+    }
+},
+    error: function(xhr) {
+        console.log(xhr.responseText);
+    }
+});
+     }
+        function openAadhaarModal(service_id) {
+    $('#service_id').val(service_id);
+    $('#aadhaarModal').modal('show');
+}
 </script>
 @endpush
