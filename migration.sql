@@ -3550,3 +3550,18 @@ alter table service_payment add ramjiservice_id int(11) DEFAULT 0 after parent_i
 alter table find_payment add ramjiservice_id int(11) DEFAULT 0 after service_id;
 alter table recharge_payment add ramjiservice_id int(11) DEFAULT 0 after service_id;
 alter table panpayment add ramjiservice_id int(11) DEFAULT 0 after service_id;
+
+ALTER TABLE tnega_services ADD COLUMN relation_name_tamil text NULL;
+ALTER TABLE tnega_services ADD COLUMN relation_name_english  text NULL;
+ALTER TABLE tnega_services ADD COLUMN relation_age text NULL;
+ALTER TABLE tnega_services ADD COLUMN relation_status text NULL;
+ALTER TABLE tnega_services ADD COLUMN family_income_source  text NULL;
+ALTER TABLE tnega_services ADD COLUMN family_graduation  text NULL;
+ALTER TABLE tnega_services ADD COLUMN sibling_graduation  text NULL;
+
+alter table tnega_services add community_certificate text DEFAULT NULL;   
+alter table tnega_services add family_count text DEFAULT NULL;   
+alter table tnega_services add education_document text DEFAULT NULL;   
+alter table tnega_services add applicant_tc text DEFAULT NULL NULL after education_document;   
+alter table tnega_services add tamil_name text DEFAULT NULL NULL after applicant_tc;    
+alter table tnega_services add english_name text DEFAULT NULL NULL after tamil_name; 

@@ -897,12 +897,12 @@ if (!empty($customerid) && $customerid != 0) {
             $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
             return view('applyservice.smartcard_nametransfer', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'mainbalance', 'coordinator_permission', 'admin_payment'));
         } elseif ($serviceid == 217) {
-            $mainbalance = DB::table('users')->select('wallet')->where('id', 2)->first();
+            $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
             $pandetails  = DB::table('utislpan')->where('user_id', Auth::user()->id)->where('service_id', $serviceid)->orderBy('id', 'Desc')->get();
             return view('applyservice.newpan', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'pandetails', 'mainbalance'));
 
         } elseif ($serviceid == 218) {
-            $mainbalance = DB::table('users')->select('wallet')->where('id', 2)->first();
+            $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
             $pandetails  = DB::table('utislpan')->where('user_id', Auth::user()->id)->where('service_id', $serviceid)->orderBy('id', 'Desc')->get();
             return view('applyservice.utislpancorrection', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'pandetails', 'mainbalance'));
 
@@ -11263,7 +11263,7 @@ if($coordinator_permission == 1){
         'address'             => $request->address,
         'address_tamil'       => $request->address_tamil,
         'marital_status'      => $request->marital_status,
-        'created_at'                  => now(),
+        'created_at'          => now(),
     ]);
 
     DB::table('tnega_customers')

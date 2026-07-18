@@ -264,6 +264,17 @@ Route::get('viewpattaservice', [App\Http\Controllers\ServiceController::class, '
 
 Route::post('/search-customer-aadhaar', [App\Http\Controllers\ServiceController::class, 'searchCustomerAadhaar']);
 
+Route::post('/submittnegaincome', [App\Http\Controllers\ServiceController::class, 'submittnegaincome'])->name('submittnegaincome');
+Route::post('/submittnegacommunity', [App\Http\Controllers\ServiceController::class, 'submittnegacommunity'])->name('submittnegacommunity');
+Route::post('/submittnegagraduate', [App\Http\Controllers\ServiceController::class, 'submittnegagraduate'])->name('submittnegagraduate');
+Route::post('/submittnegaresidence', [App\Http\Controllers\ServiceController::class, 'submittnegaresidence'])->name('submittnegaresidence');
+Route::post('/submittneganativity', [App\Http\Controllers\ServiceController::class, 'submittneganativity'])->name('submittneganativity');
+Route::post('/submittnegaunemployed', [App\Http\Controllers\ServiceController::class, 'submittnegaunemployed'])->name('submittnegaunemployed');
+Route::post('/submittnegaobc', [App\Http\Controllers\ServiceController::class, 'submittnegaobc'])->name('submittnegaobc');
+Route::post('/submittnegaunmarried', [App\Http\Controllers\ServiceController::class, 'submittnegaunmarried'])->name('submittnegaunmarried');
+Route::post('/submittnegahandicap', [App\Http\Controllers\ServiceController::class, 'submittnegahandicap'])->name('submittnegahandicap');
+Route::post('/submittnegawidow', [App\Http\Controllers\ServiceController::class, 'submittnegawidow'])->name('submittnegawidow');
+
 
 Route::get('/appliedservice/{status}', [App\Http\Controllers\ServicestatusController::class, 'appliedservice'])->name('appliedservice');
 Route::get('/servicestatus/{status}/{id}/{serviceid}', [App\Http\Controllers\ServicestatusController::class, 'servicestatus'])->name('servicestatus');
@@ -309,6 +320,18 @@ Route::post('/agristack_update', [App\Http\Controllers\ServicestatusController::
 Route::post('/pvcprint_update', [App\Http\Controllers\ServicestatusController::class, 'pvcprint_update'])->name('pvcprint_update');
 Route::post('/smartcard_pdf_statusupdate', [App\Http\Controllers\ServicestatusController::class, 'smartcard_pdf_statusupdate'])->name('smartcard_pdf_statusupdate');
 Route::post('/aadhaarfind_update', [App\Http\Controllers\ServicestatusController::class, 'aadhaarfind_update'])->name('aadhaarfind_update');
+
+Route::post('/submittnegacommunityupdate', [App\Http\Controllers\ServicestatusController::class, 'submittnegacommunityupdate'])->name('submittnegacommunityupdate');
+Route::post('/submittnegaincomeupdate', [App\Http\Controllers\ServicestatusController::class, 'submittnegaincomeupdate'])->name('submittnegaincomeupdate');
+Route::post('/submittnegagraduateupdate', [App\Http\Controllers\ServicestatusController::class, 'submittnegagraduateupdate'])->name('submittnegagraduateupdate');
+Route::post('/submittneganativityupdate', [App\Http\Controllers\ServicestatusController::class, 'submittneganativityupdate'])->name('submittneganativityupdate');
+Route::post('/submittnegaresidenceupdate', [App\Http\Controllers\ServicestatusController::class, 'submittnegaresidenceupdate'])->name('submittnegaresidenceupdate');
+Route::post('/submittnegaunemployedupdate', [App\Http\Controllers\ServicestatusController::class, 'submittnegaunemployedupdate'])->name('submittnegaunemployedupdate');
+Route::post('/submittnegaobcupdate', [App\Http\Controllers\ServicestatusController::class, 'submittnegaobcupdate'])->name('submittnegaobcupdate');
+Route::post('/submittnegaobcdupdate', [App\Http\Controllers\ServicestatusController::class, 'submittnegaobcdupdate'])->name('submittnegaobcdupdate');
+Route::post('/submittnegaunmarriedupdate', [App\Http\Controllers\ServicestatusController::class, 'submittnegaunmarriedupdate'])->name('submittnegaunmarriedupdate');
+Route::post('/submittnegahandicapupdate', [App\Http\Controllers\ServicestatusController::class, 'submittnegahandicapupdate'])->name('submittnegahandicapupdate');
+Route::post('/submittnegawidowupdate', [App\Http\Controllers\ServicestatusController::class, 'submittnegawidowupdate'])->name('submittnegawidowupdate');
 
 
 Route::get('/servicepayment/{serviceid}', [App\Http\Controllers\ServicePaymentController::class, 'servicepayment'])->name('servicepayment');

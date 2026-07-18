@@ -34,7 +34,7 @@
     <!-- Main CSS File -->
     <link href="https://bootstrapmade.com/content/demo/Forma/assets/css/main.css" rel="stylesheet">
 
-        <script>
+    <script>
         ! function(f, b, e, v, n, t, s) {
             if (f.fbq) return;
             n = f.fbq = function() {
@@ -60,78 +60,72 @@
     <!-- Facebook Domain Verification -->
     <meta name="facebook-domain-verification" content="o7tjuxul606tpvrxq094bhwog98hc5" />
     <style>
-        #policy{
-    background: linear-gradient(135deg,#0f172a,#111827,#1e293b);
-    padding:80px 0;
-}
+        #policy,
+        #terms {
+            background: linear-gradient(135deg, #0f172a, #111827, #1e293b);
+            padding: 80px 0;
+        }
 
-#policy .section-title h2,
-#policy .section-title span,
-#policy .intro-title{
-    color:#fff;
-}
+        #policy .card,
+        #terms .card {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .12);
+            backdrop-filter: blur(12px);
+            border-radius: 18px;
+            color: #e5e7eb;
+            overflow: hidden;
+            transition: .4s;
+        }
 
-#policy .intro-text{
-    color:#cbd5e1;
-}
+        #policy .card:hover,
+        #terms .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, .35);
+        }
 
-#policy .card{
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:18px;
-    backdrop-filter:blur(12px);
-    color:#e5e7eb;
-    transition:.4s;
-    overflow:hidden;
-}
+        #policy .card-header,
+        #terms .card-header {
+            border: none;
+            padding: 18px 25px;
+        }
 
-#policy .card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 20px 45px rgba(0,0,0,.35);
-}
+        #policy .card-header {
+            background: linear-gradient(90deg, #2563eb, #0ea5e9) !important;
+        }
 
-#policy .card-header{
-    background:linear-gradient(90deg,#2563eb,#0ea5e9)!important;
-    border:none;
-    padding:18px 25px;
-}
+        #terms .card-header {
+            background: linear-gradient(90deg, #9333ea, #6366f1) !important;
+        }
 
-#policy .card:last-child .card-header{
-    background:linear-gradient(90deg,#9333ea,#6366f1)!important;
-}
+        #policy h5,
+        #terms h5 {
+            color: #60a5fa;
+            font-weight: 700;
+            margin-top: 22px;
+        }
 
-#policy .card-body{
-    padding:28px;
-}
+        #policy p,
+        #policy li,
+        #terms p,
+        #terms li {
+            color: #d1d5db;
+            line-height: 1.8;
+        }
 
-#policy h5{
-    color:#60a5fa;
-    margin-top:22px;
-    font-weight:700;
-}
+        #policy strong,
+        #terms strong {
+            color: #fff;
+        }
 
-#policy p,
-#policy li{
-    color:#d1d5db;
-    line-height:1.8;
-}
-
-#policy ul{
-    padding-left:20px;
-}
-
-#policy li{
-    margin-bottom:8px;
-}
-
-#policy strong{
-    color:#fff;
-}
-    </style>    
+        #policy hr,
+        #terms hr {
+            border-color: rgba(255, 255, 255, .15);
+        }
+    </style>
 </head>
 
 <body class="index-page">
-       <noscript>
+    <noscript>
         <img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=919664389493798&ev=PageView&noscript=1" />
     </noscript>
@@ -151,6 +145,7 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#policy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms & Conditions</a></li>
                     <li><a href="{{ url('register') }}">Register</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -721,264 +716,211 @@
             </div>
 
         </section><!-- /Services Section -->
-<section id="policy" class="services section">
 
-    <!-- Section Title -->
-    <div class="container section-title" data-aos="fade-up">
-        <h2>Privacy Policy</h2>
-        <div>
-            <span>Privacy Policy &</span>
-            <span class="description-title">Terms & Conditions</span>
-        </div>
-    </div>
-
-    <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="section-intro mb-5">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="intro-title">PKRM Solution</h2>
-                    <p class="intro-text">
-                        👉 Please read our Privacy Policy and Terms & Conditions carefully before using PKRM Solution services.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- START CONTENT -->
-
-        <div class="row">
-
-            <!-- Privacy Policy -->
-            <div class="col-lg-6 mb-4">
-                <div class="card shadow-sm h-100 border-0">
-
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0">Privacy Policy</h4>
-                    </div>
-
-                    <div class="card-body">
-
-                        <p><strong>Effective Date:</strong> 09 July 2026</p>
-
-                        <p>
-                            Welcome to <strong>PKRM Solution</strong>.
-                            We respect your privacy and are committed to protecting your personal information.
-                        </p>
-
-                        <h5>Information We Collect</h5>
-
-                        <ul>
-                            <li>Name</li>
-                            <li>Mobile Number</li>
-                            <li>Email Address</li>
-                            <li>Business Information</li>
-                            <li>Any information submitted through our contact or registration forms</li>
-                        </ul>
-
-                        <h5>How We Use Your Information</h5>
-
-                        <ul>
-                            <li>To respond to your enquiries</li>
-                            <li>To provide our products and services</li>
-                            <li>To contact you regarding demos or support</li>
-                            <li>To improve our website and customer experience</li>
-                            <li>To send service-related updates</li>
-                        </ul>
-
-                        <h5>Information Sharing</h5>
-
-                        <p>
-                            We do not sell, rent, or share your personal information with third parties except when required by law or to provide our services.
-                        </p>
-
-                        <h5>Cookies</h5>
-
-                        <p>
-                            Our website may use cookies and analytics tools to improve website performance and user experience.
-                        </p>
-
-                        <h5>Data Security</h5>
-
-                        <p>
-                            We take reasonable measures to protect your personal information. However, no internet transmission is completely secure.
-                        </p>
-
-                        <h5>Your Consent</h5>
-
-                        <p>
-                            By using our website, you agree to this Privacy Policy.
-                        </p>
-
-                        <h5>Contact Us</h5>
-
-                        <p>
-                            If you have any questions regarding this Privacy Policy, please contact PKRM Solution through the contact details available on our website.
-                        </p>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Terms -->
-            <div class="col-lg-6 mb-4">
-
-                <div class="card shadow-sm h-100 border-0">
-
-                    <div class="card-header bg-dark text-white">
-                        <h4 class="mb-0">Terms & Conditions</h4>
-                    </div>
-
-                    <div class="card-body">
-
-                        <p><strong>Effective Date:</strong> 09 July 2026</p>
-
-                        <p>
-                            By accessing and using the PKRM Solution website, you agree to the following terms and conditions.
-                        </p>
-
-                        <h5>Website Usage</h5>
-
-                        <ul>
-                            <li>Use this website only for lawful purposes.</li>
-                            <li>Provide accurate information when submitting forms.</li>
-                            <li>Do not attempt unauthorized access or misuse of the website.</li>
-                        </ul>
-
-                        <h5>Intellectual Property</h5>
-
-                        <p>
-                            All website content, including text, images, logos, graphics and trademarks belongs to PKRM Solution.
-                        </p>
-
-                        <h5>Service Availability</h5>
-
-                        <p>
-                            PKRM Solution may modify, update or discontinue any service without prior notice.
-                        </p>
-
-                        <h5>Limitation of Liability</h5>
-
-                        <p>
-                            PKRM Solution is not responsible for any direct or indirect loss arising from the use of this website.
-                        </p>
-
-                        <h5>Applicable Law</h5>
-
-                        <p>
-                            These Terms & Conditions are governed by the laws of India.
-                        </p>
-
-                        <h5>Acceptance</h5>
-
-                        <p>
-                            By continuing to use this website, you accept these Terms & Conditions.
-                        </p>
-
-                        <h5>Contact Us</h5>
-
-                        <p>
-                            For any questions regarding these Terms & Conditions, please contact PKRM Solution.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- END CONTENT -->
-
-    </div>
-
-</section>
-
-        <!-- Why Us Section -->
-        <section id="why-us" class="why-us section light-background">
+        <section class="services section">
 
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
-                <h2>Why Us</h2>
-                <div><span>Why</span> <span class="description-title">Choose Us</span></div>
-            </div><!-- End Section Title -->
+                <h2>Privacy Policy & Terms</h2>
+            </div>
 
             <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-                <div class="row align-items-center mb-5">
-                    <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
-                        <div class="intro-content">
-                            <span class="badge">Why Choose Us</span>
-                            <h2>Partner with a Team That Delivers Real Results</h2>
-                            <p class="lead">🌟 Our Vision To become India’s No.1 Rural Digital Business Support
-                                Platform, giving every small service center the tools and systems needed to grow into a
-                                stable, successful digital business.</p>
-                            <div class="stats-grid">
-                                <div class="stat-item">
-                                    <div class="stat-number" data-purecounter-start="0" data-purecounter-end="150"
-                                        data-purecounter-duration="2">80%</div>
-                                    <div class="stat-label">Service Clearense</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-number" data-purecounter-start="0" data-purecounter-end="98"
-                                        data-purecounter-duration="2">98%</div>
-                                    <div class="stat-label">Customer Support</div>
-                                </div>
-                            </div>
+                <!-- =========================
+             PRIVACY POLICY
+        ========================== -->
+                <div id="policy" class="mb-5">
+
+                    <div class="card shadow border-0">
+
+                        <div class="card-header bg-primary text-white py-3">
+                            <h3 class="mb-0">
+                                <i class="bi bi-shield-lock me-2"></i>
+                                Privacy Policy
+                            </h3>
                         </div>
+
+                        <div class="card-body p-4">
+
+                            <p><strong>Effective Date:</strong> 09 July 2026</p>
+
+                            <p>
+                                Welcome to <strong>PKRM Solution</strong>.
+                                We respect your privacy and are committed to protecting
+                                your personal information.
+                            </p>
+
+                            <hr>
+
+                            <h5>Information We Collect</h5>
+
+                            <ul>
+                                <li>Name</li>
+                                <li>Mobile Number</li>
+                                <li>Email Address</li>
+                                <li>Business Information</li>
+                                <li>Information submitted through contact or registration forms</li>
+                            </ul>
+
+                            <hr>
+
+                            <h5>How We Use Your Information</h5>
+
+                            <ul>
+                                <li>Respond to enquiries</li>
+                                <li>Provide our products and services</li>
+                                <li>Offer customer support</li>
+                                <li>Improve our website</li>
+                                <li>Send service updates</li>
+                            </ul>
+
+                            <hr>
+
+                            <h5>Information Sharing</h5>
+
+                            <p>
+                                We do not sell, rent or share your personal information
+                                with third parties except when required by law or to
+                                provide our services.
+                            </p>
+
+                            <hr>
+
+                            <h5>Cookies</h5>
+
+                            <p>
+                                Our website may use cookies and analytics tools to improve
+                                website performance and user experience.
+                            </p>
+
+                            <hr>
+
+                            <h5>Data Security</h5>
+
+                            <p>
+                                We take reasonable measures to protect your information.
+                                However, no internet transmission is completely secure.
+                            </p>
+
+                            <hr>
+
+                            <h5>Your Consent</h5>
+
+                            <p>
+                                By using our website, you agree to this Privacy Policy.
+                            </p>
+
+                            <hr>
+
+                            <h5>Contact Us</h5>
+
+                            <p>
+                                If you have any questions regarding this Privacy Policy,
+                                please contact PKRM Solution through the contact details
+                                available on our website.
+                            </p>
+
+                        </div>
+
                     </div>
 
-                    <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
-                        <div class="showcase-image">
-                            <img src="https://bootstrapmade.com/content/demo/Forma/assets/img/illustration/illustration-18.webp"
-                                alt="Digital Solutions" class="img-fluid">
-                        </div>
-                    </div>
                 </div>
 
-                {{-- <div class="row g-4 mb-5">
-                    <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="value-card">
-                            <div class="icon-box">
-                                <i class="bi bi-lightning-charge-fill"></i>
-                            </div>
-                            <h4>Fast Turnaround</h4>
-                            <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis
-                                aute irure dolor.</p>
-                            <a href="#" class="learn-more">Learn more <i class="bi bi-arrow-right"></i></a>
+                <!-- =========================
+             TERMS & CONDITIONS
+        ========================== -->
+                <div id="terms">
+
+                    <div class="card shadow border-0">
+
+                        <div class="card-header bg-dark text-white py-3">
+                            <h3 class="mb-0">
+                                <i class="bi bi-file-earmark-text me-2"></i>
+                                Terms & Conditions
+                            </h3>
                         </div>
+
+                        <div class="card-body p-4">
+
+                            <p><strong>Effective Date:</strong> 09 July 2026</p>
+
+                            <p>
+                                By accessing and using the PKRM Solution website,
+                                you agree to the following Terms & Conditions.
+                            </p>
+
+                            <hr>
+
+                            <h5>Website Usage</h5>
+
+                            <ul>
+                                <li>Use this website only for lawful purposes.</li>
+                                <li>Provide accurate information when submitting forms.</li>
+                                <li>Do not attempt unauthorized access or misuse of the website.</li>
+                            </ul>
+
+                            <hr>
+
+                            <h5>Intellectual Property</h5>
+
+                            <p>
+                                All website content including text, images, graphics,
+                                logos and trademarks belongs to PKRM Solution.
+                            </p>
+
+                            <hr>
+
+                            <h5>Service Availability</h5>
+
+                            <p>
+                                PKRM Solution may modify, update or discontinue any
+                                service without prior notice.
+                            </p>
+
+                            <hr>
+
+                            <h5>Limitation of Liability</h5>
+
+                            <p>
+                                PKRM Solution is not responsible for any direct or
+                                indirect loss arising from the use of this website.
+                            </p>
+
+                            <hr>
+
+                            <h5>Applicable Law</h5>
+
+                            <p>
+                                These Terms & Conditions are governed by the laws of India.
+                            </p>
+
+                            <hr>
+
+                            <h5>Acceptance</h5>
+
+                            <p>
+                                By continuing to use this website, you accept these
+                                Terms & Conditions.
+                            </p>
+
+                            <hr>
+
+                            <h5>Contact Us</h5>
+
+                            <p>
+                                For any questions regarding these Terms & Conditions,
+                                please contact PKRM Solution.
+                            </p>
+
+                        </div>
+
                     </div>
 
-                    <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="value-card featured">
-                            <div class="featured-badge">Most Popular</div>
-                            <div class="icon-box">
-                                <i class="bi bi-graph-up-arrow"></i>
-                            </div>
-                            <h4>Data-Driven Strategy</h4>
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                                laudantium totam.</p>
-                            <a href="#" class="learn-more">Learn more <i class="bi bi-arrow-right"></i></a>
-                        </div>
-                    </div>
+                </div>
 
-                    <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
-                        <div class="value-card">
-                            <div class="icon-box">
-                                <i class="bi bi-shield-check"></i>
-                            </div>
-                            <h4>Proven Expertise</h4>
-                            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit sed quia
-                                consequuntur magni.</p>
-                            <a href="#" class="learn-more">Learn more <i class="bi bi-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
 
-        </section><!-- /Why Us Section -->
+        </section>
 
         <!-- Contact Section -->
         <section id="contact" class="contact section">
@@ -1011,8 +953,7 @@
                                 </div>
                                 <div class="channel-info">
                                     <h5>Email</h5>
-                                    <p><a href="" class="__cf_email__"
-                                           >pkrmsolution@gmail.com</a>
+                                    <p><a href="" class="__cf_email__">pkrmsolution@gmail.com</a>
                                     </p>
                                 </div>
                             </div>
@@ -1049,9 +990,9 @@
                                 <p>Tell us about your Details.</p>
                             </div>
 
-                             <form action="{{ url('/savequery') }}" method="post"
-                                            enctype="multipart/form-data" class="bg-dark">
-                                            {{ csrf_field() }}
+                            <form action="{{ url('/savequery') }}" method="post" enctype="multipart/form-data"
+                                class="bg-dark">
+                                {{ csrf_field() }}
                                 <div class="form-group">
                                     <label>Full Name</label>
                                     <input type="text" name="name" class="form-control" placeholder="Name">
@@ -1072,7 +1013,7 @@
                                     <textarea name="message" class="form-control" rows="3"placeholder="Message"></textarea>
                                 </div>
                                 <div class="error-message"></div>
-                                     <button type="submit" class="btn btn-primary">Send Message</button>
+                                <button type="submit" class="btn btn-primary">Send Message</button>
                                 </button>
                             </form>
                         </div>
@@ -1107,19 +1048,9 @@
                         <li><a href="#">About us</a></li>
                         <li><a href="#">Services</a></li>
                         <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
                     </ul>
                 </div>
-
-                {{-- <div class="col-lg-2 col-6 footer-links">
-                    <h4>Our Services</h4>
-                    <ul>
-                        <li><a href="#">Web Design</a></li>
-                        <li><a href="#">Web Development</a></li>
-                        <li><a href="#">Product Management</a></li>
-                        <li><a href="#">Marketing</a></li>
-                        <li><a href="#">Graphic Design</a></li>
-                    </ul>
-                </div> --}}
 
                 <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
                     <h4>Contact Us</h4>
