@@ -971,19 +971,6 @@
                                             <div class="container-xxl flex-grow-1">
                                                 <div id="category_div" class="row text-center">
                                                     @if ($services->isEmpty())
-                                                    <div class="d-flex justify-content-center align-items-center py-5">
-                                                        <div class="no-service-card text-center p-4">
-                                                            <h4 class="no-service-title mb-3">No Services Activated
-                                                            </h4>
-                                                            <p class="no-service-subtitle mb-4">Please activate
-                                                                services to continue</p>
-
-                                                            <a href="{{ url('/userpermission') }}/{{ Auth::user()->id }}"
-                                                                class="btn manage-btn">
-                                                                Manage User Permissions
-                                                            </a>
-                                                        </div>
-                                                    </div>
                                                     @else
                                                     @foreach ($services as $ser)
                                                     <div class="col-6 col-md-3 col-lg-2 mb-4 category_data">

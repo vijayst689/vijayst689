@@ -11042,33 +11042,99 @@ DB::table('tnega_customers')
     // =========================================================================
     // STEP 4: MANDATORY DOCUMENT UPLOAD (TNEGA SERVICES)
     // =========================================================================
-    $photo = "";
-    if ($request->hasFile('photo')) {
-        $file = $request->file('photo');
-        $photo = uniqid() . "." . $file->getClientOriginalExtension();
-        $file->move(public_path('upload/services/photo'), $photo);
+$photo = "";
+
+if ($request->hasFile('photo')) {
+
+    $file = $request->file('photo');
+
+    $photo = uniqid() . "." . $file->getClientOriginalExtension();
+
+    $path = public_path('upload/services/photo');
+
+    if (!file_exists($path)) {
+        mkdir($path, 0777, true);
     }
 
-    $smart_card = "";
-    if ($request->hasFile('smart_card')) {
-        $file = $request->file('smart_card');
-        $smart_card = uniqid() . "." . $file->getClientOriginalExtension();
-        $file->move(public_path('upload/services/smart_card'), $smart_card);
+    $file->move($path, $photo);
+
+    $fullPath = $path . '/' . $photo;
+
+    // Resize to 250x250 and compress to ~50KB
+    $this->resizeUserPhoto($fullPath, 250, 250, 50);
+}
+
+
+// ================= SMART CARD =================
+$smart_card = "";
+
+if ($request->hasFile('smart_card')) {
+
+    $file = $request->file('smart_card');
+
+    $smart_card = uniqid() . "." . $file->getClientOriginalExtension();
+
+    $path = public_path('upload/services/smart_card');
+
+    if (!file_exists($path)) {
+        mkdir($path, 0777, true);
     }
 
-    $signature = "";
-    if ($request->hasFile('signature')) {
-        $file = $request->file('signature');
-        $signature = uniqid() . "." . $file->getClientOriginalExtension();
-        $file->move(public_path('upload/services/signature'), $signature);
+    $file->move($path, $smart_card);
+
+    $fullPath = $path . '/' . $smart_card;
+
+    // Compress to ~200KB
+    $this->compressFileTo200KB($fullPath, 200);
+}
+
+
+// ================= SIGNATURE =================
+$signature = "";
+
+if ($request->hasFile('signature')) {
+
+    $file = $request->file('signature');
+
+    $signature = uniqid() . "." . $file->getClientOriginalExtension();
+
+    $path = public_path('upload/services/signature');
+
+    if (!file_exists($path)) {
+        mkdir($path, 0777, true);
     }
 
-    $aadhaar_card = "";
-    if ($request->hasFile('aadhaar_card')) {
-        $file = $request->file('aadhaar_card');
-        $aadhaar_card = uniqid() . "." . $file->getClientOriginalExtension();
-        $file->move(public_path('upload/services/aadhaar_card'), $aadhaar_card);
+    $file->move($path, $signature);
+
+    $fullPath = $path . '/' . $signature;
+
+    // Compress to ~200KB
+    $this->compressFileTo200KB($fullPath, 200);
+}
+
+
+// ================= AADHAAR CARD =================
+$aadhaar_card = "";
+
+if ($request->hasFile('aadhaar_card')) {
+
+    $file = $request->file('aadhaar_card');
+
+    $aadhaar_card = uniqid() . "." . $file->getClientOriginalExtension();
+
+    $path = public_path('upload/services/aadhaar_card');
+
+    if (!file_exists($path)) {
+        mkdir($path, 0777, true);
     }
+
+    $file->move($path, $aadhaar_card);
+
+    $fullPath = $path . '/' . $aadhaar_card;
+
+    // Compress to ~200KB
+    $this->compressFileTo200KB($fullPath, 200);
+}
 //============================
 // UPDATE TNEGA SERVICES
 //============================
