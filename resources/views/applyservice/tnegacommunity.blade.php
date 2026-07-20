@@ -362,7 +362,7 @@
                                         <div class="card shadow border-0 mt-4">
 
                                             <div class="card-header bg-success text-white">
-                                                <h6 class="mb-0">Community Document Details</h6>
+                                                <h5 class="mb-0">Community Document Details</h5>
                                             </div>
 
                                             <div class="card-body">
@@ -407,7 +407,7 @@
                                                         <label class="form-label">5. Community Certificate of Father
                                                             *</label>
                                                         <input type="file" class="form-control"
-                                                            accept=".jpg,.jpeg,.png,.pdf" name="community_certificate"
+                                                            accept=".jpg,.jpeg,.png,.pdf" name="father_community_certificate"
                                                             id="community_certificate_father">
                                                     </div>
                                                     <div class="" id="community_certificate_motherhide"
@@ -415,7 +415,7 @@
                                                         <label class="form-label">5. Community Certificate of Mother
                                                             *</label>
                                                         <input class="form-control" type="file"
-                                                            accept=".jpg,.jpeg,.png,.pdf" name="community_certificate"
+                                                            accept=".jpg,.jpeg,.png,.pdf" name="mother_community_certificate"
                                                             id="community_certificate_mother">
                                                     </div>
 
@@ -424,7 +424,7 @@
                                                         <label class="form-label">5. Community Certificate of Siblings
                                                             *</label>
                                                         <input class="form-control" type="file"
-                                                            accept=".jpg,.jpeg,.png,.pdf" name="community_certificate"
+                                                            accept=".jpg,.jpeg,.png,.pdf" name="siblings_community_certificate"
                                                             id="community_certificate_siblings">
                                                     </div>
 

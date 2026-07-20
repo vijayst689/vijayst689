@@ -10643,24 +10643,38 @@ DB::table('tnega_customers')
         $insertid = DB::getPdo()->lastInsertId();
 
                   
-            $files = [
+$files = [
+
     'address_proof' => [
         'folder' => 'address_proof',
         'compress' => true
     ],
-    
-    'community_certificate' => [
+
+    'father_community_certificate' => [
         'folder' => 'community_certificate',
         'compress' => true
     ],
+
+    'mother_community_certificate' => [
+        'folder' => 'community_certificate',
+        'compress' => true
+    ],
+
+    'siblings_community_certificate' => [
+        'folder' => 'community_certificate',
+        'compress' => true
+    ],
+
     'signature' => [
         'folder' => 'signature',
         'compress' => true
     ],
+
     'photo' => [
         'folder' => 'photo',
         'resize' => true
     ]
+
 ];
 
 $updateData = [];
@@ -10670,37 +10684,39 @@ foreach ($files as $field => $config) {
     if ($request->hasFile($field)) {
 
         $extension = $request->file($field)->extension();
-        $fileName  = $insertid . '.' . $extension;
+        $fileName = $insertid . '.' . $extension;
 
-        $folderPath = public_path(
-            'upload' . DIRECTORY_SEPARATOR .
-            'services' . DIRECTORY_SEPARATOR .
-            $config['folder']
-        );
+        $folderPath = public_path('upload/services/' . $config['folder']);
 
-        // Create folder if not exists
         if (!file_exists($folderPath)) {
             mkdir($folderPath, 0777, true);
         }
 
         $request->file($field)->move($folderPath, $fileName);
 
-        $fullPath = $folderPath . DIRECTORY_SEPARATOR . $fileName;
+        $fullPath = $folderPath . '/' . $fileName;
 
         if (!empty($config['compress'])) {
             $this->compressFileTo200KB($fullPath, 200);
         }
 
         if (!empty($config['resize'])) {
-            $this->resizeUserPhoto(
-                $fullPath,
-                250,
-                250,
-                50
-            );
+            $this->resizeUserPhoto($fullPath, 250, 250, 50);
         }
 
-        $updateData[$field] = $fileName;
+        // DB column mapping
+        if (in_array($field, [
+            'father_community_certificate',
+            'mother_community_certificate',
+            'siblings_community_certificate'
+        ])) {
+
+            $updateData['community_certificate'] = $fileName;
+
+        } else {
+
+            $updateData[$field] = $fileName;
+        }
     }
 }
 

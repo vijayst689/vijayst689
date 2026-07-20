@@ -11658,41 +11658,59 @@ $tnega = DB::table('tnega_services')
     ->first();
 
 $files = [
+
     'address_proof' => [
         'folder' => 'address_proof',
-        'compress' => true
+        'compress' => true,
     ],
-    'community_certificate' => [
+
+    'father_community_certificate' => [
         'folder' => 'community_certificate',
-        'compress' => true
+        'compress' => true,
     ],
+
+    'mother_community_certificate' => [
+        'folder' => 'community_certificate',
+        'compress' => true,
+    ],
+
+    'siblings_community_certificate' => [
+        'folder' => 'community_certificate',
+        'compress' => true,
+    ],
+
     'signature' => [
         'folder' => 'signature',
-        'compress' => true
+        'compress' => true,
     ],
+
     'photo' => [
         'folder' => 'photo',
-        'resize' => true
-    ]
+        'resize' => true,
+    ],
 ];
 
 $updateData = [];
 
 foreach ($files as $field => $config) {
 
-    // Old file retain
-    $updateData[$field] = $tnega->$field ?? '';
+    if ($field == 'father_community_certificate' ||
+        $field == 'mother_community_certificate' ||
+        $field == 'siblings_community_certificate') {
+
+        $updateData['community_certificate'] = $tnega->community_certificate ?? '';
+
+    } else {
+
+        $updateData[$field] = $tnega->$field ?? '';
+    }
 
     if ($request->hasFile($field)) {
 
-        $extension = $request->file($field)->extension();
-       $fileName = $tnega->id . '.' . $extension;
+       $extension = $request->file($field)->extension();
+        $fileName = $request->applied_serviceid . '.' . $extension;
 
-        $folderPath = public_path(
-            'upload' . DIRECTORY_SEPARATOR .
-            'services' . DIRECTORY_SEPARATOR .
-            $config['folder']
-        );
+        $folderPath = public_path('upload/services/' . $config['folder']);
 
         if (!file_exists($folderPath)) {
             mkdir($folderPath, 0777, true);
@@ -11700,22 +11718,26 @@ foreach ($files as $field => $config) {
 
         $request->file($field)->move($folderPath, $fileName);
 
-        $fullPath = $folderPath . DIRECTORY_SEPARATOR . $fileName;
+        $fullPath = $folderPath . '/' . $fileName;
 
         if (!empty($config['compress'])) {
             $this->compressFileTo200KB($fullPath, 200);
         }
 
         if (!empty($config['resize'])) {
-            $this->resizeUserPhoto(
-                $fullPath,
-                250,
-                250,
-                50
-            );
+            $this->resizeUserPhoto($fullPath, 250, 250, 50);
         }
 
-        $updateData[$field] = $fileName;
+        if ($field == 'father_community_certificate' ||
+            $field == 'mother_community_certificate' ||
+            $field == 'siblings_community_certificate') {
+
+            $updateData['community_certificate'] = $fileName;
+
+        } else {
+
+            $updateData[$field] = $fileName;
+        }
     }
 }
 $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();

@@ -389,63 +389,85 @@
                                                 </select>
                                             </div>
 
-                                            <div class="" id="community_certificate_fatherhide"
-                                                style="display: none;">
-                                                <label class="form-label">5. Community Certificate of Father *</label>
-                                                @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                                    @if ($services->community != '')
-                                                        <br><a target="_blank"
-                                                            href="{{ URL::to('/') }}/upload/services/community_certificate/{{ $services->community_certificate }}"
-                                                            class="btn btn-primary me-2">View</a><br>
-                                                    @endif
-                                                @else
-                                                    <input @if ($services->community_certificate == '')  @endif class="form-control"
-                                                        type="file" accept="image/jpeg, image/png"
-                                                        id="community_certificate_father" name="community_certificate">
-                                                    @if ($services->community != '')
-                                                        <a target="_blank"
-                                                            href="{{ URL::to('/') }}/upload/services/community_certificate/{{ $services->community_certificate }}">Download</a><br>
-                                                    @endif
-                                                @endif
-                                            </div>
-                                            <div class="" id="community_certificate_motherhide"
-                                                style="display: none;">
-                                                <label class="form-label">5. Community Certificate of Mother *</label>
-                                                @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                                    @if ($services->community != '')
-                                                        <br><a target="_blank"
-                                                            href="{{ URL::to('/') }}/upload/services/community_certificate/{{ $services->community_certificate }}"
-                                                            class="btn btn-primary me-2">View</a><br>
-                                                    @endif
-                                                @else
-                                                    <input @if ($services->community == '')  @endif class="form-control"
-                                                        type="file" accept="image/jpeg, image/png"
-                                                        id="community_certificate_mother" name="community_certificate">
-                                                    @if ($services->community != '')
-                                                        <a target="_blank"
-                                                            href="{{ URL::to('/') }}/upload/services/community_certificate/{{ $services->community_certificate }}">Download</a><br>
-                                                    @endif
-                                                @endif
-                                            </div>
-                                            <div class="" id="community_certificate_siblingshide"
-                                                style="display: none;">
-                                                <label class="form-label">5. Community Certificate of Siblings *</label>
-                                                @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                                    @if ($services->community != '')
-                                                        <br><a target="_blank"
-                                                            href="{{ URL::to('/') }}/upload/services/community_certificate/{{ $services->community_certificate }}"
-                                                            class="btn btn-primary me-2">View</a><br>
-                                                    @endif
-                                                @else
-                                                    <input @if ($services->community_certificate == '')  @endif class="form-control"
-                                                        type="file" accept="image/jpeg, image/png"
-                                                        name="community_certificate" id="community_certificate_siblings">
-                                                    @if ($services->community != '')
-                                                        <a target="_blank"
-                                                            href="{{ URL::to('/') }}/upload/services/community_certificate/{{ $services->community_certificate }}">Download</a><br>
-                                                    @endif
-                                                @endif
-                                            </div>
+                                <div id="community_certificate_fatherhide" style="display:none;">
+                                    <label class="form-label">5. Community Certificate of Father <span
+                                            class="text-danger">*</span></label>
+
+                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                        @if (!empty($services->community_certificate))
+                                            <br>
+                                            <a target="_blank"
+                                                href="{{ URL::to('/') }}/upload/services/community_certificate/{{ $services->community_certificate }}"
+                                                class="btn btn-primary btn-sm mb-2">
+                                                View
+                                            </a>
+                                        @endif
+                                    @else
+                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png,.pdf"
+                                            id="community_certificate_father" name="father_community_certificate">
+
+                                        @if (!empty($services->community_certificate))
+                                            <a target="_blank"
+                                                href="{{ URL::to('/') }}/upload/services/community_certificate/{{ $services->community_certificate }}">
+                                                Download
+                                            </a>
+                                        @endif
+                                    @endif
+                                </div>
+
+
+                                <div id="community_certificate_motherhide" style="display:none;">
+                                    <label class="form-label">5. Community Certificate of Mother <span
+                                            class="text-danger">*</span></label>
+
+                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                        @if (!empty($services->community_certificate))
+                                            <br>
+                                            <a target="_blank"
+                                                href="{{ URL::to('/') }}/upload/services/community_certificate/{{ $services->community_certificate }}"
+                                                class="btn btn-primary btn-sm mb-2">
+                                                View
+                                            </a>
+                                        @endif
+                                    @else
+                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png,.pdf"
+                                            id="community_certificate_mother" name="mother_community_certificate">
+
+                                        @if (!empty($services->community_certificate))
+                                            <a target="_blank"
+                                                href="{{ URL::to('/') }}/upload/services/community_certificate/{{ $services->community_certificate }}">
+                                                Download
+                                            </a>
+                                        @endif
+                                    @endif
+                                </div>
+
+
+                                <div id="community_certificate_siblingshide" style="display:none;">
+                                    <label class="form-label">5. Community Certificate of Siblings <span
+                                            class="text-danger">*</span></label>
+
+                                    @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                        @if (!empty($services->community_certificate))
+                                            <br>
+                                            <a target="_blank"
+                                                href="{{ URL::to('/') }}/upload/services/community_certificate/{{ $services->community_certificate }}"
+                                                class="btn btn-primary btn-sm mb-2">
+                                                View
+                                            </a>
+                                        @endif
+                                    @else
+                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png,.pdf"
+                                            id="community_certificate_siblings" name="siblings_community_certificate">
+
+                                        @if (!empty($services->community_certificate))
+                                            <a target="_blank"
+                                                href="{{ URL::to('/') }}/upload/services/community_certificate/{{ $services->community_certificate }}">
+                                                Download
+                                            </a>
+                                        @endif
+                                    @endif
+                                </div>
                                         </div>
 
                                         <div class="d-flex justify-content-between mt-4">
@@ -794,50 +816,48 @@
 
             $('#community').change(function() {
 
-                if ($(this).val() == 'Community Certificate of Father') {
+        if ($(this).val() == 'Community Certificate of Father') {
 
-                    $('#community_certificate_fatherhide').show("slow");
-                    $('#community_certificate_motherhide').hide("slow");
-                    $('#community_certificate_siblingshide').hide("slow");
+            $('#community_certificate_fatherhide').show("slow");
+            $('#community_certificate_motherhide').hide("slow");
+            $('#community_certificate_siblingshide').hide("slow");
 
-                    $('#community_certificate_father').prop("required", true);
-                    $('#community_certificate_father').prop("required", false);
-                    $('#community_certificate_mother').prop("required", false);
-                    $('#community_certificate_siblings').prop("required", false);
+            $('#community_certificate_father').prop("required", false);
+            $('#community_certificate_mother').prop("required", false);
+            $('#community_certificate_siblings').prop("required", false);
 
-                } else if ($(this).val() == 'Community Certificate of Mother') {
+        } else if ($(this).val() == 'Community Certificate of Mother') {
 
-                    $('#community_certificate_motherhide').show("slow");
-                    $('#community_certificate_fatherhide').hide("slow");
-                    $('#community_certificate_siblingshide').hide("slow");
+            $('#community_certificate_motherhide').show("slow");
+            $('#community_certificate_fatherhide').hide("slow");
+            $('#community_certificate_siblingshide').hide("slow");
 
-                    $('#community_certificate_father').prop("required", false);
-                    $('#community_certificate_mother').prop("required", true);
-                    $('#community_certificate_mother').prop("required", false);
-                    $('#community_certificate_siblings').prop("required", false);
+            $('#community_certificate_father').prop("required", false);
+            $('#community_certificate_mother').prop("required", false);
+            $('#community_certificate_siblings').prop("required", false);
 
-                } else if ($(this).val() == 'Community Certificate of Siblings') {
+        } else if ($(this).val() == 'Community Certificate of Siblings') {
 
-                    $('#community_certificate_siblingshide').show("slow");
-                    $('#community_certificate_fatherhide').hide("slow");
-                    $('#community_certificate_motherhide').hide("slow");
+            $('#community_certificate_siblingshide').show("slow");
+            $('#community_certificate_fatherhide').hide("slow");
+            $('#community_certificate_motherhide').hide("slow");
 
-                    $('#community_certificate_father').prop("required", false);
-                    $('#community_certificate_mother').prop("required", false);
-                    $('#community_certificate_siblings').prop("required", true);
+            $('#community_certificate_father').prop("required", false);
+            $('#community_certificate_mother').prop("required", false);
+            $('#community_certificate_siblings').prop("required", false);
 
-                } else {
+        } else {
 
-                    $('#community_certificate_fatherhide').hide("slow");
-                    $('#community_certificate_motherhide').hide("slow");
-                    $('#community_certificate_siblingshide').hide("slow");
+            $('#community_certificate_fatherhide').hide("slow");
+            $('#community_certificate_motherhide').hide("slow");
+            $('#community_certificate_siblingshide').hide("slow");
 
-                    $('#community_certificate_father').prop("required", false);
-                    $('#community_certificate_mother').prop("required", false);
-                    $('#community_certificate_siblings').prop("required", false);
-                }
+            $('#community_certificate_father').prop("required", false);
+            $('#community_certificate_mother').prop("required", false);
+            $('#community_certificate_siblings').prop("required", false);
+        }
 
-            });
+    });
 
             // Update page load ஆனதும் selected valueக்கு ஏற்ப show செய்யும்
             $('#community').trigger('change');
