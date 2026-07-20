@@ -460,7 +460,7 @@
                                                                             class="text-danger">*</span></label>
 
                                                                     <input type="text" class="form-control number"
-                                                                        name="father_pay_scale">
+                                                                        name="pay_scale">
                                                                 </div>
 
 
@@ -905,43 +905,6 @@
                                                                         class="text-danger">*</span></label>
                                                                 <input type="file" class="form-control"
                                                                     name="mother_income_proof_file">
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="row" id="fatherIncomeProofSection"
-                                                            style="display:none;">
-
-                                                            <div class="col-md-6 mb-3">
-                                                                <label>Proof of Income <span
-                                                                        class="text-danger">*</span></label><br>
-
-                                                                <label class="me-3">
-                                                                    <input type="radio" name="father_income_proof"
-                                                                        value="Payslip"> Payslip
-                                                                </label>
-
-                                                                <label class="me-3">
-                                                                    <input type="radio" name="father_income_proof"
-                                                                        value="Income Certificate"> Income Certificate
-                                                                </label>
-
-                                                                <label class="me-3">
-                                                                    <input type="radio" name="father_income_proof"
-                                                                        value="ITR"> ITR
-                                                                </label>
-
-                                                                <label class="me-3">
-                                                                    <input type="radio" name="father_income_proof"
-                                                                        value="Others"> Others
-                                                                </label>
-                                                            </div>
-
-                                                            <div class="col-md-6 mb-3" id="fatherIncomeFile"
-                                                                style="display:none;">
-                                                                <label>Upload Proof <span
-                                                                        class="text-danger">*</span></label>
-                                                                <input type="file" class="form-control"
-                                                                    name="father_income_proof_file">
                                                             </div>
 
                                                         </div>

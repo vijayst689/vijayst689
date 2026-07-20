@@ -638,7 +638,7 @@
 
                             </div>                
                                 @endif
-                                                       <div class="mt-2 text-center">
+                                    <div class="mt-2 text-center">
                                     @if ($services->status == 'Resubmit' && $apply_user_id != Auth::user()->id)
                                         <button type="submit" disabled class="btn btn-primary me-2">Resubmit</button>
                                     @elseif($services->status == 'Approved')
