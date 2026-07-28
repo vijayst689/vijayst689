@@ -988,7 +988,23 @@
                                                     </div>
 
                                                 </div>
-                                                <div id="fatherOtherDetails" style="display:none;"></div>
+                                                <div id="fatherOtherDetails" style="display:none;">
+                                                     <div class="row">
+                                                     <div class="col-md-6 mb-3">
+                                                        <label>Designation <span class="text-danger">*</span></label>
+                                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif
+                                                            type="text" class="form-control" name="father_designation"
+                                                            value="{{ $services->father_designation }}">
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-3">
+                                                        <label>Pay Scale <span class="text-danger">*</span></label>
+                                                        <input @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif
+                                                            type="text" class="form-control" name="pay_scale"
+                                                            value="{{ $services->pay_scale }}">
+                                                    </div>
+                                                    </div>
+                                                </div>
                                                 <hr>
 
                                                 <h5 class="text-primary mb-3">Status of Mother</h5>
@@ -1711,9 +1727,28 @@
                                                         </div>
                                                         <div id="motherOtherDetails" style="display:none;">
 
-                                                            <div class="row">
+  <div class="row">
 
-                                                                {{-- Designation and Pay Scale moved to motherCommonDetails --}}
+                                                                <div class="col-md-6 mb-3">
+                                                                    <label>Pay of Scale <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif
+                                                                        type="text" class="form-control number"
+                                                                        name="mother_pay_scale"
+                                                                        value="{{ $services->mother_pay_scale }}">
+                                                                </div>
+
+
+                                                                <div class="col-md-6 mb-3">
+                                                                    <label>Designation <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <input
+                                                                        @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif
+                                                                        type="text" class="form-control"
+                                                                        name="mother_designation"
+                                                                        value="{{ $services->mother_designation }}">
+                                                                </div>
 
                                                             </div>
 
@@ -2049,34 +2084,32 @@
     <script>
         $(document).ready(function() {
 
+            // Hidden field required remove
+            function checkFatherStatus() {
+
+                if ($("#father_status").is(":hidden") || $("#father_status").is(":disabled")) {
+                    $("#father_status").prop("required", false);
+                } else {
+                    $("#father_status").prop("required", true);
+                }
+
+            }
+
             function toggleFatherSections() {
+
+                checkFatherStatus();
 
                 var status = $("#father_status").val();
 
-                // Hide all individual sections
-                $("#fatherConstitutional").hide();
-                $("#fatherGovernmentService").hide();
-                $("#fatherInternationalOrg").hide();
-                $("#fatherDeathDetails").hide();
-                $("#fatherPSUDetails").hide();
-                $("#fatherArmedForcesDetails").hide();
-                $("#fatherProfessionalDetails").hide();
-                $("#fatherAgricultureDetails").hide();
-                $("#fatherPlantationDetails").hide();
-                $("#fatherVacantLandDetails").hide();
-                $("#fatherIncomeWealthDetails").hide();
-                $("#fatherOtherDetails").hide();
+                // Hide all sections
+                $(".father-section").hide();
 
-                // Hide Common Sections
-                $("#fatherCommonDetails").hide();
-                $("#fatherLocationDetails").hide();
+                // Remove required
+                $(".father-section")
+                    .find("input, select, textarea")
+                    .prop("required", false);
 
-                // Remove required before applying
-
-                $("#fatherCommonDetails input").prop("required", false);
-                $("#fatherLocationDetails input").prop("required", false);
-
-                // Common Designation + Pay Scale
+                // Common Details
                 var commonStatus = [
                     "Constitutional Posts",
                     "Government Services",
@@ -2084,25 +2117,19 @@
                     "Death/Permanent Incapacitation",
                     "Public Sector Undertakings",
                     "Armed Forces/Para Military Forces",
-                    "Professional Class",
-                    "Agricultural Land Holding (Owned by Mother, Father, Minor Child)",
-                    "Plantation (Property Owners)",
-                    "Vacant Land and/or Building in Urban Areas or Urban Agglomeration",
-                    "Income/Wealth (Property Owners)",
-                    "Others"
+                    "Professional Class"
                 ];
 
                 if (commonStatus.includes(status)) {
 
                     $("#fatherCommonDetails").slideDown();
 
-                    $("#fatherCommonDetails input")
+                    $("#fatherCommonDetails")
+                        .find("input")
                         .prop("required", true);
-                    $("#fatherCommonDetails input")
-                        .prop("required", false);
                 }
 
-                // Common Location
+                // Location Details
                 var locationStatus = [
                     "Agricultural Land Holding (Owned by Mother, Father, Minor Child)",
                     "Plantation (Property Owners)",
@@ -2113,103 +2140,90 @@
 
                     $("#fatherLocationDetails").slideDown();
 
-                    $("#fatherLocationDetails input")
+                    $("#fatherLocationDetails")
+                        .find("input")
                         .prop("required", true);
-                    $("#fatherLocationDetails input")
-                        .prop("required", false);
-
                 }
-
-                // Individual Sections
 
                 switch (status) {
 
                     case "Constitutional Posts":
-
                         $("#fatherConstitutional").slideDown();
-
                         break;
 
                     case "Government Services":
-
                         $("#fatherGovernmentService").slideDown();
-
+                        $("#fatherGovernmentService").find("input").prop("required", true);
                         break;
 
                     case "International Organization":
-
                         $("#fatherInternationalOrg").slideDown();
-
+                        $("#fatherInternationalOrg").find("input").prop("required", true);
                         break;
 
                     case "Death/Permanent Incapacitation":
-
                         $("#fatherDeathDetails").slideDown();
-
+                        $("#fatherDeathDetails").find("input").prop("required", true);
                         break;
 
                     case "Public Sector Undertakings":
-
                         $("#fatherPSUDetails").slideDown();
-
+                        $("#fatherPSUDetails").find("input").prop("required", true);
                         break;
 
                     case "Armed Forces/Para Military Forces":
-
                         $("#fatherArmedForcesDetails").slideDown();
-
+                        $("#fatherArmedForcesDetails").find("input").prop("required", true);
                         break;
 
                     case "Professional Class":
-
                         $("#fatherProfessionalDetails").slideDown();
-
+                        $("#fatherProfessionalDetails").find("input").prop("required", true);
                         break;
 
                     case "Agricultural Land Holding (Owned by Mother, Father, Minor Child)":
-
                         $("#fatherAgricultureDetails").slideDown();
-
+                        $("#fatherAgricultureDetails").find("input").prop("required", true);
                         break;
 
                     case "Plantation (Property Owners)":
-
                         $("#fatherPlantationDetails").slideDown();
-
+                        $("#fatherPlantationDetails").find("input").prop("required", true);
                         break;
 
                     case "Vacant Land and/or Building in Urban Areas or Urban Agglomeration":
-
                         $("#fatherVacantLandDetails").slideDown();
-
+                        $("#fatherVacantLandDetails").find("input").prop("required", true);
                         break;
 
                     case "Income/Wealth (Property Owners)":
-
                         $("#fatherIncomeWealthDetails").slideDown();
-
+                        $("#fatherIncomeWealthDetails").find("input").prop("required", true);
                         break;
 
                     case "Others":
-
                         $("#fatherOtherDetails").slideDown();
+                        break;
 
+                    case "Unemployed":
                         break;
                 }
 
             }
 
-            // Page Load (Update Page Data Show)
-
+            // Page Load
             toggleFatherSections();
 
-            // Change Event
-
+            // Change
             $("#father_status").on("change", function() {
-
                 toggleFatherSections();
-
             });
+
+            // Submit
+            $("form").on("submit", function() {
+                checkFatherStatus();
+            });
+
         });
     </script>
     <script>
@@ -2248,32 +2262,15 @@
 
                 var status = $("#mother_status").val();
 
-
                 // எல்லா sections hide
-                $("#motherCommonDetails").hide();
-                $("#motherLocationDetails").hide();
+                $(".mother-section").hide();
 
-                $("#motherGovernmentService").hide();
-                $("#motherInternationalOrg").hide();
-                $("#motherDeathDetails").hide();
-                $("#motherPSUDetails").hide();
-                $("#motherArmedForcesDetails").hide();
-                $("#motherProfessionalDetails").hide();
-                $("#motherAgricultureDetails").hide();
-                $("#motherPlantationDetails").hide();
-                $("#motherVacantLandDetails").hide();
-                $("#motherIncomeWealthDetails").hide();
-                $("#motherOtherDetails").hide();
-
-
-                // hide பண்ணும்போது required remove
+                // எல்லா required remove
                 $(".mother-section")
-                    .find("input,select")
+                    .find("input, select, textarea")
                     .prop("required", false);
 
-
-
-                // Common Designation + Pay Scale
+                // Common Section
                 var commonStatus = [
                     "Constitutional Posts",
                     "Government Services",
@@ -2281,10 +2278,8 @@
                     "Death/Permanent Incapacitation",
                     "Public Sector Undertakings",
                     "Armed Forces/Para Military Forces",
-                    "Professional Class",
-                    "Others"
+                    "Professional Class"
                 ];
-
 
                 if (commonStatus.includes(status)) {
 
@@ -2293,18 +2288,14 @@
                     $("#motherCommonDetails")
                         .find("input")
                         .prop("required", true);
-                    $("#motherCommonDetails")
-                        .find("input")
-                        .prop("required", false);
                 }
 
-                // Location Common
+                // Location Section
                 var locationStatus = [
                     "Agricultural Land Holding (Owned by Mother, Father, Minor Child)",
                     "Plantation (Property Owners)",
                     "Vacant Land and/or Building in Urban Areas or Urban Agglomeration"
                 ];
-
 
                 if (locationStatus.includes(status)) {
 
@@ -2313,19 +2304,13 @@
                     $("#motherLocationDetails")
                         .find("input")
                         .prop("required", true);
-                    $("#motherLocationDetails")
-                        .find("input")
-                        .prop("required", false);
                 }
-
-                // Individual Sections
 
                 switch (status) {
 
                     case "Government Services":
 
                         $("#motherGovernmentService").slideDown();
-
                         $("#motherGovernmentService")
                             .find("input")
                             .prop("required", true);
@@ -2335,7 +2320,6 @@
                     case "International Organization":
 
                         $("#motherInternationalOrg").slideDown();
-
                         $("#motherInternationalOrg")
                             .find("input")
                             .prop("required", true);
@@ -2345,7 +2329,6 @@
                     case "Death/Permanent Incapacitation":
 
                         $("#motherDeathDetails").slideDown();
-
                         $("#motherDeathDetails")
                             .find("input")
                             .prop("required", true);
@@ -2355,7 +2338,6 @@
                     case "Public Sector Undertakings":
 
                         $("#motherPSUDetails").slideDown();
-
                         $("#motherPSUDetails")
                             .find("input")
                             .prop("required", true);
@@ -2365,7 +2347,6 @@
                     case "Armed Forces/Para Military Forces":
 
                         $("#motherArmedForcesDetails").slideDown();
-
                         $("#motherArmedForcesDetails")
                             .find("input")
                             .prop("required", true);
@@ -2375,7 +2356,6 @@
                     case "Professional Class":
 
                         $("#motherProfessionalDetails").slideDown();
-
                         $("#motherProfessionalDetails")
                             .find("input")
                             .prop("required", true);
@@ -2385,7 +2365,6 @@
                     case "Agricultural Land Holding (Owned by Mother, Father, Minor Child)":
 
                         $("#motherAgricultureDetails").slideDown();
-
                         $("#motherAgricultureDetails")
                             .find("input")
                             .prop("required", true);
@@ -2395,7 +2374,6 @@
                     case "Plantation (Property Owners)":
 
                         $("#motherPlantationDetails").slideDown();
-
                         $("#motherPlantationDetails")
                             .find("input")
                             .prop("required", true);
@@ -2405,18 +2383,15 @@
                     case "Vacant Land and/or Building in Urban Areas or Urban Agglomeration":
 
                         $("#motherVacantLandDetails").slideDown();
-
                         $("#motherVacantLandDetails")
                             .find("input")
                             .prop("required", true);
 
                         break;
 
-
                     case "Income/Wealth (Property Owners)":
 
                         $("#motherIncomeWealthDetails").slideDown();
-
                         $("#motherIncomeWealthDetails")
                             .find("input")
                             .prop("required", true);
@@ -2427,113 +2402,120 @@
 
                         $("#motherOtherDetails").slideDown();
 
+                        // No Pay Scale / Designation
+                        $("#motherCommonDetails").hide();
+
                         break;
 
+                    case "Unemployed":
+
+                        // Nothing to show
+
+                        $("#motherCommonDetails").hide();
+                        $("#motherLocationDetails").hide();
+
+                        break;
                 }
 
             }
 
-            // Page Load (Edit/Update)
             toggleMotherSections();
 
-            // Change
-            $("#mother_status").on("change", function() {
-
+            $("#mother_status").change(function() {
                 toggleMotherSections();
-
             });
 
         });
     </script>
     {{-- Father radio button code --}}
     <script>
-$(document).ready(function () {
+        $(document).ready(function() {
 
-    function toggleFatherIncomeProof() {
+            function toggleFatherIncomeProof() {
 
-        let occupation = $("#father_occupation").val();
+                let occupation = $("#father_occupation").val();
 
-        if (occupation == "Employed" || occupation == "Self Employed") {
+                if (occupation == "Employed" || occupation == "Self Employed") {
 
-            $("#fatherIncomeProofSection").show();
+                    $("#fatherIncomeProofSection").show();
 
-        } else {
+                } else {
 
-            $("#fatherIncomeProofSection").hide();
-            $("#fatherIncomeFile").hide();
-        }
-    }
+                    $("#fatherIncomeProofSection").hide();
+                    $("#fatherIncomeFile").hide();
+                }
+            }
 
-    $("#father_occupation").on("change", function () {
+            $("#father_occupation").on("change", function() {
 
-        toggleFatherIncomeProof();
+                toggleFatherIncomeProof();
 
-        if ($(this).val() != "Employed" && $(this).val() != "Self Employed") {
+                if ($(this).val() != "Employed" && $(this).val() != "Self Employed") {
 
-            $("input[name='father_income_proof']").prop("checked", false);
-            $("input[name='father_income_proof_file']").val("");
+                    $("input[name='father_income_proof']").prop("checked", false);
+                    $("input[name='father_income_proof_file']").val("");
 
-        }
+                }
 
-    });
+            });
 
-    $("input[name='father_income_proof']").on("change", function () {
-        $("#fatherIncomeFile").show();
-    });
+            $("input[name='father_income_proof']").on("change", function() {
+                $("#fatherIncomeFile").show();
+            });
 
-    // Page Load
-    toggleFatherIncomeProof();
+            // Page Load
+            toggleFatherIncomeProof();
 
-    if ($("input[name='father_income_proof']:checked").length > 0) {
-        $("#fatherIncomeFile").show();
-    }
+            if ($("input[name='father_income_proof']:checked").length > 0) {
+                $("#fatherIncomeFile").show();
+            }
 
-});
-</script>  
+        });
+    </script>
     {{-- Mother radio button code --}}
     <script>
-$(document).ready(function () {
+        $(document).ready(function() {
 
-    function toggleMotherIncomeProof() {
+            function toggleMotherIncomeProof() {
 
-        let occupation = $("#mother_occupation").val();
+                let occupation = $("#mother_occupation").val();
 
-        if (occupation == "Employed" || occupation == "Self Employed") {
+                if (occupation == "Employed" || occupation == "Self Employed") {
 
-            $("#motherIncomeProofSection").show();
+                    $("#motherIncomeProofSection").show();
 
-        } else {
+                } else {
 
-            $("#motherIncomeProofSection").hide();
-            $("#motherIncomeFile").hide();
-        }
-    }
+                    $("#motherIncomeProofSection").hide();
+                    $("#motherIncomeFile").hide();
+                }
+            }
 
-    $("#mother_occupation").on("change", function () {
+            $("#mother_occupation").on("change", function() {
 
-        toggleMotherIncomeProof();
+                toggleMotherIncomeProof();
 
-        if ($(this).val() != "Employed" && $(this).val() != "Self Employed") {
+                if ($(this).val() != "Employed" && $(this).val() != "Self Employed") {
 
-            $("input[name='mother_income_proof']").prop("checked", false);
-            $("input[name='mother_income_proof_file']").val("");
+                    $("input[name='mother_income_proof']").prop("checked", false);
+                    $("input[name='mother_income_proof_file']").val("");
 
-        }
+                }
 
-    });
+            });
 
-    $("input[name='mother_income_proof']").on("change", function () {
-        $("#motherIncomeFile").show();
-    });
+            $("input[name='mother_income_proof']").on("change", function() {
+                $("#motherIncomeFile").show();
+            });
 
-    // Page Load
-    toggleMotherIncomeProof();
+            // Page Load
+            toggleMotherIncomeProof();
 
-    if ($("input[name='mother_income_proof']:checked").length > 0) {
-        $("#motherIncomeFile").show();
-    }
+            if ($("input[name='mother_income_proof']:checked").length > 0) {
+                $("#motherIncomeFile").show();
+            }
 
-});
-    </script>    
+        });
+    </script>
 @endpush
 

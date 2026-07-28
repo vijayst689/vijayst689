@@ -339,8 +339,6 @@ $services = $services
             $services = DB::table('software')->where('id',$id)->where('status',$status)->first();
         }elseif($service_id == 213 || $service_id == 214 || $service_id == 215 ){
             $services = DB::table('patta')->where('id',$id)->where('status',$status)->first();
-        }elseif($service_id == 196 || $service_id == 197 ){
-            $services = DB::table('utislpan')->where('id',$id)->where('status',$status)->first();
         }elseif($service_id == 217 || $service_id == 218 ){
             $services = DB::table('utislpan')->where('id',$id)->where('status',$status)->first();
         } elseif($service_id == 220 ){
@@ -12557,7 +12555,7 @@ DB::table('income')
         return redirect("appliedservice/$status")->With("success", "Application submitted Succesfully");
     }
 
-        public function submittnegaresidenceupdate(Request $request)
+    public function submittnegaresidenceupdate(Request $request)
     {
         //dd($request->all());
         $apply_user_id = 0;
@@ -12702,7 +12700,6 @@ DB::table('income')
                 'from_date'                   => json_encode($request->from_date),
                 'to_date'                     => json_encode($request->to_date),
                 'address_count'               => $request->address_count,
-                'nativity_type'               => $request->nativity_type,
             ]);
 
 $tnega = DB::table('tnega_residence')
@@ -12831,7 +12828,7 @@ DB::table('tnega_residence')
         return redirect("appliedservice/$status")->With("success", "Application submitted Succesfully");
     }
 
-        public function submittneganativityupdate(Request $request)
+    public function submittneganativityupdate(Request $request)
     {
         //dd($request->all());
         $apply_user_id = 0;
@@ -12983,53 +12980,24 @@ $tnega = DB::table('nativity')
     ->where('id', $request->applied_serviceid)
     ->first();
 
-if ($request->nativity_type == 'birth') {
-
-    $files = [
-        'birth_photo' => [
-            'folder' => 'photo',
-            'resize' => true,
-        ],
-        'birth_aadhaar_card' => [
-            'folder' => 'aadhaar_card',
-            'compress' => true,
-        ],
-        'birth_certificate' => [
-            'folder' => 'birth_certificate',
-            'compress' => true,
-        ],
-        'birth_signature' => [
-            'folder' => 'signature',
-            'compress' => true,
-        ],
-    ];
-
-} else {
-
-    $files = [
-        'photo' => [
-            'folder' => 'photo',
-            'resize' => true,
-        ],
-        'aadhaar_card' => [
-            'folder' => 'aadhaar_card',
-            'compress' => true,
-        ],
-        'residence_birth_certificate' => [
-            'folder' => 'birth_certificate',
-            'compress' => true,
-        ],
-        'signature' => [
-            'folder' => 'signature',
-            'compress' => true,
-        ],
-        'school_proof' => [
-            'folder' => 'school_proof',
-            'resize' => true,
-        ],
-    ];
-
-}
+$files = [
+    'address_proof' => [
+        'folder' => 'address_proof',
+        'compress' => true
+    ],
+    'community_certificate' => [
+        'folder' => 'community_certificate',
+        'compress' => true
+    ],
+    'signature' => [
+        'folder' => 'signature',
+        'compress' => true
+    ],
+    'photo' => [
+        'folder' => 'photo',
+        'resize' => true
+    ]
+];
 
 $updateData = [];
 
@@ -13387,10 +13355,9 @@ DB::table('tnega_unemployed')
 
       // submittnegaobcdupdate
 
-        public function submittnegaobcdupdate(Request $request)
+     public function submittnegaobcdupdate(Request $request)
     {
-        // dd($request->all());
-        $adminid       = Auth::user()->id;
+        //dd($request->all());
         $apply_user_id = 0;
         if ($request->distributor_id == 0 && $request->retailer_id == 0) {
             $apply_user_id = $request->user_id;
@@ -13426,17 +13393,18 @@ DB::table('tnega_unemployed')
                     $filepath    = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'certificate' . DIRECTORY_SEPARATOR);
                     move_uploaded_file($_FILES['certificate']['tmp_name'], $filepath . $certificate);
                     DB::table('tnega_obc')->where('id', $request->applied_serviceid)->update([
-                        'certificate' => $certificate,
-                        'status'      => $status,
+                        'certificate'    => $certificate,
+                        'status'         => $status,
                     ]);
                 }
                 DB::table('tnega_obc')->where('id', $request->applied_serviceid)->update([
-                    'status'         => $status,
-                    'application'    => $request->application,
-                    'lects'          => $request->lects,
+                    'status'      => $status,
+                    'application' => $request->application,
+                    'lects'       => $request->lects,
                     'completed_date' => date("Y-m-d"),
                 ]);
 
+               
             } elseif ($status == "Rejected") {
                 $serviceid = $request->serviceid;
                 $getservice_payment = DB::table('service_payment')->where('service_id', $serviceid)->first();
@@ -13498,31 +13466,30 @@ DB::table('tnega_unemployed')
         } else {
             $status    = "Pending";
             $serviceid = $request->serviceid;
-            $user_id = $request->user_id;
-
-            DB::table('tnega_customers')
-                ->where('aadhaar_no', $request->aadhaar_no)
-                ->update([
-                    'name'                => $request->name,
-                    'name_tamil'          => $request->name_tamil,
-                    'mobile'              => $request->mobile,
-                    'can_number'          => $request->can_number,
-                    'dob'                 => $request->dob,
-                    'religion'            => $request->religion,
-                    'father_name_english' => $request->father_name_english,
-                    'mother_name_english' => $request->mother_name_english,
-                    'father_name_tamil'   => $request->father_name_tamil,
-                    'mother_name_tamil'   => $request->mother_name_tamil,
-                    'gender'              => $request->gender,
-                    'district_name'       => $request->district_name,
-                    'panchayath_name'     => $request->panchayath_name,
-                    'taluk_name'          => $request->taluk_name,
-                    'address'             => $request->address,
-                    'address_tamil'       => $request->address_tamil,
-                    'marital_status'      => $request->marital_status,
-                ]);
-
-DB::table('tnega_obc')
+           
+        DB::table('tnega_customers')
+    ->where('aadhaar_no', $request->aadhaar_no)
+    ->update([
+        'name'                => $request->name,
+        'name_tamil'          => $request->name_tamil,
+        'mobile'              => $request->mobile,
+        'can_number'          => $request->can_number,
+        'dob'                 => $request->dob,
+        'religion'            => $request->religion,
+        'father_name_english' => $request->father_name_english,
+        'mother_name_english' => $request->mother_name_english,
+        'father_name_tamil'   => $request->father_name_tamil,
+        'mother_name_tamil'   => $request->mother_name_tamil,
+        'gender'              => $request->gender,
+        'district_name'       => $request->district_name,
+        'panchayath_name'     => $request->panchayath_name,
+        'taluk_name'          => $request->taluk_name,
+        'address'             => $request->address,
+        'address_tamil'       => $request->address_tamil,
+        'marital_status'      => $request->marital_status,
+    ]);
+    
+           DB::table('tnega_obc')
     ->where('id', $request->applied_serviceid)
     ->update([
         'status'                      => $status,
@@ -13682,21 +13649,64 @@ foreach ($files as $field => $config) {
 
 if (!empty($updateData)) {
 
-    DB::table('tnega_obc')
-        ->where('id', $request->applied_serviceid)
-        ->update($updateData);
+$getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    if($coordinator_permission == 1){
+     $post_data = array();
+     $getdata = DB::table('tnega_obc')->where('id',$request->applied_serviceid)->get();
+     $getdata = json_decode( json_encode( $getdata ), true );
+     foreach ( $getdata as $key => $ser ) {
+                $getdata[ $key ][ 'customer_details' ] = array();
+                $getdata[ $key ][ 'obc_caste' ] = array();
+                $ser_id = $ser[ 'id' ];
+                $user_id = $ser[ 'user_id' ];
+                $sql = "select * from tnega_customers where user_id=$user_id";
+                $result1 = DB::select( $sql );
+                $sql = "select * from obc_castes where service_id=$ser_id order by id Asc";
+                $result2 = DB::select( $sql );
+                $getdata[ $key ][ 'customer_details' ] = $result1;
+                $getdata[ $key ][ 'obc_caste' ] = $result2;
+            }
+            
+    if(count($getdata) > 0){
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+     $post_data['data'] = $getdata;
+     $post_data['key'] = $API_KEY;
+     $post_data['index'] = $WEBSITE_INDEX;
+     $ch = curl_init();
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_obc_api';
+        //echo $url1;die;
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS,json_encode($post_data) );
+         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+        }
 
-}
+DB::table('tnega_obc')
+    ->where('id', $request->applied_serviceid)
+    ->update($updateData);
+        }
 
         return redirect("appliedservice/$status")->With("success", "Application submitted Succesfully");
     }
 
             // submittnegaunmarriedupdate
 
-        public function submittnegaunmarriedupdate(Request $request)
+     public function submittnegaunmarriedupdate(Request $request)
     {
         //dd($request->all());
-        $adminid       = Auth::user()->id;
         $apply_user_id = 0;
         if ($request->distributor_id == 0 && $request->retailer_id == 0) {
             $apply_user_id = $request->user_id;
@@ -13732,17 +13742,18 @@ if (!empty($updateData)) {
                     $filepath    = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'certificate' . DIRECTORY_SEPARATOR);
                     move_uploaded_file($_FILES['certificate']['tmp_name'], $filepath . $certificate);
                     DB::table('tnega_unmarried')->where('id', $request->applied_serviceid)->update([
-                        'certificate' => $certificate,
-                        'status'      => $status,
+                        'certificate'    => $certificate,
+                        'status'         => $status,
                     ]);
                 }
                 DB::table('tnega_unmarried')->where('id', $request->applied_serviceid)->update([
-                    'status'         => $status,
-                    'application'    => $request->application,
-                    'lects'          => $request->lects,
+                    'status'      => $status,
+                    'application' => $request->application,
+                    'lects'       => $request->lects,
                     'completed_date' => date("Y-m-d"),
                 ]);
 
+               
             } elseif ($status == "Rejected") {
                 $serviceid = $request->serviceid;
                 $getservice_payment = DB::table('service_payment')->where('service_id', $serviceid)->first();
@@ -13795,7 +13806,7 @@ if (!empty($updateData)) {
                 $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
                 DB::update(DB::raw($sql));
 
-                DB::table('tnega_services')->where('id', $request->applied_serviceid)->update([
+                DB::table('tnega_unmarried')->where('id', $request->applied_serviceid)->update([
                     'status'  => $status,
                     'remarks' => $request->remarks,
 
@@ -13804,31 +13815,30 @@ if (!empty($updateData)) {
         } else {
             $status    = "Pending";
             $serviceid = $request->serviceid;
-            $user_id = $request->user_id;
-
-            DB::table('tnega_customers')
-                ->where('aadhaar_no', $request->aadhaar_no)
-                ->update([
-                    'name'                => $request->name,
-                    'name_tamil'          => $request->name_tamil,
-                    'mobile'              => $request->mobile,
-                    'can_number'          => $request->can_number,
-                    'dob'                 => $request->dob,
-                    'religion'            => $request->religion,
-                    'father_name_english' => $request->father_name_english,
-                    'mother_name_english' => $request->mother_name_english,
-                    'father_name_tamil'   => $request->father_name_tamil,
-                    'mother_name_tamil'   => $request->mother_name_tamil,
-                    'gender'              => $request->gender,
-                    'district_name'       => $request->district_name,
-                    'panchayath_name'     => $request->panchayath_name,
-                    'taluk_name'          => $request->taluk_name,
-                    'address'             => $request->address,
-                    'address_tamil'       => $request->address_tamil,
-                    'marital_status'      => $request->marital_status,
-                ]);
-
-DB::table('tnega_unmarried')
+           
+        DB::table('tnega_customers')
+    ->where('aadhaar_no', $request->aadhaar_no)
+    ->update([
+        'name'                => $request->name,
+        'name_tamil'          => $request->name_tamil,
+        'mobile'              => $request->mobile,
+        'can_number'          => $request->can_number,
+        'dob'                 => $request->dob,
+        'religion'            => $request->religion,
+        'father_name_english' => $request->father_name_english,
+        'mother_name_english' => $request->mother_name_english,
+        'father_name_tamil'   => $request->father_name_tamil,
+        'mother_name_tamil'   => $request->mother_name_tamil,
+        'gender'              => $request->gender,
+        'district_name'       => $request->district_name,
+        'panchayath_name'     => $request->panchayath_name,
+        'taluk_name'          => $request->taluk_name,
+        'address'             => $request->address,
+        'address_tamil'       => $request->address_tamil,
+        'marital_status'      => $request->marital_status,
+    ]);
+    
+            DB::table('tnega_unmarried')
     ->where('id', $request->applied_serviceid)
     ->update([
         'status'              => $status,
@@ -13913,9 +13923,51 @@ foreach ($files as $field => $config) {
     }
 }
 
-DB::table('tnega_unmarried')
+$getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    if($coordinator_permission == 1){
+     $post_data = array();
+     $getdata = DB::table( 'tnega_unmarried' )->where('id',$request->applied_serviceid)->get();
+     $getdata = json_decode( json_encode( $getdata ), true );
+     foreach ( $getdata as $key => $ser ) {
+                $getdata[ $key ][ 'customer_details' ] = array();
+                $ser_id = $ser[ 'id' ];
+                $user_id = $ser[ 'user_id' ];
+                $sql = "select * from tnega_customers where user_id=$user_id";
+                $result1 = DB::select( $sql );
+                $getdata[ $key ][ 'customer_details' ] = $result1;
+            }
+            
+    if(count($getdata) > 0){
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+     $post_data['data'] = $getdata;
+     $post_data['key'] = $API_KEY;
+     $post_data['index'] = $WEBSITE_INDEX;
+     $ch = curl_init();
+        //dd($post_data);
+        $url1 = $RAMJIPAY_URL.'/api/update_unmarried_api';
+        //echo $url1;die;
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS,json_encode($post_data) );
+         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+        }
+
+        DB::table('tnega_unmarried')
     ->where('id', $request->applied_serviceid)
     ->update($updateData);
+
         }
 
         return redirect("appliedservice/$status")->With("success", "Application submitted Succesfully");

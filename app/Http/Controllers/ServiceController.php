@@ -879,11 +879,6 @@ if (!empty($customerid) && $customerid != 0) {
              $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
             return view('applyservice.pattaservice', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'mainbalance', 'coordinator_permission', 'admin_payment'));
 
-        } elseif ($serviceid == 196) {
-            $mainbalance = DB::table('users')->select('wallet')->where('id', 2)->first();
-            $pandetails  = DB::table('utislpan')->where('user_id', Auth::user()->id)->where('service_id', $serviceid)->orderBy('id', 'Desc')->get();
-            return view('applyservice.newpan', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'pandetails', 'mainbalance'));
-
         } elseif ($serviceid == 197) {
             $mainbalance = DB::table('users')->select('wallet')->where('id', 2)->first();
             $pandetails  = DB::table('utislpan')->where('user_id', Auth::user()->id)->where('service_id', $serviceid)->orderBy('id', 'Desc')->get();
@@ -12014,22 +12009,21 @@ if($coordinator_permission == 1){
         return redirect("appliedservice/Pending")->With("success", "Application submitted Succesfully");
     }
 
-        public function submittneganativity(Request $request)
+    public function submittneganativity(Request $request)
     {
          //dd($request->all());
-        $user_id        = 0;
-        $retailer_id    = 0;
+         $user_id = 0;
+        $retailer_id = 0;
         $distributor_id = 0;
         if (Auth::user()->user_type_id == 3) {
-            $user_id        = $request->user_id;
+            $user_id = $request->user_id;
             $distributor_id = Auth::user()->id;
         } elseif (Auth::user()->user_type_id == 4) {
-            $user_id     = $request->user_id;
+            $user_id = $request->user_id;
             $retailer_id = Auth::user()->id;
         } elseif (Auth::user()->user_type_id == 5) {
             $user_id = Auth::user()->id;
         }
-
         $serviceid = $request->serviceid;
         $servicepayment = 0;
         $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
@@ -12042,7 +12036,7 @@ if($coordinator_permission == 1){
             } elseif (Auth::user()->user_type_id == 4) {
                 $servicepayment = $getservicepayment->retailer_amount;
             } elseif (Auth::user()->user_type_id == 5) {
-                $servicepayment = $getservicepayment->service_amount;
+                $servicepayment = $getservicepayment->customer_amount;
             }
         }
         if (Auth::user()->wallet < $servicepayment) {
@@ -12121,9 +12115,7 @@ $insertid = DB::table('nativity')->insertGetId([
         'nativity_district'           => json_encode($request->nativity_district),
         'from_date'                   => json_encode($request->from_date),
         'to_date'                     => json_encode($request->to_date),
-        'address_count'               => $request->address_count,
-        'nativity_type'               => $request->nativity_type,
-    'status'                      => 'Pending',
+        'status'                      => 'Pending',
     'applied_date'                => date('Y-m-d'),
     'created_at'                  => date('Y-m-d'),
 ]);
@@ -13001,28 +12993,110 @@ DB::table('tnega_obc')
         $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
         DB::update(DB::raw($sql));
 
+$getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+$coordinator_permission = 0;
+$admin_payment = 0;
+if($getpermission){
+    $coordinator_permission = $getpermission->coordinator_permission;
+    $admin_payment = $getpermission->admin_amount;
+}
+if($coordinator_permission == 1){
+    $post_data = array();
+
+     $getdata = DB::table('tnega_obc')->where('id',$insertid)->get();
+     $getdata = json_decode( json_encode( $getdata ), true );
+            foreach ( $getdata as $key => $ser ) {
+                $getdata[ $key ][ 'customer_details' ] = array();
+                $getdata[ $key ][ 'obc_caste' ] = array();
+                $ser_id = $ser[ 'id' ];
+                $user_id = $ser[ 'user_id' ];
+                $sql = "select * from tnega_customers where user_id=$user_id";
+                $result1 = DB::select( $sql );
+                $sql = "select * from obc_castes where service_id=$ser_id order by id Asc";
+                $result2 = DB::select( $sql );
+                $getdata[ $key ][ 'customer_details' ] = $result1;
+                $getdata[ $key ][ 'obc_caste' ] = $result2;
+            }
+    if(count($getdata) > 0){       
+
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+      $post_data['data'] = $getdata;
+      $post_data['key'] = $API_KEY;
+      $post_data['index'] = $WEBSITE_INDEX;
+     $ch = curl_init();
+    //echo "<pre>";print_r($post_data);echo"</pre>";die;
+    //dd(json_encode($getdata));
+     //dd($post_data);
+     $url1 = $RAMJIPAY_URL.'/api/get_obc_api';
+   //echo $url1;die;
+     curl_setopt( $ch, CURLOPT_URL, $url1 );
+     curl_setopt( $ch, CURLOPT_POST, 1 );
+     curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode($post_data) );
+     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
+     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+     $server_output = curl_exec( $ch );
+     curl_close( $ch );
+     $resdata = json_decode($server_output, true);
+        //dd($resdata);
+     if ($resdata) {
+                    $status = $resdata['message'];
+                    if ($status == "Success") {
+                        $date = date('Y-m-d');
+                        $time = date('H:i:s');
+                        $service_status = 'Out Payment';
+                        $ad_info = 'Ramji Wallet Debit' . ' ' . $servicename;
+                        $getrawallet = DB::table('users')->select('rawallet')->where('id', 1)->first();
+                        $rawallet = 0;
+                        if ($getrawallet) {
+                            $balance1 = $getrawallet->rawallet;
+                        }
+
+                        $getrawallet1 = DB::table('users')->select('rawallet')->where('id', 2)->first();
+                        $rawallet1 = 0;
+                        if ($getrawallet1) {
+                            $balance2 = $getrawallet1->rawallet;
+                        }
+                        $newbalance2 = $balance1 + $admin_payment;
+                        $newbalance3 = $balance2 - $admin_payment;
+                        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+                        DB::insert(DB::raw($sql));
+                        $sql = "update users set rawallet = rawallet + $admin_payment where id = 1";
+                        DB::update(DB::raw($sql));
+                        $service_status = 'IN Payment';
+                        $ad_info = 'Ramji Wallet Credit' . ' ' . $servicename;
+                        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+                        DB::insert(DB::raw($sql));
+                        $sql = "update users set rawallet = rawallet - $admin_payment where id = 2";
+                        DB::update(DB::raw($sql));
+                    }
+     }
+    }
+}
         return redirect("appliedservice/Pending")->With("success", "Application submitted Succesfully");
     }
 
+
         // submittnegaunmarried Function Start
 
-        public function submittnegaunmarried(Request $request)
+    public function submittnegaunmarried(Request $request)
     {
-        // dd($request->all());
-        $user_id        = 0;
-        $retailer_id    = 0;
+         //dd($request->all());
+         $user_id = 0;
+        $retailer_id = 0;
         $distributor_id = 0;
         if (Auth::user()->user_type_id == 3) {
-            $user_id        = $request->user_id;
+            $user_id = $request->user_id;
             $distributor_id = Auth::user()->id;
         } elseif (Auth::user()->user_type_id == 4) {
-            $user_id     = $request->user_id;
+            $user_id = $request->user_id;
             $retailer_id = Auth::user()->id;
         } elseif (Auth::user()->user_type_id == 5) {
             $user_id = Auth::user()->id;
         }
-        $serviceid         = $request->serviceid;
-        $servicepayment    = 0;
+        $serviceid = $request->serviceid;
+        $servicepayment = 0;
         $getservicepayment = DB::table('service_payment')->where('service_id', $serviceid)->first();
         if ($getservicepayment) {
 
@@ -13033,18 +13107,46 @@ DB::table('tnega_obc')
             } elseif (Auth::user()->user_type_id == 4) {
                 $servicepayment = $getservicepayment->retailer_amount;
             } elseif (Auth::user()->user_type_id == 5) {
-                $servicepayment = $getservicepayment->service_amount;
+                $servicepayment = $getservicepayment->customer_amount;
             }
         }
         if (Auth::user()->wallet < $servicepayment) {
             return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
-        } 
-       if (empty($request->user_id)) {
-
+        }
+        if($user_id == 0){
+       
     $user_id = DB::table('tnega_customers')->insertGetId([
+    'service_id'          => $request->serviceid,
+    'user_id'             => 0,
+    'name'                => $request->name,
+    'name_tamil'          => $request->name_tamil,
+    'aadhaar_no'          => $request->aadhaar_no,
+    'mobile'              => $request->mobile,
+    'can_number'          => $request->can_number,
+    'dob'                 => $request->dob,
+    'religion'            => $request->religion,
+    'father_name_english' => $request->father_name_english,
+    'mother_name_english' => $request->mother_name_english,
+    'father_name_tamil'   => $request->father_name_tamil,
+    'mother_name_tamil'   => $request->mother_name_tamil,
+    'gender'              => $request->gender,
+    'district_name'       => $request->district_name,
+    'panchayath_name'     => $request->panchayath_name,
+    'taluk_name'          => $request->taluk_name,
+    'address'             => $request->address,
+    'address_tamil'       => $request->address_tamil,
+    'marital_status'      => $request->marital_status,
+    'created_at'          => date('Y-m-d'),
+]);
 
-        'service_id'          => $request->serviceid,
-        'user_id'             => 0,
+DB::table('tnega_customers')
+    ->where('id', $user_id)
+    ->update([
+        'user_id' => $user_id
+    ]);
+
+    }else{
+        DB::table('tnega_customers')->where('user_id', $user_id)->update([
         'name'                => $request->name,
         'name_tamil'          => $request->name_tamil,
         'aadhaar_no'          => $request->aadhaar_no,
@@ -13063,47 +13165,11 @@ DB::table('tnega_obc')
         'address'             => $request->address,
         'address_tamil'       => $request->address_tamil,
         'marital_status'      => $request->marital_status,
-        'created_at'                  => now(),
-    ]);
-
-    DB::table('tnega_customers')
-        ->where('id', $user_id)
-        ->update([
-            'user_id' => $user_id
-        ]);
-
-} else {
-
-    $user_id = $request->user_id;
-
-    DB::table('tnega_customers')
-        ->where('id', $user_id)
-        ->update([
-
-            'service_id'          => $request->serviceid,
-            'name'                => $request->name,
-            'name_tamil'          => $request->name_tamil,
-            'aadhaar_no'          => $request->aadhaar_no,
-            'mobile'              => $request->mobile,
-            'can_number'          => $request->can_number,
-            'dob'                 => $request->dob,
-            'religion'            => $request->religion,
-            'father_name_english' => $request->father_name_english,
-            'mother_name_english' => $request->mother_name_english,
-            'father_name_tamil'   => $request->father_name_tamil,
-            'mother_name_tamil'   => $request->mother_name_tamil,
-            'gender'              => $request->gender,
-            'district_name'       => $request->district_name,
-            'panchayath_name'     => $request->panchayath_name,
-            'taluk_name'          => $request->taluk_name,
-            'address'             => $request->address,
-            'address_tamil'       => $request->address_tamil,
-            'marital_status'      => $request->marital_status,
-            'created_at'                  => now(),
 
         ]);
-}
-    // Second Insert Service
+    }   
+
+       // Second Insert Service
 $insertid = DB::table('tnega_unmarried')->insertGetId([
     'user_id'                     => $user_id,
     'retailer_id'                 => $retailer_id,
@@ -13272,9 +13338,86 @@ if (!empty($updateData)) {
         $sql = "update users set wallet = wallet - $servicepayment where id = $user_id";
         DB::update(DB::raw($sql));
 
+$getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+$coordinator_permission = 0;
+$admin_payment = 0;
+if($getpermission){
+    $coordinator_permission = $getpermission->coordinator_permission;
+    $admin_payment = $getpermission->admin_amount;
+}
+if($coordinator_permission == 1){
+    $post_data = array();
 
+    $getdata = DB::table( 'tnega_unmarried' )->where('id',$insertid)->get();
+     $getdata = json_decode( json_encode( $getdata ), true );
+            foreach ( $getdata as $key => $ser ) {
+                $getdata[ $key ][ 'customer_details' ] = array();
+                $ser_id = $ser[ 'id' ];
+                $user_id = $ser[ 'user_id' ];
+                $sql = "select * from tnega_customers where user_id=$user_id";
+                $result1 = DB::select( $sql );
+                $getdata[ $key ][ 'customer_details' ] = $result1;
+            }
+    if(count($getdata) > 0){       
+
+     $API_KEY = env( 'API_KEY', '' );
+     $RAMJIPAY_URL = env( 'RAMJIPAY_URL', '' );
+     $WEBSITE_INDEX = env( 'WEBSITE_INDEX', '' );
+      $post_data['data'] = $getdata;
+      $post_data['key'] = $API_KEY;
+      $post_data['index'] = $WEBSITE_INDEX;
+     $ch = curl_init();
+    //echo "<pre>";print_r($post_data);echo"</pre>";die;
+    //dd(json_encode($getdata));
+     //dd($post_data);
+     $url1 = $RAMJIPAY_URL.'/api/get_unmarried_api';
+   //echo $url1;die;
+     curl_setopt( $ch, CURLOPT_URL, $url1 );
+     curl_setopt( $ch, CURLOPT_POST, 1 );
+     curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode($post_data) );
+     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
+     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+     $server_output = curl_exec( $ch );
+     curl_close( $ch );
+     $resdata = json_decode($server_output, true);
+        //dd($resdata);
+     if ($resdata) {
+                    $status = $resdata['message'];
+                    if ($status == "Success") {
+                        $date = date('Y-m-d');
+                        $time = date('H:i:s');
+                        $service_status = 'Out Payment';
+                        $ad_info = 'Ramji Wallet Debit' . ' ' . $servicename;
+                        $getrawallet = DB::table('users')->select('rawallet')->where('id', 1)->first();
+                        $rawallet = 0;
+                        if ($getrawallet) {
+                            $balance1 = $getrawallet->rawallet;
+                        }
+
+                        $getrawallet1 = DB::table('users')->select('rawallet')->where('id', 2)->first();
+                        $rawallet1 = 0;
+                        if ($getrawallet1) {
+                            $balance2 = $getrawallet1->rawallet;
+                        }
+                        $newbalance2 = $balance1 + $admin_payment;
+                        $newbalance3 = $balance2 - $admin_payment;
+                        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','1','2','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance3')";
+                        DB::insert(DB::raw($sql));
+                        $sql = "update users set rawallet = rawallet + $admin_payment where id = 1";
+                        DB::update(DB::raw($sql));
+                        $service_status = 'IN Payment';
+                        $ad_info = 'Ramji Wallet Credit' . ' ' . $servicename;
+                        $sql = "insert into ramji_payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('2','2','1','$admin_payment','$ad_info', '$service_status','$time','$date','2','$newbalance2')";
+                        DB::insert(DB::raw($sql));
+                        $sql = "update users set rawallet = rawallet - $admin_payment where id = 2";
+                        DB::update(DB::raw($sql));
+                    }
+     }
+    }
+}
         return redirect("appliedservice/Pending")->With("success", "Application submitted Succesfully");
     }
+
 
             // submittnegahandicap Function Start
 

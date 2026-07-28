@@ -104,3 +104,9 @@ Route::post('/get_unemployed_servicesstatus', [App\Http\Controllers\api\ApiContr
 
 //INCOME SERVICE 
 Route::post('/get_income_servicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_income_servicesstatus'])->name('get_income_servicesstatus');
+
+//OBC SERVICE 
+Route::post('/get_obc_servicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_obc_servicesstatus'])->name('get_obc_servicesstatus');
+
+//UNMARRIED SERVICE 
+Route::post('/get_unmarried_servicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_unmarried_servicesstatus'])->name('get_unmarried_servicesstatus');

@@ -794,9 +794,26 @@
                                                 </div>
                                                 <div id="fatherOtherDetails" style="display:none;">
 
-                                                    <div class="row">
+                                                 <div class="row">
 
-                                                    </div>
+                                                                <div class="col-md-6 mb-3">
+                                                                    <label>Pay of Scale <span
+                                                                            class="text-danger">*</span></label>
+
+                                                                    <input type="text" class="form-control number"
+                                                                        name="pay_scale">
+                                                                </div>
+
+
+                                                                <div class="col-md-6 mb-3">
+                                                                    <label>Designation <span
+                                                                            class="text-danger">*</span></label>
+
+                                                                    <input type="text" class="form-control"
+                                                                        name="father_designation">
+                                                                </div>
+
+                                                            </div>
 
                                                 </div>
                                                 <hr>
@@ -1264,6 +1281,21 @@
                                                         <div id="motherOtherDetails" style="display:none;">
 
                                                             <div class="row">
+
+                                                                <div class="col-md-6 mb-3">
+                                                                    <label>Designation <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <input type="text" class="form-control"
+                                                                        name="mother_designation">
+                                                                </div>
+
+
+                                                                <div class="col-md-6 mb-3">
+                                                                    <label>Pay of Scale <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <input type="text" class="form-control number"
+                                                                        name="mother_pay_scale">
+                                                                </div>
 
                                                             </div>
 
@@ -1746,7 +1778,6 @@
         });
 
 // Employed select panura time Father
-
 $(document).ready(function () {
 
     function toggleFatherIncomeProof() {
@@ -1756,20 +1787,20 @@ $(document).ready(function () {
         if (occupation === "Employed" || occupation === "Self Employed") {
 
             $("#fatherIncomeProofSection").show();
-            $("input[name='father_income_proof']").prop("required", true);
+
+            if ($("input[name='father_income_proof']:checked").length > 0) {
+                $("#fatherIncomeFile").show();
+            } else {
+                $("#fatherIncomeFile").hide();
+            }
 
         } else {
 
             $("#fatherIncomeProofSection").hide();
             $("#fatherIncomeFile").hide();
 
-            $("input[name='father_income_proof']")
-                .prop("checked", false)
-                .prop("required", false);
-
-            $("input[name='father_income_proof_file']")
-                .prop("required", false)
-                .val("");
+            $("input[name='father_income_proof']").prop("checked", false);
+            $("input[name='father_income_proof_file']").val("");
         }
     }
 
@@ -1778,18 +1809,10 @@ $(document).ready(function () {
     });
 
     $("input[name='father_income_proof']").on("change", function () {
-
         $("#fatherIncomeFile").show();
-
-        $("input[name='father_income_proof_file']").prop("required", false);
-
     });
 
     toggleFatherIncomeProof();
-
-    if ($("input[name='father_income_proof']:checked").length > 0) {
-        $("#fatherIncomeFile").show();
-    }
 
 });
 

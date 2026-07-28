@@ -154,7 +154,7 @@
             btn.disabled = true;
             btn.innerText = "Submitting...";
         });
-        var ramjibalance = "{{ $mainbalance->wallet }}";
+        var ramjibalance = "{{ $mainbalance->rawallet }}";
         ramjibalance = parseFloat(ramjibalance);
         amount = parseInt(amount);
 

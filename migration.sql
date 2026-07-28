@@ -3565,3 +3565,5 @@ alter table tnega_services add education_document text DEFAULT NULL;
 alter table tnega_services add applicant_tc text DEFAULT NULL NULL after education_document;   
 alter table tnega_services add tamil_name text DEFAULT NULL NULL after applicant_tc;    
 alter table tnega_services add english_name text DEFAULT NULL NULL after tamil_name; 
+
+alter table obc_castes add `service_id` int(11) DEFAULT 0; 
