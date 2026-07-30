@@ -49,31 +49,40 @@
                                         <input type="hidden" name="amount" value="{{ $amount }}">
                                         <input type="hidden" name="service_amount" value="{{ $payment }}">
 
-                                        <div class="mb-3 col-md-6">
-                                            <label for="name" class="form-label">Name</label>
-                                            <input required type="text" maxlength="100" class="form-control"
-                                                name="name" placeholder="Name" />
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            <label class="form-label">Documents</label>
-                                            <select required id="documents" name="documents" class="form-control">
-                                                <option value="">Select Documents</option>
-                                                <option value="Aadhaar Card">Aadhaar Card</option>
-                                                <option value="Smart Card">Smart Card</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            <div class="" id="aadhaar_cardhide" style="display: none;">
-                                                <label>Aadhaar Card</label>
-                                                <input id="aadhaar_card" class="form-control" type="file"
-                                                    name="aadhaar_card">
-                                            </div>
-                                            <div class="" id="smart_cardhide" style="display: none;">
-                                                <label>Smart Card</label>
-                                                <input id="smart_card" class="form-control" type="file"
-                                                    name="smart_card">
-                                            </div>
-                                        </div>
+                                    <div
+                                        class="alert alert-warning text-center fw-bold fs-4 border border-danger shadow-sm">
+                                        <span class="text-danger">
+                                            குடும்ப உறுப்பினர் பெயரை மட்டும் நீக்கம் செய்ய முடியும்..
+                                            குடும்ப தலைவரை நீக்கம் செய்ய முடியாது
+                                        </span><br>
+                                        <span class="text-dark">
+                                            ஆவணங்களில் அட்டை எண்கள் தெளிவாக தெரியும் படி இருக்க வேண்டும்.
+                                        </span>
+                                    </div>
+
+                                    <div class="mb-3 col-md-6">
+                                        <label for="smartcard_number" class="form-label">Ration Card Number</label>
+                                        <input required type="text" maxlength="20" class="form-control"
+                                            name="smartcard_number" placeholder="Ration Card Number" />
+                                    </div>
+                                  
+                                    <div class="mb-3 col-md-6">
+                                        <label for="aadhaar_card" class="form-label">Aadhaar Card Front Page</label>
+                                        <input required accept="image/jpeg, image/png" type="file" class="form-control"
+                                            name="aadhaar_card">
+                                        <small class="text-success">
+                                            Allowed files: JPG, JPEG, PNG
+                                        </small>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="smart_card" class="form-label">Smart Card Front Page</label>
+                                        <input required accept=".jpg,.jpeg,.png,.pdf" type="file" class="form-control"
+                                            name="smart_card">
+                                        <small class="text-success">
+                                            Allowed files: JPG, JPEG, PNG, PDF
+                                        </small>
+                                    </div>
+
                                         <div class="text-center">
                                             <p id="nopayment"></p>
                                         </div>
@@ -134,26 +143,6 @@
 
                         }
                     }
-                    $('#documents').change(function() {
-                        if ($('#documents').val() == 'Aadhaar Card') {
-                            $('#aadhaar_cardhide').show("slow");
-                            $('#smart_cardhide').hide("slow");
-                            $('#smart_card').prop("required", false);
-                            $('#aadhaar_card').prop("required", true);
-
-                        } else if ($('#documents').val() == 'Smart Card') {
-                            $('#smart_cardhide').show("slow");
-                            $('#aadhaar_cardhide').hide("slow");
-                            $('#aadhaar_card').prop("required", false);
-                            $('#smart_card').prop("required", true);
-
-                        } else {
-                            $('#aadhaar_cardhide').hide("slow");
-                            $('#smart_cardhide').hide("slow");
-                            $('#aadhaar_card').prop("required", false);
-                            $('#smart_card').prop("required", false);
-
-                        }
-                    });
+                   
                 </script>
             @endpush

@@ -60,61 +60,49 @@
                                     @endphp
 
                                     <div class="mb-3 col-md-6">
-                                        <label for="name" class="form-label">Name</label>
+                                        <label for="smartcard_number" class="form-label">Ration Card Number</label>
                                         <input @if (Auth::user()->id != $apply_user_id) disabled @endif required type="text"
-                                            value="{{ $services->name }}" class="form-control" name="name"
-                                            maxlength="100" placeholder="Name" />
+                                            value="{{ $services->smartcard_number }}" class="form-control"
+                                            name="smartcard_number" maxlength="20" placeholder="Ration Card Number" />
+                                    </div>
+
+                                    <div class="mb-3 col-md-6">
+                                        @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                            @if ($services->aadhaar_card != '')
+                                                <label>Aadhaar Card Front Page</label>
+                                                <br><a target="_blank"
+                                                    href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
+                                                    class="btn btn-primary me-2">View</a><br>
+                                            @endif
+                                        @else
+                                            <label>Aadhaar Card Front Page</label>
+                                            <input @if ($services->aadhaar_card == '' && $services->documents == 'Aadhaar Card') required @endif class="form-control"
+                                                type="file" accept="image/jpeg, image/png" name="aadhaar_card"
+                                                id="aadhaar_card">
+                                            @if ($services->aadhaar_card != '')
+                                                <a target="_blank"
+                                                    href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
+                                            @endif
+                                        @endif
                                     </div>
                                     <div class="mb-3 col-md-6">
-                                        <label class="form-label">Documents</label>
-                                        <select @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id) disabled @endif required id="documents"
-                                            name="documents" class="form-control">
-                                            <option value="">Select Documents</option>
-                                            <option @if ($services->documents == 'Aadhaar Card') selected @endif value="Aadhaar Card">
-                                                Aadhaar Card</option>
-                                            <option @if ($services->documents == 'Smart Card') selected @endif value="Smart Card">
-                                                Smart Card</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <div class="" id="aadhaar_cardhide" style="display: none;">
-                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                                @if ($services->aadhaar_card != '')
-                                                    <label>Aadhaar Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Aadhaar Card</label>
-                                                <input @if ($services->aadhaar_card == '' && $services->documents == 'Aadhaar Card') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="aadhaar_card" id="aadhaar_card">
-                                                @if ($services->aadhaar_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/aadhaar_card/{{ $services->aadhaar_card }}">Download</a><br>
-                                                @endif
+                                        @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
+                                            @if ($services->smart_card != '')
+                                                <label>Smart Card Front Page</label>
+                                                <br><a target="_blank"
+                                                    href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
+                                                    class="btn btn-primary me-2">View</a><br>
                                             @endif
-                                        </div>
-                                        <div class="" id="smart_cardhide" style="display: none;">
-                                            @if (Auth::user()->id != $apply_user_id && Auth::user()->id != $services->user_id)
-                                                @if ($services->smart_card != '')
-                                                    <label>Smart Card</label>
-                                                    <br><a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}"
-                                                        class="btn btn-primary me-2">View</a><br>
-                                                @endif
-                                            @else
-                                                <label>Smart Card</label>
-                                                <input @if ($services->smart_card == '' && $services->documents == 'Smart Card') required @endif
-                                                    class="form-control" type="file" accept="image/jpeg, image/png"
-                                                    name="smart_card" id="smart_card">
-                                                @if ($services->smart_card != '')
-                                                    <a target="_blank"
-                                                        href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
-                                                @endif
+                                        @else
+                                            <label>Smart Card Front Page</label>
+                                            <input @if ($services->smart_card == '' && $services->documents == 'Smart Card') required @endif class="form-control"
+                                                type="file" accept=".jpg,.jpeg,.png,.pdf" name="smart_card"
+                                                id="smart_card">
+                                            @if ($services->smart_card != '')
+                                                <a target="_blank"
+                                                    href="{{ URL::to('/') }}/upload/services/smart_card/{{ $services->smart_card }}">Download</a><br>
                                             @endif
-                                        </div>
+                                        @endif
                                     </div>
 
                                     @if (Auth::user()->id != $apply_user_id)
@@ -223,7 +211,6 @@
             var certificate = "{{ $services->certificate }}";
             var selects = "{{ $services->selects }}";
             var lects = "{{ $services->lects }}";
-            var documents = "{{ $services->documents }}";
 
             if (status == "Resubmit") {
                 $('#remarkshide').show("slow");
@@ -251,12 +238,6 @@
                     }
                 }
                 $('#selectshide').show("slow")
-            }
-
-            if (documents == "Aadhaar Card") {
-                $('#aadhaar_cardhide').show("slow");
-            } else if (documents == "Smart Card") {
-                $('#smart_cardhide').show("slow");
             }
 
         });
@@ -352,28 +333,6 @@
                 $('#application').prop("required", false);
                 $('#certhide').hide("slow");
                 $('#certificate').prop("required", false);
-            }
-        });
-
-        $('#documents').change(function() {
-            if ($('#documents').val() == 'Aadhaar Card') {
-                $('#aadhaar_cardhide').show("slow");
-                $('#smart_cardhide').hide("slow");
-                $('#smart_card').prop("required", false);
-                $('#aadhaar_card').prop("required", true);
-
-            } else if ($('#documents').val() == 'Smart Card') {
-                $('#smart_cardhide').show("slow");
-                $('#aadhaar_cardhide').hide("slow");
-                $('#aadhaar_card').prop("required", false);
-                $('#smart_card').prop("required", true);
-
-            } else {
-                $('#aadhaar_cardhide').hide("slow");
-                $('#smart_cardhide').hide("slow");
-                $('#aadhaar_card').prop("required", false);
-                $('#smart_card').prop("required", false);
-
             }
         });
     
