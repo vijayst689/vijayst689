@@ -884,11 +884,11 @@ if (!empty($customerid) && $customerid != 0) {
             $pandetails  = DB::table('utislpan')->where('user_id', Auth::user()->id)->where('service_id', $serviceid)->orderBy('id', 'Desc')->get();
             return view('applyservice.utislpancorrection', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'pandetails', 'mainbalance'));
 
-        } elseif ($serviceid == 220) {
+        } elseif ($serviceid == 221) {
             $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
             return view('applyservice.smartcard_otpservice', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'mainbalance', 'coordinator_permission', 'admin_payment'));
 
-        } elseif ($serviceid == 221 || $serviceid == 222 || $serviceid == 227 || $serviceid == 228 || $serviceid == 229 || $serviceid == 230 || $serviceid == 231 || $serviceid == 232 || $serviceid == 235) {
+        } elseif ($serviceid == 222 || $serviceid == 227 || $serviceid == 228 || $serviceid == 229 || $serviceid == 230 || $serviceid == 231 || $serviceid == 232 || $serviceid == 235) {
             $mainbalance = DB::table('users')->select('rawallet')->where('id', 2)->first();
             return view('applyservice.smartcard_nametransfer', compact('serviceid', 'districts', 'servicename', 'amount', 'customers', 'payment', 'mainbalance', 'coordinator_permission', 'admin_payment'));
         } elseif ($serviceid == 217) {
@@ -9542,7 +9542,7 @@ if($coordinator_permission == 1){
         if(Auth::user()->wallet < $servicepayment){
             return redirect()->back()->with('error', 'Insufficient wallet balance. Please recharge your wallet to proceed.');
         }
-        if ($serviceid == 221 || $serviceid == 222 || $serviceid == 227 || $serviceid == 228 || $serviceid == 229 || $serviceid == 230 || $serviceid == 231 || $serviceid == 232 || $serviceid == 235) {
+        if ($serviceid == 222 || $serviceid == 227 || $serviceid == 228 || $serviceid == 229 || $serviceid == 230 || $serviceid == 231 || $serviceid == 232 || $serviceid == 235) {
             DB::table('smartcard')->insert([
                 'user_id'        => $user_id,
                 'retailer_id'    => $retailer_id,
@@ -9643,7 +9643,7 @@ if($coordinator_permission == 1){
                 $RAMJIPAY_URL  = env('RAMJIPAY_URL', '');
                 $WEBSITE_INDEX = env('WEBSITE_INDEX', '');
                 $ch            = curl_init();
-                if ($serviceid == 221) {
+                if ($serviceid == 22) {
                     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=219&rowid=$rowid&status=$status&smartcard_file=$smartcard_url&dist_id=$dist_id&taluk_id=$taluk_id&relationship=$relationship&name_tamil=$name_tamil&name_english=$name_english&dob=$dob";
                 } elseif ($serviceid == 222) {
                     $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&aadhaar_file=$aadhaar_url&service_id=224&rowid=$rowid&status=$status&smartcard_file=$smartcard_url&relationship=$relationship";
