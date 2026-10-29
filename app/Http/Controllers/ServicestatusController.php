@@ -114,7 +114,7 @@ $services = $services
     'can_edit','bond','voterid','fssai','covid','nalavariyam','license',
     'tailor','pmkissan','birth_certificate','medicalscheme','dharsan',
     'software','smartcard_otp','smartcard_pdf','pvc_card','aadhaarfind','patta','utislpan','agri_stack','voteridpdf_download','tnega_obc','nativity','income','tnega_residence','tnega_unemployed','tnega_unmarried','tnega_handicap','tnega_widow'
-    ];
+    ,'employment','bond'];
 
     $user = auth()->user();
 
@@ -295,7 +295,7 @@ $services = $services
         } elseif($service_id == 208 || $service_id == 209 || $service_id == 210 || $service_id == 211 || $service_id == 225 || $service_id == 226 || $service_id == 233 || $service_id == 234){
             $services = DB::table('can_edit')->where('id',$id)->where('status',$status)->first();
 
-        } elseif($service_id == 100 ){
+        }  elseif($service_id == 100 ){
             $services = DB::table('bond')->where('id',$id)->where('status',$status)->first();
 
         }elseif($service_id == 113 || $service_id == 120 || $service_id == 164 || $service_id == 182){
@@ -343,25 +343,36 @@ $services = $services
             $services = DB::table('utislpan')->where('id',$id)->where('status',$status)->first();
         } elseif($service_id == 220 ){
             $services = DB::table('smartcard_otp')->where('id',$id)->where('status',$status)->first();
-        }elseif($service_id == 187 ){
+        }elseif($service_id == 187 )
+        
+        {
+         //tnega_services
+        } elseif($service_id == 242){
             $services = DB::table('tnega_services')->where('id',$id)->where('status',$status)->first();
-        } elseif ($service_id == 188) {
-            $services = DB::table('income')->where('id', $id)->where('status', $status)->first();
-        } elseif ($service_id == 193) {
-            $services = DB::table('nativity')->where('id', $id)->where('status', $status)->first();
-        } elseif ($service_id == 196) {
-          $services = DB::table('tnega_obc')->where('id', $id)->where('status', $status)->first();
-        } elseif ($service_id == 194) {
-          $services = DB::table('tnega_residence')->where('id', $id)->where('status', $status)->first();
-        } elseif ($service_id == 195) {
-          $services = DB::table('tnega_unemployed')->where('id', $id)->where('status', $status)->first();
-        } elseif ($service_id == 197) {
-          $services = DB::table('tnega_unmarried')->where('id', $id)->where('status', $status)->first();
-        } elseif ($service_id == 198) {
-          $services = DB::table('tnega_handicap')->where('id', $id)->where('status', $status)->first();
-        } elseif ($service_id == 199) {
-          $services = DB::table('tnega_widow')->where('id', $id)->where('status', $status)->first();
-        }elseif($service_id == 181){
+        } elseif($service_id == 244 ){
+            $services = DB::table('nativity')->where('id',$id)->where('status',$status)->first();
+        } elseif($service_id == 245 ){
+            $services = DB::table('tnega_residence')->where('id',$id)->where('status',$status)->first();
+        } elseif($service_id == 246 ){
+            $services = DB::table('tnega_unemployed')->where('id',$id)->where('status',$status)->first();
+        } elseif($service_id == 247 ){
+            $services = DB::table('tnega_obc')->where('id',$id)->where('status',$status)->first();
+        } elseif($service_id == 248 ){
+            $services = DB::table('tnega_unmarried')->where('id',$id)->where('status',$status)->first();
+        } elseif($service_id == 249 ){
+            $services = DB::table('tnega_handicap')->where('id',$id)->where('status',$status)->first();
+        } elseif($service_id == 250 ){
+            $services = DB::table('tnega_widow')->where('id',$id)->where('status',$status)->first();
+        } elseif($service_id == 243 ){
+            $services = DB::table('income')->where('id',$id)->where('status',$status)->first();
+        } elseif ($service_id == 257 || $service_id == 258 || $service_id == 259 || $service_id == 260 || $service_id == 261 || $service_id == 262) {
+            $services = DB::table('employment')->where('id', $id)->where('status', $status)->first();
+        }  elseif( $service_id == 100 ){
+            return view('servicestatus.bondupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
+
+        } 
+
+        elseif($service_id == 181){
             $votercorrection_services = DB::table('voterid')->where('id',$id)->where('status',$status)->get();
             $votercorrection_services = json_decode( json_encode( $votercorrection_services ), true );
             foreach ( $votercorrection_services as $key => $ser ) {
@@ -612,16 +623,33 @@ $services = $services
     } elseif ($service_id == 157) {
             return view('servicestatus.pvccardupdate', compact('id', 'services', 'servicename', 'customers', 'serviceid', 'amount', 'districts'));
     
-    }elseif ($service_id == 245) {
-            return view('servicestatus.smartcard_pdfstatusupdate', compact('id', 'services', 'servicename', 'customers', 'serviceid', 'amount', 'districts'));
-        } elseif ($service_id == 72) {
+    } elseif ($service_id == 245) {
+             return view('servicestatus.smartcard_pdfstatusupdate', compact('id', 'services', 'servicename', 'customers', 'serviceid', 'amount', 'districts'));
+    
+    } elseif ($service_id == 257 || $service_id == 258 || $service_id == 259 || $service_id == 260 || $service_id == 261 || $service_id == 262) {
+            return view('servicestatus.employmentstatusupdate', compact('id', 'services', 'servicename', 'customers', 'serviceid', 'amount', 'districts'));
+    
+    } elseif ($service_id == 100) {
+            $services = DB::table('bond')->where('id', $id)->where('status', $status)->first();
+
+    } elseif ($service_id == 72) {
             return view('servicestatus.aadhaarfind_statusupdate', compact('id', 'services', 'servicename', 'customers', 'serviceid', 'amount', 'districts'));
-        }
-         elseif ($service_id == 187 || $service_id == 200 || $service_id == 201 || $service_id == 202 || $service_id == 203 || $service_id == 204 || $service_id == 205) {
+    }
+      elseif ($service_id == 187 || $service_id == 200 || $service_id == 201 || $service_id == 202 || $service_id == 203 || $service_id == 204 || $service_id == 205 || $service_id == 242)
+            
+    {
             $tncustomers = DB::table('tnega_customers')->where('user_id', $user_id)->first();
             // dd($tncustomers);
             return view('servicestatus.tnegacommunityupdate', compact('id', 'services', 'servicename', 'tncustomers', 'serviceid', 'amount', 'districts', 'customers'));
-        } elseif ($service_id == 189) {
+    } elseif ($service_id == 243) {
+            $tncustomers = DB::table('tnega_customers')->where('user_id', $user_id)->first();
+            $relation    = DB::table('family_member')
+                ->where('applied_service_id', $id)
+                ->get();
+
+             //dd($services);
+            return view('servicestatus.tnegaincomeupdate', compact('id', 'services', 'servicename', 'tncustomers', 'serviceid', 'amount', 'districts', 'customers', 'relation'));
+    }elseif ($service_id == 244) {
             $declar      = DB::table('declaration')->get();
             $tncustomers = DB::table('tnega_customers')
                 ->where('user_id', $user_id)
@@ -647,10 +675,11 @@ $services = $services
         'importantDetails','familydetails','declar'
     ));
      
-        } elseif ($service_id == 193) {
+        } elseif ($service_id == 245) {
             $tncustomers = DB::table('tnega_customers')
                 ->where('user_id', $user_id)
                 ->first();
+                // dd($services->id, $services->photo);
             return view('servicestatus.tneganativityupdate', compact(
                 'id',
                 'services',
@@ -661,7 +690,7 @@ $services = $services
                 'districts',
                 'customers',
             ));
-        } elseif ($service_id == 194) {
+        } elseif ($service_id == 246) {
             $tncustomers = DB::table('tnega_customers')
                 ->where('user_id', $user_id)
                 ->first();
@@ -675,7 +704,7 @@ $services = $services
                 'districts',
                 'customers',
             ));
-        } elseif ($service_id == 195) {
+        } elseif ($service_id == 247) {
             $tncustomers = DB::table('tnega_customers')
                 ->where('user_id', $user_id)
                 ->first();
@@ -689,7 +718,7 @@ $services = $services
                 'districts',
                 'customers',
             ));
-        } elseif ($service_id == 196) {
+        } elseif ($service_id == 248) {
             $tncustomers = DB::table('tnega_customers')
                 ->where('user_id', $user_id)
                 ->first();
@@ -707,7 +736,7 @@ $services = $services
                 'districts',
                 'customers','obc'
             ));
-        } elseif ($service_id == 197) {
+        } elseif ($service_id == 249) {
             $tncustomers = DB::table('tnega_customers')
                 ->where('user_id', $user_id)
                 ->first();
@@ -722,7 +751,7 @@ $services = $services
                 'districts',
                 'customers'
             ));
-        } elseif ($service_id == 198) {
+        } elseif ($service_id == 250) {
             $tncustomers = DB::table('tnega_customers')
                 ->where('user_id', $user_id)
                 ->first();
@@ -737,7 +766,7 @@ $services = $services
                 'districts',
                 'customers'
             ));
-        } elseif ($service_id == 199) {
+        } elseif ($service_id == 251) {
             $tncustomers = DB::table('tnega_customers')
                 ->where('user_id', $user_id)
                 ->first();
@@ -752,16 +781,9 @@ $services = $services
                 'districts',
                 'customers'
             ));
-        } elseif ($service_id == 188) {
-            $tncustomers = DB::table('tnega_customers')->where('user_id', $user_id)->first();
-            $relation    = DB::table('family_member')
-                ->where('applied_service_id', $id)
-                ->get();
-
-             //dd($services);
-            return view('servicestatus.tnegaincomeupdate', compact('id', 'services', 'servicename', 'tncustomers', 'serviceid', 'amount', 'districts', 'customers', 'relation'));
-
         }
+
+
     }
 
 public function submit_statusupdate_tnegaservices1(Request $request){
@@ -10811,6 +10833,8 @@ public function voteridpdf_statusupdate(Request $request){
 
     return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
 }
+
+
 public function agristack_update(Request $request){
     $apply_user_id = 0;
     if ($request->distributor_id == 0 && $request->retailer_id == 0) {
@@ -14431,6 +14455,238 @@ DB::table('tnega_widow')
 
         return redirect("appliedservice/$status")->With("success", "Application submitted Succesfully");
     }
+
+    // ---employment_update--- //
+
+        public function employment_update(Request $request)
+    {
+        $adminid       = Auth::user()->id;
+        $apply_user_id = 0;
+        if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+            $apply_user_id = $request->user_id;
+        } elseif ($request->retailer_id == 0) {
+            $apply_user_id = $request->distributor_id;
+        } elseif ($request->distributor_id == 0) {
+            $apply_user_id = $request->retailer_id;
+        }
+        if ($apply_user_id != Auth::user()->id) {
+            $status = $request->status;
+            if ($status == "Resubmit") {
+                DB::table('employment')->where('id', $request->applied_serviceid)->update([
+                    'remarks' => $request->remarks,
+                    'status'  => $status,
+                ]);
+            } elseif ($status == "Processing") {
+                if ($request->acknowledgement != null) {
+                    $acknowledgement = uniqid() . '.' . $request->file('acknowledgement')->extension();
+                    $filepath        = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'acknowledgement' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['acknowledgement']['tmp_name'], $filepath . $acknowledgement);
+                    DB::table('employment')->where('id', $request->applied_serviceid)->update([
+                        'acknowledgement' => $acknowledgement,
+                    ]);
+                }
+                DB::table('employment')->where('id', $request->applied_serviceid)->update([
+                    'status'         => $status,
+                    'application_no' => $request->application_no,
+                    'selects'        => $request->selects,
+                    'processing_date' => now(),
+                ]);
+            } elseif ($status == "Approved") {
+                if ($request->certificate != null) {
+                    $certificate = uniqid() . '.' . $request->file('certificate')->extension();
+                    $filepath    = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'certificate' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['certificate']['tmp_name'], $filepath . $certificate);
+                    DB::table('employment')->where('id', $request->applied_serviceid)->update([
+                        'certificate' => $certificate,
+                        'status'      => $status,
+                    ]);
+                }
+                DB::table('employment')->where('id', $request->applied_serviceid)->update([
+                    'status'         => $status,
+                    'application'    => $request->application,
+                    'lects'          => $request->lects,
+                    'completed_date' => date("Y-m-d"),
+                ]);
+
+                //Admin Commision Start
+                $id         = $request->applied_serviceid;
+                $getadminid = DB::table('employment')->where('id', $id)->first();
+                $adminid    = $getadminid->admin_id ? $getadminid->admin_id : 0;
+                if ($adminid != 0) {
+
+                    //Admin Commision Start
+                    $serviceid        = $request->serviceid;
+                    $getadmin_payment = DB::table('service_permissions')->where('service_id', $serviceid)->where('user_id', $adminid)->first();
+
+                    $payment = 0;
+                    if ($getadmin_payment) {
+                        $payment = $getadmin_payment->amount;
+                    }
+                    $getservicename = DB::table('services')->select('service_name')->where('id', $serviceid)->first();
+                    $servicename    = "";
+                    if ($getservicename) {
+                        $servicename = $getservicename->service_name;
+                    }
+                    $date           = date('Y-m-d');
+                    $time           = date('H:i:s');
+                    $service_status = 'Out Payment';
+                    $ad_info        = "Service Commision For" . ' ' . $servicename;
+
+                    $getwallet = DB::table('users')->select('wallet')->where('id', 1)->first();
+                    $balance   = 0;
+                    if ($getwallet) {
+                        $balance = $getwallet->wallet;
+                    }
+                    $getuserswallet = DB::table('users')->select('wallet')->where('id', $adminid)->first();
+                    $balance1       = 0;
+                    if ($getuserswallet) {
+                        $balance1 = $getuserswallet->wallet;
+                    }
+                    $newbalance  = $balance - $payment;
+                    $newbalance1 = $balance1 + $payment;
+
+                    $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$adminid','1','$adminid','$payment','$ad_info', '$service_status','$time','$date','$adminid','$newbalance')";
+                    DB::insert(DB::raw($sql));
+                    $sql = "update users set wallet = wallet - $payment where id = 1";
+                    DB::update(DB::raw($sql));
+                    $service_status = 'IN Payment';
+                    $sql            = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$adminid','$adminid','1','$payment','$ad_info', '$service_status','$time','$date','$adminid','$newbalance1')";
+                    DB::insert(DB::raw($sql));
+                    $sql = "update users set wallet = wallet + $payment where id = $adminid";
+                    DB::update(DB::raw($sql));
+                }
+                //Admin Commision End
+
+            } elseif ($status == "Rejected") {
+                $serviceid          = $request->serviceid;
+                $getservice_payment = DB::table('service_payment')->where('service_id', $serviceid)->first();
+                $getusers           = DB::table('users')->where('id', $apply_user_id)->first();
+                $usertype           = 0;
+                if ($getusers) {
+                    $usertype = $getusers->user_type_id;
+                }
+                $payment = 0;
+                if ($getservice_payment) {
+                    if ($usertype == 3) {
+                        $payment = $getservice_payment->distributor_amount;
+                    } elseif ($usertype == 4) {
+                        $payment = $getservice_payment->retailer_amount;
+                    } elseif ($usertype == 5) {
+                        $payment = $getservice_payment->customer_amount;
+                    }
+                }
+
+                $getservicename = DB::table('services')->select('service_name')->where('id', $serviceid)->first();
+                $servicename    = "";
+                if ($getservicename) {
+                    $servicename = $getservicename->service_name;
+                }
+                $date           = date('Y-m-d');
+                $time           = date('H:i:s');
+                $service_status = 'Out Payment';
+                $ad_info        = "Service Refund For" . ' ' . $servicename;
+
+                $getwallet = DB::table('users')->select('wallet')->where('id', 1)->first();
+                $balance   = 0;
+                if ($getwallet) {
+                    $balance = $getwallet->wallet;
+                }
+                $getuserswallet = DB::table('users')->select('wallet')->where('id', $apply_user_id)->first();
+                $balance1       = 0;
+                if ($getuserswallet) {
+                    $balance1 = $getuserswallet->wallet;
+                }
+                $newbalance  = $balance - $payment;
+                $newbalance1 = $balance1 + $payment;
+
+                $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','1','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+                DB::insert(DB::raw($sql));
+                $sql = "update users set wallet = wallet - $payment where id = 1";
+                DB::update(DB::raw($sql));
+                $service_status = 'IN Payment';
+                $sql            = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','1','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+                DB::insert(DB::raw($sql));
+                $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+                DB::update(DB::raw($sql));
+
+                DB::table('employment')->where('id', $request->applied_serviceid)->update([
+                    'status'  => $status,
+                    'remarks' => $request->remarks,
+                    'rejected_date' => now(),
+
+                ]);
+            }
+        } else {
+            $status    = "Pending";
+            $serviceid = $request->serviceid;
+            if ($serviceid == 257 || $serviceid == 258 || $serviceid == 259) {
+                DB::table('employment')->where('id', $request->applied_serviceid)->update([
+                    'emp_reg_number' => $request->emp_reg_number,
+                    'aadhaar_no'     => $request->aadhaar_no,
+                    'name'           => $request->name,
+                    'dob'            => $request->dob,
+                    'password'       => $request->password,
+                    'status'         => 'Pending',
+                    'applied_date'   => date("Y-m-d"),
+                    'created_at'     => date("Y-m-d"),
+
+                ]);
+                if ($request->employment_card != null) {
+                    $employment_card = uniqid() . '.' . $request->file('employment_card')->extension();
+                    $filepath        = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'employment_card' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['employment_card']['tmp_name'], $filepath . $employment_card);
+
+                    DB::table('employment')->where('id', $request->applied_serviceid)->update([
+                        'employment_card' => $employment_card,
+                    ]);
+                }
+            } elseif ($serviceid == 260 || $serviceid == 261) {
+                DB::table('employment')->where('id', $request->applied_serviceid)->update([
+                    'amount'       => $request->amount,
+                    'password'     => $request->password,
+                    'name'         => $request->name,
+                    'status'       => 'Pending',
+                    'applied_date' => date("Y-m-d"),
+                    'created_at'   => date("Y-m-d"),
+
+                ]);
+
+                if ($request->marksheet != null) {
+                    $marksheet = uniqid() . '.' . $request->file('marksheet')->extension();
+                    $filepath  = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'marksheet' . DIRECTORY_SEPARATOR);
+                    move_uploaded_file($_FILES['marksheet']['tmp_name'], $filepath . $marksheet);
+
+                    DB::table('employment')->where('id', $request->applied_serviceid)->update([
+                        'marksheet' => $marksheet,
+                    ]);
+                }
+            } elseif ($serviceid == 262) {
+                DB::table('employment')->where('id', $request->applied_serviceid)->update([
+                    'amount'       => $request->amount,
+                    'name'         => $request->name,
+                    'father_name'  => $request->father_name,
+                    'dob'          => $request->dob,
+                    'mobile'       => $request->mobile,
+                    'community'    => $request->community,
+                    'caste'        => $request->caste,
+                    'email'        => $request->email,
+                    'address'      => $request->address,
+                    'status'       => 'Pending',
+                    'applied_date' => date("Y-m-d"),
+                    'created_at'   => date("Y-m-d"),
+
+                ]);
+
+            }
+            DB::table('employment')->where('id', $request->applied_serviceid)->update([
+                'status' => $status,
+            ]);
+        }
+
+        return redirect("appliedservice/$status")->With("success", "Application submitted Succesfully");
+    }
+
+ 
 
 public function compressFileTo200KB($filePath, $targetKB = 200)
 {

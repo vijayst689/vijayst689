@@ -62,6 +62,14 @@ Route::post('/get_bulkorderstatus', [App\Http\Controllers\api\ApiController::cla
 // MEDICAL SCHEME SERVICE 
 Route::post('/get_medicalschemestatus', [App\Http\Controllers\api\ApiController::class, 'get_medicalschemestatus'])->name('get_medicalschemestatus');
 
+//BOND SERVICE
+Route::post('/get_bondstatus', [App\Http\Controllers\api\ApiController::class, 'get_bondstatus'])->name('get_bondstatus');
+
+
+//  EMPLOYMENT SERVICE 
+Route::post('/get_employment_status', [App\Http\Controllers\api\ApiController::class, 'get_employment_status'])->name('get_employment_status');
+
+
 // MEDICAL SCHEME SERVICE 
 Route::post('/get_voteridpdf_downloadestatus', [App\Http\Controllers\api\ApiController::class, 'get_voteridpdf_downloadestatus'])->name('get_voteridpdf_downloadestatus');
 
@@ -90,6 +98,8 @@ Route::get('/wallet-users', function (Request $request) {
 // PATTA SERVICE 
 Route::post('/get_pattastatus', [App\Http\Controllers\api\ApiController::class, 'get_pattastatus'])->name('get_pattastatus');
 
+
+
 //ESEVAI SERVICE 
 Route::post('/get_esevai_servicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_esevai_servicesstatus'])->name('get_esevai_servicesstatus');
 
@@ -108,5 +118,22 @@ Route::post('/get_income_servicesstatus', [App\Http\Controllers\api\ApiControlle
 //OBC SERVICE 
 Route::post('/get_obc_servicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_obc_servicesstatus'])->name('get_obc_servicesstatus');
 
+// VOTERID SERVICE 
+Route::post('/get_voteridstatus', [App\Http\Controllers\api\ApiController::class, 'get_voteridstatus'])->name('get_voteridstatus');
+
+Route::post('/get_otpfrom_otherwebsite', [App\Http\Controllers\api\ApiController::class, 'getOtpFromOtherWebsite']);
+
+// TNEGA SERVICE
+Route::post('/get_tnegaservicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_tnegaservicesstatus'])->name('get_tnegaservicesstatus');
+
 //UNMARRIED SERVICE 
 Route::post('/get_unmarried_servicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_unmarried_servicesstatus'])->name('get_unmarried_servicesstatus');
+
+//HANDICAP SERVICE 
+Route::post('/get_handicap_servicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_handicap_servicesstatus'])->name('get_handicap_servicesstatus');
+
+//WIDOW SERVICE 
+Route::post('/get_widow_servicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_widow_servicesstatus'])->name('get_widow_servicesstatus');
+
+//GRADUATE SERVICE 
+Route::post('/get_graduate_servicesstatus', [App\Http\Controllers\api\ApiController::class, 'get_graduate_servicesstatus'])->name('get_graduate_servicesstatus');

@@ -1,4 +1,5 @@
-@extends('layouts.app')
+
+        @extends('layouts.app')
 @section('content')
     <style>
         body {
@@ -73,34 +74,6 @@
             color: #2c3e50;
             font-weight: bold;
         }
-
-        .marquee-container {
-            width: 100%;
-            overflow: hidden;
-            background: #dc3545;
-            border-radius: 5px;
-            padding: 8px 0;
-        }
-
-        .marquee-text {
-            display: inline-block;
-            white-space: nowrap;
-            color: #fff;
-            font-weight: bold;
-            font-size: 16px;
-            padding-left: 100%;
-            animation: scrollText 20s linear infinite;
-        }
-
-        @keyframes scrollText {
-            from {
-                transform: translateX(0);
-            }
-
-            to {
-                transform: translateX(-100%);
-            }
-        }
     </style>
     <div class="page-wrapper">
         <div class="page-content">
@@ -119,12 +92,12 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
- <div class="card-body">
+                    <div class="card-body">
                         <h6 class="card-title">{{ $servicename }}</h6>
                         <h6 class="card-title">Service Payment : <span class="text-danger">{{ $payment }}</span></h6>
 
                         <div class="row">
-                            <form class="row g-4" action="{{ url('submittnegaresidence') }}" enctype="multipart/form-data"
+                         <form class="row g-4" action="{{ url('submittnegaresidence') }}" enctype="multipart/form-data"
                                 method="post" id="myForm" onsubmit="return checkpayment(event)">
                                 @csrf
 
@@ -501,9 +474,10 @@
                     </div>
 
                     </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        @endsection
+            @endsection
 @push('page_scripts')
     <script>
         document.getElementById("myForm").addEventListener("submit", function() {

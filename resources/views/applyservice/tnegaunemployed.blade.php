@@ -1,4 +1,5 @@
-@extends('layouts.app')
+
+        @extends('layouts.app')
 @section('content')
     <style>
         body {
@@ -91,12 +92,12 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-    <div class="card-body">
+                    <div class="card-body">
                         <h6 class="card-title">{{ $servicename }}</h6>
                         <h6 class="card-title">Service Payment : <span class="text-danger">{{ $payment }}</span></h6>
 
                         <div class="row">
-                            <form class="row g-4" action="{{ url('submittnegaunemployed') }}" enctype="multipart/form-data"
+                             <form class="row g-4" action="{{ url('submittnegaunemployed') }}" enctype="multipart/form-data"
                                 method="post" id="myForm" onsubmit="return checkpayment(event)">
                                 @csrf
 
@@ -504,9 +505,10 @@
                     </div>
 
                     </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        @endsection
+            @endsection
 @push('page_scripts')
     <script>
         document.getElementById("myForm").addEventListener("submit", function() {

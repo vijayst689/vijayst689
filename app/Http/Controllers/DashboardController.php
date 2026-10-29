@@ -2144,7 +2144,7 @@ class DashboardController extends Controller
                     ->where('retailer_id', Auth::user()->id)
                     ->orderBy('id', 'Desc')->count();
 
-                                                 $tnega_obc = DB::table('tnega_obc')
+                $tnega_obc = DB::table('tnega_obc')
                     ->where('status', 'Processing')
                     ->where('retailer_id', Auth::user()->id)
                     ->orderBy('id', 'Desc')->count();

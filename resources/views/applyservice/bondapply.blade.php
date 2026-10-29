@@ -42,55 +42,60 @@
                                 <h6 class="card-title">Service Payment : <span
                                         class="text-danger">{{ $payment }}</span></h6>
                                 <div class="card-body p-4">
-                                    <form class="row g-4" action="{{ url('bondsubmit') }}" enctype="multipart/form-data"
-                                        onsubmit="return checkpayment(event)" method="post" id="myForm">
-                                        {{ csrf_field() }}
+                                   <form class="row g-4" action="{{ url('bondsubmit') }}" enctype="multipart/form-data"
+                                method="post" ID="myForm">
+                                {{ csrf_field() }}
 
-                                        <div class="row">
-                                            <input type="hidden" name="serviceid" value="{{ $serviceid }}">
-                                            <input type="hidden" name="amount" value="{{ $amount }}">
-                                            <input type="hidden" name="service_amount" value="{{ $payment }}">
-                                            <input type="hidden" name="user_id" value="{{ $customers->id }}">
+                                <div class="row">
+                                    <input type="hidden" name="serviceid" value="{{ $serviceid }}">
+                                    <input type="hidden" name="amount" value="{{ $amount }}">
+                                    <input type="hidden" name="service_amount" value="{{ $payment }}">
 
-                                            <div class="mb-3 col-md-6">
-                                                <label for="applicant_name" class="form-label">Applicant Name</label>
-                                                <input type="text" maxlength="30" class="form-control"
-                                                    name="applicant_name" placeholder="Applicant Name" />
+                                    <div class="mb-3 col-md-6">
+                                        <label for="dist_id" class="form-label">District</label>
+                                        <select required name="dist_id" id="dist_id" class="form-control">
+                                            <option value="">Select District</option>
+                                            @foreach ($districts as $d)
+                                                <option value="{{ $d->id }}">{{ $d->district_name }}</option>
+                                            @endforeach
+                                        </select>
 
-                                                <label for="document_number" class="form-label">Document Number</label>
-                                                <input type="text" maxlength="30" class="form-control"
-                                                    name="document_number" placeholder="Document No" />
+                                        <label for="document_number" class="form-label">Document Number</label>
+                                        <input required type="text" maxlength="30" class="form-control number"
+                                            name="document_number" placeholder="Document No" />
 
-                                                <label for="dist_id" class="form-label">District</label>
-                                                <select required name="dist_id" id="dist_id" class="form-control">
-                                                    <option value="">Select District</option>
-                                                    @foreach ($districts as $d)
-                                                        <option value="{{ $d->id }}">{{ $d->district_name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                        <label for="revenue_village" class="form-label">Revenue Village</label>
+                                        <input required type="text" maxlength="100" class="form-control"
+                                            name="revenue_village" placeholder="Revenue Village" />
+
+                                         {{-- <label for="mobile" class="form-label">Cell Number</label>
+                                        <input required type="text" maxlength="10" class="form-control number"
+                                            name="mobile" placeholder="Cell Number" /> --}}
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="taluk_id" class="form-label">Taluk</label>
+                                            <select required name="taluk_id" id="taluk" class="form-control">
+                                            </select>
+                                        <label for="sub_reg_office" class="form-label">Sub-Register Office(SRO)</label>
+                                        <input required type="text" maxlength="100" class="form-control"
+                                            name="sub_reg_office" placeholder="Sub-Register Office(SRO)" />
+
+                                        <label for="year" class="form-label">Year</label>
+                                        <input required type="year" maxlength="4" class="form-control number"
+                                            name="year" placeholder="Year" />
+                                        
+                                    </div>
+                                    <div class="text-center">
+                                        <p id="nopayment"></p>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="col-12">
+                                            <div class="mb-0">
+                                                <button id="save" type="submit" class="btn btn-primary">Apply</button>
                                             </div>
-                                            <div class="mb-3 col-md-6">
-                                                <label for="aadhaar_no" class="form-label">Aadhaar Number</label>
-                                                <input type="text" maxlength="12" class="form-control number"
-                                                    name="aadhaar_no" placeholder="Aadhaar Number" />
-
-                                                <label for="year" class="form-label">Year</label>
-                                                <input type="year" maxlength="4" class="form-control number"
-                                                    name="year" placeholder="Year" />
-
-                                                <label for="taluk_id" class="form-label">Taluk</label>
-                                                <select required name="taluk_id" id="taluk" class="form-control">
-                                                </select>
-                                            </div>
-                                            <div class="text-center">
-                                                <p id="nopayment"></p>
-                                            </div>
-                                            <div class="mt-2 text-center">
-                                                <button id="save" type="submit"
-                                                    class="btn btn-primary me-2">Apply</button>
-                                            </div>
-                                    </form>
+                                        </div>
+                                    </div>
+                            </form>
                                 </div>
                             </div>
                         </div>
@@ -99,73 +104,60 @@
                 </main>
             @endsection
             @push('page_scripts')
-                <script>
-                    document.getElementById("myForm").addEventListener("submit", function() {
-                        const btn = document.getElementById("save");
-                        btn.disabled = true;
-                        btn.innerText = "Submitting...";
-                    });
-                    $(function() {
-                        var wallet = "{{ Auth::user()->wallet }}";
-                        var amount = "{{ $payment }}";
-                        if (parseFloat(amount) > parseInt(wallet)) {
-                            $('#save').prop("disabled", true);
-                            $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
-                                'color': 'red',
-                                'font-size': '150%',
-                                'font-weight': 'bold'
-                            });
-                        }
-                        $("#acc_number, #confirmacc_number").keyup(checkAccountNumberMatch);
-                    });
-                    var ramjibalance = "{{ $mainbalance->rawallet }}";
-                    //alert(ramjibalance);
-                    ramjibalance = parseFloat(ramjibalance);
+               <script>
+        document.getElementById("myForm").addEventListener("submit", function() {
+        const btn = document.getElementById("save");
+        btn.disabled = true;               
+        btn.innerText = "Submitting...";  
+    });
+    
+        $(function() {
+            var wallet = "{{ Auth::user()->wallet }}";
+            var amount = "{{ $payment }}";
+            if (parseFloat(amount) > parseInt(wallet)) {
+                $('#save').prop("disabled", true);
+                $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
+                    'color': 'red',
+                    'font-size': '150%',
+                    'font-weight': 'bold'
+                });
+            }
+        });
 
-                    function checkpayment(e) {
-                        var amount = {{ $admin_payment }};
-                        if (amount > ramjibalance) {
-                            alert("LOW BALANCE");
-                            $('#save').prop("disabled", true);
-                            $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
-                                'color': 'red',
-                                'font-size': '130%',
-                                'font-weight': 'bold'
-                            });
-                            return false;
-                        } else {
-                            $("#nopayment").html("");
-                            $("#save").attr("disabled", true);
-                            $("#ramjidebit_amount").val(amount);
-                            return true;
-
-                        }
-                    }
-                    $('#dist_id').on('change', function() {
-                        var dist_id = this.value;
-                        $("#taluk").html('');
-                        var url = "{{ url('service/get_taluk') }}/" + dist_id;
-                        $.ajax({
-                            url: url,
-                            type: "GET",
-                            success: function(result) {
-                                $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
-                                $.each(result, function(key, value) {
-                                    $("#taluk").append('<option value="' + value
-                                        .id + '">' + value.taluk_name + '</option>');
-                                });
-                            }
-                        });
+       $('#dist_id').on('change', function() {
+            var dist_id = this.value;
+            $("#taluk").html('');
+            var url = "{{ url('service/get_taluk') }}/" + dist_id;
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function(result) {
+                    $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
+                    $.each(result, function(key, value) {
+                        $("#taluk").append('<option value="' + value
+                            .id + '">' + value.taluk_name + '</option>');
                     });
+                    $('#panchayath').html('<option value="">-- Select Panchayath --</option>');
+                }
+            });
+        });
 
-                    $("#pricetable").on('click', '.btnDelete', function() {
-                        $(this).closest('tr').remove();
+        $('#taluk').on('change', function() {
+            var taluk_id = this.value;
+            $("#panchayath").html('');
+            var url = "{{ url('service/get_panchayath') }}/" + taluk_id;
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function(result) {
+                    $('#panchayath').html('<option value="">-- Select Panchayath Name --</option>');
+                    $.each(result, function(key, value) {
+                        $("#panchayath").append('<option value="' + value
+                            .id + '">' + value.panchayath_name + '</option>');
                     });
+                }
+            });
+        });
 
-                    function addnewrow() {
-                        $("#pricetable tbody").append(
-                            "<tr><td> <select required name='relationship[]' class='form-control'><option value=''>Select</option><option value='Mother'>தாய்</option><option value='Father'>தந்தை</option><option value='Husband'>கணவர்</option><option value='Wife'>மனைவி</option><option value='Son'>மகன்</option><option value='Daughter'>மகள்</option><option value='Father In Law'>மாமனார்</option><option value='Mother In Law'>மாமியார்</option><option value='Son In Law'>மருமகன்</option><option value='Daughter In Law'>மருமகள்</option></select></td><td><input class='form-control' required type='text' name='relation_name[]'maxlength='80'><td><input class='form-control' required type='date' name='relation_dob[]'></td><td><select required name='maritial_status[]' class='form-control alive_or_dead'><option value=''>Select</option><option value='Married'>Married</option><option value='Single'>Single</option><option value='Divorced'>Divorced</option></select></td><td><input class='form-control' required type='file' name='doc[]' accept='image/jpeg, image/png'></td><td><a onClick='removerow()' class='btn btn-sm btn-danger btnDelete'><i class='bx bx-trash'></i></a></td></tr>"
-                        );
-                    }
-                </script>
+    </script>
             @endpush

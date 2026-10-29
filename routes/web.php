@@ -262,7 +262,14 @@ Route::get('viewcanservice', [App\Http\Controllers\ServiceController::class, 'vi
 
 Route::get('viewpattaservice', [App\Http\Controllers\ServiceController::class, 'viewpattaservice']);
 
+// --- searchCustomerAadhaar --- //
+
 Route::post('/search-customer-aadhaar', [App\Http\Controllers\ServiceController::class, 'searchCustomerAadhaar']);
+
+
+
+
+//esevai services routes
 
 Route::post('/submittnegaincome', [App\Http\Controllers\ServiceController::class, 'submittnegaincome'])->name('submittnegaincome');
 Route::post('/submittnegacommunity', [App\Http\Controllers\ServiceController::class, 'submittnegacommunity'])->name('submittnegacommunity');
@@ -320,6 +327,20 @@ Route::post('/agristack_update', [App\Http\Controllers\ServicestatusController::
 Route::post('/pvcprint_update', [App\Http\Controllers\ServicestatusController::class, 'pvcprint_update'])->name('pvcprint_update');
 Route::post('/smartcard_pdf_statusupdate', [App\Http\Controllers\ServicestatusController::class, 'smartcard_pdf_statusupdate'])->name('smartcard_pdf_statusupdate');
 Route::post('/aadhaarfind_update', [App\Http\Controllers\ServicestatusController::class, 'aadhaarfind_update'])->name('aadhaarfind_update');
+
+
+// --- bondsubmit --- //
+
+Route::post('/bondsubmit', [App\Http\Controllers\ServiceController::class, 'bondsubmit'])->name('bondsubmit');
+Route::post('/bond_update', [App\Http\Controllers\ServicestatusController::class, 'bond_update'])->name('bond_update');
+
+
+// --- employment_update --- //
+
+Route::post('/employment_update', [App\Http\Controllers\ServicestatusController::class, 'employment_update'])->name('employment_update');
+Route::post('/submitapply_employement', [App\Http\Controllers\ServiceController::class, 'submitapply_employement'])->name('submitapply_employement');
+
+//esevai services routes
 
 Route::post('/submittnegacommunityupdate', [App\Http\Controllers\ServicestatusController::class, 'submittnegacommunityupdate'])->name('submittnegacommunityupdate');
 Route::post('/submittnegaincomeupdate', [App\Http\Controllers\ServicestatusController::class, 'submittnegaincomeupdate'])->name('submittnegaincomeupdate');

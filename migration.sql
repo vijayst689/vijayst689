@@ -3369,6 +3369,47 @@ alter table tnega_residence add acknowledgement text DEFAULT NULL after certific
 alter table tnega_residence add dist_id int(11) DEFAULT 0 after admin_id; 
 alter table tnega_residence add taluk_id int(11) DEFAULT 0 after dist_id; 
 
+CREATE TABLE `employment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `aadhaar_no` varchar(20) DEFAULT NULL,
+  `emp_reg_number` varchar(50) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(100) DEFAULT NULL,
+  `application` varchar(100) DEFAULT NULL,
+  `lects` varchar(50) DEFAULT NULL,
+  `selects` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+
+alter table employment add address varchar(500) DEFAULT NULL;
+alter table employment add father_name varchar(100) DEFAULT NULL;
+alter table employment add dob varchar(10) DEFAULT NULL;
+alter table employment add mobile varchar(10) DEFAULT NULL;
+alter table employment add community varchar(50) DEFAULT NULL;
+alter table employment add caste varchar(50) DEFAULT NULL;
+alter table employment add email varchar(50) DEFAULT NULL;
+alter table employment add password varchar(20) DEFAULT NULL;
+alter table employment add marksheet varchar(20) DEFAULT NULL;
+
+alter table employment add employment_card varchar(20) DEFAULT NULL;
+alter table employment add name text DEFAULT NULL;
+alter table employment add api_processing text DEFAULT NULL after certificate;
+alter table employment add api_approved text DEFAULT NULL after api_processing;
+
+
 
 CREATE TABLE `tnega_unemployed` (
     `id` int(11) NOT NULL AUTO_INCREMENT,

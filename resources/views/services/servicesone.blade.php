@@ -915,6 +915,8 @@
                                                             </div>
                                                         </div>
                                                         @endforeach
+
+                                                        
                                                         @elseif($serviceid == 10)
                                                         @foreach ($services as $service)
                                                         <div class="col-md-3 col-lg-2 col-sm-4 mb-2">
@@ -965,133 +967,199 @@
                                         </div>
                                     </div>
                                     @else
-                                    <div class="container-fluid mt-1">
 
-                                        <div class="row">
-                                            <div class="container-xxl flex-grow-1">
-                                                <div id="category_div" class="row text-center">
-                                                    @if ($services->isEmpty())
-                                                    @else
-                                                    @foreach ($services as $ser)
-                                                    <div class="col-6 col-md-3 col-lg-2 mb-4 category_data">
-                                                        <div class="card service-card h-100">
+                                   {{-- parent_id 126; tnega service adhardetails code --}}
 
 
-                                                            @if($ser->id == 125)
-                                                            <a href="{{ url('/applypdfservice', 12) }}"
-                                                                class="service-link">
-                                                                @else
-                                                                <a href="{{ url('/applyservices', $ser->id) }}"
-                                                                    class="service-link">
-                                                                    @endif
+    @foreach ($services as $service)
 
+        @if ($service->parent_id == 126 && $service->id != 126)
 
-                                                                    <div class="service-content">
-                                                                        <img src="{{ !empty($ser->sub_service_image)
-                                                                                ? asset('upload/sub_service/' . $ser->sub_service_image)
-                                                                                : asset('upload/service/default.png') }}"
-                                                                            class="service-img"
-                                                                            style="width: 100px; height: 100px;" />
+            <div class="col-md-3 col-lg-2 col-sm-4 mb-2">
+                <div class="text-center">
 
-                                                                        <p class="service-title">
-                                                                            {{ $ser->service_name }}
-                                                                        </p>
-                                                                    </div>
+                    <a href="javascript:void(0)"
+                       onclick="openAadhaarModal('{{ $service->id }}')"
+                       class="service-link">
 
-                                                                </a>
-                                                        </div>
-                                                    </div>
-                                                    @endforeach
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endif
-                                </div>
-                            </div>
-                            </form>
+                        <img src="/upload/sub_service/{{ $service->sub_service_image }}"
+                             class="rounded-circle img-thumbnail fixed-round">
+
+                    </a>
+                     <p class="service-title">
+                                                {{ $service->service_name }}
+                                            </p>
+                </div>
+            </div>
+
+        @endif
+
+    @endforeach
+
+    <div class="container-fluid mt-1">
+
+    <div class="row">
+        <div class="container-xxl flex-grow-1">
+
+            <div id="category_div" class="row text-center">
+
+                @if ($services->isEmpty())
+
+                    <div class="d-flex justify-content-center align-items-center py-5">
+                        <div class="no-service-card text-center p-4">
+
+                            <h4 class="no-service-title mb-3">
+                                No Services Activated
+                            </h4>
+
+                            <p class="no-service-subtitle mb-4">
+                                Please activate services to continue
+                            </p>
+
+                            <a href="{{ url('/userpermission') }}/{{ Auth::user()->id }}"
+                               class="btn manage-btn">
+                                Manage User Permissions
+                            </a>
+
                         </div>
                     </div>
 
-                </div>
+                @else
+
+                  {{-- //---இசேவை adhardetails fetchcode---// --}}
+
+                    @foreach ($services as $ser)
+
+                        {{-- parent_id 126 உள்ள services hide --}}
+                        @if ($ser->parent_id != 126)
+
+                            <div class="col-6 col-md-3 col-lg-2 mb-4 category_data">
+
+                                <div class="card service-card h-100">
+
+                                    @if ($ser->id == 125)
+                                            <a href="{{ url('/applypdfservice', 12) }}" class="service-link">
+                                            @elseif ($ser->id == 71)
+                                                <a href="{{ url('/applypdfservice', 6) }}" class="service-link">
+                                                @else
+                                                    <a href="{{ url('/applyservices', $ser->id) }}" class="service-link">
+                                        @endif
+
+                                        <div class="service-content">
+
+                                            <img src="{{ !empty($ser->sub_service_image)
+                                                ? asset('upload/sub_service/' . $ser->sub_service_image)
+                                                : asset('upload/service/default.png') }}"
+                                                class="service-img"
+                                                style="width: 100px; height: 100px;" />
+
+                                            <p class="service-title">
+                                                {{ $ser->service_name }}
+                                            </p>
+
+                                        </div>
+
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        @endif
+
+                    @endforeach
+
+                @endif
+
             </div>
+
         </div>
     </div>
-    @endif
+
 </div>
-
-<div class="modal fade" id="agentreg" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title align-self-center">Agent Id Registeration</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ url('/agentregisteration') }}" method="post" enctype="multipart/form-data">
-                {{ csrf_field() }}
-                <div class="modal-body">
-                    <div class="row">
-
-                        <div class="mb-3 col-md-6">
-                            <label for="username" class="form-label">User Name</label>
-                            <input type="text" name="username" class="form-control" maxlength="50"
-                                placeholder="User Name">
-
-                            <label for="mobile" class="form-label">Mobile Number</label>
-                            <input type="text" name="mobile" class="form-control number" maxlength="10"
-                                placeholder="Mobile Number">
-
-                            <label for="village" class="form-label">Name of Premises/Building/Village</label>
-                            <input type="text" name="village" class="form-control" maxlength="50"
-                                placeholder="Name of Premises/Building/Village">
-                            <label for="taluk" class="form-label">Area/Locality/Taluk/Sub-Division</label>
-                            <input type="text" name="taluk" class="form-control" maxlength="50"
-                                placeholder="Area/Locality/Taluk/Sub-Division">
-                            <label for="state" class="form-label">State/Union Territory</label>
-                            <input type="text" name="state" class="form-control" maxlength="50"
-                                placeholder="State/Union Territory">
-
-                        </div>
-
-
-                        <div class="mb-3 col-md-6">
-                            <label for="email" class="form-label">Email Id</label>
-                            <input type="email" name="email" class="form-control" maxlength="30" placeholder="Email Id">
-                            <label for="door_no" class="form-label">Flat/Room/Door/Block No</label>
-                            <input type="text" name="door_no" class="form-control" maxlength="20"
-                                placeholder="Flat/Room/Door/Block No">
-                            <label for="post_office" class="form-label">Road/Street/Lane/Post Office</label>
-                            <input type="text" name="post_office" class="form-control" maxlength="30"
-                                placeholder="Road/Street/Lane/Post Office">
-
-                            <label for="district" class="form-label">Town/City/District</label>
-                            <input type="text" name="district" class="form-control" maxlength="30"
-                                placeholder="Town/City/District">
-
-                            <label for="pincode" class="form-label">Pin Code</label>
-                            <input type="text" name="pincode" class="form-control" maxlength="20"
-                                placeholder="Pin Code">
-                        </div>
-                        <div class="modal-footer text-center">
-                            <button type="submit" id="save" class="btn btn-primary">Submit</button>
-                        </div>
-                    </div>
-                </div>
-        </div>
+        @endif
+    </div>
     </div>
     </form>
-</div>
-</div>
-</div>
-  <div class="modal fade" id="aadhaarModal">
+    @endif
+    </div>
+
+
+    <div class="modal fade" id="agentreg" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title align-self-center">Agent Id Registeration</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ url('/agentregisteration') }}" method="post" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                        <div class="row">
+
+                            <div class="mb-3 col-md-6">
+                                <label for="username" class="form-label">User Name</label>
+                                <input type="text" name="username" class="form-control" maxlength="50"
+                                    placeholder="User Name">
+
+                                <label for="mobile" class="form-label">Mobile Number</label>
+                                <input type="text" name="mobile" class="form-control number" maxlength="10"
+                                    placeholder="Mobile Number">
+
+                                <label for="village" class="form-label">Name of Premises/Building/Village</label>
+                                <input type="text" name="village" class="form-control" maxlength="50"
+                                    placeholder="Name of Premises/Building/Village">
+                                <label for="taluk" class="form-label">Area/Locality/Taluk/Sub-Division</label>
+                                <input type="text" name="taluk" class="form-control" maxlength="50"
+                                    placeholder="Area/Locality/Taluk/Sub-Division">
+                                <label for="state" class="form-label">State/Union Territory</label>
+                                <input type="text" name="state" class="form-control" maxlength="50"
+                                    placeholder="State/Union Territory">
+
+                            </div>
+
+
+                            <div class="mb-3 col-md-6">
+                                <label for="email" class="form-label">Email Id</label>
+                                <input type="email" name="email" class="form-control" maxlength="30"
+                                    placeholder="Email Id">
+                                <label for="door_no" class="form-label">Flat/Room/Door/Block No</label>
+                                <input type="text" name="door_no" class="form-control" maxlength="20"
+                                    placeholder="Flat/Room/Door/Block No">
+                                <label for="post_office" class="form-label">Road/Street/Lane/Post Office</label>
+                                <input type="text" name="post_office" class="form-control" maxlength="30"
+                                    placeholder="Road/Street/Lane/Post Office">
+
+                                <label for="district" class="form-label">Town/City/District</label>
+                                <input type="text" name="district" class="form-control" maxlength="30"
+                                    placeholder="Town/City/District">
+
+                                <label for="pincode" class="form-label">Pin Code</label>
+                                <input type="text" name="pincode" class="form-control" maxlength="20"
+                                    placeholder="Pin Code">
+                            </div>
+                            <div class="modal-footer text-center">
+                                <button type="submit" id="save" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        </form>
+    </div>
+    </div>
+    </div>
+
+
+ <div class="modal fade" id="aadhaarModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5>Enter Aadhaar Number</h5>
                 </div>
                 <div class="modal-body">
-                    <input type="text" id="aadhaar_no" class="form-control"  oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,12)">
+                    <input type="text" id="aadhaar_no" class="form-control"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,12)">
                     <input type="hidden" id="service_id" class="form-control">
 
                 </div>
@@ -1291,50 +1359,54 @@ $('#nalavariyam_usertype').on('change', function() {
     });
 
 });
+        // ---இசேவை adhardetails fetchcode---//
 
-             function searchCustomer() {
+           function searchCustomer() {
 
-    var aadhaar_no = $('#aadhaar_no').val().trim();
-    var service_id = $('#service_id').val();
+            var aadhaar_no = $('#aadhaar_no').val().trim();
+            var service_id = $('#service_id').val();
 
-    // Empty Check
-    if (aadhaar_no == '') {
-        alert('Please enter Aadhaar Number');
-        $('#aadhaar_no').focus();
-        return false;
-    }
+            // Empty Check
+            if (aadhaar_no == '') {
+                alert('Please enter Aadhaar Number');
+                $('#aadhaar_no').focus();
+                return false;
+            }
 
-    // 12 Digit Check
-    if (!/^\d{12}$/.test(aadhaar_no)) {
-        alert('Aadhaar Number must be exactly 12 digits');
-        $('#aadhaar_no').focus();
-        return false;
-    }
+            // 12 Digit Check
+            if (!/^\d{12}$/.test(aadhaar_no)) {
+                alert('Aadhaar Number must be exactly 12 digits');
+                $('#aadhaar_no').focus();
+                return false;
+            }
 
-$.ajax({
-    url: "{{ url('/search-customer-aadhaar') }}",
-    type: "POST",
-    data: {
-        aadhaar_no: aadhaar_no,
-        service_id: service_id,
-        _token: "{{ csrf_token() }}"
-    },
-success: function(response) {
+            $.ajax({
+                url: "{{ url('/search-customer-aadhaar') }}",
+                type: "POST",
+                data: {
+                    aadhaar_no: aadhaar_no,
+                    service_id: service_id,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
 
-    if (response.status) {
-        window.location.href = "/applyservice/" + service_id + "/" + encodeURIComponent(response.customer_id);
-    } else {
-        window.location.href = "/applyservice/" + service_id + "/0";
-    }
-},
-    error: function(xhr) {
-        console.log(xhr.responseText);
-    }
-});
-     }
+                    if (response.status) {
+                        window.location.href = "/applyservice/" + service_id + "/" + encodeURIComponent(response
+                            .customer_id);
+                    } else {
+                        window.location.href = "/applyservice/" + service_id + "/0";
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+
         function openAadhaarModal(service_id) {
-    $('#service_id').val(service_id);
-    $('#aadhaarModal').modal('show');
-}
+            $('#service_id').val(service_id);
+            $('#aadhaarModal').modal('show');
+        }
+
 </script>
 @endpush
