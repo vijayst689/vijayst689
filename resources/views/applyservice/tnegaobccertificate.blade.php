@@ -1419,72 +1419,131 @@
             btn.innerText = "Submitting...";
         });
 
-        var wallet = "{{ Auth::user()->wallet }}";
-        var amount = "{{ $payment }}";
-    $(function() {
-        if (parseFloat(amount) > parseInt(wallet)) {
-            $('#save').prop("disabled", true);
-            $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
-                'color': 'red',
-                'font-size': '150%',
-                'font-weight': 'bold'
-            });
-        }
-         var ramjibalance = "{{ $mainbalance->rawallet }}";
-                //alert(ramjibalance);
-                ramjibalance = parseFloat(ramjibalance);
+        $(function() {
+            var wallet = "{{ Auth::user()->wallet }}";
+            var amount = "{{ $payment }}";
+            if (parseFloat(amount) > parseInt(wallet)) {
+                $('#save').prop("disabled", true);
+                $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
+                    'color': 'red',
+                    'font-size': '150%',
+                    'font-weight': 'bold'
+                });
+            }
+        });
+        var ramjibalance = "{{ $mainbalance->rawallet }}";
+        //alert(ramjibalance);
+        ramjibalance = parseFloat(ramjibalance);
 
-                function checkpayment(e) {
-                    var amount = {{ $admin_payment }};
-                    if (amount > ramjibalance) {
-                        alert("LOW BALANCE");
-                        $('#save').prop("disabled", true);
-                        $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
-                            'color': 'red',
-                            'font-size': '130%',
-                            'font-weight': 'bold'
-                        });
-                        return false;
-                    } else {
-                        $("#nopayment").html("");
-                        $("#save").attr("disabled", true);
-                        $("#ramjidebit_amount").val(amount);
-                        return true;
-
-                    }
+        function checkpayment(e) {
+            var amount = {
+                {
+                    $admin_payment
                 }
-        gettaluk(dist_id);
-        getpanchayath(taluk_id);
-    });
-    </script>
-    <script>
-        function nextStep(step) {
+            };
+            if (amount > ramjibalance) {
+                alert("LOW BALANCE");
+                $('#save').prop("disabled", true);
+                $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
+                    'color': 'red',
+                    'font-size': '130%',
+                    'font-weight': 'bold'
+                });
+                return false;
+            } else {
+                $("#nopayment").html("");
+                $("#save").attr("disabled", true);
+                $("#ramjidebit_amount").val(amount);
+                return true;
 
-            console.log('Current:', 'step' + step);
-            console.log('Next:', 'step' + (step + 1));
-
-            let currentStep = document.getElementById('step' + step);
-            let nextStepDiv = document.getElementById('step' + (step + 1));
-
-            console.log(currentStep);
-            console.log(nextStepDiv);
-
-            if (currentStep) currentStep.style.display = 'none';
-            if (nextStepDiv) nextStepDiv.style.display = 'block';
-        }
-
-        function prevStep(step) {
-
-            console.log('Current:', 'step' + step);
-            console.log('Previous:', 'step' + (step - 1));
-
-            let currentStep = document.getElementById('step' + step);
-            let prevStepDiv = document.getElementById('step' + (step - 1));
-
-            if (currentStep) currentStep.style.display = 'none';
-            if (prevStepDiv) prevStepDiv.style.display = 'block';
+            }
         }
     </script>
+<script>
+    function nextStep(step) {
+
+        // STEP 1 -> STEP 2
+        if (step == 1) {
+
+            let step1 = document.getElementById('step1');
+
+            // Check all required fields in Step 1
+            let fields = step1.querySelectorAll(
+                'input[required], select[required], textarea[required]'
+            );
+
+            let valid = true;
+
+            fields.forEach(function(field) {
+
+                // Remove old validation
+                field.classList.remove('is-invalid');
+
+                if (!field.value || field.value.trim() === '') {
+                    valid = false;
+                    field.classList.add('is-invalid');
+                }
+            });
+
+            // If any field is empty
+            if (!valid) {
+                alert('Please fill all Step 1 details.');
+                return;
+            }
+
+            // All fields filled
+            step1.style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+        }
+
+
+        // STEP 2 -> STEP 3
+        if (step == 2) {
+
+            let step2 = document.getElementById('step2');
+
+            let fields = step2.querySelectorAll(
+                'input[required], select[required], textarea[required]'
+            );
+
+            let valid = true;
+
+            fields.forEach(function(field) {
+
+                field.classList.remove('is-invalid');
+
+                if (!field.value || field.value.trim() === '') {
+                    valid = false;
+                    field.classList.add('is-invalid');
+                }
+            });
+
+            if (!valid) {
+                alert('Please fill all Step 2 details.');
+                return;
+            }
+
+            step2.style.display = 'none';
+            document.getElementById('step3').style.display = 'block';
+        }
+    }
+
+
+    function prevStep(step) {
+
+        // STEP 2 -> STEP 1
+        if (step == 2) {
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step1').style.display = 'block';
+        }
+
+        // STEP 3 -> STEP 2
+        if (step == 3) {
+            document.getElementById('step3').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+        }
+    }
+</script>
 
     {{-- Add Script --}}
 
@@ -1784,6 +1843,16 @@ $(document).ready(function () {
 
         let occupation = $("#father_occupation").val();
 
+        // 1. Unemployed தேர்வு செய்தால் Status Section-ஐ Hide செய்ய
+        if (occupation === "Unemployed") {
+            $("#father_status_div").hide();
+            $("#father_status").val("").prop("required", false); // Value-ஐ Clear செய்து Validation-ஐ நீக்கும்
+        } else {
+            $("#father_status_div").show();
+            $("#father_status").prop("required", true); // மீண்டும் Required சேர்க்கும்
+        }
+
+        // 2. Income Proof Section க்கான நிபந்தனை
         if (occupation === "Employed" || occupation === "Self Employed") {
 
             $("#fatherIncomeProofSection").show();
@@ -1812,10 +1881,10 @@ $(document).ready(function () {
         $("#fatherIncomeFile").show();
     });
 
+    // பக்கத்தை Load செய்யும்போது நிலையை சரிபார்க்க
     toggleFatherIncomeProof();
 
 });
-
 // Employed select panura time Mother
 
 
@@ -1825,10 +1894,19 @@ $(document).ready(function () {
 
         let occupation = $("#mother_occupation").val();
 
+        // 1. Mother Occupation "Unemployed" ஆக இருந்தால் Status Section-ஐ Hide செய்ய
+        if (occupation === "Unemployed") {
+            $("#mother_status_div").hide();
+            $("#mother_status").val("").prop("required", false); // Value Clear செய்து Validation நீக்கும்
+        } else {
+            $("#mother_status_div").show();
+            $("#mother_status").prop("required", true); // மீண்டும் Required சேர்க்கும்
+        }
+
+        // 2. Income Proof Section க்கான நிபந்தனை
         if (occupation == "Employed" || occupation == "Self Employed") {
 
             $("#motherIncomeProofSection").show();
-
             $("input[name='mother_income_proof']").prop("required", true);
 
             // Update page-ல் radio already selected இருந்தா file upload section-ஐ show பண்ணு

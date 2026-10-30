@@ -1688,6 +1688,7 @@ public function get_employment_status(Request $request){
 
 
 public function update_payment_status(Request $request){
+    
     $API_KEY = env('API_KEY','');
     $WEBSITE_INDEX = env('WEBSITE_INDEX','');
     $key = $request->key;
@@ -1735,6 +1736,7 @@ public function update_payment_status(Request $request){
     return response()->json($response);
 }
 
+
 public function get_bulkorderstatus(Request $request){
     $API_KEY = env('API_KEY','');
     $WEBSITE_INDEX = env('WEBSITE_INDEX','');
@@ -1759,7 +1761,7 @@ public function get_bulkorderstatus(Request $request){
 }
 
 public function get_medicalschemestatus(Request $request){
-    
+
         $API_KEY = env('API_KEY','');
         $WEBSITE_INDEX = env('WEBSITE_INDEX','');
         $key = $request->key;
