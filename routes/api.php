@@ -70,6 +70,9 @@ Route::post('/get_bondstatus', [App\Http\Controllers\api\ApiController::class, '
 Route::post('/get_employment_status', [App\Http\Controllers\api\ApiController::class, 'get_employment_status'])->name('get_employment_status');
 
 
+// MANUAL PDF SERVICE 
+Route::post('/get_manualpdf_status', [App\Http\Controllers\api\ApiController::class, 'get_manualpdf_status'])->name('get_manualpdf_status');
+
 // MEDICAL SCHEME SERVICE 
 Route::post('/get_voteridpdf_downloadestatus', [App\Http\Controllers\api\ApiController::class, 'get_voteridpdf_downloadestatus'])->name('get_voteridpdf_downloadestatus');
 

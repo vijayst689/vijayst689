@@ -1760,6 +1760,93 @@ alter table can_edit modify can_number varchar(30);
 alter table can_edit modify certificate_number varchar(50);
 alter table can_edit add applicant_name varchar(100) DEFAULT NULL after application_no;
 
+alter table patta add aadhaar_card varchar(20) DEFAULT NULL;
+alter table patta add patta_no varchar(20) DEFAULT NULL;
+alter table patta add mobile varchar(10) DEFAULT NULL;
+
+alter table bond add sub_reg_office varchar(100) DEFAULT NULL;
+alter table bond add mobile varchar(10) DEFAULT NULL;
+
+
+alter table employment add address varchar(500) DEFAULT NULL;
+alter table employment add father_name varchar(100) DEFAULT NULL;
+alter table employment add dob varchar(10) DEFAULT NULL;
+alter table employment add mobile varchar(10) DEFAULT NULL;
+alter table employment add community varchar(50) DEFAULT NULL;
+alter table employment add caste varchar(50) DEFAULT NULL;
+alter table employment add email varchar(50) DEFAULT NULL;
+alter table employment add password varchar(20) DEFAULT NULL;
+alter table employment add marksheet varchar(20) DEFAULT NULL;
+
+alter table meetingdetails add meeting_place varchar(70) DEFAULT NULL;
+alter table meetingdetails add meeting_address varchar(200) DEFAULT NULL;
+alter table meetingdetails add email varchar(100) DEFAULT NULL;
+
+alter table manual_pdf add aadhaar_card varchar(20) DEFAULT NULL;
+
+alter table employment add employment_card varchar(20) DEFAULT NULL;
+alter table employment add name text DEFAULT NULL;
+
+alter table employment add api_processing text DEFAULT NULL after certificate;
+alter table employment add api_approved text DEFAULT NULL after api_processing;
+
+
+alter table users add column member_id varchar(20) default NULL;
+alter table nalavariyam_customer add column member_id varchar(20) default NULL;
+
+alter table nalavariyam_customer add photo varchar(20) DEFAULT NULL;
+alter table nalavariyam_customer add signature varchar(20) DEFAULT NULL;
+alter table nalavariyam_customer add work_type varchar(200) DEFAULT NULL;
+alter table nalavariyam_customer add dob varchar(10) DEFAULT NULL;
+
+
+alter table bond add revenue_village varchar(100) DEFAULT NULL;
+
+ALTER TABLE users
+MODIFY COLUMN nalavariyam_dist_id TEXT NULL;
+
+ALTER TABLE nalavariyam_form
+MODIFY COLUMN dist_id TEXT NULL;
+
+alter table aadhaarcard add relationship_tamil varchar(70) DEFAULT NULL;
+
+ALTER TABLE nalavariyam_form
+MODIFY COLUMN dist_id TEXT NULL;
+
+ALTER TABLE `manual_pdf` 
+ADD COLUMN `mobile` VARCHAR(20) NULL AFTER `dob`;
+
+alter table manual_pdf add smartcard_no varchar(20) DEFAULT NULL;
+
+CREATE TABLE `manual_pdf` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `retailer_id` int(11) DEFAULT 0,
+  `distributor_id` int(11) DEFAULT 0,
+  `admin_id` int(11) DEFAULT 0,
+  `amount` decimal(10,2) DEFAULT 0.00,
+  `dist_id` int(11) DEFAULT 0,
+  `aadhaar_no` varchar(15) DEFAULT NULL,
+  `dl_no` varchar(20) DEFAULT NULL,
+  `rc_no` varchar(20) DEFAULT NULL,
+  `dob` varchar(10) DEFAULT NULL,
+  `acknowledgement` varchar(20) DEFAULT NULL,
+  `application_no` varchar(100) DEFAULT NULL,
+  `application` varchar(100) DEFAULT NULL,
+  `api_processing` text DEFAULT NULL,
+  `api_approved` text DEFAULT NULL,
+  `lects` varchar(50) DEFAULT NULL,
+  `selects` varchar(50) DEFAULT NULL,
+  `certificate` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  `applied_date` varchar(10) DEFAULT NULL,
+  `completed_date` varchar(10) DEFAULT NULL,
+  `created_at` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
 CREATE TABLE `smartcard_otp` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `service_id` int(11) DEFAULT 0,

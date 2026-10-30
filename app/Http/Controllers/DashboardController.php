@@ -369,9 +369,21 @@ class DashboardController extends Controller
                 $tnega_widow = DB::table('tnega_widow')
                     ->where('status', 'Pending')
                     ->orderBy('id', 'Desc')->count();
+
+                $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Pending')
+                    ->orderBy('id', 'Desc')->count();
+
+                     $employment = DB::table('employment')
+                    ->where('status', 'Pending')
+                    ->orderBy('id', 'Desc')->count();
     
 
-                $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow;
+                $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + 
+                + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + 
+                $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + 
+                $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed 
+                + $tnega_unmarried + $tnega_handicap + $tnega_widow + $manual_pdf + $employment + $bond;
 
                 $service = DB::table('msme')
                     ->where('status', 'Processing')
@@ -513,7 +525,20 @@ class DashboardController extends Controller
                     ->where('status', 'Processing')
                     ->orderBy('id', 'Desc')->count();
 
-                $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow;
+                    $employment = DB::table('employment')
+                    ->where('status', 'Processing')
+                    ->orderBy('id', 'Desc')->count();
+
+                    $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Processing')
+                    ->orderBy('id', 'Desc')->count();
+
+                $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard +
+                 $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam 
+                 + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan 
+                 + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card 
+                 + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence 
+                 + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow + $manual_pdf + $employment;
 
                 $service = DB::table('msme')
                     ->where('status', 'Resubmit')
@@ -653,10 +678,25 @@ class DashboardController extends Controller
 
                 $tnega_widow = DB::table('tnega_widow')
                     ->where('status', 'Resubmit')
-                    ->orderBy('id', 'Desc')->count();    
+                    ->orderBy('id', 'Desc')->count();  
+                    
+                    $employment = DB::table('employment')
+                    ->where('status', 'Resubmit')
+                    ->orderBy('id', 'Desc')->count(); 
+
+                    $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Resubmit')
+                    ->orderBy('id', 'Desc')->count(); 
     
 
-                $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow;
+                $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard 
+                + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam
+                 + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme 
+                 + $dharsan + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card 
+                 + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income 
+                 + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap 
+                 + $tnega_widow + $manual_pdf + $employment;
+
 
                 $service = DB::table('msme')
                     ->where('status', 'Rejected')
@@ -796,9 +836,22 @@ class DashboardController extends Controller
 
                 $tnega_widow = DB::table('tnega_widow')
                     ->where('status', 'Rejected')
-                    ->orderBy('id', 'Desc')->count();    
+                    ->orderBy('id', 'Desc')->count();  
+                    
+                $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Rejected')
+                    ->orderBy('id', 'Desc')->count();
+
+                $employment = DB::table('employment')
+                    ->where('status', 'Rejected')
+                    ->orderBy('id', 'Desc')->count();
     
-                $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow;
+                $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard 
+                + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor 
+                + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $smartcard_otp 
+                + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind 
+                + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried 
+                + $tnega_handicap + $tnega_widow + $manual_pdf  + $employment;
 
                 $service = DB::table('msme')
                     ->where('status', 'Approved')
@@ -939,9 +992,23 @@ class DashboardController extends Controller
                 $tnega_widow = DB::table('tnega_widow')
                     ->where('status', 'Approved')
                     ->orderBy('id', 'Desc')->count(); 
+
+                    $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Approved')
+                    ->orderBy('id', 'Desc')->count();
+
+                    $employment = DB::table('employment')
+                    ->where('status', 'Approved')
+                    ->orderBy('id', 'Desc')->count();
     
 
-                $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow;
+                $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard 
+                + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam 
+                + $license + $tailor + $pmkissan + $birth_certificate + $medicalscheme 
+                + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack 
+                + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income 
+                + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap 
+                + $tnega_widow + $manual_pdf + $employment;
 
             } elseif (Auth::user()->user_type_id == 3) {
 
@@ -1120,7 +1187,22 @@ class DashboardController extends Controller
                     ->where('distributor_id', Auth::user()->id)
                     ->orderBy('id', 'Desc')->count();     
 
-                $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow;
+                      $employment = DB::table('employment')
+                    ->where('status', 'Pending')
+                    ->where('distributor_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                      $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Pending')
+                    ->where('distributor_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard 
+                + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard 
+                + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta 
+                + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf 
+                + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence
+                 + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow + $manual_pdf + $employment;
 
                 $service = DB::table('msme')
                     ->where('status', 'Processing')
@@ -1295,9 +1377,24 @@ class DashboardController extends Controller
                 $tnega_widow = DB::table('tnega_widow')
                     ->where('status', 'Processing')
                     ->where('distributor_id', Auth::user()->id)
-                    ->orderBy('id', 'Desc')->count();                    
+                    ->orderBy('id', 'Desc')->count();
+                    
+                $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Processing')
+                    ->where('distributor_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
 
-                $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow;
+                       $employment = DB::table('employment')
+                    ->where('status', 'Processing')
+                    ->where('distributor_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard 
+                + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard 
+                + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta 
+                + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf 
+                + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence 
+                + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow + $manual_pdf + $employment;
 
                 $service = DB::table('msme')
                     ->where('status', 'Resubmit')
@@ -1474,7 +1571,23 @@ class DashboardController extends Controller
                     ->where('distributor_id', Auth::user()->id)
                     ->orderBy('id', 'Desc')->count();     
 
-                $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow;
+                $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Resubmit')
+                    ->where('distributor_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $employment = DB::table('employment')
+                    ->where('status', 'Resubmit')
+                    ->where('distributor_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard 
+                + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license 
+                + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme 
+                + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack 
+                + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income
+                 + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap 
+                 + $tnega_widow  + $manual_pdf + $aadhaarfind + $employment;
 
                 $service = DB::table('msme')
                     ->where('status', 'Rejected')
@@ -1651,7 +1764,23 @@ class DashboardController extends Controller
                     ->where('distributor_id', Auth::user()->id)
                     ->orderBy('id', 'Desc')->count();     
 
-                $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow;
+                    $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Rejected')
+                    ->where('distributor_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                    $employment = DB::table('employment')
+                    ->where('status', 'Rejected')
+                    ->where('distributor_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard 
+                + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam 
+                + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme 
+                + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack 
+                + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income 
+                + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap 
+                + $tnega_widow + $manual_pdf + $aadhaarfind + $employment;
 
                 $service = DB::table('msme')
                     ->where('status', 'Approved')
@@ -1828,7 +1957,25 @@ class DashboardController extends Controller
                     ->where('distributor_id', Auth::user()->id)
                     ->orderBy('id', 'Desc')->count(); 
 
-                $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow;
+
+                      $employment = DB::table('employment')
+                    ->where('status', 'Approved')
+                    ->where('distributor_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+
+                      $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Approved')
+                    ->where('distributor_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard
+                 + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam 
+                 + $license + $pancard + $tailor + $pmkissan + $birth_certificate 
+                 + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download 
+                 + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc 
+                 + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried
+                  + $tnega_handicap + $tnega_widow + $manual_pdf + $aadhaarfind + $employment;
 
             } elseif (Auth::user()->user_type_id == 4) {
 
@@ -2007,7 +2154,22 @@ class DashboardController extends Controller
                     ->where('retailer_id', Auth::user()->id)
                     ->orderBy('id', 'Desc')->count(); 
 
-                $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow;
+                    $employment = DB::table('employment')
+                    ->where('status', 'Pending')
+                    ->where('retailer_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                    $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Pending')
+                    ->where('retailer_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard 
+                + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam 
+                + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme
+                 + $dharsan + $patta + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf 
+                 + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed
+                  + $tnega_unmarried + $tnega_handicap + $tnega_widow + $manual_pdf + $aadhaarfind + $employment;
 
                 $service = DB::table('msme')
                     ->where('status', 'Processing')
@@ -2184,7 +2346,23 @@ class DashboardController extends Controller
                     ->where('retailer_id', Auth::user()->id)
                     ->orderBy('id', 'Desc')->count(); 
 
-                $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow;
+                 $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Processing')
+                    ->where('retailer_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $employment = DB::table('employment')
+                    ->where('status', 'Processing')
+                    ->where('retailer_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard 
+                + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam 
+                + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme 
+                + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack 
+                + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income 
+                + $tnega_residence + $tnega_unemployed + $tnega_unmarried 
+                + $tnega_handicap + $tnega_widow + $manual_pdf + $aadhaarfind + $employment;
 
                 $service = DB::table('msme')
                     ->where('status', 'Resubmit')
@@ -2361,7 +2539,22 @@ class DashboardController extends Controller
                     ->where('retailer_id', Auth::user()->id)
                     ->orderBy('id', 'Desc')->count(); 
 
-                $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow;
+                $employment = DB::table('employment')
+                    ->where('status', 'Resubmit')
+                    ->where('retailer_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Resubmit')
+                    ->where('retailer_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard +
+                 $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard 
+                 + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta 
+                 + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf 
+                  + $tnega_obc + $nativity + $income + $tnega_residence 
+                 + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow + $manual_pdf + $aadhaarfind + $employment;
 
                 $service = DB::table('msme')
                     ->where('status', 'Rejected')
@@ -2536,9 +2729,25 @@ class DashboardController extends Controller
                 $tnega_widow = DB::table('tnega_widow')
                     ->where('status', 'Rejected')
                     ->where('retailer_id', Auth::user()->id)
-                    ->orderBy('id', 'Desc')->count();     
+                    ->orderBy('id', 'Desc')->count();  
+                    
+                $employment = DB::table('employment')
+                    ->where('status', 'Rejected')
+                    ->where('retailer_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
 
-                $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow;
+                $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Rejected')
+                    ->where('retailer_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard 
+                + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam 
+                + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme 
+                + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack 
+                + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity
+                 + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried +
+                  $tnega_handicap + $tnega_widow + $manual_pdf + $aadhaarfind + $employment;
 
                 $service = DB::table('msme')
                     ->where('status', 'Approved')
@@ -2713,9 +2922,27 @@ class DashboardController extends Controller
                 $tnega_widow = DB::table('tnega_widow')
                     ->where('status', 'Approved')
                     ->where('retailer_id', Auth::user()->id)
-                    ->orderBy('id', 'Desc')->count();     
+                    ->orderBy('id', 'Desc')->count();   
+                    
+                $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Approved')
+                    ->where('retailer_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
 
-                $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income + $tnega_residence + $tnega_unemployed + $tnega_unmarried + $tnega_handicap + $tnega_widow;
+
+                $employment = DB::table('employment')
+                    ->where('status', 'Approved')
+                    ->where('retailer_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard 
+                + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid 
+                + $nalavariyam + $license + $pancard + $tailor + $pmkissan 
+                + $birth_certificate + $medicalscheme + $dharsan + $patta 
+                + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card 
+                + $smartcard_pdf + $aadhaarfind + $tnega_obc + $nativity + $income 
+                + $tnega_residence + $tnega_unemployed + $tnega_unmarried 
+                + $tnega_handicap + $tnega_widow + $manual_pdf + $aadhaarfind + $employment;
 
             } elseif (Auth::user()->user_type_id == 5) {
 
@@ -2852,9 +3079,22 @@ class DashboardController extends Controller
                 $aadhaarfind = DB::table('aadhaarfind')
                     ->where('status', 'Pending')
                     ->where('user_id', Auth::user()->id)
-                    ->orderBy('id', 'Desc')->count();    
+                    ->orderBy('id', 'Desc')->count();
+                    
+                $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Pending')
+                    ->where('user_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+                    
+                $employment = DB::table('employment')
+                    ->where('status', 'Pending')
+                    ->where('user_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
 
-                $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind;
+                $pending = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard 
+                + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam 
+                + $license + $pancard + $patta + $smartcard_otp + $voteridpdf_download 
+                + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $manual_pdf + $aadhaarfind + $employment;
 
                 $service = DB::table('msme')
                     ->where('status', 'Processing')
@@ -2991,7 +3231,23 @@ class DashboardController extends Controller
                     ->where('user_id', Auth::user()->id)
                     ->orderBy('id', 'Desc')->count();
 
-                $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind;
+
+                 $employment = DB::table('employment')
+                    ->where('status', 'Processing')
+                    ->where('user_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+
+                $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Processing')
+                    ->where('user_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $inpro = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard 
+                + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam 
+                + $license + $pancard + $tailor + $pmkissan + $birth_certificate 
+                + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download 
+                + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind + $manual_pdf + $aadhaarfind + $employment;
 
                 $service = DB::table('msme')
                     ->where('status', 'Resubmit')
@@ -3128,7 +3384,21 @@ class DashboardController extends Controller
                     ->where('user_id', Auth::user()->id)
                     ->orderBy('id', 'Desc')->count();
 
-                $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind;
+                $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Resubmit')
+                    ->where('user_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $employment = DB::table('employment')
+                    ->where('status', 'Resubmit')
+                    ->where('user_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $resub = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard 
+                + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam 
+                + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme 
+                + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack 
+                + $pvc_card + $smartcard_pdf + $aadhaarfind + $manual_pdf + $aadhaarfind + $employment;
 
                 $service = DB::table('msme')
                     ->where('status', 'Rejected')
@@ -3265,7 +3535,16 @@ class DashboardController extends Controller
                     ->where('user_id', Auth::user()->id)
                     ->orderBy('id', 'Desc')->count();
 
-                $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind;
+                $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Rejected')
+                    ->where('user_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();  
+
+                $rerej = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard 
+                + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam
+                 + $license + $pancard + $tailor + $pmkissan + $birth_certificate 
+                 + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download 
+                 + $agri_stack + $pvc_card + $smartcard_pdf  + $manual_pdf+ $aadhaarfind;
 
                 $service = DB::table('msme')
                     ->where('status', 'Approved')
@@ -3357,11 +3636,6 @@ class DashboardController extends Controller
                     ->where('user_id', Auth::user()->id)
                     ->orderBy('id', 'Desc')->count();
 
-                $medicalscheme = DB::table('medicalscheme')
-                    ->where('status', 'Approved')
-                    ->where('user_id', Auth::user()->id)
-                    ->orderBy('id', 'Desc')->count();
-
                 $dharsan = DB::table('dharsan')
                     ->where('status', 'Approved')
                     ->where('user_id', Auth::user()->id)
@@ -3402,7 +3676,29 @@ class DashboardController extends Controller
                     ->where('user_id', Auth::user()->id)
                     ->orderBy('id', 'Desc')->count();
 
-                $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack + $pvc_card + $smartcard_pdf + $aadhaarfind;
+                 $manual_pdf = DB::table('manual_pdf')
+                    ->where('status', 'Approved')
+                    ->where('user_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                 $employment = DB::table('employment')
+                    ->where('status', 'Approved')
+                    ->where('user_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+                $medicalscheme = DB::table('medicalscheme')
+                    ->where('status', 'Approved')
+                    ->where('user_id', Auth::user()->id)
+                    ->orderBy('id', 'Desc')->count();
+
+
+
+
+                $approve = $service + $itr + $gst + $tec_exam + $tnegaservices + $smartcard 
+                + $aadhaarcard + $can_edit + $bond + $voterid + $fssai + $covid + $nalavariyam 
+                + $license + $pancard + $tailor + $pmkissan + $birth_certificate + $medicalscheme 
+                + $dharsan + $patta + $smartcard_otp + $voteridpdf_download + $agri_stack 
+                + $pvc_card + $smartcard_pdf + $aadhaarfind + $manual_pdf + $aadhaarfind + $employment ;
             }
 
             if (Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2) {

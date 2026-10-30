@@ -53,12 +53,14 @@
 
                                     <div class="mb-3 col-md-6">
                                         <label for="dist_id" class="form-label">District</label>
-                                        <select required name="dist_id" id="dist_id" class="form-control">
-                                            <option value="">Select District</option>
-                                            @foreach ($districts as $d)
-                                                <option value="{{ $d->id }}">{{ $d->district_name }}</option>
-                                            @endforeach
-                                        </select>
+                                         <select required name="dist_id" id="dist_id"
+                                                            class="form-control">
+                                                            <option value="">Select District</option>
+                                                            @foreach ($districts as $d)
+                                                                <option value="{{ $d->id }}">
+                                                                    {{ $d->district_name }}</option>
+                                                            @endforeach
+                                                        </select>
 
                                         <label for="document_number" class="form-label">Document Number</label>
                                         <input required type="text" maxlength="30" class="form-control number"
@@ -74,8 +76,8 @@
                                     </div>
                                     <div class="mb-3 col-md-6">
                                         <label for="taluk_id" class="form-label">Taluk</label>
-                                            <select required name="taluk_id" id="taluk" class="form-control">
-                                            </select>
+ <select name="taluk_id" id="taluk" class="form-control">
+                                                        </select>                                           
                                         <label for="sub_reg_office" class="form-label">Sub-Register Office(SRO)</label>
                                         <input required type="text" maxlength="100" class="form-control"
                                             name="sub_reg_office" placeholder="Sub-Register Office(SRO)" />
@@ -104,16 +106,16 @@
                 </main>
             @endsection
             @push('page_scripts')
-               <script>
+                <script>
         document.getElementById("myForm").addEventListener("submit", function() {
-        const btn = document.getElementById("save");
-        btn.disabled = true;               
-        btn.innerText = "Submitting...";  
-    });
-    
+            const btn = document.getElementById("save");
+            btn.disabled = true;
+            btn.innerText = "Submitting...";
+        });
+
+        var wallet = "{{ Auth::user()->wallet }}";
+        var amount = "{{ $payment }}";
         $(function() {
-            var wallet = "{{ Auth::user()->wallet }}";
-            var amount = "{{ $payment }}";
             if (parseFloat(amount) > parseInt(wallet)) {
                 $('#save').prop("disabled", true);
                 $('#nopayment').html("No Fund in Wallet.Please Update Your wallet To Continue the Service").css({
@@ -123,41 +125,62 @@
                 });
             }
         });
+        var ramjibalance = "{{ $mainbalance->rawallet }}";
+        //alert(ramjibalance);
+        ramjibalance = parseFloat(ramjibalance);
 
-       $('#dist_id').on('change', function() {
-            var dist_id = this.value;
-            $("#taluk").html('');
-            var url = "{{ url('service/get_taluk') }}/" + dist_id;
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function(result) {
-                    $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
-                    $.each(result, function(key, value) {
-                        $("#taluk").append('<option value="' + value
-                            .id + '">' + value.taluk_name + '</option>');
+        function checkpayment(e) {
+            var amount = {{ $admin_payment }};
+            if (amount > ramjibalance) {
+                alert("LOW BALANCE");
+                $('#save').prop("disabled", true);
+                $('#nopayment').html("Low Balance For the Service.Please Contact Admin...").css({
+                    'color': 'red',
+                    'font-size': '130%',
+                    'font-weight': 'bold'
+                });
+                return false;
+            } else {
+                $("#nopayment").html("");
+                $("#save").attr("disabled", true);
+                $("#ramjidebit_amount").val(amount);
+                return true;
+
+            }
+        }
+         $('#dist_id').on('change', function() {
+                        var dist_id = this.value;
+                        $("#taluk").html('');
+                        var url = "{{ url('service/get_taluk') }}/" + dist_id;
+                        $.ajax({
+                            url: url,
+                            type: "GET",
+                            success: function(result) {
+                                $('#taluk').html('<option value="">-- Select Taluk Name --</option>');
+                                $.each(result, function(key, value) {
+                                    $("#taluk").append('<option value="' + value
+                                        .id + '">' + value.taluk_name + '</option>');
+                                });
+                                $('#panchayath').html('<option value="">-- Select Panchayath --</option>');
+                            }
+                        });
                     });
-                    $('#panchayath').html('<option value="">-- Select Panchayath --</option>');
-                }
-            });
-        });
 
-        $('#taluk').on('change', function() {
-            var taluk_id = this.value;
-            $("#panchayath").html('');
-            var url = "{{ url('service/get_panchayath') }}/" + taluk_id;
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function(result) {
-                    $('#panchayath').html('<option value="">-- Select Panchayath Name --</option>');
-                    $.each(result, function(key, value) {
-                        $("#panchayath").append('<option value="' + value
-                            .id + '">' + value.panchayath_name + '</option>');
+                    $('#taluk').on('change', function() {
+                        var taluk_id = this.value;
+                        $("#panchayath").html('');
+                        var url = "{{ url('service/get_panchayath') }}/" + taluk_id;
+                        $.ajax({
+                            url: url,
+                            type: "GET",
+                            success: function(result) {
+                                $('#panchayath').html('<option value="">-- Select Panchayath Name --</option>');
+                                $.each(result, function(key, value) {
+                                    $("#panchayath").append('<option value="' + value
+                                        .id + '">' + value.panchayath_name + '</option>');
+                                });
+                            }
+                        });
                     });
-                }
-            });
-        });
-
     </script>
             @endpush

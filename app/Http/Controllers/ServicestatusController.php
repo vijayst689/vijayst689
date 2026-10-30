@@ -113,8 +113,10 @@ $services = $services
        'itr','gst','tec_exam','tnega_services','smartcard','aadhaarcard',
     'can_edit','bond','voterid','fssai','covid','nalavariyam','license',
     'tailor','pmkissan','birth_certificate','medicalscheme','dharsan',
-    'software','smartcard_otp','smartcard_pdf','pvc_card','aadhaarfind','patta','utislpan','agri_stack','voteridpdf_download','tnega_obc','nativity','income','tnega_residence','tnega_unemployed','tnega_unmarried','tnega_handicap','tnega_widow'
-    ,'employment','bond'];
+    'software','smartcard_otp','smartcard_pdf','pvc_card','aadhaarfind',
+    'patta','utislpan','agri_stack','voteridpdf_download','tnega_obc','nativity',
+    'income','tnega_residence','tnega_unemployed','tnega_unmarried','tnega_handicap','tnega_widow'
+    ,'employment','bond' ,'manual_pdf'];
 
     $user = auth()->user();
 
@@ -331,7 +333,7 @@ $services = $services
             $services = DB::table('aadhaarfind')->where('id', $id)->where('status', $status)->first();
 } elseif($service_id == 155 || $service_id == 156){
             $services = DB::table('birth_certificate')->where('id',$id)->where('status',$status)->first();
-        } elseif($service_id == 179 || $service_id == 180 ){
+        } elseif($service_id == 270 || $service_id == 271 ){
             $services = DB::table('medicalscheme')->where('id',$id)->where('status',$status)->first();
         }elseif($service_id == 183 || $service_id == 184 || $service_id == 185 || $service_id == 186 ){
             $services = DB::table('dharsan')->where('id',$id)->where('status',$status)->first();
@@ -369,8 +371,9 @@ $services = $services
             $services = DB::table('employment')->where('id', $id)->where('status', $status)->first();
         }  elseif( $service_id == 100 ){
             return view('servicestatus.bondupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
-
-        } 
+        } elseif ($service_id == 264 || $service_id == 265 || $service_id == 266) {
+            $services = DB::table('manual_pdf')->where('id', $id)->where('status', $status)->first();
+        }
 
         elseif($service_id == 181){
             $votercorrection_services = DB::table('voterid')->where('id',$id)->where('status',$status)->get();
@@ -569,6 +572,9 @@ $services = $services
         } elseif( $service_id == 100 ){
             return view('servicestatus.bondupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
 
+        } elseif ($service_id == 264 || $service_id == 265 || $service_id == 266) {
+            return view('servicestatus.manualpdf_statusupdate', compact('id', 'services', 'servicename', 'customers', 'serviceid', 'amount', 'districts'));
+
         } elseif( $service_id == 122 || $service_id == 123){
             return view('servicestatus.fssaiupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
 
@@ -593,7 +599,7 @@ $services = $services
     }   elseif( $service_id == 165 ){
         return view('servicestatus.tec_csc_service_update',compact('id','services','servicename','customers','serviceid','amount','districts') );
 
-    }   elseif( $service_id == 179 || $service_id == 180 ){
+    }   elseif( $service_id == 270 || $service_id == 271 ){
         return view('servicestatus.medicalscheme_statusupdate',compact('id','services','servicename','customers','serviceid','amount','districts') );
 
     }   elseif( $service_id == 183 || $service_id == 184 || $service_id == 185 || $service_id == 186 ){
@@ -785,6 +791,197 @@ $services = $services
 
 
     }
+
+public function manualpdf_update(Request $request){
+    $apply_user_id = 0;
+    if ($request->distributor_id == 0 && $request->retailer_id == 0) {
+        $apply_user_id = $request->user_id;
+    }
+    elseif($request->retailer_id == 0){
+        $apply_user_id = $request->distributor_id;
+    }elseif($request->distributor_id == 0){
+        $apply_user_id = $request->retailer_id;
+    }
+    if($apply_user_id != Auth::user()->id){
+        $status = $request->status;
+        if($status == "Resubmit"){
+            DB::table( 'manual_pdf' )->where('id', $request->applied_serviceid)->update( [
+                'remarks'  => $request->remarks,
+                'status'  => $status,
+            ] );
+        }elseif($status == "Processing"){
+            if ( $request->acknowledgement != null ) {
+                $acknowledgement = uniqid().'.'.$request->file( 'acknowledgement' )->extension();
+                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'acknowledgement' . DIRECTORY_SEPARATOR);
+                move_uploaded_file( $_FILES[ 'acknowledgement' ][ 'tmp_name' ], $filepath . $acknowledgement );
+                DB::table( 'manual_pdf' )->where( 'id', $request->applied_serviceid )->update( [
+                    'acknowledgement' => $acknowledgement,
+                ] );
+            }
+            DB::table( 'manual_pdf' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application_no' => $request->application_no,
+                'selects' => $request->selects,
+            ] );
+        }elseif($status == "Approved"){
+            if ( $request->certificate != null ) {
+                $certificate = uniqid().'.'.$request->file( 'certificate' )->extension();
+                $filepath = public_path( 'upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR .'certificate'. DIRECTORY_SEPARATOR);
+                move_uploaded_file( $_FILES[ 'certificate' ][ 'tmp_name' ], $filepath . $certificate );
+                DB::table( 'manual_pdf' )->where( 'id', $request->applied_serviceid )->update( [
+                    'certificate' => $certificate,
+                    'status' => $status,
+                    'completed_date' => date("Y-m-d"),
+                ] );
+            }
+            DB::table( 'manual_pdf' )->where( 'id', $request->applied_serviceid )->update( [
+                'status' => $status,
+                'application' => $request->application,
+                'lects' => $request->lects,
+            ] );
+        }elseif($status == "Rejected"){
+            $serviceid = $request->serviceid;
+            $getservice_payment = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+            $getusers = DB::table( 'users' )->where('id',$apply_user_id)->first();
+            $usertype = 0;
+            if($getusers){
+                $usertype = $getusers->user_type_id;
+            }
+            $payment = 0;
+            if($getservice_payment){
+                if($usertype == 3){
+                  $payment = $getservice_payment->distributor_amount;
+              }elseif($usertype == 4){
+                  $payment = $getservice_payment->retailer_amount;
+              }elseif($usertype == 5){
+                  $payment = $getservice_payment->customer_amount;
+              }
+          }
+
+          $getservicename = DB::table( 'services' )->select('service_name')->where('id',$serviceid)->first();
+          $servicename = "";
+          if($getservicename){
+            $servicename = $getservicename->service_name;
+        }
+        $date = date( 'Y-m-d' );
+        $time = date( 'H:i:s' );
+        $service_status = 'Out Payment';
+        $ad_info = "Service Refund For". ' ' .$servicename;
+
+        $getwallet = DB::table( 'users' )->select('wallet')->where('id',2)->first();
+        $balance = 0;
+        if($getwallet){
+            $balance = $getwallet->wallet;
+        }
+        $getuserswallet = DB::table( 'users' )->select('wallet')->where('id',$apply_user_id)->first();
+        $balance1 = 0;
+        if($getuserswallet){
+            $balance1 = $getuserswallet->wallet;
+        }
+        $newbalance = $balance - $payment;
+        $newbalance1 = $balance1 + $payment;
+
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','2','$apply_user_id','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet - $payment where id = 2";
+        DB::update( DB::raw( $sql ) );
+        $service_status = 'IN Payment';
+        $sql = "insert into payment (log_id,from_id,to_id,amount,ad_info,service_status,time,paydate,pay_id,newbalance) values ('$apply_user_id','$apply_user_id','2','$payment','$ad_info', '$service_status','$time','$date','$apply_user_id','$newbalance1')";
+        DB::insert( DB::raw( $sql ) );
+        $sql = "update users set wallet = wallet + $payment where id = $apply_user_id";
+        DB::update( DB::raw( $sql ) );
+
+        DB::table( 'manual_pdf' )->where( 'id', $request->applied_serviceid )->update( [
+            'status' => $status,
+            'remarks'  => $request->remarks,
+
+        ] );
+
+    }
+    } else {
+            $status = "Pending";
+            $serviceid = $request->serviceid;
+           
+            DB::table('manual_pdf')->where('id', $request->applied_serviceid)->update([   
+                'aadhaar_no'          => $request->aadhaar_no,
+                'dl_no'               => $request->dl_no,
+                'rc_no'               => $request->rc_no,
+                'dob'                 => $request->dob,
+                'mobile'              => $request->mobile,
+                'smartcard_no'        => $request->smartcard_no,           
+                'status'              => 'Pending',
+                'applied_date'        => date("Y-m-d"),
+                'created_at'          => date("Y-m-d"),
+
+            ]);
+
+              if ($request->aadhaar_card != null) {
+                $aadhaar_card = uniqid() . '.' . $request->file('aadhaar_card')->extension();
+                $filepath     = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'aadhaar_card' . DIRECTORY_SEPARATOR);
+                move_uploaded_file($_FILES['aadhaar_card']['tmp_name'], $filepath . $aadhaar_card);
+                DB::table('manual_pdf')->where('id', $request->applied_serviceid)->update([
+                    'aadhaar_card' => $aadhaar_card,
+                ]);
+            } 
+
+    $getpermission = DB::table( 'service_payment' )->where('service_id',$serviceid)->first();
+    $coordinator_permission = 0;
+    if($getpermission){
+        $coordinator_permission = $getpermission->coordinator_permission;
+    }
+    //echo$coordinator_permission;die;
+    if($coordinator_permission == 1){
+     $getdata = DB::table( 'manual_pdf' )->where('id',$request->applied_serviceid)->first();
+     if($getdata){
+     
+                    $service_id = $getdata->service_id;
+                    $rowid = $getdata->id;
+                    $aadhaar_no = $getdata->aadhaar_no;
+                    $aadhaar_card = $getdata->aadhaar_card;
+                    $smartcard_no = $getdata->smartcard_no;
+                    $mobile = $getdata->mobile;
+                    $status = $getdata->status;
+                    $url = url('/');
+                    $aadhaar_url = $url . '/upload/services/aadhaar_card/' . $aadhaar_card;
+                    $API_KEY = env('API_KEY', '');
+                    $RAMJIPAY_URL = env('RAMJIPAY_URL', '');
+                    $WEBSITE_INDEX = env('WEBSITE_INDEX', '');
+
+                    $ch = curl_init();
+                if ($serviceid == 264) {
+                   $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=284&rowid=$rowid&status=$status&aadhaar_no=$aadhaar_no&aadhaar_card=$aadhaar_url";
+                } elseif ($serviceid == 265) {
+                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=291&rowid=$rowid&status=$status&smartcard_no=$smartcard_no&mobile=$mobile";
+                } elseif ($serviceid == 266) {
+                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=292&rowid=$rowid&status=$status&smartcard_no=$smartcard_no";
+                } elseif ($serviceid == 267) {
+                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=295&rowid=$rowid&status=$status&aadhaar_no=$aadhaar_no";
+                } elseif ($serviceid == 268) {
+                    $post_data = "key=$API_KEY&index=$WEBSITE_INDEX&service_id=296&rowid=$rowid&status=$status&smartcard_no=$smartcard_no";                  
+                }
+                    //dd($post_data);
+                    $url1 = $RAMJIPAY_URL . '/api/update_manualpdf_api';
+        //echo $url1;die;
+
+        curl_setopt( $ch, CURLOPT_URL, $url1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $server_output = curl_exec( $ch );
+        curl_close( $ch );
+        $resdata = json_decode($server_output, true);
+       //dd($resdata);
+    }
+}
+            DB::table('manual_pdf')->where('id', $request->applied_serviceid)->update([
+                'status' => $status,
+            ]);
+    }
+    return redirect("appliedservice/$status")->With("success","Application submitted Succesfully");
+}
+
+
+
 
 public function submit_statusupdate_tnegaservices1(Request $request){
     $apply_user_id = 0;
@@ -8807,7 +9004,7 @@ public function medicalscheme_update(Request $request){
     }else{
         $status = "Pending";
         $serviceid = $request->serviceid;
-        if($serviceid == 179){
+        if($serviceid == 270){
             if ($request->passportsize_photo != null) {
                     $passportsize_photo = uniqid() . '.' . $request->file('passportsize_photo')->extension();
                     $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR . 'passportsize_photo' . DIRECTORY_SEPARATOR);
@@ -8959,7 +9156,7 @@ public function medicalscheme_update(Request $request){
 
         curl_setopt( $ch, CURLOPT_URL, $url1 );
         curl_setopt( $ch, CURLOPT_POST, 1 );
-        curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_data );  
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
         $server_output = curl_exec( $ch );
         curl_close( $ch );
@@ -8967,7 +9164,7 @@ public function medicalscheme_update(Request $request){
        //dd($resdata);
     }
 }
-        }elseif($serviceid == 180){
+        }elseif($serviceid == 271){
             if ($request->aadhaar_card != null) {
                 $aadhaar_card = uniqid().'.'.$request->file('aadhaar_card')->extension();
                 $filepath = public_path('upload' . DIRECTORY_SEPARATOR . 'services' . DIRECTORY_SEPARATOR. 'aadhaar_card' . DIRECTORY_SEPARATOR);

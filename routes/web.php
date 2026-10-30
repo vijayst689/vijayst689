@@ -334,11 +334,20 @@ Route::post('/aadhaarfind_update', [App\Http\Controllers\ServicestatusController
 Route::post('/bondsubmit', [App\Http\Controllers\ServiceController::class, 'bondsubmit'])->name('bondsubmit');
 Route::post('/bond_update', [App\Http\Controllers\ServicestatusController::class, 'bond_update'])->name('bond_update');
 
+// --- manualpdf_update --- //
+
+Route::post('/submitapply_manualpdf', [App\Http\Controllers\ServiceController::class, 'submitapply_manualpdf'])->name('submitapply_manualpdf');
+Route::post('/manualpdf_update', [App\Http\Controllers\ServicestatusController::class, 'manualpdf_update'])->name('manualpdf_update');
+
+
+// Route::post('/submitapply_medicalscheme', [App\Http\Controllers\ServiceController::class, 'submitapply_medicalscheme'])->name('submitapply_medicalscheme');
+// Route::post('/medicalscheme_update', [App\Http\Controllers\ServicestatusController::class, 'medicalscheme_update'])->name('medicalscheme_update');
 
 // --- employment_update --- //
 
-Route::post('/employment_update', [App\Http\Controllers\ServicestatusController::class, 'employment_update'])->name('employment_update');
 Route::post('/submitapply_employement', [App\Http\Controllers\ServiceController::class, 'submitapply_employement'])->name('submitapply_employement');
+Route::post('/employment_update', [App\Http\Controllers\ServicestatusController::class, 'employment_update'])->name('employment_update');
+
 
 //esevai services routes
 
